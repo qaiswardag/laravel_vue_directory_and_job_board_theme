@@ -1,3 +1,142 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    /*
+    |--------------------------------------------------------------------------
+    | Alerts
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------
+    */
+    .myFocus {
+        @apply focus-within:border-2 focus-within:border-emerald-500;
+    }
+
+    .active-link-color {
+        @apply text-emerald-600;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Headers
+    |--------------------------------------------------------------------------
+    */
+    .myPrimayHeader {
+        @apply text-3xl mt-1 mb-2 font-semibold text-black;
+    }
+
+    .mySecondaryHeader {
+        @apply text-2xl mt-1 mb-2 font-semibold text-black;
+    }
+
+    .myTertiaryHeader {
+        @apply text-lg mt-1 mb-2 font-semibold text-black;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Links
+    |--------------------------------------------------------------------------
+    */
+    .myPrimaryLink {
+        @apply text-emerald-600 font-semibold
+        focus:outline-none
+        focus:ring-2 focus:ring-emerald-500
+        focus-visible:ring-2 focus-visible:ring-emerald-500;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Buttons
+    |--------------------------------------------------------------------------
+    */
+    .myRadio {
+        @apply w-5 h-5 text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:ring-emerald-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+    }
+
+    .myPrimaryButton {
+        @apply font-semibold inline-flex items-center justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 sm:text-sm text-sm text-white shadow-sm hover:bg-emerald-600 sm:w-auto
+        focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2
+        focus-visible:ring-2 focus-visible:ring-emerald-500;
+    }
+
+    .mySecondaryButton {
+        @apply myPrimaryButton bg-gray-700 hover:bg-gray-800 focus:ring-gray-700;
+    }
+
+    .myPrimaryDeleteButton {
+        @apply myPrimaryButton bg-red-500 hover:bg-red-600 focus:ring-red-500;
+    }
+
+    .myPrimaryDeleteButtonNoBg {
+        @apply myPrimaryButton bg-white hover:bg-white shadow-none focus:ring-offset-0 focus:ring-0 text-gray-400 hover:text-gray-600 px-0;
+    }
+
+    .myPrimaryToggleButton {
+        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 bg-gray-100 hover:bg-emerald-500 hover:text-white;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Icons
+    |--------------------------------------------------------------------------
+    */
+    .smallIcon {
+        @apply cursor-pointer flex-shrink-0 mr-1.5 h-7 w-7 text-gray-800 transform duration-200 stroke-2;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Grid
+    |--------------------------------------------------------------------------
+    */
+    .myPrimaryGap {
+        @apply gap-4;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Forms
+    |--------------------------------------------------------------------------
+    */
+    .myPrimaryForm {
+        /*@apply border-2 border-amber-700 p-12 rounded-lg*/
+    }
+
+    .myPrimaryInputLabel {
+        @apply mt-4 mb-2 block text-sm font-medium text-gray-700 text-left;
+    }
+
+    .myPrimaryInput {
+        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent;
+    }
+
+    .myPrimaryHiddenInputField {
+        @apply px-0;
+    }
+
+    .myPrimaryTextArea {
+        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent;
+    }
+
+    .myPrimarySelect {
+        @apply bg-gray-50 focus:bg-white font-normal text-gray-800 placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:outline-4 focus:outline-emerald-50 sm:text-sm;
+    }
+
+    #my-select {
+        @apply py-1.5 px-2 text-gray-800 bg-gray-50 rounded-md
+        border border-gray-300 focus-within:border focus-within:border-transparent
+        sm:text-sm font-normal
+        focus-within:bg-white focus:focus-within:rounded-md
+        focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-[1px];
+    }
+    .myPrimaryInputError {
+        @apply mt-1 italic block text-sm font-medium text-red-600 text-left;
+    }
+}
