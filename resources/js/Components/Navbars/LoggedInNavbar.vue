@@ -13,6 +13,7 @@ defineProps({
 });
 
 const showingNavigationDropdown = ref(false);
+const modalShowSwitchTeams = ref(false);
 const modalShowLogout = ref(false);
 
 // modal content
@@ -29,15 +30,44 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 const switchToTeam = (team) => {
-    router.put(
-        route("current-team.update"),
-        {
-            team_id: team.id,
-        },
-        {
-            preserveState: false,
-        }
-    );
+    // handle show modal for unique content
+    modalShowSwitchTeams.value = true;
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = `You are switching team to ${team.name}`;
+    descriptionModal.value = `Are you sure you want to switch team to ${team.name}?`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Swtich team";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowSwitchTeams.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowSwitchTeams.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        router.put(
+            route("current-team.update"),
+            {
+                team_id: team.id,
+            },
+            {
+                preserveState: false,
+            }
+        );
+
+        // handle show modal for unique content
+        modalShowSwitchTeams.value = false;
+    };
+
+    // end modal
 };
 
 const logout = () => {
@@ -73,6 +103,23 @@ const logout = () => {
 </script>
 
 <template>
+    <DynamicModal
+        :show="modalShowSwitchTeams"
+        :type="typeModal"
+        :gridColumnAmount="gridColumnModal"
+        :title="titleModal"
+        :description="descriptionModal"
+        :firstButtonText="firstButtonModal"
+        :secondButtonText="secondButtonModal"
+        :thirdButtonText="thirdButtonModal"
+        @firstModalButtonFunction="firstModalButtonFunction"
+        @secondModalButtonFunction="secondModalButtonFunction"
+        @thirdModalButtonFunction="thirdModalButtonFunction"
+    >
+        <header></header>
+        <main></main>
+    </DynamicModal>
+
     <DynamicModal
         :show="modalShowLogout"
         :type="typeModal"

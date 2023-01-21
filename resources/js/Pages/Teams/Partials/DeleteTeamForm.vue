@@ -2,25 +2,74 @@
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionSection from "@/Components/ActionSection.vue";
-import ConfirmationModal from "@/Components/Modals/ConfirmationModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import ConfirmYourPassword from "@/Components/Modals/ConfirmYourPassword.vue";
 
 const props = defineProps({
     team: Object,
 });
 
-const confirmingTeamDeletion = ref(false);
+const modalShowConfirmingTeamDeletion = ref(false);
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
 const form = useForm({});
 
-const confirmTeamDeletion = () => {
-    confirmingTeamDeletion.value = true;
-};
+// const confirmTeamDeletion = () => {
+//     modalShowConfirmingTeamDeletion.value = true;
+// };
 
 const deleteTeam = () => {
-    form.delete(route("teams.destroy", props.team), {
-        errorBag: "deleteTeam",
-    });
+    // handle show modal for unique content
+    modalShowConfirmingTeamDeletion.value = true;
+    // set modal standards
+    typeModal.value = "delete";
+    gridColumnModal.value = 2;
+    titleModal.value = `Delete Team ${props.team.name}?`;
+    descriptionModal.value = `Are you sure you want to delete ${props.team.name}? Once a team is
+                    deleted, all of its resources and data will be permanently
+                    deleted.`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Delete";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowConfirmingTeamDeletion.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowConfirmingTeamDeletion.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        form.delete(route("teams.destroy", props.team), {
+            errorBag: "deleteTeam",
+        });
+        // handle show modal for unique content
+        modalShowConfirmingTeamDeletion.value = false;
+    };
+};
+
+const okHaveBeenConfirmed = function () {
+    console.log("this it a TEST TEST TEST");
+};
+const test1 = function () {
+    console.log("22222");
 };
 </script>
 
@@ -39,39 +88,33 @@ const deleteTeam = () => {
             </div>
 
             <div class="mt-5">
-                <DangerButton @click="confirmTeamDeletion">
-                    Delete Team
-                </DangerButton>
+                <DangerButton @click="deleteTeam"> Delete Team </DangerButton>
             </div>
 
             <!-- Delete Team Confirmation Modal -->
-            <ConfirmationModal
-                :show="confirmingTeamDeletion"
-                @close="confirmingTeamDeletion = false"
+
+            <ConfirmYourPassword
+                :show="true"
+                title="min titel"
+                content="min content"
+                button="min button"
+            ></ConfirmYourPassword>
+            <DynamicModal
+                :show="modalShowConfirmingTeamDeletion"
+                :type="typeModal"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
             >
-                <template #title> Delete Team </template>
-
-                <template #content>
-                    Are you sure you want to delete this team? Once a team is
-                    deleted, all of its resources and data will be permanently
-                    deleted.
-                </template>
-
-                <template #footer>
-                    <SecondaryButton @click="confirmingTeamDeletion = false">
-                        Cancel
-                    </SecondaryButton>
-
-                    <DangerButton
-                        class="ml-3"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                        @click="deleteTeam"
-                    >
-                        Delete Team
-                    </DangerButton>
-                </template>
-            </ConfirmationModal>
+                <header></header>
+                <main></main>
+            </DynamicModal>
         </template>
     </ActionSection>
 </template>

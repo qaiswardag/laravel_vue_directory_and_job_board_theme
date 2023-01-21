@@ -78,6 +78,12 @@
         @apply w-5 h-5 text-fuchsia-600 bg-gray-100 border-gray-300 focus:ring-fuchsia-500 dark:focus:ring-fuchsia-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
     }
 
+    .myPrimaryOkButton {
+        @apply font-semibold inline-flex items-center justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 sm:text-sm text-sm text-white shadow-sm hover:bg-emerald-600 sm:w-auto
+        focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2
+        focus-visible:ring-2 focus-visible:ring-emerald-500;
+    }
+
     .myPrimaryButton {
         @apply font-semibold inline-flex items-center justify-center rounded-md border border-transparent bg-fuchsia-500 px-4 py-2 sm:text-sm text-sm text-white shadow-sm hover:bg-fuchsia-600 sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2
