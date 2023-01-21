@@ -22,7 +22,7 @@ const props = defineProps({
 });
 
 // show modal for confirming password
-const modalConfirmingPassword = ref(false);
+const modalShowConfirmingPassword = ref(false);
 
 // modal content
 const typeModal = ref("");
@@ -50,7 +50,7 @@ const startmodalConfirmingPassword = () => {
         if (response.data.confirmed) {
             emit("confirmed");
         } else {
-            modalConfirmingPassword.value = true;
+            modalShowConfirmingPassword.value = true;
 
             // set modal standards
             typeModal.value = "success";
@@ -64,7 +64,7 @@ const startmodalConfirmingPassword = () => {
             // handle click
             firstModalButtonFunction.value = function () {
                 // handle show modal for unique content
-                modalConfirmingPassword.value = false;
+                modalShowConfirmingPassword.value = false;
             };
             // handle click
             thirdModalButtonFunction.value = function () {
@@ -99,7 +99,7 @@ const confirmPassword = () => {
 };
 
 const closeModal = () => {
-    modalConfirmingPassword.value = false;
+    modalShowConfirmingPassword.value = false;
     form.password = "";
     form.error = "";
 };
@@ -112,7 +112,7 @@ const closeModal = () => {
         </span>
 
         <DynamicModal
-            :show="modalConfirmingPassword"
+            :show="modalShowConfirmingPassword"
             :type="typeModal"
             :gridColumnAmount="gridColumnModal"
             :title="titleModal"

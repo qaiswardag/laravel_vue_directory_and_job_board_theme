@@ -5,9 +5,19 @@
 @layer components {
     /*
     |--------------------------------------------------------------------------
-    | Alerts
+    | Colors
     |--------------------------------------------------------------------------
     */
+    .myPrimaryColor {
+        @apply text-fuchsia-600;
+    }
+    .myPrimaryLinkColor {
+        @apply myPrimaryColor visited:myPrimaryColor;
+    }
+
+    .myPrimaryBackgroundColor {
+        @apply bg-fuchsia-600;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -15,11 +25,11 @@
     |--------------------------------------------------------------------------
     */
     .myFocus {
-        @apply focus-within:border-2 focus-within:border-emerald-500;
+        @apply focus-within:border-2 focus-within:border-fuchsia-500;
     }
 
     .active-link-color {
-        @apply text-emerald-600;
+        @apply text-fuchsia-600;
     }
 
     /*
@@ -45,10 +55,10 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryLink {
-        @apply text-emerald-600 font-semibold
+        @apply text-fuchsia-600 font-semibold
         focus:outline-none
-        focus:ring-2 focus:ring-emerald-500
-        focus-visible:ring-2 focus-visible:ring-emerald-500;
+        focus:ring-2 focus:ring-fuchsia-500
+        focus-visible:ring-2 focus-visible:ring-fuchsia-500;
     }
 
     /*
@@ -57,13 +67,13 @@
     |--------------------------------------------------------------------------
     */
     .myRadio {
-        @apply w-5 h-5 text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:ring-emerald-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+        @apply w-5 h-5 text-fuchsia-600 bg-gray-100 border-gray-300 focus:ring-fuchsia-500 dark:focus:ring-fuchsia-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
     }
 
     .myPrimaryButton {
-        @apply font-semibold inline-flex items-center justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 sm:text-sm text-sm text-white shadow-sm hover:bg-emerald-600 sm:w-auto
-        focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2
-        focus-visible:ring-2 focus-visible:ring-emerald-500;
+        @apply font-semibold inline-flex items-center justify-center rounded-md border border-transparent bg-fuchsia-500 px-4 py-2 sm:text-sm text-sm text-white shadow-sm hover:bg-fuchsia-600 sm:w-auto
+        focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2
+        focus-visible:ring-2 focus-visible:ring-fuchsia-500;
     }
 
     .mySecondaryButton {
@@ -79,7 +89,7 @@
     }
 
     .myPrimaryToggleButton {
-        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 bg-gray-100 hover:bg-emerald-500 hover:text-white;
+        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2 bg-gray-100 hover:bg-fuchsia-500 hover:text-white;
     }
 
     /*
@@ -114,7 +124,7 @@
     }
 
     .myPrimaryInput {
-        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent;
+        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent;
     }
 
     .myPrimaryHiddenInputField {
@@ -122,11 +132,11 @@
     }
 
     .myPrimaryTextArea {
-        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent;
+        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent;
     }
 
     .myPrimarySelect {
-        @apply bg-gray-50 focus:bg-white font-normal text-gray-800 placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:outline-4 focus:outline-emerald-50 sm:text-sm;
+        @apply bg-gray-50 focus:bg-white font-normal text-gray-800 placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-fuchsia-500 focus:border-fuchsia-500 focus:outline-4 focus:outline-fuchsia-50 sm:text-sm;
     }
 
     #my-select {
@@ -134,7 +144,7 @@
         border border-gray-300 focus-within:border focus-within:border-transparent
         sm:text-sm font-normal
         focus-within:bg-white focus:focus-within:rounded-md
-        focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-[1px];
+        focus-within:ring-2 focus-within:ring-fuchsia-500 focus-within:ring-offset-[1px];
     }
     .myPrimaryInputError {
         @apply mt-1 italic block text-sm font-medium text-red-600 text-left;

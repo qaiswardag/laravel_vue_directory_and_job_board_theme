@@ -172,7 +172,7 @@
                                 <div v-if="thirdButtonText">
                                     <div v-if="type === 'default'">
                                         <button
-                                            class="myPrimaryButton bg-emerald-500 text-sm w-full"
+                                            class="myPrimaryButton bg-emerald-500 focus-visible:ring-emerald-500 focus:ring-emerald-500 hover:bg-emerald-600 text-sm w-full"
                                             type="button"
                                             @click="thirdButton"
                                         >
@@ -181,7 +181,7 @@
                                     </div>
                                     <div v-if="type === 'success'">
                                         <button
-                                            class="myPrimaryButton bg-emerald-500 text-sm w-full"
+                                            class="myPrimaryButton bg-emerald-500 focus-visible:ring-emerald-500 focus:ring-emerald-500 hover:bg-emerald-600 text-sm w-full"
                                             type="button"
                                             @click="thirdButton"
                                         >
@@ -191,7 +191,7 @@
 
                                     <div v-if="type === 'warning'">
                                         <button
-                                            class="myPrimaryButton bg-emerald-500 text-sm w-full"
+                                            class="myPrimaryButton bg-emerald-500 focus-visible:ring-emerald-500 focus:ring-emerald-500 hover:bg-emerald-600 text-sm w-full"
                                             type="button"
                                             @click="thirdButton"
                                         >
