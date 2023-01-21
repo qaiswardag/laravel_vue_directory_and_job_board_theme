@@ -1,5 +1,5 @@
 <script setup>
-import AuthLayout from "@/Layouts/AuthLayout.vue";
+import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { Link } from "@inertiajs/vue3";
 
 defineProps({
@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-    <AuthLayout title="Testing">
+    <LoggedInLayout title="Testing">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Testing page
@@ -145,5 +145,5 @@ defineProps({
                 et.
             </div>
         </div>
-    </AuthLayout>
+    </LoggedInLayout>
 </template>

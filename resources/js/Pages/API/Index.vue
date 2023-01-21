@@ -1,6 +1,6 @@
 <script setup>
 import ApiTokenManager from "@/Pages/API/Partials/ApiTokenManager.vue";
-import AuthLayout from "@/Layouts/AuthLayout.vue";
+import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 
 defineProps({
     tokens: Array,
@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-    <AuthLayout title="API Tokens">
+    <LoggedInLayout title="API Tokens">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 API Tokens
@@ -26,5 +26,5 @@ defineProps({
                 />
             </div>
         </div>
-    </AuthLayout>
+    </LoggedInLayout>
 </template>

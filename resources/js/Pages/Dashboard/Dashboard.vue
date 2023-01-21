@@ -1,10 +1,10 @@
 <script setup>
-import AuthLayout from "@/Layouts/AuthLayout.vue";
+import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Welcome from "@/Components/Welcome/Welcome.vue";
 </script>
 
 <template>
-    <AuthLayout title="Dashboard">
+    <LoggedInLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Dashboard
@@ -18,5 +18,5 @@ import Welcome from "@/Components/Welcome/Welcome.vue";
                 </div>
             </div>
         </div>
-    </AuthLayout>
+    </LoggedInLayout>
 </template>

@@ -1,16 +1,15 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link } from "@inertiajs/vue3";
+import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 
 defineProps({
-    fun: {
+    test: {
         type: Boolean,
     },
 });
 </script>
 
 <template>
-    <AppLayout title="Testing">
+    <LoggedInLayout title="Testing">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Home
@@ -35,5 +34,5 @@ defineProps({
                 </p>
             </div>
         </div>
-    </AppLayout>
+    </LoggedInLayout>
 </template>

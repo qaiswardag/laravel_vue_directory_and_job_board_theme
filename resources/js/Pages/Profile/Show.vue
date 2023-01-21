@@ -1,5 +1,5 @@
 <script setup>
-import AuthLayout from "@/Layouts/AuthLayout.vue";
+import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import DeleteUserForm from "@/Pages/Profile/Partials/DeleteUserForm.vue";
 import LogoutOtherBrowserSessionsForm from "@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue";
 import SectionBorder from "@/Components/SectionBorder.vue";
@@ -31,7 +31,7 @@ setTimeout(() => {
 </script>
 
 <template>
-    <AuthLayout title="Profile">
+    <LoggedInLayout title="Profile">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Profile
@@ -80,5 +80,5 @@ setTimeout(() => {
                 </template>
             </div>
         </div>
-    </AuthLayout>
+    </LoggedInLayout>
 </template>
