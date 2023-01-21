@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionSection from "@/Components/ActionSection.vue";
 import DangerButton from "@/Components/DangerButton.vue";
-import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import ConfirmYourPassword from "@/Components/Modals/ConfirmYourPassword.vue";
 
 const props = defineProps({
@@ -92,14 +91,7 @@ const test1 = function () {
             </div>
 
             <!-- Delete Team Confirmation Modal -->
-
             <ConfirmYourPassword
-                :show="true"
-                title="min titel"
-                content="min content"
-                button="min button"
-            ></ConfirmYourPassword>
-            <DynamicModal
                 :show="modalShowConfirmingTeamDeletion"
                 :type="typeModal"
                 :gridColumnAmount="gridColumnModal"
@@ -114,7 +106,7 @@ const test1 = function () {
             >
                 <header></header>
                 <main></main>
-            </DynamicModal>
+            </ConfirmYourPassword>
         </template>
     </ActionSection>
 </template>
