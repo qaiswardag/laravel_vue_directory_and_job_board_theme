@@ -271,7 +271,7 @@ const logout = () => {
                                                         </svg>
 
                                                         <div>
-                                                            {{ team.name }} øøø
+                                                            {{ team.name }}
                                                         </div>
                                                     </div>
                                                 </DropdownLink>
@@ -341,6 +341,13 @@ const logout = () => {
                                     :active="route().current('profile.show')"
                                 >
                                     Profile
+                                </DropdownLink>
+
+                                <DropdownLink
+                                    :href="route('privacyPolicy')"
+                                    :active="route().current('privacyPolicy')"
+                                >
+                                    Privacy Policy
                                 </DropdownLink>
 
                                 <DropdownLink

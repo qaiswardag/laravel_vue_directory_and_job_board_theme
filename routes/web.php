@@ -32,7 +32,7 @@ Route::middleware([
     Route::get("/dashboard", function () {
         return Inertia::render("Dashboard");
     })->name("dashboard");
-    // Route::get("/user/profile", function () {
-    //     return Inertia::render("Profile.Show");
-    // })->name("profile");
+    Route::get("/privacy-policy", function () {
+        return Inertia::render("PrivacyPolicy");
+    })->name("privacyPolicy");
 });

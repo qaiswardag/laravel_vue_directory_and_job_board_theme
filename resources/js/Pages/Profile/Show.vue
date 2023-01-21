@@ -6,11 +6,28 @@ import SectionBorder from "@/Components/SectionBorder.vue";
 import TwoFactorAuthenticationForm from "@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue";
 import UpdatePasswordForm from "@/Pages/Profile/Partials/UpdatePasswordForm.vue";
 import UpdateProfileInformationForm from "@/Pages/Profile/Partials/UpdateProfileInformationForm.vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
+// store
+const store = useStore();
 
 defineProps({
     confirmsTwoFactorAuthentication: Boolean,
     sessions: Array,
 });
+
+// get current user
+const getCurrentUser = computed(() => {
+    return store.getters["user/getCurrentUser"];
+});
+
+setTimeout(() => {
+    store.commit("user/setCurrentUser", {
+        id: 1,
+        name: "Steve Jobs",
+        email: "joe-doe@meeshop.dk",
+    });
+}, 6000);
 </script>
 
 <template>
@@ -19,6 +36,7 @@ defineProps({
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Profile
             </h2>
+            <p>Store. Current fake user is: {{ getCurrentUser.name }}</p>
         </template>
 
         <div>

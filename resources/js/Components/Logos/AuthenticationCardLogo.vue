@@ -1,0 +1,11 @@
+<script setup>
+import { Link } from "@inertiajs/vue3";
+</script>
+
+<template>
+    <Link :href="'/'">
+        <div class="shrink-0 flex items-center">
+            <div class="text-2xl block h-9 w-auto">myself.ae logø</div>
+        </div>
+    </Link>
+</template>
