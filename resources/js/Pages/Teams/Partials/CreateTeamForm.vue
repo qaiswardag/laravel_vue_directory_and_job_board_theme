@@ -1,18 +1,18 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
-import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { useForm } from "@inertiajs/vue3";
+import FormSection from "@/Components/Forms/FormSection.vue";
+import InputError from "@/Components/Forms/InputError.vue";
+import InputLabel from "@/Components/Forms/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/Forms/TextInput.vue";
 
 const form = useForm({
-    name: '',
+    name: "",
 });
 
 const createTeam = () => {
-    form.post(route('teams.store'), {
-        errorBag: 'createTeam',
+    form.post(route("teams.store"), {
+        errorBag: "createTeam",
         preserveScroll: true,
     });
 };
@@ -20,9 +20,7 @@ const createTeam = () => {
 
 <template>
     <FormSection @submitted="createTeam">
-        <template #title>
-            Team Details
-        </template>
+        <template #title> Team Details </template>
 
         <template #description>
             Create a new team to collaborate with others on projects.
@@ -33,7 +31,11 @@ const createTeam = () => {
                 <InputLabel value="Team Owner" />
 
                 <div class="flex items-center mt-2">
-                    <img class="object-cover w-12 h-12 rounded-full" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
+                    <img
+                        class="object-cover w-12 h-12 rounded-full"
+                        :src="$page.props.user.profile_photo_url"
+                        :alt="$page.props.user.name"
+                    />
 
                     <div class="ml-4 leading-tight">
                         <div>{{ $page.props.user.name }}</div>
@@ -58,7 +60,10 @@ const createTeam = () => {
         </template>
 
         <template #actions>
-            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <PrimaryButton
+                :class="{ 'opacity-25': form.processing }"
+                :disabled="form.processing"
+            >
                 Create
             </PrimaryButton>
         </template>

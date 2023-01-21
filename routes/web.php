@@ -16,7 +16,7 @@ use Inertia\Inertia;
 */
 
 Route::get("/", function () {
-    return Inertia::render("Home", [
+    return Inertia::render("Home/Home", [
         "canLogin" => Route::has("login"),
         "canRegister" => Route::has("register"),
         "laravelVersion" => Application::VERSION,
@@ -24,15 +24,25 @@ Route::get("/", function () {
     ]);
 })->name("home");
 
+//
+// middleware for group of pages
 Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
     "verified",
-])->group(function () {
-    Route::get("/dashboard", function () {
-        return Inertia::render("Dashboard");
-    })->name("dashboard");
-    Route::get("/privacy-policy", function () {
-        return Inertia::render("PrivacyPolicy");
-    })->name("privacyPolicy");
-});
+])
+    // group of pages
+    ->group(function () {
+        // just for testing. Delete Testing.vue when this route is deleted
+        Route::get("/test", function () {
+            return Inertia::render("Testing");
+        })->name("test");
+        // dashboard
+        Route::get("/dashboard", function () {
+            return Inertia::render("Dashboard/Dashboard");
+        })->name("dashboard");
+        // privacy policy
+        Route::get("/privacy-policy", function () {
+            return Inertia::render("PolicyAndTerms/PrivacyPolicy");
+        })->name("privacyPolicy");
+    });

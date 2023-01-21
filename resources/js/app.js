@@ -12,6 +12,9 @@ const appName =
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
+    // Disable Inertia's default loading indicato
+    progress: false,
+    //
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,
@@ -23,8 +26,5 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .mount(el);
-    },
-    progress: {
-        color: "#4B5563",
     },
 });

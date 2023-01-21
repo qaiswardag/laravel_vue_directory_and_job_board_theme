@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, nextTick } from "vue";
-import InputError from "../InputError.vue";
-import TextInput from "../TextInput.vue";
+import InputError from "../Forms/InputError.vue";
+import TextInput from "../Forms/TextInput.vue";
 import DynamicModal from "./DynamicModal.vue";
 
 const emit = defineEmits(["confirmed"]);

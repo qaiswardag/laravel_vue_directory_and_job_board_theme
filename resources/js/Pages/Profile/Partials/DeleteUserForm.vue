@@ -4,8 +4,8 @@ import { useForm } from "@inertiajs/vue3";
 import DynamicModal from "../../../Components/Modals/DynamicModal.vue";
 import ActionSection from "@/Components/ActionSection.vue";
 import DangerButton from "@/Components/DangerButton.vue";
-import InputError from "@/Components/InputError.vue";
-import TextInput from "@/Components/TextInput.vue";
+import InputError from "@/Components/Forms/InputError.vue";
+import TextInput from "@/Components/Forms/TextInput.vue";
 
 // show modal for user deletion
 const modalShowUserDeletion = ref(false);

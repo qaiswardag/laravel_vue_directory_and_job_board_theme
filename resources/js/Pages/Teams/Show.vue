@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthLayout from "@/Layouts/AuthLayout.vue";
 import DeleteTeamForm from "@/Pages/Teams/Partials/DeleteTeamForm.vue";
 import SectionBorder from "@/Components/SectionBorder.vue";
 import TeamMemberManager from "@/Pages/Teams/Partials/TeamMemberManager.vue";
@@ -13,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="Team Settings">
+    <AuthLayout title="Team Settings">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Project Settings
@@ -40,5 +40,5 @@ defineProps({
                 </template>
             </div>
         </div>
-    </AppLayout>
+    </AuthLayout>
 </template>

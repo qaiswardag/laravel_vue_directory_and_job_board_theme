@@ -1,7 +1,7 @@
 <script setup>
 import { Head, router } from "@inertiajs/vue3";
 import Banner from "@/Components/Banner.vue";
-import AppNavigation from "../Components/Navbars/AppNavigation.vue";
+import MainNavigation from "../Components/Navbars/MainNavigation.vue";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import { ref } from "vue";
 
@@ -30,7 +30,7 @@ router.on("finish", () => {
         <Banner />
 
         <div class="min-h-screen bg-gray-100">
-            <AppNavigation></AppNavigation>
+            <MainNavigation></MainNavigation>
             <!-- Page Heading -->
             <header v-if="$slots.header" class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">

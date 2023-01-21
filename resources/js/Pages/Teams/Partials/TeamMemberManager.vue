@@ -6,13 +6,13 @@ import ActionSection from "@/Components/ActionSection.vue";
 import ConfirmationModal from "@/Components/Modals/ConfirmationModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import DialogModal from "@/Components/Modals/DialogModal.vue";
-import FormSection from "@/Components/FormSection.vue";
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
+import FormSection from "@/Components/Forms/FormSection.vue";
+import InputError from "@/Components/Forms/InputError.vue";
+import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SectionBorder from "@/Components/SectionBorder.vue";
-import TextInput from "@/Components/TextInput.vue";
+import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "../../../Components/Modals/DynamicModal.vue";
 
 const props = defineProps({
