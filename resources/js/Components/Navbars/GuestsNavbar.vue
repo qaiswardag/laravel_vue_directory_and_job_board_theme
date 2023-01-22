@@ -6,45 +6,15 @@ import Dropdown from "@/Components/Dropdowns/Dropdown.vue";
 import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
 import NavLink from "@/Components/Navbars/NavLink.vue";
 import ResponsiveNavLink from "@/Components/Navbars/ResponsiveNavLink.vue";
-import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 defineProps({
     title: String,
 });
 
 const showingNavigationDropdown = ref(false);
-
-// modal content
-const typeModal = ref("");
-const gridColumnModal = ref(Number(1));
-const titleModal = ref("");
-const descriptionModal = ref("");
-const firstButtonModal = ref("");
-const secondButtonModal = ref(null);
-const thirdButtonModal = ref(null);
-// set dynamic modal handle functions
-const firstModalButtonFunction = ref(null);
-const secondModalButtonFunction = ref(null);
-const thirdModalButtonFunction = ref(null);
 </script>
 
 <template>
-    <DynamicModal
-        :show="false"
-        :type="typeModal"
-        :gridColumnAmount="gridColumnModal"
-        :title="titleModal"
-        :description="descriptionModal"
-        :firstButtonText="firstButtonModal"
-        :secondButtonText="secondButtonModal"
-        :thirdButtonText="thirdButtonModal"
-        @firstModalButtonFunction="firstModalButtonFunction"
-        @secondModalButtonFunction="secondModalButtonFunction"
-        @thirdModalButtonFunction="thirdModalButtonFunction"
-    >
-        <header></header>
-        <main></main>
-    </DynamicModal>
     <nav class="border-b border-gray-100 bg-gray-100">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
