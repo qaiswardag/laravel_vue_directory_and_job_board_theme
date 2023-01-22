@@ -492,10 +492,11 @@ const displayableRole = (role) => {
             :show="confirmingLeavingTeam"
             @close="confirmingLeavingTeam = false"
         >
-            <template #title> Leave Team </template>
+            <template #title> Leave {{ props.team.name }}? </template>
 
             <template #content>
-                Are you sure you would like to leave this team?
+                Are you sure you would like to leave
+                {{ props.team.name }}?
             </template>
 
             <template #footer>

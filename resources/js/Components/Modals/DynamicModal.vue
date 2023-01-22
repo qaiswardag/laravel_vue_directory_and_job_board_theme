@@ -101,7 +101,7 @@
 
                                     <DialogTitle
                                         as="h3"
-                                        class="tertiaryHeader my-0 py-0"
+                                        class="myTertiaryHeader my-0 py-0"
                                     >
                                         {{ title }}
                                     </DialogTitle>
@@ -129,7 +129,7 @@
                         <div>
                             <div
                                 v-html="description"
-                                class="text-sm text-gray-600 mt-4 mb-10"
+                                class="myPrimaryParagraph mt-4 mb-6"
                             ></div>
                             <header>
                                 <slot name="header"></slot>
