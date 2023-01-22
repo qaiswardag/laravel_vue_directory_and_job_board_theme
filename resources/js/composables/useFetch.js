@@ -12,7 +12,7 @@ export const useFetch = function () {
     const abortTimeout = ref(null);
 
     // load data
-    const loadData = async function (
+    const handleData = async function (
         url,
         fetchOptions = {},
         customFetchOptions = {
@@ -146,6 +146,6 @@ export const useFetch = function () {
     return {
         isPending,
         error,
-        loadData,
+        handleData,
     };
 };

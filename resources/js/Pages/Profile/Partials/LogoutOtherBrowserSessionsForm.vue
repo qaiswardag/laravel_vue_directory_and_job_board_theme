@@ -3,25 +3,65 @@ import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/ActionMessage.vue";
 import ActionSection from "@/Components/ActionSection.vue";
-import DialogModal from "@/Components/Modals/DialogModal.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 defineProps({
     sessions: Array,
 });
 
-const confirmingLogout = ref(false);
+const modalShowConfirmingSessionLogout = ref(false);
 const passwordInput = ref(null);
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
 
 const form = useForm({
     password: "",
 });
 
-const confirmLogout = () => {
-    confirmingLogout.value = true;
+const handleSessionLogout = () => {
+    modalShowConfirmingSessionLogout.value = true;
+
+    // handle show modal for unique content
+    modalShowConfirmingSessionLogout.value = true;
+    // set modal standards
+    typeModal.value = "danger";
+    gridColumnModal.value = 2;
+    titleModal.value = "Log Out Other Browser Sessions";
+    descriptionModal.value =
+        "Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Delete";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowConfirmingSessionLogout.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowConfirmingSessionLogout.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        logoutOtherBrowserSessions();
+    };
+    // end modal
 
     setTimeout(() => passwordInput.value.focus(), 250);
 };
@@ -29,14 +69,16 @@ const confirmLogout = () => {
 const logoutOtherBrowserSessions = () => {
     form.delete(route("other-browser-sessions.destroy"), {
         preserveScroll: true,
-        onSuccess: () => closeModal(),
+        onSuccess: () => {
+            modalShowConfirmingSessionLogout.value = false;
+        },
         onError: () => passwordInput.value.focus(),
         onFinish: () => form.reset(),
     });
 };
 
 const closeModal = () => {
-    confirmingLogout.value = false;
+    modalShowConfirmingSessionLogout.value = false;
 
     form.reset();
 };
@@ -134,7 +176,7 @@ const closeModal = () => {
             </div>
 
             <div class="flex items-center mt-5">
-                <PrimaryButton @click="confirmLogout">
+                <PrimaryButton @click="handleSessionLogout">
                     Log Out Other Browser Sessions
                 </PrimaryButton>
 
@@ -143,15 +185,21 @@ const closeModal = () => {
                 </ActionMessage>
             </div>
 
-            <!-- Log Out Other Devices Confirmation Modal -->
-            <DialogModal :show="confirmingLogout" @close="closeModal">
-                <template #title> Log Out Other Browser Sessions </template>
-
-                <template #content>
-                    Please enter your password to confirm you would like to log
-                    out of your other browser sessions across all of your
-                    devices.
-
+            <DynamicModal
+                :show="modalShowConfirmingSessionLogout"
+                :type="typeModal"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
+                <main>
                     <div class="mt-4">
                         <TextInput
                             ref="passwordInput"
@@ -167,23 +215,8 @@ const closeModal = () => {
                             class="mt-2"
                         />
                     </div>
-                </template>
-
-                <template #footer>
-                    <SecondaryButton @click="closeModal">
-                        Cancel
-                    </SecondaryButton>
-
-                    <PrimaryButton
-                        class="ml-3"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                        @click="logoutOtherBrowserSessions"
-                    >
-                        Log Out Other Browser Sessions
-                    </PrimaryButton>
-                </template>
-            </DialogModal>
+                </main>
+            </DynamicModal>
         </template>
     </ActionSection>
 </template>

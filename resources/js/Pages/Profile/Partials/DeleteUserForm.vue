@@ -5,7 +5,7 @@ import ActionSection from "@/Components/ActionSection.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import DynamicModal from "../../../Components/Modals/DynamicModal.vue";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 const confirmingUserDeletion = ref(false); // old modal
 const modalShowConfirmingUserDeletion = ref(false);
@@ -115,21 +115,11 @@ const closeModal = () => {
             </div>
 
             <div class="mt-5">
-                <DangerButton
-                    @click="handleUserDeletion"
-                    class="bg-green-600 hover:bg-green-800"
-                >
-                    Test — Delete Account
-                </DangerButton>
-            </div>
-
-            <div class="mt-5">
-                <DangerButton @click="confirmUserDeletion">
+                <DangerButton @click="handleUserDeletion">
                     Delete Account
                 </DangerButton>
             </div>
 
-            <!-- Delete Account Confirmation Modal — start-->
             <DynamicModal
                 :show="modalShowConfirmingUserDeletion"
                 :type="typeModal"
@@ -162,7 +152,6 @@ const closeModal = () => {
                     </div>
                 </main>
             </DynamicModal>
-            <!-- Delete Account Confirmation Modal — end-->
         </template>
     </ActionSection>
 </template>

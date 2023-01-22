@@ -63,10 +63,10 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryLink {
-        @apply text-fuchsia-600 font-semibold
+        @apply text-fuchsia-600 text-sm
         focus:outline-none
-        focus:ring-2 focus:ring-fuchsia-500
-        focus-visible:ring-2 focus-visible:ring-fuchsia-500;
+        focus:ring-0 focus:ring-fuchsia-500
+        focus-visible:ring-0 focus-visible:ring-fuchsia-500;
     }
 
     /*

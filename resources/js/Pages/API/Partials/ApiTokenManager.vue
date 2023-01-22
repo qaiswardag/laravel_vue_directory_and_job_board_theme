@@ -4,9 +4,7 @@ import { useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/ActionMessage.vue";
 import ActionSection from "@/Components/ActionSection.vue";
 import Checkbox from "@/Components/Forms/Checkbox.vue";
-import ConfirmationModal from "@/Components/Modals/ConfirmationModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
-import DialogModal from "@/Components/DialogModal.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
@@ -205,98 +203,70 @@ const deleteApiToken = () => {
             </div>
         </div>
 
-        <!-- Token Value Modal -->
-        <DialogModal :show="displayingToken" @close="displayingToken = false">
-            <template #title> API Token </template>
+        <!-- Token Show Modal here -->
+        <div>
+            Please copy your new API token. For your security, it won't be shown
+            again.
+        </div>
 
-            <template #content>
-                <div>
-                    Please copy your new API token. For your security, it won't
-                    be shown again.
-                </div>
+        <div
+            v-if="$page.props.jetstream.flash.token"
+            class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500 break-all"
+        >
+            {{ $page.props.jetstream.flash.token }}
+        </div>
 
-                <div
-                    v-if="$page.props.jetstream.flash.token"
-                    class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500 break-all"
-                >
-                    {{ $page.props.jetstream.flash.token }}
-                </div>
-            </template>
+        <SecondaryButton @click="displayingToken = false">
+            Close
+        </SecondaryButton>
+        <!-- Token Show Modal here -->
 
-            <template #footer>
-                <SecondaryButton @click="displayingToken = false">
-                    Close
-                </SecondaryButton>
-            </template>
-        </DialogModal>
+        <!-- Token Show Modal here below -->
+        <!-- API Token Permissions Modal -->
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div v-for="permission in availablePermissions" :key="permission">
+                <label class="flex items-center">
+                    <Checkbox
+                        v-model:checked="updateApiTokenForm.permissions"
+                        :value="permission"
+                    />
+                    <span class="ml-2 text-sm text-gray-600">{{
+                        permission
+                    }}</span>
+                </label>
+            </div>
+        </div>
+
+        <SecondaryButton @click="managingPermissionsFor = null">
+            Cancel
+        </SecondaryButton>
+
+        <PrimaryButton
+            class="ml-3"
+            :class="{ 'opacity-25': updateApiTokenForm.processing }"
+            :disabled="updateApiTokenForm.processing"
+            @click="updateApiToken"
+        >
+            Save
+        </PrimaryButton>
 
         <!-- API Token Permissions Modal -->
-        <DialogModal
-            :show="managingPermissionsFor != null"
-            @close="managingPermissionsFor = null"
+        <!-- Token Show Modal here belaboveow -->
+
+        <!-- PUT BELOW INSIDE A MODAL -->
+        <SecondaryButton @click="apiTokenBeingDeleted = null">
+            Cancel
+        </SecondaryButton>
+
+        <DangerButton
+            class="ml-3"
+            :class="{ 'opacity-25': deleteApiTokenForm.processing }"
+            :disabled="deleteApiTokenForm.processing"
+            @click="deleteApiToken"
         >
-            <template #title> API Token Permissions </template>
-
-            <template #content>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div
-                        v-for="permission in availablePermissions"
-                        :key="permission"
-                    >
-                        <label class="flex items-center">
-                            <Checkbox
-                                v-model:checked="updateApiTokenForm.permissions"
-                                :value="permission"
-                            />
-                            <span class="ml-2 text-sm text-gray-600">{{
-                                permission
-                            }}</span>
-                        </label>
-                    </div>
-                </div>
-            </template>
-
-            <template #footer>
-                <SecondaryButton @click="managingPermissionsFor = null">
-                    Cancel
-                </SecondaryButton>
-
-                <PrimaryButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': updateApiTokenForm.processing }"
-                    :disabled="updateApiTokenForm.processing"
-                    @click="updateApiToken"
-                >
-                    Save
-                </PrimaryButton>
-            </template>
-        </DialogModal>
-
-        <!-- Delete Token Confirmation Modal -->
-        <ConfirmationModal
-            :show="apiTokenBeingDeleted != null"
-            @close="apiTokenBeingDeleted = null"
-        >
-            <template #title> Delete API Token </template>
-
-            <template #content>
-                Are you sure you would like to delete this API token?
-            </template>
-
-            <template #footer>
-                <SecondaryButton @click="apiTokenBeingDeleted = null">
-                    Cancel
-                </SecondaryButton>
-
-                <DangerButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': deleteApiTokenForm.processing }"
-                    :disabled="deleteApiTokenForm.processing"
-                    @click="deleteApiToken"
-                >
-                    Delete
-                </DangerButton>
-            </template>
-        </ConfirmationModal>
+            Delete
+        </DangerButton>
+        <!-- PUT ABOVE INSIDE A MODAL -->
     </div>
 </template>

@@ -3,9 +3,7 @@ import { ref } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/ActionMessage.vue";
 import ActionSection from "@/Components/ActionSection.vue";
-import ConfirmationModal from "@/Components/Modals/ConfirmationModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
-import DialogModal from "@/Components/Modals/DialogModal.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
@@ -13,7 +11,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SectionBorder from "@/Components/SectionBorder.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import DynamicModal from "../../../Components/Modals/DynamicModal.vue";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 const props = defineProps({
     team: Object,
@@ -21,6 +19,7 @@ const props = defineProps({
     userPermissions: Object,
 });
 
+const modalShowCancelTeamInvitation = ref(false);
 const modalShowTeamMemberBeingRemoved = ref(false);
 
 // modal content
@@ -48,8 +47,10 @@ const updateRoleForm = useForm({
 const leaveTeamForm = useForm({});
 const removeTeamMemberForm = useForm({});
 
-const currentlyManagingRole = ref(false);
 const managingRoleFor = ref(null);
+const modalShowCurrentlyManagingRole = ref(false);
+const modalShowLeaveTeam = ref(false);
+const modalShowManagingRoleFor = ref(null);
 const confirmingLeavingTeam = ref(false);
 
 const addTeamMember = () => {
@@ -60,16 +61,77 @@ const addTeamMember = () => {
     });
 };
 
+const handleCancelTeamInvitation = function (invitation) {
+    modalShowCancelTeamInvitation.value = true;
+
+    // set modal standards
+    typeModal.value = "warning";
+    gridColumnModal.value = 2;
+    titleModal.value = "Cancel pending Team Invitation";
+    descriptionModal.value = `Are you sure you want to cancel this pending team invitations: ${invitation.email}`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Change";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowCancelTeamInvitation.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowCancelTeamInvitation.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        cancelTeamInvitation(invitation);
+    };
+    // end modal
+};
+
 const cancelTeamInvitation = (invitation) => {
     router.delete(route("team-invitations.destroy", invitation), {
         preserveScroll: true,
+        onSuccess: () => (modalShowCancelTeamInvitation.value = false),
+        onError: (err) => {
+            console.log(
+                "Something went wrong canceling team invitation. Error:",
+                err
+            );
+        },
     });
 };
 
 const manageRole = (teamMember) => {
     managingRoleFor.value = teamMember;
     updateRoleForm.role = teamMember.membership.role;
-    currentlyManagingRole.value = true;
+    modalShowCurrentlyManagingRole.value = true;
+
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = "Change Role ";
+    descriptionModal.value = "Are you sure you want to change user role?";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Change";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowCurrentlyManagingRole.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowCurrentlyManagingRole.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        updateRole();
+    };
+    // end modal
 };
 
 const updateRole = () => {
@@ -77,18 +139,55 @@ const updateRole = () => {
         route("team-members.update", [props.team, managingRoleFor.value]),
         {
             preserveScroll: true,
-            onSuccess: () => (currentlyManagingRole.value = false),
+            onSuccess: () => (modalShowCurrentlyManagingRole.value = false),
+            onError: (err) => {
+                console.log("Something went wrong chaning role. Error:", err);
+            },
         }
     );
 };
 
-const confirmLeavingTeam = () => {
-    confirmingLeavingTeam.value = true;
+const handleLeaveTeam = function () {
+    modalShowLeaveTeam.value = true;
+
+    // set modal standards
+    typeModal.value = "warning";
+    gridColumnModal.value = 2;
+    titleModal.value = "Leave team ";
+    descriptionModal.value = "Are you sure you want to leave this team?";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Leave team";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowLeaveTeam.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowLeaveTeam.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        updateRole();
+    };
+    // end modal
 };
 
 const leaveTeam = () => {
     leaveTeamForm.delete(
-        route("team-members.destroy", [props.team, usePage().props.user])
+        route("team-members.destroy", [props.team, usePage().props.user]),
+        {
+            preserveScroll: true,
+            onError: (err) => {
+                console.log("Error leaving team:", err);
+            },
+            onSuccess: () => {
+                modalShowLeaveTeam.value = false;
+            },
+        }
     );
 };
 
@@ -194,10 +293,9 @@ const displayableRole = (role) => {
                                 v-for="(role, i) in availableRoles"
                                 :key="role.key"
                                 type="button"
-                                class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10"
                                 :class="{
-                                    'border-t border-gray-200 dark:border-gray-700 focus:border-none rounded-t-none':
-                                        i > 0,
+                                    'rounded-b-none': i > 0,
                                     'rounded-b-none':
                                         i !=
                                         Object.keys(availableRoles).length - 1,
@@ -206,7 +304,7 @@ const displayableRole = (role) => {
                             >
                                 <div
                                     :class="{
-                                        'opacity-50':
+                                        'opacity-40':
                                             addTeamMemberForm.role &&
                                             addTeamMemberForm.role != role.key,
                                     }"
@@ -216,8 +314,8 @@ const displayableRole = (role) => {
                                         <div
                                             class="text-sm text-gray-600 dark:text-gray-400"
                                             :class="{
-                                                'font-semibold':
-                                                    addTeamMemberForm.role ==
+                                                '':
+                                                    updateRoleForm.role ===
                                                     role.key,
                                             }"
                                         >
@@ -309,9 +407,11 @@ const displayableRole = (role) => {
                                 <button
                                     v-if="userPermissions.canRemoveTeamMembers"
                                     class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none"
-                                    @click="cancelTeamInvitation(invitation)"
+                                    @click="
+                                        handleCancelTeamInvitation(invitation)
+                                    "
                                 >
-                                    Cancel
+                                    Cancel Invitation
                                 </button>
                             </div>
                         </div>
@@ -350,45 +450,42 @@ const displayableRole = (role) => {
                                 </div>
                             </div>
 
-                            <div class="flex items-center">
+                            <div class="flex items-center myPrimaryGap">
                                 <!-- Manage Team Member Role -->
                                 <button
                                     v-if="
                                         userPermissions.canAddTeamMembers &&
                                         availableRoles.length
                                     "
-                                    class="ml-2 text-sm text-gray-400 underline"
+                                    class="myPrimaryLink"
                                     @click="manageRole(user)"
                                 >
                                     {{ displayableRole(user.membership.role) }}
                                 </button>
 
-                                <div
-                                    v-else-if="availableRoles.length"
-                                    class="ml-2 text-sm text-gray-400"
-                                >
+                                <div v-else-if="availableRoles.length">
+                                    Role:&nbsp;
                                     {{ displayableRole(user.membership.role) }}
+                                    - p
                                 </div>
 
                                 <!-- Leave Team -->
-                                <button
+                                <DangerButton
                                     v-if="$page.props.user.id === user.id"
-                                    class="cursor-pointer ml-6 text-sm text-red-500"
-                                    @click="confirmLeavingTeam"
+                                    @click="handleLeaveTeam"
                                 >
-                                    Leave
-                                </button>
+                                    Leave team
+                                </DangerButton>
 
                                 <!-- Remove Team Member -->
-                                <button
+                                <DangerButton
                                     v-else-if="
                                         userPermissions.canRemoveTeamMembers
                                     "
-                                    class="cursor-pointer ml-6 text-sm text-red-500"
-                                    @click="removeTeamMember(user)"
+                                    @click="removeTeamMember(user.name)"
                                 >
                                     Remove
-                                </button>
+                                </DangerButton>
                             </div>
                         </div>
                     </div>
@@ -396,14 +493,40 @@ const displayableRole = (role) => {
             </ActionSection>
         </div>
 
-        <!-- Role Management Modal -->
-        <DialogModal
-            :show="currentlyManagingRole"
-            @close="currentlyManagingRole = false"
+        <!-- Cancel Team Invitation -->
+        <DynamicModal
+            :show="modalShowCancelTeamInvitation"
+            :type="typeModal"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
         >
-            <template #title> Manage Role </template>
+            <header></header>
+            <main></main>
+        </DynamicModal>
 
-            <template #content>
+        <!-- Role Leave Team -->
+        <DynamicModal
+            :show="modalShowCurrentlyManagingRole"
+            :type="typeModal"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
+        >
+            <header></header>
+            <main>
                 <div v-if="managingRoleFor">
                     <div
                         class="relative z-0 mt-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer"
@@ -412,10 +535,9 @@ const displayableRole = (role) => {
                             v-for="(role, i) in availableRoles"
                             :key="role.key"
                             type="button"
-                            class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                            class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10"
                             :class="{
-                                'border-t border-gray-200 dark:border-gray-700 focus:border-none rounded-t-none':
-                                    i > 0,
+                                'rounded-b-none': i > 0,
                                 'rounded-b-none':
                                     i !==
                                     Object.keys(availableRoles).length - 1,
@@ -424,7 +546,7 @@ const displayableRole = (role) => {
                         >
                             <div
                                 :class="{
-                                    'opacity-50':
+                                    'opacity-40':
                                         updateRoleForm.role &&
                                         updateRoleForm.role !== role.key,
                                 }"
@@ -434,7 +556,7 @@ const displayableRole = (role) => {
                                     <div
                                         class="text-sm text-gray-600 dark:text-gray-400"
                                         :class="{
-                                            'font-semibold':
+                                            '':
                                                 updateRoleForm.role ===
                                                 role.key,
                                         }"
@@ -469,52 +591,26 @@ const displayableRole = (role) => {
                         </button>
                     </div>
                 </div>
-            </template>
-
-            <template #footer>
-                <SecondaryButton @click="currentlyManagingRole = false">
-                    Cancel
-                </SecondaryButton>
-
-                <PrimaryButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': updateRoleForm.processing }"
-                    :disabled="updateRoleForm.processing"
-                    @click="updateRole"
-                >
-                    Save
-                </PrimaryButton>
-            </template>
-        </DialogModal>
-
-        <!-- Leave Team Confirmation Modal -->
-        <ConfirmationModal
-            :show="confirmingLeavingTeam"
-            @close="confirmingLeavingTeam = false"
+            </main>
+        </DynamicModal>
+        <!-- Role Leave Team -->
+        <DynamicModal
+            :show="modalShowLeaveTeam"
+            :type="typeModal"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
         >
-            <template #title> Leave {{ props.team.name }}? </template>
-
-            <template #content>
-                Are you sure you would like to leave
-                {{ props.team.name }}?
-            </template>
-
-            <template #footer>
-                <SecondaryButton @click="confirmingLeavingTeam = false">
-                    Cancel
-                </SecondaryButton>
-
-                <DangerButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': leaveTeamForm.processing }"
-                    :disabled="leaveTeamForm.processing"
-                    @click="leaveTeam"
-                >
-                    Leave
-                </DangerButton>
-            </template>
-        </ConfirmationModal>
-
+            <header></header>
+            <main></main>
+        </DynamicModal>
+        <!-- Role Management Modal -->
         <DynamicModal
             :show="modalShowTeamMemberBeingRemoved"
             :type="typeModal"

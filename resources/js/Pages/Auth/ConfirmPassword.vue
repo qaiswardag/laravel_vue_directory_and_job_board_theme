@@ -1,138 +1,67 @@
 <script setup>
-import { ref, reactive, nextTick } from "vue";
-import DialogModal from "@/Components/Modals/DialogModal.vue";
-import InputError from "@/Components/Forms/InputError.vue";
+import { ref } from "vue";
+import AuthenticationCard from "@/Components/AuthenticationCard.vue";
+import AuthenticationCardLogo from "@/Components/AuthenticationCardLogo.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
-import TextInput from "@/Components/Forms/TextInput.vue";
-import { useFetch } from "@/composables/useFetch";
+import TextInput from "@/Components/TextInput.vue";
 
-// use fetch
-const {
-    loadData: loadComponents,
-    isPending: isPendingComponents,
-    error: errorloadComponents,
-} = useFetch();
-
-const emit = defineEmits(["confirmed"]);
-
-defineProps({
-    title: {
-        type: String,
-        default: "Confirm Password",
-    },
-    content: {
-        type: String,
-        default: "For your security, please confirm your password to continue.",
-    },
-    button: {
-        type: String,
-        default: "Confirm",
-    },
-});
-
-const confirmingPassword = ref(false);
-
-const form = reactive({
+const form = useForm({
     password: "",
-    error: "",
-    processing: false,
 });
 
 const passwordInput = ref(null);
 
-const startConfirmingPassword = () => {
-    //
-    //
-    //
-    //
-    axios.get(route("password.confirmation")).then((response) => {
-        if (response.data.confirmed) {
-            emit("confirmed");
-        } else {
-            confirmingPassword.value = true;
+const submit = () => {
+    form.post(route("password.confirm"), {
+        onFinish: () => {
+            form.reset();
 
-            setTimeout(() => passwordInput.value.focus(), 250);
-        }
-    });
-    //
-    //
-    //
-    //
-    //
-};
-
-const confirmPassword = () => {
-    form.processing = true;
-
-    //
-    //
-    //
-    axios
-        .post(route("password.confirm"), {
-            password: form.password,
-        })
-        .then(() => {
-            form.processing = false;
-
-            closeModal();
-            nextTick().then(() => emit("confirmed"));
-        })
-        .catch((error) => {
-            form.processing = false;
-            form.error = error.response.data.errors.password[0];
             passwordInput.value.focus();
-        });
-    //
-    //
-    //
-};
-
-const closeModal = () => {
-    confirmingPassword.value = false;
-    form.password = "";
-    form.error = "";
+        },
+    });
 };
 </script>
 
 <template>
-    <span>
-        <span @click="startConfirmingPassword">
-            <slot />
-        </span>
+    <Head title="Secure Area" />
 
-        <DialogModal :show="confirmingPassword" @close="closeModal">
-            <template #title> {{ title }}</template>
+    <AuthenticationCard>
+        <template #logo>
+            <AuthenticationCardLogo />
+        </template>
 
-            <template #content>
-                {{ content }}
+        <div class="mb-4 text-sm text-gray-600">
+            This is a secure area of the application. Please confirm your
+            password before continuing.
+        </div>
 
-                <div class="mt-4">
-                    <TextInput
-                        ref="passwordInput"
-                        v-model="form.password"
-                        type="password"
-                        class="mt-1 block w-3/4"
-                        placeholder="Password"
-                        @keyup.enter="confirmPassword"
-                    />
+        <form @submit.prevent="submit">
+            <div>
+                <InputLabel for="password" value="Password" />
+                <TextInput
+                    id="password"
+                    ref="passwordInput"
+                    v-model="form.password"
+                    type="password"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="current-password"
+                    autofocus
+                />
+                <InputError class="mt-2" :message="form.errors.password" />
+            </div>
 
-                    <InputError :message="form.error" class="mt-2" />
-                </div>
-            </template>
-
-            <template #footer>
-                <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
-
+            <div class="flex justify-end mt-4">
                 <PrimaryButton
-                    class="ml-3"
+                    class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
-                    @click="confirmPassword"
                 >
-                    {{ button }}
+                    Confirm
                 </PrimaryButton>
-            </template>
-        </DialogModal>
-    </span>
+            </div>
+        </form>
+    </AuthenticationCard>
 </template>
