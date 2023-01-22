@@ -5,6 +5,14 @@ import InputError from "@/Components/Forms/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
+import { useFetch } from "@/composables/useFetch";
+
+// use fetch
+const {
+    loadData: loadComponents,
+    isPending: isPendingComponents,
+    error: errorloadComponents,
+} = useFetch();
 
 const emit = defineEmits(["confirmed"]);
 
@@ -34,6 +42,10 @@ const form = reactive({
 const passwordInput = ref(null);
 
 const startConfirmingPassword = () => {
+    //
+    //
+    //
+    //
     axios.get(route("password.confirmation")).then((response) => {
         if (response.data.confirmed) {
             emit("confirmed");
@@ -43,11 +55,19 @@ const startConfirmingPassword = () => {
             setTimeout(() => passwordInput.value.focus(), 250);
         }
     });
+    //
+    //
+    //
+    //
+    //
 };
 
 const confirmPassword = () => {
     form.processing = true;
 
+    //
+    //
+    //
     axios
         .post(route("password.confirm"), {
             password: form.password,
@@ -63,6 +83,9 @@ const confirmPassword = () => {
             form.error = error.response.data.errors.password[0];
             passwordInput.value.focus();
         });
+    //
+    //
+    //
 };
 
 const closeModal = () => {

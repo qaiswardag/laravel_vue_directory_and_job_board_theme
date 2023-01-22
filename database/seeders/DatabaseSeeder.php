@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             "id" => 1,
             "user_id" => User::find(1)->id,
             "name" => "Team owened by Qais",
-            // "personal_team" => 1,
+            "personal_team" => 1,
         ]);
         // Shaun Pelling
         User::factory()->create([
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             "id" => 2,
             "user_id" => User::find(2)->id,
             "name" => "Team owened by Shaun",
-            // "personal_team" => 1,
+            "personal_team" => 1,
         ]);
 
         // Mie Mortensen
@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
             "id" => 3,
             "user_id" => User::find(3)->id,
             "name" => "Team owened by Mie",
-            // "personal_team" => 1,
+            "personal_team" => 1,
         ]);
 
         // Qais Wardag joined Mie Mortensens team
