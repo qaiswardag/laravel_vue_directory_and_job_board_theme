@@ -69,6 +69,13 @@
         focus-visible:ring-0 focus-visible:ring-fuchsia-500;
     }
 
+    .myPrimaryActiveLink {
+        @apply text-red-600 text-sm
+        focus:outline-none
+        focus:ring-0 focus:ring-red-500
+        focus-visible:ring-0 focus-visible:ring-red-500;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Buttons

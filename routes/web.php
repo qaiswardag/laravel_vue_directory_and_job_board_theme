@@ -46,3 +46,21 @@ Route::middleware([
             return Inertia::render("PolicyAndTerms/PrivacyPolicy");
         })->name("privacyPolicy");
     });
+
+// for testing
+// for testing
+// for testing
+// just for testing. Delete Testing.vue when this route is deleted
+Route::get("/test", function () {
+    return Inertia::render("Testing", [
+        "currentTime" => now()->toTimeString(),
+    ]);
+})->name("test");
+// test post request
+Route::post("/logout", function () {
+    dd(request("foo"));
+});
+
+// for testing
+// for testing
+// for testing
