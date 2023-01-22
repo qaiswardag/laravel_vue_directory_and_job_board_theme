@@ -188,21 +188,10 @@ import {
     ExclamationCircleIcon,
     BellIcon,
 } from "@heroicons/vue/24/outline";
-import {
-    Dialog,
-    DialogOverlay,
-    DialogTitle,
-    TransitionChild,
-    TransitionRoot,
-} from "@headlessui/vue";
+import {} from "@headlessui/vue";
 
 export default {
     components: {
-        Dialog,
-        DialogOverlay,
-        DialogTitle,
-        TransitionChild,
-        TransitionRoot,
         CheckIcon,
         ExclamationCircleIcon,
         BellIcon,
