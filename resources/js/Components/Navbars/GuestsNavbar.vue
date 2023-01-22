@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { Link } from "@inertiajs/vue3";
-import ApplicationMark from "@/Components/ApplicationMark.vue";
+import ApplicationMark from "@/Components/MarkComponents/ApplicationMark.vue";
 import Dropdown from "@/Components/Dropdowns/Dropdown.vue";
 import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
 import NavLink from "@/Components/Navbars/NavLink.vue";

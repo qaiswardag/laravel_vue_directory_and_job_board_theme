@@ -5,7 +5,7 @@ import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vu
 import Checkbox from "@/Components/Forms/Checkbox.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 

@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
-import ActionMessage from "@/Components/ActionMessage.vue";
+import ActionMessage from "@/Components/Actions/ActionMessage.vue";
 import ActionSection from "@/Components/ActionSection.vue";
-import DangerButton from "@/Components/DangerButton.vue";
+import DangerButton from "@/Components/Buttons/DangerButton.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import SectionBorder from "@/Components/SectionBorder.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
@@ -168,7 +168,7 @@ const handleLeaveTeam = function () {
     };
     // handle click
     thirdModalButtonFunction.value = function () {
-        updateRole();
+        leaveTeam();
     };
     // end modal
 };
@@ -471,7 +471,7 @@ const displayableRole = (role) => {
                                 <!-- Leave Team -->
                                 <DangerButton
                                     v-if="$page.props.user.id === user.id"
-                                    @click="handleLeaveTeam"
+                                    @click="handleLeaveTeam()"
                                 >
                                     Leave team
                                 </DangerButton>

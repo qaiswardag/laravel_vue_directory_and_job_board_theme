@@ -2,11 +2,11 @@
 import { ref, computed, watch } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import ActionSection from "@/Components/ActionSection.vue";
-import DangerButton from "@/Components/DangerButton.vue";
+import DangerButton from "@/Components/Buttons/DangerButton.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
+import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 
 const props = defineProps({

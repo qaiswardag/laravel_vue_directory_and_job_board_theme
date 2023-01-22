@@ -1,6 +1,6 @@
 <script setup>
 import { Head, router } from "@inertiajs/vue3";
-import Banner from "@/Components/Banner.vue";
+import Banner from "@/Components/Banners/Banner.vue";
 import Navbar from "@/Components/Navbars/Navbar.vue";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import { ref } from "vue";
