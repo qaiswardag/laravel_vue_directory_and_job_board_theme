@@ -3,17 +3,81 @@ import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionSection from "@/Components/ActionSection.vue";
 import DangerButton from "@/Components/DangerButton.vue";
-import DialogModal from "@/Components/Modals/DialogModal.vue";
 import InputError from "@/Components/Forms/InputError.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
+import DynamicModal from "../../../Components/Modals/DynamicModal.vue";
 
-const confirmingUserDeletion = ref(false);
+const confirmingUserDeletion = ref(false); // old modal
+const modalShowConfirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
 
 const form = useForm({
     password: "",
 });
+
+const showingNavigationDropdown = ref(false);
+const modalShowSwitchTeams = ref(false);
+const modalShowLogout = ref(false);
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
+const handleUserDeletion = function () {
+    // handle show modal for unique content
+    modalShowConfirmingUserDeletion.value = true;
+    // set modal standards
+    typeModal.value = "danger";
+    gridColumnModal.value = 2;
+    titleModal.value = "Permanently delete your account?";
+    descriptionModal.value =
+        "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Delete";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowConfirmingUserDeletion.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowConfirmingUserDeletion.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        // delete
+        deleteUserProfile();
+    };
+    // end modal
+};
+
+const deleteUserProfile = () => {
+    form.delete(route("current-user.destroy"), {
+        preserveScroll: true,
+        onSuccess: () => {
+            // handle show modal for unique content
+            modalShowConfirmingUserDeletion.value = false;
+        },
+        onError: () => passwordInput.value.focus(),
+        onFinish: () => form.reset(),
+    });
+};
+// Qais code end
+// Qais code end
+// Qais code end
+// Qais code end
 
 const confirmUserDeletion = () => {
     confirmingUserDeletion.value = true;
@@ -35,21 +99,6 @@ const closeModal = () => {
 
     form.reset();
 };
-
-const testFunction = function () {
-    form.delete(route("current-user.destroy"), {
-        preserveScroll: true,
-        onSuccess: (log) => {
-            console.log("user deleted. Everything worked", log);
-        },
-        onError: (err) => {
-            console.log("it did not work:", err);
-        },
-        onFinish: () => {
-            console.log("everything finished");
-        },
-    });
-};
 </script>
 
 <template>
@@ -66,26 +115,36 @@ const testFunction = function () {
             </div>
 
             <div class="mt-5">
+                <DangerButton
+                    @click="handleUserDeletion"
+                    class="bg-green-600 hover:bg-green-800"
+                >
+                    Test — Delete Account
+                </DangerButton>
+            </div>
+
+            <div class="mt-5">
                 <DangerButton @click="confirmUserDeletion">
                     Delete Account
                 </DangerButton>
             </div>
-            <div class="mt-5">
-                <DangerButton @click="testFunction">
-                    Test button delete user
-                </DangerButton>
-            </div>
 
-            <!-- Delete Account Confirmation Modal -->
-            <DialogModal :show="confirmingUserDeletion" @close="closeModal">
-                <template #title> Delete Account </template>
-
-                <template #content>
-                    Are you sure you want to delete your account? Once your
-                    account is deleted, all of its resources and data will be
-                    permanently deleted. Please enter your password to confirm
-                    you would like to permanently delete your account.
-
+            <!-- Delete Account Confirmation Modal — start-->
+            <DynamicModal
+                :show="modalShowConfirmingUserDeletion"
+                :type="typeModal"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
+                <main>
                     <div class="mt-4">
                         <TextInput
                             ref="passwordInput"
@@ -93,7 +152,7 @@ const testFunction = function () {
                             type="password"
                             class="mt-1 block w-3/4"
                             placeholder="Password"
-                            @keyup.enter="deleteUser"
+                            @keyup.enter="deleteUserProfile"
                         />
 
                         <InputError
@@ -101,23 +160,9 @@ const testFunction = function () {
                             class="mt-2"
                         />
                     </div>
-                </template>
-
-                <template #footer>
-                    <SecondaryButton @click="closeModal">
-                        Cancel
-                    </SecondaryButton>
-
-                    <DangerButton
-                        class="ml-3"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                        @click="deleteUser"
-                    >
-                        Delete Account
-                    </DangerButton>
-                </template>
-            </DialogModal>
+                </main>
+            </DynamicModal>
+            <!-- Delete Account Confirmation Modal — end-->
         </template>
     </ActionSection>
 </template>

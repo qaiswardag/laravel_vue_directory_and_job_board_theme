@@ -77,5 +77,12 @@ class DatabaseSeeder extends Seeder
             "user_id" => User::find(2)->id, // Shaun Pellings
             "role" => "admin", // editor
         ]);
+
+        // Mie Mortensen joined Qais Wardags team
+        TeamUser::factory()->create([
+            "team_id" => Team::find(1)->id, // Qais Wardag
+            "user_id" => User::find(3)->id, // Mie Mortensens team
+            "role" => "admin", // editor
+        ]);
     }
 }

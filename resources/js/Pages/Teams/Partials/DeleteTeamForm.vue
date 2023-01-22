@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionSection from "@/Components/ActionSection.vue";
 import DangerButton from "@/Components/DangerButton.vue";
-import ConfirmsPassword from "@/Components/Modals/ConfirmsPassword.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
@@ -34,7 +33,7 @@ const deleteTeam = function () {
             console.log("team deleted. Everything worked", log);
         },
         onError: (err) => {
-            console.log("it did not work:", err); // {password: 'The password is incorrect.'}
+            console.log("Error, deleting team:", err); // {password: 'The password is incorrect.'}
         },
         onFinish: () => {
             console.log("everything finished");
