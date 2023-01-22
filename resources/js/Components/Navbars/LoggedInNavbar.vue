@@ -75,11 +75,11 @@ const logout = () => {
     modalShowLogout.value = true;
     // set modal standards
     typeModal.value = "success";
-    gridColumnModal.value = 3;
+    gridColumnModal.value = 2;
     titleModal.value = "Logout";
     descriptionModal.value = "Are you sure you want to logout?";
     firstButtonModal.value = "Close";
-    secondButtonModal.value = "Maria";
+    secondButtonModal.value = null;
     thirdButtonModal.value = "Logout";
 
     // handle click

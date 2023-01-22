@@ -10,10 +10,6 @@ const props = defineProps({
         type: String,
         default: "2xl",
     },
-    closeable: {
-        type: Boolean,
-        default: true,
-    },
 });
 
 const emit = defineEmits(["close"]);
@@ -30,9 +26,7 @@ watch(
 );
 
 const close = () => {
-    if (props.closeable) {
-        emit("close");
-    }
+    emit("close");
 };
 
 const closeOnEscape = (e) => {

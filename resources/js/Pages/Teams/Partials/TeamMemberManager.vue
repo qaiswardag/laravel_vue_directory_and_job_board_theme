@@ -8,7 +8,6 @@ import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SectionBorder from "@/Components/SectionBorder.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
@@ -50,8 +49,6 @@ const removeTeamMemberForm = useForm({});
 const managingRoleFor = ref(null);
 const modalShowCurrentlyManagingRole = ref(false);
 const modalShowLeaveTeam = ref(false);
-const modalShowManagingRoleFor = ref(null);
-const confirmingLeavingTeam = ref(false);
 
 const addTeamMember = () => {
     addTeamMemberForm.post(route("team-members.store", props.team), {
@@ -437,9 +434,9 @@ const displayableRole = (role) => {
                         <div
                             v-for="user in team.users"
                             :key="user.id"
-                            class="flex items-center justify-between"
+                            class="flex items-center justify-between pb-2 border-b"
                         >
-                            <div class="flex items-center">
+                            <div class="flex items-center myPrimaryParagraph">
                                 <img
                                     class="w-8 h-8 rounded-full"
                                     :src="user.profile_photo_url"
@@ -463,10 +460,12 @@ const displayableRole = (role) => {
                                     {{ displayableRole(user.membership.role) }}
                                 </button>
 
-                                <div v-else-if="availableRoles.length">
-                                    Role:&nbsp;
+                                <div
+                                    v-else-if="availableRoles.length"
+                                    class="myPrimaryParagraph"
+                                >
+                                    &nbsp;
                                     {{ displayableRole(user.membership.role) }}
-                                    - p
                                 </div>
 
                                 <!-- Leave Team -->
@@ -482,7 +481,7 @@ const displayableRole = (role) => {
                                     v-else-if="
                                         userPermissions.canRemoveTeamMembers
                                     "
-                                    @click="removeTeamMember(user.name)"
+                                    @click="removeTeamMember(user)"
                                 >
                                     Remove
                                 </DangerButton>

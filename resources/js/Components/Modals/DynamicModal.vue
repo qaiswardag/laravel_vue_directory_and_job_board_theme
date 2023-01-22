@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Original Modal - start -->
-        <Modal :show="show" :closeable="true" @close="false">
+        <Modal :show="show" @close="firstButton" :maxWidth="maxWidth">
             <slot name="content" />
 
             <div
@@ -102,9 +102,7 @@
                 </div>
             </div>
 
-            <div
-                class="flex flex-row justify-end px-6 py-4 bg-gray-100 text-right"
-            >
+            <div class="flex flex-col px-6 py-4 bg-gray-100 text-right">
                 <slot name="footer" />
                 <div
                     :class="{
@@ -181,7 +179,7 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import Modal from "@/Components/Modals/Modal.vue";
 import {
     CheckIcon,
@@ -190,66 +188,60 @@ import {
 } from "@heroicons/vue/24/outline";
 import {} from "@headlessui/vue";
 
-export default {
-    components: {
-        CheckIcon,
-        ExclamationCircleIcon,
-        BellIcon,
-        Modal,
+defineProps({
+    show: {
+        type: Boolean,
+        default: false,
+        required: true,
     },
-    props: {
-        show: {
-            type: Boolean,
-            default: false,
-            required: true,
-        },
-        gridColumnAmount: {
-            type: Number,
-            required: true,
-        },
-        type: {
-            type: String,
-            required: true,
-        },
-        title: {
-            type: String,
-            required: true,
-        },
-        description: {
-            required: true,
-        },
-        firstButtonText: {
-            type: String,
-        },
-        secondButtonText: {
-            type: String,
-        },
-        thirdButtonText: {
-            type: String,
-        },
+    maxWidth: {
+        type: String,
+        required: false,
+        default: "2xl",
     },
-
-    setup(props, context) {
-        // first button function
-        const firstButton = function () {
-            context.emit("firstModalButtonFunction");
-        };
-
-        // second button  function
-        const secondButton = function () {
-            context.emit("secondModalButtonFunction");
-        };
-
-        // third button function
-        const thirdButton = function () {
-            context.emit("thirdModalButtonFunction");
-        };
-        //
-        return {
-            firstButton,
-            secondButton,
-            thirdButton,
-        };
+    gridColumnAmount: {
+        type: Number,
+        required: true,
     },
+    type: {
+        type: String,
+        required: true,
+    },
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        required: true,
+    },
+    firstButtonText: {
+        type: String,
+    },
+    secondButtonText: {
+        type: String,
+    },
+    thirdButtonText: {
+        type: String,
+    },
+});
+
+const emit = defineEmits([
+    "firstModalButtonFunction",
+    "secondModalButtonFunction",
+    "thirdModalButtonFunction",
+]);
+
+// first button function
+const firstButton = function () {
+    emit("firstModalButtonFunction");
+};
+// second button  function
+const secondButton = function () {
+    emit("secondModalButtonFunction");
+};
+
+// third button function
+const thirdButton = function () {
+    emit("thirdModalButtonFunction");
 };
 </script>
