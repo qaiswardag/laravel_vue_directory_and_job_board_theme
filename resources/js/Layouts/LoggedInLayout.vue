@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from "vue";
 import { Link, Head, router } from "@inertiajs/vue3";
+import SearchAnythingModal from "@/Components/Modals/SearchAnythingModal.vue";
 import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
 import Banner from "@/Components/Banners/Banner.vue";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import ResponsiveNavLink from "@/Components/Navbars/ResponsiveNavLink.vue";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
+import SlideOverNotifications from "@/Components/Sidebars/SlideOverNotifications.vue";
 import {
     Dialog,
     DialogPanel,
@@ -34,6 +36,17 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 defineProps({
     title: String,
 });
+
+// notifikation slide over
+const showNotificationsSlideOver = ref(false);
+
+// use search model
+const modalShowSearchAnything = ref(false);
+
+// serach anything modal
+const handleSearchAnything = function () {
+    modalShowSearchAnything.value = true;
+};
 
 const modalShowSwitchTeams = ref(false);
 const modalShowLogout = ref(false);
@@ -89,7 +102,6 @@ const handleSwitchToTeam = (team) => {
     // end modal
 };
 const handleLogout = () => {
-    console.log("you clicked me");
     // handle show modal for unique content
     modalShowLogout.value = true;
     // set modal standards
@@ -119,6 +131,15 @@ const handleLogout = () => {
     // end modal
 };
 
+// handle notifications window
+const openNotificationsWindow = function () {
+    showNotificationsSlideOver.value = true;
+};
+// close notifications window
+const closeNotificationsWindow = function () {
+    showNotificationsSlideOver.value = false;
+};
+
 // is loaded
 const isDOMLoaded = ref(false);
 
@@ -136,6 +157,20 @@ const sidebarOpen = ref(false);
     <div v-if="isDOMLoaded">
         <FullScreenSpinner></FullScreenSpinner>
     </div>
+
+    <SearchAnythingModal
+        :open="modalShowSearchAnything"
+        @toggleSearchAnythingModal="
+            modalShowSearchAnything = !modalShowSearchAnything
+        "
+    >
+    </SearchAnythingModal>
+
+    <SlideOverNotifications
+        :open="showNotificationsSlideOver"
+        @closeNotificationsWindow="closeNotificationsWindow"
+    >
+    </SlideOverNotifications>
     <DynamicModal
         :show="modalShowSwitchTeams"
         :type="typeModal"
@@ -399,7 +434,7 @@ const sidebarOpen = ref(false);
         </div>
     </div>
     <div class="flex flex-1 flex-col md:pl-64">
-        <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-gray-100">
+        <div class="sticky top-0 z-10 flex h-16 flex-shrink-0">
             <button
                 type="button"
                 class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-fuchsia-500 md:hidden"
@@ -408,8 +443,50 @@ const sidebarOpen = ref(false);
                 <span class="sr-only">Open sidebar</span>
                 <Bars3BottomLeftIcon class="h-6 w-6" aria-hidden="true" />
             </button>
-            <div class="flex flex-1 justify-between pr-4">
-                <div class="flex flex-1"></div>
+            <div
+                class="bg-white flex flex-1 justify-between pr-4 border-b-2 border-gray-200"
+            >
+                <div class="flex flex-1">
+                    <div class="ml-4 flex items-center md:ml-6 gap-8">
+                        <form class="w-full flex md:ml-0" @submit.prevent>
+                            <label for="search-field" class="sr-only">
+                                Search anything...
+                            </label>
+                            <div
+                                class="relative w-full text-gray-400 focus-within:text-gray-600"
+                            >
+                                <div
+                                    class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="2"
+                                        stroke="currentColor"
+                                        class="w-4 h-4"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                        />
+                                    </svg>
+                                </div>
+                                <input
+                                    id="search-field"
+                                    class="cursor-pointer block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 font-semibold placeholder-gray-500 placeholder:font-semibold focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
+                                    @click.prevent="handleSearchAnything"
+                                    placeholder="Search anything..."
+                                    readonly
+                                    type="search"
+                                    autocomplete="off"
+                                    name="search"
+                                />
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
                 <div class="ml-4 flex items-center items-center md:ml-6 gap-8">
                     <!-- Profile dropdown -->
@@ -595,11 +672,11 @@ const sidebarOpen = ref(false);
                                     Your Profile
                                 </DropdownLink>
 
-                                <DropdownLink as="button" :active="false">
-                                    <form @submit.prevent="handleLogout">
+                                <form @submit.prevent="handleLogout">
+                                    <DropdownLink as="button" :active="false">
                                         Log Out
-                                    </form>
-                                </DropdownLink>
+                                    </DropdownLink>
+                                </form>
                             </MenuItems>
                         </transition>
                     </Menu>
@@ -609,7 +686,11 @@ const sidebarOpen = ref(false);
                         class="rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2"
                     >
                         <span class="sr-only">View notifications</span>
-                        <BellIcon class="h-6 w-6" aria-hidden="true" />
+                        <BellIcon
+                            @click="openNotificationsWindow"
+                            class="h-6 w-6"
+                            aria-hidden="true"
+                        />
                     </button>
                 </div>
             </div>
