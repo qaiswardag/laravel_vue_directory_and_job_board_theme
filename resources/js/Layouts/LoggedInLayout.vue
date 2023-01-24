@@ -43,11 +43,6 @@ const showNotificationsSlideOver = ref(false);
 // use search model
 const modalShowSearchAnything = ref(false);
 
-// serach anything modal
-const handleSearchAnything = function () {
-    modalShowSearchAnything.value = true;
-};
-
 const modalShowSwitchTeams = ref(false);
 const modalShowLogout = ref(false);
 // modal content
@@ -131,12 +126,22 @@ const handleLogout = () => {
     // end modal
 };
 
+// serach anything modal button (close)
+const searchAnythingModalButton = function () {
+    modalShowSearchAnything.value = false;
+};
+
+// handle serach anything click
+const handleSearchAnything = function () {
+    modalShowSearchAnything.value = true;
+};
+
 // handle notifications window
-const openNotificationsWindow = function () {
+const handleNotificationsSlideOver = function () {
     showNotificationsSlideOver.value = true;
 };
 // close notifications window
-const closeNotificationsWindow = function () {
+const notificationsSlideOverButton = function () {
     showNotificationsSlideOver.value = false;
 };
 
@@ -160,15 +165,13 @@ const sidebarOpen = ref(false);
 
     <SearchAnythingModal
         :open="modalShowSearchAnything"
-        @toggleSearchAnythingModal="
-            modalShowSearchAnything = !modalShowSearchAnything
-        "
+        @searchAnythingModalButton="searchAnythingModalButton"
     >
     </SearchAnythingModal>
 
     <SlideOverNotifications
         :open="showNotificationsSlideOver"
-        @closeNotificationsWindow="closeNotificationsWindow"
+        @notificationsSlideOverButton="notificationsSlideOverButton"
     >
     </SlideOverNotifications>
     <DynamicModal
@@ -437,7 +440,7 @@ const sidebarOpen = ref(false);
         <div class="sticky top-0 z-10 flex h-16 flex-shrink-0">
             <button
                 type="button"
-                class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-fuchsia-500 md:hidden"
+                class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-fuchsia-500 md:hidden bg-white border-b-2 border-gray-200"
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>
@@ -687,7 +690,7 @@ const sidebarOpen = ref(false);
                     >
                         <span class="sr-only">View notifications</span>
                         <BellIcon
-                            @click="openNotificationsWindow"
+                            @click="handleNotificationsSlideOver"
                             class="h-6 w-6"
                             aria-hidden="true"
                         />

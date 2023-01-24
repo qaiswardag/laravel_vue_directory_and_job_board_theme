@@ -1,3 +1,80 @@
+<script setup>
+import { computed, ref } from "vue";
+import { MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
+import {
+    ExclamationTriangleIcon,
+    FolderIcon,
+    LifebuoyIcon,
+} from "@heroicons/vue/24/outline";
+import {
+    Combobox,
+    ComboboxInput,
+    ComboboxOptions,
+    ComboboxOption,
+    Dialog,
+    DialogPanel,
+    TransitionChild,
+    TransitionRoot,
+} from "@headlessui/vue";
+
+const props = defineProps({
+    open: {
+        type: Boolean,
+        required: true,
+    },
+});
+
+const emit = defineEmits(["searchAnythingModalButton"]);
+// search anything modal button
+const searchAnythingModalButton = function () {
+    emit("searchAnythingModalButton");
+};
+
+const projects = [
+    {
+        id: 1,
+        name: "Workflow Inc. / Website Redesign",
+        category: "Projects",
+        url: "#",
+    },
+    // More projects...
+];
+
+const users = [
+    {
+        id: 1,
+        name: "Leslie Alexander",
+        url: "#",
+        imageUrl:
+            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
+    // More users...
+];
+
+const rawQuery = ref("");
+const query = computed(() => rawQuery.value.toLowerCase().replace(/^[#>]/, ""));
+const filteredProjects = computed(() =>
+    rawQuery.value === "#"
+        ? projects
+        : query.value === "" || rawQuery.value.startsWith(">")
+        ? []
+        : projects.filter((project) =>
+              project.name.toLowerCase().includes(query.value)
+          )
+);
+const filteredUsers = computed(() =>
+    rawQuery.value === ">"
+        ? users
+        : query.value === "" || rawQuery.value.startsWith("#")
+        ? []
+        : users.filter((user) => user.name.toLowerCase().includes(query.value))
+);
+
+function onSelect(item) {
+    window.location = item.url;
+}
+</script>
+
 <template>
     <TransitionRoot
         :show="open"
@@ -8,7 +85,7 @@
         <Dialog
             as="div"
             class="relative z-10"
-            @close="toggleSearchAnythingModal"
+            @close="searchAnythingModalButton"
         >
             <TransitionChild
                 as="template"
@@ -37,14 +114,41 @@
                     <DialogPanel
                         class="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
                     >
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
+                        <div
+                            class="flex justify-end items-center p-2 bg-gray-50"
+                        >
+                            <div @click="searchAnythingModalButton">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    aria-hidden="true"
+                                    class="h-6 w-6 text-gray-400 self-center cursor-pointer"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    ></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <!--  -->
+                        <!--  -->
                         <Combobox @update:modelValue="onSelect">
-                            <div class="relative">
+                            <div class="relative flex items-center">
                                 <MagnifyingGlassIcon
-                                    class="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
+                                    class="pointer-events-none absolute left-5 h-5 w-4 text-gray-400"
                                     aria-hidden="true"
                                 />
                                 <ComboboxInput
-                                    class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm"
+                                    class="h-14 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm"
                                     placeholder="Search..."
                                     @change="rawQuery = $event.target.value"
                                 />
@@ -223,80 +327,3 @@
         </Dialog>
     </TransitionRoot>
 </template>
-
-<script setup>
-import { computed, ref } from "vue";
-import { MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
-import {
-    ExclamationTriangleIcon,
-    FolderIcon,
-    LifebuoyIcon,
-} from "@heroicons/vue/24/outline";
-import {
-    Combobox,
-    ComboboxInput,
-    ComboboxOptions,
-    ComboboxOption,
-    Dialog,
-    DialogPanel,
-    TransitionChild,
-    TransitionRoot,
-} from "@headlessui/vue";
-
-const props = defineProps({
-    open: {
-        type: Boolean,
-        required: true,
-    },
-});
-
-const emit = defineEmits(["toggleSearchAnythingModal"]);
-// toggle modal function
-const toggleSearchAnythingModal = function () {
-    emit("toggleSearchAnythingModal");
-};
-
-const projects = [
-    {
-        id: 1,
-        name: "Workflow Inc. / Website Redesign",
-        category: "Projects",
-        url: "#",
-    },
-    // More projects...
-];
-
-const users = [
-    {
-        id: 1,
-        name: "Leslie Alexander",
-        url: "#",
-        imageUrl:
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    // More users...
-];
-
-const rawQuery = ref("");
-const query = computed(() => rawQuery.value.toLowerCase().replace(/^[#>]/, ""));
-const filteredProjects = computed(() =>
-    rawQuery.value === "#"
-        ? projects
-        : query.value === "" || rawQuery.value.startsWith(">")
-        ? []
-        : projects.filter((project) =>
-              project.name.toLowerCase().includes(query.value)
-          )
-);
-const filteredUsers = computed(() =>
-    rawQuery.value === ">"
-        ? users
-        : query.value === "" || rawQuery.value.startsWith("#")
-        ? []
-        : users.filter((user) => user.name.toLowerCase().includes(query.value))
-);
-
-function onSelect(item) {
-    window.location = item.url;
-}
-</script>
