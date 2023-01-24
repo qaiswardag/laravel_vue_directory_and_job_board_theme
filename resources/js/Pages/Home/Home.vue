@@ -1,5 +1,5 @@
 <script setup>
-import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
+import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 
 defineProps({
     test: {
@@ -9,11 +9,9 @@ defineProps({
 </script>
 
 <template>
-    <LoggedInLayout title="Testing">
+    <GuestsLayout title="Home">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Home
-            </h2>
+            <h2 class="font-semibold text-xl leading-tight">Home</h2>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
@@ -34,5 +32,5 @@ defineProps({
                 </p>
             </div>
         </div>
-    </LoggedInLayout>
+    </GuestsLayout>
 </template>

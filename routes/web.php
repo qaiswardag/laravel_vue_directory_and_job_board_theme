@@ -57,9 +57,6 @@ Route::get("/test", function () {
     ]);
 })->name("test");
 // test post request
-Route::post("/logout", function () {
-    dd(request("foo"));
-});
 
 // for testing
 // for testing

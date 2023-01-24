@@ -24,9 +24,7 @@ const submit = () => {
 <template>
     <LoggedInLayout title="Testing">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Forgot Password
-            </h2>
+            <h2 class="font-semibold text-xl leading-tight">Forgot Password</h2>
         </template>
         <Head title="Log in" />
         <Head title="Forgot Password" />

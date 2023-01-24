@@ -1,6 +1,6 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 
 defineProps({
     currentTime: {
@@ -12,9 +12,7 @@ defineProps({
 <template>
     <LoggedInLayout title="Testing">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Testing page
-            </h2>
+            <h2 class="font-semibold text-xl leading-tight">Testing page</h2>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
@@ -40,7 +38,19 @@ defineProps({
                                 _token: this.$page.props.csrf_token,
                             }"
                         >
-                            Log me out
+                            Log out
+                        </Link>
+                    </p>
+                    <p class="myPrimaryLink my-2">
+                        <Link
+                            :href="route('home')"
+                            as="button"
+                            :data="{ foo: 'bar' }"
+                            :headers="{
+                                _token: this.$page.props.csrf_token,
+                            }"
+                        >
+                            Home - go to named route
                         </Link>
                     </p>
                 </div>
@@ -76,24 +86,24 @@ defineProps({
                     </p>
                     <p class="myPrimaryLink my-2 flex myPrimaryGap">
                         <Link
-                            href="/logout"
+                            href="/test"
                             as="button"
                             :class="{
                                 'font-semibold underline':
                                     route().current('test'),
                             }"
                         >
-                            Testing
+                            Test
                         </Link>
                         <Link
-                            href="/logout"
+                            href="/dashboard"
                             as="button"
                             :class="{
                                 'font-semibold underline':
                                     route().current('home'),
                             }"
                         >
-                            Settings
+                            Dashboard
                         </Link>
                     </p>
                 </div>

@@ -33,10 +33,7 @@ setTimeout(() => {
 <template>
     <LoggedInLayout title="Profile">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Profile
-            </h2>
-            <p>Store. Current fake user is: {{ getCurrentUser.name }}</p>
+            <h2 class="font-semibold text-xl leading-tight">Profile</h2>
         </template>
 
         <div>
