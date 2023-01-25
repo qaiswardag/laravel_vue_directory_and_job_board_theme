@@ -1,12 +1,40 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { Link, router } from "@inertiajs/vue3";
+import { useFetch } from "use-lightweight-fetch";
 
 defineProps({
     currentTime: {
         required: true,
     },
 });
+
+// use fetch
+const {
+    handleData: handleDataUsers,
+    fetchedData: fetchedDataUsers,
+    isError: isErrorUsers,
+    isLoading: isLoadingUsers,
+} = useFetch();
+
+const loadUsers = async function () {
+    try {
+        await handleDataUsers(
+            "https://jsonplaceholder.typicode.com/users",
+            {},
+            {
+                pending: true,
+                additionalCallTime: 300,
+                abortTimeoutTime: 8000,
+            }
+        );
+        // catch
+    } catch (err) {
+        isErrorUsers.value = `${err}. ${
+            isErrorUsers.value ? isErrorUsers.value : ""
+        }`;
+    }
+};
 </script>
 
 <template>
