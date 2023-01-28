@@ -84,5 +84,8 @@ class DatabaseSeeder extends Seeder
             "user_id" => User::find(3)->id, // Mie Mortensens team
             "role" => "admin", // editor
         ]);
+
+        // fake users
+        User::factory(100)->create();
     }
 }

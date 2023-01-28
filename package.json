@@ -24,6 +24,7 @@
         "@headlessui/vue": "^1.7.7",
         "@heroicons/vue": "^2.0.13",
         "nprogress": "^0.2.0",
+        "use-lightweight-fetch": "^1.1.0",
         "vuex": "^4.1.0"
     }
 }

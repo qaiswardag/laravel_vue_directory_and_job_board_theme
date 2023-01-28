@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { Link, Head, router } from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
 import SearchAnythingModal from "@/Components/Modals/SearchAnythingModal.vue";
 import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
 import Banner from "@/Components/Banners/Banner.vue";
@@ -34,7 +34,9 @@ import ApplicationMark from "@/Components/MarkComponents/ApplicationMark.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 defineProps({
-    title: String,
+    title: {
+        required: true,
+    },
 });
 
 // notifikation slide over
@@ -59,7 +61,6 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 const handleSwitchToTeam = (team) => {
-    console.log("ok, this fn ran");
     // handle show modal for unique content
     modalShowSwitchTeams.value = true;
     // set modal standards
@@ -159,9 +160,20 @@ const sidebarOpen = ref(false);
 </script>
 
 <template>
-    <div v-if="isDOMLoaded">
+    <Head>
+        <title>{{ title }}</title>
+        <!-- head-key makes sure to only add on meta key -->
+        <meta
+            type="description"
+            content="myself.ae Fashion and Jobs"
+            head-key="description"
+        />
+    </Head>
+    <Banner />
+
+    <!-- <div v-if="isDOMLoaded">
         <FullScreenSpinner></FullScreenSpinner>
-    </div>
+    </div> -->
 
     <SearchAnythingModal
         :open="modalShowSearchAnything"
@@ -206,6 +218,8 @@ const sidebarOpen = ref(false);
         <header></header>
         <main></main>
     </DynamicModal>
+
+    <!-- Static sidebar for mobile - start -->
     <TransitionRoot as="template" :show="sidebarOpen">
         <Dialog
             as="div"
@@ -311,7 +325,10 @@ const sidebarOpen = ref(false);
                                 </SideBarLink>
 
                                 <template
-                                    v-if="$page.props.jetstream.hasTeamFeatures"
+                                    v-if="
+                                        $page.props.user.all_teams.length > 0 &&
+                                        $page.props.jetstream.hasTeamFeatures
+                                    "
                                 >
                                     <SideBarLink
                                         :href="
@@ -349,8 +366,9 @@ const sidebarOpen = ref(false);
             </div>
         </Dialog>
     </TransitionRoot>
+    <!-- Static sidebar for mobile - end -->
 
-    <!-- Static sidebar for desktop -->
+    <!-- Static sidebar for desktop - start -->
     <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div
@@ -405,7 +423,12 @@ const sidebarOpen = ref(false);
                         </svg>
                         Your Profile
                     </SideBarLink>
-                    <template v-if="$page.props.jetstream.hasTeamFeatures">
+                    <template
+                        v-if="
+                            $page.props.user.all_teams.length > 0 &&
+                            $page.props.jetstream.hasTeamFeatures
+                        "
+                    >
                         <SideBarLink
                             :href="
                                 route(
@@ -432,15 +455,62 @@ const sidebarOpen = ref(false);
                             Teams Settings
                         </SideBarLink>
                     </template>
+
+                    <SideBarLink
+                        :href="route('manageTeams')"
+                        :active="route().current('manageTeams')"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"
+                            />
+                        </svg>
+
+                        Manage Teams
+                    </SideBarLink>
+
+                    <SideBarLink
+                        :href="route('docs', $page.props.user.current_team)"
+                        :active="route().current('docs')"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"
+                            />
+                        </svg>
+
+                        Doc
+                    </SideBarLink>
                 </nav>
             </div>
         </div>
     </div>
+    <!-- Static sidebar for desktop - end -->
+
+    <!-- Topbar - start -->
     <div class="flex flex-1 flex-col md:pl-64">
         <div class="sticky top-0 z-10 flex h-16 flex-shrink-0">
             <button
                 type="button"
-                class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-fuchsia-500 md:hidden bg-white border-b-2 border-gray-200"
+                class="border-r px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-fuchsia-500 md:hidden bg-white border-b-2 border-gray-200"
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>
@@ -491,10 +561,16 @@ const sidebarOpen = ref(false);
                     </div>
                 </div>
 
-                <div class="ml-4 flex items-center items-center md:ml-6 gap-8">
-                    <!-- Profile dropdown -->
-                    <Menu as="div" class="relative">
-                        <div>
+                <div class="ml-4 flex items-center md:ml-6 gap-8">
+                    <!--  -->
+                    <!-- Teams Management desktop - start -->
+                    <template
+                        v-if="
+                            $page.props.user.all_teams.length > 0 &&
+                            $page.props.jetstream.hasTeamFeatures
+                        "
+                    >
+                        <Menu as="div" class="relative">
                             <MenuButton
                                 class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2"
                             >
@@ -517,26 +593,22 @@ const sidebarOpen = ref(false);
                                     />
                                 </svg>
                             </MenuButton>
-                        </div>
-                        <transition
-                            enter-active-class="transition ease-out duration-100"
-                            enter-from-class="transform opacity-0 scale-95"
-                            enter-to-class="transform opacity-100 scale-100"
-                            leave-active-class="transition ease-in duration-75"
-                            leave-from-class="transform opacity-100 scale-100"
-                            leave-to-class="transform opacity-0 scale-95"
-                        >
-                            <MenuItems
-                                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                            >
-                                <span
-                                    class="myPrimaryParagraph block px-4 py-2 text-xs text-gray-400"
-                                    >Manage Teams</span
-                                >
 
-                                <template
-                                    v-if="$page.props.jetstream.hasTeamFeatures"
+                            <transition
+                                enter-active-class="transition ease-out duration-100"
+                                enter-from-class="transform opacity-0 scale-95"
+                                enter-to-class="transform opacity-100 scale-100"
+                                leave-active-class="transition ease-in duration-75"
+                                leave-from-class="transform opacity-100 scale-100"
+                                leave-to-class="transform opacity-0 scale-95"
+                            >
+                                <MenuItems
+                                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 >
+                                    <span
+                                        class="myPrimaryParagraph block px-4 py-2 text-xs text-gray-400"
+                                        >Manage Teams</span
+                                    >
                                     <DropdownLink
                                         :href="
                                             route(
@@ -548,101 +620,13 @@ const sidebarOpen = ref(false);
                                     >
                                         Team Settings
                                     </DropdownLink>
-                                </template>
+                                </MenuItems>
+                            </transition>
+                        </Menu>
+                    </template>
+                    <!-- Teams Management desktop - end -->
 
-                                <template
-                                    v-if="$page.props.jetstream.hasTeamFeatures"
-                                >
-                                    <DropdownLink
-                                        :href="route('teams.create')"
-                                        :active="
-                                            route().current('teams.create')
-                                        "
-                                    >
-                                        Create New Team
-                                    </DropdownLink>
-                                </template>
-
-                                <div class="border-t border-gray-100"></div>
-
-                                <div class="border-t border-gray-100" />
-
-                                <!-- Team Switcher -->
-                                <div
-                                    class="block px-4 py-2 text-xs text-gray-400"
-                                >
-                                    Switch Teams
-                                </div>
-
-                                <template
-                                    v-for="team in $page.props.user.all_teams"
-                                    :key="team.id"
-                                >
-                                    <form
-                                        @submit.prevent="
-                                            handleSwitchToTeam(team)
-                                        "
-                                    >
-                                        <DropdownLink
-                                            as="button"
-                                            :active="
-                                                team.id ==
-                                                $page.props.user.current_team_id
-                                                    ? true
-                                                    : false
-                                            "
-                                        >
-                                            <div class="flex items-center">
-                                                <svg
-                                                    v-if="
-                                                        team.id ===
-                                                        $page.props.user
-                                                            .current_team_id
-                                                    "
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="currentColor"
-                                                    class="mr-2 h-5 w-5 text-emerald-600"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        d="M4.5 12.75l6 6 9-13.5"
-                                                    />
-                                                </svg>
-
-                                                <svg
-                                                    v-if="
-                                                        team.id !==
-                                                        $page.props.user
-                                                            .current_team_id
-                                                    "
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="currentColor"
-                                                    class="mr-2 h-5 w-5 text-gray-800"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                                                    />
-                                                </svg>
-
-                                                <div>{{ team.name }}</div>
-                                            </div>
-                                        </DropdownLink>
-                                    </form>
-                                </template>
-                            </MenuItems>
-                        </transition>
-                    </Menu>
-
-                    <!-- Profile dropdown -->
+                    <!-- Profile dropdown - start -->
                     <Menu as="div" class="relative">
                         <div>
                             <MenuButton
@@ -683,6 +667,7 @@ const sidebarOpen = ref(false);
                             </MenuItems>
                         </transition>
                     </Menu>
+                    <!-- Profile dropdown - end -->
 
                     <button
                         type="button"
@@ -713,4 +698,5 @@ const sidebarOpen = ref(false);
             </div>
         </main>
     </div>
+    <!--Topbar - start -->
 </template>

@@ -25,8 +25,7 @@ router.on("finish", () => {
         <FullScreenSpinner></FullScreenSpinner>
     </div>
     <div>
-        <Head :title="title" />
-
+        <Head :title="title"></Head>
         <Banner />
 
         <div class="min-h-screen bg-gray-100">

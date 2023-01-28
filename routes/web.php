@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Teams\TeamController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Laravel\Jetstream\Jetstream;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +36,9 @@ Route::middleware([
     // group of pages
     ->group(function () {
         // just for testing. Delete Testing.vue when this route is deleted
-        Route::get("/test", function () {
-            return Inertia::render("Testing");
-        })->name("test");
+        Route::get("/docs", function () {
+            return Inertia::render("Docs");
+        })->name("docs");
         // dashboard
         Route::get("/dashboard", function () {
             return Inertia::render("Dashboard/Dashboard");
@@ -47,17 +49,22 @@ Route::middleware([
         })->name("privacyPolicy");
     });
 
-// for testing
-// for testing
-// for testing
-// just for testing. Delete Testing.vue when this route is deleted
-Route::get("/test", function () {
-    return Inertia::render("Testing", [
-        "currentTime" => now()->toTimeString(),
-    ]);
-})->name("test");
-// test post request
+// teams
+// middleware for group of pages
+Route::middleware([
+    "auth:sanctum",
+    config("jetstream.auth_session"),
+    "verified",
+])->group(function () {
+    // just for testing. Delete Testing.vue when this route is deleted
+    Route::get("/manage-teams", function () {
+        return Inertia::render("Teams/ManageTeams");
+    })->name("manageTeams");
+});
 
-// for testing
-// for testing
-// for testing
+// Teams...
+if (Jetstream::hasTeamFeatures()) {
+    Route::post("/company", [TeamController::class, "store"])->name(
+        "company.store"
+    );
+}

@@ -10,16 +10,16 @@ const form = useForm({
     name: "",
 });
 
-const handleCreateTeam = () => {
-    form.post(route("company.store"), {
-        // error bag validation
+const createTeam = () => {
+    form.post(route("teams.store"), {
+        errorBag: "createTeam",
         preserveScroll: true,
     });
 };
 </script>
 
 <template>
-    <FormSection @submitted="handleCreateTeam">
+    <FormSection @submitted="createTeam">
         <template #title> Team Details </template>
 
         <template #description>
@@ -54,7 +54,6 @@ const handleCreateTeam = () => {
                     type="text"
                     class="block w-full mt-1"
                     autofocus
-                    autocomplete="off"
                 />
                 <InputError :message="form.errors.name" class="mt-2" />
             </div>
