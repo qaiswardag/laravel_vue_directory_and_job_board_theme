@@ -15,7 +15,6 @@ const flashObject = computed(() => {
 });
 
 watch(flashObject, (newValue) => {
-    console.log("er:", newValue);
     if (newValue.error === null && newValue.success === null) {
         showFlash.value = null;
     }
@@ -35,10 +34,10 @@ const flashModalButton = function () {
     <div v-if="showFlash">
         <div v-if="flashObject.error">
             <div
-                class="flex flex-col gap-4 bottom-20 right-0 fixed mb-8 md:mr-4 mx-2"
+                class="flex flex-col gap-4 bottom-6 right-0 fixed mb-8 md:mr-4 mx-2"
             >
                 <div class="rounded-md bg-red-50 p-4">
-                    <div class="flex">
+                    <div class="flex items-center">
                         <div class="flex-shrink-0">
                             <CheckCircleIcon
                                 class="h-5 w-5 text-red-500"
@@ -71,7 +70,7 @@ const flashModalButton = function () {
         </div>
         <div v-if="flashObject.success">
             <div
-                class="flex flex-col gap-4 bottom-20 right-0 fixed mb-8 md:mr-4 mx-2"
+                class="flex flex-col gap-4 bottom-10 right-0 fixed mb-8 md:mr-4 mx-2"
             >
                 <div class="rounded-md bg-emerald-100 p-4">
                     <div class="flex">

@@ -37,23 +37,19 @@ class StoreTeamControllerRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        // validate for custom validation
+        sleep(1);
         $validator->after(function ($validator) {
             if (false) {
                 $validator->errors()->add(
                     "name",
                     "Unique custom error for name. But I must explain to you how all this mistaken idea of
-                    denouncing pleasure and praising pain was born and I will give you a complete account of the system,
-                    and expound the actual teachings."
+                    denouncing pleasure."
                 );
             }
         });
 
         // if validator fails
         if ($validator->fails()) {
-            //
-            // Session::flash("message", "Special message goes here");
-
             return redirect()
                 ->back()
                 ->with(

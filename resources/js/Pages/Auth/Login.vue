@@ -31,11 +31,10 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestsLayout title="Login">
+    <GuestsLayout title="Log in">
         <template #header>
             <h2 class="font-semibold text-xl leading-tight">Login</h2>
         </template>
-        <Head title="Log in" />
 
         <AuthenticationCard>
             <template #logo>

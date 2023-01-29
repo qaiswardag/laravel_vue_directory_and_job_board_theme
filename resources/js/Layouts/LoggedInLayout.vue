@@ -47,9 +47,9 @@ const showNotificationsSlideOver = ref(false);
 const modalShowSearchAnything = ref(false);
 // flash modal
 const modalShowFlashModal = ref(true);
-
 const modalShowSwitchTeams = ref(false);
 const modalShowLogout = ref(false);
+
 // modal content
 const typeModal = ref("");
 const gridColumnModal = ref(Number(1));

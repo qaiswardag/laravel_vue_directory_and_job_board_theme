@@ -3,16 +3,55 @@ import { useForm } from "@inertiajs/vue3";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
-import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import SubmitButton from "../../../Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import { computed, ref, watch } from "@vue/runtime-core";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import { ref } from "@vue/reactivity";
 
 const createTeamForm = useForm({
     name: "",
 });
 
-const handleCreateTeam = () => {
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
+const modalShowCreateTeam = ref(false);
+const handleCreateTeam = function () {
+    // handle show modal for unique content
+    modalShowCreateTeam.value = true;
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = "Create a new team";
+    descriptionModal.value = "Are you sure you want to create a new team?";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Create Team";
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowCreateTeam.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        createTeam();
+        // handle show modal for unique content
+        modalShowCreateTeam.value = false;
+    };
+    // end modal
+};
+
+const createTeam = () => {
     createTeamForm.post(route("company.store"), {
         // error bag validation
         preserveScroll: true,
@@ -22,14 +61,28 @@ const handleCreateTeam = () => {
         onError: () => {
             createTeamForm.reset();
         },
-        onFinish: () => {
-            createTeamForm.reset();
-        },
+        onFinish: () => {},
     });
 };
 </script>
 
 <template>
+    <DynamicModal
+        :show="modalShowCreateTeam"
+        :type="typeModal"
+        :gridColumnAmount="gridColumnModal"
+        :title="titleModal"
+        :description="descriptionModal"
+        :firstButtonText="firstButtonModal"
+        :secondButtonText="secondButtonModal"
+        :thirdButtonText="thirdButtonModal"
+        @firstModalButtonFunction="firstModalButtonFunction"
+        @secondModalButtonFunction="secondModalButtonFunction"
+        @thirdModalButtonFunction="thirdModalButtonFunction"
+    >
+        <header></header>
+        <main></main>
+    </DynamicModal>
     <FormSection @submitted="handleCreateTeam">
         <template #title> Team Details </template>
 
@@ -67,19 +120,15 @@ const handleCreateTeam = () => {
                     autofocus
                     autocomplete="off"
                 />
-                <InputError
-                    :message="createTeamForm.errors.name"
-                    class="mt-2"
-                />
+                <InputError :message="createTeamForm.errors.name" />
             </div>
         </template>
 
         <template #actions>
             <SubmitButton
-                :class="{ 'opacity-25': createTeamForm.processing }"
                 :disabled="createTeamForm.processing"
+                buttonText="Create team"
             >
-                Create
             </SubmitButton>
         </template>
     </FormSection>
