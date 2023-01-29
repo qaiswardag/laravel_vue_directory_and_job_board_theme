@@ -2,7 +2,6 @@
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { router, Head } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import { vueFetch } from "use-lightweight-fetch";
 
 // test using costum npm package
@@ -69,7 +68,7 @@ onMounted(async () => {
                             href="/logout"
                             method="POST"
                             as="button"
-                            :data="{ foo: 'bar' }"
+                            :data="{ foooooo: 'bar' }"
                             :headers="{
                                 _token: this.$page.props.csrf_token,
                             }"
@@ -81,7 +80,7 @@ onMounted(async () => {
                         <Link
                             :href="route('home')"
                             as="button"
-                            :data="{ foo: 'bar' }"
+                            :data="{ fooooo: 'bar' }"
                             :headers="{
                                 _token: this.$page.props.csrf_token,
                             }"
@@ -254,10 +253,6 @@ onMounted(async () => {
                         <div
                             class="mx-auto max-w-7xl py-24 px-6 sm:py-32 lg:px-8 lg:py-20"
                         >
-                            <div v-if="isLoadingDataUsers">
-                                <FullScreenSpinner></FullScreenSpinner>
-                            </div>
-
                             <div
                                 v-if="isErrorDataUsers && !isLoadingDataUsers"
                                 class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"

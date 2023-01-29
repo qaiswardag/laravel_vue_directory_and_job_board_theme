@@ -47,20 +47,22 @@ class TeamController extends Controller
         // create($request->user(), $request->all());
         //
 
+        sleep(1);
         $team = Team::create([
             "user_id" => $request->user()->id,
             "name" => $request->name,
             "personal_team" => false,
         ]);
 
-        //dd($team->id);
-
-        // TODO: update user and set as users current team. user->current_team_id
+        // TODO: update user and set as users current team.
         $request->user()->update([
             "current_team_id" => $team->id,
         ]);
-    }
 
+        return redirect()
+            ->back()
+            ->with("success", "Team have been created successfully.");
+    }
     /**
      * Display the specified resource.
      *

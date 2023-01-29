@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Teams;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Session;
 
 class StoreTeamControllerRequest extends FormRequest
 {
@@ -38,7 +39,7 @@ class StoreTeamControllerRequest extends FormRequest
     {
         // validate for custom validation
         $validator->after(function ($validator) {
-            if (2 == "3") {
+            if (false) {
                 $validator->errors()->add(
                     "name",
                     "Unique custom error for name. But I must explain to you how all this mistaken idea of
@@ -50,10 +51,15 @@ class StoreTeamControllerRequest extends FormRequest
 
         // if validator fails
         if ($validator->fails()) {
-            return back()->with(
-                "error",
-                "There was an error with your submission. Please make sure all fields are filled in correctly."
-            );
+            //
+            // Session::flash("message", "Special message goes here");
+
+            return redirect()
+                ->back()
+                ->with(
+                    "error",
+                    "There was an error with your submission. Please make sure all fields are filled in correctly."
+                );
         }
     }
 }

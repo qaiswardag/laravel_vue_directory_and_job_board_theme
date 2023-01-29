@@ -4,16 +4,27 @@ import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
+import SubmitButton from "../../../Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
+import { computed, ref, watch } from "@vue/runtime-core";
 
-const form = useForm({
+const createTeamForm = useForm({
     name: "",
 });
 
 const handleCreateTeam = () => {
-    form.post(route("company.store"), {
+    createTeamForm.post(route("company.store"), {
         // error bag validation
         preserveScroll: true,
+        onSuccess: () => {
+            createTeamForm.reset();
+        },
+        onError: () => {
+            createTeamForm.reset();
+        },
+        onFinish: () => {
+            createTeamForm.reset();
+        },
     });
 };
 </script>
@@ -50,23 +61,26 @@ const handleCreateTeam = () => {
                 <InputLabel for="name" value="Team Name" />
                 <TextInput
                     id="name"
-                    v-model="form.name"
+                    v-model="createTeamForm.name"
                     type="text"
                     class="block w-full mt-1"
                     autofocus
                     autocomplete="off"
                 />
-                <InputError :message="form.errors.name" class="mt-2" />
+                <InputError
+                    :message="createTeamForm.errors.name"
+                    class="mt-2"
+                />
             </div>
         </template>
 
         <template #actions>
-            <PrimaryButton
-                :class="{ 'opacity-25': form.processing }"
-                :disabled="form.processing"
+            <SubmitButton
+                :class="{ 'opacity-25': createTeamForm.processing }"
+                :disabled="createTeamForm.processing"
             >
                 Create
-            </PrimaryButton>
+            </SubmitButton>
         </template>
     </FormSection>
 </template>
