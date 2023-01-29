@@ -570,6 +570,28 @@ const sidebarOpen = ref(false);
                 <div class="ml-4 flex items-center md:ml-6 gap-8">
                     <!--  -->
                     <!-- Teams Management desktop - start -->
+                    <div
+                        class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2"
+                    >
+                        <Link
+                            :href="
+                                route(
+                                    'manageTeams',
+                                    $page.props.user.current_team
+                                )
+                            "
+                            :class="{
+                                myPrimaryLink: route().current('manageTeams'),
+                            }"
+                            v-if="
+                                $page.props.user.all_teams.length > 0 &&
+                                $page.props.user.current_team &&
+                                $page.props.jetstream.hasTeamFeatures
+                            "
+                        >
+                            Select a Team
+                        </Link>
+                    </div>
                     <template
                         v-if="
                             $page.props.user.all_teams.length > 0 &&
