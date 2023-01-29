@@ -331,6 +331,7 @@ const sidebarOpen = ref(false);
                                 <template
                                     v-if="
                                         $page.props.user.all_teams.length > 0 &&
+                                        $page.props.user.current_team &&
                                         $page.props.jetstream.hasTeamFeatures
                                     "
                                 >
@@ -430,6 +431,7 @@ const sidebarOpen = ref(false);
                     <template
                         v-if="
                             $page.props.user.all_teams.length > 0 &&
+                            $page.props.user.current_team &&
                             $page.props.jetstream.hasTeamFeatures
                         "
                     >
@@ -571,6 +573,7 @@ const sidebarOpen = ref(false);
                     <template
                         v-if="
                             $page.props.user.all_teams.length > 0 &&
+                            $page.props.user.current_team &&
                             $page.props.jetstream.hasTeamFeatures
                         "
                     >
