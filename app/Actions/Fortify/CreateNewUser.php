@@ -21,8 +21,10 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+        sleep(1);
         Validator::make($input, [
-            "name" => ["required", "string", "max:255"],
+            "firstName" => ["required", "string", "max:255"],
+            "lastName" => ["required", "string", "max:255"],
             "email" => [
                 "required",
                 "string",
@@ -39,7 +41,8 @@ class CreateNewUser implements CreatesNewUsers
         return DB::transaction(function () use ($input) {
             return User::create(
                 [
-                    "name" => $input["name"],
+                    "firstName" => $input["firstName"],
+                    "lastName" => $input["lastName"],
                     "email" => $input["email"],
                     "password" => Hash::make($input["password"]),
                 ]
@@ -58,7 +61,7 @@ class CreateNewUser implements CreatesNewUsers
         $user->ownedTeams()->save(
             Team::forceCreate([
                 "user_id" => $user->id,
-                "name" => explode(" ", $user->name, 2)[0] . "'s Team",
+                "name" => explode(" ", $user->firstName, 2)[0] . "'s Team",
                 "personal_team" => true,
             ])
         );

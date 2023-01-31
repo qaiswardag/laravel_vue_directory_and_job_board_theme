@@ -1,6 +1,9 @@
 <?php
 
+use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Teams\TeamController;
+use App\Http\Controllers\Users\UserController;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,10 +38,21 @@ Route::middleware([
 ])
     // group of pages
     ->group(function () {
-        // just for testing. Delete Testing.vue when this route is deleted
+        // test - start
+        // test - start
+        // test - start
+        // test - start
+        //
+        //
         Route::get("/docs", function () {
             return Inertia::render("Docs");
         })->name("docs");
+        //
+        //
+        // test - end
+        // test - end
+        // test - end
+        // test - end
         // dashboard
         Route::get("/dashboard", function () {
             return Inertia::render("Dashboard/Dashboard");
@@ -49,6 +63,13 @@ Route::middleware([
         })->name("privacyPolicy");
     });
 
+// Users
+Route::post("/user-register", [UserController::class, "store"])
+    //
+    ->name("userStore");
+
+//
+//
 // teams
 // middleware for group of pages
 Route::middleware([
@@ -64,7 +85,7 @@ Route::middleware([
 
 // Teams...
 if (Jetstream::hasTeamFeatures()) {
-    Route::post("/company", [TeamController::class, "store"])->name(
-        "company.store"
-    );
+    Route::post("/company-register", [TeamController::class, "store"])
+        //
+        ->name("teamStore");
 }

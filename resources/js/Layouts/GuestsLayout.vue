@@ -21,9 +21,9 @@ router.on("finish", () => {
 </script>
 
 <template>
-    <div v-if="isLoaded">
+    <!-- <div v-if="isLoaded">
         <FullScreenSpinner></FullScreenSpinner>
-    </div>
+    </div> -->
     <div>
         <Head :title="title"></Head>
         <Banner />

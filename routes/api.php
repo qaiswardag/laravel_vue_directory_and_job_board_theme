@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware("auth:sanctum")->get("/user", function (Request $request) {
     return $request->user();
 });
+
+// test - start
+// test - start
+// test - start
+Route::get("/docs-users", function () {
+    // return response()->json(
+    //     [
+    //         "fejl_en" => "We are unable to send you users at current moment.",
+    //         "fejl_to" => "Please try again.",
+    //         "fejl_tre" => "Or contact us.",
+    //         // "fejl_fem" => ["Check check check.", "La la la."],
+    //     ],
+    //     401
+    // );
+    //
+    //
+    return response()->json([
+        "users" => User::latest()
+            ->take(10)
+            ->get(),
+    ]);
+});
+// test - start
+// test - start
+// test - start

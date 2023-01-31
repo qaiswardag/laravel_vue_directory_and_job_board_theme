@@ -9,9 +9,11 @@ import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 const form = useForm({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     password_confirmation: "",
@@ -19,7 +21,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("register"), {
+    form.post(route("userStore"), {
         onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
@@ -40,17 +42,28 @@ const submit = () => {
 
             <form @submit.prevent="submit">
                 <div>
-                    <InputLabel for="name" value="Name" />
+                    <InputLabel for="firstName" value="First name" />
                     <TextInput
-                        id="name"
-                        v-model="form.name"
+                        id="firstName"
+                        v-model="form.firstName"
                         type="text"
                         class="mt-1 block w-full"
-                        required
                         autofocus
-                        autocomplete="name"
+                        autocomplete="firstName"
                     />
-                    <InputError class="mt-2" :message="form.errors.name" />
+                    <InputError class="mt-2" :message="form.errors.firstName" />
+                </div>
+                <div>
+                    <InputLabel for="lastName" value="Last name" />
+                    <TextInput
+                        id="lastName"
+                        v-model="form.lastName"
+                        type="text"
+                        class="mt-1 block w-full"
+                        autofocus
+                        autocomplete="lastName"
+                    />
+                    <InputError class="mt-2" :message="form.errors.lastName" />
                 </div>
 
                 <div class="mt-4">
@@ -60,7 +73,6 @@ const submit = () => {
                         v-model="form.email"
                         type="email"
                         class="mt-1 block w-full"
-                        required
                     />
                     <InputError class="mt-2" :message="form.errors.email" />
                 </div>
@@ -72,7 +84,6 @@ const submit = () => {
                         v-model="form.password"
                         type="password"
                         class="mt-1 block w-full"
-                        required
                         autocomplete="new-password"
                     />
                     <InputError class="mt-2" :message="form.errors.password" />
@@ -88,7 +99,6 @@ const submit = () => {
                         v-model="form.password_confirmation"
                         type="password"
                         class="mt-1 block w-full"
-                        required
                         autocomplete="new-password"
                     />
                     <InputError
@@ -131,21 +141,16 @@ const submit = () => {
                     </InputLabel>
                 </div>
 
-                <div class="flex items-center justify-end mt-4">
-                    <Link
-                        :href="route('login')"
-                        class="underline text-sm text-gray-600 hover:text-gray-900"
-                    >
+                <div class="flex items-center justify-between mt-4">
+                    <Link :href="route('login')" class="myPrimaryLink">
                         Already registered?
                     </Link>
 
-                    <PrimaryButton
-                        class="ml-4"
-                        :class="{ 'opacity-25': form.processing }"
+                    <SubmitButton
                         :disabled="form.processing"
+                        buttonText="Register"
                     >
-                        Register
-                    </PrimaryButton>
+                    </SubmitButton>
                 </div>
             </form>
         </AuthenticationCard>

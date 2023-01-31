@@ -13,9 +13,11 @@ const props = defineProps({
     user: Object,
 });
 
+// TODO Fix error! User can not update thier first name or last name!
 const form = useForm({
     _method: "PUT",
-    name: props.user.name,
+    firstName: props.user.firstName,
+    lastName: props.user.lastName,
     email: props.user.email,
     photo: null,
 });
@@ -103,7 +105,7 @@ const clearPhotoFileInput = () => {
                 <div v-show="!photoPreview" class="mt-2">
                     <img
                         :src="user.profile_photo_url"
-                        :alt="user.name"
+                        :alt="user.firstName"
                         class="rounded-full h-20 w-20 object-cover"
                     />
                 </div>
@@ -140,15 +142,27 @@ const clearPhotoFileInput = () => {
 
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="firstName" value="First name" />
                 <TextInput
-                    id="name"
-                    v-model="form.name"
+                    id="firstName"
+                    v-model="form.firstName"
                     type="text"
                     class="mt-1 block w-full"
-                    autocomplete="name"
+                    autocomplete="firstName"
                 />
-                <InputError :message="form.errors.name" class="mt-2" />
+                <InputError :message="form.errors.firstName" class="mt-2" />
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="lastName" value="Last name" />
+                <TextInput
+                    id="lastName"
+                    v-model="form.lastName"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="lastName"
+                />
+                <InputError :message="form.errors.lastName" class="mt-2" />
             </div>
 
             <!-- Email -->

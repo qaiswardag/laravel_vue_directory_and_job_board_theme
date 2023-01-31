@@ -3,6 +3,7 @@ import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { router, Head } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 import { vueFetch } from "use-lightweight-fetch";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 // test using costum npm package
 // test using costum npm package
@@ -11,13 +12,41 @@ import { vueFetch } from "use-lightweight-fetch";
 const pathUsers = "https://jsonplaceholder.typicode.com/users";
 // use lightweight fetch
 const {
+    handleData: handleBackendDataUsers,
+    fetchedData: fetchedBackendDataUsers,
+    isError: isErrorBackendDataUsers,
+    validationProperties,
+    isLoading: isLoadingBackendDataUsers,
+    isSuccess: isSuccessBackendDataUsers,
+} = vueFetch();
+
+const getBackenUsers = async function () {
+    try {
+        await handleBackendDataUsers(
+            "/api/docs-users",
+            {},
+            {
+                loading: true,
+                additionalCallTime: 2000,
+                abortTimeoutTime: 8000,
+            }
+        );
+        // catch
+    } catch (err) {
+        isErrorBackendDataUsers.value = `${err}. ${
+            isErrorBackendDataUsers.value ? isErrorBackendDataUsers.value : ""
+        }`;
+        //
+    }
+};
+
+const {
     handleData: handleDataUsers,
     fetchedData: fetchedDataUsers,
     isError: isErrorDataUsers,
     isLoading: isLoadingDataUsers,
     isSuccess: isSuccessDataUsers,
 } = vueFetch();
-
 onMounted(async () => {
     try {
         const body = await handleDataUsers(
@@ -239,6 +268,21 @@ onMounted(async () => {
                     class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl"
                 >
                     <p class="myPrimaryParagraph font-semibold mb-2">
+                        An Important SPA Security Concern
+                    </p>
+                    <p class="myPrimaryParagraph my-2">
+                        If returning all users to the client, client will have
+                        access to all users data like Stripe token. Only return
+                        data which is relevant. Use service providers.
+                    </p>
+                    <p class="myPrimaryParagraph my-2">la</p>
+                </div>
+                <!-- Test end-->
+                <!-- Test start-->
+                <div
+                    class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl"
+                >
+                    <p class="myPrimaryParagraph font-semibold mb-2">
                         Fetch data using custom npm package
                     </p>
 
@@ -304,6 +348,98 @@ onMounted(async () => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Test end-->
+
+                <!-- Test start-->
+                <div
+                    class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl"
+                >
+                    <p class="myPrimaryParagraph font-semibold mb-2">
+                        Fetch backend data using custom npm package
+                    </p>
+                    <p class="myPrimaryParagraph font-semibold my-12">
+                        Validation Properties: {{ validationProperties }}
+                    </p>
+
+                    <div class="bg-white">
+                        <div class="bg-red-50">
+                            <h1
+                                class="text-3xl font-semibold text-emerald-600 py-10 text-center"
+                            >
+                                Backend Users table
+                            </h1>
+                        </div>
+                        <div
+                            class="mx-auto max-w-7xl py-24 px-6 sm:py-32 lg:px-8 lg:py-20"
+                        >
+                            <div
+                                v-if="
+                                    isErrorBackendDataUsers &&
+                                    !isLoadingBackendDataUsers
+                                "
+                                class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                                role="alert"
+                            >
+                                <span class="block sm:inline">{{
+                                    isErrorBackendDataUsers
+                                }}</span>
+                            </div>
+
+                            <div
+                                v-if="
+                                    !isErrorBackendDataUsers &&
+                                    !isLoadingBackendDataUsers &&
+                                    isSuccessBackendDataUsers
+                                "
+                                class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                                role="alert"
+                            >
+                                <span class="sr-only">Info</span>
+                                <div>
+                                    <span class="font-semibold">Success!</span>
+                                    Successfully fetched users.
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div
+                                    v-for="user in fetchedBackendDataUsers &&
+                                    fetchedBackendDataUsers.users"
+                                    :key="user.id"
+                                    class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
+                                >
+                                    <div class="min-w-0 flex-1">
+                                        <div class="focus:outline-none">
+                                            <span
+                                                class="absolute inset-0"
+                                                aria-hidden="true"
+                                            ></span>
+                                            <p
+                                                class="text-sm font-medium text-gray-900"
+                                            >
+                                                {{ user.firstName }}
+                                                {{ user.lastName }}
+                                            </p>
+                                            <p
+                                                class="truncate text-sm text-gray-500"
+                                            >
+                                                {{ user.email }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-end py-6">
+                                <SubmitButton
+                                    @click="getBackenUsers"
+                                    :disabled="isLoadingBackendDataUsers"
+                                    buttonText="Show Users"
+                                >
+                                </SubmitButton>
                             </div>
                         </div>
                     </div>

@@ -3,7 +3,7 @@ import { useForm } from "@inertiajs/vue3";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
-import SubmitButton from "../../../Components/Buttons/SubmitButton.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import { ref } from "@vue/reactivity";
@@ -52,7 +52,7 @@ const handleCreateTeam = function () {
 };
 
 const createTeam = () => {
-    createTeamForm.post(route("company.store"), {
+    createTeamForm.post(route("teamStore"), {
         // error bag validation
         preserveScroll: true,
         onSuccess: () => {
@@ -94,18 +94,30 @@ const createTeam = () => {
             <div class="col-span-6">
                 <InputLabel value="Team Owner" />
 
-                <div class="flex items-center mt-2">
-                    <img
-                        class="object-cover w-12 h-12 rounded-full"
-                        :src="$page.props.user.profile_photo_url"
-                        :alt="$page.props.user.name"
-                    />
+                <div class="flex items-center gap-2 mt-2">
+                    <div v-if="$page.props.user.profile_photo_url && false">
+                        <img
+                            class="object-cover w-12 h-12 rounded-full"
+                            :src="$page.props.user.profile_photo_url"
+                            :alt="$page.props.user.firstName"
+                        />
+                    </div>
 
-                    <div class="ml-4 leading-tight">
-                        <div>{{ $page.props.user.name }}</div>
-                        <div class="text-sm text-gray-700">
+                    <div
+                        v-if="true"
+                        class="h-12 w-12 rounded-full bg-emerald-100 flex justify-center items-center text-xs font-semibold"
+                    >
+                        {{ $page.props.user.firstName.charAt(0).toUpperCase() }}
+                        {{ $page.props.user.lastName.charAt(0).toUpperCase() }}
+                    </div>
+                    <div class="flex flex-col items-center gap-1 mt-2">
+                        <p class="text-xs font-semibold">
+                            {{ $page.props.user.firstName }}
+                            {{ $page.props.user.lastName }}
+                        </p>
+                        <p class="text-xs font-semibold">
                             {{ $page.props.user.email }}
-                        </div>
+                        </p>
                     </div>
                 </div>
             </div>

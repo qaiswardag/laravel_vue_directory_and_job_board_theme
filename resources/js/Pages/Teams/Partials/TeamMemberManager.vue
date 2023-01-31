@@ -443,7 +443,7 @@ const displayableRole = (role) => {
                                     :alt="user.name"
                                 />
                                 <div class="ml-4 dark:text-white">
-                                    {{ user.name }}
+                                    {{ user.firstName }} {{ user.lastName }}
                                 </div>
                             </div>
 

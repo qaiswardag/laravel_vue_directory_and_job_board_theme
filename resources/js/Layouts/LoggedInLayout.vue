@@ -585,7 +585,7 @@ const sidebarOpen = ref(false);
                             }"
                             v-if="
                                 $page.props.user.all_teams.length > 0 &&
-                                $page.props.user.current_team &&
+                                !$page.props.user.current_team &&
                                 $page.props.jetstream.hasTeamFeatures
                             "
                         >
@@ -667,7 +667,10 @@ const sidebarOpen = ref(false);
                                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                     alt=""
                                 />
-                                <span> {{ $page.props.user.name }}</span>
+                                <span>
+                                    {{ $page.props.user.firstName }}
+                                    {{ $page.props.user.lastName }}</span
+                                >
                             </MenuButton>
                         </div>
                         <transition

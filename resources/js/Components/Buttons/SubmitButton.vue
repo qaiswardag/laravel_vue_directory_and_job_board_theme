@@ -42,7 +42,7 @@ defineProps({
         <button
             :type="type"
             :disabled="disabled"
-            class="myPrimaryButton myPrimaryGap min-w-[7rem] px-0"
+            class="myPrimaryButton myPrimaryGap min-w-[8rem]"
             :class="{ 'opacity-25 cursor-default': disabled }"
         >
             <slot />
