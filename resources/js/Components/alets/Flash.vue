@@ -19,7 +19,11 @@ watch(flashObject, (newValue) => {
         showFlash.value = null;
     }
 
-    if (newValue.error !== null || newValue.success !== null) {
+    if (
+        newValue.error !== null ||
+        newValue.errorBags !== null ||
+        newValue.success !== null
+    ) {
         showFlash.value = true;
     }
 });

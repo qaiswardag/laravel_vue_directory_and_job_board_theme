@@ -266,10 +266,7 @@ const displayableRole = (role) => {
                             type="email"
                             class="mt-1 block w-full"
                         />
-                        <InputError
-                            :message="addTeamMemberForm.errors.email"
-                            class="mt-2"
-                        />
+                        <InputError :message="addTeamMemberForm.errors.email" />
                     </div>
 
                     <!-- Role -->
@@ -278,10 +275,7 @@ const displayableRole = (role) => {
                         class="col-span-6 lg:col-span-4"
                     >
                         <InputLabel for="roles" value="Role" />
-                        <InputError
-                            :message="addTeamMemberForm.errors.role"
-                            class="mt-2"
-                        />
+                        <InputError :message="addTeamMemberForm.errors.role" />
 
                         <div
                             class="relative z-0 mt-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer"
@@ -443,7 +437,7 @@ const displayableRole = (role) => {
                                     :alt="user.name"
                                 />
                                 <div class="ml-4 dark:text-white">
-                                    {{ user.firstName }} {{ user.lastName }}
+                                    {{ user.first_name }} {{ user.last_name }}
                                 </div>
                             </div>
 

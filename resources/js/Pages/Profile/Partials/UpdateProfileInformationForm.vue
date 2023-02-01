@@ -8,6 +8,7 @@ import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 const props = defineProps({
     user: Object,
@@ -16,8 +17,8 @@ const props = defineProps({
 // TODO Fix error! User can not update thier first name or last name!
 const form = useForm({
     _method: "PUT",
-    firstName: props.user.firstName,
-    lastName: props.user.lastName,
+    first_name: props.user.first_name,
+    last_name: props.user.last_name,
     email: props.user.email,
     photo: null,
 });
@@ -105,7 +106,7 @@ const clearPhotoFileInput = () => {
                 <div v-show="!photoPreview" class="mt-2">
                     <img
                         :src="user.profile_photo_url"
-                        :alt="user.firstName"
+                        :alt="user.first_name"
                         class="rounded-full h-20 w-20 object-cover"
                     />
                 </div>
@@ -137,32 +138,32 @@ const clearPhotoFileInput = () => {
                     Remove Photo
                 </SecondaryButton>
 
-                <InputError :message="form.errors.photo" class="mt-2" />
+                <InputError :message="form.errors.photo" />
             </div>
 
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="firstName" value="First name" />
+                <InputLabel for="first_name" value="First name" />
                 <TextInput
-                    id="firstName"
-                    v-model="form.firstName"
+                    id="first_name"
+                    v-model="form.first_name"
                     type="text"
                     class="mt-1 block w-full"
-                    autocomplete="firstName"
+                    autocomplete="first_name"
                 />
-                <InputError :message="form.errors.firstName" class="mt-2" />
+                <InputError :message="form.errors.first_name" />
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="lastName" value="Last name" />
+                <InputLabel for="last_name" value="Last name" />
                 <TextInput
-                    id="lastName"
-                    v-model="form.lastName"
+                    id="last_name"
+                    v-model="form.last_name"
                     type="text"
                     class="mt-1 block w-full"
-                    autocomplete="lastName"
+                    autocomplete="last_name"
                 />
-                <InputError :message="form.errors.lastName" class="mt-2" />
+                <InputError :message="form.errors.last_name" />
             </div>
 
             <!-- Email -->
@@ -174,7 +175,7 @@ const clearPhotoFileInput = () => {
                     type="email"
                     class="mt-1 block w-full"
                 />
-                <InputError :message="form.errors.email" class="mt-2" />
+                <InputError :message="form.errors.email" />
 
                 <div
                     v-if="
@@ -208,16 +209,13 @@ const clearPhotoFileInput = () => {
         </template>
 
         <template #actions>
-            <ActionMessage :on="form.recentlySuccessful" class="mr-3">
-                Saved.
-            </ActionMessage>
-
-            <PrimaryButton
-                :class="{ 'opacity-25': form.processing }"
-                :disabled="form.processing"
-            >
-                Save
-            </PrimaryButton>
+            <div class="flex flex-col myPrimaryGap">
+                <SubmitButton :disabled="form.processing" buttonText="Update">
+                </SubmitButton>
+                <ActionMessage :on="form.recentlySuccessful" type="success">
+                    Successfully updated details.
+                </ActionMessage>
+            </div>
         </template>
     </FormSection>
 </template>

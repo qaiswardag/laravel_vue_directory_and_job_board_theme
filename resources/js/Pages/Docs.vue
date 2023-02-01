@@ -421,8 +421,8 @@ onMounted(async () => {
                                             <p
                                                 class="text-sm font-medium text-gray-900"
                                             >
-                                                {{ user.firstName }}
-                                                {{ user.lastName }}
+                                                {{ user.first_name }}
+                                                {{ user.last_name }}
                                             </p>
                                             <p
                                                 class="truncate text-sm text-gray-500"

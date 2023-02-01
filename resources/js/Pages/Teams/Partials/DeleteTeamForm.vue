@@ -28,16 +28,11 @@ const handleDeleteTeam = () => {
 
 const deleteTeam = function () {
     form.delete(route("teams.destroy", props.team), {
+        errorBag: "deleteTeam",
         preserveScroll: true,
-        onSuccess: (log) => {
-            console.log("team deleted. Everything worked", log);
-        },
-        onError: (err) => {
-            console.log("Error, deleting team:", err); // {password: 'The password is incorrect.'}
-        },
-        onFinish: () => {
-            console.log("everything finished");
-        },
+        onSuccess: (log) => {},
+        onError: (err) => {},
+        onFinish: (log) => {},
     });
 };
 </script>
@@ -68,6 +63,7 @@ const deleteTeam = function () {
                     Delete Team
                 </DangerButton>
             </div>
+            <InputError :message="form.errors.team" />
 
             <!-- with confirm password modal - start -->
             <!-- <div class="mt-5">

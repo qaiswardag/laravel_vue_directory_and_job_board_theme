@@ -96,7 +96,7 @@
     }
 
     .myPrimaryDeleteButton {
-        @apply myPrimaryButton bg-red-500 hover:bg-red-600 focus:ring-red-500;
+        @apply myPrimaryButton bg-red-600 hover:bg-red-500 focus:ring-red-500;
     }
 
     .myPrimaryDeleteButtonNoBg {
@@ -132,6 +132,13 @@
     */
     .myPrimaryForm {
         /*@apply border-2 border-amber-700 p-12 rounded-lg*/
+    }
+
+    .myInputsFamily {
+        @apply flex items-center myPrimaryGap;
+    }
+    .myInputGroup {
+        @apply w-full self-start;
     }
 
     .myPrimaryInputLabel {

@@ -45,7 +45,7 @@ const submit = () => {
                     required
                     autofocus
                 />
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
@@ -58,7 +58,7 @@ const submit = () => {
                     required
                     autocomplete="new-password"
                 />
-                <InputError class="mt-2" :message="form.errors.password" />
+                <InputError :message="form.errors.password" />
             </div>
 
             <div class="mt-4">
@@ -74,10 +74,7 @@ const submit = () => {
                     required
                     autocomplete="new-password"
                 />
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password_confirmation"
-                />
+                <InputError :message="form.errors.password_confirmation" />
             </div>
 
             <div class="flex items-center justify-end mt-4">

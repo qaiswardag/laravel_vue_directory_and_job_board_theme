@@ -180,7 +180,11 @@ const closeModal = () => {
                     Log Out Other Browser Sessions
                 </PrimaryButton>
 
-                <ActionMessage :on="form.recentlySuccessful" class="ml-3">
+                <ActionMessage
+                    :on="form.recentlySuccessful"
+                    type="sucsess"
+                    class="ml-3"
+                >
                     Done.
                 </ActionMessage>
             </div>
@@ -210,10 +214,7 @@ const closeModal = () => {
                             @keyup.enter="logoutOtherBrowserSessions"
                         />
 
-                        <InputError
-                            :message="form.errors.password"
-                            class="mt-2"
-                        />
+                        <InputError :message="form.errors.password" />
                     </div>
                 </main>
             </DynamicModal>

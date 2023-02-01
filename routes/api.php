@@ -34,11 +34,16 @@ Route::get("/docs-users", function () {
     // );
     //
     //
-    return response()->json([
-        "users" => User::latest()
-            ->take(10)
-            ->get(),
-    ]);
+    return response(
+        [
+            "users" => User::latest()
+                ->take(10)
+                ->get(),
+        ],
+        200
+    );
+    //
+    // ->header("Content-Type", "text/plain");
 });
 // test - start
 // test - start

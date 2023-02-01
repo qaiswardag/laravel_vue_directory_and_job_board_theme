@@ -668,8 +668,8 @@ const sidebarOpen = ref(false);
                                     alt=""
                                 />
                                 <span>
-                                    {{ $page.props.user.firstName }}
-                                    {{ $page.props.user.lastName }}</span
+                                    {{ $page.props.user.first_name }}
+                                    {{ $page.props.user.last_name }}</span
                                 >
                             </MenuButton>
                         </div>

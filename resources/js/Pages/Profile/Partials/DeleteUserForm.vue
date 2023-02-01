@@ -145,10 +145,7 @@ const closeModal = () => {
                             @keyup.enter="deleteUserProfile"
                         />
 
-                        <InputError
-                            :message="form.errors.password"
-                            class="mt-2"
-                        />
+                        <InputError :message="form.errors.password" />
                     </div>
                 </main>
             </DynamicModal>

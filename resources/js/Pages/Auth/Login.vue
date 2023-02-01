@@ -26,7 +26,17 @@ const submit = () => {
         ...data,
         remember: form.remember ? "on" : "",
     })).post(route("login"), {
-        onFinish: () => form.reset("password"),
+        //
+        //
+        //
+        // error bag validation
+        // errorBag: "loginUser",
+        preserveScroll: true,
+        onSuccess: (log) => {
+            form.reset();
+        },
+        onError: (err) => {},
+        onFinish: () => {},
     });
 };
 </script>
@@ -57,7 +67,7 @@ const submit = () => {
                         required
                         autofocus
                     />
-                    <InputError class="mt-2" :message="form.errors.email" />
+                    <InputError :message="form.errors.email" />
                 </div>
 
                 <div class="mt-4">
@@ -70,7 +80,7 @@ const submit = () => {
                         required
                         autocomplete="current-password"
                     />
-                    <InputError class="mt-2" :message="form.errors.password" />
+                    <InputError :message="form.errors.password" />
                 </div>
 
                 <div class="block mt-4">

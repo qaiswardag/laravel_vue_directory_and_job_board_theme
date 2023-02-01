@@ -65,7 +65,7 @@ const updateTeamName = () => {
                     :disabled="!permissions.canUpdateTeam"
                 />
 
-                <InputError :message="form.errors.name" class="mt-2" />
+                <InputError :message="form.errors.name" />
             </div>
         </template>
 

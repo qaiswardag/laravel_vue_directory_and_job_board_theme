@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        dd("came to user controller and store method");
+        // dd("came to user controller and store method");
     }
 
     /**

@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
         // Qais Wardag
         User::factory()->create([
             "id" => 1,
-            "firstName" => "Qais",
-            "lastName" => "Wardag",
+            "first_name" => "Qais",
+            "last_name" => "Wardag",
             "email" => "qw@myself.ae",
             "current_team_id" => 1,
             "password" => Hash::make("123456"),
@@ -36,8 +36,8 @@ class DatabaseSeeder extends Seeder
         // Shaun Pelling
         User::factory()->create([
             "id" => 2,
-            "firstName" => "Shaun",
-            "lastName" => "Pelling",
+            "first_name" => "Shaun",
+            "last_name" => "Pelling",
             "email" => "sp@myself.ae",
             "current_team_id" => 2,
             "password" => Hash::make("123456"),
@@ -53,8 +53,8 @@ class DatabaseSeeder extends Seeder
         // Mie Mortensen
         User::factory()->create([
             "id" => 3,
-            "firstName" => "Mie",
-            "lastName" => "Mortensen",
+            "first_name" => "Mie",
+            "last_name" => "Mortensen",
             "email" => "mm@myself.ae",
             "current_team_id" => 3,
             "password" => Hash::make("123456"),

@@ -12,8 +12,8 @@ import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 const form = useForm({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
     password_confirmation: "",
@@ -21,7 +21,16 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("userStore"), {
+    form.post(route("register"), {
+        // error bag validation
+        errorBag: "createUser",
+        preserveScroll: true,
+        onSuccess: (log) => {
+            form.reset();
+        },
+        onError: (err) => {
+            form.reset();
+        },
         onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
@@ -41,32 +50,34 @@ const submit = () => {
             </template>
 
             <form @submit.prevent="submit">
-                <div>
-                    <InputLabel for="firstName" value="First name" />
-                    <TextInput
-                        id="firstName"
-                        v-model="form.firstName"
-                        type="text"
-                        class="mt-1 block w-full"
-                        autofocus
-                        autocomplete="firstName"
-                    />
-                    <InputError class="mt-2" :message="form.errors.firstName" />
-                </div>
-                <div>
-                    <InputLabel for="lastName" value="Last name" />
-                    <TextInput
-                        id="lastName"
-                        v-model="form.lastName"
-                        type="text"
-                        class="mt-1 block w-full"
-                        autofocus
-                        autocomplete="lastName"
-                    />
-                    <InputError class="mt-2" :message="form.errors.lastName" />
+                <div class="myInputsFamily">
+                    <div class="myInputGroup">
+                        <InputLabel for="first_name" value="First name" />
+                        <TextInput
+                            id="first_name"
+                            v-model="form.first_name"
+                            type="text"
+                            class="mt-1 block w-full"
+                            autofocus
+                            autocomplete="first_name"
+                        />
+                        <InputError :message="form.errors.first_name" />
+                    </div>
+                    <div class="myInputGroup">
+                        <InputLabel for="last_name" value="Last name" />
+                        <TextInput
+                            id="last_name"
+                            v-model="form.last_name"
+                            type="text"
+                            class="mt-1 block w-full"
+                            autofocus
+                            autocomplete="last_name"
+                        />
+                        <InputError :message="form.errors.last_name" />
+                    </div>
                 </div>
 
-                <div class="mt-4">
+                <div class="myInputGroup">
                     <InputLabel for="email" value="Email" />
                     <TextInput
                         id="email"
@@ -74,10 +85,10 @@ const submit = () => {
                         type="email"
                         class="mt-1 block w-full"
                     />
-                    <InputError class="mt-2" :message="form.errors.email" />
+                    <InputError :message="form.errors.email" />
                 </div>
 
-                <div class="mt-4">
+                <div class="myInputGroup">
                     <InputLabel for="password" value="Password" />
                     <TextInput
                         id="password"
@@ -86,10 +97,10 @@ const submit = () => {
                         class="mt-1 block w-full"
                         autocomplete="new-password"
                     />
-                    <InputError class="mt-2" :message="form.errors.password" />
+                    <InputError :message="form.errors.password" />
                 </div>
 
-                <div class="mt-4">
+                <div class="myInputGroup">
                     <InputLabel
                         for="password_confirmation"
                         value="Confirm Password"
@@ -101,10 +112,7 @@ const submit = () => {
                         class="mt-1 block w-full"
                         autocomplete="new-password"
                     />
-                    <InputError
-                        class="mt-2"
-                        :message="form.errors.password_confirmation"
-                    />
+                    <InputError :message="form.errors.password_confirmation" />
                 </div>
 
                 <div
@@ -137,7 +145,7 @@ const submit = () => {
                                 >
                             </div>
                         </div>
-                        <InputError class="mt-2" :message="form.errors.terms" />
+                        <InputError :message="form.errors.terms" />
                     </InputLabel>
                 </div>
 

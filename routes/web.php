@@ -62,13 +62,6 @@ Route::middleware([
             return Inertia::render("PolicyAndTerms/PrivacyPolicy");
         })->name("privacyPolicy");
     });
-
-// Users
-Route::post("/user-register", [UserController::class, "store"])
-    //
-    ->name("userStore");
-
-//
 //
 // teams
 // middleware for group of pages
@@ -82,10 +75,3 @@ Route::middleware([
         return Inertia::render("Teams/ManageTeams");
     })->name("manageTeams");
 });
-
-// Teams...
-if (Jetstream::hasTeamFeatures()) {
-    Route::post("/company-register", [TeamController::class, "store"])
-        //
-        ->name("teamStore");
-}
