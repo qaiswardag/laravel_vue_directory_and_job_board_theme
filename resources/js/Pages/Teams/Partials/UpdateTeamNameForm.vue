@@ -6,11 +6,54 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import { ref } from "@vue/reactivity";
 
 const props = defineProps({
     team: Object,
     permissions: Object,
 });
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
+const modalShowUpdateTeam = ref(false);
+
+const handleUpdateTeam = function () {
+    // handle show modal for unique content
+    modalShowUpdateTeam.value = true;
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = "Update team";
+    descriptionModal.value = "Are you sure you want to update this team?";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Update";
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowUpdateTeam.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        updateTeamName();
+        // handle show modal for unique content
+        modalShowUpdateTeam.value = false;
+    };
+    // end modal
+};
 
 const form = useForm({
     name: props.team.name,
@@ -18,14 +61,34 @@ const form = useForm({
 
 const updateTeamName = () => {
     form.put(route("teams.update", props.team), {
-        errorBag: "updateTeamName",
+        // error bag validation
+        errorBag: "updateTeam",
         preserveScroll: true,
+        onSuccess: (log) => {},
+        onError: (err) => {},
+        onFinish: () => {},
     });
 };
 </script>
 
 <template>
-    <FormSection @submitted="updateTeamName">
+    <DynamicModal
+        :show="modalShowUpdateTeam"
+        :type="typeModal"
+        :gridColumnAmount="gridColumnModal"
+        :title="titleModal"
+        :description="descriptionModal"
+        :firstButtonText="firstButtonModal"
+        :secondButtonText="secondButtonModal"
+        :thirdButtonText="thirdButtonModal"
+        @firstModalButtonFunction="firstModalButtonFunction"
+        @secondModalButtonFunction="secondModalButtonFunction"
+        @thirdModalButtonFunction="thirdModalButtonFunction"
+    >
+        <header></header>
+        <main></main>
+    </DynamicModal>
+    <FormSection @submitted="handleUpdateTeam">
         <template #title> Team Name </template>
 
         <template #description>
@@ -37,18 +100,32 @@ const updateTeamName = () => {
             <div class="col-span-6">
                 <InputLabel value="Team Owner" />
 
-                <div class="flex items-center mt-2">
-                    <img
-                        class="w-12 h-12 rounded-full object-cover"
-                        :src="team.owner.profile_photo_url"
-                        :alt="team.owner.name"
-                    />
+                <div class="flex items-center gap-2 mt-2">
+                    <div v-if="$page.props.user.profile_photo_url && false">
+                        <img
+                            class="object-cover w-12 h-12 rounded-full"
+                            :src="$page.props.user.profile_photo_url"
+                            :alt="$page.props.user.first_name"
+                        />
+                    </div>
 
-                    <div class="ml-4 leading-tight">
-                        <div>{{ team.owner.name }}</div>
-                        <div class="text-gray-700 text-sm">
-                            {{ team.owner.email }}
-                        </div>
+                    <div
+                        v-if="true"
+                        class="h-12 w-12 rounded-full bg-myPrimaryColor-500 flex justify-center items-center text-xs font-semibold text-white"
+                    >
+                        {{
+                            $page.props.user.first_name.charAt(0).toUpperCase()
+                        }}
+                        {{ $page.props.user.last_name.charAt(0).toUpperCase() }}
+                    </div>
+                    <div class="flex flex-col items-left gap-1">
+                        <p class="text-xs font-semibold">
+                            {{ $page.props.user.first_name }}
+                            {{ $page.props.user.last_name }}
+                        </p>
+                        <p class="text-xs font-semibold">
+                            {{ $page.props.user.email }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -62,28 +139,20 @@ const updateTeamName = () => {
                     v-model="form.name"
                     type="text"
                     class="mt-1 block w-full"
-                    :disabled="!permissions.canUpdateTeam"
                 />
 
                 <InputError :message="form.errors.name" />
             </div>
         </template>
 
-        <template v-if="permissions.canUpdateTeam" #actions>
-            <ActionMessage
-                type="success"
-                :on="form.recentlySuccessful"
-                class="mr-3"
-            >
-                Saved.
-            </ActionMessage>
-
-            <PrimaryButton
-                :class="{ 'opacity-25': form.processing }"
+        <template #actions>
+            <SubmitButton
+                :status="form.recentlySuccessful"
+                successMessage="Successfully updated your team."
                 :disabled="form.processing"
+                buttonText="Update"
             >
-                Save
-            </PrimaryButton>
+            </SubmitButton>
         </template>
     </FormSection>
 </template>

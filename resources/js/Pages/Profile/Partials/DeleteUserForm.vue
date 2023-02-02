@@ -122,6 +122,8 @@ const closeModal = () => {
 
             <DynamicModal
                 :show="modalShowConfirmingUserDeletion"
+                :disabled="form.processing"
+                disabledWhichButton="thirdButton"
                 :type="typeModal"
                 :gridColumnAmount="gridColumnModal"
                 :title="titleModal"

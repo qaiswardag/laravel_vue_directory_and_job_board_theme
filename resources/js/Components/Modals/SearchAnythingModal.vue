@@ -182,7 +182,7 @@ function onSelect(item) {
                                                 :class="[
                                                     'flex cursor-default select-none items-center px-4 py-2',
                                                     active &&
-                                                        'bg-indigo-600 text-white',
+                                                        'bg-myPrimaryColor-600 text-white',
                                                 ]"
                                             >
                                                 <FolderIcon
@@ -222,7 +222,7 @@ function onSelect(item) {
                                                 :class="[
                                                     'flex cursor-default select-none items-center px-4 py-2',
                                                     active &&
-                                                        'bg-indigo-600 text-white',
+                                                        'bg-myPrimaryColor-600 text-white',
                                                 ]"
                                             >
                                                 <img
@@ -290,7 +290,7 @@ function onSelect(item) {
                                     :class="[
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery.startsWith('#')
-                                            ? 'border-indigo-600 text-indigo-600'
+                                            ? 'border-myPrimaryColor-600 text-myPrimaryColor-600'
                                             : 'border-gray-400 text-gray-900',
                                     ]"
                                     >#</kbd
@@ -303,7 +303,7 @@ function onSelect(item) {
                                     :class="[
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery.startsWith('>')
-                                            ? 'border-indigo-600 text-indigo-600'
+                                            ? 'border-myPrimaryColor-600 text-myPrimaryColor-600'
                                             : 'border-gray-400 text-gray-900',
                                     ]"
                                     >&gt;</kbd
@@ -313,7 +313,7 @@ function onSelect(item) {
                                     :class="[
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery === '?'
-                                            ? 'border-indigo-600 text-indigo-600'
+                                            ? 'border-myPrimaryColor-600 text-myPrimaryColor-600'
                                             : 'border-gray-400 text-gray-900',
                                     ]"
                                     >?</kbd

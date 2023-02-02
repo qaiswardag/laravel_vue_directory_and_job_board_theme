@@ -58,11 +58,11 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
 
                     <a href="https://laravel.com/docs">
                         <div
-                            class="mt-3 flex items-center text-sm font-semibold text-indigo-700"
+                            class="mt-3 flex items-center text-sm font-semibold text-myPrimaryColor-600"
                         >
                             <div>Explore the documentation</div>
 
-                            <div class="ml-1 text-indigo-500">
+                            <div class="ml-1 text-myPrimaryColor-600">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -115,11 +115,11 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
 
                     <a href="https://laracasts.com">
                         <div
-                            class="mt-3 flex items-center text-sm font-semibold text-indigo-700"
+                            class="mt-3 flex items-center text-sm font-semibold text-myPrimaryColor-600"
                         >
                             <div>Start watching Laracasts</div>
 
-                            <div class="ml-1 text-indigo-500">
+                            <div class="ml-1 text-myPrimaryColor-600">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"

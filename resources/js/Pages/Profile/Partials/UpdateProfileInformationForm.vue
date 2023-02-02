@@ -207,15 +207,14 @@ const clearPhotoFileInput = () => {
                 </div>
             </div>
         </template>
-
         <template #actions>
-            <div class="flex flex-col myPrimaryGap">
-                <SubmitButton :disabled="form.processing" buttonText="Update">
-                </SubmitButton>
-                <ActionMessage :on="form.recentlySuccessful" type="success">
-                    Successfully updated details.
-                </ActionMessage>
-            </div>
+            <SubmitButton
+                :status="form.recentlySuccessful"
+                successMessage="Successfully updated your profile."
+                :disabled="form.processing"
+                buttonText="Update"
+            >
+            </SubmitButton>
         </template>
     </FormSection>
 </template>

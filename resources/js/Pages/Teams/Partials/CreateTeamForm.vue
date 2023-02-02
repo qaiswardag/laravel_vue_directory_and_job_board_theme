@@ -53,8 +53,8 @@ const handleCreateTeam = function () {
 
 const createTeam = () => {
     createTeamForm.post(route("teams.store"), {
-        errorBag: "createTeam",
         // error bag validation
+        errorBag: "createTeam",
         preserveScroll: true,
         onSuccess: (log) => {
             createTeamForm.reset();
@@ -106,14 +106,14 @@ const createTeam = () => {
 
                     <div
                         v-if="true"
-                        class="h-12 w-12 rounded-full bg-emerald-100 flex justify-center items-center text-xs font-semibold"
+                        class="h-12 w-12 rounded-full bg-myPrimaryColor-500 flex justify-center items-center text-xs font-semibold text-white"
                     >
                         {{
                             $page.props.user.first_name.charAt(0).toUpperCase()
                         }}
                         {{ $page.props.user.last_name.charAt(0).toUpperCase() }}
                     </div>
-                    <div class="flex flex-col items-center gap-1 mt-2">
+                    <div class="flex flex-col items-left gap-1">
                         <p class="text-xs font-semibold">
                             {{ $page.props.user.first_name }}
                             {{ $page.props.user.last_name }}

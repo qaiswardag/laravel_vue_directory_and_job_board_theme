@@ -576,7 +576,7 @@ const sidebarOpen = ref(false);
         <div class="sticky top-0 z-10 flex h-16 flex-shrink-0">
             <button
                 type="button"
-                class="border-r px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-fuchsia-500 md:hidden bg-white border-b-2 border-gray-200"
+                class="border-r px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-myPrimaryColor-500 md:hidden bg-white border-b-2 border-gray-200"
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>
@@ -630,29 +630,34 @@ const sidebarOpen = ref(false);
                 <div class="ml-4 flex items-center md:ml-6 gap-8">
                     <!--  -->
                     <!-- Teams Management desktop - start -->
-                    <div
-                        class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2"
+
+                    <template
+                        v-if="
+                            $page.props.user.all_teams.length > 0 &&
+                            !$page.props.user.current_team &&
+                            $page.props.jetstream.hasTeamFeatures
+                        "
                     >
-                        <Link
-                            :href="
-                                route(
-                                    'teams.manage-teams',
-                                    $page.props.user.current_team
-                                )
-                            "
-                            :class="{
-                                myPrimaryLink:
-                                    route().current('teams.manage-teams'),
-                            }"
-                            v-if="
-                                $page.props.user.all_teams.length > 0 &&
-                                !$page.props.user.current_team &&
-                                $page.props.jetstream.hasTeamFeatures
-                            "
+                        <div
+                            class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
                         >
-                            Select a Team
-                        </Link>
-                    </div>
+                            <Link
+                                :href="
+                                    route(
+                                        'teams.manage-teams',
+                                        $page.props.user.current_team
+                                    )
+                                "
+                                :class="{
+                                    myPrimaryLink:
+                                        route().current('teams.manage-teams'),
+                                }"
+                            >
+                                Select a Team
+                            </Link>
+                        </div>
+                    </template>
+
                     <template
                         v-if="
                             $page.props.user.all_teams.length > 0 &&
@@ -662,7 +667,7 @@ const sidebarOpen = ref(false);
                     >
                         <Menu as="div" class="relative">
                             <MenuButton
-                                class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2"
+                                class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
                             >
                                 <span class="sr-only">Open user menu</span>
                                 <div>
@@ -720,7 +725,7 @@ const sidebarOpen = ref(false);
                     <Menu as="div" class="relative">
                         <div>
                             <MenuButton
-                                class="flex ml-3 gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2"
+                                class="flex ml-3 gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
                             >
                                 <span class="sr-only">Open user menu</span>
                                 <img
@@ -764,7 +769,7 @@ const sidebarOpen = ref(false);
 
                     <button
                         type="button"
-                        class="rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2"
+                        class="rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
                     >
                         <span class="sr-only">View notifications</span>
                         <BellIcon

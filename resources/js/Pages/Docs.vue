@@ -327,7 +327,7 @@ onMounted(async () => {
                                 <div
                                     v-for="user in fetchedDataUsers"
                                     :key="user.id"
-                                    class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
+                                    class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-myPrimaryColor-600 focus-within:ring-offset-2 hover:border-gray-400"
                                 >
                                     <div class="min-w-0 flex-1">
                                         <div class="focus:outline-none">
@@ -410,7 +410,7 @@ onMounted(async () => {
                                     v-for="user in fetchedBackendDataUsers &&
                                     fetchedBackendDataUsers.users"
                                     :key="user.id"
-                                    class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
+                                    class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-myPrimaryColor-500 focus-within:ring-offset-2 hover:border-gray-400"
                                 >
                                     <div class="min-w-0 flex-1">
                                         <div class="focus:outline-none">

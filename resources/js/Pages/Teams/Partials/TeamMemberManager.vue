@@ -11,6 +11,7 @@ import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import SectionBorder from "@/Components/SectionBorder.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 const props = defineProps({
     team: Object,
@@ -52,9 +53,13 @@ const modalShowLeaveTeam = ref(false);
 
 const addTeamMember = () => {
     addTeamMemberForm.post(route("team-members.store", props.team), {
+        // error bag validation
         errorBag: "addTeamMember",
         preserveScroll: true,
         onSuccess: () => addTeamMemberForm.reset(),
+
+        onError: (err) => {},
+        onFinish: () => {},
     });
 };
 
@@ -346,20 +351,13 @@ const displayableRole = (role) => {
                 </template>
 
                 <template #actions>
-                    <ActionMessage
-                        type="success"
-                        :on="addTeamMemberForm.recentlySuccessful"
-                        class="mr-3"
-                    >
-                        Added.
-                    </ActionMessage>
-
-                    <PrimaryButton
-                        :class="{ 'opacity-25': addTeamMemberForm.processing }"
+                    <SubmitButton
+                        :status="addTeamMemberForm.recentlySuccessful"
+                        successMessage="Successfully added a team member."
                         :disabled="addTeamMemberForm.processing"
+                        buttonText="Add memeber"
                     >
-                        Add
-                    </PrimaryButton>
+                    </SubmitButton>
                 </template>
             </FormSection>
         </div>
@@ -431,16 +429,36 @@ const displayableRole = (role) => {
                             :key="user.id"
                             class="flex items-center justify-between pb-2 border-b"
                         >
-                            <div class="flex items-center myPrimaryParagraph">
-                                <img
-                                    class="w-8 h-8 rounded-full"
-                                    :src="user.profile_photo_url"
-                                    :alt="user.name"
-                                />
-                                <div class="ml-4 dark:text-white">
-                                    {{ user.first_name }} {{ user.last_name }}
+                            <!--  -->
+                            <div class="flex items-center gap-2 mt-2">
+                                <div v-if="user.profile_photo_url && false">
+                                    <img
+                                        class="object-cover w-12 h-12 rounded-full"
+                                        :src="user.profile_photo_url"
+                                        :alt="user.first_name"
+                                    />
+                                </div>
+
+                                <div
+                                    v-if="true"
+                                    class="h-12 w-12 rounded-full bg-myPrimaryColor-500 flex justify-center items-center text-xs font-semibold text-white"
+                                >
+                                    {{
+                                        user.first_name.charAt(0).toUpperCase()
+                                    }}
+                                    {{ user.last_name.charAt(0).toUpperCase() }}
+                                </div>
+                                <div class="flex flex-col items-left gap-1">
+                                    <p class="text-xs font-semibold">
+                                        {{ user.first_name }}
+                                        {{ user.last_name }}
+                                    </p>
+                                    <p class="text-xs font-semibold">
+                                        {{ user.email }}
+                                    </p>
                                 </div>
                             </div>
+                            <!--  -->
 
                             <div class="flex items-center myPrimaryGap">
                                 <!-- Manage Team Member Role -->

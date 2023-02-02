@@ -7,6 +7,7 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
@@ -24,12 +25,12 @@ const updatePassword = () => {
         onSuccess: () => form.reset(),
         onError: () => {
             if (form.errors.password) {
-                form.reset("password", "password_confirmation");
+                // form.reset("password", "password_confirmation");
                 passwordInput.value.focus();
             }
 
             if (form.errors.current_password) {
-                form.reset("current_password");
+                // form.reset("current_password");
                 currentPasswordInput.value.focus();
             }
         },
@@ -89,20 +90,13 @@ const updatePassword = () => {
         </template>
 
         <template #actions>
-            <ActionMessage
-                :on="form.recentlySuccessful"
-                type="success"
-                class="mr-3"
-            >
-                Saved.
-            </ActionMessage>
-
-            <PrimaryButton
-                :class="{ 'opacity-25': form.processing }"
+            <SubmitButton
+                :status="form.recentlySuccessful"
+                successMessage="Successfully updated your password."
                 :disabled="form.processing"
+                buttonText="Update"
             >
-                Save
-            </PrimaryButton>
+            </SubmitButton>
         </template>
     </FormSection>
 </template>

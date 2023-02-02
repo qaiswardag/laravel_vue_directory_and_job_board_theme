@@ -25,16 +25,48 @@ router.on("finish", () => {
         <FullScreenSpinner></FullScreenSpinner>
     </div> -->
     <div>
-        <Head :title="title"></Head>
+        <Head>
+            <title>{{ title }}</title>
+            <!-- head-key makes sure to only add on meta key -->
+            <meta
+                type="description"
+                content="myself.ae Fashion and Jobs"
+                head-key="description"
+            />
+        </Head>
         <Banner />
+        <div class="my-6 pr-12">
+            <nav
+                class="myPrimaryParagraph font-medium text-base flex justify-end items-center myPrimaryGap"
+            >
+                <Link
+                    :href="route('home')"
+                    :class="{
+                        'myPrimaryLink text-base': route().current('home'),
+                    }"
+                >
+                    Home
+                </Link>
+                <Link
+                    :href="route('login')"
+                    :class="{
+                        'myPrimaryLink text-base': route().current('login'),
+                    }"
+                >
+                    Login
+                </Link>
+                <Link
+                    :href="route('register')"
+                    :class="{
+                        'myPrimaryLink text-base': route().current('register'),
+                    }"
+                >
+                    Register
+                </Link>
+            </nav>
+        </div>
 
         <div class="min-h-screen bg-gray-100">
-            <header v-if="$slots.header" class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
-
             <!-- Page Content -->
             <main>
                 <slot />

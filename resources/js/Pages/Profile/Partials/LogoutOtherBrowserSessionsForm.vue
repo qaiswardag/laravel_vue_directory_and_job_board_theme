@@ -45,7 +45,7 @@ const handleSessionLogout = () => {
         "Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.";
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
-    thirdButtonModal.value = "Delete";
+    thirdButtonModal.value = "Confirm";
 
     // handle click
     firstModalButtonFunction.value = function () {
@@ -55,7 +55,7 @@ const handleSessionLogout = () => {
     // handle click
     secondModalButtonFunction.value = function () {
         // handle show modal for unique content
-        modalShowConfirmingSessionLogout.value = false;
+        // modalShowConfirmingSessionLogout.value = false;
     };
     // handle click
     thirdModalButtonFunction.value = function () {
@@ -192,6 +192,8 @@ const closeModal = () => {
             <DynamicModal
                 :show="modalShowConfirmingSessionLogout"
                 :type="typeModal"
+                :disabled="form.processing"
+                disabledWhichButton="thirdButton"
                 :gridColumnAmount="gridColumnModal"
                 :title="titleModal"
                 :description="descriptionModal"

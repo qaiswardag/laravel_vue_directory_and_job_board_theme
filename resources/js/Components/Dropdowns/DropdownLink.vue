@@ -17,7 +17,7 @@ defineProps({
 
 const classes = computed(() => {
     return props.active
-        ? "inline-flex items-center px-1 pt-1 text-sm font-semibold leading-5 myPrimaryColor focus:outline-none  transition"
+        ? "inline-flex items-center px-1 pt-1 text-sm font-semibold leading-5 focus:outline-none  transition"
         : "inline-flex items-center px-1 pt-1 text-sm font-semibold leading-5 text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 transition";
 });
 </script>
@@ -37,7 +37,7 @@ const classes = computed(() => {
             v-else-if="as == 'a'"
             :href="href"
             class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition"
-            :class="active ? 'myPrimaryLinkColor' : ''"
+            :class="active ? 'text-myPrimaryColor-500' : ''"
         >
             <slot />
         </a>
@@ -46,7 +46,7 @@ const classes = computed(() => {
             v-else
             :href="href"
             class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition"
-            :class="active ? 'myPrimaryLinkColor' : ''"
+            :class="active ? 'text-myPrimaryColor-500' : ''"
         >
             <slot />
         </Link>

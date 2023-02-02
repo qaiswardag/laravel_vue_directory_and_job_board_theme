@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -11,18 +12,35 @@ module.exports = {
     ],
 
     theme: {
-        // colors: {
-        //     transparent: "transparent",
-        //     current: "currentColor",
-        //     white: "#ffffff",
-        //     purple: "#3f3cbb",
-        //     midnight: "#121063",
-        //     metal: "#565584",
-        //     tahiti: "#3ab7bf",
-        //     silver: "#ecebff",
-        //     "bubble-gum": "#ff77e9",
-        //     bermuda: "#78dcca",
-        // },
+        colors: {
+            myPrimaryColor: {
+                50: "#ecfdf5",
+                100: "#d1fae5",
+                200: "#a7f3d0",
+                300: "#6ee7b7",
+                400: "#34d399",
+                500: "#10b981",
+                600: "#059669",
+                700: "#047857",
+                800: "#065f46",
+                900: "#064e3b",
+            },
+            myErrorColor: {
+                500: "#d50000",
+                600: "#d60000",
+            },
+            transparent: "transparent",
+            current: "currentColor",
+            black: colors.black,
+            white: colors.white,
+            gray: colors.slate,
+            green: colors.emerald,
+            purple: colors.violet,
+            yellow: colors.amber,
+            red: colors.red,
+            fuchsia: colors.fuchsia,
+            pink: colors.fuchsia,
+        },
         extend: {
             fontFamily: {
                 sans: [
