@@ -287,6 +287,11 @@ const sidebarOpen = ref(false);
                         </div>
                         <div class="mt-5 h-0 flex-1 overflow-y-auto">
                             <nav class="space-y-1 px-2" aria-label="menu">
+                                <p
+                                    class="text-gray-600 group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
+                                >
+                                    Mobile Navigation
+                                </p>
                                 <SideBarLink
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
@@ -302,7 +307,7 @@ const sidebarOpen = ref(false);
                                         <path
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                                            d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
                                         />
                                     </svg>
                                     Dashboard
@@ -322,7 +327,7 @@ const sidebarOpen = ref(false);
                                         <path
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                                            d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
                                         />
                                     </svg>
                                     Your Profile
@@ -361,6 +366,56 @@ const sidebarOpen = ref(false);
                                         Teams Settings
                                     </SideBarLink>
                                 </template>
+                                <SideBarLink
+                                    :href="route('teams.manage-teams')"
+                                    :active="
+                                        route().current('teams.manage-teams')
+                                    "
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"
+                                        />
+                                    </svg>
+
+                                    Manage Teams
+                                </SideBarLink>
+
+                                <SideBarLink
+                                    :href="
+                                        route(
+                                            'docs',
+                                            $page.props.user.current_team
+                                        )
+                                    "
+                                    :active="route().current('docs')"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"
+                                        />
+                                    </svg>
+
+                                    Doc
+                                </SideBarLink>
                             </nav>
                         </div>
                     </DialogPanel>
@@ -388,6 +443,11 @@ const sidebarOpen = ref(false);
             </div>
             <div class="mt-5 flex flex-grow flex-col">
                 <nav class="flex-1 space-y-1 px-2 pb-4" aria-label="menu">
+                    <p
+                        class="text-gray-600 group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
+                    >
+                        Navigation
+                    </p>
                     <SideBarLink
                         :href="route('dashboard')"
                         :active="route().current('dashboard')"
@@ -403,7 +463,7 @@ const sidebarOpen = ref(false);
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                                d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
                             />
                         </svg>
                         Dashboard
@@ -423,7 +483,7 @@ const sidebarOpen = ref(false);
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
                             />
                         </svg>
                         Your Profile
@@ -463,8 +523,8 @@ const sidebarOpen = ref(false);
                     </template>
 
                     <SideBarLink
-                        :href="route('manageTeams')"
-                        :active="route().current('manageTeams')"
+                        :href="route('teams.manage-teams')"
+                        :active="route().current('teams.manage-teams')"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -576,12 +636,13 @@ const sidebarOpen = ref(false);
                         <Link
                             :href="
                                 route(
-                                    'manageTeams',
+                                    'teams.manage-teams',
                                     $page.props.user.current_team
                                 )
                             "
                             :class="{
-                                myPrimaryLink: route().current('manageTeams'),
+                                myPrimaryLink:
+                                    route().current('teams.manage-teams'),
                             }"
                             v-if="
                                 $page.props.user.all_teams.length > 0 &&

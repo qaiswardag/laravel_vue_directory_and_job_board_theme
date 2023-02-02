@@ -31,6 +31,21 @@ const handleSwitchToTeam = (team) => {
             },
         }
     );
+    //
+    //
+    //
+    router.put(
+        route("current-team.update"),
+        {
+            team_id: team.id,
+        },
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                console.log("team switched");
+            },
+        }
+    );
 };
 //
 //

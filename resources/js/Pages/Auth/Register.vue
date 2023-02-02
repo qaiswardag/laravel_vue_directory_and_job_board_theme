@@ -28,10 +28,10 @@ const submit = () => {
         onSuccess: (log) => {
             form.reset();
         },
-        onError: (err) => {
-            form.reset();
+        onError: (err) => {},
+        onFinish: () => {
+            // form.reset("password", "password_confirmation");
         },
-        onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
 </script>

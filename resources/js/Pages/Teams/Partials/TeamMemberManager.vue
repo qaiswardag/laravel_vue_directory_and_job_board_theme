@@ -347,6 +347,7 @@ const displayableRole = (role) => {
 
                 <template #actions>
                     <ActionMessage
+                        type="success"
                         :on="addTeamMemberForm.recentlySuccessful"
                         class="mr-3"
                     >

@@ -73,5 +73,5 @@ Route::middleware([
     // just for testing. Delete Testing.vue when this route is deleted
     Route::get("/manage-teams", function () {
         return Inertia::render("Teams/ManageTeams");
-    })->name("manageTeams");
+    })->name("teams.manage-teams");
 });

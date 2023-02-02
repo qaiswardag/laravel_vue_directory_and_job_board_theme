@@ -70,7 +70,11 @@ const updateTeamName = () => {
         </template>
 
         <template v-if="permissions.canUpdateTeam" #actions>
-            <ActionMessage :on="form.recentlySuccessful" class="mr-3">
+            <ActionMessage
+                type="success"
+                :on="form.recentlySuccessful"
+                class="mr-3"
+            >
                 Saved.
             </ActionMessage>
 

@@ -13,10 +13,12 @@ import CreateTeamFormOld from "@/Pages/Teams/Partials/CreateTeamFormOld.vue";
 
         <template v-if="$page.props.user.all_teams.length < 1">
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
-                <p>You do not have any teams. Create a team first.</p>
-                <Link :href="route('teams.create')" class="myPrimaryLink">
-                    Create New Team</Link
-                >
+                <h1 class="myPrimayHeader">Create your first team</h1>
+                <p class="myPrimaryParagraph">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Maiores impedit perferendis suscipit eaque, iste dolor
+                    cupiditate blanditiis.
+                </p>
             </div>
         </template>
 
@@ -31,11 +33,6 @@ import CreateTeamFormOld from "@/Pages/Teams/Partials/CreateTeamFormOld.vue";
             </div>
         </template>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
-            <p>Old form</p>
-            <CreateTeamFormOld />
-        </div>
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
-            <p>New form</p>
             <CreateTeamForm></CreateTeamForm>
         </div>
     </LoggedInLayout>
