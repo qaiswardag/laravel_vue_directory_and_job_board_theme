@@ -3,49 +3,65 @@ import ActionSection from "@/Components/ActionSection.vue";
 import DropdownLink from "../../../Components/Dropdowns/DropdownLink.vue";
 import NavLink from "../../../Components/Navbars/NavLink.vue";
 import { router } from "@inertiajs/vue3";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 
-//
-// router.put(
-//     route("current-team.update"),
-//     {
-//         team_id: team.id,
-//     },
-//     {
-//         preserveState: false,
-//     }
-// );
-//
-//
-//
-//
+const switchTeamForm = useForm({});
+
+const modalShowSwitchTeam = ref(false);
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
 const handleSwitchToTeam = (team) => {
-    router.put(
-        route("current-team.update"),
-        {
-            team_id: team.id,
+    modalShowSwitchTeam.value = true;
+
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = `Switch team to ${team.name}`;
+    descriptionModal.value = `Are you sure you want to switch  team to ${team.name}`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Switch Team";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowSwitchTeam.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowSwitchTeam.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        switchTeam(team);
+    };
+    // end modal
+};
+//
+//
+const switchTeam = function (team) {
+    switchTeamForm.put(route("current-team.update", { team_id: team.id }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            modalShowSwitchTeam.value = false;
         },
-        {
-            preserveScroll: true,
-            onSuccess: () => {
-                console.log("team switched");
-            },
-        }
-    );
-    //
-    //
-    //
-    router.put(
-        route("current-team.update"),
-        {
-            team_id: team.id,
-        },
-        {
-            preserveScroll: true,
-            onSuccess: () => {
-                console.log("team switched");
-            },
-        }
-    );
+        onError: (err) => {},
+    });
 };
 //
 //
@@ -58,75 +74,194 @@ const handleSwitchToTeam = (team) => {
         <ActionSection>
             <template #title> Switch team </template>
 
-            <template #description> Switch team lorem ipsum</template>
+            <template #description> Switch to another team</template>
 
             <template #content>
                 <div class="max-w-xl">
-                    <p class="myPrimaryParagraph">
-                        Once a team is deleted, all of its resources and data
-                        will be permanently deleted. Before deleting this team,
-                        please download any data or information regarding this
-                        team that you wish to retain.
-                    </p>
+                    <p class="myPrimaryParagraph">Switch to another Team.</p>
                 </div>
-                <template
-                    v-for="team in $page.props.user.all_teams"
-                    :key="team.id"
-                >
-                    <form @submit.prevent="handleSwitchToTeam(team)">
-                        <button
-                            class="bg-gray-100 py-2 px-2 my-2 w-full rounded hover:bg-emerald-500 hover:text-white"
-                            :class="{
-                                'bg-emerald-500 text-white':
-                                    team.id == $page.props.user.current_team_id,
-                            }"
+
+                <div class="mt-8 flex flex-col">
+                    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div
+                            class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
                         >
                             <div
-                                v-if="$page.props.user.all_teams.length > 0"
-                                class="flex items-center"
+                                class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
                             >
-                                <svg
-                                    v-if="
-                                        team.id ===
-                                        $page.props.user.current_team_id
-                                    "
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="mr-2 h-5 w-5 text-white"
+                                <table
+                                    class="min-w-full divide-y divide-gray-300"
                                 >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M4.5 12.75l6 6 9-13.5"
-                                    />
-                                </svg>
+                                    <caption>
+                                        <p class="myPrimaryParagraph my-4">
+                                            Switch Team
+                                        </p>
+                                    </caption>
+                                    <thead class="bg-gray-50">
+                                        <tr class="divide-x divide-gray-200">
+                                            <th
+                                                scope="col"
+                                                class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6 min-w-[20rem]"
+                                            >
+                                                Team
+                                            </th>
 
-                                <svg
-                                    v-if="
-                                        team.id !==
-                                        $page.props.user.current_team_id
-                                    "
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="mr-2 h-5 w-5"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                                    />
-                                </svg>
-                                {{ team.name }} — team id: {{ team.id }}
+                                            <th
+                                                scope="col"
+                                                class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                            >
+                                                Switch Team
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody
+                                        class="divide-y divide-gray-200 bg-white"
+                                    >
+                                        <tr
+                                            v-for="team in $page.props.user
+                                                .all_teams"
+                                            :key="team.id"
+                                            class="divide-x divide-gray-200"
+                                        >
+                                            <td
+                                                class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
+                                            >
+                                                <form
+                                                    @submit.prevent="
+                                                        handleSwitchToTeam(team)
+                                                    "
+                                                >
+                                                    <div
+                                                        class="flex items-center myPrimaryGap"
+                                                        v-if="
+                                                            $page.props.user
+                                                                .all_teams
+                                                                .length > 0
+                                                        "
+                                                    >
+                                                        <button
+                                                            class="myPrimaryButtonNoBackground w-full flex items-center myPrimaryGap py-2"
+                                                            :class="{
+                                                                '':
+                                                                    team.id ===
+                                                                    $page.props
+                                                                        .user
+                                                                        .current_team_id,
+                                                            }"
+                                                        >
+                                                            <div>
+                                                                {{ team.name }}
+                                                            </div>
+                                                            <div
+                                                                v-if="
+                                                                    team.id ===
+                                                                    $page.props
+                                                                        .user
+                                                                        .current_team_id
+                                                                "
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    stroke-width="2"
+                                                                    stroke="currentColor"
+                                                                    class="w-5 h-5 text-myPrimaryColor-600"
+                                                                >
+                                                                    <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M4.5 12.75l6 6 9-13.5"
+                                                                    />
+                                                                </svg>
+                                                            </div>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </td>
+
+                                            <td
+                                                class="whitespace-nowrap p-4 text-sm text-gray-500"
+                                            >
+                                                <form
+                                                    @submit.prevent="
+                                                        handleSwitchToTeam(team)
+                                                    "
+                                                >
+                                                    <div
+                                                        class="flex items-center myPrimaryGap"
+                                                        v-if="
+                                                            $page.props.user
+                                                                .all_teams
+                                                                .length > 0
+                                                        "
+                                                    >
+                                                        <button
+                                                            class="myPrimaryButton w-full flex items-center myPrimaryGap py-2"
+                                                            :class="{
+                                                                'bg-gray-600':
+                                                                    team.id !==
+                                                                    $page.props
+                                                                        .user
+                                                                        .current_team_id,
+                                                            }"
+                                                        >
+                                                            <div>
+                                                                {{ team.name }}
+                                                            </div>
+                                                            <div
+                                                                v-if="
+                                                                    team.id ===
+                                                                    $page.props
+                                                                        .user
+                                                                        .current_team_id
+                                                                "
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    stroke-width="2"
+                                                                    stroke="currentColor"
+                                                                    class="w-5 h-5 text-white"
+                                                                >
+                                                                    <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M4.5 12.75l6 6 9-13.5"
+                                                                    />
+                                                                </svg>
+                                                            </div>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                        </button>
-                    </form>
-                </template>
+                        </div>
+                    </div>
+                </div>
+                <DynamicModal
+                    :show="modalShowSwitchTeam"
+                    :type="typeModal"
+                    :disabled="switchTeamForm.processing"
+                    disabledWhichButton="thirdButton"
+                    :gridColumnAmount="gridColumnModal"
+                    :title="titleModal"
+                    :description="descriptionModal"
+                    :firstButtonText="firstButtonModal"
+                    :secondButtonText="secondButtonModal"
+                    :thirdButtonText="thirdButtonModal"
+                    @firstModalButtonFunction="firstModalButtonFunction"
+                    @secondModalButtonFunction="secondModalButtonFunction"
+                    @thirdModalButtonFunction="thirdModalButtonFunction"
+                >
+                    <header></header>
+                    <main></main>
+                </DynamicModal>
             </template>
         </ActionSection>
     </div>
