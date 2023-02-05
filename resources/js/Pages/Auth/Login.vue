@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import AuthenticationCard from "@/Components/AuthenticationCard.vue";
+import AuthenticationCard from "@/Components/Cards/AuthenticationCard.vue";
 import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vue";
 import Checkbox from "@/Components/Forms/Checkbox.vue";
 import InputError from "@/Components/Forms/InputError.vue";
@@ -47,7 +47,7 @@ const submit = () => {
             <h2 class="font-semibold text-xl leading-tight">Login</h2>
         </template>
 
-        <AuthenticationCard>
+        <AuthenticationCard :css="'opacity-100'">
             <template #logo>
                 <AuthenticationCardLogo />
             </template>
@@ -63,8 +63,6 @@ const submit = () => {
                         id="email"
                         v-model="form.email"
                         type="email"
-                        class="mt-1 block w-full"
-                        required
                         autofocus
                     />
                     <InputError :message="form.errors.email" />
@@ -76,8 +74,6 @@ const submit = () => {
                         id="password"
                         v-model="form.password"
                         type="password"
-                        class="mt-1 block w-full"
-                        required
                         autocomplete="current-password"
                     />
                     <InputError :message="form.errors.password" />

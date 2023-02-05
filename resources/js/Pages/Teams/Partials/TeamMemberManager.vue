@@ -20,6 +20,7 @@ const props = defineProps({
 });
 
 const modalShowCancelTeamInvitation = ref(false);
+const modalShowAddedTeamMember = ref(false);
 const modalShowTeamMemberBeingRemoved = ref(false);
 
 // modal content
@@ -40,6 +41,7 @@ const addTeamMemberForm = useForm({
     role: null,
 });
 
+const cancelTeamInvitationForm = useForm({});
 const updateRoleForm = useForm({
     role: null,
 });
@@ -56,7 +58,32 @@ const addTeamMember = () => {
         // error bag validation
         errorBag: "addTeamMember",
         preserveScroll: true,
-        onSuccess: () => addTeamMemberForm.reset(),
+        onSuccess: () => {
+            addTeamMemberForm.reset();
+
+            modalShowAddedTeamMember.value = true;
+            // set modal standards
+            typeModal.value = "success";
+            gridColumnModal.value = 1;
+            titleModal.value = `Team member added to ${props.team.name}`;
+            descriptionModal.value = `
+            These people have been invited to your team and have been sent an invitation email. They may join the team by accepting the email invitation.
+            `;
+            firstButtonModal.value = "Close";
+            secondButtonModal.value = null;
+            thirdButtonModal.value = null;
+
+            // handle click
+            firstModalButtonFunction.value = function () {
+                // handle show modal for unique content
+                modalShowAddedTeamMember.value = false;
+            };
+            // handle click
+            secondModalButtonFunction.value = function () {};
+            // handle click
+            thirdModalButtonFunction.value = function () {};
+            // end modal
+        },
 
         onError: (err) => {},
         onFinish: () => {},
@@ -67,13 +94,13 @@ const handleCancelTeamInvitation = function (invitation) {
     modalShowCancelTeamInvitation.value = true;
 
     // set modal standards
-    typeModal.value = "warning";
+    typeModal.value = "danger";
     gridColumnModal.value = 2;
     titleModal.value = "Cancel pending Team Invitation";
     descriptionModal.value = `Are you sure you want to cancel this pending team invitations: ${invitation.email}`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
-    thirdButtonModal.value = "Change";
+    thirdButtonModal.value = "Cancel invitation";
 
     // handle click
     firstModalButtonFunction.value = function () {
@@ -93,16 +120,16 @@ const handleCancelTeamInvitation = function (invitation) {
 };
 
 const cancelTeamInvitation = (invitation) => {
-    router.delete(route("team-invitations.destroy", invitation), {
-        preserveScroll: true,
-        onSuccess: () => (modalShowCancelTeamInvitation.value = false),
-        onError: (err) => {
-            console.log(
-                "Something went wrong canceling team invitation. Error:",
-                err
-            );
-        },
-    });
+    cancelTeamInvitationForm.delete(
+        route("team-invitations.destroy", invitation),
+        {
+            preserveScroll: true,
+            onSuccess: () => (modalShowCancelTeamInvitation.value = false),
+            onError: (err) => {
+                console.log("Something went wrong chaning role. Error:", err);
+            },
+        }
+    );
 };
 
 const manageRole = (teamMember) => {
@@ -193,7 +220,7 @@ const leaveTeam = () => {
     );
 };
 
-const removeTeamMember = (teamMember) => {
+const handleRemoveTeamMember = (teamMember) => {
     // handle show modal for unique content
     modalShowTeamMemberBeingRemoved.value = true;
 
@@ -219,18 +246,21 @@ const removeTeamMember = (teamMember) => {
     };
     // handle click
     thirdModalButtonFunction.value = function () {
-        removeTeamMemberForm.delete(
-            route("team-members.destroy", [props.team, teamMember]),
-            {
-                errorBag: "removeTeamMember",
-                preserveScroll: true,
-                preserveState: true,
-                onSuccess: () =>
-                    (modalShowTeamMemberBeingRemoved.value = false),
-            }
-        );
+        removeTeamMember(teamMember);
     };
     // end modal
+};
+
+const removeTeamMember = function (teamMember) {
+    removeTeamMemberForm.delete(
+        route("team-members.destroy", [props.team, teamMember]),
+        {
+            errorBag: "removeTeamMember",
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => (modalShowTeamMemberBeingRemoved.value = false),
+        }
+    );
 };
 
 const displayableRole = (role) => {
@@ -254,22 +284,21 @@ const displayableRole = (role) => {
 
                 <template #form>
                     <div class="col-span-6">
-                        <div
-                            class="max-w-xl text-sm text-gray-600 dark:text-gray-400"
-                        >
-                            Please provide the email address of the person you
-                            would like to add to this team.
+                        <div class="max-w-xl">
+                            <p class="myPrimaryParagraph">
+                                Please provide the email address of the person
+                                you would like to add to this team.
+                            </p>
                         </div>
                     </div>
 
                     <!-- Member Email -->
-                    <div class="col-span-6 sm:col-span-4">
+                    <div class="myInputGroup">
                         <InputLabel for="email" value="Email" />
                         <TextInput
                             id="email"
                             v-model="addTeamMemberForm.email"
                             type="email"
-                            class="mt-1 block w-full"
                         />
                         <InputError :message="addTeamMemberForm.errors.email" />
                     </div>
@@ -362,12 +391,7 @@ const displayableRole = (role) => {
             </FormSection>
         </div>
 
-        <div
-            v-if="
-                team.team_invitations.length > 0 &&
-                userPermissions.canAddTeamMembers
-            "
-        >
+        <div v-if="userPermissions.canAddTeamMembers">
             <SectionBorder />
 
             <!-- Team Member Invitations -->
@@ -375,28 +399,44 @@ const displayableRole = (role) => {
                 <template #title> Pending Team Invitations </template>
 
                 <template #description>
-                    These people have been invited to your team and have been
-                    sent an invitation email. They may join the team by
-                    accepting the email invitation.
+                    <div v-if="team.team_invitations.length < 1">
+                        No Pending Team Invitations
+                    </div>
+                    <div v-if="team.team_invitations.length > 0">
+                        These people have been invited to your team and have
+                        been sent an invitation email. They may join the team by
+                        accepting the email invitation.
+                    </div>
                 </template>
 
                 <!-- Pending Team Member Invitation List -->
                 <template #content>
                     <div class="space-y-6">
+                        <div v-if="team.team_invitations.length < 1">
+                            <p class="myPrimaryParagraph">
+                                No people have been invited to your team yet.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex flex-col myPrimaryGap"
+                        v-if="team.team_invitations.length > 0"
+                    >
                         <div
                             v-for="invitation in team.team_invitations"
                             :key="invitation.id"
-                            class="flex items-center justify-between"
+                            class="flex items-center justify-between py-2 px-2 border border-myPrimaryColor-200 rounded-md"
                         >
-                            <div class="text-gray-600 dark:text-gray-400">
+                            <p class="myPrimaryParagraph">
                                 {{ invitation.email }}
-                            </div>
+                            </p>
 
                             <div class="flex items-center">
                                 <!-- Cancel Team Invitation -->
                                 <button
                                     v-if="userPermissions.canRemoveTeamMembers"
-                                    class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none"
+                                    class="myPrimaryDeleteButtonNoBackground"
                                     @click="
                                         handleCancelTeamInvitation(invitation)
                                     "
@@ -429,7 +469,6 @@ const displayableRole = (role) => {
                             :key="user.id"
                             class="flex items-center justify-between pb-2 border-b"
                         >
-                            <!--  -->
                             <div class="flex items-center gap-2 mt-2">
                                 <div v-if="user.profile_photo_url && false">
                                     <img
@@ -458,7 +497,6 @@ const displayableRole = (role) => {
                                     </p>
                                 </div>
                             </div>
-                            <!--  -->
 
                             <div class="flex items-center myPrimaryGap">
                                 <!-- Manage Team Member Role -->
@@ -467,7 +505,7 @@ const displayableRole = (role) => {
                                         userPermissions.canAddTeamMembers &&
                                         availableRoles.length
                                     "
-                                    class="myPrimaryLink"
+                                    class="myPrimaryButtonNoBackground"
                                     @click="manageRole(user)"
                                 >
                                     {{ displayableRole(user.membership.role) }}
@@ -486,7 +524,7 @@ const displayableRole = (role) => {
                                     v-if="$page.props.user.id === user.id"
                                     @click="handleLeaveTeam()"
                                 >
-                                    Leave team
+                                    Leave Team
                                 </DangerButton>
 
                                 <!-- Remove Team Member -->
@@ -494,7 +532,7 @@ const displayableRole = (role) => {
                                     v-else-if="
                                         userPermissions.canRemoveTeamMembers
                                     "
-                                    @click="removeTeamMember(user)"
+                                    @click="handleRemoveTeamMember(user)"
                                 >
                                     Remove
                                 </DangerButton>
@@ -509,6 +547,8 @@ const displayableRole = (role) => {
         <DynamicModal
             :show="modalShowCancelTeamInvitation"
             :type="typeModal"
+            :disabled="cancelTeamInvitationForm.processing"
+            disabledWhichButton="thirdButton"
             :gridColumnAmount="gridColumnModal"
             :title="titleModal"
             :description="descriptionModal"
@@ -523,10 +563,12 @@ const displayableRole = (role) => {
             <main></main>
         </DynamicModal>
 
-        <!-- Role Leave Team -->
+        <!-- Manage Team Members -->
         <DynamicModal
             :show="modalShowCurrentlyManagingRole"
             :type="typeModal"
+            :disabled="updateRoleForm.processing"
+            disabledWhichButton="thirdButton"
             :gridColumnAmount="gridColumnModal"
             :title="titleModal"
             :description="descriptionModal"
@@ -605,9 +647,29 @@ const displayableRole = (role) => {
                 </div>
             </main>
         </DynamicModal>
+
         <!-- Role Leave Team -->
         <DynamicModal
             :show="modalShowLeaveTeam"
+            :type="typeModal"
+            :disabled="leaveTeamForm.processing"
+            disabledWhichButton="thirdButton"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
+        >
+            <header></header>
+            <main></main>
+        </DynamicModal>
+        <!-- Role Leave Team -->
+        <DynamicModal
+            :show="modalShowAddedTeamMember"
             :type="typeModal"
             :gridColumnAmount="gridColumnModal"
             :title="titleModal"
@@ -622,10 +684,13 @@ const displayableRole = (role) => {
             <header></header>
             <main></main>
         </DynamicModal>
+
         <!-- Role Management Modal -->
         <DynamicModal
             :show="modalShowTeamMemberBeingRemoved"
             :type="typeModal"
+            :disabled="removeTeamMemberForm.processing"
+            disabledWhichButton="thirdButton"
             :gridColumnAmount="gridColumnModal"
             :title="titleModal"
             :description="descriptionModal"

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import AuthenticationCard from "@/Components/AuthenticationCard.vue";
-import AuthenticationCardLogo from "@/Components/AuthenticationCardLogo.vue";
+import AuthenticationCard from "@/Components/Cards/AuthenticationCard.vue";
+import AuthenticationCardLogo from "@/Components/Cards/AuthenticationCardLogo.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
@@ -27,7 +27,7 @@ const submit = () => {
 <template>
     <Head title="Secure Area" />
 
-    <AuthenticationCard>
+    <AuthenticationCard :css="'opacity-100'">
         <template #logo>
             <AuthenticationCardLogo />
         </template>
@@ -37,7 +37,7 @@ const submit = () => {
             password before continuing.
         </div>
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" :css="'opacity-100'">
             <div>
                 <InputLabel for="password" value="Password" />
                 <TextInput
@@ -45,7 +45,6 @@ const submit = () => {
                     ref="passwordInput"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
                     required
                     autocomplete="current-password"
                     autofocus

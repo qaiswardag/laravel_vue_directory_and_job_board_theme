@@ -31,14 +31,12 @@ const hasActions = computed(() => !!useSlots().actions);
                             : 'sm:rounded-md'
                     "
                 >
-                    <div class="grid grid-cols-6 gap-6">
-                        <slot name="form" />
-                    </div>
+                    <slot name="form" />
                 </div>
 
                 <div
                     v-if="hasActions"
-                    class="px-4 py-4 pb-4 bg-gray-100 sm:px-6 min-h-[6rem] text-right sm:rounded-bl-md sm:rounded-br-md"
+                    class="px-4 py-4 pb-4 bg-gray-100 sm:px-6 min-h-[7rem] text-right sm:rounded-bl-md sm:rounded-br-md"
                 >
                     <slot name="actions" />
                 </div>

@@ -7,6 +7,7 @@ import InputError from "@/Components/Forms/InputError.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 defineProps({
     sessions: Array,
@@ -71,9 +72,14 @@ const logoutOtherBrowserSessions = () => {
         preserveScroll: true,
         onSuccess: () => {
             modalShowConfirmingSessionLogout.value = false;
+            form.reset();
         },
-        onError: () => passwordInput.value.focus(),
-        onFinish: () => form.reset(),
+        onError: () => {
+            passwordInput.value.focus();
+        },
+        onFinish: () => {
+            form.reset();
+        },
     });
 };
 
@@ -94,12 +100,14 @@ const closeModal = () => {
         </template>
 
         <template #content>
-            <div class="max-w-xl text-sm text-gray-600">
-                If necessary, you may log out of all of your other browser
-                sessions across all of your devices. Some of your recent
-                sessions are listed below; however, this list may not be
-                exhaustive. If you feel your account has been compromised, you
-                should also update your password.
+            <div class="max-w-xl">
+                <p class="myPrimaryParagraph">
+                    If necessary, you may log out of all of your other browser
+                    sessions across all of your devices. Some of your recent
+                    sessions are listed below; however, this list may not be
+                    exhaustive. If you feel your account has been compromised,
+                    you should also update your password.
+                </p>
             </div>
 
             <!-- Other Browser Sessions -->
@@ -174,20 +182,18 @@ const closeModal = () => {
                     </div>
                 </div>
             </div>
+        </template>
 
-            <div class="flex items-center mt-5">
-                <PrimaryButton @click="handleSessionLogout">
-                    Log Out Other Browser Sessions
-                </PrimaryButton>
-
-                <ActionMessage
-                    :on="form.recentlySuccessful"
-                    type="sucsess"
-                    class="ml-3"
-                >
-                    Done.
-                </ActionMessage>
-            </div>
+        <template #actions>
+            <PrimaryButton @click="handleSessionLogout">
+                Log Out Other Browser Sessions
+            </PrimaryButton>
+            <ActionMessage
+                :on="form.recentlySuccessful"
+                type="sucsess"
+                class="ml-3"
+                >Successfully deleted your Browser Sessions.
+            </ActionMessage>
 
             <DynamicModal
                 :show="modalShowConfirmingSessionLogout"
@@ -211,7 +217,6 @@ const closeModal = () => {
                             ref="passwordInput"
                             v-model="form.password"
                             type="password"
-                            class="mt-1 block w-3/4"
                             placeholder="Password"
                             @keyup.enter="logoutOtherBrowserSessions"
                         />

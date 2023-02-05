@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import AuthenticationCard from "@/Components/AuthenticationCard.vue";
+import AuthenticationCard from "@/Components/Cards/AuthenticationCard.vue";
 import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 
@@ -23,7 +23,7 @@ const verificationLinkSent = computed(
 <template>
     <Head title="Email Verification" />
 
-    <AuthenticationCard>
+    <AuthenticationCard :css="'opacity-100'">
         <template #logo>
             <AuthenticationCardLogo />
         </template>

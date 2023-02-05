@@ -6,12 +6,28 @@ import DangerButton from "@/Components/Buttons/DangerButton.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
+import FormSection from "@/Components/Forms/FormSection.vue";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 const props = defineProps({
     team: Object,
 });
 
-const enablingConfirmPassword = ref(false);
+const modalShowDeleteTeam = ref(false);
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
 
 const passwordInput = ref(null);
 
@@ -19,19 +35,48 @@ const form = useForm({
     password: "",
 });
 
-const modalShowConfirmingTeamDeletion = ref(false);
-
 const handleDeleteTeam = () => {
-    console.log("handle delete team køre");
-    deleteTeam();
+    modalShowDeleteTeam.value = true;
+
+    // handle show modal for unique content
+    modalShowDeleteTeam.value = true;
+    // set modal standards
+    typeModal.value = "delete";
+    gridColumnModal.value = 2;
+    titleModal.value = `Delete team`;
+    descriptionModal.value =
+        "Please enter your password to confirm you would like to delete this team.";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Confirm";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowDeleteTeam.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        // modalShowDeleteTeam.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        deleteTeam();
+    };
+    // end modal
 };
 
 const deleteTeam = function () {
     form.delete(route("teams.destroy", props.team), {
         errorBag: "deleteTeam",
         preserveScroll: true,
-        onSuccess: (log) => {},
-        onError: (err) => {},
+        onSuccess: (log) => {
+            modalShowDeleteTeam.value = false;
+        },
+        onError: (err) => {
+            modalShowDeleteTeam.value = false;
+        },
         onFinish: (log) => {},
     });
 };
@@ -44,40 +89,49 @@ const deleteTeam = function () {
         <template #description> Permanently delete this team. </template>
 
         <template #content>
-            <div class="max-w-xl text-sm text-gray-600">
-                Once a team is deleted, all of its resources and data will be
-                permanently deleted. Before deleting this team, please download
-                any data or information regarding this team that you wish to
-                retain.
-            </div>
+            <div class="max-w-xl">
+                <p class="myPrimaryParagraph font-semibold mb-4">
+                    Permanently delete {{ team.name }}?
+                </p>
 
-            <!-- TODO: Add "confirms password" middleware to delete team
+                <p class="myPrimaryParagraph mb-4">
+                    Once a team is deleted, all of its resources and data will
+                    be permanently deleted. Before deleting this team, please
+                    download any data or information regarding this team that
+                    you wish to retain.
+                </p>
+            </div>
+        </template>
+
+        <!-- TODO: Add "confirms password" middleware to delete team
             right now, team can be deleted without password confirmation -->
-            <div class="mt-5">
-                <DangerButton
-                    type="button"
-                    :class="{ 'opacity-25': enablingConfirmPassword }"
-                    :disabled="enablingConfirmPassword"
-                    @click="deleteTeam"
-                >
-                    Delete Team
-                </DangerButton>
-            </div>
-            <InputError :message="form.errors.team" />
 
-            <!-- with confirm password modal - start -->
-            <!-- <div class="mt-5">
-                <ConfirmsPassword @confirmed="handleDeleteTeam">
-                    <DangerButton
-                        type="button"
-                        :class="{ 'opacity-25': enablingConfirmPassword }"
-                        :disabled="enablingConfirmPassword"
-                    >
-                        Delete Team
-                    </DangerButton>
-                </ConfirmsPassword>
-            </div> -->
-            <!-- with confirm password modal - end -->
+        <template #actions>
+            <div class="flex flex-col items-end">
+                <DangerButton type="button" @click="handleDeleteTeam">
+                    Delete {{ team.name }}
+                </DangerButton>
+                <InputError :message="form.errors.team" />
+            </div>
+
+            <DynamicModal
+                :show="modalShowDeleteTeam"
+                :type="typeModal"
+                :disabled="form.processing"
+                disabledWhichButton="thirdButton"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
+                <main></main>
+            </DynamicModal>
         </template>
     </ActionSection>
 </template>

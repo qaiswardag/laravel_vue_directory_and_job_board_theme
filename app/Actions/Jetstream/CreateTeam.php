@@ -19,6 +19,7 @@ class CreateTeam implements CreatesTeams
      */
     public function create(User $user, array $input): Team
     {
+        // TODO: if user do not own and user is creating thier first team make that team thier personal team
         Gate::forUser($user)->authorize("create", Jetstream::newTeamModel());
 
         Validator::make($input, [

@@ -15,6 +15,8 @@ const props = defineProps({
     permissions: Object,
 });
 
+const modalShowUpdateTeam = ref(false);
+
 // modal content
 const typeModal = ref("");
 const gridColumnModal = ref(Number(1));
@@ -27,8 +29,6 @@ const thirdButtonModal = ref(null);
 const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
-
-const modalShowUpdateTeam = ref(false);
 
 const handleUpdateTeam = function () {
     // handle show modal for unique content
@@ -131,15 +131,10 @@ const updateTeamName = () => {
             </div>
 
             <!-- Team Name -->
-            <div class="col-span-6 sm:col-span-4">
+            <div class="myInputGroup mt-8">
                 <InputLabel for="name" value="Team Name" />
 
-                <TextInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                />
+                <TextInput id="name" v-model="form.name" type="text" />
 
                 <InputError :message="form.errors.name" />
             </div>

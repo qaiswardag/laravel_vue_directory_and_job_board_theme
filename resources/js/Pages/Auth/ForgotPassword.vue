@@ -1,12 +1,13 @@
 <script setup>
 import { Head, useForm } from "@inertiajs/vue3";
-import AuthenticationCard from "@/Components/AuthenticationCard.vue";
+import AuthenticationCard from "@/Components/Cards/AuthenticationCard.vue";
 import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
+import GuestsLayout from "@/Layouts/GuestsLayout.vue";
+import SubmitButton from "../../Components/Buttons/SubmitButton.vue";
 
 defineProps({
     status: String,
@@ -22,14 +23,12 @@ const submit = () => {
 </script>
 
 <template>
-    <LoggedInLayout title="Testing">
+    <GuestsLayout title="Log in">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Forgot Password</h2>
+            <h2 class="font-semibold text-xl leading-tight">Login</h2>
         </template>
-        <Head title="Log in" />
-        <Head title="Forgot Password" />
 
-        <AuthenticationCard>
+        <AuthenticationCard :css="'opacity-100'">
             <template #logo>
                 <AuthenticationCardLogo />
             </template>
@@ -45,28 +44,25 @@ const submit = () => {
             </div>
 
             <form @submit.prevent="submit">
-                <div>
+                <div class="myInputGroup">
                     <InputLabel for="email" value="Email" />
                     <TextInput
                         id="email"
                         v-model="form.email"
                         type="email"
-                        class="mt-1 block w-full"
-                        required
                         autofocus
                     />
                     <InputError :message="form.errors.email" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <PrimaryButton
-                        :class="{ 'opacity-25': form.processing }"
+                    <SubmitButton
                         :disabled="form.processing"
+                        buttonText="Email Password Reset Link"
                     >
-                        Email Password Reset Link
-                    </PrimaryButton>
+                    </SubmitButton>
                 </div>
             </form>
         </AuthenticationCard>
-    </LoggedInLayout>
+    </GuestsLayout>
 </template>

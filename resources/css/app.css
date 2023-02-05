@@ -86,6 +86,24 @@
     .myPrimaryToggleButton {
         @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2 bg-gray-100 hover:bg-myPrimaryColor-500 hover:text-white;
     }
+    /*
+    |--------------------------------------------------------------------------
+    | Buttons With no background
+    |--------------------------------------------------------------------------
+    */
+
+    .myPrimaryButtonNoBackground {
+        @apply myPrimaryParagraph font-semibold  text-myPrimaryColor-600 
+        focus:outline-none cursor-pointer;
+    }
+
+    .mySecondaryButtonNoBackground {
+        @apply font-semibold  text-myPrimaryColor-600;
+    }
+
+    .myPrimaryDeleteButtonNoBackground {
+        @apply myPrimaryButtonNoBackground text-myErrorColor-600;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -118,7 +136,7 @@
         @apply flex items-center myPrimaryGap;
     }
     .myInputGroup {
-        @apply w-full self-start;
+        @apply w-full self-start mb-2;
     }
 
     .myPrimaryInputLabel {
@@ -127,6 +145,10 @@
 
     .myPrimaryInput {
         @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:border-transparent;
+    }
+
+    .myPrimaryInputError {
+        @apply mt-1 italic block text-sm font-medium text-myErrorColor-500 text-left;
     }
 
     .myPrimaryHiddenInputField {
@@ -151,8 +173,5 @@
         sm:text-sm font-normal
         focus-within:bg-white focus:focus-within:rounded-md
         focus-within:ring-2 focus-within:ring-myPrimaryColor-500 focus-within:ring-offset-[1px];
-    }
-    .myPrimaryInputError {
-        @apply mt-1 italic block text-sm font-medium text-red-600 text-left;
     }
 }

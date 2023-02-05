@@ -30,6 +30,7 @@ class DeleteUser implements DeletesUsers
      */
     public function delete(User $user): void
     {
+        sleep(5);
         DB::transaction(function () use ($user) {
             $this->deleteTeams($user);
             $user->deleteProfilePhoto();

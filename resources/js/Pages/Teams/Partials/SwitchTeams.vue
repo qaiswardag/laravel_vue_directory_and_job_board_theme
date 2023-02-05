@@ -61,11 +61,13 @@ const handleSwitchToTeam = (team) => {
             <template #description> Switch team lorem ipsum</template>
 
             <template #content>
-                <div class="max-w-xl text-sm text-gray-600">
-                    Once a team is deleted, all of its resources and data will
-                    be permanently deleted. Before deleting this team, please
-                    download any data or information regarding this team that
-                    you wish to retain.
+                <div class="max-w-xl">
+                    <p class="myPrimaryParagraph">
+                        Once a team is deleted, all of its resources and data
+                        will be permanently deleted. Before deleting this team,
+                        please download any data or information regarding this
+                        team that you wish to retain.
+                    </p>
                 </div>
                 <template
                     v-for="team in $page.props.user.all_teams"

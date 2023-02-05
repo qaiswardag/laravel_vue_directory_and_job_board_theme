@@ -90,8 +90,9 @@ const clearPhotoFileInput = () => {
             <!-- Profile Photo -->
             <div
                 v-if="$page.props.jetstream.managesProfilePhotos"
-                class="col-span-6 sm:col-span-4"
+                class="myInputGroup"
             >
+                >
                 <!-- Profile Photo File Input -->
                 <input
                     ref="photoInput"
@@ -142,39 +143,32 @@ const clearPhotoFileInput = () => {
             </div>
 
             <!-- Name -->
-            <div class="col-span-6 sm:col-span-4">
+            <div class="myInputGroup">
                 <InputLabel for="first_name" value="First name" />
                 <TextInput
                     id="first_name"
                     v-model="form.first_name"
                     type="text"
-                    class="mt-1 block w-full"
                     autocomplete="first_name"
                 />
                 <InputError :message="form.errors.first_name" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="myInputGroup">
                 <InputLabel for="last_name" value="Last name" />
                 <TextInput
                     id="last_name"
                     v-model="form.last_name"
                     type="text"
-                    class="mt-1 block w-full"
                     autocomplete="last_name"
                 />
                 <InputError :message="form.errors.last_name" />
             </div>
 
             <!-- Email -->
-            <div class="col-span-6 sm:col-span-4">
+            <div class="myInputGroup">
                 <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                />
+                <TextInput id="email" v-model="form.email" type="email" />
                 <InputError :message="form.errors.email" />
 
                 <div

@@ -1,7 +1,7 @@
 <script setup>
 import { nextTick, ref } from "vue";
 import { Head, useForm } from "@inertiajs/vue3";
-import AuthenticationCard from "@/Components/AuthenticationCard.vue";
+import AuthenticationCard from "@/Components/Cards/AuthenticationCard.vue";
 import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
@@ -40,7 +40,7 @@ const submit = () => {
 <template>
     <Head title="Two-factor Confirmation" />
 
-    <AuthenticationCard>
+    <AuthenticationCard :css="'opacity-100'">
         <template #logo>
             <AuthenticationCardLogo />
         </template>
@@ -66,7 +66,6 @@ const submit = () => {
                     v-model="form.code"
                     type="text"
                     inputmode="numeric"
-                    class="mt-1 block w-full"
                     autofocus
                     autocomplete="one-time-code"
                 />
@@ -80,7 +79,6 @@ const submit = () => {
                     ref="recoveryCodeInput"
                     v-model="form.recovery_code"
                     type="text"
-                    class="mt-1 block w-full"
                     autocomplete="one-time-code"
                 />
                 <InputError :message="form.errors.recovery_code" />

@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-    on: Boolean,
+    on: { required: true, Boolean },
     type: {
         required: true,
     },
@@ -8,19 +8,51 @@ defineProps({
 </script>
 
 <template>
-    <transition
-        leave-active-class="transition ease-in duration-1000"
-        leave-from-class="opacity-100"
-        leave-to-class="opacity-0"
-    >
-        <div v-show="on" class="text-sm text-gray-600">
-            <div v-if="type === 'success'">
-                <div class="rounded-md bg-green-50 p-4">
-                    <p class="text-sm font-medium text-green-800">
-                        <slot />
-                    </p>
-                </div>
+    <transition name="slide-fade">
+        <div v-show="on" class="text-sm text-gray-600 mt-2">
+            <div v-if="type === 'sucsess'">
+                <p class="myPrimaryParagraph">
+                    <slot />
+                </p>
             </div>
         </div>
     </transition>
 </template>
+
+<style scope>
+/*
+  Enter and leave animations can use different
+  durations and timing functions.
+*/
+.slide-fade-enter-active {
+    transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    transform: translateX(20px);
+    opacity: 0;
+}
+
+.bounce-enter-active {
+    animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+</style>

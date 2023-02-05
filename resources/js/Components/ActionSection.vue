@@ -14,10 +14,18 @@ import SectionTitle from "./SectionTitle.vue";
         </SectionTitle>
 
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <div
-                class="px-4 py-5 sm:p-6 bg-white border border-gray-300 rounded"
-            >
-                <slot name="content" />
+            <div class="border border-gray-300 rounded">
+                <div
+                    class="px-4 py-5 bg-white sm:p-6 sm:rounded-tl-md sm:rounded-tr-md"
+                >
+                    <slot name="content" />
+                </div>
+
+                <div
+                    class="px-4 py-4 pb-4 bg-gray-100 sm:px-6 min-h-[7rem] text-right sm:rounded-bl-md sm:rounded-br-md"
+                >
+                    <slot name="actions" />
+                </div>
             </div>
         </div>
     </div>

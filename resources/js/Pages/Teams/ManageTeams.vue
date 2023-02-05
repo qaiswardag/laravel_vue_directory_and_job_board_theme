@@ -2,7 +2,6 @@
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import SwitchTeams from "./Partials/SwitchTeams.vue";
 import CreateTeamForm from "@/Pages/Teams/Partials/CreateTeamForm.vue";
-import CreateTeamFormOld from "@/Pages/Teams/Partials/CreateTeamFormOld.vue";
 </script>
 
 <template>

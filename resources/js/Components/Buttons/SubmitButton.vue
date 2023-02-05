@@ -1,4 +1,5 @@
 <script setup>
+import ActionMessage from "@/Components/Actions/ActionMessage.vue";
 defineProps({
     type: {
         type: String,
@@ -18,17 +19,20 @@ defineProps({
     successMessage: {
         type: String,
     },
+    ButtonStyleDelete: {
+        type: Boolean,
+    },
 });
 </script>
 
 <template>
-    <div class="flex flex-col items-end gap-2">
+    <div class="flex flex-col items-end justify-end gap-2">
         <div class="flex items-center gap-3">
-            <Transition name="bounce">
+            <Transition name="slide-fade">
                 <div v-if="disabled" role="status">
                     <svg
                         aria-hidden="true"
-                        class="inline w-6 h-6 animate-spin text-myPrimaryColor-600 fill-myErrorColor-500"
+                        class="inline w-7 h-7 stroke-3 animate-spin text-yellow-400 fill-myPrimaryColor-600"
                         stroke-width="2"
                         viewBox="0 0 100 101"
                         fill="none"
@@ -50,20 +54,23 @@ defineProps({
                 :type="type"
                 :disabled="disabled"
                 class="myPrimaryButton myPrimaryGap min-w-[8rem]"
-                :class="{ 'opacity-25 cursor-default': disabled }"
+                :class="{
+                    'opacity-25 cursor-default': disabled,
+                    myPrimaryDeleteButton: ButtonStyleDelete,
+                }"
             >
                 <slot />
                 {{ disabled ? "Loading.." : buttonText }}
             </button>
         </div>
-        <Transition name="slide-fade">
-            <template v-if="status">
-                <p class="myPrimaryParagraph text-xs">
-                    {{ successMessage }}
-                </p>
-            </template>
-        </Transition>
     </div>
+    <transition name="slide-fade">
+        <template v-if="status">
+            <ActionMessage :on="status" type="sucsess" class="ml-3"
+                >{{ successMessage }}
+            </ActionMessage>
+        </template>
+    </transition>
 </template>
 
 <style scope>
@@ -76,7 +83,7 @@ defineProps({
 }
 
 .slide-fade-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+    transition: all 1s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .slide-fade-enter-from,

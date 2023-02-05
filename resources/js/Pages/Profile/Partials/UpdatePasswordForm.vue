@@ -47,33 +47,31 @@ const updatePassword = () => {
         </template>
 
         <template #form>
-            <div class="col-span-6 sm:col-span-4">
+            <div class="myInputGroup">
                 <InputLabel for="current_password" value="Current Password" />
                 <TextInput
                     id="current_password"
                     ref="currentPasswordInput"
                     v-model="form.current_password"
                     type="password"
-                    class="mt-1 block w-full"
                     autocomplete="current-password"
                 />
                 <InputError :message="form.errors.current_password" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="myInputGroup">
                 <InputLabel for="password" value="New Password" />
                 <TextInput
                     id="password"
                     ref="passwordInput"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
                     autocomplete="new-password"
                 />
                 <InputError :message="form.errors.password" />
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="myInputGroup">
                 <InputLabel
                     for="password_confirmation"
                     value="Confirm Password"
@@ -82,7 +80,6 @@ const updatePassword = () => {
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
                     autocomplete="new-password"
                 />
                 <InputError :message="form.errors.password_confirmation" />

@@ -32,8 +32,8 @@ const handleCreateTeam = function () {
     // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 2;
-    titleModal.value = "Create a new team";
-    descriptionModal.value = "Are you sure you want to create a new team?";
+    titleModal.value = `Create a new team ${createTeamForm.name}`;
+    descriptionModal.value = `Following team is being created ${createTeamForm.name}.`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Create Team";
@@ -85,7 +85,7 @@ const createTeam = () => {
         <main></main>
     </DynamicModal>
     <FormSection @submitted="handleCreateTeam">
-        <template #title> Team Details </template>
+        <template #title> Create Team </template>
 
         <template #description>
             Create a new team to collaborate with others on projects.
@@ -94,7 +94,6 @@ const createTeam = () => {
         <template #form>
             <div class="col-span-6">
                 <InputLabel value="Team Owner" />
-
                 <div class="flex items-center gap-2 mt-2">
                     <div v-if="$page.props.user.profile_photo_url && false">
                         <img
@@ -125,7 +124,7 @@ const createTeam = () => {
                 </div>
             </div>
 
-            <div class="col-span-6 sm:col-span-4">
+            <div class="myInputGroup mt-8">
                 <InputLabel for="name" value="Team Name" />
                 <TextInput
                     id="name"

@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import AuthenticationCard from "@/Components/AuthenticationCard.vue";
+import AuthenticationCard from "@/Components/Cards/AuthenticationCard.vue";
 import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vue";
 import Checkbox from "@/Components/Forms/Checkbox.vue";
 import InputError from "@/Components/Forms/InputError.vue";
@@ -46,17 +46,8 @@ const submit = () => {
         <div
             class="bg-[url('/images/app-images/background-images/register/register.jpg')] bg-cover bg-no-repeat bg-fixed bg-center pt-8 pb-32"
         >
-            <AuthenticationCard>
-                <template #logo>
-                    <div
-                        class="w-full sm:max-w-md mt-6 px-6 py-4 overflow-hidden"
-                    ></div>
-                </template>
-
+            <AuthenticationCard :css="'opacity-95'">
                 <form @submit.prevent="submit">
-                    <AuthenticationCardLogo
-                        class="flex justify-center my-4"
-                    ></AuthenticationCardLogo>
                     <div class="mt-4 mb-8">
                         <h1 class="mySecondaryHeader text-center">
                             Sign up and get started today
@@ -72,7 +63,6 @@ const submit = () => {
                                 id="first_name"
                                 v-model="form.first_name"
                                 type="text"
-                                class="mt-1 block w-full"
                                 autofocus
                                 autocomplete="first_name"
                             />
@@ -84,7 +74,6 @@ const submit = () => {
                                 id="last_name"
                                 v-model="form.last_name"
                                 type="text"
-                                class="mt-1 block w-full"
                                 autofocus
                                 autocomplete="last_name"
                             />
@@ -98,7 +87,6 @@ const submit = () => {
                             id="email"
                             v-model="form.email"
                             type="email"
-                            class="mt-1 block w-full"
                         />
                         <InputError :message="form.errors.email" />
                     </div>
@@ -109,7 +97,6 @@ const submit = () => {
                             id="password"
                             v-model="form.password"
                             type="password"
-                            class="mt-1 block w-full"
                             autocomplete="new-password"
                         />
                         <InputError :message="form.errors.password" />
@@ -124,7 +111,6 @@ const submit = () => {
                             id="password_confirmation"
                             v-model="form.password_confirmation"
                             type="password"
-                            class="mt-1 block w-full"
                             autocomplete="new-password"
                         />
                         <InputError
