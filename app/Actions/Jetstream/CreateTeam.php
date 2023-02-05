@@ -19,7 +19,8 @@ class CreateTeam implements CreatesTeams
      */
     public function create(User $user, array $input): Team
     {
-        // TODO: if user do not own and user is creating thier first team make that team thier personal team
+        $userTeams = Team::where("user_id", $user->id)->get();
+
         Gate::forUser($user)->authorize("create", Jetstream::newTeamModel());
 
         Validator::make($input, [
@@ -31,6 +32,8 @@ class CreateTeam implements CreatesTeams
         $user->switchTeam(
             $team = $user->ownedTeams()->create([
                 "name" => $input["name"],
+                // if user do not own and user is creating thier first team make that team thier personal team
+                "personal_team" => $userTeams->count() ? false : true,
                 "personal_team" => false,
             ])
         );

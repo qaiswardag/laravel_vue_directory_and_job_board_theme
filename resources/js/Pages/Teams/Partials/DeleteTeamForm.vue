@@ -77,7 +77,9 @@ const deleteTeam = function () {
         onError: (err) => {
             modalShowDeleteTeam.value = false;
         },
-        onFinish: (log) => {},
+        onFinish: (log) => {
+            modalShowDeleteTeam.value = false;
+        },
     });
 };
 </script>

@@ -15,12 +15,98 @@ defineProps({
 <template>
     <LoggedInLayout title="Team Settings">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Teams Settings</h2>
+            <h2 class="font-semibold text-xl leading-tight rounded">
+                Teams Settings
+            </h2>
         </template>
 
         <div>
+            <div
+                class="my-4 border-2 border-myPrimaryColor-500 rounded-lg px-4"
+            >
+                <h1 class="mySecondaryHeader my-4">Team:</h1>
+                <hr />
+                <p
+                    class="myPrimaryParagraph my-4 text-myErrorColor-600 flex justify-between items-center"
+                >
+                    <span class="text-myErrorColor-600"> team id: </span>
+                    {{ JSON.stringify(team.id) }}
+                </p>
+                <hr />
+                <p
+                    class="myPrimaryParagraph my-4 text-myErrorColor-600 flex justify-between items-center"
+                >
+                    <span class="text-myErrorColor-600"> team user id: </span>
+                    {{ JSON.stringify(team.user_id) }}
+                </p>
+                <hr />
+                <p
+                    class="myPrimaryParagraph my-4 text-myErrorColor-600 flex justify-between items-center"
+                >
+                    <span class="text-myErrorColor-600"> Personal team: </span>
+                    {{ JSON.stringify(team.personal_team) }}
+                </p>
+                <hr />
+                <p
+                    class="myPrimaryParagraph my-4 text-myErrorColor-600 flex justify-between items-center"
+                >
+                    <span class="text-myErrorColor-600"> Owner: </span>
+                    {{ team.owner.first_name }}
+                    {{ team.owner.last_name }}
+                </p>
+            </div>
+            <!--  -->
+            <!--  -->
+            <!--  -->
+            <!--  -->
+            <!--  -->
+            <div
+                class="my-4 border-2 border-myPrimaryColor-500 rounded-lg px-4"
+            >
+                <h1 class="mySecondaryHeader my-4">Permissions:</h1>
+                <hr />
+                <p
+                    class="myPrimaryParagraph my-4 text-myErrorColor-600 flex justify-between items-center"
+                >
+                    <span class="text-myErrorColor-600">
+                        Current Permissions:
+                    </span>
+                    {{ JSON.stringify(permissions) }}
+                </p>
+                <hr />
+                <p
+                    class="myPrimaryParagraph my-4 text-indigo-600 flex justify-between items-center"
+                >
+                    <span class="text-indigo-800">
+                        Example for company created by user. Like (teams table:
+                        user_id = 1, which is Qais ):
+                    </span>
+
+                    {"canAddTeamMembers":true,"canDeleteTeam":true,"canRemoveTeamMembers":true,"canUpdateTeam":true}
+                </p>
+
+                <hr />
+
+                <p
+                    class="myPrimaryParagraph my-4 text-fuchsia-600 flex justify-between items-center"
+                >
+                    <span class="text-fuchsia-800">
+                        Permissions Added Team Member as Administrator:
+                    </span>
+                    {"canAddTeamMembers":false,"canDeleteTeam":false,"canRemoveTeamMembers":false,"canUpdateTeam":false}
+                </p>
+                <hr />
+                <p
+                    class="myPrimaryParagraph my-4 text-green-600 flex justify-between items-center"
+                >
+                    <span class="text-green-800">
+                        Permissions Added Team Member as Editor:
+                    </span>
+                    {"canAddTeamMembers":false,"canDeleteTeam":false,"canRemoveTeamMembers":false,"canUpdateTeam":false}
+                </p>
+            </div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
-                <UpdateTeamNameForm :team="team" :permissions="permissions" />
+                <UpdateTeamNameForm :team="team"> </UpdateTeamNameForm>
 
                 <TeamMemberManager
                     class="mt-10 sm:mt-0"
@@ -29,11 +115,8 @@ defineProps({
                     :user-permissions="permissions"
                 />
 
-                <template v-if="permissions.canDeleteTeam">
-                    <SectionBorder />
-
-                    <DeleteTeamForm class="mt-10 sm:mt-0" :team="team" />
-                </template>
+                <SectionBorder> </SectionBorder>
+                <DeleteTeamForm class="mt-10 sm:mt-0" :team="team" />
             </div>
         </div>
     </LoggedInLayout>

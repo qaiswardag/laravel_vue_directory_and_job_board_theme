@@ -259,6 +259,12 @@ const removeTeamMember = function (teamMember) {
             preserveScroll: true,
             preserveState: true,
             onSuccess: () => (modalShowTeamMemberBeingRemoved.value = false),
+            onError: (err) => {
+                modalShowTeamMemberBeingRemoved.value = false;
+            },
+            onFinish: (log) => {
+                modalShowTeamMemberBeingRemoved.value = false;
+            },
         }
     );
 };
@@ -270,7 +276,7 @@ const displayableRole = (role) => {
 
 <template>
     <div>
-        <div v-if="userPermissions.canAddTeamMembers">
+        <div>
             <SectionBorder />
 
             <!-- Add Team Member -->
@@ -426,7 +432,7 @@ const displayableRole = (role) => {
                         <div
                             v-for="invitation in team.team_invitations"
                             :key="invitation.id"
-                            class="flex items-center justify-between py-2 px-2 border border-myPrimaryColor-200 rounded-md"
+                            class="flex items-center justify-between py-4 px-2 pb-2 border-b"
                         >
                             <p class="myPrimaryParagraph">
                                 {{ invitation.email }}
@@ -529,9 +535,6 @@ const displayableRole = (role) => {
 
                                 <!-- Remove Team Member -->
                                 <DangerButton
-                                    v-else-if="
-                                        userPermissions.canRemoveTeamMembers
-                                    "
                                     @click="handleRemoveTeamMember(user)"
                                 >
                                     Remove

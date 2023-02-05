@@ -435,7 +435,6 @@ onMounted(async () => {
                             </div>
                             <div class="flex justify-end py-6">
                                 <SubmitButton
-                                    @click="getBackenUsers"
                                     :disabled="isLoadingBackendDataUsers"
                                     buttonText="Show Users"
                                 >

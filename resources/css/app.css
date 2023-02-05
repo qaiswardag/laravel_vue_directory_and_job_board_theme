@@ -70,7 +70,7 @@
     }
 
     .myPrimaryButton {
-        @apply font-semibold inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryColor-500 px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryColor-600 sm:w-auto
+        @apply break-keep font-semibold inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryColor-500 px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryColor-600 sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2
         focus-visible:ring-2 focus-visible:ring-myPrimaryColor-500;
     }
