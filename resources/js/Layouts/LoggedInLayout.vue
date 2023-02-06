@@ -63,43 +63,6 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-const handleSwitchToTeam = (team) => {
-    // handle show modal for unique content
-    modalShowSwitchTeams.value = true;
-    // set modal standards
-    typeModal.value = "success";
-    gridColumnModal.value = 2;
-    titleModal.value = `You are switching team to ${team.name}`;
-    descriptionModal.value = `Are you sure you want to switch team to ${team.name}?`;
-    firstButtonModal.value = "Close";
-    secondButtonModal.value = null;
-    thirdButtonModal.value = "Swtich team";
-    // handle click
-    firstModalButtonFunction.value = function () {
-        // handle show modal for unique content
-        modalShowSwitchTeams.value = false;
-    };
-    // handle click
-    secondModalButtonFunction.value = function () {
-        // handle show modal for unique content
-        modalShowSwitchTeams.value = false;
-    };
-    // handle click
-    thirdModalButtonFunction.value = function () {
-        router.put(
-            route("current-team.update"),
-            {
-                team_id: team.id,
-            },
-            {
-                preserveState: false,
-            }
-        );
-        // handle show modal for unique content
-        modalShowSwitchTeams.value = false;
-    };
-    // end modal
-};
 const handleLogout = () => {
     // handle show modal for unique content
     modalShowLogout.value = true;
@@ -191,22 +154,6 @@ const sidebarOpen = ref(false);
     >
     </SlideOverNotifications>
     <DynamicModal
-        :show="modalShowSwitchTeams"
-        :type="typeModal"
-        :gridColumnAmount="gridColumnModal"
-        :title="titleModal"
-        :description="descriptionModal"
-        :firstButtonText="firstButtonModal"
-        :secondButtonText="secondButtonModal"
-        :thirdButtonText="thirdButtonModal"
-        @firstModalButtonFunction="firstModalButtonFunction"
-        @secondModalButtonFunction="secondModalButtonFunction"
-        @thirdModalButtonFunction="thirdModalButtonFunction"
-    >
-        <header></header>
-        <main></main>
-    </DynamicModal>
-    <DynamicModal
         :show="modalShowLogout"
         :type="typeModal"
         :gridColumnAmount="gridColumnModal"
@@ -239,7 +186,9 @@ const sidebarOpen = ref(false);
                 leave-from="opacity-100"
                 leave-to="opacity-0"
             >
-                <div class="fixed inset-0 bg-gray-600 bg-opacity-75" />
+                <div
+                    class="fixed inset-0 bg-myPrimaryNormalColor bg-opacity-75"
+                />
             </TransitionChild>
 
             <div class="fixed inset-0 z-40 flex">
@@ -288,7 +237,7 @@ const sidebarOpen = ref(false);
                         <div class="mt-5 h-0 flex-1 overflow-y-auto">
                             <nav class="space-y-1 px-2" aria-label="menu">
                                 <p
-                                    class="text-gray-600 group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
+                                    class="text-myPrimaryNormalColor group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
                                 >
                                     Mobile Navigation
                                 </p>
@@ -302,7 +251,7 @@ const sidebarOpen = ref(false);
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                                        class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -322,7 +271,7 @@ const sidebarOpen = ref(false);
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                                        class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -355,12 +304,12 @@ const sidebarOpen = ref(false);
                                             viewBox="0 0 24 24"
                                             stroke-width="1.5"
                                             stroke="currentColor"
-                                            class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                                            class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
                                         >
                                             <path
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
-                                                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+                                                d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
                                             />
                                         </svg>
                                         Teams Settings
@@ -378,7 +327,7 @@ const sidebarOpen = ref(false);
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                                        class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -405,7 +354,7 @@ const sidebarOpen = ref(false);
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                                        class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -444,7 +393,7 @@ const sidebarOpen = ref(false);
             <div class="mt-5 flex flex-grow flex-col">
                 <nav class="flex-1 space-y-1 px-2 pb-4" aria-label="menu">
                     <p
-                        class="text-gray-600 group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
+                        class="text-myPrimaryNormalColor group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
                     >
                         Navigation
                     </p>
@@ -458,7 +407,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -478,7 +427,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -510,14 +459,15 @@ const sidebarOpen = ref(false);
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                                class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
                             >
                                 <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+                                    d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
                                 />
                             </svg>
+
                             Teams Settings
                         </SideBarLink>
                     </template>
@@ -532,7 +482,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -554,7 +504,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -576,7 +526,7 @@ const sidebarOpen = ref(false);
         <div class="sticky top-0 z-10 flex h-16 flex-shrink-0">
             <button
                 type="button"
-                class="border-r px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-myPrimaryColor-500 md:hidden bg-white border-b-2 border-gray-200"
+                class="border-r px-4 text-myPrimaryNormalColor focus:outline-none focus:ring-2 focus:ring-inset focus:ring-myPrimaryColor-500 md:hidden bg-white border-b-2 border-gray-200"
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>
@@ -592,7 +542,7 @@ const sidebarOpen = ref(false);
                                 Search anything...
                             </label>
                             <div
-                                class="relative w-full text-gray-400 focus-within:text-gray-600"
+                                class="relative w-full text-myPrimaryNormalColor focus-within:text-myPrimaryNormalColor"
                             >
                                 <div
                                     class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
@@ -614,7 +564,7 @@ const sidebarOpen = ref(false);
                                 </div>
                                 <input
                                     id="search-field"
-                                    class="cursor-pointer block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 font-semibold placeholder-gray-500 placeholder:font-semibold focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
+                                    class="cursor-pointer block w-full h-full pl-8 pr-3 py-2 border-transparent text-myPrimaryNormalColor font-semibold placeholder-gray-500 placeholder:font-semibold focus:outline-none focus:placeholder-myPrimaryNormalColor focus:ring-0 focus:border-transparent sm:text-sm"
                                     @click.prevent="handleSearchAnything"
                                     placeholder="Search anything..."
                                     readonly
@@ -701,7 +651,7 @@ const sidebarOpen = ref(false);
                                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 >
                                     <span
-                                        class="myPrimaryParagraph block px-4 py-2 text-xs text-gray-400"
+                                        class="myPrimaryParagraph block px-4 py-2 text-xs text-myPrimaryNormalColor"
                                         >Manage Teams</span
                                     >
                                     <DropdownLink
@@ -769,7 +719,7 @@ const sidebarOpen = ref(false);
 
                     <button
                         type="button"
-                        class="rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
+                        class="rounded-full p-1 text-myPrimaryNormalColor hover:text-myPrimaryNormalColor focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
                     >
                         <span class="sr-only">View notifications</span>
                         <BellIcon

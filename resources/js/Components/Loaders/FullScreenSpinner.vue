@@ -5,7 +5,7 @@
         >
             <div class="flex justify-center items-center">
                 <svg
-                    class="inline mr-2 w-14 h-14 text-gray-300 animate-spin dark:text-gray-600 fill-gray-600"
+                    class="inline mr-2 w-14 h-14 text-gray-300 animate-spin dark:text-myPrimaryNormalColor fill-gray-600"
                     fill="none"
                     role="status"
                     viewBox="0 0 100 101"

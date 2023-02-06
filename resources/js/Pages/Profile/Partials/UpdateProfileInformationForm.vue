@@ -36,6 +36,7 @@ const updateProfileInformation = () => {
         errorBag: "updateProfileInformation",
         preserveScroll: true,
         onSuccess: () => clearPhotoFileInput(),
+        onError: () => {},
     });
 };
 
@@ -184,7 +185,7 @@ const clearPhotoFileInput = () => {
                             :href="route('verification.send')"
                             method="post"
                             as="button"
-                            class="underline text-gray-600 hover:text-gray-900"
+                            class="underline text-myPrimaryNormalColor hover:text-myPrimaryNormalColor"
                             @click.prevent="sendEmailVerification"
                         >
                             Click here to re-send the verification email.

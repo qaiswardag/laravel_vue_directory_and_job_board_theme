@@ -13,6 +13,10 @@ module.exports = {
 
     theme: {
         colors: {
+            myPrimaryLightColor: "#64748b",
+            myPrimaryNormalColor: "#374151",
+            myPrimaryDarkColor: "#111827",
+
             myPrimaryColor: {
                 50: "#ecfdf5",
                 100: "#d1fae5",
@@ -41,6 +45,7 @@ module.exports = {
             red: colors.red,
             fuchsia: colors.fuchsia,
             pink: colors.fuchsia,
+            violet: colors.violet,
         },
         extend: {
             fontFamily: {

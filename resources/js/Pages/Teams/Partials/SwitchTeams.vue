@@ -74,13 +74,9 @@ const switchTeam = function (team) {
         <ActionSection>
             <template #title> Switch team </template>
 
-            <template #description> Switch to another team</template>
+            <template #description> Switch to another team.</template>
 
             <template #content>
-                <div class="max-w-xl">
-                    <p class="myPrimaryParagraph">Switch to another Team.</p>
-                </div>
-
                 <div class="mt-8 flex flex-col">
                     <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div
@@ -101,14 +97,26 @@ const switchTeam = function (team) {
                                         <tr class="divide-x divide-gray-200">
                                             <th
                                                 scope="col"
-                                                class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6 min-w-[20rem]"
+                                                class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryNormalColor sm:pl-6 min-w-[20rem]"
                                             >
                                                 Team
                                             </th>
 
                                             <th
                                                 scope="col"
-                                                class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryNormalColor"
+                                            >
+                                                Team id
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryNormalColor"
+                                            >
+                                                Team owner
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryNormalColor"
                                             >
                                                 Switch Team
                                             </th>
@@ -125,7 +133,7 @@ const switchTeam = function (team) {
                                             class="divide-x divide-gray-200"
                                         >
                                             <td
-                                                class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
+                                                class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryNormalColor sm:pl-6"
                                             >
                                                 <form
                                                     @submit.prevent="
@@ -141,9 +149,9 @@ const switchTeam = function (team) {
                                                         "
                                                     >
                                                         <button
-                                                            class="myPrimaryButtonNoBackground w-full flex items-center myPrimaryGap py-2"
+                                                            class="myPrimaryButtonNoBackground text-myPrimaryNormalColor w-full flex items-center myPrimaryGap py-2"
                                                             :class="{
-                                                                '':
+                                                                'text-myPrimaryColor-600':
                                                                     team.id ===
                                                                     $page.props
                                                                         .user
@@ -182,7 +190,17 @@ const switchTeam = function (team) {
                                             </td>
 
                                             <td
-                                                class="whitespace-nowrap p-4 text-sm text-gray-500"
+                                                class="whitespace-nowrap p-4 text-sm text-myPrimaryNormalColor"
+                                            >
+                                                {{ team.id }}
+                                            </td>
+                                            <td
+                                                class="whitespace-nowrap p-4 text-sm text-myPrimaryNormalColor"
+                                            >
+                                                User id: {{ team.user_id }}
+                                            </td>
+                                            <td
+                                                class="whitespace-nowrap p-4 text-sm text-myPrimaryNormalColor"
                                             >
                                                 <form
                                                     @submit.prevent="
@@ -200,7 +218,7 @@ const switchTeam = function (team) {
                                                         <button
                                                             class="myPrimaryButton w-full flex items-center myPrimaryGap py-2"
                                                             :class="{
-                                                                'bg-gray-600':
+                                                                'bg-gray-600 hover:bg-gray-700 focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus-visible:ring-2 focus-visible:ring-gray-600':
                                                                     team.id !==
                                                                     $page.props
                                                                         .user

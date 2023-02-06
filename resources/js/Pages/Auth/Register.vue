@@ -139,14 +139,14 @@ const submit = () => {
                                     <a
                                         target="_blank"
                                         :href="route('terms.show')"
-                                        class="underline text-sm text-gray-600 hover:text-gray-900"
+                                        class="underline text-sm text-myPrimaryNormalColor hover:text-myPrimaryNormalColor"
                                         >Terms of Service</a
                                     >
                                     and
                                     <a
                                         target="_blank"
                                         :href="route('policy.show')"
-                                        class="underline text-sm text-gray-600 hover:text-gray-900"
+                                        class="underline text-sm text-myPrimaryNormalColor hover:text-myPrimaryNormalColor"
                                         >Privacy Policy</a
                                     >
                                 </div>

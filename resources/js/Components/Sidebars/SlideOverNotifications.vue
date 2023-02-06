@@ -81,7 +81,7 @@ const notificationsSlideOverButton = function () {
                                                 class="flex items-start justify-between"
                                             >
                                                 <DialogTitle
-                                                    class="text-lg font-medium text-gray-900"
+                                                    class="text-lg font-medium text-myPrimaryNormalColor"
                                                 >
                                                     Latest 15 notifications
                                                 </DialogTitle>
@@ -121,7 +121,7 @@ const notificationsSlideOverButton = function () {
 
                                             <a
                                                 href="#"
-                                                class="block primaryLink primaryParagraph rounded"
+                                                class="block myPrimaryLink primaryParagraph rounded"
                                             >
                                                 View all notifications
                                             </a>
@@ -146,7 +146,7 @@ const notificationsSlideOverButton = function () {
                                                     >
                                                         <a
                                                             href="#"
-                                                            class="text-sm font-medium text-gray-900 mb-4 mt-2 block"
+                                                            class="text-sm font-medium text-myPrimaryNormalColor mb-4 mt-2 block"
                                                         >
                                                             {{
                                                                 notification.title
@@ -175,12 +175,12 @@ const notificationsSlideOverButton = function () {
                                                         </div>
 
                                                         <p
-                                                            class="text-xs text-gray-500 my-2"
+                                                            class="text-xs text-myPrimaryNormalColor my-2"
                                                         >
                                                             Updated: 01.01.2023
                                                         </p>
                                                         <p
-                                                            class="text-sm text-gray-500 mt-4"
+                                                            class="text-sm text-myPrimaryNormalColor mt-4"
                                                         >
                                                             {{
                                                                 notification.description.slice(

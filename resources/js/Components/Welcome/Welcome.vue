@@ -13,7 +13,7 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
                 Welcome to your Jetstream application!
             </div>
 
-            <div class="mt-6 text-gray-500">
+            <div class="mt-6 text-myPrimaryNormalColor">
                 Laravel Jetstream provides a beautiful, robust starting point
                 for your next Laravel application. Laravel is designed to help
                 you build your application using a development environment that
@@ -33,7 +33,7 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-8 h-8 text-gray-400"
+                        class="w-8 h-8 text-myPrimaryLightTextColor"
                     >
                         <path
                             stroke-linecap="round"
@@ -42,14 +42,14 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
                         />
                     </svg>
                     <div
-                        class="ml-4 text-lg text-gray-600 leading-7 font-semibold"
+                        class="ml-4 text-lg text-myPrimaryNormalColor leading-7 font-semibold"
                     >
                         <a href="https://laravel.com/docs">Documentation</a>
                     </div>
                 </div>
 
                 <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
+                    <div class="mt-2 text-sm text-myPrimaryNormalColor">
                         Laravel has wonderful documentation covering every
                         aspect of the framework. Whether you're new to the
                         framework or have previous experience, we recommend
@@ -91,7 +91,7 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-8 h-8 text-gray-400"
+                        class="w-8 h-8 text-myPrimaryLightTextColor"
                     >
                         <path
                             stroke-linecap="round"
@@ -99,14 +99,14 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
                         />
                     </svg>
                     <div
-                        class="ml-4 text-lg text-gray-600 leading-7 font-semibold"
+                        class="ml-4 text-lg text-myPrimaryNormalColor leading-7 font-semibold"
                     >
                         <a href="https://laracasts.com">Laracasts</a>
                     </div>
                 </div>
 
                 <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
+                    <div class="mt-2 text-sm text-myPrimaryNormalColor">
                         Laracasts offers thousands of video tutorials on
                         Laravel, PHP, and JavaScript development. Check them
                         out, see for yourself, and massively level up your
@@ -148,7 +148,7 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-8 h-8 text-gray-400"
+                        class="w-8 h-8 text-myPrimaryLightTextColor"
                     >
                         <path
                             stroke-linecap="round"
@@ -157,14 +157,14 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
                         />
                     </svg>
                     <div
-                        class="ml-4 text-lg text-gray-600 leading-7 font-semibold"
+                        class="ml-4 text-lg text-myPrimaryNormalColor leading-7 font-semibold"
                     >
                         <a href="https://tailwindcss.com/">Tailwind</a>
                     </div>
                 </div>
 
                 <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
+                    <div class="mt-2 text-sm text-myPrimaryNormalColor">
                         Laravel Jetstream is built with Tailwind, an amazing
                         utility first CSS framework that doesn't get in your
                         way. You'll be amazed how easily you can build and
@@ -182,7 +182,7 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-8 h-8 text-gray-400"
+                        class="w-8 h-8 text-myPrimaryLightTextColor"
                     >
                         <path
                             stroke-linecap="round"
@@ -191,14 +191,14 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
                         />
                     </svg>
                     <div
-                        class="ml-4 text-lg text-gray-600 leading-7 font-semibold"
+                        class="ml-4 text-lg text-myPrimaryNormalColor leading-7 font-semibold"
                     >
                         Authentication
                     </div>
                 </div>
 
                 <div class="ml-12">
-                    <div class="mt-2 text-sm text-gray-500">
+                    <div class="mt-2 text-sm text-myPrimaryNormalColor">
                         Authentication and registration views are included with
                         Laravel Jetstream, as well as support for user email
                         verification and resetting forgotten passwords. So,

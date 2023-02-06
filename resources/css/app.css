@@ -22,7 +22,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryParagraph {
-        @apply text-sm text-gray-800;
+        @apply text-sm text-myPrimaryNormalColor;
     }
     /*
     |--------------------------------------------------------------------------
@@ -84,7 +84,7 @@
     }
 
     .myPrimaryToggleButton {
-        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2 bg-gray-100 hover:bg-myPrimaryColor-500 hover:text-white;
+        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-myPrimaryNormalColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2 bg-gray-100 hover:bg-myPrimaryColor-500 hover:text-white;
     }
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +111,7 @@
     |--------------------------------------------------------------------------
     */
     .mySmallIcon {
-        @apply cursor-pointer flex-shrink-0 mr-1.5 h-7 w-7 text-gray-800 transform duration-200 stroke-2;
+        @apply cursor-pointer flex-shrink-0 mr-1.5 h-7 w-7 text-myPrimaryNormalColor transform duration-200 stroke-2;
     }
 
     /*
@@ -140,7 +140,7 @@
     }
 
     .myPrimaryInputLabel {
-        @apply mt-4 mb-2 block text-sm font-medium text-gray-700 text-left;
+        @apply mt-4 mb-2 block text-sm font-medium text-myPrimaryNormalColor text-left;
     }
 
     .myPrimaryInput {
@@ -164,11 +164,11 @@
     }
 
     .myPrimarySelect {
-        @apply bg-gray-50 focus:bg-white font-normal text-gray-800 placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-myPrimaryColor-500 focus:border-myPrimaryColor-500 focus:outline-4 focus:outline-myPrimaryColor-50 sm:text-sm;
+        @apply bg-gray-50 focus:bg-white font-normal text-myPrimaryNormalColor placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-myPrimaryColor-500 focus:border-myPrimaryColor-500 focus:outline-4 focus:outline-myPrimaryColor-50 sm:text-sm;
     }
 
     #my-select {
-        @apply py-1.5 px-2 text-gray-800 bg-gray-50 rounded-md
+        @apply py-1.5 px-2 text-myPrimaryNormalColor bg-gray-50 rounded-md
         border border-gray-300 focus-within:border focus-within:border-transparent
         sm:text-sm font-normal
         focus-within:bg-white focus:focus-within:rounded-md

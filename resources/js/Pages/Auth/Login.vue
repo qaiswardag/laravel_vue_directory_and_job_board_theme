@@ -85,7 +85,7 @@ const submit = () => {
                             v-model:checked="form.remember"
                             name="remember"
                         />
-                        <span class="ml-2 text-sm text-gray-600"
+                        <span class="ml-2 text-sm text-myPrimaryNormalColor"
                             >Remember me</span
                         >
                     </label>

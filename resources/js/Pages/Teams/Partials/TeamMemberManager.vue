@@ -67,7 +67,7 @@ const addTeamMember = () => {
             gridColumnModal.value = 1;
             titleModal.value = `Team member added to ${props.team.name}`;
             descriptionModal.value = `
-            These people have been invited to your team and have been sent an invitation email. They may join the team by accepting the email invitation.
+           New Team Member have been invited to your team and have been sent an invitation email. The new Member may join the team by accepting the email invitation.
             `;
             firstButtonModal.value = "Close";
             secondButtonModal.value = null;
@@ -352,7 +352,7 @@ const displayableRole = (role) => {
                                     <!-- Role Name -->
                                     <div class="flex items-center">
                                         <div
-                                            class="text-sm text-gray-600 dark:text-gray-400"
+                                            class="text-sm text-myPrimaryNormalColor dark:text-myPrimaryLightTextColor"
                                             :class="{
                                                 '':
                                                     updateRoleForm.role ===
@@ -384,7 +384,7 @@ const displayableRole = (role) => {
 
                                     <!-- Role Description -->
                                     <div
-                                        class="mt-2 text-xs text-gray-600 dark:text-gray-400 text-left"
+                                        class="mt-2 text-xs text-myPrimaryNormalColor dark:text-myPrimaryLightTextColor text-left"
                                     >
                                         {{ role.description }}
                                     </div>
@@ -462,19 +462,19 @@ const displayableRole = (role) => {
                                                 >
                                                     <th
                                                         scope="col"
-                                                        class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6 min-w-[20rem]"
+                                                        class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryNormalColor sm:pl-6 min-w-[20rem]"
                                                     >
                                                         Email
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                        class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryNormalColor"
                                                     >
                                                         Role
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                        class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryNormalColor"
                                                     >
                                                         Action
                                                     </th>
@@ -490,19 +490,19 @@ const displayableRole = (role) => {
                                                     class="divide-x divide-gray-200"
                                                 >
                                                     <td
-                                                        class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
+                                                        class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryNormalColor sm:pl-6"
                                                     >
                                                         {{ invitation.email }}
                                                     </td>
                                                     <td
-                                                        class="whitespace-nowrap p-4 text-sm text-gray-500"
+                                                        class="whitespace-nowrap p-4 text-sm text-myPrimaryNormalColor"
                                                     >
                                                         {{ invitation.role }}
                                                     </td>
 
                                                     <!-- Cancel Team Invitation -->
                                                     <td
-                                                        class="whitespace-nowrap p-4 text-sm text-gray-500"
+                                                        class="whitespace-nowrap p-4 text-sm text-myPrimaryNormalColor"
                                                     >
                                                         <button
                                                             class="myPrimaryDeleteButtonNoBackground col-span-3"
@@ -564,19 +564,19 @@ const displayableRole = (role) => {
                                             >
                                                 <th
                                                     scope="col"
-                                                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6 min-w-[20rem]"
+                                                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryNormalColor sm:pl-6 min-w-[20rem]"
                                                 >
                                                     User
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                    class="px-4 py-3.5 text-left text-sm font-semibold myPrimaryNormalColor"
                                                 >
                                                     Role
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryNormalColor"
                                                 >
                                                     Action
                                                 </th>
@@ -592,7 +592,7 @@ const displayableRole = (role) => {
                                                 class="divide-x divide-gray-200"
                                             >
                                                 <td
-                                                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6"
+                                                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryNormalColor sm:pl-6"
                                                 >
                                                     <div
                                                         class="flex items-center gap-2 mt-2"
@@ -651,7 +651,7 @@ const displayableRole = (role) => {
                                                     </div>
                                                 </td>
                                                 <td
-                                                    class="whitespace-nowrap p-4 text-sm text-gray-500"
+                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryNormalColor"
                                                 >
                                                     <!-- Manage Team Member Role -->
                                                     <button
@@ -674,7 +674,7 @@ const displayableRole = (role) => {
 
                                                 <!-- Cancel Team Invitation -->
                                                 <td
-                                                    class="whitespace-nowrap p-4 text-sm text-gray-500"
+                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryNormalColor"
                                                 >
                                                     <!-- Leave Team -->
                                                     <div
@@ -781,7 +781,7 @@ const displayableRole = (role) => {
                                 <!-- Role Name -->
                                 <div class="flex items-center">
                                     <div
-                                        class="text-sm text-gray-600 dark:text-gray-400"
+                                        class="text-sm text-myPrimaryNormalColor dark:text-myPrimaryLightTextColor"
                                         :class="{
                                             '':
                                                 updateRoleForm.role ===
@@ -810,7 +810,7 @@ const displayableRole = (role) => {
 
                                 <!-- Role Description -->
                                 <div
-                                    class="mt-2 text-xs text-gray-600 dark:text-gray-400"
+                                    class="mt-2 text-xs text-myPrimaryNormalColor dark:text-myPrimaryLightTextColor"
                                 >
                                     {{ role.description }}
                                 </div>

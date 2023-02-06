@@ -3,14 +3,14 @@ import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { router, Head } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 import { vueFetch } from "use-lightweight-fetch";
-import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
+import FetchButton from "@/Components/Buttons/FetchButton.vue";
 
 // test using costum npm package
 // test using costum npm package
 // test using costum npm package
 // test using costum npm package
-const pathUsers = "https://jsonplaceholder.typicode.com/users";
 // use lightweight fetch
+const pathBackendUsers = "/api/docs-users";
 const {
     handleData: handleBackendDataUsers,
     fetchedData: fetchedBackendDataUsers,
@@ -21,25 +21,18 @@ const {
 } = vueFetch();
 
 const getBackenUsers = async function () {
-    try {
-        await handleBackendDataUsers(
-            "/api/docs-users",
-            {},
-            {
-                loading: true,
-                additionalCallTime: 2000,
-                abortTimeoutTime: 8000,
-            }
-        );
-        // catch
-    } catch (err) {
-        isErrorBackendDataUsers.value = `${err}. ${
-            isErrorBackendDataUsers.value ? isErrorBackendDataUsers.value : ""
-        }`;
-        //
-    }
+    handleBackendDataUsers(
+        pathBackendUsers,
+        {},
+        {
+            loading: true,
+            additionalCallTime: 2000,
+            abortTimeoutTime: 8000,
+        }
+    );
 };
 
+const pathUsers = "https://jsonplaceholder.typicode.com/users";
 const {
     handleData: handleDataUsers,
     fetchedData: fetchedDataUsers,
@@ -47,24 +40,17 @@ const {
     isLoading: isLoadingDataUsers,
     isSuccess: isSuccessDataUsers,
 } = vueFetch();
-onMounted(async () => {
-    try {
-        const body = await handleDataUsers(
-            pathUsers,
-            {},
-            {
-                loading: true,
-                additionalCallTime: 200,
-                abortTimeoutTime: 8000,
-            }
-        );
-        // catch
-    } catch (err) {
-        isErrorDataUsers.value = `${err}. ${
-            isErrorDataUsers.value ? isErrorDataUsers.value : ""
-        }`;
-        //
-    }
+
+onMounted(() => {
+    handleDataUsers(
+        pathUsers,
+        {},
+        {
+            loading: true,
+            additionalCallTime: 200,
+            abortTimeoutTime: 8000,
+        }
+    );
 });
 
 // test using costum npm package
@@ -336,12 +322,12 @@ onMounted(async () => {
                                                 aria-hidden="true"
                                             ></span>
                                             <p
-                                                class="text-sm font-medium text-gray-900"
+                                                class="text-sm font-medium text-myPrimaryNormalColor"
                                             >
                                                 {{ user.name }}
                                             </p>
                                             <p
-                                                class="truncate text-sm text-gray-500"
+                                                class="truncate text-sm text-myPrimaryNormalColor"
                                             >
                                                 {{ user.email }}
                                             </p>
@@ -419,13 +405,13 @@ onMounted(async () => {
                                                 aria-hidden="true"
                                             ></span>
                                             <p
-                                                class="text-sm font-medium text-gray-900"
+                                                class="text-sm font-medium text-myPrimaryNormalColor"
                                             >
                                                 {{ user.first_name }}
                                                 {{ user.last_name }}
                                             </p>
                                             <p
-                                                class="truncate text-sm text-gray-500"
+                                                class="truncate text-sm text-myPrimaryNormalColor"
                                             >
                                                 {{ user.email }}
                                             </p>
@@ -434,11 +420,13 @@ onMounted(async () => {
                                 </div>
                             </div>
                             <div class="flex justify-end py-6">
-                                <SubmitButton
+                                <FetchButton
+                                    :ButtonStyleDelete="true"
+                                    @firstButtonClick="getBackenUsers"
                                     :disabled="isLoadingBackendDataUsers"
-                                    buttonText="Show Users"
+                                    buttonText="Get Users"
                                 >
-                                </SubmitButton>
+                                </FetchButton>
                             </div>
                         </div>
                     </div>

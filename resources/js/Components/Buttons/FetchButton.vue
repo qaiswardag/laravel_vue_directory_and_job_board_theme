@@ -24,6 +24,12 @@ defineProps({
         type: Boolean,
     },
 });
+
+const emit = defineEmits(["firstButtonClick"]);
+// search anything modal button
+const firstButtonClick = function () {
+    emit("firstButtonClick");
+};
 </script>
 
 <template>
@@ -35,6 +41,7 @@ defineProps({
                 </div>
             </Transition>
             <button
+                @click="firstButtonClick"
                 :type="type"
                 :disabled="disabled"
                 class="myPrimaryButton myPrimaryGap min-w-[8rem]"

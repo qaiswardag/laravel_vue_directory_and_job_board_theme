@@ -9,7 +9,7 @@ defineProps({
 
 <template>
     <transition name="slide-fade">
-        <div v-show="on" class="text-sm text-gray-600 mt-2">
+        <div v-show="on" class="text-sm text-myPrimaryNormalColor mt-2">
             <div v-if="type === 'sucsess'">
                 <p class="myPrimaryParagraph">
                     <slot />

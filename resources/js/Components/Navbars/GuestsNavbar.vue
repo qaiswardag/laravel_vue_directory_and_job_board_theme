@@ -62,7 +62,7 @@ const showingNavigationDropdown = ref(false);
                                 <span class="inline-flex rounded-md">
                                     <button
                                         type="button"
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-myPrimaryNormalColor bg-white hover:bg-gray-50 hover:text-myPrimaryNormalColor focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
                                     >
                                         Current team name
 
@@ -94,7 +94,7 @@ const showingNavigationDropdown = ref(false);
                                         "
                                     >
                                         <div
-                                            class="block px-4 py-2 text-xs text-gray-400"
+                                            class="block px-4 py-2 text-xs text-myPrimaryLightTextColor"
                                         >
                                             Manage Team
                                         </div>
@@ -113,7 +113,7 @@ const showingNavigationDropdown = ref(false);
 
                                         <!-- Team Switcher -->
                                         <div
-                                            class="block px-4 py-2 text-xs text-gray-400"
+                                            class="block px-4 py-2 text-xs text-myPrimaryLightTextColor"
                                         >
                                             Switch Teams
                                         </div>
@@ -153,7 +153,7 @@ const showingNavigationDropdown = ref(false);
                                 <span v-else class="inline-flex rounded-md">
                                     <button
                                         type="button"
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-myPrimaryNormalColor bg-white hover:text-myPrimaryNormalColor focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
                                     >
                                         Get Startet Today
 
@@ -178,7 +178,7 @@ const showingNavigationDropdown = ref(false);
                             <template #content>
                                 <!-- Account Management -->
                                 <div
-                                    class="block px-4 py-2 text-xs text-gray-400"
+                                    class="block px-4 py-2 text-xs text-myPrimaryLightTextColor"
                                 >
                                     Sign in or register
                                 </div>
@@ -217,7 +217,7 @@ const showingNavigationDropdown = ref(false);
                 <!-- Hamburger -->
                 <div class="-mr-2 flex items-center sm:hidden">
                     <button
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-myPrimaryLightTextColor hover:text-myPrimaryNormalColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-myPrimaryNormalColor transition"
                         @click="
                             showingNavigationDropdown =
                                 !showingNavigationDropdown
@@ -278,10 +278,14 @@ const showingNavigationDropdown = ref(false);
                     <div v-if="true" class="shrink-0 mr-3">User image here</div>
 
                     <div>
-                        <div class="font-medium text-base text-gray-800">
+                        <div
+                            class="font-medium text-base text-myPrimaryNormalColor"
+                        >
                             User name here
                         </div>
-                        <div class="font-medium text-sm text-gray-500">
+                        <div
+                            class="font-medium text-sm text-myPrimaryNormalColor"
+                        >
                             User name here
                         </div>
                     </div>
@@ -299,7 +303,9 @@ const showingNavigationDropdown = ref(false);
                     <template v-if="true">
                         <div class="border-t border-gray-200" />
 
-                        <div class="block px-4 py-2 text-xs text-gray-400">
+                        <div
+                            class="block px-4 py-2 text-xs text-myPrimaryLightTextColor"
+                        >
                             Manage Team
                         </div>
 
@@ -316,7 +322,9 @@ const showingNavigationDropdown = ref(false);
                         <div class="border-t border-gray-200" />
 
                         <!-- Team Switcher -->
-                        <div class="block px-4 py-2 text-xs text-gray-400">
+                        <div
+                            class="block px-4 py-2 text-xs text-myPrimaryLightTextColor"
+                        >
                             Switch Teams
                         </div>
 

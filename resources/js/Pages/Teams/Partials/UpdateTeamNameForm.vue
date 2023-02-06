@@ -101,11 +101,13 @@ const updateTeamName = () => {
                 <InputLabel value="Team Owner" />
 
                 <div class="flex items-center gap-2 mt-2">
-                    <div v-if="$page.props.user.profile_photo_url && false">
+                    <div
+                        v-if="$page.props.team.owner.profile_photo_url && false"
+                    >
                         <img
                             class="object-cover w-12 h-12 rounded-full"
-                            :src="$page.props.user.profile_photo_url"
-                            :alt="$page.props.user.first_name"
+                            :src="$page.props.team.owner.profile_photo_url"
+                            :alt="$page.props.team.owner.first_name"
                         />
                     </div>
 
@@ -113,18 +115,26 @@ const updateTeamName = () => {
                         v-if="true"
                         class="h-12 w-12 rounded-full bg-myPrimaryColor-500 flex justify-center items-center text-xs font-semibold text-white"
                     >
+                        <hr />
+
                         {{
-                            $page.props.user.first_name.charAt(0).toUpperCase()
+                            $page.props.team.owner.first_name
+                                .charAt(0)
+                                .toUpperCase()
                         }}
-                        {{ $page.props.user.last_name.charAt(0).toUpperCase() }}
+                        {{
+                            $page.props.team.owner.last_name
+                                .charAt(0)
+                                .toUpperCase()
+                        }}
                     </div>
                     <div class="flex flex-col items-left gap-1">
                         <p class="text-xs font-semibold">
-                            {{ $page.props.user.first_name }}
-                            {{ $page.props.user.last_name }}
+                            {{ $page.props.team.owner.first_name }}
+                            {{ $page.props.team.owner.last_name }}
                         </p>
                         <p class="text-xs font-semibold">
-                            {{ $page.props.user.email }}
+                            {{ $page.props.team.owner.email }}
                         </p>
                     </div>
                 </div>

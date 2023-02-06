@@ -116,9 +116,10 @@ const deleteApiToken = () => {
                                     "
                                     :value="permission"
                                 />
-                                <span class="ml-2 text-sm text-gray-600">{{
-                                    permission
-                                }}</span>
+                                <span
+                                    class="ml-2 text-sm text-myPrimaryNormalColor"
+                                    >{{ permission }}</span
+                                >
                             </label>
                         </div>
                     </div>
@@ -170,14 +171,14 @@ const deleteApiToken = () => {
                                 <div class="flex items-center ml-2">
                                     <div
                                         v-if="token.last_used_ago"
-                                        class="text-sm text-gray-400"
+                                        class="text-sm text-myPrimaryLightTextColor"
                                     >
                                         Last used {{ token.last_used_ago }}
                                     </div>
 
                                     <button
                                         v-if="availablePermissions.length > 0"
-                                        class="cursor-pointer ml-6 text-sm text-gray-400 underline"
+                                        class="cursor-pointer ml-6 text-sm text-myPrimaryLightTextColor underline"
                                         @click="
                                             manageApiTokenPermissions(token)
                                         "
@@ -207,7 +208,7 @@ const deleteApiToken = () => {
 
         <div
             v-if="$page.props.jetstream.flash.token"
-            class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500 break-all"
+            class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-myPrimaryNormalColor break-all"
         >
             {{ $page.props.jetstream.flash.token }}
         </div>
@@ -227,7 +228,7 @@ const deleteApiToken = () => {
                         v-model:checked="updateApiTokenForm.permissions"
                         :value="permission"
                     />
-                    <span class="ml-2 text-sm text-gray-600">{{
+                    <span class="ml-2 text-sm text-myPrimaryNormalColor">{{
                         permission
                     }}</span>
                 </label>

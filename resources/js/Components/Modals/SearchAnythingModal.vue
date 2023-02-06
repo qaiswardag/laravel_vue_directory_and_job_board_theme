@@ -128,7 +128,7 @@ function onSelect(item) {
                                     stroke-width="2"
                                     stroke="currentColor"
                                     aria-hidden="true"
-                                    class="h-6 w-6 text-gray-400 self-center cursor-pointer"
+                                    class="h-6 w-6 text-myPrimaryLightTextColor self-center cursor-pointer"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -144,11 +144,11 @@ function onSelect(item) {
                         <Combobox @update:modelValue="onSelect">
                             <div class="relative flex items-center">
                                 <MagnifyingGlassIcon
-                                    class="pointer-events-none absolute left-5 h-5 w-4 text-gray-400"
+                                    class="pointer-events-none absolute left-5 h-5 w-4 text-myPrimaryLightTextColor"
                                     aria-hidden="true"
                                 />
                                 <ComboboxInput
-                                    class="h-14 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm"
+                                    class="h-14 w-full border-0 bg-transparent pl-11 pr-4 text-myPrimaryNormalColor placeholder-gray-400 focus:ring-0 sm:text-sm"
                                     placeholder="Search..."
                                     @change="rawQuery = $event.target.value"
                                 />
@@ -164,12 +164,12 @@ function onSelect(item) {
                             >
                                 <li v-if="filteredProjects.length > 0">
                                     <h2
-                                        class="text-xs font-semibold text-gray-900"
+                                        class="text-xs font-semibold text-myPrimaryNormalColor"
                                     >
                                         Projects
                                     </h2>
                                     <ul
-                                        class="-mx-4 mt-2 text-sm text-gray-700"
+                                        class="-mx-4 mt-2 text-sm text-myPrimaryNormalColor"
                                     >
                                         <ComboboxOption
                                             v-for="project in filteredProjects"
@@ -190,7 +190,7 @@ function onSelect(item) {
                                                         'h-6 w-6 flex-none',
                                                         active
                                                             ? 'text-white'
-                                                            : 'text-gray-400',
+                                                            : 'text-myPrimaryLightTextColor',
                                                     ]"
                                                     aria-hidden="true"
                                                 />
@@ -204,12 +204,12 @@ function onSelect(item) {
                                 </li>
                                 <li v-if="filteredUsers.length > 0">
                                     <h2
-                                        class="text-xs font-semibold text-gray-900"
+                                        class="text-xs font-semibold text-myPrimaryNormalColor"
                                     >
                                         Users
                                     </h2>
                                     <ul
-                                        class="-mx-4 mt-2 text-sm text-gray-700"
+                                        class="-mx-4 mt-2 text-sm text-myPrimaryNormalColor"
                                     >
                                         <ComboboxOption
                                             v-for="user in filteredUsers"
@@ -245,13 +245,15 @@ function onSelect(item) {
                                 class="py-14 px-6 text-center text-sm sm:px-14"
                             >
                                 <LifebuoyIcon
-                                    class="mx-auto h-6 w-6 text-gray-400"
+                                    class="mx-auto h-6 w-6 text-myPrimaryLightTextColor"
                                     aria-hidden="true"
                                 />
-                                <p class="mt-4 font-semibold text-gray-900">
+                                <p
+                                    class="mt-4 font-semibold text-myPrimaryNormalColor"
+                                >
                                     Help with searching
                                 </p>
-                                <p class="mt-2 text-gray-500">
+                                <p class="mt-2 text-myPrimaryNormalColor">
                                     Use this tool to quickly search for users
                                     and projects across our entire platform. You
                                     can also use the search modifiers found in
@@ -270,20 +272,22 @@ function onSelect(item) {
                                 class="py-14 px-6 text-center text-sm sm:px-14"
                             >
                                 <ExclamationTriangleIcon
-                                    class="mx-auto h-6 w-6 text-gray-400"
+                                    class="mx-auto h-6 w-6 text-myPrimaryLightTextColor"
                                     aria-hidden="true"
                                 />
-                                <p class="mt-4 font-semibold text-gray-900">
+                                <p
+                                    class="mt-4 font-semibold text-myPrimaryNormalColor"
+                                >
                                     No results found
                                 </p>
-                                <p class="mt-2 text-gray-500">
+                                <p class="mt-2 text-myPrimaryNormalColor">
                                     We couldn’t find anything with that term.
                                     Please try again.
                                 </p>
                             </div>
 
                             <div
-                                class="flex flex-wrap items-center bg-gray-50 py-2.5 px-4 text-xs text-gray-700"
+                                class="flex flex-wrap items-center bg-gray-50 py-2.5 px-4 text-xs text-myPrimaryNormalColor"
                             >
                                 Type
                                 <kbd
@@ -291,7 +295,7 @@ function onSelect(item) {
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery.startsWith('#')
                                             ? 'border-myPrimaryColor-600 text-myPrimaryColor-600'
-                                            : 'border-gray-400 text-gray-900',
+                                            : 'border-gray-400 text-myPrimaryNormalColor',
                                     ]"
                                     >#</kbd
                                 >
@@ -304,7 +308,7 @@ function onSelect(item) {
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery.startsWith('>')
                                             ? 'border-myPrimaryColor-600 text-myPrimaryColor-600'
-                                            : 'border-gray-400 text-gray-900',
+                                            : 'border-gray-400 text-myPrimaryNormalColor',
                                     ]"
                                     >&gt;</kbd
                                 >
@@ -314,7 +318,7 @@ function onSelect(item) {
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery === '?'
                                             ? 'border-myPrimaryColor-600 text-myPrimaryColor-600'
-                                            : 'border-gray-400 text-gray-900',
+                                            : 'border-gray-400 text-myPrimaryNormalColor',
                                     ]"
                                     >?</kbd
                                 >

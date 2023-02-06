@@ -28,7 +28,7 @@ const verificationLinkSent = computed(
             <AuthenticationCardLogo />
         </template>
 
-        <div class="mb-4 text-sm text-gray-600">
+        <div class="mb-4 text-sm text-myPrimaryNormalColor">
             Before continuing, could you verify your email address by clicking
             on the link we just emailed to you? If you didn't receive the email,
             we will gladly send you another.
@@ -54,7 +54,7 @@ const verificationLinkSent = computed(
                 <div>
                     <Link
                         :href="route('profile.show')"
-                        class="underline text-sm text-gray-600 hover:text-gray-900"
+                        class="underline text-sm text-myPrimaryNormalColor hover:text-myPrimaryNormalColor"
                     >
                         Edit Profile</Link
                     >
@@ -63,7 +63,7 @@ const verificationLinkSent = computed(
                         :href="route('logout')"
                         method="post"
                         as="button"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 ml-2"
+                        class="underline text-sm text-myPrimaryNormalColor hover:text-myPrimaryNormalColor ml-2"
                     >
                         Log Out
                     </Link>

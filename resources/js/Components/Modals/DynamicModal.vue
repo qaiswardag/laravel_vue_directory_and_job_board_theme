@@ -30,7 +30,7 @@
                             >
                                 <BellIcon
                                     aria-hidden="true"
-                                    class="h-4 w-4 text-gray-600"
+                                    class="h-4 w-4 text-myPrimaryNormalColor"
                                 />
                             </div>
 
@@ -77,7 +77,7 @@
                             stroke-width="2"
                             stroke="currentColor"
                             aria-hidden="true"
-                            class="h-6 w-6 text-gray-700 self-center cursor-pointer"
+                            class="h-6 w-6 text-myPrimaryNormalColor self-center cursor-pointer"
                         >
                             <path
                                 stroke-linecap="round"
@@ -132,7 +132,7 @@
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-gray-800 hover:text-gray-800 focus:ring-yellow-400 text-sm w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-myPrimaryNormalColor hover:text-myPrimaryNormalColor focus:ring-yellow-400 text-sm w-full"
                                 :class="{
                                     'opacity-25 cursor-default': disabled,
                                 }"
@@ -178,7 +178,7 @@
                             "
                         >
                             <button
-                                class="myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-gray-800 hover:text-gray-800 focus:ring-yellow-400 text-sm w-full"
+                                class="myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-myPrimaryNormalColor hover:text-myPrimaryNormalColor focus:ring-yellow-400 text-sm w-full"
                                 type="button"
                                 @click="secondButton"
                             >
