@@ -187,10 +187,7 @@ const closeModal = () => {
             <PrimaryButton @click="handleSessionLogout">
                 Log Out Other Browser Sessions
             </PrimaryButton>
-            <ActionMessage
-                :on="form.recentlySuccessful"
-                type="sucsess"
-                class="ml-3"
+            <ActionMessage :on="form.recentlySuccessful" type="success"
                 >Successfully deleted your Browser Sessions.
             </ActionMessage>
 

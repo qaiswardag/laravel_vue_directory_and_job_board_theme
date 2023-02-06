@@ -8,7 +8,6 @@ import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import ResponsiveNavLink from "@/Components/Navbars/ResponsiveNavLink.vue";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 import SlideOverNotifications from "@/Components/Sidebars/SlideOverNotifications.vue";
-import Flash from "../Components/alets/Flash.vue";
 import {
     Dialog,
     DialogPanel,
@@ -45,8 +44,6 @@ const showNotificationsSlideOver = ref(false);
 
 // search modal
 const modalShowSearchAnything = ref(false);
-// flash modal
-const modalShowFlashModal = ref(true);
 const modalShowSwitchTeams = ref(false);
 const modalShowLogout = ref(false);
 
@@ -147,7 +144,6 @@ const sidebarOpen = ref(false);
     >
     </SearchAnythingModal>
 
-    <Flash :flash="$page.props.flash"></Flash>
     <SlideOverNotifications
         :open="showNotificationsSlideOver"
         @notificationsSlideOverButton="notificationsSlideOverButton"

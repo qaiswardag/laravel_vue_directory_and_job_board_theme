@@ -1,7 +1,10 @@
 <script setup>
 import { CheckCircleIcon } from "@heroicons/vue/20/solid";
 defineProps({
-    on: { required: true, Boolean },
+    on: {
+        required: true,
+        Type: Boolean,
+    },
     type: {
         required: true,
     },
@@ -9,21 +12,22 @@ defineProps({
 </script>
 
 <template>
-    <transition name="slide-fade">
-        <div v-show="on" class="text-sm text-myPrimaryNormalColor mt-2">
-            <div v-if="type === 'sucsess'">
-                <div class="flex gap-1 items-center justify-end rounded">
-                    <CheckCircleIcon
-                        class="h-5 w-5 text-green-400"
-                        aria-hidden="true"
-                    />
-                    <p class="myPrimaryParagraph">
-                        <slot />
-                    </p>
+    <div
+        v-if="type === 'success'"
+        class="flex flex-col gap-4 bottom-4 right-0 fixed mb-2 md:mr-0 mx-2"
+    >
+        <Transition v-show="on" name="slide-fade">
+            <div class="rounded-3xl py-4 px-6 mx-2 bg-green-500 text-white">
+                <div
+                    class="flex gap-2 items-center justify-end myPrimaryParagraph text-white"
+                >
+                    <CheckCircleIcon class="h-5 w-5" aria-hidden="true" />
+
+                    <slot />
                 </div>
             </div>
-        </div>
-    </transition>
+        </Transition>
+    </div>
 </template>
 
 <style scope>
@@ -43,23 +47,5 @@ defineProps({
 .slide-fade-leave-to {
     transform: translateX(20px);
     opacity: 0;
-}
-
-.bounce-enter-active {
-    animation: bounce-in 0.5s;
-}
-.bounce-leave-active {
-    animation: bounce-in 0.5s reverse;
-}
-@keyframes bounce-in {
-    0% {
-        transform: scale(0);
-    }
-    50% {
-        transform: scale(1.25);
-    }
-    100% {
-        transform: scale(1);
-    }
 }
 </style>

@@ -211,13 +211,11 @@ const flashModalButton = function () {
             </div>
         </template>
         <template #actions>
-            <SubmitButton
-                :onSuccess="form.recentlySuccessful"
-                successMessage="Successfully updated your profile."
-                :disabled="form.processing"
-                buttonText="Update"
-            >
+            <SubmitButton :disabled="form.processing" buttonText="Update">
             </SubmitButton>
+            <ActionMessage :on="form.recentlySuccessful" type="success">
+                Successfully updated your Profile Information.
+            </ActionMessage>
         </template>
     </FormSection>
 </template>

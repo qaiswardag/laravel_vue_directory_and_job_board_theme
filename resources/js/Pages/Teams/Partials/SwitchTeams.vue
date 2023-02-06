@@ -197,7 +197,7 @@ const switchTeam = function (team) {
                                             <td
                                                 class="whitespace-nowrap p-4 text-sm text-myPrimaryNormalColor"
                                             >
-                                                User id: {{ team.user_id }}
+                                                {{ team.user_id }}
                                             </td>
                                             <td
                                                 class="whitespace-nowrap p-4 text-sm text-myPrimaryNormalColor"

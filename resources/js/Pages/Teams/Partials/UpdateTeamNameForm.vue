@@ -153,13 +153,11 @@ const updateTeamName = () => {
         </template>
 
         <template #actions>
-            <SubmitButton
-                :onSuccess="form.recentlySuccessful"
-                successMessage="Successfully updated your team."
-                :disabled="form.processing"
-                buttonText="Update"
-            >
+            <SubmitButton :disabled="form.processing" buttonText="Update">
             </SubmitButton>
+            <ActionMessage :on="form.recentlySuccessful" type="success">
+                Successfully updated your team.
+            </ActionMessage>
         </template>
     </FormSection>
 </template>

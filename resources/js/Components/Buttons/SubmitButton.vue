@@ -1,6 +1,5 @@
 <script setup>
-import ActionMessage from "@/Components/Actions/ActionMessage.vue";
-import SmallUniversalSpinner from "../Loaders/SmallUniversalSpinner.vue";
+import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 defineProps({
     type: {
         type: String,
@@ -13,18 +12,6 @@ defineProps({
     disabled: {
         type: Boolean,
         required: true,
-    },
-    onSuccess: {
-        type: Boolean,
-    },
-    successMessage: {
-        type: String,
-    },
-    hasErrors: {
-        type: Boolean,
-    },
-    errorMessage: {
-        type: String,
     },
     ButtonStyleDelete: {
         type: Boolean,
@@ -41,7 +28,7 @@ const firstButtonClick = function () {
 <template>
     <div class="flex flex-col items-end justify-end gap-2">
         <div class="flex items-center gap-3">
-            <Transition name="slide-fade">
+            <Transition name="bounce">
                 <div v-if="disabled" role="status">
                     <SmallUniversalSpinner></SmallUniversalSpinner>
                 </div>
@@ -57,19 +44,10 @@ const firstButtonClick = function () {
                 }"
             >
                 <slot />
-                {{ disabled ? "Loading.." : buttonText }}
+                {{ disabled ? "Loading..." : buttonText }}
             </button>
         </div>
     </div>
-    <transition name="slide-fade">
-        <template v-if="onSuccess">
-            <ActionMessage :on="onSuccess" type="sucsess" class="ml-3">
-                <div class="flex gap-1 items-center justify-end rounded">
-                    {{ successMessage }}
-                </div>
-            </ActionMessage>
-        </template>
-    </transition>
 </template>
 
 <style scope>

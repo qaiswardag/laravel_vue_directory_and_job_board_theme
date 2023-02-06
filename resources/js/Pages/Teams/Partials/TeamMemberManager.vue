@@ -526,9 +526,9 @@ const displayableRole = (role) => {
                 <template #actions>
                     <ActionMessage
                         :on="cancelTeamInvitationForm.recentlySuccessful"
-                        type="sucsess"
+                        type="success"
                     >
-                        Successfully Removed pending invition.
+                        Successfully deleted pending invition.
                     </ActionMessage>
                 </template>
             </ActionSection>
@@ -723,13 +723,13 @@ const displayableRole = (role) => {
                 <template #actions>
                     <ActionMessage
                         :on="removeTeamMemberForm.recentlySuccessful"
-                        type="sucsess"
+                        type="success"
                     >
                         Successfully Updated Team Member List.
                     </ActionMessage>
                     <ActionMessage
                         :on="updateRoleForm.recentlySuccessful"
-                        type="sucsess"
+                        type="success"
                     >
                         Successfully Updated Team Member Role.
                     </ActionMessage>

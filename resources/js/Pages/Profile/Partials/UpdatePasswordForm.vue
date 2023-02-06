@@ -87,12 +87,7 @@ const updatePassword = () => {
         </template>
 
         <template #actions>
-            <SubmitButton
-                :onSuccess="form.recentlySuccessful"
-                successMessage="Successfully updated your password."
-                :disabled="form.processing"
-                buttonText="Update"
-            >
+            <SubmitButton :disabled="form.processing" buttonText="Update">
             </SubmitButton>
         </template>
     </FormSection>

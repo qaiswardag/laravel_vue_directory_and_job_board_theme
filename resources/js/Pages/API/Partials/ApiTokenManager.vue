@@ -127,10 +127,7 @@ const deleteApiToken = () => {
             </template>
 
             <template #actions>
-                <ActionMessage
-                    :on="createApiTokenForm.recentlySuccessful"
-                    class="mr-3"
-                >
+                <ActionMessage :on="createApiTokenForm.recentlySuccessful">
                     Created.
                 </ActionMessage>
 

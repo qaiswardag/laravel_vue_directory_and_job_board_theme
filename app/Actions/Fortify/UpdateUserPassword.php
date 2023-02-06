@@ -18,7 +18,7 @@ class UpdateUserPassword implements UpdatesUserPasswords
      */
     public function update(User $user, array $input): void
     {
-        sleep(1.5);
+        sleep(1);
         Validator::make(
             $input,
             [
