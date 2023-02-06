@@ -14,7 +14,6 @@ const props = defineProps({
     user: Object,
 });
 
-// TODO Fix error! User can not update thier first name or last name!
 const form = useForm({
     _method: "PUT",
     first_name: props.user.first_name,
@@ -35,8 +34,13 @@ const updateProfileInformation = () => {
     form.post(route("user-profile-information.update"), {
         errorBag: "updateProfileInformation",
         preserveScroll: true,
-        onSuccess: () => clearPhotoFileInput(),
-        onError: () => {},
+        onSuccess: () => {
+            clearPhotoFileInput();
+        },
+        onError: (err) => {
+            console.log("not able to update details!", err);
+        },
+        onFinish: () => {},
     });
 };
 
@@ -76,6 +80,10 @@ const clearPhotoFileInput = () => {
     if (photoInput.value?.value) {
         photoInput.value.value = null;
     }
+};
+
+const flashModalButton = function () {
+    console.log("you clicked me!!");
 };
 </script>
 
@@ -204,7 +212,7 @@ const clearPhotoFileInput = () => {
         </template>
         <template #actions>
             <SubmitButton
-                :status="form.recentlySuccessful"
+                :onSuccess="form.recentlySuccessful"
                 successMessage="Successfully updated your profile."
                 :disabled="form.processing"
                 buttonText="Update"

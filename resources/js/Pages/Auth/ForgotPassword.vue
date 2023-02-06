@@ -57,6 +57,8 @@ const submit = () => {
 
                 <div class="flex items-center justify-end mt-4">
                     <SubmitButton
+                        :onSuccess="form.processing"
+                        successMessage="Successfully updated."
                         :disabled="form.processing"
                         buttonText="Email Password Reset Link"
                     >

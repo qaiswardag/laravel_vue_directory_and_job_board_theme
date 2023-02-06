@@ -3,7 +3,7 @@ import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { router, Head } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 import { vueFetch } from "use-lightweight-fetch";
-import FetchButton from "@/Components/Buttons/FetchButton.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 // test using costum npm package
 // test using costum npm package
@@ -52,6 +52,28 @@ onMounted(() => {
         }
     );
 });
+
+// submit button test - start
+// submit button test - start
+// submit button test - start
+// submit button test - start
+//
+const runMe = ref(false);
+//
+//
+const TestSubmitButtonTwice = function () {
+    console.log("you clicked me");
+    runMe.value = true;
+
+    // set timer
+    setTimeout(() => {
+        runMe.value = false;
+    }, 1000);
+};
+// submit button test - end
+// submit button test - end
+// submit button test - end
+// submit button test - end
 
 // test using costum npm package
 // test using costum npm package
@@ -419,14 +441,21 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex justify-end py-6">
-                                <FetchButton
+                            <div class="flex justify-end py-6 gap-4 flex-col">
+                                <SubmitButton
                                     :ButtonStyleDelete="true"
                                     @firstButtonClick="getBackenUsers"
                                     :disabled="isLoadingBackendDataUsers"
                                     buttonText="Get Users"
                                 >
-                                </FetchButton>
+                                </SubmitButton>
+                                <SubmitButton
+                                    :ButtonStyleDelete="false"
+                                    @firstButtonClick="TestSubmitButtonTwice"
+                                    :disabled="runMe"
+                                    buttonText="Do something"
+                                >
+                                </SubmitButton>
                             </div>
                         </div>
                     </div>

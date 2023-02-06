@@ -1,4 +1,5 @@
 <script setup>
+import { CheckCircleIcon } from "@heroicons/vue/20/solid";
 defineProps({
     on: { required: true, Boolean },
     type: {
@@ -11,9 +12,15 @@ defineProps({
     <transition name="slide-fade">
         <div v-show="on" class="text-sm text-myPrimaryNormalColor mt-2">
             <div v-if="type === 'sucsess'">
-                <p class="myPrimaryParagraph">
-                    <slot />
-                </p>
+                <div class="flex gap-1 items-center justify-end rounded">
+                    <CheckCircleIcon
+                        class="h-5 w-5 text-green-400"
+                        aria-hidden="true"
+                    />
+                    <p class="myPrimaryParagraph">
+                        <slot />
+                    </p>
+                </div>
             </div>
         </div>
     </transition>

@@ -14,16 +14,28 @@ defineProps({
         type: Boolean,
         required: true,
     },
-    status: {
+    onSuccess: {
         type: Boolean,
     },
     successMessage: {
+        type: String,
+    },
+    hasErrors: {
+        type: Boolean,
+    },
+    errorMessage: {
         type: String,
     },
     ButtonStyleDelete: {
         type: Boolean,
     },
 });
+
+const emit = defineEmits(["firstButtonClick"]);
+// search anything modal button
+const firstButtonClick = function () {
+    emit("firstButtonClick");
+};
 </script>
 
 <template>
@@ -35,6 +47,7 @@ defineProps({
                 </div>
             </Transition>
             <button
+                @click="firstButtonClick"
                 :type="type"
                 :disabled="disabled"
                 class="myPrimaryButton myPrimaryGap min-w-[8rem]"
@@ -49,9 +62,11 @@ defineProps({
         </div>
     </div>
     <transition name="slide-fade">
-        <template v-if="status">
-            <ActionMessage :on="status" type="sucsess" class="ml-3"
-                >{{ successMessage }}
+        <template v-if="onSuccess">
+            <ActionMessage :on="onSuccess" type="sucsess" class="ml-3">
+                <div class="flex gap-1 items-center justify-end rounded">
+                    {{ successMessage }}
+                </div>
             </ActionMessage>
         </template>
     </transition>

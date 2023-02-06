@@ -97,7 +97,7 @@ const handleCancelTeamInvitation = function (invitation) {
     typeModal.value = "danger";
     gridColumnModal.value = 2;
     titleModal.value = "Cancel pending Team Invitation";
-    descriptionModal.value = `Are you sure you want to cancel team invitation for: ${invitation.email}`;
+    descriptionModal.value = `Are you sure you want to cancel Pending Team Invitation for: ${invitation.email}`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Cancel invitation";
@@ -396,8 +396,6 @@ const displayableRole = (role) => {
 
                 <template #actions>
                     <SubmitButton
-                        :status="addTeamMemberForm.recentlySuccessful"
-                        successMessage="Successfully added a team member."
                         :disabled="addTeamMemberForm.processing"
                         buttonText="Add memeber"
                     >
@@ -523,6 +521,15 @@ const displayableRole = (role) => {
                             </div>
                         </div>
                     </div>
+                </template>
+                <!-- Pending Team Member Invitation List -->
+                <template #actions>
+                    <ActionMessage
+                        :on="cancelTeamInvitationForm.recentlySuccessful"
+                        type="sucsess"
+                    >
+                        Successfully Removed pending invition.
+                    </ActionMessage>
                 </template>
             </ActionSection>
         </div>
@@ -712,6 +719,20 @@ const displayableRole = (role) => {
                             </div>
                         </div>
                     </div>
+                </template>
+                <template #actions>
+                    <ActionMessage
+                        :on="removeTeamMemberForm.recentlySuccessful"
+                        type="sucsess"
+                    >
+                        Successfully Updated Team Member List.
+                    </ActionMessage>
+                    <ActionMessage
+                        :on="updateRoleForm.recentlySuccessful"
+                        type="sucsess"
+                    >
+                        Successfully Updated Team Member Role.
+                    </ActionMessage>
                 </template>
             </ActionSection>
         </div>

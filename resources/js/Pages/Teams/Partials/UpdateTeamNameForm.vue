@@ -65,7 +65,9 @@ const updateTeamName = () => {
         errorBag: "updateTeam",
         preserveScroll: true,
         onSuccess: (log) => {},
-        onError: (err) => {},
+        onError: (err) => {
+            console.log("error is:", err);
+        },
         onFinish: () => {},
     });
 };
@@ -152,7 +154,7 @@ const updateTeamName = () => {
 
         <template #actions>
             <SubmitButton
-                :status="form.recentlySuccessful"
+                :onSuccess="form.recentlySuccessful"
                 successMessage="Successfully updated your team."
                 :disabled="form.processing"
                 buttonText="Update"

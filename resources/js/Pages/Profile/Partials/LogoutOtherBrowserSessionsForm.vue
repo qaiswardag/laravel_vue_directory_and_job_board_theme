@@ -7,7 +7,6 @@ import InputError from "@/Components/Forms/InputError.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 defineProps({
     sessions: Array,
