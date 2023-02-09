@@ -46,43 +46,66 @@ const updatePassword = () => {
             Ensure your account is using a long, random password to stay secure.
         </template>
 
-        <template #form>
-            <div class="myInputGroup">
-                <InputLabel for="current_password" value="Current Password" />
-                <TextInput
-                    id="current_password"
-                    ref="currentPasswordInput"
-                    v-model="form.current_password"
-                    type="password"
-                    autocomplete="current-password"
-                />
-                <InputError :message="form.errors.current_password" />
-            </div>
+        <template #main>
+            <div class="myInputsOrganization">
+                <div class="myInputsOrganizationText">
+                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                    <p class="myPrimaryParagraph">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Corporis ex dignissimos quas doloremque culpa at!
+                    </p>
+                </div>
+                <div class="myInputGroup">
+                    <InputLabel
+                        for="current_password"
+                        value="Current Password"
+                    />
+                    <TextInput
+                        id="current_password"
+                        ref="currentPasswordInput"
+                        v-model="form.current_password"
+                        type="password"
+                        autocomplete="current-password"
+                    />
+                    <InputError :message="form.errors.current_password" />
+                </div>
 
-            <div class="myInputGroup">
-                <InputLabel for="password" value="New Password" />
-                <TextInput
-                    id="password"
-                    ref="passwordInput"
-                    v-model="form.password"
-                    type="password"
-                    autocomplete="new-password"
-                />
-                <InputError :message="form.errors.password" />
-            </div>
+                <div class="myInputGroup">
+                    <InputLabel for="password" value="New Password" />
+                    <TextInput
+                        id="password"
+                        ref="passwordInput"
+                        v-model="form.password"
+                        type="password"
+                        autocomplete="new-password"
+                    />
+                    <InputError :message="form.errors.password" />
+                </div>
 
-            <div class="myInputGroup">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    autocomplete="new-password"
-                />
-                <InputError :message="form.errors.password_confirmation" />
+                <div class="myInputGroup">
+                    <InputLabel
+                        for="password_confirmation"
+                        value="Confirm Password"
+                    />
+                    <TextInput
+                        id="password_confirmation"
+                        v-model="form.password_confirmation"
+                        type="password"
+                        autocomplete="new-password"
+                    />
+                    <InputError :message="form.errors.password_confirmation" />
+                </div>
+            </div>
+        </template>
+        <template #sidebar>
+            <div class="myInputsOrganization">
+                <div class="myInputsOrganizationText">
+                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                    <p class="myPrimaryParagraph">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Corporis ex dignissimos quas doloremque culpa at!
+                    </p>
+                </div>
             </div>
         </template>
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Users\UserController;
 use App\Models\User;
@@ -62,16 +63,26 @@ Route::middleware([
             return Inertia::render("PolicyAndTerms/PrivacyPolicy");
         })->name("privacyPolicy");
     });
+
 //
-// teams
-// middleware for group of pages
-Route::middleware([
-    "auth:sanctum",
-    config("jetstream.auth_session"),
-    "verified",
-])->group(function () {
-    // just for testing. Delete Testing.vue when this route is deleted
-    Route::get("/manage-teams", function () {
-        return Inertia::render("Teams/ManageTeams");
-    })->name("teams.manage-teams");
-});
+//
+//
+//
+//
+//
+//
+// Route::get("/teams/create", [TeamController::class, "create"])->name(
+//     "teams.create"
+// );
+//
+Route::get("/manage/posts", [PostController::class, "index"])->name(
+    "posts.index"
+);
+//
+Route::get("/posts/create", [PostController::class, "create"])->name(
+    "posts.create"
+);
+Route::post("/posts/store", [PostController::class, "store"])->name(
+    "posts.store"
+);
+Route::get("/posts/{post}", [PostController::class, "show"])->name("post.show");

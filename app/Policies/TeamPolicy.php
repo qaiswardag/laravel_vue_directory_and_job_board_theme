@@ -55,6 +55,7 @@ class TeamPolicy
      */
     public function updateTeamMember(User $user, Team $team): bool
     {
+        // change to user->has->role->editor
         return $user->ownsTeam($team);
     }
 

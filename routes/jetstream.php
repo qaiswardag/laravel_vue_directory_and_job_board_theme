@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
 use Laravel\Jetstream\Http\Controllers\Inertia\ApiTokenController;
 use Laravel\Jetstream\Http\Controllers\Inertia\CurrentUserController;
@@ -138,6 +139,15 @@ Route::group(
                             TeamInvitationController::class,
                             "destroy",
                         ])->name("team-invitations.destroy");
+                        // Mange teams
+                        Route::get("/manage/teams", function () {
+                            return Inertia::render("Teams/Index");
+                        })->name("teams.index");
+                    }
+
+                    // Posts...
+                    if (Jetstream::hasTeamFeatures()) {
+                        // somthing here
                     }
                 });
             }

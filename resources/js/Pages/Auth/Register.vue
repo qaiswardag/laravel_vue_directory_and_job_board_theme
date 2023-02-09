@@ -44,7 +44,10 @@ const submit = () => {
         <Head title="Register" />
 
         <div
-            class="bg-[url('/images/app-images/background-images/register/register.jpg')] bg-cover bg-no-repeat bg-fixed bg-center pt-8 pb-32"
+            class="min-h-full bg-cover bg-top sm:bg-top"
+            style="
+                background-image: url('/images/app-images/background-images/register/register.jpg');
+            "
         >
             <AuthenticationCard :css="'opacity-95'">
                 <form @submit.prevent="submit">
@@ -139,14 +142,14 @@ const submit = () => {
                                     <a
                                         target="_blank"
                                         :href="route('terms.show')"
-                                        class="underline text-sm text-myPrimaryNormalColor hover:text-myPrimaryNormalColor"
+                                        class="underline text-sm text-myPrimaryGrayColor hover:text-myPrimaryGrayColor"
                                         >Terms of Service</a
                                     >
                                     and
                                     <a
                                         target="_blank"
                                         :href="route('policy.show')"
-                                        class="underline text-sm text-myPrimaryNormalColor hover:text-myPrimaryNormalColor"
+                                        class="underline text-sm text-myPrimaryGrayColor hover:text-myPrimaryGrayColor"
                                         >Privacy Policy</a
                                     >
                                 </div>

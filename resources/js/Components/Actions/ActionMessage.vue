@@ -14,7 +14,7 @@ defineProps({
 <template>
     <div
         v-if="type === 'success'"
-        class="flex flex-col gap-4 bottom-4 right-0 fixed mb-2 md:mr-0 mx-2"
+        class="flex flex-col gap-4 bottom-4 right-0 fixed mb-2 md:mr-0 mx-2 z-50"
     >
         <Transition v-show="on" name="slide-fade">
             <div class="rounded-3xl py-4 px-6 mx-2 bg-green-500 text-white">

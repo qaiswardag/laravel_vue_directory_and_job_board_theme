@@ -30,7 +30,7 @@
                             >
                                 <BellIcon
                                     aria-hidden="true"
-                                    class="h-4 w-4 text-myPrimaryNormalColor"
+                                    class="h-4 w-4 text-myPrimaryGrayColor"
                                 />
                             </div>
 
@@ -77,7 +77,7 @@
                             stroke-width="2"
                             stroke="currentColor"
                             aria-hidden="true"
-                            class="h-6 w-6 text-myPrimaryNormalColor self-center cursor-pointer"
+                            class="h-6 w-6 text-myPrimaryGrayColor self-center cursor-pointer"
                         >
                             <path
                                 stroke-linecap="round"
@@ -132,7 +132,7 @@
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-myPrimaryNormalColor hover:text-myPrimaryNormalColor focus:ring-yellow-400 text-sm w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-myPrimaryGrayColor hover:text-myPrimaryGrayColor focus:ring-yellow-400 text-sm w-full"
                                 :class="{
                                     'opacity-25 cursor-default': disabled,
                                 }"
@@ -142,7 +142,10 @@
                             >
                                 <div>
                                     <Transition name="bounce">
-                                        <div role="status">
+                                        <div
+                                            role="status"
+                                            class="flex items-center"
+                                        >
                                             <svg
                                                 aria-hidden="true"
                                                 class="w-4 h-4 animate-spin text-white-600 fill-gray-800 flex items-center"
@@ -178,7 +181,7 @@
                             "
                         >
                             <button
-                                class="myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-myPrimaryNormalColor hover:text-myPrimaryNormalColor focus:ring-yellow-400 text-sm w-full"
+                                class="myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-myPrimaryGrayColor hover:text-myPrimaryGrayColor focus:ring-yellow-400 text-sm w-full"
                                 type="button"
                                 @click="secondButton"
                             >
@@ -207,7 +210,10 @@
                                 >
                                     <div>
                                         <Transition name="bounce">
-                                            <div role="status">
+                                            <div
+                                                role="status"
+                                                class="flex items-center"
+                                            >
                                                 <svg
                                                     aria-hidden="true"
                                                     class="w-4 h-4 animate-spin text-white-600 fill-gray-800 flex items-center"
@@ -269,7 +275,10 @@
                                 >
                                     <div>
                                         <Transition name="bounce">
-                                            <div role="status">
+                                            <div
+                                                role="status"
+                                                class="flex items-center"
+                                            >
                                                 <svg
                                                     aria-hidden="true"
                                                     class="w-4 h-4 animate-spin text-white-600 fill-gray-800 flex items-center"
@@ -332,7 +341,10 @@
                                 >
                                     <div>
                                         <Transition name="bounce">
-                                            <div role="status">
+                                            <div
+                                                role="status"
+                                                class="flex items-center"
+                                            >
                                                 <svg
                                                     aria-hidden="true"
                                                     class="w-4 h-4 animate-spin text-white-600 fill-gray-800 flex items-center"
@@ -396,7 +408,10 @@
                                 >
                                     <div>
                                         <Transition name="bounce">
-                                            <div role="status">
+                                            <div
+                                                role="status"
+                                                class="flex items-center"
+                                            >
                                                 <svg
                                                     aria-hidden="true"
                                                     class="w-4 h-4 animate-spin text-white-600 fill-gray-800 flex items-center"

@@ -81,7 +81,7 @@ const notificationsSlideOverButton = function () {
                                                 class="flex items-start justify-between"
                                             >
                                                 <DialogTitle
-                                                    class="text-lg font-medium text-myPrimaryNormalColor"
+                                                    class="mySecondaryHeader"
                                                 >
                                                     Latest 15 notifications
                                                 </DialogTitle>
@@ -90,7 +90,7 @@ const notificationsSlideOverButton = function () {
                                                 >
                                                     <button
                                                         type="button"
-                                                        class="rounded-md bg-white text-myPrimaryColor-400 hover:text-myPrimaryColor-500 focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
+                                                        class="rounded-md bg-white text-myPrimaryBrandColor hover:text-myPrimaryBrandColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2"
                                                         @click="
                                                             $emit(
                                                                 'notificationsSlideOverButton'
@@ -146,7 +146,7 @@ const notificationsSlideOverButton = function () {
                                                     >
                                                         <a
                                                             href="#"
-                                                            class="text-sm font-medium text-myPrimaryNormalColor mb-4 mt-2 block"
+                                                            class="text-sm font-medium text-myPrimaryGrayColor mb-4 mt-2 block"
                                                         >
                                                             {{
                                                                 notification.title
@@ -175,12 +175,12 @@ const notificationsSlideOverButton = function () {
                                                         </div>
 
                                                         <p
-                                                            class="text-xs text-myPrimaryNormalColor my-2"
+                                                            class="text-xs text-myPrimaryGrayColor my-2"
                                                         >
                                                             Updated: 01.01.2023
                                                         </p>
                                                         <p
-                                                            class="text-sm text-myPrimaryNormalColor mt-4"
+                                                            class="text-sm text-myPrimaryGrayColor mt-4"
                                                         >
                                                             {{
                                                                 notification.description.slice(

@@ -9,11 +9,11 @@
     |--------------------------------------------------------------------------
     */
     .myFocus {
-        @apply focus-within:border-2 focus-within:border-myPrimaryColor-500;
+        @apply focus-within:border-2 focus-within:border-myPrimaryBrandColor;
     }
 
     .myActiveLinkColor {
-        @apply text-myPrimaryColor-600;
+        @apply text-myPrimaryBrandColor;
     }
 
     /*
@@ -22,7 +22,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryParagraph {
-        @apply text-sm text-myPrimaryNormalColor;
+        @apply text-sm text-myPrimaryGrayColor;
     }
     /*
     |--------------------------------------------------------------------------
@@ -47,10 +47,10 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryLink {
-        @apply text-myPrimaryColor-600 text-sm
+        @apply text-myPrimaryBrandColor text-sm
         focus:outline-none
-        focus:ring-0 focus:ring-myPrimaryColor-500
-        focus-visible:ring-0 focus-visible:ring-myPrimaryColor-500;
+        focus:ring-0 focus:ring-myPrimaryBrandColor
+        focus-visible:ring-0 focus-visible:ring-myPrimaryBrandColor;
     }
 
     .myPrimaryActiveLink {
@@ -66,13 +66,13 @@
     |--------------------------------------------------------------------------
     */
     .myRadio {
-        @apply w-5 h-5 text-myPrimaryColor-600 bg-gray-100 border-gray-300 focus:ring-myPrimaryColor-500 dark:focus:ring-myPrimaryColor-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+        @apply w-5 h-5 text-myPrimaryBrandColor bg-gray-100 border-gray-300 focus:ring-myPrimaryBrandColor dark:focus:ring-myPrimaryBrandColor dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
     }
 
     .myPrimaryButton {
-        @apply break-keep font-semibold inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryColor-500 px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryColor-600 sm:w-auto
-        focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2
-        focus-visible:ring-2 focus-visible:ring-myPrimaryColor-500;
+        @apply break-keep font-semibold inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryBrandColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryBrandColor sm:w-auto
+        focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2
+        focus-visible:ring-2 focus-visible:ring-myPrimaryBrandColor;
     }
 
     .mySecondaryButton {
@@ -80,11 +80,11 @@
     }
 
     .myPrimaryDeleteButton {
-        @apply myPrimaryButton bg-myErrorColor-500 hover:bg-myErrorColor-600 focus:ring-myErrorColor-500;
+        @apply myPrimaryButton bg-myErrorColor hover:bg-myErrorColor focus:ring-myErrorColor;
     }
 
     .myPrimaryToggleButton {
-        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-myPrimaryNormalColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2 bg-gray-100 hover:bg-myPrimaryColor-500 hover:text-white;
+        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-myPrimaryGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 bg-gray-100 hover:bg-myPrimaryBrandColor hover:text-white;
     }
     /*
     |--------------------------------------------------------------------------
@@ -93,16 +93,16 @@
     */
 
     .myPrimaryButtonNoBackground {
-        @apply myPrimaryParagraph font-semibold  text-myPrimaryColor-600 
+        @apply myPrimaryParagraph font-semibold  text-myPrimaryBrandColor 
         focus:outline-none cursor-pointer;
     }
 
     .mySecondaryButtonNoBackground {
-        @apply font-semibold  text-myPrimaryColor-600;
+        @apply font-semibold  text-myPrimaryBrandColor;
     }
 
     .myPrimaryDeleteButtonNoBackground {
-        @apply myPrimaryButtonNoBackground text-myErrorColor-600;
+        @apply myPrimaryButtonNoBackground text-myErrorColor;
     }
 
     /*
@@ -111,7 +111,7 @@
     |--------------------------------------------------------------------------
     */
     .mySmallIcon {
-        @apply cursor-pointer flex-shrink-0 mr-1.5 h-7 w-7 text-myPrimaryNormalColor transform duration-200 stroke-2;
+        @apply cursor-pointer flex-shrink-0 mr-1.5 h-7 w-7 text-myPrimaryGrayColor transform duration-200 stroke-2;
     }
 
     /*
@@ -129,7 +129,21 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryForm {
-        /*@apply border-2 border-amber-700 p-12 rounded-lg*/
+        @apply grid sm:grid-cols-12 grid-cols-1 myPrimaryGap mb-8;
+    }
+    .myPrimaryFormMain {
+        @apply sm:col-span-8 col-span-1  grid grid-cols-1 myPrimaryGap;
+    }
+    .myPrimaryFormSidebar {
+        @apply sm:col-span-4 col-span-1 grid grid-cols-1 myPrimaryGap;
+    }
+
+    .myInputsOrganization {
+        @apply px-4 py-4 border border-myPrimaryLightGrayColor rounded bg-gray-50;
+    }
+
+    .myInputsOrganizationText {
+        @apply mt-12 mb-4;
     }
 
     .myInputsFamily {
@@ -138,17 +152,20 @@
     .myInputGroup {
         @apply w-full self-start mb-2;
     }
+    .myDoActionButtonSection {
+        @apply px-4 py-4 border border-myPrimaryLightGrayColor rounded sm:px-6 text-right mt-1 bg-gray-50;
+    }
 
     .myPrimaryInputLabel {
-        @apply mt-4 mb-2 block text-sm font-medium text-myPrimaryNormalColor text-left;
+        @apply mt-4 mb-2 block text-sm font-medium text-myPrimaryGrayColor text-left;
     }
 
     .myPrimaryInput {
-        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:border-transparent;
+        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
     }
 
     .myPrimaryInputError {
-        @apply mt-1 italic block text-sm font-medium text-myErrorColor-500 text-left;
+        @apply mt-1 italic block text-sm font-medium text-myErrorColor text-left;
     }
 
     .myPrimaryHiddenInputField {
@@ -156,22 +173,33 @@
     }
 
     .myPrimaryTextArea {
-        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:border-transparent;
+        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
     }
 
     .myPrimaryCheckbox {
-        @apply focus:ring-myPrimaryColor-500 h-5 w-5 text-myPrimaryColor-500 border-gray-400 rounded-md;
+        @apply focus:ring-myPrimaryBrandColor h-5 w-5 text-myPrimaryBrandColor border-gray-400 rounded-md;
     }
 
     .myPrimarySelect {
-        @apply bg-gray-50 focus:bg-white font-normal text-myPrimaryNormalColor placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-myPrimaryColor-500 focus:border-myPrimaryColor-500 focus:outline-4 focus:outline-myPrimaryColor-50 sm:text-sm;
+        @apply bg-gray-50 focus:bg-white font-normal text-myPrimaryGrayColor placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-myPrimaryBrandColor focus:border-myPrimaryBrandColor focus:outline-4 focus:outline-myPrimaryBrandColor sm:text-sm;
     }
 
     #my-select {
-        @apply py-1.5 px-2 text-myPrimaryNormalColor bg-gray-50 rounded-md
+        @apply py-1.5 px-2 text-myPrimaryGrayColor bg-gray-50 rounded-md
         border border-gray-300 focus-within:border focus-within:border-transparent
         sm:text-sm font-normal
         focus-within:bg-white focus:focus-within:rounded-md
-        focus-within:ring-2 focus-within:ring-myPrimaryColor-500 focus-within:ring-offset-[1px];
+        focus-within:ring-2 focus-within:ring-myPrimaryBrandColor focus-within:ring-offset-[1px];
     }
 }
+
+/* CSS styles for VueQuill - start */
+.ql-toolbar.ql-snow {
+    border-top-right-radius: 10px 10px;
+    border-top-left-radius: 10px 10px;
+}
+
+.ql-editor {
+    min-height: 200px;
+}
+/* CSS styles for VueQuill - end */

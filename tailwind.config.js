@@ -13,26 +13,20 @@ module.exports = {
 
     theme: {
         colors: {
-            myPrimaryLightColor: "#64748b",
-            myPrimaryNormalColor: "#374151",
-            myPrimaryDarkColor: "#111827",
+            //
+            // brand colors
+            myPrimaryBrandColor: "#059669",
+            //
+            //
+            // error color
+            myErrorColor: "#d60000",
+            // gray colors
+            myPrimaryLightGrayColor: "#e2e8f0",
+            myPrimaryGrayColor: "#374151",
+            myPrimaryDarkGrayColor: "#111827",
 
-            myPrimaryColor: {
-                50: "#ecfdf5",
-                100: "#d1fae5",
-                200: "#a7f3d0",
-                300: "#6ee7b7",
-                400: "#34d399",
-                500: "#10b981",
-                600: "#059669",
-                700: "#047857",
-                800: "#065f46",
-                900: "#064e3b",
-            },
-            myErrorColor: {
-                500: "#d50000",
-                600: "#d60000",
-            },
+            //
+
             transparent: "transparent",
             current: "currentColor",
             black: colors.black,

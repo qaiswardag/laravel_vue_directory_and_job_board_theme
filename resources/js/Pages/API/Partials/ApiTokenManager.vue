@@ -87,7 +87,7 @@ const deleteApiToken = () => {
                 application on your behalf.
             </template>
 
-            <template #form>
+            <template #main>
                 <!-- Token Name -->
                 <div class="myInputGroup">
                     <InputLabel for="name" value="Name" />
@@ -117,7 +117,7 @@ const deleteApiToken = () => {
                                     :value="permission"
                                 />
                                 <span
-                                    class="ml-2 text-sm text-myPrimaryNormalColor"
+                                    class="ml-2 text-sm text-myPrimaryGrayColor"
                                     >{{ permission }}</span
                                 >
                             </label>
@@ -154,7 +154,7 @@ const deleteApiToken = () => {
                     </template>
 
                     <!-- API Token List -->
-                    <template #content>
+                    <template #main>
                         <div class="space-y-6">
                             <div
                                 v-for="token in tokens"
@@ -205,7 +205,7 @@ const deleteApiToken = () => {
 
         <div
             v-if="$page.props.jetstream.flash.token"
-            class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-myPrimaryNormalColor break-all"
+            class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-myPrimaryGrayColor break-all"
         >
             {{ $page.props.jetstream.flash.token }}
         </div>
@@ -225,7 +225,7 @@ const deleteApiToken = () => {
                         v-model:checked="updateApiTokenForm.permissions"
                         :value="permission"
                     />
-                    <span class="ml-2 text-sm text-myPrimaryNormalColor">{{
+                    <span class="ml-2 text-sm text-myPrimaryGrayColor">{{
                         permission
                     }}</span>
                 </label>

@@ -148,7 +148,7 @@ function onSelect(item) {
                                     aria-hidden="true"
                                 />
                                 <ComboboxInput
-                                    class="h-14 w-full border-0 bg-transparent pl-11 pr-4 text-myPrimaryNormalColor placeholder-gray-400 focus:ring-0 sm:text-sm"
+                                    class="h-14 w-full border-0 bg-transparent pl-11 pr-4 text-myPrimaryGrayColor placeholder-gray-400 focus:ring-0 sm:text-sm"
                                     placeholder="Search..."
                                     @change="rawQuery = $event.target.value"
                                 />
@@ -164,12 +164,12 @@ function onSelect(item) {
                             >
                                 <li v-if="filteredProjects.length > 0">
                                     <h2
-                                        class="text-xs font-semibold text-myPrimaryNormalColor"
+                                        class="text-xs font-semibold text-myPrimaryGrayColor"
                                     >
                                         Projects
                                     </h2>
                                     <ul
-                                        class="-mx-4 mt-2 text-sm text-myPrimaryNormalColor"
+                                        class="-mx-4 mt-2 text-sm text-myPrimaryGrayColor"
                                     >
                                         <ComboboxOption
                                             v-for="project in filteredProjects"
@@ -182,7 +182,7 @@ function onSelect(item) {
                                                 :class="[
                                                     'flex cursor-default select-none items-center px-4 py-2',
                                                     active &&
-                                                        'bg-myPrimaryColor-600 text-white',
+                                                        'bg-myPrimaryBrandColor text-white',
                                                 ]"
                                             >
                                                 <FolderIcon
@@ -204,12 +204,12 @@ function onSelect(item) {
                                 </li>
                                 <li v-if="filteredUsers.length > 0">
                                     <h2
-                                        class="text-xs font-semibold text-myPrimaryNormalColor"
+                                        class="text-xs font-semibold text-myPrimaryGrayColor"
                                     >
                                         Users
                                     </h2>
                                     <ul
-                                        class="-mx-4 mt-2 text-sm text-myPrimaryNormalColor"
+                                        class="-mx-4 mt-2 text-sm text-myPrimaryGrayColor"
                                     >
                                         <ComboboxOption
                                             v-for="user in filteredUsers"
@@ -222,7 +222,7 @@ function onSelect(item) {
                                                 :class="[
                                                     'flex cursor-default select-none items-center px-4 py-2',
                                                     active &&
-                                                        'bg-myPrimaryColor-600 text-white',
+                                                        'bg-myPrimaryBrandColor text-white',
                                                 ]"
                                             >
                                                 <img
@@ -249,11 +249,11 @@ function onSelect(item) {
                                     aria-hidden="true"
                                 />
                                 <p
-                                    class="mt-4 font-semibold text-myPrimaryNormalColor"
+                                    class="mt-4 font-semibold text-myPrimaryGrayColor"
                                 >
                                     Help with searching
                                 </p>
-                                <p class="mt-2 text-myPrimaryNormalColor">
+                                <p class="mt-2 text-myPrimaryGrayColor">
                                     Use this tool to quickly search for users
                                     and projects across our entire platform. You
                                     can also use the search modifiers found in
@@ -276,26 +276,26 @@ function onSelect(item) {
                                     aria-hidden="true"
                                 />
                                 <p
-                                    class="mt-4 font-semibold text-myPrimaryNormalColor"
+                                    class="mt-4 font-semibold text-myPrimaryGrayColor"
                                 >
                                     No results found
                                 </p>
-                                <p class="mt-2 text-myPrimaryNormalColor">
+                                <p class="mt-2 text-myPrimaryGrayColor">
                                     We couldn’t find anything with that term.
                                     Please try again.
                                 </p>
                             </div>
 
                             <div
-                                class="flex flex-wrap items-center bg-gray-50 py-2.5 px-4 text-xs text-myPrimaryNormalColor"
+                                class="flex flex-wrap items-center bg-gray-50 py-2.5 px-4 text-xs text-myPrimaryGrayColor"
                             >
                                 Type
                                 <kbd
                                     :class="[
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery.startsWith('#')
-                                            ? 'border-myPrimaryColor-600 text-myPrimaryColor-600'
-                                            : 'border-gray-400 text-myPrimaryNormalColor',
+                                            ? 'border-myPrimaryBrandColor text-myPrimaryBrandColor'
+                                            : 'border-gray-400 text-myPrimaryGrayColor',
                                     ]"
                                     >#</kbd
                                 >
@@ -307,8 +307,8 @@ function onSelect(item) {
                                     :class="[
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery.startsWith('>')
-                                            ? 'border-myPrimaryColor-600 text-myPrimaryColor-600'
-                                            : 'border-gray-400 text-myPrimaryNormalColor',
+                                            ? 'border-myPrimaryBrandColor text-myPrimaryBrandColor'
+                                            : 'border-gray-400 text-myPrimaryGrayColor',
                                     ]"
                                     >&gt;</kbd
                                 >
@@ -317,8 +317,8 @@ function onSelect(item) {
                                     :class="[
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery === '?'
-                                            ? 'border-myPrimaryColor-600 text-myPrimaryColor-600'
-                                            : 'border-gray-400 text-myPrimaryNormalColor',
+                                            ? 'border-myPrimaryBrandColor text-myPrimaryBrandColor'
+                                            : 'border-gray-400 text-myPrimaryGrayColor',
                                     ]"
                                     >?</kbd
                                 >

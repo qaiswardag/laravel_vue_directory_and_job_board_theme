@@ -5,7 +5,10 @@ import ActionSection from "@/Components/ActionSection.vue";
 import DangerButton from "@/Components/Buttons/DangerButton.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
+import InputLabel from "@/Components/Forms/InputLabel.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 const confirmingUserDeletion = ref(false); // old modal
 const modalShowConfirmingUserDeletion = ref(false);
@@ -107,21 +110,39 @@ const closeModal = () => {
 
         <template #description> Permanently delete your account. </template>
 
-        <template #content>
-            <div class="max-w-xl">
-                <p class="myPrimaryParagraph">
-                    Once your account is deleted, all of its resources and data
-                    will be permanently deleted. Before deleting your account,
-                    please download any data or information that you wish to
-                    retain.
-                </p>
+        <template #main>
+            <div class="myInputsOrganization">
+                <div class="myInputsOrganizationText">
+                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                    <p class="myPrimaryParagraph">
+                        Once your account is deleted, all of its resources and
+                        data will be permanently deleted. Before deleting your
+                        account, please download any data or information that
+                        you wish to retain.
+                    </p>
+                </div>
+                <div class="myInputGroup"></div>
+            </div>
+        </template>
+        <template #sidebar>
+            <div class="myInputsOrganization">
+                <div class="myInputsOrganizationText">
+                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                    <p class="myPrimaryParagraph">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Corporis ex dignissimos quas doloremque culpa at!
+                    </p>
+                </div>
             </div>
         </template>
 
         <template #actions>
-            <DangerButton @click="handleUserDeletion">
-                Delete Account
-            </DangerButton>
+            <SubmitButton
+                :ButtonStyleDelete="true"
+                @firstButtonClick="handleUserDeletion"
+                buttonText="Delete Account"
+            >
+            </SubmitButton>
 
             <DynamicModal
                 :show="modalShowConfirmingUserDeletion"
@@ -140,7 +161,8 @@ const closeModal = () => {
             >
                 <header></header>
                 <main>
-                    <div class="mt-4">
+                    <div class="myInputGroup">
+                        <InputLabel for="roles" value="Enter Password" />
                         <TextInput
                             ref="passwordInput"
                             v-model="form.password"

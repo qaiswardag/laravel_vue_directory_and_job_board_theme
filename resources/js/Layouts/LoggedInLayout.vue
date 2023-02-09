@@ -183,7 +183,7 @@ const sidebarOpen = ref(false);
                 leave-to="opacity-0"
             >
                 <div
-                    class="fixed inset-0 bg-myPrimaryNormalColor bg-opacity-75"
+                    class="fixed inset-0 bg-myPrimaryGrayColor bg-opacity-75"
                 />
             </TransitionChild>
 
@@ -233,7 +233,7 @@ const sidebarOpen = ref(false);
                         <div class="mt-5 h-0 flex-1 overflow-y-auto">
                             <nav class="space-y-1 px-2" aria-label="menu">
                                 <p
-                                    class="text-myPrimaryNormalColor group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
+                                    class="text-myPrimaryGrayColor group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
                                 >
                                     Mobile Navigation
                                 </p>
@@ -247,7 +247,7 @@ const sidebarOpen = ref(false);
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
+                                        class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -267,7 +267,7 @@ const sidebarOpen = ref(false);
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
+                                        class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -300,7 +300,7 @@ const sidebarOpen = ref(false);
                                             viewBox="0 0 24 24"
                                             stroke-width="1.5"
                                             stroke="currentColor"
-                                            class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
+                                            class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
                                         >
                                             <path
                                                 stroke-linecap="round"
@@ -312,10 +312,8 @@ const sidebarOpen = ref(false);
                                     </SideBarLink>
                                 </template>
                                 <SideBarLink
-                                    :href="route('teams.manage-teams')"
-                                    :active="
-                                        route().current('teams.manage-teams')
-                                    "
+                                    :href="route('teams.index')"
+                                    :active="route().current('teams.index')"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -323,7 +321,7 @@ const sidebarOpen = ref(false);
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
+                                        class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -350,7 +348,7 @@ const sidebarOpen = ref(false);
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
+                                        class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -389,7 +387,7 @@ const sidebarOpen = ref(false);
             <div class="mt-5 flex flex-grow flex-col">
                 <nav class="flex-1 space-y-1 px-2 pb-4" aria-label="menu">
                     <p
-                        class="text-myPrimaryNormalColor group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
+                        class="text-myPrimaryGrayColor group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
                     >
                         Navigation
                     </p>
@@ -403,7 +401,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -423,7 +421,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -433,6 +431,40 @@ const sidebarOpen = ref(false);
                         </svg>
                         Your Profile
                     </SideBarLink>
+                    <template
+                        v-if="
+                            $page.props.user.all_teams.length > 0 &&
+                            $page.props.user.current_team &&
+                            $page.props.jetstream.hasTeamFeatures
+                        "
+                    >
+                        <SideBarLink
+                            :href="
+                                route(
+                                    'posts.index'
+                                    // $page.props.user.current_team
+                                )
+                            "
+                            :active="route().current('posts.index')"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"
+                                />
+                            </svg>
+
+                            Posts
+                        </SideBarLink>
+                    </template>
                     <template
                         v-if="
                             $page.props.user.all_teams.length > 0 &&
@@ -455,12 +487,12 @@ const sidebarOpen = ref(false);
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
+                                class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
                             >
                                 <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
+                                    d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
                                 />
                             </svg>
 
@@ -469,8 +501,8 @@ const sidebarOpen = ref(false);
                     </template>
 
                     <SideBarLink
-                        :href="route('teams.manage-teams')"
-                        :active="route().current('teams.manage-teams')"
+                        :href="route('teams.index')"
+                        :active="route().current('teams.index')"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -478,7 +510,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -500,7 +532,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-myPrimaryNormalColor mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -522,7 +554,7 @@ const sidebarOpen = ref(false);
         <div class="sticky top-0 z-10 flex h-16 flex-shrink-0">
             <button
                 type="button"
-                class="border-r px-4 text-myPrimaryNormalColor focus:outline-none focus:ring-2 focus:ring-inset focus:ring-myPrimaryColor-500 md:hidden bg-white border-b-2 border-gray-200"
+                class="border-r px-4 text-myPrimaryGrayColor focus:outline-none focus:ring-2 focus:ring-inset focus:ring-myPrimaryBrandColor md:hidden bg-white border-b-2 border-gray-200"
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>
@@ -538,7 +570,7 @@ const sidebarOpen = ref(false);
                                 Search anything...
                             </label>
                             <div
-                                class="relative w-full text-myPrimaryNormalColor focus-within:text-myPrimaryNormalColor"
+                                class="relative w-full text-myPrimaryGrayColor focus-within:text-myPrimaryGrayColor"
                             >
                                 <div
                                     class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
@@ -560,7 +592,7 @@ const sidebarOpen = ref(false);
                                 </div>
                                 <input
                                     id="search-field"
-                                    class="cursor-pointer block w-full h-full pl-8 pr-3 py-2 border-transparent text-myPrimaryNormalColor font-semibold placeholder-gray-500 placeholder:font-semibold focus:outline-none focus:placeholder-myPrimaryNormalColor focus:ring-0 focus:border-transparent sm:text-sm"
+                                    class="cursor-pointer block w-full h-full pl-8 pr-3 py-2 border-transparent text-myPrimaryGrayColor font-semibold placeholder-gray-500 placeholder:font-semibold focus:outline-none focus:placeholder-myPrimaryGrayColor focus:ring-0 focus:border-transparent sm:text-sm"
                                     @click.prevent="handleSearchAnything"
                                     placeholder="Search anything..."
                                     readonly
@@ -585,18 +617,18 @@ const sidebarOpen = ref(false);
                         "
                     >
                         <div
-                            class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
+                            class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 py-2 px-2"
                         >
                             <Link
                                 :href="
                                     route(
-                                        'teams.manage-teams',
+                                        'teams.index',
                                         $page.props.user.current_team
                                     )
                                 "
                                 :class="{
                                     myPrimaryLink:
-                                        route().current('teams.manage-teams'),
+                                        route().current('teams.index'),
                                 }"
                             >
                                 Select a Team
@@ -613,7 +645,7 @@ const sidebarOpen = ref(false);
                     >
                         <Menu as="div" class="relative">
                             <MenuButton
-                                class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
+                                class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 py-2 px-2"
                             >
                                 <span class="sr-only">Open user menu</span>
                                 <div>
@@ -647,7 +679,7 @@ const sidebarOpen = ref(false);
                                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 >
                                     <span
-                                        class="myPrimaryParagraph block px-4 py-2 text-xs text-myPrimaryNormalColor"
+                                        class="myPrimaryParagraph block px-4 py-2 text-xs text-myPrimaryGrayColor"
                                         >Manage Teams</span
                                     >
                                     <DropdownLink
@@ -659,7 +691,7 @@ const sidebarOpen = ref(false);
                                         "
                                         :active="route().current('teams.show')"
                                     >
-                                        Team Settings
+                                        Teams Settings
                                     </DropdownLink>
                                 </MenuItems>
                             </transition>
@@ -671,7 +703,7 @@ const sidebarOpen = ref(false);
                     <Menu as="div" class="relative">
                         <div>
                             <MenuButton
-                                class="flex ml-3 gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
+                                class="flex ml-3 gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 pr-2"
                             >
                                 <span class="sr-only">Open user menu</span>
                                 <img
@@ -715,7 +747,7 @@ const sidebarOpen = ref(false);
 
                     <button
                         type="button"
-                        class="rounded-full p-1 text-myPrimaryNormalColor hover:text-myPrimaryNormalColor focus:outline-none focus:ring-2 focus:ring-myPrimaryColor-500 focus:ring-offset-2"
+                        class="rounded-full p-1 text-myPrimaryGrayColor hover:text-myPrimaryGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2"
                     >
                         <span class="sr-only">View notifications</span>
                         <BellIcon
@@ -735,7 +767,7 @@ const sidebarOpen = ref(false);
                     <slot name="header" />
                 </div>
             </header>
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 mb-24">
                 <main>
                     <slot />
                 </main>

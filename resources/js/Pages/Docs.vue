@@ -335,7 +335,7 @@ const TestSubmitButtonTwice = function () {
                                 <div
                                     v-for="user in fetchedDataUsers"
                                     :key="user.id"
-                                    class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-myPrimaryColor-600 focus-within:ring-offset-2 hover:border-gray-400"
+                                    class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-myPrimaryBrandColor focus-within:ring-offset-2 hover:border-gray-400"
                                 >
                                     <div class="min-w-0 flex-1">
                                         <div class="focus:outline-none">
@@ -344,12 +344,12 @@ const TestSubmitButtonTwice = function () {
                                                 aria-hidden="true"
                                             ></span>
                                             <p
-                                                class="text-sm font-medium text-myPrimaryNormalColor"
+                                                class="text-sm font-medium text-myPrimaryGrayColor"
                                             >
                                                 {{ user.name }}
                                             </p>
                                             <p
-                                                class="truncate text-sm text-myPrimaryNormalColor"
+                                                class="truncate text-sm text-myPrimaryGrayColor"
                                             >
                                                 {{ user.email }}
                                             </p>
@@ -418,7 +418,7 @@ const TestSubmitButtonTwice = function () {
                                     v-for="user in fetchedBackendDataUsers &&
                                     fetchedBackendDataUsers.users"
                                     :key="user.id"
-                                    class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-myPrimaryColor-500 focus-within:ring-offset-2 hover:border-gray-400"
+                                    class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-myPrimaryBrandColor focus-within:ring-offset-2 hover:border-gray-400"
                                 >
                                     <div class="min-w-0 flex-1">
                                         <div class="focus:outline-none">
@@ -427,13 +427,13 @@ const TestSubmitButtonTwice = function () {
                                                 aria-hidden="true"
                                             ></span>
                                             <p
-                                                class="text-sm font-medium text-myPrimaryNormalColor"
+                                                class="text-sm font-medium text-myPrimaryGrayColor"
                                             >
                                                 {{ user.first_name }}
                                                 {{ user.last_name }}
                                             </p>
                                             <p
-                                                class="truncate text-sm text-myPrimaryNormalColor"
+                                                class="truncate text-sm text-myPrimaryGrayColor"
                                             >
                                                 {{ user.email }}
                                             </p>

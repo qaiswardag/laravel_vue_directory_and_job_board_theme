@@ -1,7 +1,7 @@
 <template>
     <svg
         aria-hidden="true"
-        class="inline w-7 h-7 animate-spin text-myPrimaryLightColor fill-myPrimaryDarkColor"
+        class="inline w-7 h-7 animate-spin text-myPrimaryLightGrayColor fill-myPrimaryDarkGrayColor"
         stroke-width="2"
         viewBox="0 0 100 101"
         fill="none"

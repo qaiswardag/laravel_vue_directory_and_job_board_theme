@@ -62,7 +62,7 @@ const showingNavigationDropdown = ref(false);
                                 <span class="inline-flex rounded-md">
                                     <button
                                         type="button"
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-myPrimaryNormalColor bg-white hover:bg-gray-50 hover:text-myPrimaryNormalColor focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-myPrimaryGrayColor bg-white hover:bg-gray-50 hover:text-myPrimaryGrayColor focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
                                     >
                                         Current team name
 
@@ -84,7 +84,7 @@ const showingNavigationDropdown = ref(false);
                                 </span>
                             </template>
 
-                            <template #content>
+                            <template #main>
                                 <div class="w-60">
                                     <!-- Team Management -->
                                     <template
@@ -153,7 +153,7 @@ const showingNavigationDropdown = ref(false);
                                 <span v-else class="inline-flex rounded-md">
                                     <button
                                         type="button"
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-myPrimaryNormalColor bg-white hover:text-myPrimaryNormalColor focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-myPrimaryGrayColor bg-white hover:text-myPrimaryGrayColor focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
                                     >
                                         Get Startet Today
 
@@ -175,7 +175,7 @@ const showingNavigationDropdown = ref(false);
                                 </span>
                             </template>
 
-                            <template #content>
+                            <template #main>
                                 <!-- Account Management -->
                                 <div
                                     class="block px-4 py-2 text-xs text-myPrimaryLightTextColor"
@@ -217,7 +217,7 @@ const showingNavigationDropdown = ref(false);
                 <!-- Hamburger -->
                 <div class="-mr-2 flex items-center sm:hidden">
                     <button
-                        class="inline-flex items-center justify-center p-2 rounded-md text-myPrimaryLightTextColor hover:text-myPrimaryNormalColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-myPrimaryNormalColor transition"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-myPrimaryLightTextColor hover:text-myPrimaryGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-myPrimaryGrayColor transition"
                         @click="
                             showingNavigationDropdown =
                                 !showingNavigationDropdown
@@ -279,12 +279,12 @@ const showingNavigationDropdown = ref(false);
 
                     <div>
                         <div
-                            class="font-medium text-base text-myPrimaryNormalColor"
+                            class="font-medium text-base text-myPrimaryGrayColor"
                         >
                             User name here
                         </div>
                         <div
-                            class="font-medium text-sm text-myPrimaryNormalColor"
+                            class="font-medium text-sm text-myPrimaryGrayColor"
                         >
                             User name here
                         </div>

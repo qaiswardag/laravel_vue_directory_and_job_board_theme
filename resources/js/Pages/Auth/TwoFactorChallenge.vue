@@ -45,7 +45,7 @@ const submit = () => {
             <AuthenticationCardLogo />
         </template>
 
-        <div class="mb-4 text-sm text-myPrimaryNormalColor">
+        <div class="mb-4 text-sm text-myPrimaryGrayColor">
             <template v-if="!recovery">
                 Please confirm access to your account by entering the
                 authentication code provided by your authenticator application.
@@ -87,7 +87,7 @@ const submit = () => {
             <div class="flex items-center justify-end mt-4">
                 <button
                     type="button"
-                    class="text-sm text-myPrimaryNormalColor hover:text-myPrimaryNormalColor underline cursor-pointer"
+                    class="text-sm text-myPrimaryGrayColor hover:text-myPrimaryGrayColor underline cursor-pointer"
                     @click.prevent="toggleRecovery"
                 >
                     <template v-if="!recovery"> Use a recovery code </template>

@@ -1,5 +1,6 @@
 <script setup>
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
+
 defineProps({
     type: {
         type: String,

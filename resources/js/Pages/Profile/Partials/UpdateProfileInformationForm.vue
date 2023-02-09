@@ -95,7 +95,7 @@ const flashModalButton = function () {
             Update your account's profile information and email address.
         </template>
 
-        <template #form>
+        <template #main>
             <!-- Profile Photo -->
             <div
                 v-if="$page.props.jetstream.managesProfilePhotos"
@@ -152,61 +152,81 @@ const flashModalButton = function () {
             </div>
 
             <!-- Name -->
-            <div class="myInputGroup">
-                <InputLabel for="first_name" value="First name" />
-                <TextInput
-                    id="first_name"
-                    v-model="form.first_name"
-                    type="text"
-                    autocomplete="first_name"
-                />
-                <InputError :message="form.errors.first_name" />
-            </div>
-
-            <div class="myInputGroup">
-                <InputLabel for="last_name" value="Last name" />
-                <TextInput
-                    id="last_name"
-                    v-model="form.last_name"
-                    type="text"
-                    autocomplete="last_name"
-                />
-                <InputError :message="form.errors.last_name" />
-            </div>
-
-            <!-- Email -->
-            <div class="myInputGroup">
-                <InputLabel for="email" value="Email" />
-                <TextInput id="email" v-model="form.email" type="email" />
-                <InputError :message="form.errors.email" />
-
-                <div
-                    v-if="
-                        $page.props.jetstream.hasEmailVerification &&
-                        user.email_verified_at === null
-                    "
-                >
-                    <p class="text-sm mt-2">
-                        Your email address is unverified.
-
-                        <Link
-                            :href="route('verification.send')"
-                            method="post"
-                            as="button"
-                            class="underline text-myPrimaryNormalColor hover:text-myPrimaryNormalColor"
-                            @click.prevent="sendEmailVerification"
-                        >
-                            Click here to re-send the verification email.
-                        </Link>
+            <div class="myInputsOrganization">
+                <div class="myInputsOrganizationText">
+                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                    <p class="myPrimaryParagraph">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Corporis ex dignissimos quas doloremque culpa at!
                     </p>
+                </div>
+                <div class="myInputGroup">
+                    <InputLabel for="first_name" value="First name" />
+                    <TextInput
+                        id="first_name"
+                        v-model="form.first_name"
+                        type="text"
+                        autocomplete="first_name"
+                    />
+                    <InputError :message="form.errors.first_name" />
+                </div>
+
+                <div class="myInputGroup">
+                    <InputLabel for="last_name" value="Last name" />
+                    <TextInput
+                        id="last_name"
+                        v-model="form.last_name"
+                        type="text"
+                        autocomplete="last_name"
+                    />
+                    <InputError :message="form.errors.last_name" />
+                </div>
+
+                <!-- Email -->
+                <div class="myInputGroup">
+                    <InputLabel for="email" value="Email" />
+                    <TextInput id="email" v-model="form.email" type="email" />
+                    <InputError :message="form.errors.email" />
 
                     <div
-                        v-show="verificationLinkSent"
-                        class="mt-2 font-medium text-sm text-green-600"
+                        v-if="
+                            $page.props.jetstream.hasEmailVerification &&
+                            user.email_verified_at === null
+                        "
                     >
-                        A new verification link has been sent to your email
-                        address.
+                        <p class="text-sm mt-2">
+                            Your email address is unverified.
+
+                            <Link
+                                :href="route('verification.send')"
+                                method="post"
+                                as="button"
+                                class="underline text-myPrimaryGrayColor hover:text-myPrimaryGrayColor"
+                                @click.prevent="sendEmailVerification"
+                            >
+                                Click here to re-send the verification email.
+                            </Link>
+                        </p>
+
+                        <div
+                            v-show="verificationLinkSent"
+                            class="mt-2 font-medium text-sm text-green-600"
+                        >
+                            A new verification link has been sent to your email
+                            address.
+                        </div>
                     </div>
+                </div>
+            </div>
+        </template>
+        <template #sidebar>
+            <div class="myInputsOrganization">
+                <div class="myInputsOrganizationText">
+                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                    <p class="myPrimaryParagraph">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Corporis ex dignissimos quas doloremque culpa at!
+                    </p>
                 </div>
             </div>
         </template>

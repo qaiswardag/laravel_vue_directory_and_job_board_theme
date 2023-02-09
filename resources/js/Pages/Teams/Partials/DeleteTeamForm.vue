@@ -88,32 +88,21 @@ const deleteTeam = function () {
     <ActionSection>
         <template #title> Delete Team </template>
 
-        <template #description> Permanently delete this team. </template>
+        <template #description> Delete {{ team.name }}? </template>
 
-        <template #content>
-            <div class="max-w-xl">
-                <p class="myPrimaryParagraph font-semibold mb-4">
-                    Permanently delete {{ team.name }}?
-                </p>
-
-                <p class="myPrimaryParagraph mb-4">
-                    Once a team is deleted, all of its resources and data will
-                    be permanently deleted. Before deleting this team, please
-                    download any data or information regarding this team that
-                    you wish to retain.
-                </p>
-            </div>
-        </template>
-
-        <!-- TODO: Add "confirms password" middleware to delete team
-            right now, team can be deleted without password confirmation -->
-
-        <template #actions>
-            <div class="flex flex-col items-end">
-                <DangerButton type="button" @click="handleDeleteTeam">
-                    Delete {{ team.name }}
-                </DangerButton>
-                <InputError :message="form.errors.team" />
+        <template #main>
+            <div class="myInputsOrganization">
+                <div class="myInputsOrganizationText">
+                    <p class="myTertiaryHeader">
+                        Permanently delete {{ team.name }}?
+                    </p>
+                    <p class="myPrimaryParagraph">
+                        Once a team is deleted, all of its resources and data
+                        will be permanently deleted. Before deleting this team,
+                        please download any data or information regarding this
+                        team that you wish to retain.
+                    </p>
+                </div>
             </div>
 
             <DynamicModal
@@ -134,6 +123,30 @@ const deleteTeam = function () {
                 <header></header>
                 <main></main>
             </DynamicModal>
+        </template>
+
+        <template #sidebar>
+            <div class="myInputsOrganization">
+                <div class="myInputsOrganizationText">
+                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                    <p class="myPrimaryParagraph">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Corporis ex dignissimos quas doloremque culpa at!
+                    </p>
+                </div>
+            </div>
+        </template>
+
+        <!-- TODO: Add "confirms password" middleware to delete team
+            right now, team can be deleted without password confirmation -->
+
+        <template #actions>
+            <SubmitButton
+                :ButtonStyleDelete="true"
+                @firstButtonClick="handleDeleteTeam"
+                :buttonText="`Delete ${team.name}`"
+            >
+            </SubmitButton>
         </template>
     </ActionSection>
 </template>
