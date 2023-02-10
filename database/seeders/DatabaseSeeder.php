@@ -83,6 +83,7 @@ class DatabaseSeeder extends Seeder
             "email" => "qw@myself.ae",
             "public" => true,
             "current_team_id" => 1,
+            "superadmin" => true,
             "password" => Hash::make("123456"),
         ]);
 
