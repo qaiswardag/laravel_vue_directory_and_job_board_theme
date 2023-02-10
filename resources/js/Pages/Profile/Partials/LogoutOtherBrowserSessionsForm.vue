@@ -7,6 +7,7 @@ import InputError from "@/Components/Forms/InputError.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
 defineProps({
     sessions: Array,
@@ -208,11 +209,13 @@ const closeModal = () => {
         </template>
 
         <template #actions>
-            <div class="text-right">
-                <PrimaryButton @click="handleSessionLogout">
-                    Log Out Other Browser Sessions
-                </PrimaryButton>
-            </div>
+            <SubmitButton
+                :ButtonStyleDelete="false"
+                :disabled="false"
+                @firstButtonClick="handleSessionLogout"
+                buttonText="Log Out Other Browser Sessions"
+            >
+            </SubmitButton>
             <ActionMessage :on="form.recentlySuccessful" type="success"
                 >Successfully deleted your Browser Sessions.
             </ActionMessage>

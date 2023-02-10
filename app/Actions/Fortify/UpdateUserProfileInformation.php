@@ -27,6 +27,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 "max:255",
                 Rule::unique("users")->ignore($user->id),
             ],
+            "public" => ["boolean"],
             "photo" => ["nullable", "mimes:jpg,jpeg,png", "max:1024"],
         ])->validateWithBag("updateProfileInformation");
 
@@ -45,6 +46,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                     "first_name" => $input["first_name"],
                     "last_name" => $input["last_name"],
                     "email" => $input["email"],
+                    "public" => $input["public"],
                 ])
                 ->save();
         }
@@ -62,6 +64,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 "first_name" => $input["first_name"],
                 "last_name" => $input["last_name"],
                 "email" => $input["email"],
+                "public" => $input["public"],
                 "email_verified_at" => null,
             ])
             ->save();

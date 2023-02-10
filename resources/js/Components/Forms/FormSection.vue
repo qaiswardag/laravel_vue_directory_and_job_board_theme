@@ -2,6 +2,12 @@
 import { computed, useSlots } from "vue";
 import SectionTitle from "../SectionTitle.vue";
 
+defineProps({
+    noSidebar: {
+        Type: Boolean,
+    },
+});
+
 defineEmits(["submitted"]);
 
 const hasActions = computed(() => !!useSlots().actions);
@@ -27,16 +33,25 @@ const hasActions = computed(() => !!useSlots().actions);
                         <slot name="description" />
                     </template>
                 </SectionTitle>
-                <div class="myPrimaryForm">
-                    <div class="myPrimaryFormMain">
-                        <slot name="main" />
-                    </div>
-                    <div class="myPrimaryFormSidebar">
-                        <slot name="sidebar" />
-                    </div>
-                </div>
 
-                <div>
+                <slot name="header" />
+
+                <div class="flex flex-col myPrimaryGap">
+                    <div :class="{ block: noSidebar }" class="myPrimaryForm">
+                        <div
+                            :class="{ 'md:w-full': noSidebar }"
+                            class="myPrimaryFormMain"
+                        >
+                            <slot name="main" />
+                        </div>
+                        <div
+                            :class="{ 'md:w-full': noSidebar }"
+                            class="myPrimaryFormSidebar"
+                        >
+                            <slot name="sidebar" />
+                        </div>
+                    </div>
+
                     <slot name="actions" />
                 </div>
             </div>

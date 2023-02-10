@@ -108,7 +108,7 @@ const updateTeamName = () => {
                     </p>
                 </div>
                 <div class="myInputGroup">
-                    <div class="col-span-6">
+                    <div class="myAvatarSection">
                         <InputLabel value="Team Owner" />
 
                         <div class="flex items-center gap-2 mt-2">

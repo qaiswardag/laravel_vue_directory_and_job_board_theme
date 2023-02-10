@@ -20,7 +20,7 @@ defineProps({
             </h2>
         </template>
 
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
+        <div>
             <UpdateTeamNameForm :team="team"> </UpdateTeamNameForm>
 
             <TeamMemberManager

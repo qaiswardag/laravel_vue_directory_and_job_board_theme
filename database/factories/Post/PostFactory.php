@@ -17,7 +17,13 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "user_id" => rand(1, 3), // Qais Wardag, Shaun Pelling or Mie Mortensen,
+            "team_id" => rand(1, 3), // Qais Wardag, Shaun Pelling or Mie Mortensens Team
+            "title" => substr($this->faker->sentence(rand(2, 6), false), 0, -1),
+            "slug" => "the-slug",
+            "content" => $this->faker->sentence(rand(20, 60), false),
+            "published" => rand(0, 1),
+            "tags" => "Summer,Dubai,Event,FashionShow",
         ];
     }
 }

@@ -32,6 +32,7 @@ class CreateNewUser implements CreatesNewUsers
                 "max:255",
                 "unique:users",
             ],
+            "public" => ["boolean"],
             "password" => $this->passwordRules(),
             "terms" => Jetstream::hasTermsAndPrivacyPolicyFeature()
                 ? ["accepted", "required"]

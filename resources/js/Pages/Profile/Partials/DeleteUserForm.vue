@@ -105,7 +105,7 @@ const closeModal = () => {
 </script>
 
 <template>
-    <ActionSection>
+    <ActionSection :noSidebar="true">
         <template #title> Delete Account </template>
 
         <template #description> Permanently delete your account. </template>
@@ -113,7 +113,9 @@ const closeModal = () => {
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                    <p class="myTertiaryHeader">
+                        Permanently delete your account
+                    </p>
                     <p class="myPrimaryParagraph">
                         Once your account is deleted, all of its resources and
                         data will be permanently deleted. Before deleting your
@@ -124,21 +126,11 @@ const closeModal = () => {
                 <div class="myInputGroup"></div>
             </div>
         </template>
-        <template #sidebar>
-            <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Corporis ex dignissimos quas doloremque culpa at!
-                    </p>
-                </div>
-            </div>
-        </template>
 
         <template #actions>
             <SubmitButton
                 :ButtonStyleDelete="true"
+                :disabled="false"
                 @firstButtonClick="handleUserDeletion"
                 buttonText="Delete Account"
             >

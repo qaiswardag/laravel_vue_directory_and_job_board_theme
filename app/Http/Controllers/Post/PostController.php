@@ -16,9 +16,25 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Post $post)
     {
-        return Inertia::render("Posts/Index");
+        $posts = Post::latest()
+            ->when($request->query("search_query"), function ($query, $term) {
+                $query->where("headline", "LIKE", "%" . $term . "%");
+            })
+
+            //
+            //
+            //
+            // pagination
+            ->paginate(4);
+        // // append posts
+        $posts->appends($request->all());
+        //
+        //
+        return Inertia::render("Posts/Index", [
+            "posts" => $posts,
+        ]);
     }
 
     /**

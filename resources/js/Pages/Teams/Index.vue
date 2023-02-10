@@ -2,6 +2,7 @@
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import SwitchTeams from "./Partials/SwitchTeams.vue";
 import CreateTeamForm from "@/Pages/Teams/Partials/CreateTeamForm.vue";
+import SectionBorder from "@/Components/SectionBorder.vue";
 </script>
 
 <template>
@@ -11,7 +12,7 @@ import CreateTeamForm from "@/Pages/Teams/Partials/CreateTeamForm.vue";
         </template>
 
         <template v-if="$page.props.user.all_teams.length < 1">
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
+            <div>
                 <h1 class="myPrimayHeader">Create your first Team</h1>
                 <p class="myPrimaryParagraph">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -27,12 +28,10 @@ import CreateTeamForm from "@/Pages/Teams/Partials/CreateTeamForm.vue";
                 $page.props.jetstream.hasTeamFeatures
             "
         >
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
-                <SwitchTeams></SwitchTeams>
-            </div>
+            <SwitchTeams></SwitchTeams>
         </template>
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
-            <CreateTeamForm></CreateTeamForm>
-        </div>
+
+        <SectionBorder />
+        <CreateTeamForm></CreateTeamForm>
     </LoggedInLayout>
 </template>

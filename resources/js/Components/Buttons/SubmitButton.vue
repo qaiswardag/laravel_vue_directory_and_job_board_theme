@@ -27,26 +27,28 @@ const firstButtonClick = function () {
 </script>
 
 <template>
-    <div class="flex flex-col items-end justify-end gap-2">
-        <div class="flex items-center gap-3">
-            <Transition name="bounce">
-                <div v-if="disabled" role="status">
-                    <SmallUniversalSpinner></SmallUniversalSpinner>
-                </div>
-            </Transition>
-            <button
-                @click="firstButtonClick"
-                :type="type"
-                :disabled="disabled"
-                class="myPrimaryButton myPrimaryGap min-w-[8rem]"
-                :class="{
-                    'opacity-25 cursor-default': disabled,
-                    myPrimaryDeleteButton: ButtonStyleDelete,
-                }"
-            >
-                <slot />
-                {{ disabled ? "Loading..." : buttonText }}
-            </button>
+    <div class="myPrimaryFormAction">
+        <div class="flex flex-col items-end justify-end gap-2">
+            <div class="flex items-center gap-3">
+                <Transition name="bounce">
+                    <div v-if="disabled" role="status">
+                        <SmallUniversalSpinner></SmallUniversalSpinner>
+                    </div>
+                </Transition>
+                <button
+                    @click="firstButtonClick"
+                    :type="type"
+                    :disabled="disabled"
+                    class="myPrimaryButton myPrimaryGap min-w-[8rem]"
+                    :class="{
+                        'opacity-25 cursor-default': disabled,
+                        myPrimaryDeleteButton: ButtonStyleDelete,
+                    }"
+                >
+                    <slot />
+                    {{ disabled ? "Loading..." : buttonText }}
+                </button>
+            </div>
         </div>
     </div>
 </template>

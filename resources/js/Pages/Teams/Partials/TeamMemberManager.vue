@@ -469,95 +469,91 @@ const displayableRole = (role) => {
                             </div>
 
                             <div v-if="team.team_invitations.length > 0">
-                                <div class="mt-8 flex flex-col">
+                                <div class="overflow-x-auto">
                                     <div
-                                        class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8"
+                                        class="inline-block min-w-full py-2 align-middle px-1"
                                     >
                                         <div
-                                            class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
+                                            class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
                                         >
-                                            <div
-                                                class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
+                                            <table
+                                                class="min-w-full divide-y divide-gray-300"
                                             >
-                                                <table
-                                                    class="min-w-full divide-y divide-gray-300"
-                                                >
-                                                    <caption>
-                                                        <p
-                                                            class="myPrimaryParagraph my-4"
-                                                        >
-                                                            Manage Pending Team
-                                                            Invitations
-                                                        </p>
-                                                    </caption>
-                                                    <thead class="bg-gray-50">
-                                                        <tr
-                                                            class="divide-x divide-gray-200"
-                                                        >
-                                                            <th
-                                                                scope="col"
-                                                                class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryGrayColor sm:pl-6 min-w-[20rem]"
-                                                            >
-                                                                Email
-                                                            </th>
-                                                            <th
-                                                                scope="col"
-                                                                class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
-                                                            >
-                                                                Role
-                                                            </th>
-                                                            <th
-                                                                scope="col"
-                                                                class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
-                                                            >
-                                                                Action
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-
-                                                    <tbody
-                                                        class="divide-y divide-gray-200 bg-white"
+                                                <caption class="bg-white">
+                                                    <p
+                                                        class="myPrimaryParagraph my-4"
                                                     >
-                                                        <tr
-                                                            v-for="invitation in team.team_invitations"
-                                                            :key="invitation.id"
-                                                            class="divide-x divide-gray-200"
+                                                        Manage Pending Team
+                                                        Invitations
+                                                    </p>
+                                                </caption>
+                                                <thead class="bg-gray-50">
+                                                    <tr
+                                                        class="divide-x divide-gray-200"
+                                                    >
+                                                        <th
+                                                            scope="col"
+                                                            class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryGrayColor sm:pl-6 min-w-[20rem]"
                                                         >
-                                                            <td
-                                                                class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryGrayColor sm:pl-6"
-                                                            >
-                                                                {{
-                                                                    invitation.email
-                                                                }}
-                                                            </td>
-                                                            <td
-                                                                class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
-                                                            >
-                                                                {{
-                                                                    invitation.role
-                                                                }}
-                                                            </td>
+                                                            Email
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
+                                                        >
+                                                            Role
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
+                                                        >
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
 
-                                                            <!-- Cancel Team Invitation -->
-                                                            <td
-                                                                class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                <tbody
+                                                    class="divide-y divide-gray-200 bg-white"
+                                                >
+                                                    <tr
+                                                        v-for="invitation in team.team_invitations"
+                                                        :key="invitation.id"
+                                                        class="divide-x divide-gray-200"
+                                                    >
+                                                        <td
+                                                            class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryGrayColor sm:pl-6"
+                                                        >
+                                                            {{
+                                                                invitation.email
+                                                            }}
+                                                        </td>
+                                                        <td
+                                                            class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                        >
+                                                            {{
+                                                                invitation.role
+                                                            }}
+                                                        </td>
+
+                                                        <!-- Cancel Team Invitation -->
+                                                        <td
+                                                            class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                        >
+                                                            <button
+                                                                class="myPrimaryDeleteButton"
+                                                                @click="
+                                                                    handleCancelTeamInvitation(
+                                                                        invitation
+                                                                    )
+                                                                "
                                                             >
-                                                                <button
-                                                                    class="myPrimaryDeleteButtonNoBackground col-span-3"
-                                                                    @click="
-                                                                        handleCancelTeamInvitation(
-                                                                            invitation
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    Cancel
-                                                                    Invitation
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                                Cancel
+                                                                Invitation
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -610,61 +606,60 @@ const displayableRole = (role) => {
                                 doloremque culpa at!
                             </p>
                         </div>
-                        <div class="mt-8 flex flex-col">
+
+                        <div class="overflow-x-auto">
                             <div
-                                class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8"
+                                class="inline-block min-w-full py-2 align-middle px-1"
                             >
                                 <div
-                                    class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
+                                    class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
                                 >
-                                    <div
-                                        class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg"
+                                    <table
+                                        class="min-w-full divide-y divide-gray-300"
                                     >
-                                        <table
-                                            class="min-w-full divide-y divide-gray-300"
-                                        >
-                                            <caption>
-                                                <p
-                                                    class="myPrimaryParagraph my-4"
-                                                >
-                                                    Manage Team Member
-                                                </p>
-                                            </caption>
-                                            <thead class="bg-gray-50">
-                                                <tr
-                                                    class="divide-x divide-gray-200"
-                                                >
-                                                    <th
-                                                        scope="col"
-                                                        class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryGrayColor sm:pl-6 min-w-[20rem]"
-                                                    >
-                                                        User
-                                                    </th>
-                                                    <th
-                                                        scope="col"
-                                                        class="px-4 py-3.5 text-left text-sm font-semibold myPrimaryGrayColor"
-                                                    >
-                                                        Role
-                                                    </th>
-                                                    <th
-                                                        scope="col"
-                                                        class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
-                                                    >
-                                                        Action
-                                                    </th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody
-                                                class="divide-y divide-gray-200 bg-white"
+                                        <caption class="bg-white">
+                                            <p class="myPrimaryParagraph my-4">
+                                                Manage Team Member
+                                            </p>
+                                        </caption>
+                                        <thead class="bg-gray-50">
+                                            <tr
+                                                class="divide-x divide-gray-200"
                                             >
-                                                <tr
-                                                    v-for="user in team.users"
-                                                    :key="user.id"
-                                                    class="divide-x divide-gray-200"
+                                                <th
+                                                    scope="col"
+                                                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryGrayColor sm:pl-6 min-w-[20rem]"
                                                 >
-                                                    <td
-                                                        class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryGrayColor sm:pl-6"
+                                                    User
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="px-4 py-3.5 text-left text-sm font-semibold myPrimaryGrayColor"
+                                                >
+                                                    Role
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
+                                                >
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody
+                                            class="divide-y divide-gray-200 bg-white"
+                                        >
+                                            <tr
+                                                v-for="user in team.users"
+                                                :key="user.id"
+                                                class="divide-x divide-gray-200"
+                                            >
+                                                <td
+                                                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryGrayColor sm:pl-6"
+                                                >
+                                                    <div
+                                                        class="myAvatarSection"
                                                     >
                                                         <div
                                                             class="flex items-center gap-2 mt-2"
@@ -727,96 +722,91 @@ const displayableRole = (role) => {
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                    </td>
-                                                    <td
-                                                        class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                    </div>
+                                                </td>
+                                                <td
+                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                >
+                                                    <!-- Manage Team Member Role -->
+                                                    <button
+                                                        v-if="
+                                                            availableRoles.length
+                                                        "
+                                                        class="myPrimaryButtonNoBackground"
+                                                        @click="
+                                                            manageRole(user)
+                                                        "
                                                     >
-                                                        <!-- Manage Team Member Role -->
-                                                        <button
+                                                        {{
+                                                            displayableRole(
+                                                                user.membership
+                                                                    .role
+                                                            )
+                                                        }}
+                                                    </button>
+                                                </td>
+
+                                                <!-- Cancel Team Invitation -->
+                                                <td
+                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                >
+                                                    <!-- Leave Team -->
+                                                    <div
+                                                        class="flex items-center myPrimaryGap"
+                                                    >
+                                                        <DangerButton
                                                             v-if="
-                                                                availableRoles.length
+                                                                $page.props.user
+                                                                    .id ===
+                                                                user.id
                                                             "
-                                                            class="myPrimaryButtonNoBackground"
                                                             @click="
-                                                                manageRole(user)
+                                                                handleLeaveTeam()
                                                             "
                                                         >
-                                                            {{
-                                                                displayableRole(
-                                                                    user
-                                                                        .membership
-                                                                        .role
-                                                                )
-                                                            }}
-                                                        </button>
-                                                    </td>
-
-                                                    <!-- Cancel Team Invitation -->
-                                                    <td
-                                                        class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
-                                                    >
-                                                        <!-- Leave Team -->
-                                                        <div
-                                                            class="flex items-center myPrimaryGap"
+                                                            Leave Team
+                                                        </DangerButton>
+                                                        <p
+                                                            class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryBrandColor text-white rounded-xl py-2 px-4 font-semibold"
+                                                            v-if="
+                                                                $page.props.user
+                                                                    .id ===
+                                                                user.id
+                                                            "
                                                         >
-                                                            <DangerButton
-                                                                v-if="
-                                                                    $page.props
-                                                                        .user
-                                                                        .id ===
-                                                                    user.id
-                                                                "
-                                                                @click="
-                                                                    handleLeaveTeam()
-                                                                "
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                stroke-width="2"
+                                                                stroke="currentColor"
+                                                                class="w-4 h-4"
                                                             >
-                                                                Leave Team
-                                                            </DangerButton>
-                                                            <p
-                                                                class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryBrandColor text-white rounded-xl py-2 px-4 font-semibold"
-                                                                v-if="
-                                                                    $page.props
-                                                                        .user
-                                                                        .id ===
-                                                                    user.id
-                                                                "
-                                                            >
-                                                                <svg
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    fill="none"
-                                                                    viewBox="0 0 24 24"
-                                                                    stroke-width="2"
-                                                                    stroke="currentColor"
-                                                                    class="w-4 h-4"
-                                                                >
-                                                                    <path
-                                                                        stroke-linecap="round"
-                                                                        stroke-linejoin="round"
-                                                                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                                                                    />
-                                                                </svg>
+                                                                <path
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"
+                                                                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                                                                />
+                                                            </svg>
 
-                                                                <span>
-                                                                    You
-                                                                </span>
-                                                            </p>
+                                                            <span> You </span>
+                                                        </p>
 
-                                                            <!-- Remove Team Member -->
-                                                            <DangerButton
-                                                                @click="
-                                                                    handleRemoveTeamMember(
-                                                                        user
-                                                                    )
-                                                                "
-                                                            >
-                                                                Remove
-                                                            </DangerButton>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                        <!-- Remove Team Member -->
+                                                        <DangerButton
+                                                            @click="
+                                                                handleRemoveTeamMember(
+                                                                    user
+                                                                )
+                                                            "
+                                                        >
+                                                            Remove User
+                                                        </DangerButton>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

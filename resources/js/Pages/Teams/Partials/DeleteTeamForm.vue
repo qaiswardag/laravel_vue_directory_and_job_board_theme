@@ -85,7 +85,7 @@ const deleteTeam = function () {
 </script>
 
 <template>
-    <ActionSection>
+    <ActionSection :noSidebar="true">
         <template #title> Delete Team </template>
 
         <template #description> Delete {{ team.name }}? </template>
@@ -125,24 +125,13 @@ const deleteTeam = function () {
             </DynamicModal>
         </template>
 
-        <template #sidebar>
-            <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Corporis ex dignissimos quas doloremque culpa at!
-                    </p>
-                </div>
-            </div>
-        </template>
-
         <!-- TODO: Add "confirms password" middleware to delete team
             right now, team can be deleted without password confirmation -->
 
         <template #actions>
             <SubmitButton
                 :ButtonStyleDelete="true"
+                :disabled="false"
                 @firstButtonClick="handleDeleteTeam"
                 :buttonText="`Delete ${team.name}`"
             >

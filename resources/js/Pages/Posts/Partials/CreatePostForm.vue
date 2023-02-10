@@ -67,8 +67,6 @@ const createPost = () => {
     });
 };
 
-// toggle start
-const ø = ref(false);
 // toggle end
 </script>
 
@@ -171,18 +169,26 @@ const ø = ref(false);
                 <template #sidebar>
                     <div class="myInputsOrganization">
                         <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                            <p class="myTertiaryHeader">Publish status</p>
                             <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Corporis ex dignissimos quas
-                                doloremque culpa at!
+                                Define if your Post is Published.
                             </p>
                         </div>
-                        <div class="myInputGroup">
+                        <div
+                            class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
+                        >
                             <InputLabel
-                                for="title"
-                                value="Published"
-                                class="mb-1"
+                                :value="
+                                    createPostForm.published
+                                        ? 'Published'
+                                        : 'Private'
+                                "
+                                :class="{
+                                    'text-myPrimaryBrandColor':
+                                        createPostForm.published,
+                                    'text-myErrorColor':
+                                        !createPostForm.published,
+                                }"
                             />
                             <Switch
                                 v-model="createPostForm.published"
@@ -247,6 +253,9 @@ const ø = ref(false);
                                 </span>
                             </Switch>
                         </div>
+                        <InputError
+                            :message="createPostForm.errors.published"
+                        />
                     </div>
                     <div class="myInputsOrganization">
                         <div class="myInputsOrganizationText">

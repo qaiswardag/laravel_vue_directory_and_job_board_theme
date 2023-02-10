@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Post\Post;
 use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\TeamUser;
@@ -80,6 +81,7 @@ class DatabaseSeeder extends Seeder
             "first_name" => "Qais",
             "last_name" => "Wardag",
             "email" => "qw@myself.ae",
+            "public" => true,
             "current_team_id" => 1,
             "password" => Hash::make("123456"),
         ]);
@@ -96,6 +98,7 @@ class DatabaseSeeder extends Seeder
             "first_name" => "Shaun",
             "last_name" => "Pelling",
             "email" => "sp@myself.ae",
+            "public" => false,
             "current_team_id" => 2,
             "password" => Hash::make("123456"),
         ]);
@@ -113,6 +116,7 @@ class DatabaseSeeder extends Seeder
             "first_name" => "Mie",
             "last_name" => "Mortensen",
             "email" => "mm@myself.ae",
+            "public" => true,
             "current_team_id" => 3,
             "password" => Hash::make("123456"),
         ]);
@@ -206,7 +210,10 @@ class DatabaseSeeder extends Seeder
             "role" => "admin",
         ]);
 
-        // fake users
+        // fake Posts
+        Post::factory(250)->create([]);
+
+        // fake Users
         User::factory(100)->create();
     }
 }
