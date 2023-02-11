@@ -15,9 +15,7 @@ defineProps({
 <template>
     <LoggedInLayout title="Team Settings">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight rounded">
-                Teams Settings
-            </h2>
+            <h2 class="myPrimaryMainPageHeader">Teams Settings</h2>
         </template>
 
         <div>

@@ -2,6 +2,7 @@
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Users\UserController;
 use App\Models\User;
@@ -71,10 +72,8 @@ Route::middleware([
 //
 //
 //
-// Route::get("/teams/create", [TeamController::class, "create"])->name(
-//     "teams.create"
-// );
-//
+// posts
+// posts
 Route::get("/manage/posts", [PostController::class, "index"])->name(
     "posts.index"
 );
@@ -86,3 +85,18 @@ Route::post("/posts/store", [PostController::class, "store"])->name(
     "posts.store"
 );
 Route::get("/posts/{post}", [PostController::class, "show"])->name("post.show");
+//
+//
+//
+// super admin
+// super admin
+
+Route::get("/superadmin/dashboard", function () {
+    return Inertia::render("Superadmin/Index", []);
+})->name("superadmin.index");
+// super admin — Users
+// super admin - User
+Route::get("/superadmin/users", [
+    SuperadminUserController::class,
+    "index",
+])->name("superadmin.users.index");

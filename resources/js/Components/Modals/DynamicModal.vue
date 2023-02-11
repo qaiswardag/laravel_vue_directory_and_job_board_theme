@@ -30,7 +30,7 @@
                             >
                                 <BellIcon
                                     aria-hidden="true"
-                                    class="h-4 w-4 text-myPrimaryGrayColor"
+                                    class="h-4 w-4 text-myPrimaryDarkGrayColor"
                                 />
                             </div>
 
@@ -77,7 +77,7 @@
                             stroke-width="2"
                             stroke="currentColor"
                             aria-hidden="true"
-                            class="h-6 w-6 text-myPrimaryGrayColor self-center cursor-pointer"
+                            class="h-6 w-6 text-myPrimaryDarkGrayColor self-center cursor-pointer"
                         >
                             <path
                                 stroke-linecap="round"
@@ -110,18 +110,17 @@
                         'sm:grid-cols-2': gridColumnAmount === 2,
                         'sm:grid-cols-3': gridColumnAmount === 3,
                     }"
-                    class="sm:grid sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
+                    class="sm:grid sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full"
                 >
-                    <div v-if="firstButtonText">
-                        <button
-                            ref="firstButtonRef"
-                            class="myPrimaryButton bg-gray-700 hover:bg-gray-800 text-white focus:ring-gray-700 text-sm w-full"
-                            type="button"
-                            @click="firstButton"
-                        >
-                            {{ firstButtonText }}
-                        </button>
-                    </div>
+                    <button
+                        v-if="firstButtonText"
+                        ref="firstButtonRef"
+                        class="shadow myPrimaryButton bg-myPrimaryMediumGrayColor text-myPrimaryDarkGrayColor text-sm w-full hover:bg-gray-500 hover:text-white focus:ring-gray-500"
+                        type="button"
+                        @click="firstButton"
+                    >
+                        {{ firstButtonText }}
+                    </button>
 
                     <div v-if="secondButtonText">
                         <!-- start loading -->
@@ -132,7 +131,7 @@
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-myPrimaryGrayColor hover:text-myPrimaryGrayColor focus:ring-yellow-400 text-sm w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor focus:ring-yellow-400 text-sm w-full"
                                 :class="{
                                     'opacity-25 cursor-default': disabled,
                                 }"
@@ -181,7 +180,7 @@
                             "
                         >
                             <button
-                                class="myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-myPrimaryGrayColor hover:text-myPrimaryGrayColor focus:ring-yellow-400 text-sm w-full"
+                                class="myPrimaryButton bg-yellow-300 hover:bg-yellow-400 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor focus:ring-yellow-400 text-sm w-full"
                                 type="button"
                                 @click="secondButton"
                             >
@@ -380,7 +379,7 @@
                                 "
                             >
                                 <button
-                                    class="myPrimaryButton bg-emerald-500 focus-visible:ring-emerald-500 focus:ring-emerald-500 hover:bg-emerald-600 text-sm w-full"
+                                    class="flex items-center gap-2 myPrimaryButton bg-myErrorColor hover:bg-red-600 text-white focus:ring-myErrorColor text-sm w-full"
                                     type="button"
                                     @click="thirdButton"
                                 >
@@ -399,7 +398,7 @@
                                 "
                             >
                                 <button
-                                    class="flex items-center gap-2 myPrimaryButton bg-red-500 hover:bg-red-600 text-white focus:ring-red-500 text-sm w-full"
+                                    class="flex items-center gap-2 myPrimaryButton bg-myErrorColor hover:bg-red-600 text-white focus:ring-myErrorColor text-sm w-full"
                                     :class="{
                                         'opacity-25 cursor-default': disabled,
                                     }"
@@ -447,7 +446,7 @@
                                 "
                             >
                                 <button
-                                    class="flex items-center gap-2 myPrimaryButton bg-red-500 hover:bg-red-600 text-white focus:ring-red-500 text-sm w-full"
+                                    class="flex items-center gap-2 myPrimaryButton bg-myErrorColor hover:bg-red-600 text-white focus:ring-myErrorColor text-sm w-full"
                                     type="button"
                                     @click="thirdButton"
                                 >

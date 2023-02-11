@@ -17,7 +17,12 @@ defineProps({
 <template>
     <LoggedInLayout title="Profile">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Profile</h2>
+            <h2 class="myPrimaryMainPageHeader">Profile</h2>
+        </template>
+
+        <template #description>
+            Lørem ipsum dolor sit, amet consectetur adipisicing elit. Animi,
+            distinctio.
         </template>
 
         <div>

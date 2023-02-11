@@ -25,7 +25,7 @@ const submit = () => {
 <template>
     <GuestsLayout title="Log in">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Login</h2>
+            <h2 class="myPrimaryMainPageHeader">Login</h2>
         </template>
 
         <AuthenticationCard :css="'opacity-100'">
@@ -33,7 +33,7 @@ const submit = () => {
                 <AuthenticationCardLogo />
             </template>
 
-            <div class="mb-4 text-sm text-myPrimaryGrayColor">
+            <div class="mb-4 text-sm text-myPrimaryDarkGrayColor">
                 Forgot your password? No problem. Just let us know your email
                 address and we will email you a password reset link that will
                 allow you to choose a new one.

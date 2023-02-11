@@ -11,7 +11,7 @@ defineProps({
 <template>
     <GuestsLayout title="Home">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Home</h2>
+            <h2 class="myPrimaryMainPageHeader">Home</h2>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">

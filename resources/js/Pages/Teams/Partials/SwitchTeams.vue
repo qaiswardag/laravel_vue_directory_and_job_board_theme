@@ -108,26 +108,26 @@ const switchTeam = function (team) {
                                             >
                                                 <th
                                                     scope="col"
-                                                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryGrayColor sm:pl-6 min-w-[20rem]"
+                                                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryDarkGrayColor sm:pl-6 min-w-[20rem]"
                                                 >
                                                     Team
                                                 </th>
 
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
+                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
                                                 >
                                                     Team id
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
+                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
                                                 >
                                                     Team owner
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
+                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
                                                 >
                                                     Switch Team
                                                 </th>
@@ -144,7 +144,7 @@ const switchTeam = function (team) {
                                                 class="divide-x divide-gray-200"
                                             >
                                                 <td
-                                                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryGrayColor sm:pl-6"
+                                                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryDarkGrayColor sm:pl-6"
                                                 >
                                                     <form
                                                         @submit.prevent="
@@ -162,7 +162,7 @@ const switchTeam = function (team) {
                                                             "
                                                         >
                                                             <button
-                                                                class="myPrimaryButtonNoBackground text-myPrimaryGrayColor w-full flex items-center myPrimaryGap py-2"
+                                                                class="myPrimaryButtonNoBackground text-myPrimaryDarkGrayColor w-full flex items-center myPrimaryGap py-2"
                                                                 :class="{
                                                                     'text-myPrimaryBrandColor':
                                                                         team.id ===
@@ -207,17 +207,17 @@ const switchTeam = function (team) {
                                                 </td>
 
                                                 <td
-                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
                                                 >
                                                     {{ team.id }}
                                                 </td>
                                                 <td
-                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
                                                 >
                                                     {{ team.user_id }}
                                                 </td>
                                                 <td
-                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
                                                 >
                                                     <form
                                                         @submit.prevent="

@@ -148,7 +148,7 @@ function onSelect(item) {
                                     aria-hidden="true"
                                 />
                                 <ComboboxInput
-                                    class="h-14 w-full border-0 bg-transparent pl-11 pr-4 text-myPrimaryGrayColor placeholder-gray-400 focus:ring-0 sm:text-sm"
+                                    class="h-14 w-full border-0 bg-transparent pl-11 pr-4 text-myPrimaryDarkGrayColor placeholder-gray-400 focus:ring-0 sm:text-sm"
                                     placeholder="Search..."
                                     @change="rawQuery = $event.target.value"
                                 />
@@ -164,12 +164,12 @@ function onSelect(item) {
                             >
                                 <li v-if="filteredProjects.length > 0">
                                     <h2
-                                        class="text-xs font-semibold text-myPrimaryGrayColor"
+                                        class="text-xs font-semibold text-myPrimaryDarkGrayColor"
                                     >
                                         Projects
                                     </h2>
                                     <ul
-                                        class="-mx-4 mt-2 text-sm text-myPrimaryGrayColor"
+                                        class="-mx-4 mt-2 text-sm text-myPrimaryDarkGrayColor"
                                     >
                                         <ComboboxOption
                                             v-for="project in filteredProjects"
@@ -204,12 +204,12 @@ function onSelect(item) {
                                 </li>
                                 <li v-if="filteredUsers.length > 0">
                                     <h2
-                                        class="text-xs font-semibold text-myPrimaryGrayColor"
+                                        class="text-xs font-semibold text-myPrimaryDarkGrayColor"
                                     >
                                         Users
                                     </h2>
                                     <ul
-                                        class="-mx-4 mt-2 text-sm text-myPrimaryGrayColor"
+                                        class="-mx-4 mt-2 text-sm text-myPrimaryDarkGrayColor"
                                     >
                                         <ComboboxOption
                                             v-for="user in filteredUsers"
@@ -249,11 +249,11 @@ function onSelect(item) {
                                     aria-hidden="true"
                                 />
                                 <p
-                                    class="mt-4 font-semibold text-myPrimaryGrayColor"
+                                    class="mt-4 font-semibold text-myPrimaryDarkGrayColor"
                                 >
                                     Help with searching
                                 </p>
-                                <p class="mt-2 text-myPrimaryGrayColor">
+                                <p class="mt-2 text-myPrimaryDarkGrayColor">
                                     Use this tool to quickly search for users
                                     and projects across our entire platform. You
                                     can also use the search modifiers found in
@@ -276,18 +276,18 @@ function onSelect(item) {
                                     aria-hidden="true"
                                 />
                                 <p
-                                    class="mt-4 font-semibold text-myPrimaryGrayColor"
+                                    class="mt-4 font-semibold text-myPrimaryDarkGrayColor"
                                 >
                                     No results found
                                 </p>
-                                <p class="mt-2 text-myPrimaryGrayColor">
+                                <p class="mt-2 text-myPrimaryDarkGrayColor">
                                     We couldn’t find anything with that term.
                                     Please try again.
                                 </p>
                             </div>
 
                             <div
-                                class="flex flex-wrap items-center bg-gray-50 py-2.5 px-4 text-xs text-myPrimaryGrayColor"
+                                class="flex flex-wrap items-center bg-gray-50 py-2.5 px-4 text-xs text-myPrimaryDarkGrayColor"
                             >
                                 Type
                                 <kbd
@@ -295,7 +295,7 @@ function onSelect(item) {
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery.startsWith('#')
                                             ? 'border-myPrimaryBrandColor text-myPrimaryBrandColor'
-                                            : 'border-gray-400 text-myPrimaryGrayColor',
+                                            : 'border-gray-400 text-myPrimaryDarkGrayColor',
                                     ]"
                                     >#</kbd
                                 >
@@ -308,7 +308,7 @@ function onSelect(item) {
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery.startsWith('>')
                                             ? 'border-myPrimaryBrandColor text-myPrimaryBrandColor'
-                                            : 'border-gray-400 text-myPrimaryGrayColor',
+                                            : 'border-gray-400 text-myPrimaryDarkGrayColor',
                                     ]"
                                     >&gt;</kbd
                                 >
@@ -318,7 +318,7 @@ function onSelect(item) {
                                         'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
                                         rawQuery === '?'
                                             ? 'border-myPrimaryBrandColor text-myPrimaryBrandColor'
-                                            : 'border-gray-400 text-myPrimaryGrayColor',
+                                            : 'border-gray-400 text-myPrimaryDarkGrayColor',
                                     ]"
                                     >?</kbd
                                 >

@@ -73,10 +73,7 @@ const createPost = () => {
 <template>
     <LoggedInLayout title="Create Post">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta,
-                cupiditate.
-            </h2>
+            <h2 class="myPrimaryMainPageHeader">Create a New Post</h2>
         </template>
 
         <div>

@@ -146,7 +146,7 @@ const notificationsSlideOverButton = function () {
                                                     >
                                                         <a
                                                             href="#"
-                                                            class="text-sm font-medium text-myPrimaryGrayColor mb-4 mt-2 block"
+                                                            class="text-sm font-medium text-myPrimaryDarkGrayColor mb-4 mt-2 block"
                                                         >
                                                             {{
                                                                 notification.title
@@ -175,12 +175,12 @@ const notificationsSlideOverButton = function () {
                                                         </div>
 
                                                         <p
-                                                            class="text-xs text-myPrimaryGrayColor my-2"
+                                                            class="text-xs text-myPrimaryDarkGrayColor my-2"
                                                         >
                                                             Updated: 01.01.2023
                                                         </p>
                                                         <p
-                                                            class="text-sm text-myPrimaryGrayColor mt-4"
+                                                            class="text-sm text-myPrimaryDarkGrayColor mt-4"
                                                         >
                                                             {{
                                                                 notification.description.slice(

@@ -101,16 +101,27 @@ const updateTeamName = () => {
             <!-- Team Owner Information -->
             <div class="myInputsOrganization">
                 <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Corporis ex dignissimos quas doloremque culpa at!
-                    </p>
+                    <div
+                        v-if="$page.props.team.owner.id === $page.props.user.id"
+                    >
+                        <p class="myPrimaryParagraph">You own this team</p>
+                        <p class="myTertiaryHeader">
+                            {{ $page.props.team.owner.first_name }}
+                            {{ $page.props.team.owner.last_name }}
+                        </p>
+                    </div>
+                    <div
+                        v-if="$page.props.team.owner.id !== $page.props.user.id"
+                    >
+                        <p class="myPrimaryParagraph">Team owner:</p>
+                        <p class="myTertiaryHeader">
+                            {{ $page.props.team.owner.first_name }}
+                            {{ $page.props.team.owner.last_name }}
+                        </p>
+                    </div>
                 </div>
                 <div class="myInputGroup">
                     <div class="myAvatarSection">
-                        <InputLabel value="Team Owner" />
-
                         <div class="flex items-center gap-2 mt-2">
                             <div
                                 v-if="

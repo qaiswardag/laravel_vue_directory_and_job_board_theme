@@ -39,7 +39,7 @@ const submit = () => {
 <template>
     <GuestsLayout>
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Register</h2>
+            <h2 class="myPrimaryMainPageHeader">Register</h2>
         </template>
         <Head title="Register" />
 
@@ -142,14 +142,14 @@ const submit = () => {
                                     <a
                                         target="_blank"
                                         :href="route('terms.show')"
-                                        class="underline text-sm text-myPrimaryGrayColor hover:text-myPrimaryGrayColor"
+                                        class="underline text-sm text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
                                         >Terms of Service</a
                                     >
                                     and
                                     <a
                                         target="_blank"
                                         :href="route('policy.show')"
-                                        class="underline text-sm text-myPrimaryGrayColor hover:text-myPrimaryGrayColor"
+                                        class="underline text-sm text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
                                         >Privacy Policy</a
                                     >
                                 </div>

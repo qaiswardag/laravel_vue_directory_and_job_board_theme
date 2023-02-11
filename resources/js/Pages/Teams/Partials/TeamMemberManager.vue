@@ -278,7 +278,7 @@ const removeTeamMember = function (teamMember) {
     );
 };
 
-const displayableRole = (role) => {
+const displayAbleRole = (role) => {
     return props.availableRoles.find((r) => r.key === role).name;
 };
 </script>
@@ -359,7 +359,7 @@ const displayableRole = (role) => {
                                             <!-- Role Name -->
                                             <div class="flex items-center">
                                                 <div
-                                                    class="text-sm text-myPrimaryGrayColor dark:text-myPrimaryLightTextColor"
+                                                    class="text-sm text-myPrimaryDarkGrayColor dark:text-myPrimaryLightTextColor"
                                                     :class="{
                                                         '':
                                                             updateRoleForm.role ===
@@ -391,7 +391,7 @@ const displayableRole = (role) => {
 
                                             <!-- Role Description -->
                                             <div
-                                                class="mt-2 text-xs text-myPrimaryGrayColor dark:text-myPrimaryLightTextColor text-left"
+                                                class="mt-2 text-xs text-myPrimaryDarkGrayColor dark:text-myPrimaryLightTextColor text-left"
                                             >
                                                 {{ role.description }}
                                             </div>
@@ -493,19 +493,19 @@ const displayableRole = (role) => {
                                                     >
                                                         <th
                                                             scope="col"
-                                                            class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryGrayColor sm:pl-6 min-w-[20rem]"
+                                                            class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryDarkGrayColor sm:pl-6 min-w-[20rem]"
                                                         >
                                                             Email
                                                         </th>
                                                         <th
                                                             scope="col"
-                                                            class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
+                                                            class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
                                                         >
                                                             Role
                                                         </th>
                                                         <th
                                                             scope="col"
-                                                            class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
+                                                            class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
                                                         >
                                                             Action
                                                         </th>
@@ -521,14 +521,14 @@ const displayableRole = (role) => {
                                                         class="divide-x divide-gray-200"
                                                     >
                                                         <td
-                                                            class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryGrayColor sm:pl-6"
+                                                            class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryDarkGrayColor sm:pl-6"
                                                         >
                                                             {{
                                                                 invitation.email
                                                             }}
                                                         </td>
                                                         <td
-                                                            class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                            class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
                                                         >
                                                             {{
                                                                 invitation.role
@@ -537,7 +537,7 @@ const displayableRole = (role) => {
 
                                                         <!-- Cancel Team Invitation -->
                                                         <td
-                                                            class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                            class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
                                                         >
                                                             <button
                                                                 class="myPrimaryDeleteButton"
@@ -628,19 +628,19 @@ const displayableRole = (role) => {
                                             >
                                                 <th
                                                     scope="col"
-                                                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryGrayColor sm:pl-6 min-w-[20rem]"
+                                                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryDarkGrayColor sm:pl-6 min-w-[20rem]"
                                                 >
                                                     User
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold myPrimaryGrayColor"
+                                                    class="px-4 py-3.5 text-left text-sm font-semibold myPrimaryDarkGrayColor"
                                                 >
                                                     Role
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryGrayColor"
+                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
                                                 >
                                                     Action
                                                 </th>
@@ -656,7 +656,7 @@ const displayableRole = (role) => {
                                                 class="divide-x divide-gray-200"
                                             >
                                                 <td
-                                                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryGrayColor sm:pl-6"
+                                                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryDarkGrayColor sm:pl-6"
                                                 >
                                                     <div
                                                         class="myAvatarSection"
@@ -725,7 +725,7 @@ const displayableRole = (role) => {
                                                     </div>
                                                 </td>
                                                 <td
-                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
                                                 >
                                                     <!-- Manage Team Member Role -->
                                                     <button
@@ -738,7 +738,7 @@ const displayableRole = (role) => {
                                                         "
                                                     >
                                                         {{
-                                                            displayableRole(
+                                                            displayAbleRole(
                                                                 user.membership
                                                                     .role
                                                             )
@@ -748,7 +748,7 @@ const displayableRole = (role) => {
 
                                                 <!-- Cancel Team Invitation -->
                                                 <td
-                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryGrayColor"
+                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
                                                 >
                                                     <!-- Leave Team -->
                                                     <div
@@ -907,7 +907,7 @@ const displayableRole = (role) => {
                                 <!-- Role Name -->
                                 <div class="flex items-center">
                                     <div
-                                        class="text-sm text-myPrimaryGrayColor dark:text-myPrimaryLightTextColor"
+                                        class="text-sm text-myPrimaryDarkGrayColor dark:text-myPrimaryLightTextColor"
                                         :class="{
                                             '':
                                                 updateRoleForm.role ===
@@ -936,7 +936,7 @@ const displayableRole = (role) => {
 
                                 <!-- Role Description -->
                                 <div
-                                    class="mt-2 text-xs text-myPrimaryGrayColor dark:text-myPrimaryLightTextColor"
+                                    class="mt-2 text-xs text-myPrimaryDarkGrayColor dark:text-myPrimaryLightTextColor"
                                 >
                                     {{ role.description }}
                                 </div>

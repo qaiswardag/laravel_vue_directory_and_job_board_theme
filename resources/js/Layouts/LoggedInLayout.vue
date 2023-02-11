@@ -183,7 +183,7 @@ const sidebarOpen = ref(false);
                 leave-to="opacity-0"
             >
                 <div
-                    class="fixed inset-0 bg-myPrimaryGrayColor bg-opacity-75"
+                    class="fixed inset-0 bg-myPrimaryDarkGrayColor bg-opacity-75"
                 />
             </TransitionChild>
 
@@ -233,7 +233,7 @@ const sidebarOpen = ref(false);
                         <div class="mt-5 h-0 flex-1 overflow-y-auto">
                             <nav class="space-y-1 px-2" aria-label="menu">
                                 <p
-                                    class="text-myPrimaryGrayColor group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
+                                    class="text-myPrimaryDarkGrayColor group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
                                 >
                                     Mobile Navigation
                                 </p>
@@ -247,7 +247,7 @@ const sidebarOpen = ref(false);
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                                        class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -267,7 +267,7 @@ const sidebarOpen = ref(false);
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                                        class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -300,7 +300,7 @@ const sidebarOpen = ref(false);
                                             viewBox="0 0 24 24"
                                             stroke-width="1.5"
                                             stroke="currentColor"
-                                            class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                                            class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                                         >
                                             <path
                                                 stroke-linecap="round"
@@ -311,54 +311,6 @@ const sidebarOpen = ref(false);
                                         Teams Settings
                                     </SideBarLink>
                                 </template>
-                                <SideBarLink
-                                    :href="route('teams.index')"
-                                    :active="route().current('teams.index')"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"
-                                        />
-                                    </svg>
-
-                                    Manage Teams
-                                </SideBarLink>
-
-                                <SideBarLink
-                                    :href="
-                                        route(
-                                            'docs',
-                                            $page.props.user.current_team
-                                        )
-                                    "
-                                    :active="route().current('docs')"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"
-                                        />
-                                    </svg>
-
-                                    Doc
-                                </SideBarLink>
                             </nav>
                         </div>
                     </DialogPanel>
@@ -387,7 +339,7 @@ const sidebarOpen = ref(false);
             <div class="mt-5 flex flex-grow flex-col">
                 <nav class="flex-1 space-y-1 px-2 pb-4" aria-label="menu">
                     <p
-                        class="text-myPrimaryGrayColor group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
+                        class="text-myPrimaryDarkGrayColor group flex items-center px-2 py-2 text-xs font-normal pt-2 pb-2 border-b border-gray-200"
                     >
                         Navigation
                     </p>
@@ -401,7 +353,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -421,7 +373,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -453,7 +405,7 @@ const sidebarOpen = ref(false);
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                                class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                             >
                                 <path
                                     stroke-linecap="round"
@@ -487,7 +439,7 @@ const sidebarOpen = ref(false);
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                                class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                             >
                                 <path
                                     stroke-linecap="round"
@@ -510,7 +462,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -532,7 +484,7 @@ const sidebarOpen = ref(false);
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="text-myPrimaryGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                            class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                         >
                             <path
                                 stroke-linecap="round"
@@ -541,7 +493,38 @@ const sidebarOpen = ref(false);
                             />
                         </svg>
 
-                        Doc
+                        Docs
+                    </SideBarLink>
+                    <SideBarLink
+                        :href="
+                            route(
+                                'superadmin.index',
+                                $page.props.user.current_team
+                            )
+                        "
+                        :active="route().current('superadmin.index')"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                        </svg>
+
+                        Super Administrator
                     </SideBarLink>
                 </nav>
             </div>
@@ -554,7 +537,7 @@ const sidebarOpen = ref(false);
         <div class="sticky top-0 z-10 flex h-16 flex-shrink-0">
             <button
                 type="button"
-                class="border-r px-4 text-myPrimaryGrayColor focus:outline-none focus:ring-2 focus:ring-inset focus:ring-myPrimaryBrandColor md:hidden bg-white border-b-2 border-gray-200"
+                class="border-r px-4 text-myPrimaryDarkGrayColor focus:outline-none focus:ring-2 focus:ring-inset focus:ring-myPrimaryBrandColor md:hidden bg-white border-b-2 border-gray-200"
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>
@@ -570,7 +553,7 @@ const sidebarOpen = ref(false);
                                 Search anything...
                             </label>
                             <div
-                                class="relative w-full text-myPrimaryGrayColor focus-within:text-myPrimaryGrayColor"
+                                class="relative w-full text-myPrimaryDarkGrayColor focus-within:text-myPrimaryDarkGrayColor"
                             >
                                 <div
                                     class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
@@ -592,7 +575,7 @@ const sidebarOpen = ref(false);
                                 </div>
                                 <input
                                     id="search-field"
-                                    class="cursor-pointer block w-full h-full pl-8 pr-3 py-2 border-transparent text-myPrimaryGrayColor font-semibold placeholder-gray-500 placeholder:font-semibold focus:outline-none focus:placeholder-myPrimaryGrayColor focus:ring-0 focus:border-transparent sm:text-sm"
+                                    class="cursor-pointer block w-full h-full pl-8 pr-3 py-2 border-transparent text-myPrimaryDarkGrayColor font-semibold placeholder-gray-500 placeholder:font-semibold focus:outline-none focus:placeholder-myPrimaryDarkGrayColor focus:ring-0 focus:border-transparent sm:text-sm"
                                     @click.prevent="handleSearchAnything"
                                     placeholder="Search anything..."
                                     readonly
@@ -679,7 +662,7 @@ const sidebarOpen = ref(false);
                                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 >
                                     <span
-                                        class="myPrimaryParagraph block px-4 py-2 text-xs text-myPrimaryGrayColor"
+                                        class="myPrimaryParagraph block px-4 py-2 text-xs text-myPrimaryDarkGrayColor"
                                         >Manage Teams</span
                                     >
                                     <DropdownLink
@@ -747,7 +730,7 @@ const sidebarOpen = ref(false);
 
                     <button
                         type="button"
-                        class="rounded-full p-1 text-myPrimaryGrayColor hover:text-myPrimaryGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2"
+                        class="rounded-full p-1 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2"
                     >
                         <span class="sr-only">View notifications</span>
                         <BellIcon
@@ -762,10 +745,8 @@ const sidebarOpen = ref(false);
 
         <main class="flex-1">
             <Banner />
-            <header v-if="$slots.header" class="bg-emerald-500 text-white">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
+            <header v-if="$slots.header">
+                <slot name="header" />
             </header>
             <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 mb-24">
                 <main>

@@ -32,7 +32,7 @@ const submit = () => {
             <AuthenticationCardLogo />
         </template>
 
-        <div class="mb-4 text-sm text-myPrimaryGrayColor">
+        <div class="mb-4 text-sm text-myPrimaryDarkGrayColor">
             This is a secure area of the application. Please confirm your
             password before continuing.
         </div>

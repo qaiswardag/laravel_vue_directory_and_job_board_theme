@@ -84,7 +84,7 @@ const TestSubmitButtonTwice = function () {
 <template>
     <LoggedInLayout title="Docs">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Docs</h2>
+            <h2 class="myPrimaryMainPageHeader">Docs</h2>
         </template>
 
         <div>
@@ -319,12 +319,12 @@ const TestSubmitButtonTwice = function () {
                                             aria-hidden="true"
                                         ></span>
                                         <p
-                                            class="text-sm font-medium text-myPrimaryGrayColor"
+                                            class="text-sm font-medium text-myPrimaryDarkGrayColor"
                                         >
                                             {{ user.name }}
                                         </p>
                                         <p
-                                            class="truncate text-sm text-myPrimaryGrayColor"
+                                            class="truncate text-sm text-myPrimaryDarkGrayColor"
                                         >
                                             {{ user.email }}
                                         </p>
@@ -400,13 +400,13 @@ const TestSubmitButtonTwice = function () {
                                             aria-hidden="true"
                                         ></span>
                                         <p
-                                            class="text-sm font-medium text-myPrimaryGrayColor"
+                                            class="text-sm font-medium text-myPrimaryDarkGrayColor"
                                         >
                                             {{ user.first_name }}
                                             {{ user.last_name }}
                                         </p>
                                         <p
-                                            class="truncate text-sm text-myPrimaryGrayColor"
+                                            class="truncate text-sm text-myPrimaryDarkGrayColor"
                                         >
                                             {{ user.email }}
                                         </p>

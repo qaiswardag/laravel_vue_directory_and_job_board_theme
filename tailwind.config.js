@@ -22,7 +22,7 @@ module.exports = {
             myErrorColor: "#d60000",
             // gray colors
             myPrimaryLightGrayColor: "#e2e8f0",
-            myPrimaryGrayColor: "#374151",
+            myPrimaryMediumGrayColor: "#d1d5db",
             myPrimaryDarkGrayColor: "#111827",
 
             //

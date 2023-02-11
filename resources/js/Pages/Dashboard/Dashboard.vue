@@ -1,17 +1,17 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
-import Welcome from "@/Components/Welcome/Welcome.vue";
+import Dashboard from "@/Components/Dashboard/Dashboard.vue";
 </script>
 
 <template>
     <LoggedInLayout title="Dashboard">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Dashboard</h2>
+            <h2 class="myPrimaryMainPageHeader">Dashboard</h2>
         </template>
 
         <div>
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <Welcome />
+            <div class="mt-24">
+                <Dashboard />
             </div>
         </div>
     </LoggedInLayout>

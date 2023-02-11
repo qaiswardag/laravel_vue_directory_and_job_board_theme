@@ -10,7 +10,7 @@ const props = defineProps({
 const classes = computed(() => {
     return props.active
         ? "inline-flex items-center px-1 pt-1 text-sm font-semibold leading-5 focus:outline-none  transition"
-        : "inline-flex items-center px-1 pt-1 text-sm font-semibold leading-5 text-myPrimaryGrayColor hover:text-myPrimaryGrayColor focus:outline-none focus:text-myPrimaryGrayColor transition";
+        : "inline-flex items-center px-1 pt-1 text-sm font-semibold leading-5 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor focus:outline-none focus:text-myPrimaryDarkGrayColor transition";
 });
 </script>
 

@@ -3,6 +3,7 @@ import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import ActionSection from "@/Components/ActionSection.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
+import DescriptionPlusCreate from "../../Components/Actions/DescriptionPlusCreate.vue";
 
 defineProps({
     posts: {
@@ -14,18 +15,29 @@ defineProps({
 <template>
     <LoggedInLayout title="Manage Posts">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Manage Posts</h2>
+            <h2 class="myPrimaryMainPageHeader">Posts</h2>
         </template>
 
-        <div class="sm:flex sm:items-center">
-            <div class="sm:flex-auto">
-                <h1 class="text-xl font-semibold text-gray-900">Users</h1>
-                <p class="mt-2 text-gray-700">
-                    A list of all the users in your account including their
-                    name, title, email and role.
-                </p>
-            </div>
-            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+        <DescriptionPlusCreate>
+            <template #title>
+                A list of all the Posts in of your and of the team including
+                their title cover iamge and status.</template
+            >
+            <template #buttons>
+                <Link
+                    class="myPrimaryButton"
+                    type="button"
+                    :href="route('posts.create')"
+                >
+                    Add Category
+                </Link>
+                <Link
+                    class="myPrimaryButton"
+                    type="button"
+                    :href="route('posts.create')"
+                >
+                    Lorem
+                </Link>
                 <Link
                     class="myPrimaryButton"
                     type="button"
@@ -33,8 +45,8 @@ defineProps({
                 >
                     Add Post
                 </Link>
-            </div>
-        </div>
+            </template>
+        </DescriptionPlusCreate>
 
         <!-- TABLE START -->
         <!-- TABLE START -->

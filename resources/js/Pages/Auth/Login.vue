@@ -44,7 +44,7 @@ const submit = () => {
 <template>
     <GuestsLayout title="Log in">
         <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Login</h2>
+            <h2 class="myPrimaryMainPageHeader">Login</h2>
         </template>
 
         <AuthenticationCard :css="'opacity-100'">
@@ -85,7 +85,7 @@ const submit = () => {
                             v-model:checked="form.remember"
                             name="remember"
                         />
-                        <span class="ml-2 text-sm text-myPrimaryGrayColor"
+                        <span class="ml-2 text-sm text-myPrimaryDarkGrayColor"
                             >Remember me</span
                         >
                     </label>

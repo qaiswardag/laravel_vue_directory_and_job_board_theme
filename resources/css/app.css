@@ -26,14 +26,17 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryParagraph {
-        @apply text-sm font-normal text-myPrimaryGrayColor;
+        @apply text-sm font-normal text-myPrimaryDarkGrayColor;
     }
     /*
     |--------------------------------------------------------------------------
     | Headers
     |--------------------------------------------------------------------------
     */
-    .myPrimayHeader {
+    .myPrimaryMainPageHeader {
+        @apply mySecondaryHeader mt-0 mb-6 text-center py-8 bg-myPrimaryBrandColor text-white;
+    }
+    .myPrimaryHeader {
         @apply text-3xl mt-1 mb-2 font-semibold text-black;
     }
 
@@ -88,7 +91,7 @@
     }
 
     .myPrimaryToggleButton {
-        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-myPrimaryGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 bg-gray-100 hover:bg-myPrimaryBrandColor hover:text-white;
+        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-myPrimaryDarkGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 bg-gray-100 hover:bg-myPrimaryBrandColor hover:text-white;
     }
     /*
     |--------------------------------------------------------------------------
@@ -115,7 +118,7 @@
     |--------------------------------------------------------------------------
     */
     .mySmallIcon {
-        @apply cursor-pointer flex-shrink-0 mr-1.5 h-7 w-7 text-myPrimaryGrayColor transform duration-200 stroke-2;
+        @apply cursor-pointer flex-shrink-0 mr-1.5 h-7 w-7 text-myPrimaryDarkGrayColor transform duration-200 stroke-2;
     }
 
     /*
@@ -165,7 +168,7 @@
     }
 
     .myPrimaryInputLabel {
-        @apply mt-4 mb-2 block text-sm font-medium text-myPrimaryGrayColor text-left;
+        @apply mt-4 mb-2 block text-sm font-medium text-myPrimaryDarkGrayColor text-left;
     }
 
     .myPrimaryInput {
@@ -189,11 +192,11 @@
     }
 
     .myPrimarySelect {
-        @apply bg-gray-50 focus:bg-white font-normal text-myPrimaryGrayColor placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-myPrimaryBrandColor focus:border-myPrimaryBrandColor focus:outline-4 focus:outline-myPrimaryBrandColor sm:text-sm;
+        @apply bg-gray-50 focus:bg-white font-normal text-myPrimaryDarkGrayColor placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-myPrimaryBrandColor focus:border-myPrimaryBrandColor focus:outline-4 focus:outline-myPrimaryBrandColor sm:text-sm;
     }
 
     #my-select {
-        @apply py-1.5 px-2 text-myPrimaryGrayColor bg-gray-50 rounded-md
+        @apply py-1.5 px-2 text-myPrimaryDarkGrayColor bg-gray-50 rounded-md
         border border-gray-300 focus-within:border focus-within:border-transparent
         sm:text-sm font-normal
         focus-within:bg-white focus:focus-within:rounded-md
