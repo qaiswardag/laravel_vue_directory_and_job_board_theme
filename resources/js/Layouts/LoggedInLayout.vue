@@ -393,11 +393,11 @@ const sidebarOpen = ref(false);
                         <SideBarLink
                             :href="
                                 route(
-                                    'posts.index'
+                                    'overview.posts.index'
                                     // $page.props.user.current_team
                                 )
                             "
-                            :active="route().current('posts.index')"
+                            :active="route().current('overview.posts.index')"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -496,13 +496,8 @@ const sidebarOpen = ref(false);
                         Docs
                     </SideBarLink>
                     <SideBarLink
-                        :href="
-                            route(
-                                'superadmin.index',
-                                $page.props.user.current_team
-                            )
-                        "
-                        :active="route().current('superadmin.index')"
+                        :href="route('superadmin.dashboard')"
+                        :active="route().current('superadmin.dashboard')"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

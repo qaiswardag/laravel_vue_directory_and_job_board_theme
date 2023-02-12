@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
         Team::factory()->create([
             "id" => 5,
             "user_id" => User::find(5)->id,
-            "name" => "Harpo Productions",
+            "name" => "Harpo Productions Oprah",
             "personal_team" => false,
         ]);
         // Ingrid Bergman
@@ -211,10 +211,67 @@ class DatabaseSeeder extends Seeder
             "role" => "admin",
         ]);
 
-        // fake Posts
-        Post::factory(250)->create([]);
-
         // fake Users
         User::factory(100)->create();
+        // fake Posts
+        Post::factory(250)->create();
+
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        // Post::factory()->create([
+        //     "user_id" => 5, // Oprah Winfrey
+        //     "team_id" => 5, // Oprah Winfrey teem
+        //     "title" => "My Post title for Oprahs first Blog Post",
+        //     "slug" => "the-slug",
+        //     "content" => "The description. This post belongs to Oprahs team",
+        //     "published" => rand(0, 1),
+        //     "tags" => "Summer,Dubai,Event,FashionShow",
+        // ]);
+        // Post::factory()->create([
+        //     "user_id" => 5, // Oprah Winfrey
+        //     "team_id" => 5, // Oprah Winfrey teem
+        //     "title" => "Oprahs second Blog Post",
+        //     "slug" => "the-slug",
+        //     "content" => "The description. This post belongs to Oprahs team.",
+        //     "published" => rand(0, 1),
+        //     "tags" => "Summer,Dubai,Event,FashionShow",
+        // ]);
+        // Post::factory()->create([
+        //     "user_id" => 5, // Oprah Winfrey
+        //     "team_id" => 5, // Oprah Winfrey teem
+        //     "title" => "Blog Post title",
+        //     "slug" => "the-slug",
+        //     "content" => "The description. This post belongs to Oprahs team.",
+        //     "published" => rand(0, 1),
+        //     "tags" => "Summer,Dubai,Event,FashionShow",
+        // ]);
+        // Post::factory()->create([
+        //     "user_id" => 5, // Oprah Winfrey
+        //     "team_id" => 5, // Oprah Winfrey teem
+        //     "title" => "Blog Post title",
+        //     "slug" => "the-slug",
+        //     "content" => "The description. This post belongs to Oprahs team.",
+        //     "published" => rand(0, 1),
+        //     "tags" => "Summer,Dubai,Event,FashionShow",
+        // ]);
+        // Post::factory()->create([
+        //     "user_id" => 6, // Ingrid Bergman
+        //     "team_id" => 5, // Oprah Winfrey teem
+        //     "title" => "Blog Post title",
+        //     "slug" => "the-slug",
+        //     "content" => "The description. This post belongs to Oprahs team.",
+        //     "published" => rand(0, 1),
+        //     "tags" => "Summer,Dubai,Event,FashionShow",
+        // ]);
     }
 }

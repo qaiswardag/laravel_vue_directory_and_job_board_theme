@@ -94,57 +94,51 @@ const switchTeam = function (team) {
                                 <div
                                     class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
                                 >
-                                    <table
-                                        class="min-w-full divide-y divide-gray-300"
-                                    >
-                                        <caption class="bg-white">
+                                    <table class="myPrimaryTable">
+                                        <caption class="myPrimaryTableCaption">
                                             <p class="myPrimaryParagraph my-4">
                                                 Switch Team
                                             </p>
                                         </caption>
-                                        <thead class="bg-gray-50">
-                                            <tr
-                                                class="divide-x divide-gray-200"
-                                            >
+                                        <thead class="myPrimaryTableTHead">
+                                            <tr class="myPrimaryTableTr">
                                                 <th
                                                     scope="col"
-                                                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryDarkGrayColor sm:pl-6 min-w-[20rem]"
+                                                    class="myPrimaryTableTh"
                                                 >
                                                     Team
                                                 </th>
 
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
+                                                    class="myPrimaryTableTh"
                                                 >
                                                     Team id
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
+                                                    class="myPrimaryTableTh"
                                                 >
                                                     Team owner
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
+                                                    class="myPrimaryTableTh"
                                                 >
                                                     Switch Team
                                                 </th>
                                             </tr>
                                         </thead>
 
-                                        <tbody
-                                            class="divide-y divide-gray-200 bg-white"
-                                        >
+                                        <tbody class="myPrimaryTableTBody">
                                             <tr
                                                 v-for="team in $page.props.user
                                                     .all_teams"
                                                 :key="team.id"
-                                                class="divide-x divide-gray-200"
+                                                class="myPrimaryTableTBodyTr"
                                             >
                                                 <td
-                                                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryDarkGrayColor sm:pl-6"
+                                                    class="myPrimaryTableTBodyTd"
                                                 >
                                                     <form
                                                         @submit.prevent="
@@ -207,17 +201,17 @@ const switchTeam = function (team) {
                                                 </td>
 
                                                 <td
-                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
+                                                    class="myPrimaryTableTBodyTd"
                                                 >
                                                     {{ team.id }}
                                                 </td>
                                                 <td
-                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
+                                                    class="myPrimaryTableTBodyTd"
                                                 >
                                                     {{ team.user_id }}
                                                 </td>
                                                 <td
-                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
+                                                    class="myPrimaryTableTBodyTd"
                                                 >
                                                     <form
                                                         @submit.prevent="

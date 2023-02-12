@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Post;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,10 +17,17 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $randomUser = User::all()
+            ->random(1)
+            ->first()->id;
         return [
-            "user_id" => rand(1, 3), // Qais Wardag, Shaun Pelling or Mie Mortensen,
-            "team_id" => rand(1, 3), // Qais Wardag, Shaun Pelling or Mie Mortensens Team
-            "title" => substr($this->faker->sentence(rand(2, 6), false), 0, -1),
+            "user_id" => $randomUser, // Qais Wardag, Shaun Pelling or Mie Mortensen,
+            "team_id" => rand(1, 6), // Qais Wardag, Shaun Pelling, Mie Mortensens Team etc.
+            "title" => substr(
+                $this->faker->sentence(rand(2, 10), false),
+                0,
+                -1
+            ), // delete the dot from last word
             "slug" => "the-slug",
             "content" => $this->faker->sentence(rand(20, 60), false),
             "published" => rand(0, 1),

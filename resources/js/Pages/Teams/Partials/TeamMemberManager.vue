@@ -476,36 +476,34 @@ const displayAbleRole = (role) => {
                                         <div
                                             class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
                                         >
-                                            <table
-                                                class="min-w-full divide-y divide-gray-300"
-                                            >
-                                                <caption class="bg-white">
-                                                    <p
-                                                        class="myPrimaryParagraph my-4"
-                                                    >
-                                                        Manage Pending Team
-                                                        Invitations
-                                                    </p>
+                                            <table class="myPrimaryTable">
+                                                <caption
+                                                    class="myPrimaryTableCaption"
+                                                >
+                                                    Manage Pending Team
+                                                    Invitations
                                                 </caption>
-                                                <thead class="bg-gray-50">
+                                                <thead
+                                                    class="myPrimaryTableTHead"
+                                                >
                                                     <tr
-                                                        class="divide-x divide-gray-200"
+                                                        class="myPrimaryTableTr"
                                                     >
                                                         <th
                                                             scope="col"
-                                                            class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryDarkGrayColor sm:pl-6 min-w-[20rem]"
+                                                            class="myPrimaryTableTh"
                                                         >
                                                             Email
                                                         </th>
                                                         <th
                                                             scope="col"
-                                                            class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
+                                                            class="myPrimaryTableTh"
                                                         >
                                                             Role
                                                         </th>
                                                         <th
                                                             scope="col"
-                                                            class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
+                                                            class="myPrimaryTableTh"
                                                         >
                                                             Action
                                                         </th>
@@ -513,45 +511,49 @@ const displayAbleRole = (role) => {
                                                 </thead>
 
                                                 <tbody
-                                                    class="divide-y divide-gray-200 bg-white"
+                                                    class="myPrimaryTableTBody"
                                                 >
-                                                    <tr
-                                                        v-for="invitation in team.team_invitations"
-                                                        :key="invitation.id"
-                                                        class="divide-x divide-gray-200"
+                                                    <TransitionGroup
+                                                        name="table"
                                                     >
-                                                        <td
-                                                            class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryDarkGrayColor sm:pl-6"
+                                                        <tr
+                                                            v-for="invitation in team.team_invitations"
+                                                            :key="invitation.id"
+                                                            class="myPrimaryTableTBodyTr"
                                                         >
-                                                            {{
-                                                                invitation.email
-                                                            }}
-                                                        </td>
-                                                        <td
-                                                            class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
-                                                        >
-                                                            {{
-                                                                invitation.role
-                                                            }}
-                                                        </td>
-
-                                                        <!-- Cancel Team Invitation -->
-                                                        <td
-                                                            class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
-                                                        >
-                                                            <button
-                                                                class="myPrimaryDeleteButton"
-                                                                @click="
-                                                                    handleCancelTeamInvitation(
-                                                                        invitation
-                                                                    )
-                                                                "
+                                                            <td
+                                                                class="myPrimaryTableTBodyTd"
                                                             >
-                                                                Cancel
-                                                                Invitation
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                                                                {{
+                                                                    invitation.email
+                                                                }}
+                                                            </td>
+                                                            <td
+                                                                class="myPrimaryTableTBodyTd"
+                                                            >
+                                                                {{
+                                                                    invitation.role
+                                                                }}
+                                                            </td>
+
+                                                            <!-- Cancel Team Invitation -->
+                                                            <td
+                                                                class="myPrimaryTableTBodyTd"
+                                                            >
+                                                                <button
+                                                                    class="myPrimaryDeleteButton"
+                                                                    @click="
+                                                                        handleCancelTeamInvitation(
+                                                                            invitation
+                                                                        )
+                                                                    "
+                                                                >
+                                                                    Cancel
+                                                                    Invitation
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </TransitionGroup>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -588,7 +590,7 @@ const displayAbleRole = (role) => {
             <SectionBorder />
 
             <!-- Manage Team Members -->
-            <ActionSection class="mt-10 sm:mt-0">
+            <ActionSection :noSidebar="true" class="mt-10 sm:mt-0">
                 <template #title> Team Members </template>
 
                 <template #description>
@@ -599,7 +601,10 @@ const displayAbleRole = (role) => {
                 <template #main>
                     <div class="myInputsOrganization">
                         <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                            <p class="myTertiaryHeader">
+                                Team
+                                {{ $page.props.user.current_team.name }}
+                            </p>
                             <p class="myPrimaryParagraph">
                                 Lorem ipsum dolor sit amet, consectetur
                                 adipisicing elit. Corporis ex dignissimos quas
@@ -614,214 +619,206 @@ const displayAbleRole = (role) => {
                                 <div
                                     class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
                                 >
-                                    <table
-                                        class="min-w-full divide-y divide-gray-300"
-                                    >
-                                        <caption class="bg-white">
-                                            <p class="myPrimaryParagraph my-4">
-                                                Manage Team Member
-                                            </p>
+                                    <table class="myPrimaryTable">
+                                        <caption class="myPrimaryTableCaption">
+                                            Team
+                                            <span class="font-semibold">
+                                                {{
+                                                    $page.props.user
+                                                        .current_team.name
+                                                }}
+                                            </span>
                                         </caption>
-                                        <thead class="bg-gray-50">
-                                            <tr
-                                                class="divide-x divide-gray-200"
-                                            >
+                                        <thead class="myPrimaryTableTHead">
+                                            <tr class="myPrimaryTableTr">
                                                 <th
                                                     scope="col"
-                                                    class="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-myPrimaryDarkGrayColor sm:pl-6 min-w-[20rem]"
+                                                    class="myPrimaryTableTh"
                                                 >
                                                     User
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold myPrimaryDarkGrayColor"
+                                                    class="myPrimaryTableTh"
                                                 >
                                                     Role
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-4 py-3.5 text-left text-sm font-semibold text-myPrimaryDarkGrayColor"
+                                                    class="myPrimaryTableTh"
                                                 >
                                                     Action
                                                 </th>
                                             </tr>
                                         </thead>
 
-                                        <tbody
-                                            class="divide-y divide-gray-200 bg-white"
-                                        >
-                                            <tr
-                                                v-for="user in team.users"
-                                                :key="user.id"
-                                                class="divide-x divide-gray-200"
-                                            >
-                                                <td
-                                                    class="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-myPrimaryDarkGrayColor sm:pl-6"
+                                        <tbody class="myPrimaryTableTBody">
+                                            <TransitionGroup name="table">
+                                                <tr
+                                                    v-for="user in team.users"
+                                                    :key="user.id"
+                                                    class="myPrimaryTableTBodyTr"
                                                 >
-                                                    <div
-                                                        class="myAvatarSection"
+                                                    <td
+                                                        class="myPrimaryTableTBodyTd"
                                                     >
                                                         <div
-                                                            class="flex items-center gap-2 mt-2"
+                                                            class="myAvatarSection"
                                                         >
                                                             <div
-                                                                v-if="
-                                                                    user.profile_photo_url &&
-                                                                    false
-                                                                "
+                                                                class="flex items-center gap-2 mt-2"
                                                             >
-                                                                <img
-                                                                    class="object-cover w-12 h-12 rounded-full"
-                                                                    :src="
-                                                                        user.profile_photo_url
+                                                                <div
+                                                                    v-if="
+                                                                        user.profile_photo_url &&
+                                                                        false
                                                                     "
-                                                                    :alt="
-                                                                        user.first_name
-                                                                    "
-                                                                />
-                                                            </div>
+                                                                >
+                                                                    <img
+                                                                        class="object-cover w-12 h-12 rounded-full"
+                                                                        :src="
+                                                                            user.profile_photo_url
+                                                                        "
+                                                                        :alt="
+                                                                            user.first_name
+                                                                        "
+                                                                    />
+                                                                </div>
 
-                                                            <div
-                                                                v-if="true"
-                                                                class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
-                                                            >
-                                                                {{
-                                                                    user.first_name
-                                                                        .charAt(
-                                                                            0
-                                                                        )
-                                                                        .toUpperCase()
-                                                                }}
-                                                                {{
-                                                                    user.last_name
-                                                                        .charAt(
-                                                                            0
-                                                                        )
-                                                                        .toUpperCase()
-                                                                }}
-                                                            </div>
-                                                            <div
-                                                                class="flex flex-col items-left gap-1"
-                                                            >
-                                                                <p
-                                                                    class="text-xs font-semibold"
+                                                                <div
+                                                                    v-if="true"
+                                                                    class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
                                                                 >
                                                                     {{
                                                                         user.first_name
+                                                                            .charAt(
+                                                                                0
+                                                                            )
+                                                                            .toUpperCase()
                                                                     }}
                                                                     {{
                                                                         user.last_name
+                                                                            .charAt(
+                                                                                0
+                                                                            )
+                                                                            .toUpperCase()
                                                                     }}
-                                                                </p>
-                                                                <p
-                                                                    class="text-xs font-semibold"
+                                                                </div>
+                                                                <div
+                                                                    class="flex flex-col items-left gap-1"
                                                                 >
-                                                                    {{
-                                                                        user.email
-                                                                    }}
-                                                                </p>
+                                                                    <p
+                                                                        class="text-xs font-semibold"
+                                                                    >
+                                                                        {{
+                                                                            user.first_name
+                                                                        }}
+                                                                        {{
+                                                                            user.last_name
+                                                                        }}
+                                                                    </p>
+                                                                    <p
+                                                                        class="text-xs font-semibold"
+                                                                    >
+                                                                        {{
+                                                                            user.email
+                                                                        }}
+                                                                    </p>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td
-                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
-                                                >
-                                                    <!-- Manage Team Member Role -->
-                                                    <button
-                                                        v-if="
-                                                            availableRoles.length
-                                                        "
-                                                        class="myPrimaryButtonNoBackground"
-                                                        @click="
-                                                            manageRole(user)
-                                                        "
+                                                    </td>
+                                                    <td
+                                                        class="myPrimaryTableTBodyTd"
                                                     >
-                                                        {{
-                                                            displayAbleRole(
-                                                                user.membership
-                                                                    .role
-                                                            )
-                                                        }}
-                                                    </button>
-                                                </td>
-
-                                                <!-- Cancel Team Invitation -->
-                                                <td
-                                                    class="whitespace-nowrap p-4 text-sm text-myPrimaryDarkGrayColor"
-                                                >
-                                                    <!-- Leave Team -->
-                                                    <div
-                                                        class="flex items-center myPrimaryGap"
-                                                    >
-                                                        <DangerButton
+                                                        <!-- Manage Team Member Role -->
+                                                        <button
                                                             v-if="
-                                                                $page.props.user
-                                                                    .id ===
-                                                                user.id
+                                                                availableRoles.length
                                                             "
+                                                            class="myPrimaryButtonNoBackground"
                                                             @click="
-                                                                handleLeaveTeam()
+                                                                manageRole(user)
                                                             "
                                                         >
-                                                            Leave Team
-                                                        </DangerButton>
-                                                        <p
-                                                            class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryBrandColor text-white rounded-xl py-2 px-4 font-semibold"
-                                                            v-if="
-                                                                $page.props.user
-                                                                    .id ===
-                                                                user.id
-                                                            "
-                                                        >
-                                                            <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                stroke-width="2"
-                                                                stroke="currentColor"
-                                                                class="w-4 h-4"
-                                                            >
-                                                                <path
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"
-                                                                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                                                                />
-                                                            </svg>
-
-                                                            <span> You </span>
-                                                        </p>
-
-                                                        <!-- Remove Team Member -->
-                                                        <DangerButton
-                                                            @click="
-                                                                handleRemoveTeamMember(
+                                                            {{
+                                                                displayAbleRole(
                                                                     user
+                                                                        .membership
+                                                                        .role
                                                                 )
-                                                            "
+                                                            }}
+                                                        </button>
+                                                    </td>
+
+                                                    <!-- Cancel Team Invitation -->
+                                                    <td
+                                                        class="myPrimaryTableTBodyTd"
+                                                    >
+                                                        <!-- Leave Team -->
+                                                        <div
+                                                            class="flex items-center myPrimaryGap"
                                                         >
-                                                            Remove User
-                                                        </DangerButton>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                            <DangerButton
+                                                                v-if="
+                                                                    $page.props
+                                                                        .user
+                                                                        .id ===
+                                                                    user.id
+                                                                "
+                                                                @click="
+                                                                    handleLeaveTeam()
+                                                                "
+                                                            >
+                                                                Leave Team
+                                                            </DangerButton>
+                                                            <p
+                                                                class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryBrandColor text-white rounded-xl py-2 px-4 font-semibold"
+                                                                v-if="
+                                                                    $page.props
+                                                                        .user
+                                                                        .id ===
+                                                                    user.id
+                                                                "
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    stroke-width="2"
+                                                                    stroke="currentColor"
+                                                                    class="w-4 h-4"
+                                                                >
+                                                                    <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                                                                    />
+                                                                </svg>
+
+                                                                <span>
+                                                                    You
+                                                                </span>
+                                                            </p>
+
+                                                            <!-- Remove Team Member -->
+                                                            <DangerButton
+                                                                @click="
+                                                                    handleRemoveTeamMember(
+                                                                        user
+                                                                    )
+                                                                "
+                                                            >
+                                                                Remove User
+                                                            </DangerButton>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </TransitionGroup>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </template>
-
-                <template #sidebar>
-                    <div class="myInputsOrganization">
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                            <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Corporis ex dignissimos quas
-                                doloremque culpa at!
-                            </p>
                         </div>
                     </div>
                 </template>

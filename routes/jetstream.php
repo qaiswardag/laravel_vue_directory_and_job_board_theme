@@ -140,7 +140,7 @@ Route::group(
                             "destroy",
                         ])->name("team-invitations.destroy");
                         // Mange teams
-                        Route::get("/manage/teams", function () {
+                        Route::get("/overview/teams", function () {
                             return Inertia::render("Teams/Index");
                         })->name("teams.index");
                     }

@@ -23,14 +23,14 @@ return new class extends Migration {
                 ->onDelete("cascade")
                 ->constrained();
             // team
-            // $table
-            //     ->foreignId("team_id")
-            //     ->references("id")
-            //     ->on("teams")
-            //     ->onDelete("cascade")
-            //     ->constrained();
+            $table
+                ->foreignId("team_id")
+                ->references("id")
+                ->on("teams")
+                ->onDelete("cascade")
+                ->constrained();
             //
-            $table->string("team_id");
+            // $table->foreignId("team_id");
             //
             //
             $table->string("slug");

@@ -12,7 +12,17 @@ return new class extends Migration {
     {
         Schema::create("teams", function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->index();
+            // $table->foreignId("user_id")->index(); // original row structure
+            //
+            $table
+                ->foreignId("user_id")
+                ->index()
+                ->references("id")
+                ->on("users")
+                ->onDelete("cascade")
+                ->constrained();
+            //
+            //
             $table->string("name");
             $table->boolean("personal_team");
             $table->timestamps();

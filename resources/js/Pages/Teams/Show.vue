@@ -123,8 +123,8 @@ defineProps({
                         class="myPrimaryParagraph my-4 text-myErrorColor flex justify-between items-center"
                     >
                         <span class="text-myErrorColor"> Owner: </span>
-                        {{ team.owner.first_name }}
-                        {{ team.owner.last_name }}
+                        {{ team.owner && team.owner.first_name }}
+                        {{ team.owner && team.owner.last_name }}
                     </p>
                 </div>
             </div>

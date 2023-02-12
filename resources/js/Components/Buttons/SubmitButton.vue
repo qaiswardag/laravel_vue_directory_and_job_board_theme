@@ -17,6 +17,9 @@ defineProps({
     ButtonStyleDelete: {
         type: Boolean,
     },
+    TableStyle: {
+        type: Boolean,
+    },
 });
 
 const emit = defineEmits(["firstButtonClick"]);
@@ -27,28 +30,45 @@ const firstButtonClick = function () {
 </script>
 
 <template>
-    <div class="myPrimaryFormAction">
-        <div class="flex flex-col items-end justify-end gap-2">
-            <div class="flex items-center gap-3">
-                <Transition name="bounce">
-                    <div v-if="disabled" role="status">
-                        <SmallUniversalSpinner></SmallUniversalSpinner>
-                    </div>
-                </Transition>
-                <button
-                    @click="firstButtonClick"
-                    :type="type"
-                    :disabled="disabled"
-                    class="myPrimaryButton myPrimaryGap min-w-[8rem]"
-                    :class="{
-                        'opacity-25 cursor-default': disabled,
-                        myPrimaryDeleteButton: ButtonStyleDelete,
-                    }"
-                >
+    <div
+        :class="{
+            'flex flex-col items-end justify-end gap-2': !TableStyle,
+            'items-center': TableStyle,
+        }"
+    >
+        <div
+            :class="{
+                'flex items-center gap-3': !TableStyle,
+                '': TableStyle,
+            }"
+        >
+            <Transition name="bounce">
+                <div v-if="disabled && !TableStyle" role="status">
+                    <SmallUniversalSpinner></SmallUniversalSpinner>
+                </div>
+            </Transition>
+            <button
+                @click="firstButtonClick"
+                :type="type"
+                :disabled="disabled"
+                class="myPrimaryButton"
+                :class="{
+                    'opacity-25 cursor-default': disabled,
+                    'md:min-w-[9rem] min-w-[7rem]': !TableStyle,
+                    'min-w-[5rem]': TableStyle,
+                    myPrimaryDeleteButton: ButtonStyleDelete,
+                    'py-1 px-1 bg-transparent  shadow-none border-0 hover:bg-transparent focus:outline-none focus:ring-0  focus:ring-offset-0':
+                        TableStyle,
+                    'text-myErrorColor': TableStyle && ButtonStyleDelete,
+                    'text-myPrimaryBrandColor':
+                        TableStyle && !ButtonStyleDelete,
+                }"
+            >
+                <span v-show="!disabled">
                     <slot />
-                    {{ disabled ? "Loading..." : buttonText }}
-                </button>
-            </div>
+                </span>
+                {{ disabled ? "Loading..." : buttonText }}
+            </button>
         </div>
     </div>
 </template>

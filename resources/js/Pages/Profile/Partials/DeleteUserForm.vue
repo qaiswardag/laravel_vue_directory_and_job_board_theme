@@ -130,7 +130,7 @@ const closeModal = () => {
         <template #actions>
             <SubmitButton
                 :ButtonStyleDelete="true"
-                :disabled="false"
+                :disabled="form.processing"
                 @firstButtonClick="handleUserDeletion"
                 buttonText="Delete Account"
             >

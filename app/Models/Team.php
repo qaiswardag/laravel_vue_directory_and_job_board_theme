@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Post\Post;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -38,4 +39,11 @@ class Team extends JetstreamTeam
         "updated" => TeamUpdated::class,
         "deleted" => TeamDeleted::class,
     ];
+
+    protected $with = ["posts"];
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, "team_id", "id");
+    }
 }

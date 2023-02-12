@@ -1,16 +1,138 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
+import { router, useForm, usePage } from "@inertiajs/vue3";
+import Flash from "@/Components/Actions/Flash.vue";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import FormSection from "@/Components/Forms/FormSection.vue";
+import { ref } from "vue";
 
 defineProps({
     users: {
         required: true,
     },
+    results: {
+        required: false,
+    },
 });
+
+const modalShowDeleteUser = ref(false);
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
+// handle action
+const handleDelete = function (id, user) {
+    modalShowDeleteUser.value = true;
+
+    // set modal standards
+    typeModal.value = "delete";
+    gridColumnModal.value = 2;
+    titleModal.value = `Delete User: ${user.first_name} ${user.last_name}?`;
+    descriptionModal.value = `Are you sure you want to delete user ${user.first_name} ${user.last_name}?`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Delete Post";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowDeleteUser.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowDeleteUser.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        deletePost(id);
+    };
+    // end modal
+};
+// form
+const searchField = ref(null);
+const deleteUserForm = useForm({});
+
+// form action
+const deletePost = (userId) => {
+    deleteUserForm.delete(route("superadmin.user.destroy", userId), {
+        preserveScroll: true,
+        onSuccess: () => (modalShowDeleteUser.value = false),
+        onError: (err) => {
+            console.log("Something went wrong. Error:", err);
+        },
+        onFinish: (log) => {
+            // console.log("On finish. Here is the log:", log);
+            modalShowDeleteUser.value = false;
+        },
+    });
+};
+
+const searchForm = useForm({
+    search_query: "",
+});
+
+const handleEdit = function (userId) {
+    console.log("clicked on edit user. user id is:", userId);
+};
+
+// searc
+
+const handleSearch = function () {
+    search();
+};
+
+const search = () => {
+    console.log("search query is:", searchForm.search_query);
+    searchForm.get(route("superadmin.users.index"), {
+        preserveScroll: true,
+        onSuccess: () => {
+            console.log("Success search");
+        },
+        onError: (err) => {
+            console.log("An error came for the search");
+        },
+        onFinish: () => {
+            console.log("On finish serach");
+        },
+    });
+};
 </script>
 
 <template>
-    <LoggedInLayout title="Manage teæms">
+    <LoggedInLayout title="Manage Users">
+        <!-- Cancel Team Invitation -->
+        <Flash :flash="$page.props.flash"> </Flash>
+        <DynamicModal
+            :show="modalShowDeleteUser"
+            :type="typeModal"
+            :disabled="deleteUserForm.processing"
+            disabledWhichButton="thirdButton"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
+        >
+            <header></header>
+            <main></main>
+        </DynamicModal>
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Users</h2>
         </template>
@@ -20,6 +142,57 @@ defineProps({
             <p>all users here: {{ users }}</p>
         </template>
 
+        <form>
+            <div class="relative">
+                <div
+                    class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                >
+                    <svg
+                        aria-hidden="true"
+                        class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        ></path>
+                    </svg>
+                </div>
+                <input
+                    v-model="searchForm.search_query"
+                    type="text"
+                    id="search_query"
+                    class="myPrimarySearchInputWithButton rounded-none"
+                    autocomplete="off"
+                    placeholder="Searching..."
+                />
+                <button
+                    @click.prevent="handleSearch"
+                    :disabled="searchForm.processing"
+                    type="submit"
+                    class="min-w-[6rem] text-white absolute top-0 bottom-0 right-0 bg-black hover:bg-opacity-90 focus:ring-0 focus:outline-none font-semibold text-sm px-4 py-2"
+                    :class="{ 'opacity-70': searchForm.processing }"
+                >
+                    {{ searchForm.processing ? "Loading.." : "Search" }}
+                </button>
+
+                <!-- <SubmitButton
+                    @firstButtonClick="handleSearch"
+                    :disabled="searchForm.processing"
+                    class="absolute right-2.5 bottom-2"
+                    buttonText="Search"
+                >
+                </SubmitButton> -->
+            </div>
+        </form>
+        <div class="border-2 border-gray-200 py-4 px-4 my-4 rounded">
+            Found: {{ results }}
+        </div>
         <!-- TABLE START -->
         <!-- TABLE START -->
         <!-- TABLE START -->
@@ -29,68 +202,45 @@ defineProps({
                 <div
                     class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
                 >
-                    <table class="min-w-full divide-y divide-gray-300">
-                        <caption class="bg-white">
-                            <p class="myPrimaryParagraph my-4">Your posts</p>
+                    <table class="myPrimaryTable">
+                        <caption class="myPrimaryTableCaption">
+                            List of all users
                         </caption>
-                        <thead class="bg-gray-50">
-                            <tr class="divide-x divide-gray-300">
-                                <th
-                                    scope="col"
-                                    class="py-3.5 pl-4 pr-3 text-left myPrimaryParagraph text-gray-900 sm:pl-6"
-                                >
+                        <thead class="myPrimaryTableTHead">
+                            <tr class="myPrimaryTableTr">
+                                <th scope="col" class="myPrimaryTableTh">
                                     Thumbnail
                                 </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-3.5 text-left myPrimaryParagraph text-gray-900"
-                                >
+                                <th scope="col" class="myPrimaryTableTh">
                                     Title
                                 </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-3.5 text-left myPrimaryParagraph text-gray-900"
-                                >
+                                <th scope="col" class="myPrimaryTableTh">
                                     Status
                                 </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-3.5 text-left myPrimaryParagraph text-gray-900"
-                                >
+                                <th scope="col" class="myPrimaryTableTh">
                                     User id
                                 </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-3.5 text-left myPrimaryParagraph text-gray-900"
-                                >
+                                <th scope="col" class="myPrimaryTableTh">
                                     Owner of Team
                                 </th>
-                                <th
-                                    scope="col"
-                                    class="relative py-3.5 pl-3 pr-4 sm:pr-6 myPrimaryParagraph"
-                                >
+                                <th scope="col" class="myPrimaryTableTh">
                                     Edit
                                     <span class="sr-only">Edit</span>
                                 </th>
-                                <th
-                                    scope="col"
-                                    class="relative py-3.5 pl-3 pr-4 sm:pr-6 myPrimaryParagraph"
-                                >
+                                <th scope="col" class="myPrimaryTableTh">
                                     Delete
                                     <span class="sr-only">Delete</span>
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            <template v-if="users">
+                        <tbody class="myPrimaryTableTBody">
+                            <TransitionGroup name="table">
                                 <tr
-                                    class="divide-x divide-gray-200"
+                                    class="myPrimaryTableTBodyTr"
                                     v-for="user in users.data"
                                     :key="user.id"
                                 >
-                                    <td
-                                        class="whitespace-nowrap py-4 pl-4 pr-3 sm:pl-6"
-                                    >
+                                    <td class="myPrimaryTableTBodyTd">
                                         <div class="flex items-center">
                                             <div
                                                 class="h-10 w-10 flex-shrink-0"
@@ -110,18 +260,14 @@ defineProps({
                                         </div>
                                     </td>
 
-                                    <td
-                                        class="whitespace-nowrap px-3 py-4 text-gray-500"
-                                    >
+                                    <td class="myPrimaryTableTBodyTd">
                                         <div class="text-gray-900">
                                             {{ user.first_name }}
                                             {{ user.last_name }}
                                         </div>
                                     </td>
 
-                                    <td
-                                        class="whitespace-nowrap px-3 py-4 text-gray-500"
-                                    >
+                                    <td class="myPrimaryTableTBodyTd">
                                         <span
                                             :class="
                                                 user.public
@@ -137,45 +283,73 @@ defineProps({
                                         >
                                     </td>
 
-                                    <td
-                                        class="whitespace-nowrap px-3 py-4 text-gray-500"
-                                    >
+                                    <td class="myPrimaryTableTBodyTd">
                                         <div class="text-gray-900">
                                             {{ user.id }}
                                         </div>
                                     </td>
-                                    <td
-                                        class="whitespace-nowrap px-3 py-4 text-gray-500"
-                                    >
+                                    <td class="myPrimaryTableTBodyTd">
                                         <div class="text-gray-900">
                                             team name here
                                         </div>
                                     </td>
 
-                                    <td
-                                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right sm:pr-6"
-                                    >
-                                        <a
-                                            href="#"
+                                    <td class="py-4 px-2 text-center">
+                                        <button
+                                            @click="handleEdit(user.id)"
+                                            type="button"
                                             class="myPrimaryButtonNoBackground"
-                                            >Edit<span class="sr-only"
-                                                >, {{ user.id }}</span
-                                            ></a
                                         >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke-width="2"
+                                                stroke="currentColor"
+                                                class="w-5 h-5"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                                />
+                                            </svg>
+
+                                            <span class="sr-only"
+                                                >, {{ user.id }}</span
+                                            >
+                                        </button>
                                     </td>
-                                    <td
-                                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right sm:pr-6"
-                                    >
-                                        <a
-                                            href="#"
-                                            class="myPrimaryDeleteButtonNoBackground"
-                                            >Delete<span class="sr-only"
-                                                >, {{ user.id }}</span
-                                            ></a
+                                    <td class="py-4 px-2 text-center">
+                                        <SubmitButton
+                                            :ButtonStyleDelete="true"
+                                            :TableStyle="true"
+                                            :disabled="
+                                                deleteUserForm.processing
+                                            "
+                                            @firstButtonClick="
+                                                handleDelete(user.id, user)
+                                            "
+                                            buttonText=""
                                         >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke-width="1.5"
+                                                stroke="currentColor"
+                                                class="w-5 h-5"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                />
+                                            </svg>
+                                        </SubmitButton>
                                     </td>
                                 </tr>
-                            </template>
+                            </TransitionGroup>
                         </tbody>
                     </table>
                 </div>

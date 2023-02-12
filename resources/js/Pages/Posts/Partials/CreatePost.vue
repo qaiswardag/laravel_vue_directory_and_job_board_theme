@@ -11,6 +11,7 @@ import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { ref } from "vue";
 import { Switch } from "@headlessui/vue";
+import SingleSelect from "../../../Components/Forms/SingleSelect.vue";
 
 // start Quill Editor
 // define options
@@ -46,6 +47,7 @@ const createPostForm = useForm({
     title: "",
     content: "",
     published: true,
+    team: "la la",
 });
 
 const handleCreatePost = function () {
@@ -56,17 +58,31 @@ const handleCreatePost = function () {
 };
 
 const createPost = () => {
-    createPostForm.post(route("posts.store"), {
+    createPostForm.post(route("overview.posts.store"), {
         errorBag: "createPost",
         preserveScroll: true,
         onSuccess: () => {},
         onError: () => {
             console.log("something went wrong posting the Post");
         },
-        onFinish: () => {},
+        onFinish: () => {
+            console.log("came to on finish");
+        },
     });
 };
 
+const people = [
+    { id: 1, name: "Wade Cooper" },
+    { id: 2, name: "Arlene Mccoy" },
+    { id: 3, name: "Devon Webb" },
+    { id: 4, name: "Tom Cook" },
+    { id: 5, name: "Tanya Fox" },
+    { id: 6, name: "Hellen Schmidt" },
+    { id: 7, name: "Caroline Schultz" },
+    { id: 8, name: "Mason Heaney" },
+    { id: 9, name: "Claudie Smitham" },
+    { id: 10, name: "Emil Schaefer" },
+];
 // toggle end
 </script>
 
@@ -83,6 +99,12 @@ const createPost = () => {
 
                 <template #main>
                     <div class="myInputsOrganization">
+                        <p
+                            v-for="item in $page.props.user.all_teams"
+                            :key="item.id"
+                        >
+                            <span>{{ item.name }}</span>
+                        </p>
                         <div class="myInputsOrganizationText">
                             <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
                             <p class="myPrimaryParagraph">
@@ -253,6 +275,30 @@ const createPost = () => {
                         <InputError
                             :message="createPostForm.errors.published"
                         />
+                    </div>
+                    <div class="myInputsOrganization">
+                        <div class="myInputsOrganizationText">
+                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                            <p class="myPrimaryParagraph">
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit. Corporis ex dignissimos quas
+                                doloremque culpa at!
+                            </p>
+                        </div>
+                        <div class="myInputGroup">
+                            <InputLabel
+                                for="select_team"
+                                value="Post belongs to Team"
+                                class="mb-1"
+                            />
+                            <SingleSelect
+                                :list="$page.props.user.all_teams"
+                                v-model="createPostForm.team"
+                            ></SingleSelect>
+                            <InputError
+                                :message="createPostForm.errors.team_id"
+                            />
+                        </div>
                     </div>
                     <div class="myInputsOrganization">
                         <div class="myInputsOrganizationText">

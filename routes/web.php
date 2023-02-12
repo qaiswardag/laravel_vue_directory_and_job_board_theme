@@ -2,11 +2,15 @@
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Superadmin\DashboardController;
 use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Users\UserController;
+use App\Models\Post\Post;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Jetstream\Jetstream;
@@ -74,29 +78,77 @@ Route::middleware([
 //
 // posts
 // posts
-Route::get("/manage/posts", [PostController::class, "index"])->name(
-    "posts.index"
+Route::get("/overview/posts", [PostController::class, "index"])->name(
+    "overview.posts.index"
+);
+Route::get("/overview/posts/post/{id}", [PostController::class, "show"])->name(
+    "overview.post.show"
 );
 //
-Route::get("/posts/create", [PostController::class, "create"])->name(
-    "posts.create"
+Route::get("/overview/posts/create", [PostController::class, "create"])->name(
+    "overview.posts.create"
 );
-Route::post("/posts/store", [PostController::class, "store"])->name(
-    "posts.store"
+Route::post("/overview/posts/store", [PostController::class, "store"])->name(
+    "overview.posts.store"
 );
-Route::get("/posts/{post}", [PostController::class, "show"])->name("post.show");
+Route::delete("/overview/posts/post/{id}", [
+    PostController::class,
+    "destroy",
+])->name("overview.posts.destroy");
 //
 //
 //
 // super admin
 // super admin
-
-Route::get("/superadmin/dashboard", function () {
-    return Inertia::render("Superadmin/Index", []);
-})->name("superadmin.index");
+// super admin dashboard
+Route::get("/superadmin/dashboard", [
+    DashboardController::class,
+    "index",
+])->name("superadmin.dashboard");
 // super admin — Users
 // super admin - User
 Route::get("/superadmin/users", [
     SuperadminUserController::class,
     "index",
 ])->name("superadmin.users.index");
+//
+Route::get("/superadmin/users/user/{id}", [
+    SuperadminUserController::class,
+    "show",
+])->name("superadmin.users.show");
+//
+Route::delete("/superadmin/users/user/{id}", [
+    SuperadminUserController::class,
+    "destroy",
+])->name("superadmin.user.destroy");
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// test api
+Route::get("/test-me", function () {
+    // $posts = Post::where("team_id", 5)->paginate(2); // is working
+    //
+    //
+    // $posts = Team::findOrFail(5);
+    // $posts = $posts->posts()->paginate(); // is working
+    //
+    //
+    $posts = Team::findOrFail(5);
+    $posts = $posts->posts()->get(); // is working
+    //
+    //
+    //
+    // $posts = Auth::user()->posts();
+    return $posts;
+});

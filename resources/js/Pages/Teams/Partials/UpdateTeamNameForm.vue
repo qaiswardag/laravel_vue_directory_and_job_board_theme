@@ -102,21 +102,39 @@ const updateTeamName = () => {
             <div class="myInputsOrganization">
                 <div class="myInputsOrganizationText">
                     <div
-                        v-if="$page.props.team.owner.id === $page.props.user.id"
+                        v-if="
+                            $page.props.team.owner &&
+                            $page.props.team.owner.id === $page.props.user.id
+                        "
                     >
                         <p class="myPrimaryParagraph">You own this team</p>
                         <p class="myTertiaryHeader">
-                            {{ $page.props.team.owner.first_name }}
-                            {{ $page.props.team.owner.last_name }}
+                            {{
+                                $page.props.team.owner &&
+                                $page.props.team.owner.first_name
+                            }}
+                            {{
+                                $page.props.team.owner &&
+                                $page.props.team.owner.last_name
+                            }}
                         </p>
                     </div>
                     <div
-                        v-if="$page.props.team.owner.id !== $page.props.user.id"
+                        v-if="
+                            $page.props.team.owner &&
+                            $page.props.team.owner.id !== $page.props.user.id
+                        "
                     >
                         <p class="myPrimaryParagraph">Team owner:</p>
                         <p class="myTertiaryHeader">
-                            {{ $page.props.team.owner.first_name }}
-                            {{ $page.props.team.owner.last_name }}
+                            {{
+                                $page.props.team.owner &&
+                                $page.props.team.owner.first_name
+                            }}
+                            {{
+                                $page.props.team.owner &&
+                                $page.props.team.owner.last_name
+                            }}
                         </p>
                     </div>
                 </div>
@@ -125,6 +143,7 @@ const updateTeamName = () => {
                         <div class="flex items-center gap-2 mt-2">
                             <div
                                 v-if="
+                                    $page.props.team.owner &&
                                     $page.props.team.owner.profile_photo_url &&
                                     false
                                 "
@@ -132,9 +151,13 @@ const updateTeamName = () => {
                                 <img
                                     class="object-cover w-12 h-12 rounded-full"
                                     :src="
+                                        $page.props.team.owner &&
                                         $page.props.team.owner.profile_photo_url
                                     "
-                                    :alt="$page.props.team.owner.first_name"
+                                    :alt="
+                                        $page.props.team.owner &&
+                                        $page.props.team.owner.first_name
+                                    "
                                 />
                             </div>
 
@@ -145,11 +168,13 @@ const updateTeamName = () => {
                                 <hr />
 
                                 {{
+                                    $page.props.team.owner &&
                                     $page.props.team.owner.first_name
                                         .charAt(0)
                                         .toUpperCase()
                                 }}
                                 {{
+                                    $page.props.team.owner &&
                                     $page.props.team.owner.last_name
                                         .charAt(0)
                                         .toUpperCase()
@@ -157,11 +182,20 @@ const updateTeamName = () => {
                             </div>
                             <div class="flex flex-col items-left gap-1">
                                 <p class="text-xs font-semibold">
-                                    {{ $page.props.team.owner.first_name }}
-                                    {{ $page.props.team.owner.last_name }}
+                                    {{
+                                        $page.props.team.owner &&
+                                        $page.props.team.owner.first_name
+                                    }}
+                                    {{
+                                        $page.props.team.owner &&
+                                        $page.props.team.owner.last_name
+                                    }}
                                 </p>
                                 <p class="text-xs font-semibold">
-                                    {{ $page.props.team.owner.email }}
+                                    {{
+                                        $page.props.team.owner &&
+                                        $page.props.team.owner.email
+                                    }}
                                 </p>
                             </div>
                         </div>

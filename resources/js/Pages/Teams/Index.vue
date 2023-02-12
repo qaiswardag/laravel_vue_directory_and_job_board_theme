@@ -6,7 +6,7 @@ import SectionBorder from "@/Components/SectionBorder.vue";
 </script>
 
 <template>
-    <LoggedInLayout title="Manage teæms">
+    <LoggedInLayout title="Manage teams">
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Manage Teams</h2>
         </template>

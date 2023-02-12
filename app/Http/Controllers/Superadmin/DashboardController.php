@@ -3,43 +3,19 @@
 namespace App\Http\Controllers\Superadmin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use PhpParser\Node\Expr\AssignOp\Concat;
 
-class UserController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        //
-        // session
-        session()->flashInput($request->all());
-
-        $users = User::latest()
-            ->when($request->query("search_query"), function ($query, $term) {
-                $query
-                    ->where("first_name", "LIKE", "%" . $term . "%")
-                    ->orWhere("last_name", "LIKE", "%" . $term . "%");
-            })
-            ->paginate(10);
-        // // append users
-        $users->appends($request->all());
-        //
-        //
-        //
-        //
-        //
-        //
-        return Inertia::render("Superadmin/Users/Index", [
-            "users" => $users,
-            "results" => $users->total(),
-        ]);
+        return Inertia::render("Superadmin/Dashboard");
     }
 
     /**
@@ -105,22 +81,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        sleep(1);
-
-        if (User::find($id) === null) {
-            return redirect()
-                ->route("superadmin.users.index")
-                ->with(
-                    "error",
-                    "User not found. User with following id not found: {$id}."
-                );
-        }
-
-        User::find($id)->delete();
-
         //
-        return redirect()
-            ->route("superadmin.users.index")
-            ->with("success", "Successfully deleted User with id: {$id}.");
     }
 }

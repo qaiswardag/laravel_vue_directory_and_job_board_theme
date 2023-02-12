@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Post;
 use App\Http\Controllers\Controller;
 use App\Models\Post\Post;
 use App\Models\Team;
+use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -16,21 +20,31 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Post $post)
+    public function index(Request $request)
     {
-        $posts = Post::latest()
-            ->when($request->query("search_query"), function ($query, $term) {
-                $query->where("headline", "LIKE", "%" . $term . "%");
-            })
-
-            //
-            //
-            //
-            // pagination
-            ->paginate(4);
-        // // append posts
-        $posts->appends($request->all());
+        /**
+         * Get the Posts via Company
+         *
+         * $posts = Team::findOrFail(Auth()->user()->current_team_id);
+         * $posts = $posts->posts()->paginate(2);
+         *
+         */
         //
+
+        // user
+        $posts = Team::findOrFail(5);
+        $posts = $posts->posts()->paginate(2);
+
+        //
+        //
+        //
+        //
+        // ->where("id", Auth()->user()->current_team_id)
+        // Auth()->user()->current_team_id
+        //
+        //
+        //
+
         //
         return Inertia::render("Posts/Index", [
             "posts" => $posts,
@@ -44,7 +58,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Posts/Partials/CreatePostForm");
+        return Inertia::render("Posts/Partials/CreatePost");
     }
 
     /**
@@ -56,6 +70,7 @@ class PostController extends Controller
     public function store(Request $request, Team $team)
     {
         sleep(1);
+        dd($request);
         // ->foreignId("team_id")
         // dd($request);
 
@@ -81,7 +96,7 @@ class PostController extends Controller
             "content" => $content,
         ]);
 
-        return redirect()->route("posts.index");
+        return redirect()->route("overview.posts.index");
     }
 
     /**
@@ -124,8 +139,24 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
+        sleep(1);
+
+        if (Post::find($id) === null) {
+            return redirect()
+                ->route("overview.posts.index")
+                ->with(
+                    "error",
+                    "Post not found. Post with following id not found: {$id}."
+                );
+        }
+
+        Post::find($id)->delete();
+
         //
+        return redirect()
+            ->route("overview.posts.index")
+            ->with("success", "Successfully deleted the Post with id: {$id}.");
     }
 }

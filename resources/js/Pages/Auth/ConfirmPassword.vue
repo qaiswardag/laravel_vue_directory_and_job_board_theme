@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from "vue";
 import AuthenticationCard from "@/Components/Cards/AuthenticationCard.vue";
-import AuthenticationCardLogo from "@/Components/Cards/AuthenticationCardLogo.vue";
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
+import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vue";
+import InputError from "@/Components/Forms/InputError.vue";
+import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
+import TextInput from "@/Components/Forms/TextInput.vue";
 
 const form = useForm({
     password: "",
