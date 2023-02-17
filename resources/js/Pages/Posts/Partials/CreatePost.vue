@@ -11,7 +11,8 @@ import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { ref } from "vue";
 import { Switch } from "@headlessui/vue";
-import SingleSelect from "../../../Components/Forms/SingleSelect.vue";
+import SingleSelect from "@/Components/Forms/SingleSelect.vue";
+import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 // start Quill Editor
 // define options
@@ -83,6 +84,11 @@ const people = [
     { id: 9, name: "Claudie Smitham" },
     { id: 10, name: "Emil Schaefer" },
 ];
+
+const breadcrumbsLinks = [
+    { label: "Posts", url: "overview.posts.index" },
+    { label: "Add Post" },
+];
 // toggle end
 </script>
 
@@ -90,6 +96,9 @@ const people = [
     <LoggedInLayout title="Create Post">
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Create a New Post</h2>
+        </template>
+        <template #breadcrumbs>
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
 
         <div>
@@ -99,18 +108,16 @@ const people = [
 
                 <template #main>
                     <div class="myInputsOrganization">
-                        <p
-                            v-for="item in $page.props.user.all_teams"
-                            :key="item.id"
+                        <div class="myPrimaryFormOrganizationHeader"></div>
+
+                        <div
+                            class="myPrimaryFormOrganizationHeaderDescriptionSection"
                         >
-                            <span>{{ item.name }}</span>
-                        </p>
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                            <div class="myPrimaryFormOrganizationHeader">
+                                Title & description
+                            </div>
                             <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Corporis ex dignissimos quas
-                                doloremque culpa at!
+                                Specify title & description.
                             </p>
                         </div>
                         <div class="myInputGroup">
@@ -155,12 +162,14 @@ const people = [
                     </div>
 
                     <div class="myInputsOrganization">
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                        <div
+                            class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                        >
+                            <div class="myPrimaryFormOrganizationHeader">
+                                Something here
+                            </div>
                             <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Corporis ex dignissimos quas
-                                doloremque culpa at!
+                                Lorem ipsum dolor sit.
                             </p>
                         </div>
                         <div class="myInputGroup">
@@ -187,10 +196,14 @@ const people = [
 
                 <template #sidebar>
                     <div class="myInputsOrganization">
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Publish status</p>
+                        <div
+                            class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                        >
+                            <div class="myPrimaryFormOrganizationHeader">
+                                Status
+                            </div>
                             <p class="myPrimaryParagraph">
-                                Define if your Post is Published.
+                                Specify Post status.
                             </p>
                         </div>
                         <div
@@ -277,12 +290,14 @@ const people = [
                         />
                     </div>
                     <div class="myInputsOrganization">
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                        <div
+                            class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                        >
+                            <div class="myPrimaryFormOrganizationHeader">
+                                Lorem, ipsum dolor.
+                            </div>
                             <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Corporis ex dignissimos quas
-                                doloremque culpa at!
+                                Lorem ipsum dolor sit amet.
                             </p>
                         </div>
                         <div class="myInputGroup">
@@ -301,12 +316,14 @@ const people = [
                         </div>
                     </div>
                     <div class="myInputsOrganization">
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
+                        <div
+                            class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                        >
+                            <div class="myPrimaryFormOrganizationHeader">
+                                Lorem, ipsum dolor.
+                            </div>
                             <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Corporis ex dignissimos quas
-                                doloremque culpa at!
+                                Lorem ipsum dolor sit amet.
                             </p>
                         </div>
                         <div class="myInputGroup">

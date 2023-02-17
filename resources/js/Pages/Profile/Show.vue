@@ -31,16 +31,13 @@ defineProps({
             </div>
             <SectionBorder />
             <div v-if="$page.props.jetstream.canUpdatePassword">
-                <UpdatePasswordForm class="mt-10 sm:mt-0" />
+                <UpdatePasswordForm />
             </div>
             <SectionBorder />
-            <LogoutOtherBrowserSessionsForm
-                :sessions="sessions"
-                class="mt-10 sm:mt-0"
-            />
+            <LogoutOtherBrowserSessionsForm :sessions="sessions" />
             <SectionBorder />
             <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
-                <DeleteUserForm class="mt-10 sm:mt-0" />
+                <DeleteUserForm />
             </template>
         </div>
     </LoggedInLayout>

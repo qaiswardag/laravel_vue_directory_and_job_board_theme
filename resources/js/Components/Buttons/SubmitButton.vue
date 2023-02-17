@@ -55,7 +55,7 @@ const firstButtonClick = function () {
                 :class="{
                     'opacity-25 cursor-default': disabled,
                     'md:min-w-[9rem] min-w-[7rem]': !TableStyle,
-                    'min-w-[5rem]': TableStyle,
+                    'min-w-auto': TableStyle,
                     myPrimaryDeleteButton: ButtonStyleDelete,
                     'py-1 px-1 bg-transparent  shadow-none border-0 hover:bg-transparent focus:outline-none focus:ring-0  focus:ring-offset-0':
                         TableStyle,

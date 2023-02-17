@@ -2,16 +2,21 @@
 import SectionTitle from "./SectionTitle.vue";
 
 defineProps({
-    noSidebar: {
+    sidebarArea: {
         Type: Boolean,
+        default: true,
+    },
+    actionsArea: {
+        Type: Boolean,
+        default: true,
     },
 });
 </script>
 
 <template>
-    <div class="mt-5 md:mt-0">
+    <div class="myPrimarySection">
         <div>
-            <div class="sm:rounded-tl-md sm:rounded-tr-m overflow-x-scroll">
+            <div class="myPrimaryFormWithActions">
                 <SectionTitle>
                     <template #title>
                         <slot name="title" />
@@ -22,26 +27,32 @@ defineProps({
                 </SectionTitle>
 
                 <slot name="header" />
+                <div
+                    :class="{ block: sidebarArea === false }"
+                    class="myPrimaryForm"
+                >
+                    <div
+                        :class="{ 'md:w-full': sidebarArea === false }"
+                        class="myPrimaryFormMain"
+                    >
+                        <slot name="main" />
+                    </div>
 
-                <div class="flex flex-col myPrimaryGap">
-                    <div :class="{ block: noSidebar }" class="myPrimaryForm">
+                    <template v-if="sidebarArea === true">
                         <div
-                            :class="{ 'md:w-full': noSidebar }"
-                            class="myPrimaryFormMain"
-                        >
-                            <slot name="main" />
-                        </div>
-
-                        <div
-                            :class="{ 'md:w-full': noSidebar }"
+                            :class="{ 'md:w-full': sidebarArea === false }"
                             class="myPrimaryFormSidebar"
                         >
                             <slot name="sidebar" />
                         </div>
-                    </div>
-
-                    <slot name="actions" />
+                    </template>
                 </div>
+
+                <template v-if="actionsArea === true">
+                    <div class="myPrimaryActions">
+                        <slot name="actions" />
+                    </div>
+                </template>
             </div>
         </div>
     </div>

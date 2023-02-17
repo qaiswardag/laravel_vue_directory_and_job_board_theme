@@ -17,10 +17,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        // session
-        session()->flashInput($request->all());
-
         $users = User::latest()
             ->when($request->query("search_query"), function ($query, $term) {
                 $query
@@ -31,14 +27,11 @@ class UserController extends Controller
         // // append users
         $users->appends($request->all());
         //
-        //
-        //
-        //
-        //
-        //
         return Inertia::render("Superadmin/Users/Index", [
             "users" => $users,
             "results" => $users->total(),
+            "search_query" => $request->search_query,
+            "selected_category" => $request->selected_category,
         ]);
     }
 
@@ -121,6 +114,6 @@ class UserController extends Controller
         //
         return redirect()
             ->route("superadmin.users.index")
-            ->with("success", "Successfully deleted User with id: {$id}.");
+            ->with("success", "Successfully deleted User with id: {$id}");
     }
 }

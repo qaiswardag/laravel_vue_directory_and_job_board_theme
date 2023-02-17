@@ -39,7 +39,7 @@ const updatePassword = () => {
 </script>
 
 <template>
-    <FormSection @submitted="updatePassword">
+    <FormSection @submitted="updatePassword" :sidebarArea="false">
         <template #title> Update Password </template>
 
         <template #description>
@@ -48,13 +48,6 @@ const updatePassword = () => {
 
         <template #main>
             <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Corporis ex dignissimos quas doloremque culpa at!
-                    </p>
-                </div>
                 <div class="myInputGroup">
                     <InputLabel
                         for="current_password"
@@ -94,17 +87,6 @@ const updatePassword = () => {
                         autocomplete="new-password"
                     />
                     <InputError :message="form.errors.password_confirmation" />
-                </div>
-            </div>
-        </template>
-        <template #sidebar>
-            <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Corporis ex dignissimos quas doloremque culpa at!
-                    </p>
                 </div>
             </div>
         </template>

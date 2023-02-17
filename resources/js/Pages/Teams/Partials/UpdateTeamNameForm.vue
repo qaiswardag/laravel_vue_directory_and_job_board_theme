@@ -8,6 +8,7 @@ import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import AvatarCardCenterSmall from "@/Components/Avatars/AvatarCardCenterSmall.vue";
 import { ref } from "@vue/reactivity";
 
 const props = defineProps({
@@ -90,135 +91,115 @@ const updateTeamName = () => {
         <header></header>
         <main></main>
     </DynamicModal>
-    <FormSection @submitted="handleUpdateTeam">
-        <template #title> Team Name </template>
+    <FormSection @submitted="handleUpdateTeam" :sidebarArea="false">
+        <template #title>
+            {{ $page.props.team && $page.props.team.name }}
+        </template>
 
         <template #description>
-            The team's name and owner information.
+            <div
+                v-if="
+                    $page.props.team.owner &&
+                    $page.props.team.owner.id === $page.props.user.id
+                "
+            >
+                <p class="myPrimaryParagraph">You are owner of this Team.</p>
+                <p class="myPrimaryParagraph">
+                    Account Team owner
+                    {{
+                        $page.props.team.owner &&
+                        $page.props.team.owner.first_name
+                    }}
+                    {{
+                        $page.props.team.owner &&
+                        $page.props.team.owner.last_name
+                    }}
+                </p>
+            </div>
+            <div
+                v-if="
+                    $page.props.team.owner &&
+                    $page.props.team.owner.id !== $page.props.user.id
+                "
+            >
+                <p class="myPrimaryParagraph">
+                    Account owner of this Team is
+
+                    {{
+                        $page.props.team.owner &&
+                        $page.props.team.owner.first_name
+                    }}
+                    {{
+                        $page.props.team.owner &&
+                        $page.props.team.owner.last_name
+                    }}.
+                </p>
+            </div>
         </template>
 
         <template #main>
             <!-- Team Owner Information -->
             <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <div
-                        v-if="
-                            $page.props.team.owner &&
-                            $page.props.team.owner.id === $page.props.user.id
-                        "
-                    >
-                        <p class="myPrimaryParagraph">You own this team</p>
-                        <p class="myTertiaryHeader">
-                            {{
-                                $page.props.team.owner &&
-                                $page.props.team.owner.first_name
-                            }}
-                            {{
-                                $page.props.team.owner &&
-                                $page.props.team.owner.last_name
-                            }}
-                        </p>
-                    </div>
-                    <div
-                        v-if="
-                            $page.props.team.owner &&
-                            $page.props.team.owner.id !== $page.props.user.id
-                        "
-                    >
-                        <p class="myPrimaryParagraph">Team owner:</p>
-                        <p class="myTertiaryHeader">
-                            {{
-                                $page.props.team.owner &&
-                                $page.props.team.owner.first_name
-                            }}
-                            {{
-                                $page.props.team.owner &&
-                                $page.props.team.owner.last_name
-                            }}
-                        </p>
-                    </div>
-                </div>
                 <div class="myInputGroup">
-                    <div class="myAvatarSection">
-                        <div class="flex items-center gap-2 mt-2">
-                            <div
-                                v-if="
-                                    $page.props.team.owner &&
-                                    $page.props.team.owner.profile_photo_url &&
-                                    false
-                                "
-                            >
-                                <img
-                                    class="object-cover w-12 h-12 rounded-full"
-                                    :src="
-                                        $page.props.team.owner &&
-                                        $page.props.team.owner.profile_photo_url
-                                    "
-                                    :alt="
-                                        $page.props.team.owner &&
-                                        $page.props.team.owner.first_name
-                                    "
-                                />
-                            </div>
-
-                            <div
-                                v-if="true"
-                                class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
-                            >
-                                <hr />
-
-                                {{
-                                    $page.props.team.owner &&
-                                    $page.props.team.owner.first_name
-                                        .charAt(0)
-                                        .toUpperCase()
-                                }}
-                                {{
-                                    $page.props.team.owner &&
+                    <div
+                        class="flex flex-col justify-center items-center gap-2 mb-8 mt-4"
+                    >
+                        <p class="myPrimaryParagraph">Account Team owner</p>
+                        <div
+                            v-show="
+                                $page.props.team.owner &&
+                                $page.props.team.owner.profile_photo_path !==
+                                    null
+                            "
+                            class="mt-2"
+                        >
+                            <img
+                                class="object-cover w-16 h-16 rounded-full"
+                                :src="$page.props.team.owner.profile_photo_url"
+                                :alt="
+                                    $page.props.team.owner.first_name +
                                     $page.props.team.owner.last_name
-                                        .charAt(0)
-                                        .toUpperCase()
-                                }}
-                            </div>
-                            <div class="flex flex-col items-left gap-1">
-                                <p class="text-xs font-semibold">
-                                    {{
-                                        $page.props.team.owner &&
-                                        $page.props.team.owner.first_name
-                                    }}
-                                    {{
-                                        $page.props.team.owner &&
-                                        $page.props.team.owner.last_name
-                                    }}
-                                </p>
-                                <p class="text-xs font-semibold">
-                                    {{
-                                        $page.props.team.owner &&
-                                        $page.props.team.owner.email
-                                    }}
-                                </p>
-                            </div>
+                                "
+                            />
                         </div>
+
+                        <div
+                            v-show="
+                                $page.props.team.owner &&
+                                $page.props.team.owner.profile_photo_path ===
+                                    null
+                            "
+                            class="w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                        >
+                            {{
+                                $page.props.team.owner.first_name
+                                    .charAt(0)
+                                    .toUpperCase()
+                            }}
+                            {{
+                                $page.props.team.owner.last_name
+                                    .charAt(0)
+                                    .toUpperCase()
+                            }}
+                        </div>
+                        <span
+                            class="flex flex-col items-center gap-1 myPrimaryParagraph"
+                        >
+                            <span>
+                                {{ $page.props.team.owner.first_name }}
+                                {{ $page.props.team.owner.last_name }}
+                            </span>
+                            <span>
+                                {{ $page.props.team.owner.email }}
+                            </span>
+                        </span>
                     </div>
-
-                    <!-- Team Name -->
-
-                    <InputLabel for="name" value="Team Name" />
-
+                    <!--  -->
+                    <!--  -->
+                    <!--  -->
+                    <InputLabel for="name" value="Update Team Name" />
                     <TextInput id="name" v-model="form.name" type="text" />
-
                     <InputError :message="form.errors.name" />
-                </div>
-            </div>
-        </template>
-        <template #sidebar>
-            <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Corporis ex dignissimos quas doloremque culpa at!
-                    </p>
                 </div>
             </div>
         </template>

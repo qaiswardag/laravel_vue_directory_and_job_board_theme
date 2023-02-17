@@ -3,8 +3,13 @@ import { computed, useSlots } from "vue";
 import SectionTitle from "../SectionTitle.vue";
 
 defineProps({
-    noSidebar: {
+    sidebarArea: {
         Type: Boolean,
+        default: true,
+    },
+    actionsArea: {
+        Type: Boolean,
+        default: true,
     },
 });
 
@@ -14,7 +19,7 @@ const hasActions = computed(() => !!useSlots().actions);
 </script>
 
 <template>
-    <div class="mt-5 md:mt-0">
+    <div class="myPrimarySection">
         <form @submit.prevent="$emit('submitted')">
             <div class=""></div>
 
@@ -25,34 +30,44 @@ const hasActions = computed(() => !!useSlots().actions);
                         : 'sm:rounded-md'
                 "
             >
-                <SectionTitle>
-                    <template #title>
-                        <slot name="title" />
-                    </template>
-                    <template #description>
-                        <slot name="description" />
-                    </template>
-                </SectionTitle>
+                <div class="myPrimaryFormWithActions">
+                    <SectionTitle>
+                        <template #title>
+                            <slot name="title" />
+                        </template>
+                        <template #description>
+                            <slot name="description" />
+                        </template>
+                    </SectionTitle>
 
-                <slot name="header" />
+                    <slot name="header" />
 
-                <div class="flex flex-col myPrimaryGap">
-                    <div :class="{ block: noSidebar }" class="myPrimaryForm">
+                    <div
+                        :class="{ block: sidebarArea === false }"
+                        class="myPrimaryForm"
+                    >
                         <div
-                            :class="{ 'md:w-full': noSidebar }"
+                            :class="{ 'md:w-full': sidebarArea === false }"
                             class="myPrimaryFormMain"
                         >
                             <slot name="main" />
                         </div>
-                        <div
-                            :class="{ 'md:w-full': noSidebar }"
-                            class="myPrimaryFormSidebar"
-                        >
-                            <slot name="sidebar" />
-                        </div>
+
+                        <template v-if="sidebarArea === true">
+                            <div
+                                :class="{ 'md:w-full': sidebarArea === false }"
+                                class="myPrimaryFormSidebar"
+                            >
+                                <slot name="sidebar" />
+                            </div>
+                        </template>
                     </div>
 
-                    <slot name="actions" />
+                    <template v-if="actionsArea === true">
+                        <div class="myPrimaryActions">
+                            <slot name="actions" />
+                        </div>
+                    </template>
                 </div>
             </div>
         </form>

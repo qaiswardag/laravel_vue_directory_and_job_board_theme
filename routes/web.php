@@ -144,8 +144,9 @@ Route::get("/test-me", function () {
     // $posts = $posts->posts()->paginate(); // is working
     //
     //
-    $posts = Team::findOrFail(5);
-    $posts = $posts->posts()->get(); // is working
+    $team = Team::findOrFail(5);
+    $posts = $team->posts()->get();
+
     //
     //
     //

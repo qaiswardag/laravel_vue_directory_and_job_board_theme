@@ -114,9 +114,6 @@ function onSelect(item) {
                     <DialogPanel
                         class="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
                     >
-                        <!--  -->
-                        <!--  -->
-                        <!--  -->
                         <div
                             class="flex justify-end items-center p-2 bg-gray-50"
                         >
@@ -138,9 +135,7 @@ function onSelect(item) {
                                 </svg>
                             </div>
                         </div>
-                        <!--  -->
-                        <!--  -->
-                        <!--  -->
+
                         <Combobox @update:modelValue="onSelect">
                             <div class="relative flex items-center">
                                 <MagnifyingGlassIcon

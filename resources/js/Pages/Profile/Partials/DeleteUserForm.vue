@@ -105,25 +105,20 @@ const closeModal = () => {
 </script>
 
 <template>
-    <ActionSection :noSidebar="true">
+    <ActionSection :sidebarArea="false">
         <template #title> Delete Account </template>
 
         <template #description> Permanently delete your account. </template>
 
         <template #main>
             <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">
-                        Permanently delete your account
-                    </p>
+                <div class="myInputGroup">
                     <p class="myPrimaryParagraph">
-                        Once your account is deleted, all of its resources and
-                        data will be permanently deleted. Before deleting your
-                        account, please download any data or information that
-                        you wish to retain.
+                        When you delete your account, your profile, photos,
+                        videos, comments, likes and followers will be
+                        permanently removed.
                     </p>
                 </div>
-                <div class="myInputGroup"></div>
             </div>
         </template>
 

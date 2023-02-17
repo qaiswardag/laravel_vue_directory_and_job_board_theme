@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post\Post;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -50,25 +51,3 @@ Route::get("/docs-users", function () {
 // test - start
 // test - start
 // test - start
-
-// Route::get("/test-me", function () {
-//     // user
-//     // return User::where("id", 1)->get();
-//     // team
-//     // team
-//     // team
-//     // $posts = Team::latest()
-//     //     ->where("id", 5)
-//     //     // ->posts() // fejler
-//     //     // ->paginate(2);
-//     //     ->get();
-//     // return $posts;
-
-//     //
-//     //
-//     //
-//     //
-//     //
-//     $posts = Auth::user()->posts();
-//     return $posts;
-// });

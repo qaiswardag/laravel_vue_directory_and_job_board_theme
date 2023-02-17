@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
@@ -22,30 +23,9 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        /**
-         * Get the Posts via Company
-         *
-         * $posts = Team::findOrFail(Auth()->user()->current_team_id);
-         * $posts = $posts->posts()->paginate(2);
-         *
-         */
-        //
+        $team = Team::findOrFail(Auth()->user()->current_team_id);
+        $posts = $team->posts()->paginate(2);
 
-        // user
-        $posts = Team::findOrFail(5);
-        $posts = $posts->posts()->paginate(2);
-
-        //
-        //
-        //
-        //
-        // ->where("id", Auth()->user()->current_team_id)
-        // Auth()->user()->current_team_id
-        //
-        //
-        //
-
-        //
         return Inertia::render("Posts/Index", [
             "posts" => $posts,
         ]);

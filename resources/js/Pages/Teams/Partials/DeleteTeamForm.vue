@@ -85,26 +85,19 @@ const deleteTeam = function () {
 </script>
 
 <template>
-    <ActionSection :noSidebar="true">
+    <ActionSection :sidebarArea="false">
         <template #title> Delete Team </template>
-
         <template #description> Delete {{ team.name }}? </template>
 
         <template #main>
             <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">
-                        Permanently delete {{ team.name }}?
-                    </p>
-                    <p class="myPrimaryParagraph">
-                        Once a team is deleted, all of its resources and data
-                        will be permanently deleted. Before deleting this team,
-                        please download any data or information regarding this
-                        team that you wish to retain.
-                    </p>
-                </div>
+                <p class="myPrimaryParagraph">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Atque eligendi a aut laborum consequatur labore saepe? Ullam
+                    dolore facere similique. Atque eligendi a aut laborum
+                    consequatur labore saepe? Ullam dolore facere similique?
+                </p>
             </div>
-
             <DynamicModal
                 :show="modalShowDeleteTeam"
                 :type="typeModal"

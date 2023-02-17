@@ -71,25 +71,17 @@ const switchTeam = function (team) {
 
 <template>
     <div>
-        <ActionSection :noSidebar="true">
+        <ActionSection :sidebarArea="false" :actionsArea="false">
             <template #title> Switch team </template>
 
             <template #description> Switch to another team.</template>
 
             <template #main>
                 <div class="myInputsOrganization">
-                    <div class="myInputsOrganizationText">
-                        <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                        <p class="myPrimaryParagraph">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Corporis ex dignissimos quas doloremque culpa
-                            at!
-                        </p>
-                    </div>
                     <div class="myInputGroup">
-                        <div class="overflow-x-auto">
+                        <div class="myTableContainer">
                             <div
-                                class="inline-block min-w-full py-2 align-middle px-1"
+                                class="inline-block min-w-full align-middle px-1"
                             >
                                 <div
                                     class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
@@ -119,7 +111,7 @@ const switchTeam = function (team) {
                                                     scope="col"
                                                     class="myPrimaryTableTh"
                                                 >
-                                                    Team owner
+                                                    Account Team Owner
                                                 </th>
                                                 <th
                                                     scope="col"
@@ -229,7 +221,7 @@ const switchTeam = function (team) {
                                                             "
                                                         >
                                                             <button
-                                                                class="myPrimaryButton w-full flex items-center myPrimaryGap py-2"
+                                                                class="myPrimaryButton flex items-center myPrimaryGap py-2"
                                                                 :class="{
                                                                     'bg-gray-600 hover:bg-gray-700 focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus-visible:ring-2 focus-visible:ring-gray-600':
                                                                         team.id !==

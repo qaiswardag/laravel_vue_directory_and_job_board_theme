@@ -40,7 +40,7 @@ class Team extends JetstreamTeam
         "deleted" => TeamDeleted::class,
     ];
 
-    protected $with = ["posts"];
+    // protected $with = ["posts"];
 
     public function posts()
     {

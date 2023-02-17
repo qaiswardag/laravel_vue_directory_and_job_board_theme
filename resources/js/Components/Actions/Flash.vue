@@ -49,7 +49,7 @@ const flashModalButton = function () {
                             />
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-red-800">
+                            <p class="text-sm font-medium text-red-800 pr-4">
                                 {{ flashObject.error }}
                             </p>
                         </div>
@@ -87,7 +87,7 @@ const flashModalButton = function () {
                             />
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-green-800">
+                            <p class="text-sm font-medium text-green-800 pr-4">
                                 {{ flashObject.success }}
                             </p>
                         </div>

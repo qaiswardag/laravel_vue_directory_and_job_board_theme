@@ -7,8 +7,8 @@ import DescriptionPlusCreate from "../../Components/Actions/DescriptionPlusCreat
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SubmitButton from "../../Components/Buttons/SubmitButton.vue";
-import Flash from "@/Components/Actions/Flash.vue";
 import { ref } from "vue";
+import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 defineProps({
     posts: {
@@ -82,12 +82,15 @@ const deletePost = (postId) => {
 const handleEdit = function (id) {
     console.log("handle edit function ran. post id is:", id);
 };
+
+const breadcrumbsLinks = [
+    { label: "Posts", url: "overview.posts.index" },
+    { label: "Add Post" },
+];
 </script>
 
 <template>
     <LoggedInLayout title="overview Posts">
-        <!-- Cancel Team Invitation -->
-        <Flash :flash="$page.props.flash"> </Flash>
         <DynamicModal
             :show="modalShowDeletePost"
             :type="typeModal"
@@ -104,21 +107,31 @@ const handleEdit = function (id) {
             @thirdModalButtonFunction="thirdModalButtonFunction"
         >
             <header></header>
+
             <main></main>
         </DynamicModal>
         <template #header>
             <h2 class="myPrimaryMainPageHeader">
-                Posts for {{ $page.props.user.current_team.name }}
+                Posts for
+                {{ $page.props.user && $page.props.user.current_team.name }}
             </h2>
+        </template>
+        <template #breadcrumbs>
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
 
         <DescriptionPlusCreate>
             <template #title>
-                A list of all the Posts belonging to team:
-                <span class="font-semibold">
-                    {{ $page.props.user.current_team.name }}
-                </span></template
-            >
+                <div class="py-4">
+                    Manage Posts for
+                    <span class="font-semibold">
+                        {{
+                            $page.props.user &&
+                            $page.props.user.current_team.name
+                        }}
+                    </span>
+                </div>
+            </template>
             <template #buttons>
                 <Link
                     class="myPrimaryButton"
@@ -144,12 +157,16 @@ const handleEdit = function (id) {
             </template>
         </DescriptionPlusCreate>
 
+        <h1
+            v-if="posts && posts.data.length <= 0"
+            class="myPrimarySuccessAlertMessage"
+        >
+            No Posts yet
+        </h1>
+
         <!-- TABLE START -->
-        <!-- TABLE START -->
-        <!-- TABLE START -->
-        <!-- TABLE START -->
-        <div class="overflow-x-auto min-h-[30rem]">
-            <div class="inline-block min-w-full py-2 align-middle px-1">
+        <div v-if="posts && posts.data.length >= 1" class="myTableContainer">
+            <div class="inline-block min-w-full align-middle px-1">
                 <div
                     class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
                 >
@@ -157,7 +174,10 @@ const handleEdit = function (id) {
                         <caption class="myPrimaryTableCaption">
                             Your posts for Team:
                             <span class="font-semibold">
-                                {{ $page.props.user.current_team.name }}
+                                {{
+                                    $page.props.user &&
+                                    $page.props.user.current_team.name
+                                }}
                             </span>
                         </caption>
                         <thead class="myPrimaryTableTHead">
@@ -182,7 +202,7 @@ const handleEdit = function (id) {
                                 </th>
 
                                 <th scope="col" class="myPrimaryTableTh">
-                                    Team Name
+                                    Team name
                                 </th>
                                 <th scope="col" class="myPrimaryTableTh">
                                     Edit
@@ -198,7 +218,7 @@ const handleEdit = function (id) {
                             <TransitionGroup name="table">
                                 <tr
                                     class="myPrimaryTableTBodyTr"
-                                    v-for="post in posts.data"
+                                    v-for="post in posts && posts.data"
                                     :key="post.id"
                                 >
                                     <td class="myPrimaryTableTBodyTd">
@@ -213,17 +233,13 @@ const handleEdit = function (id) {
                                                 />
                                             </div>
                                             <div class="ml-4">
-                                                <div class="text-gray-900">
-                                                    {{ post.title }}
-                                                </div>
+                                                {{ post.title }}
                                             </div>
                                         </div>
                                     </td>
 
                                     <td class="myPrimaryTableTBodyTd">
-                                        <div class="text-gray-900">
-                                            {{ post.title }}
-                                        </div>
+                                        {{ post.title }}
                                     </td>
 
                                     <td class="myPrimaryTableTBodyTd">
@@ -233,7 +249,7 @@ const handleEdit = function (id) {
                                                     ? 'bg-green-100'
                                                     : 'bg-red-100 text-myErrorColor'
                                             "
-                                            class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 text-green-800"
+                                            class="inline-flex rounded-full px-2 font-semibold leading-5 text-green-800"
                                             >{{
                                                 post.published
                                                     ? "Published"
@@ -243,30 +259,20 @@ const handleEdit = function (id) {
                                     </td>
 
                                     <td class="myPrimaryTableTBodyTd">
-                                        <div class="text-gray-900">
-                                            {{ post.id }}
-                                        </div>
+                                        {{ post.id }}
                                     </td>
                                     <td class="myPrimaryTableTBodyTd">
-                                        <div class="text-gray-900">
-                                            {{ post.user_id }}
-                                        </div>
+                                        {{ post.user_id }}
                                     </td>
                                     <td class="myPrimaryTableTBodyTd">
-                                        <div class="text-gray-900">
-                                            {{ post.user.first_name }}
-                                            {{ post.user.last_name }}
-                                        </div>
+                                        Author here
                                     </td>
 
                                     <td class="myPrimaryTableTBodyTd">
-                                        <div class="text-gray-900">
-                                            {{
-                                                $page.props.user.current_team
-                                                    .name
-                                            }}
-                                            <!-- {{ post.belongs_to_team.name }} -->
-                                        </div>
+                                        {{
+                                            $page.props.user &&
+                                            $page.props.user.current_team.name
+                                        }}
                                     </td>
 
                                     <td class="myPrimaryTableTBodyTd">
@@ -299,9 +305,7 @@ const handleEdit = function (id) {
                                         <SubmitButton
                                             :ButtonStyleDelete="true"
                                             :TableStyle="true"
-                                            :disabled="
-                                                deletePostForm.processing
-                                            "
+                                            :disabled="false"
                                             @firstButtonClick="
                                                 handleDelete(post.id, post)
                                             "
@@ -330,13 +334,7 @@ const handleEdit = function (id) {
                 </div>
             </div>
         </div>
-        <Pagination :links="posts.links"></Pagination>
+        <!-- TABLE END -->
+        <Pagination :links="posts?.links ? posts.links : []"></Pagination>
     </LoggedInLayout>
 </template>
-
-<style scoped>
-table,
-th,
-td {
-}
-</style>

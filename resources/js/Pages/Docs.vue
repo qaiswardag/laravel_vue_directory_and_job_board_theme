@@ -87,9 +87,8 @@ const TestSubmitButtonTwice = function () {
             <h2 class="myPrimaryMainPageHeader">Docs</h2>
         </template>
 
-        <div>
-            <!-- Test start-->
-            <div class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+        <div class="myPrimarySection">
+            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
                 <p class="myPrimaryParagraph font-semibold mb-2">Link button</p>
                 <p class="myPrimaryParagraph">
                     Use Inertia Link as POST request and render the LINK as a
@@ -125,7 +124,7 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Scroll Position
                     <br />
@@ -138,7 +137,7 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Active Links
                 </p>
@@ -169,7 +168,7 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
                 <p class="myPrimaryParagraph font-semibold mb-2">Shared Data</p>
                 <p class="myPrimaryParagraph my-2">
                     Use middleware app/HTTP/Middleware "HandleInertiaRequests"
@@ -187,7 +186,7 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Global Component Registration
                 </p>
@@ -205,7 +204,7 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Persistent Layouts
                 </p>
@@ -238,7 +237,7 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     An Important SPA Security Concern
                 </p>
@@ -251,7 +250,7 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     An Important SPA Security Concern
                 </p>
@@ -264,7 +263,7 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Fetch data using custom npm package
                 </p>
@@ -338,7 +337,7 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div class="mt-4 mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Fetch backend data using custom npm package
                 </p>
@@ -433,7 +432,6 @@ const TestSubmitButtonTwice = function () {
                     </div>
                 </div>
             </div>
-            <!-- Test end-->
         </div>
     </LoggedInLayout>
 </template>

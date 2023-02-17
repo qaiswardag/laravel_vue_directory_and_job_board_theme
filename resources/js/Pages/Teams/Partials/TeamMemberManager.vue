@@ -69,9 +69,9 @@ const addTeamMember = () => {
             descriptionModal.value = `
            New Team Member have been invited to your team and have been sent an invitation email. The new Member may join the team by accepting the email invitation.
             `;
-            firstButtonModal.value = "Close";
+            firstButtonModal.value = null;
             secondButtonModal.value = null;
-            thirdButtonModal.value = null;
+            thirdButtonModal.value = "Close";
 
             // handle click
             firstModalButtonFunction.value = function () {
@@ -81,7 +81,10 @@ const addTeamMember = () => {
             // handle click
             secondModalButtonFunction.value = function () {};
             // handle click
-            thirdModalButtonFunction.value = function () {};
+            thirdModalButtonFunction.value = function () {
+                // handle show modal for unique content
+                modalShowAddedTeamMember.value = false;
+            };
             // end modal
         },
 
@@ -289,23 +292,16 @@ const displayAbleRole = (role) => {
             <SectionBorder />
 
             <!-- Add Team Member -->
-            <FormSection @submitted="addTeamMember">
+            <FormSection @submitted="addTeamMember" :sidebarArea="false">
                 <template #title> Add Team Member </template>
 
                 <template #description>
-                    Add a new team member to your team, allowing them to
+                    Add a new team member to your Team, allowing them to
                     collaborate with you.
                 </template>
 
                 <template #main>
                     <div class="myInputsOrganization">
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                            <p class="myPrimaryParagraph">
-                                Please provide the email address of the person
-                                you would like to add to this team.
-                            </p>
-                        </div>
                         <!-- Member Email -->
                         <div class="myInputGroup">
                             <InputLabel for="email" value="Email" />
@@ -406,19 +402,6 @@ const displayAbleRole = (role) => {
                     </div>
                 </template>
 
-                <template #sidebar>
-                    <div class="myInputsOrganization">
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                            <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Corporis ex dignissimos quas
-                                doloremque culpa at!
-                            </p>
-                        </div>
-                    </div>
-                </template>
-
                 <template #actions>
                     <SubmitButton
                         :disabled="addTeamMemberForm.processing"
@@ -433,7 +416,7 @@ const displayAbleRole = (role) => {
             <SectionBorder />
 
             <!-- Team Member Invitations -->
-            <ActionSection class="mt-10 sm:mt-0">
+            <ActionSection :sidebarArea="false">
                 <template #title> Pending Team Invitations </template>
 
                 <template #description>
@@ -450,14 +433,6 @@ const displayAbleRole = (role) => {
                 <!-- Pending Team Member Invitation List -->
                 <template #main>
                     <div class="myInputsOrganization">
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                            <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Corporis ex dignissimos quas
-                                doloremque culpa at!
-                            </p>
-                        </div>
                         <div class="myInputGroup">
                             <div class="space-y-6">
                                 <div v-if="team.team_invitations.length < 1">
@@ -469,9 +444,9 @@ const displayAbleRole = (role) => {
                             </div>
 
                             <div v-if="team.team_invitations.length > 0">
-                                <div class="overflow-x-auto">
+                                <div class="myTableContainer">
                                     <div
-                                        class="inline-block min-w-full py-2 align-middle px-1"
+                                        class="inline-block min-w-full align-middle px-1"
                                     >
                                         <div
                                             class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
@@ -562,27 +537,14 @@ const displayAbleRole = (role) => {
                             </div>
                         </div>
                     </div>
-                </template>
 
-                <template #sidebar>
-                    <div class="myInputsOrganization">
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                            <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Corporis ex dignissimos quas
-                                doloremque culpa at!
-                            </p>
-                        </div>
-                    </div>
+                    <ActionMessage
+                        :on="cancelTeamInvitationForm.recentlySuccessful"
+                        type="success"
+                    >
+                        Successfully deleted pending invition.
+                    </ActionMessage>
                 </template>
-
-                <ActionMessage
-                    :on="cancelTeamInvitationForm.recentlySuccessful"
-                    type="success"
-                >
-                    Successfully deleted pending invition.
-                </ActionMessage>
             </ActionSection>
         </div>
 
@@ -590,31 +552,64 @@ const displayAbleRole = (role) => {
             <SectionBorder />
 
             <!-- Manage Team Members -->
-            <ActionSection :noSidebar="true" class="mt-10 sm:mt-0">
-                <template #title> Team Members </template>
+            <ActionSection :sidebarArea="false" class="mt-10 sm:mt-0">
+                <template #title>
+                    Team Members at
+                    {{ $page.props.user && $page.props.user.current_team.name }}
+                </template>
 
                 <template #description>
-                    All of the people that are part of this team.
+                    People that are part of
+                    {{ $page.props.user && $page.props.user.current_team.name }}
+                    <div
+                        v-if="
+                            $page.props.team.owner &&
+                            $page.props.team.owner.id === $page.props.user.id
+                        "
+                    >
+                        <p class="myPrimaryParagraph">
+                            You are owner of this Team.
+                        </p>
+                        <p class="myPrimaryParagraph">
+                            Account Team owner
+                            {{
+                                $page.props.team.owner &&
+                                $page.props.team.owner.first_name
+                            }}
+                            {{
+                                $page.props.team.owner &&
+                                $page.props.team.owner.last_name
+                            }}
+                        </p>
+                    </div>
+
+                    <div
+                        v-if="
+                            $page.props.team.owner &&
+                            $page.props.team.owner.id !== $page.props.user.id
+                        "
+                    >
+                        <p class="myPrimaryParagraph">
+                            Account owner of this Team is
+
+                            {{
+                                $page.props.team.owner &&
+                                $page.props.team.owner.first_name
+                            }}
+                            {{
+                                $page.props.team.owner &&
+                                $page.props.team.owner.last_name
+                            }}.
+                        </p>
+                    </div>
                 </template>
 
                 <!-- Team Member List -->
                 <template #main>
                     <div class="myInputsOrganization">
-                        <div class="myInputsOrganizationText">
-                            <p class="myTertiaryHeader">
-                                Team
-                                {{ $page.props.user.current_team.name }}
-                            </p>
-                            <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Corporis ex dignissimos quas
-                                doloremque culpa at!
-                            </p>
-                        </div>
-
-                        <div class="overflow-x-auto">
+                        <div class="myTableContainer">
                             <div
-                                class="inline-block min-w-full py-2 align-middle px-1"
+                                class="inline-block min-w-full align-middle px-1"
                             >
                                 <div
                                     class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
@@ -655,7 +650,8 @@ const displayAbleRole = (role) => {
                                         <tbody class="myPrimaryTableTBody">
                                             <TransitionGroup name="table">
                                                 <tr
-                                                    v-for="user in team.users"
+                                                    v-for="user in team &&
+                                                    team.users"
                                                     :key="user.id"
                                                     class="myPrimaryTableTBodyTr"
                                                 >
@@ -663,16 +659,16 @@ const displayAbleRole = (role) => {
                                                         class="myPrimaryTableTBodyTd"
                                                     >
                                                         <div
-                                                            class="myAvatarSection"
+                                                            class="flex items-center gap-2 mt-2"
                                                         >
                                                             <div
-                                                                class="flex items-center gap-2 mt-2"
+                                                                v-if="
+                                                                    user &&
+                                                                    user.profile_photo_path
+                                                                "
                                                             >
                                                                 <div
-                                                                    v-if="
-                                                                        user.profile_photo_url &&
-                                                                        false
-                                                                    "
+                                                                    class="h-12 w-12 flex-shrink-0"
                                                                 >
                                                                     <img
                                                                         class="object-cover w-12 h-12 rounded-full"
@@ -680,52 +676,53 @@ const displayAbleRole = (role) => {
                                                                             user.profile_photo_url
                                                                         "
                                                                         :alt="
-                                                                            user.first_name
+                                                                            user.first_name +
+                                                                            user.last_name
                                                                         "
                                                                     />
                                                                 </div>
+                                                            </div>
 
-                                                                <div
-                                                                    v-if="true"
-                                                                    class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
-                                                                >
+                                                            <div
+                                                                v-if="
+                                                                    user &&
+                                                                    user.profile_photo_path ===
+                                                                        null
+                                                                "
+                                                                class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                                            >
+                                                                {{
+                                                                    user.first_name
+                                                                        .charAt(
+                                                                            0
+                                                                        )
+                                                                        .toUpperCase()
+                                                                }}
+                                                                {{
+                                                                    user.last_name
+                                                                        .charAt(
+                                                                            0
+                                                                        )
+                                                                        .toUpperCase()
+                                                                }}
+                                                            </div>
+                                                            <span
+                                                                class="flex flex-col items-left gap-1 myPrimaryParagraph"
+                                                            >
+                                                                <span>
                                                                     {{
                                                                         user.first_name
-                                                                            .charAt(
-                                                                                0
-                                                                            )
-                                                                            .toUpperCase()
                                                                     }}
                                                                     {{
                                                                         user.last_name
-                                                                            .charAt(
-                                                                                0
-                                                                            )
-                                                                            .toUpperCase()
                                                                     }}
-                                                                </div>
-                                                                <div
-                                                                    class="flex flex-col items-left gap-1"
-                                                                >
-                                                                    <p
-                                                                        class="text-xs font-semibold"
-                                                                    >
-                                                                        {{
-                                                                            user.first_name
-                                                                        }}
-                                                                        {{
-                                                                            user.last_name
-                                                                        }}
-                                                                    </p>
-                                                                    <p
-                                                                        class="text-xs font-semibold"
-                                                                    >
-                                                                        {{
-                                                                            user.email
-                                                                        }}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
+                                                                </span>
+                                                                <span>
+                                                                    {{
+                                                                        user.email
+                                                                    }}
+                                                                </span>
+                                                            </span>
                                                         </div>
                                                     </td>
                                                     <td
@@ -736,7 +733,7 @@ const displayAbleRole = (role) => {
                                                             v-if="
                                                                 availableRoles.length
                                                             "
-                                                            class="myPrimaryButtonNoBackground"
+                                                            class="myPrimaryButtonNoBackground flex items-center gap-2"
                                                             @click="
                                                                 manageRole(user)
                                                             "
@@ -748,6 +745,20 @@ const displayAbleRole = (role) => {
                                                                         .role
                                                                 )
                                                             }}
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                stroke-width="2"
+                                                                stroke="currentColor"
+                                                                class="w-5 h-5"
+                                                            >
+                                                                <path
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"
+                                                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                                                />
+                                                            </svg>
                                                         </button>
                                                     </td>
 
@@ -773,7 +784,7 @@ const displayAbleRole = (role) => {
                                                                 Leave Team
                                                             </DangerButton>
                                                             <p
-                                                                class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryBrandColor text-white rounded-xl py-2 px-4 font-semibold"
+                                                                class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryLightGrayColor text-black rounded-full py-2 px-4 font-semibold"
                                                                 v-if="
                                                                     $page.props
                                                                         .user

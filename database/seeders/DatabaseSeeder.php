@@ -214,7 +214,7 @@ class DatabaseSeeder extends Seeder
         // fake Users
         User::factory(100)->create();
         // fake Posts
-        Post::factory(250)->create();
+        Post::factory(25)->create();
 
         //
         //
@@ -227,51 +227,51 @@ class DatabaseSeeder extends Seeder
         //
         //
         //
-        //
-        // Post::factory()->create([
-        //     "user_id" => 5, // Oprah Winfrey
-        //     "team_id" => 5, // Oprah Winfrey teem
-        //     "title" => "My Post title for Oprahs first Blog Post",
-        //     "slug" => "the-slug",
-        //     "content" => "The description. This post belongs to Oprahs team",
-        //     "published" => rand(0, 1),
-        //     "tags" => "Summer,Dubai,Event,FashionShow",
-        // ]);
-        // Post::factory()->create([
-        //     "user_id" => 5, // Oprah Winfrey
-        //     "team_id" => 5, // Oprah Winfrey teem
-        //     "title" => "Oprahs second Blog Post",
-        //     "slug" => "the-slug",
-        //     "content" => "The description. This post belongs to Oprahs team.",
-        //     "published" => rand(0, 1),
-        //     "tags" => "Summer,Dubai,Event,FashionShow",
-        // ]);
-        // Post::factory()->create([
-        //     "user_id" => 5, // Oprah Winfrey
-        //     "team_id" => 5, // Oprah Winfrey teem
-        //     "title" => "Blog Post title",
-        //     "slug" => "the-slug",
-        //     "content" => "The description. This post belongs to Oprahs team.",
-        //     "published" => rand(0, 1),
-        //     "tags" => "Summer,Dubai,Event,FashionShow",
-        // ]);
-        // Post::factory()->create([
-        //     "user_id" => 5, // Oprah Winfrey
-        //     "team_id" => 5, // Oprah Winfrey teem
-        //     "title" => "Blog Post title",
-        //     "slug" => "the-slug",
-        //     "content" => "The description. This post belongs to Oprahs team.",
-        //     "published" => rand(0, 1),
-        //     "tags" => "Summer,Dubai,Event,FashionShow",
-        // ]);
-        // Post::factory()->create([
-        //     "user_id" => 6, // Ingrid Bergman
-        //     "team_id" => 5, // Oprah Winfrey teem
-        //     "title" => "Blog Post title",
-        //     "slug" => "the-slug",
-        //     "content" => "The description. This post belongs to Oprahs team.",
-        //     "published" => rand(0, 1),
-        //     "tags" => "Summer,Dubai,Event,FashionShow",
-        // ]);
+        // Post for Oprah Winfrey and here Team
+        Post::factory()->create([
+            "user_id" => 5, // Oprah Winfrey
+            "team_id" => 5, // Oprah Winfrey teem
+            "title" => "My Post title for Oprahs first Blog Post",
+            "slug" => "the-slug",
+            "content" => "The description. This post belongs to Oprahs team",
+            "published" => rand(0, 1),
+            "tags" => "Summer,Dubai,Event,FashionShow",
+        ]);
+        Post::factory()->create([
+            "user_id" => 5, // Oprah Winfrey
+            "team_id" => 5, // Oprah Winfrey teem
+            "title" => "Oprahs second Blog Post",
+            "slug" => "the-slug",
+            "content" => "The description. This post belongs to Oprahs team.",
+            "published" => rand(0, 1),
+            "tags" => "Summer,Dubai,Event,FashionShow",
+        ]);
+        Post::factory()->create([
+            "user_id" => 5, // Oprah Winfrey
+            "team_id" => 5, // Oprah Winfrey teem
+            "title" => "Blog Post title",
+            "slug" => "the-slug",
+            "content" => "The description. This post belongs to Oprahs team.",
+            "published" => rand(0, 1),
+            "tags" => "Summer,Dubai,Event,FashionShow",
+        ]);
+        Post::factory()->create([
+            "user_id" => 5, // Oprah Winfrey
+            "team_id" => 5, // Oprah Winfrey teem
+            "title" => "Blog Post title",
+            "slug" => "the-slug",
+            "content" => "The description. This post belongs to Oprahs team.",
+            "published" => rand(0, 1),
+            "tags" => "Summer,Dubai,Event,FashionShow",
+        ]);
+        Post::factory()->create([
+            "user_id" => 6, // Ingrid Bergman
+            "team_id" => 5, // Oprah Winfrey teem
+            "title" => "Blog Post title",
+            "slug" => "the-slug",
+            "content" => "The description. This post belongs to Oprahs team.",
+            "published" => rand(0, 1),
+            "tags" => "Summer,Dubai,Event,FashionShow",
+        ]);
     }
 }

@@ -8,6 +8,16 @@
     | Helpers
     |--------------------------------------------------------------------------
     */
+    .myPrimarySection {
+        @apply lg:py-8 md:py-8 py-8;
+    }
+    .myPrimarySuccessAlertMessage {
+        @apply myPrimarySection myPrimaryHeader text-myPrimaryBrandColor text-center;
+    }
+    .myPrimaryWarningAlertMessage {
+        @apply myPrimarySection myPrimaryHeader text-yellow-400 text-center;
+    }
+
     .myFocus {
         @apply focus-within:border-2 focus-within:border-myPrimaryBrandColor;
     }
@@ -16,17 +26,13 @@
         @apply text-myPrimaryBrandColor;
     }
 
-    .myAvatarSection {
-        @apply border-2 border-red-300 pt-6 pr-2 pb-8 pl-2 my-12 rounded bg-red-50;
-    }
-
     /*
     |--------------------------------------------------------------------------
     | primaryParagraphs
     |--------------------------------------------------------------------------
     */
     .myPrimaryParagraph {
-        @apply text-sm font-normal text-myPrimaryDarkGrayColor;
+        @apply text-sm font-normal text-gray-700;
     }
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +40,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryMainPageHeader {
-        @apply mySecondaryHeader mt-0 mb-6 text-center py-8 bg-myPrimaryBrandColor text-white;
+        @apply mySecondaryHeader mt-0 mb-0  text-center pt-12 pb-12 bg-gray-800  text-white;
     }
     .myPrimaryHeader {
         @apply text-3xl mt-1 mb-2 font-semibold text-black;
@@ -46,6 +52,9 @@
 
     .myTertiaryHeader {
         @apply text-lg mt-1 mb-2 font-semibold text-black;
+    }
+    .myFourthHeader {
+        @apply text-base mt-1 mb-2 font-semibold text-black;
     }
 
     /*
@@ -77,7 +86,7 @@
     }
 
     .myPrimaryButton {
-        @apply break-keep font-semibold inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryBrandColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryBrandColor sm:w-auto
+        @apply whitespace-nowrap break-keep font-semibold inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryBrandColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryBrandColor sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2
         focus-visible:ring-2 focus-visible:ring-myPrimaryBrandColor;
     }
@@ -127,8 +136,12 @@
     |--------------------------------------------------------------------------
     */
 
+    .myTableContainer {
+        @apply overflow-x-auto myPrimarySection;
+    }
+
     .myPrimaryTable {
-        @apply divide-y divide-myPrimaryLightGrayColor table-fixed min-w-full text-left;
+        @apply text-sm divide-y divide-myPrimaryLightGrayColor table-fixed min-w-full text-left;
     }
     .myPrimaryTableCaption {
         @apply bg-white myPrimaryParagraph py-4;
@@ -146,10 +159,10 @@
         @apply divide-y divide-gray-100 border-t border-gray-100 bg-white;
     }
     .myPrimaryTableTBodyTr {
-        @apply hover:bg-gray-50 divide-x;
+        @apply divide-x myPrimaryParagraph bg-white hover:bg-red-50;
     }
     .myPrimaryTableTBodyTd {
-        @apply px-6 py-4;
+        @apply px-6 py-4 whitespace-pre myPrimaryParagraph md:min-w-[9rem] min-w-[7rem];
     }
 
     /*
@@ -163,30 +176,55 @@
 
     /*
     |--------------------------------------------------------------------------
+    | Breadcrumbs
+    |--------------------------------------------------------------------------
+    */
+
+    .myBreadcrumbsContainer {
+        @apply flex items-center justify-start gap-1 py-2 pl-4 pr-2;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Forms
     |--------------------------------------------------------------------------
     */
+    .myPrimaryFormWithActions {
+        @apply flex flex-col myPrimaryGap md:pt-10 md:pb-4  px-2 rounded;
+    }
     .myPrimaryForm {
         @apply md:flex md:flex-row flex flex-col myPrimaryGap;
     }
+
+    .myPrimaryFormTitleDescription {
+        @apply flex flex-col w-full;
+    }
+
     .myPrimaryFormMain {
         @apply md:w-8/12 flex flex-col myPrimaryGap;
     }
     .myPrimaryFormSidebar {
         @apply md:w-4/12 flex flex-col myPrimaryGap;
     }
-
-    .myInputsOrganization {
-        @apply px-4 py-4 border border-myPrimaryLightGrayColor rounded bg-gray-50;
+    .myPrimaryActions {
+        @apply px-4 py-6  rounded;
     }
 
-    .myInputsOrganizationText {
-        @apply mt-12 mb-4;
+    .myInputsOrganization {
+        @apply px-4 pt-8 pb-8 border border-myPrimaryMediumGrayColor rounded bg-gray-100;
+    }
+
+    .myPrimaryFormOrganizationHeaderDescriptionSection {
+        @apply mb-6;
+    }
+    .myPrimaryFormOrganizationHeader {
+        @apply myFourthHeader m-0;
     }
 
     .myInputsFamily {
         @apply flex items-center myPrimaryGap;
     }
+
     .myInputGroup {
         @apply w-full self-start mb-2;
     }
@@ -199,11 +237,11 @@
     }
 
     .myPrimaryInput {
-        @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
+        @apply block w-full sm:text-sm font-medium text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3  border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
     }
 
-    .myPrimarySearchInputWithButton {
-        @apply block p-4 pl-10 w-full text-sm text-gray-900 bg-white rounded-lg border border-black focus:ring-black focus:border-black focus:bg-white dark:bg-gray-700;
+    .myPrimarySearchInput {
+        @apply myPrimaryInput pl-10;
     }
 
     .myPrimaryInputError {
@@ -223,15 +261,7 @@
     }
 
     .myPrimarySelect {
-        @apply relative w-full cursor-default rounded-md border border-gray-300 bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-myPrimaryBrandColor focus:outline-none focus:ring-1 focus:ring-myPrimaryBrandColor sm:text-sm;
-    }
-
-    #my-select {
-        @apply py-1.5 px-2 text-myPrimaryDarkGrayColor bg-gray-50 rounded-md
-        border border-gray-300 focus-within:border focus-within:border-transparent
-        sm:text-sm font-normal
-        focus-within:bg-white focus:focus-within:rounded-md
-        focus-within:ring-2 focus-within:ring-myPrimaryBrandColor focus-within:ring-offset-[1px];
+        @apply relative w-full cursor-default rounded-md  border border-myPrimaryMediumGrayColor bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-myPrimaryBrandColor focus:outline-none focus:ring-1 focus:ring-myPrimaryBrandColor sm:text-sm;
     }
 }
 
@@ -278,23 +308,25 @@
 } */
 
 /* example 3 */
-/* .table-enter-from {
+.table-enter-from {
     opacity: 1;
-    transform: translate(30px, 0);
 }
 
 .table-enter-active {
+    background-color: "indigo";
     transition: 0.5s;
 }
 
 .table-leave-to {
     opacity: 1;
+    background: "black";
 }
 
 .table-leave-active {
+    background-color: "red";
     opacity: 0;
     position: absolute;
 }
 .table-move {
     transition: all 0.5s ease;
-} */
+}

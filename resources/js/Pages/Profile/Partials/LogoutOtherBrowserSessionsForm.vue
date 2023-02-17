@@ -91,7 +91,7 @@ const closeModal = () => {
 </script>
 
 <template>
-    <ActionSection>
+    <ActionSection :sidebarArea="false">
         <template #title> Browser Sessions </template>
 
         <template #description>
@@ -101,16 +101,6 @@ const closeModal = () => {
 
         <template #main>
             <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                    <p class="myPrimaryParagraph">
-                        If necessary, you may log out of all of your other
-                        browser sessions across all of your devices. Some of
-                        your recent sessions are listed below; however, this
-                        list may not be exhaustive. If you feel your account has
-                        been compromised, you should also update your password.
-                    </p>
-                </div>
                 <div class="myInputGroup">
                     <!-- Other Browser Sessions -->
                     <div v-if="sessions.length > 0" class="mt-5 space-y-6">
@@ -195,17 +185,6 @@ const closeModal = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </template>
-        <template #sidebar>
-            <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Corporis ex dignissimos quas doloremque culpa at!
-                    </p>
                 </div>
             </div>
         </template>

@@ -3,19 +3,31 @@ import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
-import Flash from "@/Components/Actions/Flash.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
-import { ref } from "vue";
+import SearchBarWithOptions from "@/Components/SearchBars/SearchBarWithOptions.vue";
+import { onMounted, ref } from "vue";
 
-defineProps({
+const props = defineProps({
     users: {
         required: true,
     },
     results: {
         required: false,
     },
+    search_query: {
+        required: false,
+    },
+    selected_category: {
+        required: false,
+    },
 });
+
+const searchCategories = ["id", "name", "email"];
+
+const selectedUpdated = function (chosen) {
+    searchForm.selected_category = chosen;
+};
 
 const modalShowDeleteUser = ref(false);
 
@@ -39,7 +51,7 @@ const handleDelete = function (id, user) {
     // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 2;
-    titleModal.value = `Delete User: ${user.first_name} ${user.last_name}?`;
+    titleModal.value = `Delete User ${user.first_name} ${user.last_name}?`;
     descriptionModal.value = `Are you sure you want to delete user ${user.first_name} ${user.last_name}?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
@@ -70,11 +82,8 @@ const deletePost = (userId) => {
     deleteUserForm.delete(route("superadmin.user.destroy", userId), {
         preserveScroll: true,
         onSuccess: () => (modalShowDeleteUser.value = false),
-        onError: (err) => {
-            console.log("Something went wrong. Error:", err);
-        },
+        onError: (err) => {},
         onFinish: (log) => {
-            // console.log("On finish. Here is the log:", log);
             modalShowDeleteUser.value = false;
         },
     });
@@ -82,10 +91,11 @@ const deletePost = (userId) => {
 
 const searchForm = useForm({
     search_query: "",
+    selected_category: "",
 });
 
 const handleEdit = function (userId) {
-    console.log("clicked on edit user. user id is:", userId);
+    console.log("edit user. user id:", userId);
 };
 
 // searc
@@ -95,26 +105,28 @@ const handleSearch = function () {
 };
 
 const search = () => {
-    console.log("search query is:", searchForm.search_query);
     searchForm.get(route("superadmin.users.index"), {
         preserveScroll: true,
-        onSuccess: () => {
-            console.log("Success search");
-        },
+        onSuccess: () => {},
         onError: (err) => {
             console.log("An error came for the search");
         },
-        onFinish: () => {
-            console.log("On finish serach");
-        },
+        onFinish: () => {},
     });
 };
+
+onMounted(() => {
+    if (props.search_query) {
+        searchForm.search_query = props.search_query;
+    }
+    if (props.selected_category) {
+        searchForm.selected_category = props.selected_category;
+    }
+});
 </script>
 
 <template>
     <LoggedInLayout title="Manage Users">
-        <!-- Cancel Team Invitation -->
-        <Flash :flash="$page.props.flash"> </Flash>
         <DynamicModal
             :show="modalShowDeleteUser"
             :type="typeModal"
@@ -137,74 +149,31 @@ const search = () => {
             <h2 class="myPrimaryMainPageHeader">Users</h2>
         </template>
 
-        <template #description>
-            <p>This is Super Admininistrator page for a list of users</p>
-            <p>all users here: {{ users }}</p>
-        </template>
-
-        <form>
-            <div class="relative">
-                <div
-                    class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-                >
-                    <svg
-                        aria-hidden="true"
-                        class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        ></path>
-                    </svg>
-                </div>
-                <input
-                    v-model="searchForm.search_query"
-                    type="text"
-                    id="search_query"
-                    class="myPrimarySearchInputWithButton rounded-none"
-                    autocomplete="off"
-                    placeholder="Searching..."
-                />
-                <button
-                    @click.prevent="handleSearch"
-                    :disabled="searchForm.processing"
-                    type="submit"
-                    class="min-w-[6rem] text-white absolute top-0 bottom-0 right-0 bg-black hover:bg-opacity-90 focus:ring-0 focus:outline-none font-semibold text-sm px-4 py-2"
-                    :class="{ 'opacity-70': searchForm.processing }"
-                >
-                    {{ searchForm.processing ? "Loading.." : "Search" }}
-                </button>
-
-                <!-- <SubmitButton
-                    @firstButtonClick="handleSearch"
-                    :disabled="searchForm.processing"
-                    class="absolute right-2.5 bottom-2"
-                    buttonText="Search"
-                >
-                </SubmitButton> -->
-            </div>
+        <template #description></template>
+        <form @submit.prevent="handleSearch">
+            <!-- search bar componenet - start -->
+            <SearchBarWithOptions
+                v-model="searchForm.search_query"
+                @selectedUpdated="selectedUpdated"
+                :selectedOnLoad="selected_category"
+                @firstButtonClick="handleSearch"
+                :categories="searchCategories"
+                placeholderButton="Search"
+                placeholderInput="Search.."
+            ></SearchBarWithOptions>
+            <!-- search bar componenet - ens -->
         </form>
-        <div class="border-2 border-gray-200 py-4 px-4 my-4 rounded">
-            Found: {{ results }}
-        </div>
-        <!-- TABLE START -->
-        <!-- TABLE START -->
-        <!-- TABLE START -->
-        <!-- TABLE START -->
-        <div class="overflow-x-auto">
-            <div class="inline-block min-w-full py-2 align-middle px-1">
+
+        <div class="myTableContainer">
+            <div class="inline-block min-w-full align-middle px-1">
                 <div
                     class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
                 >
                     <table class="myPrimaryTable">
                         <caption class="myPrimaryTableCaption">
-                            List of all users
+                            <p class="myPrimaryParagraph">
+                                Result {{ results }}
+                            </p>
                         </caption>
                         <thead class="myPrimaryTableTHead">
                             <tr class="myPrimaryTableTr">
@@ -212,7 +181,7 @@ const search = () => {
                                     Thumbnail
                                 </th>
                                 <th scope="col" class="myPrimaryTableTh">
-                                    Title
+                                    Name
                                 </th>
                                 <th scope="col" class="myPrimaryTableTh">
                                     Status
@@ -221,7 +190,7 @@ const search = () => {
                                     User id
                                 </th>
                                 <th scope="col" class="myPrimaryTableTh">
-                                    Owner of Team
+                                    Account Owner of Team(s)
                                 </th>
                                 <th scope="col" class="myPrimaryTableTh">
                                     Edit
@@ -243,28 +212,24 @@ const search = () => {
                                     <td class="myPrimaryTableTBodyTd">
                                         <div class="flex items-center">
                                             <div
-                                                class="h-10 w-10 flex-shrink-0"
+                                                class="h-12 w-12 flex-shrink-0"
                                             >
                                                 <img
-                                                    class="h-10 w-10 rounded-full object-cover"
+                                                    class="h-12 w-12 rounded-full object-cover"
                                                     src="https://emirateswoman.com/wp-content/uploads/2022/03/Arab-Fashion-Week-2022.png"
                                                     alt=""
                                                 />
                                             </div>
                                             <div class="ml-4">
-                                                <div class="text-gray-900">
-                                                    {{ user.first_name }}
-                                                    {{ user.last_name }}
-                                                </div>
+                                                {{ user.first_name }}
+                                                {{ user.last_name }}
                                             </div>
                                         </div>
                                     </td>
 
                                     <td class="myPrimaryTableTBodyTd">
-                                        <div class="text-gray-900">
-                                            {{ user.first_name }}
-                                            {{ user.last_name }}
-                                        </div>
+                                        {{ user.first_name }}
+                                        {{ user.last_name }}
                                     </td>
 
                                     <td class="myPrimaryTableTBodyTd">
@@ -274,7 +239,7 @@ const search = () => {
                                                     ? 'bg-green-100'
                                                     : 'bg-red-100 text-myErrorColor'
                                             "
-                                            class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 text-green-800"
+                                            class="inline-flex rounded-full px-2 font-semibold leading-5 text-green-800"
                                             >{{
                                                 user.public
                                                     ? "Public"
@@ -284,17 +249,13 @@ const search = () => {
                                     </td>
 
                                     <td class="myPrimaryTableTBodyTd">
-                                        <div class="text-gray-900">
-                                            {{ user.id }}
-                                        </div>
+                                        {{ user.id }}
                                     </td>
                                     <td class="myPrimaryTableTBodyTd">
-                                        <div class="text-gray-900">
-                                            team name here
-                                        </div>
+                                        team name here
                                     </td>
 
-                                    <td class="py-4 px-2 text-center">
+                                    <td class="myPrimaryTableTBodyTd">
                                         <button
                                             @click="handleEdit(user.id)"
                                             type="button"
@@ -320,13 +281,11 @@ const search = () => {
                                             >
                                         </button>
                                     </td>
-                                    <td class="py-4 px-2 text-center">
+                                    <td class="myPrimaryTableTBodyTd">
                                         <SubmitButton
                                             :ButtonStyleDelete="true"
                                             :TableStyle="true"
-                                            :disabled="
-                                                deleteUserForm.processing
-                                            "
+                                            :disabled="false"
                                             @firstButtonClick="
                                                 handleDelete(user.id, user)
                                             "

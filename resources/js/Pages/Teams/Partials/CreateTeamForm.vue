@@ -6,6 +6,8 @@ import InputLabel from "@/Components/Forms/InputLabel.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import AvatarCardCenterSmall from "@/Components/Avatars/AvatarCardCenterSmall.vue";
+
 import { ref } from "@vue/reactivity";
 
 const createTeamForm = useForm({
@@ -84,7 +86,11 @@ const createTeam = () => {
         <header></header>
         <main></main>
     </DynamicModal>
-    <FormSection @submitted="handleCreateTeam">
+    <FormSection
+        @submitted="handleCreateTeam"
+        :sidebarArea="false"
+        :actionsArea="false"
+    >
         <template #title> Create Team </template>
 
         <template #description>
@@ -93,89 +99,22 @@ const createTeam = () => {
 
         <template #main>
             <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Corporis ex dignissimos quas doloremque culpa at!
-                    </p>
-                </div>
                 <div class="myInputGroup">
-                    <div class="myAvatarSection">
-                        <InputLabel value="Team Owner" />
-                        <div class="flex items-center gap-2 mt-2">
-                            <div
-                                v-if="
-                                    $page.props.user.profile_photo_url && false
-                                "
-                            >
-                                <img
-                                    class="object-cover w-12 h-12 rounded-full"
-                                    :src="$page.props.user.profile_photo_url"
-                                    :alt="$page.props.user.first_name"
-                                />
-                            </div>
-
-                            <div
-                                v-if="true"
-                                class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
-                            >
-                                {{
-                                    $page.props.user.first_name
-                                        .charAt(0)
-                                        .toUpperCase()
-                                }}
-                                {{
-                                    $page.props.user.last_name
-                                        .charAt(0)
-                                        .toUpperCase()
-                                }}
-                            </div>
-                            <div class="flex flex-col items-left gap-1">
-                                <p class="text-xs font-semibold">
-                                    {{ $page.props.user.first_name }}
-                                    {{ $page.props.user.last_name }}
-                                </p>
-                                <p class="text-xs font-semibold">
-                                    {{ $page.props.user.email }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="myInputGroup">
-                        <InputLabel for="name" value="Team Name" />
-                        <TextInput
-                            id="name"
-                            v-model="createTeamForm.name"
-                            type="text"
-                            autofocus
-                            autocomplete="off"
-                        />
-                        <InputError :message="createTeamForm.errors.name" />
-                    </div>
-                </div>
-            </div>
-        </template>
-
-        <template #sidebar>
-            <div class="myInputsOrganization">
-                <div class="myInputsOrganizationText">
-                    <p class="myTertiaryHeader">Lorem, ipsum dolor</p>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Corporis ex dignissimos quas doloremque culpa at!
+                    <p class="myPrimaryParagraph text-center">
+                        You will become Account owner of this Team
                     </p>
+                    <AvatarCardCenterSmall></AvatarCardCenterSmall>
+                    <InputLabel for="name" value="Team Name" />
+                    <TextInput
+                        id="name"
+                        v-model="createTeamForm.name"
+                        type="text"
+                        autofocus
+                        autocomplete="off"
+                    />
+                    <InputError :message="createTeamForm.errors.name" />
                 </div>
             </div>
-        </template>
-
-        <template #actions>
-            <SubmitButton
-                :disabled="createTeamForm.processing"
-                buttonText="Create team"
-            >
-            </SubmitButton>
         </template>
     </FormSection>
 </template>
