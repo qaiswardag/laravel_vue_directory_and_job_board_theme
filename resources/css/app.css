@@ -190,7 +190,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryFormWithActions {
-        @apply flex flex-col myPrimaryGap md:pt-10 md:pb-4  px-2 rounded;
+        @apply flex flex-col myPrimaryGap md:pb-4  px-2 rounded;
     }
     .myPrimaryForm {
         @apply md:flex md:flex-row flex flex-col myPrimaryGap;
@@ -278,7 +278,7 @@
 /* table transitions */
 
 /* example 1 */
-/* .table-enter-active,
+.table-enter-active,
 .table-leave-active {
     transition: opacity 0.3s ease;
 }
@@ -286,7 +286,7 @@
 .table-enter-from,
 .table-leave-to {
     opacity: 0;
-} */
+}
 
 /* example 2 */
 /* .table-enter-active {
@@ -307,7 +307,7 @@
     }
 } */
 
-/* example 3 */
+/* example 3 
 .table-enter-from {
     opacity: 1;
 }
@@ -329,4 +329,4 @@
 }
 .table-move {
     transition: all 0.5s ease;
-}
+} */

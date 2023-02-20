@@ -89,12 +89,10 @@
                     v-html="description"
                     class="myPrimaryParagraph mt-4 mb-6"
                 ></div>
-                <header>
-                    <slot name="header"></slot>
-                </header>
-                <main>
-                    <slot></slot>
-                </main>
+
+                <slot name="header"></slot>
+
+                <slot></slot>
             </div>
         </div>
 

@@ -79,7 +79,7 @@ const deleteUserForm = useForm({});
 
 // form action
 const deletePost = (userId) => {
-    deleteUserForm.delete(route("superadmin.user.destroy", userId), {
+    deleteUserForm.delete(route("admin.user.destroy", userId), {
         preserveScroll: true,
         onSuccess: () => (modalShowDeleteUser.value = false),
         onError: (err) => {},
@@ -105,7 +105,7 @@ const handleSearch = function () {
 };
 
 const search = () => {
-    searchForm.get(route("superadmin.users.index"), {
+    searchForm.get(route("admin.users.index"), {
         preserveScroll: true,
         onSuccess: () => {},
         onError: (err) => {
@@ -178,7 +178,7 @@ onMounted(() => {
                         <thead class="myPrimaryTableTHead">
                             <tr class="myPrimaryTableTr">
                                 <th scope="col" class="myPrimaryTableTh">
-                                    Thumbnail
+                                    User
                                 </th>
                                 <th scope="col" class="myPrimaryTableTh">
                                     Name
@@ -210,20 +210,89 @@ onMounted(() => {
                                     :key="user.id"
                                 >
                                     <td class="myPrimaryTableTBodyTd">
-                                        <div class="flex items-center">
+                                        <div
+                                            class="flex items-center gap-2 mt-2"
+                                        >
                                             <div
-                                                class="h-12 w-12 flex-shrink-0"
+                                                v-if="
+                                                    user &&
+                                                    user.profile_photo_path
+                                                "
                                             >
-                                                <img
-                                                    class="h-12 w-12 rounded-full object-cover"
-                                                    src="https://emirateswoman.com/wp-content/uploads/2022/03/Arab-Fashion-Week-2022.png"
-                                                    alt=""
-                                                />
+                                                <div
+                                                    class="h-12 w-12 flex-shrink-0"
+                                                >
+                                                    <Link
+                                                        :href="
+                                                            route(
+                                                                'users.show',
+                                                                user.id
+                                                            )
+                                                        "
+                                                    >
+                                                        <img
+                                                            class="object-cover w-12 h-12 rounded-full"
+                                                            :src="
+                                                                user.profile_photo_url
+                                                            "
+                                                            :alt="
+                                                                user.first_name +
+                                                                user.last_name
+                                                            "
+                                                        />
+                                                    </Link>
+                                                </div>
                                             </div>
-                                            <div class="ml-4">
-                                                {{ user.first_name }}
-                                                {{ user.last_name }}
+
+                                            <div
+                                                v-if="
+                                                    user &&
+                                                    user.profile_photo_path ===
+                                                        null
+                                                "
+                                            >
+                                                <Link
+                                                    :href="
+                                                        route(
+                                                            'users.show',
+                                                            user.id
+                                                        )
+                                                    "
+                                                >
+                                                    <div
+                                                        class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                                    >
+                                                        {{
+                                                            user.first_name
+                                                                .charAt(0)
+                                                                .toUpperCase()
+                                                        }}
+                                                        {{
+                                                            user.last_name
+                                                                .charAt(0)
+                                                                .toUpperCase()
+                                                        }}
+                                                    </div>
+                                                </Link>
                                             </div>
+                                            <span
+                                                class="flex flex-col items-left gap-1 myPrimaryParagraph"
+                                            >
+                                                <Link
+                                                    class="myPrimaryLink"
+                                                    :href="
+                                                        route(
+                                                            'users.show',
+                                                            user.id
+                                                        )
+                                                    "
+                                                >
+                                                    <span>
+                                                        {{ user.first_name }}
+                                                        {{ user.last_name }}
+                                                    </span>
+                                                </Link>
+                                            </span>
                                         </div>
                                     </td>
 

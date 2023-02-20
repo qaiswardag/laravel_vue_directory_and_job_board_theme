@@ -13,14 +13,14 @@ import {
 const actions = [
     {
         title: "Users",
-        href: "superadmin.users.index",
+        href: "admin.users.index",
         icon: UsersIcon,
         iconForeground: "text-myPrimaryBrandColor",
         iconBackground: "bg-gray-50",
     },
     {
         title: "Teams",
-        href: "superadmin.users.index",
+        href: "admin.users.index",
         icon: CheckBadgeIcon,
         iconForeground: "text-myPrimaryBrandColor",
         iconBackground: "bg-gray-50",

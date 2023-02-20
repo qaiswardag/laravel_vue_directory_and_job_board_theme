@@ -62,7 +62,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
     }
@@ -73,7 +73,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
         //
     }
@@ -96,24 +96,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         sleep(1);
 
-        if (User::find($id) === null) {
-            return redirect()
-                ->route("superadmin.users.index")
-                ->with(
-                    "error",
-                    "User not found. User with following id not found: {$id}."
-                );
-        }
-
-        User::find($id)->delete();
+        $user->delete();
 
         //
         return redirect()
             ->route("superadmin.users.index")
-            ->with("success", "Successfully deleted User with id: {$id}");
+            ->with("success", "Successfully deleted User with id: {$user->id}");
     }
 }

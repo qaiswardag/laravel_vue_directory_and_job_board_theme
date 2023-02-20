@@ -214,7 +214,7 @@ class DatabaseSeeder extends Seeder
         // fake Users
         User::factory(100)->create();
         // fake Posts
-        Post::factory(25)->create();
+        Post::factory(250)->create();
 
         //
         //

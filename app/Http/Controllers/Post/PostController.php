@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class PostController extends Controller
 {
@@ -47,7 +49,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Team $team)
+    public function store(Request $request, Post $post)
     {
         sleep(1);
         dd($request);
@@ -87,7 +89,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        dd("show post method in controller. post is:", $post);
     }
 
     /**
@@ -119,24 +121,21 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        sleep(1);
+        // dd(Auth::user());
 
-        if (Post::find($id) === null) {
-            return redirect()
-                ->route("overview.posts.index")
-                ->with(
-                    "error",
-                    "Post not found. Post with following id not found: {$id}."
-                );
-        }
+        // Gate::forUser($user)->check("removeTeamMember", $team)
+        // Gate::forUser(Auth::user())->check("removeGeneralResource", $post);
 
-        Post::find($id)->delete();
+        $post->delete();
 
         //
         return redirect()
-            ->route("overview.posts.index")
-            ->with("success", "Successfully deleted the Post with id: {$id}.");
+            ->back()
+            ->with(
+                "success",
+                "Successfully deleted the Post with id: {$post->id}."
+            );
     }
 }

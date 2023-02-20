@@ -139,6 +139,22 @@ const breadcrumbsLinks = [
                                 :message="createPostForm.errors.title"
                             />
                         </div>
+                        <div class="myInputGroup">
+                            <InputLabel for="slug" value="Slug" class="mb-1" />
+                            <TextInput
+                                placeholder="Post slug"
+                                id="slug"
+                                v-model="createPostForm.title"
+                                type="text"
+                                class="block w-full mt-1"
+                                autofocus
+                                autocomplete="off"
+                                readonly
+                            />
+                            <InputError
+                                :message="createPostForm.errors.title"
+                            />
+                        </div>
 
                         <div class="myInputGroup">
                             <InputLabel

@@ -224,10 +224,10 @@ const breadcrumbsLinks = [
                                     <td class="myPrimaryTableTBodyTd">
                                         <div class="flex items-center">
                                             <div
-                                                class="h-10 w-10 flex-shrink-0"
+                                                class="h-12 w-12 flex-shrink-0"
                                             >
                                                 <img
-                                                    class="h-10 w-10 rounded-full object-cover"
+                                                    class="h-12 w-12 rounded-full object-cover"
                                                     src="https://emirateswoman.com/wp-content/uploads/2022/03/Arab-Fashion-Week-2022.png"
                                                     alt=""
                                                 />

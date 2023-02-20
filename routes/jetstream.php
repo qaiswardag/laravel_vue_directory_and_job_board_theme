@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Post\PostController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
@@ -143,11 +144,6 @@ Route::group(
                         Route::get("/overview/teams", function () {
                             return Inertia::render("Teams/Index");
                         })->name("teams.index");
-                    }
-
-                    // Posts...
-                    if (Jetstream::hasTeamFeatures()) {
-                        // somthing here
                     }
                 });
             }

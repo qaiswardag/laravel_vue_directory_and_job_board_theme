@@ -446,92 +446,79 @@ const displayAbleRole = (role) => {
                             <div v-if="team.team_invitations.length > 0">
                                 <div class="myTableContainer">
                                     <div
-                                        class="inline-block min-w-full align-middle px-1"
+                                        class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
                                     >
-                                        <div
-                                            class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
-                                        >
-                                            <table class="myPrimaryTable">
-                                                <caption
-                                                    class="myPrimaryTableCaption"
-                                                >
-                                                    Manage Pending Team
-                                                    Invitations
-                                                </caption>
-                                                <thead
-                                                    class="myPrimaryTableTHead"
-                                                >
+                                        <table class="myPrimaryTable">
+                                            <caption
+                                                class="myPrimaryTableCaption"
+                                            >
+                                                Manage Pending Team Invitations
+                                            </caption>
+                                            <thead class="myPrimaryTableTHead">
+                                                <tr class="myPrimaryTableTr">
+                                                    <th
+                                                        scope="col"
+                                                        class="myPrimaryTableTh"
+                                                    >
+                                                        Email
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="myPrimaryTableTh"
+                                                    >
+                                                        Role
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="myPrimaryTableTh"
+                                                    >
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="myPrimaryTableTBody">
+                                                <TransitionGroup name="table">
                                                     <tr
-                                                        class="myPrimaryTableTr"
+                                                        v-for="invitation in team.team_invitations"
+                                                        :key="invitation.id"
+                                                        class="myPrimaryTableTBodyTr"
                                                     >
-                                                        <th
-                                                            scope="col"
-                                                            class="myPrimaryTableTh"
+                                                        <td
+                                                            class="myPrimaryTableTBodyTd"
                                                         >
-                                                            Email
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            class="myPrimaryTableTh"
+                                                            {{
+                                                                invitation.email
+                                                            }}
+                                                        </td>
+                                                        <td
+                                                            class="myPrimaryTableTBodyTd"
                                                         >
-                                                            Role
-                                                        </th>
-                                                        <th
-                                                            scope="col"
-                                                            class="myPrimaryTableTh"
+                                                            {{
+                                                                invitation.role
+                                                            }}
+                                                        </td>
+
+                                                        <!-- Cancel Team Invitation -->
+                                                        <td
+                                                            class="myPrimaryTableTBodyTd"
                                                         >
-                                                            Action
-                                                        </th>
+                                                            <button
+                                                                class="myPrimaryDeleteButton"
+                                                                @click="
+                                                                    handleCancelTeamInvitation(
+                                                                        invitation
+                                                                    )
+                                                                "
+                                                            >
+                                                                Cancel
+                                                                Invitation
+                                                            </button>
+                                                        </td>
                                                     </tr>
-                                                </thead>
-
-                                                <tbody
-                                                    class="myPrimaryTableTBody"
-                                                >
-                                                    <TransitionGroup
-                                                        name="table"
-                                                    >
-                                                        <tr
-                                                            v-for="invitation in team.team_invitations"
-                                                            :key="invitation.id"
-                                                            class="myPrimaryTableTBodyTr"
-                                                        >
-                                                            <td
-                                                                class="myPrimaryTableTBodyTd"
-                                                            >
-                                                                {{
-                                                                    invitation.email
-                                                                }}
-                                                            </td>
-                                                            <td
-                                                                class="myPrimaryTableTBodyTd"
-                                                            >
-                                                                {{
-                                                                    invitation.role
-                                                                }}
-                                                            </td>
-
-                                                            <!-- Cancel Team Invitation -->
-                                                            <td
-                                                                class="myPrimaryTableTBodyTd"
-                                                            >
-                                                                <button
-                                                                    class="myPrimaryDeleteButton"
-                                                                    @click="
-                                                                        handleCancelTeamInvitation(
-                                                                            invitation
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    Cancel
-                                                                    Invitation
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </TransitionGroup>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                </TransitionGroup>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

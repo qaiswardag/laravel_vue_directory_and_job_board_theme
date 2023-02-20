@@ -56,7 +56,7 @@ const sidebarOpen = ref(false);
 <template>
     <Head>
         <title>{{ title }}</title>
-        <!-- head-key makes sure to only add on meta key -->
+        <!-- head-key makes sure to only add one meta key -->
         <meta
             type="description"
             content="myself.ae Fashion and Jobs"
@@ -130,7 +130,7 @@ const sidebarOpen = ref(false);
                         <div class="flex flex-shrink-0 items-center px-4">
                             <img
                                 class="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=fuchsia&shade=600"
+                                src="https://global-uploads.webflow.com/5e157547d6f791d34ea4e2bf/6087f2b060c7a92408bac811_logo.svg"
                                 alt="Your Company"
                             />
                         </div>
@@ -156,7 +156,7 @@ const sidebarOpen = ref(false);
             <div class="flex flex-shrink-0 items-center px-4">
                 <img
                     class="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=fuchsia&shade=600"
+                    src="https://global-uploads.webflow.com/5e157547d6f791d34ea4e2bf/6087f2b060c7a92408bac811_logo.svg"
                     alt="Your Company"
                 />
             </div>

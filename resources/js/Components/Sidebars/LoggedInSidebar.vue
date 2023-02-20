@@ -160,8 +160,8 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             Docs
         </SideBarLink>
         <SideBarLink
-            :href="route('superadmin.dashboard')"
-            :active="route().current('superadmin.dashboard')"
+            :href="route('admin.dashboard')"
+            :active="route().current('admin.dashboard')"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
