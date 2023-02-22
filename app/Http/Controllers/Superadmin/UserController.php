@@ -104,7 +104,7 @@ class UserController extends Controller
 
         //
         return redirect()
-            ->route("superadmin.users.index")
+            ->route("admin.users.index")
             ->with("success", "Successfully deleted User with id: {$user->id}");
     }
 }

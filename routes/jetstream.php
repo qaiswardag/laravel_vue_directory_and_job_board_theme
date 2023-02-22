@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Teams\TeamController as TeamsTeamController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
@@ -102,7 +103,7 @@ Route::group(
                         ])->name("teams.store");
                         Route::get("/teams/{team}", [
                             TeamController::class,
-                            "show",
+                            "show", // TODO: check array of user vs team details
                         ])->name("teams.show");
                         Route::put("/teams/{team}", [
                             TeamController::class,
@@ -140,10 +141,37 @@ Route::group(
                             TeamInvitationController::class,
                             "destroy",
                         ])->name("team-invitations.destroy");
-                        // Mange teams
-                        Route::get("/overview/teams", function () {
-                            return Inertia::render("Teams/Index");
-                        })->name("teams.index");
+
+                        Route::get("/user/teams", function () {
+                            return Inertia::render("Teams/UserTeams/UserTeams");
+                        })->name("user.teams");
+
+                        Route::get("/user/teams/switch", function () {
+                            return Inertia::render(
+                                "Teams/SwitchTeams/SwitchTeams"
+                            );
+                        })->name("user.teams.switch");
+
+                        Route::get("/user/teams/create", function () {
+                            return Inertia::render(
+                                "Teams/CreateTeam/CreateTeam"
+                            );
+                        })->name("user.teams.create");
+
+                        Route::get("/team/members", [
+                            TeamsTeamController::class,
+                            "teamMembers",
+                        ])->name("team.members");
+
+                        Route::get("/team/delete", [
+                            TeamsTeamController::class,
+                            "showDeleteForm",
+                        ])->name("team.delete");
+
+                        Route::get("/team/update", [
+                            TeamsTeamController::class,
+                            "show",
+                        ])->name("team.update.information");
                     }
                 });
             }

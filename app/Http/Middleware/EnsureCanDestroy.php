@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class EnsureHasCorrectRole
+class EnsureCanDestroy
 {
     /**
      * Handle an incoming request.
@@ -18,18 +18,11 @@ class EnsureHasCorrectRole
      */
     public function handle(Request $request, Closure $next)
     {
-        // current team: Auth::user()->currentTeam
-        // users team role for current team: Auth::user()->teamRole(Auth::user()->currentTeam)
-        //
-
-        //
-        //
         if (
             Auth::user()->teamRole(Auth::user()->currentTeam)->name ===
                 "Owner" ||
             Auth::user()->teamRole(Auth::user()->currentTeam)->name ===
-                "Administrator" ||
-            Auth::user()->teamRole(Auth::user()->currentTeam)->name === "Editor"
+                "Administrator"
         ) {
             return $next($request);
         }

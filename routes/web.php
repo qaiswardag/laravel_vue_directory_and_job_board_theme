@@ -5,7 +5,8 @@ use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Superadmin\DashboardController;
 use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\Teams\TeamController;
-use App\Http\Controllers\Users\UserController;
+use App\Http\Controllers\Guets\Users\UserController;
+use App\Http\Controllers\Users\UserProfileController;
 use App\Http\Middleware\isSuperAdmin;
 use App\Models\Post\Post;
 use App\Models\Team;
@@ -49,7 +50,24 @@ Route::middleware([
             return Inertia::render("Dashboard/Dashboard");
         })->name("dashboard");
 
-        //
+        // update profile and profile  security
+        Route::get("/user/profile/update", function () {
+            return Inertia::render("Profile/ProfileUpdate/ProfileUpdate");
+        })->name("user.profile.update");
+
+        Route::get("/user/profile/password", function () {
+            return Inertia::render("Profile/ProfilePassword/ProfilePassword");
+        })->name("user.profile.password");
+
+        Route::get("/user/profile/security", [
+            UserProfileController::class,
+            "showSessions",
+        ])->name("user.profile.security");
+
+        // posts
+        Route::get("/overview/posts", [PostController::class, "index"])->name(
+            "overview.posts.index"
+        );
     });
 //
 // group: users within a team who can create, update and delete
@@ -57,7 +75,7 @@ Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
     "verified",
-    "ensure.has.correct.role",
+    "ensure.has.correct.role", // owner, administrator and editor
 ])
     // group of pages
     ->group(function () {
@@ -70,16 +88,21 @@ Route::middleware([
             PostController::class,
             "store",
         ])->name("overview.posts.store");
+    });
+
+Route::middleware([
+    "auth:sanctum",
+    config("jetstream.auth_session"),
+    "verified",
+    "ensure.can.destroy", // owner, administrator
+])
+    // group of pages
+    ->group(function () {
+        // posts
         Route::delete("/overview/posts/post/{post}", [
             PostController::class,
             "destroy",
         ])->name("overview.posts.destroy");
-        //
-        //
-        // posts
-        Route::get("/overview/posts", [PostController::class, "index"])->name(
-            "overview.posts.index"
-        );
     });
 
 //
@@ -98,14 +121,13 @@ Route::middleware([
             DashboardController::class,
             "index",
         ])->name("admin.dashboard");
+
         // super admin — Users
-        // super admin - User
         Route::get("/admin/users", [
             SuperadminUserController::class,
             "index",
         ])->name("admin.users.index");
-        //
-        //
+
         Route::delete("/admin/users/user/{user}", [
             SuperadminUserController::class,
             "destroy",

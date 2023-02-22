@@ -59,8 +59,7 @@ class TeamPolicy
     public function addTeamMember(User $user, Team $team): bool
     {
         return $user->teamRole($team)->name == "Owner" ||
-            $user->teamRole($team)->name == "Administrator" ||
-            $user->teamRole($team)->name == "Editor";
+            $user->teamRole($team)->name == "Administrator";
         //
         // original
         // return $user->ownsTeam($team);
@@ -72,8 +71,7 @@ class TeamPolicy
     public function updateTeamMember(User $user, Team $team): bool
     {
         return $user->teamRole($team)->name == "Owner" ||
-            $user->teamRole($team)->name == "Administrator" ||
-            $user->teamRole($team)->name == "Editor";
+            $user->teamRole($team)->name == "Administrator";
         //
         // original
         // return $user->ownsTeam($team);

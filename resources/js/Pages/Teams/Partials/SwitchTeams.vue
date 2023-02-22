@@ -63,18 +63,14 @@ const switchTeam = function (team) {
         onError: (err) => {},
     });
 };
-//
-//
-//
-//
 </script>
 
 <template>
     <div>
         <ActionSection :sidebarArea="false" :actionsArea="false">
-            <template #title> Switch team </template>
+            <template #title>Switch Teams</template>
 
-            <template #description> Switch to another team.</template>
+            <template #description> Switch to another Team.</template>
 
             <template #main>
                 <div class="myInputsOrganization">
@@ -112,6 +108,12 @@ const switchTeam = function (team) {
                                                     class="myPrimaryTableTh"
                                                 >
                                                     Account Team Owner
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="myPrimaryTableTh"
+                                                >
+                                                    Your Role in this Team
                                                 </th>
                                                 <th
                                                     scope="col"
@@ -201,6 +203,12 @@ const switchTeam = function (team) {
                                                     class="myPrimaryTableTBodyTd"
                                                 >
                                                     {{ team.user_id }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    descripe user role for this
+                                                    team
                                                 </td>
                                                 <td
                                                     class="myPrimaryTableTBodyTd"

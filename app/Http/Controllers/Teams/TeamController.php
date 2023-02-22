@@ -6,13 +6,43 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Teams\StoreTeamControllerRequest;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 use Laravel\Jetstream\Contracts\CreatesTeams;
+use Laravel\Jetstream\Jetstream;
 
 class TeamController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function teamMembers()
+    {
+        $team = Auth::user()->currentTeam;
+
+        return Inertia::render("Teams/TeamMembers/TeamMembers", [
+            "team" => $team->load("owner", "users", "teamInvitations"),
+            "availableRoles" => array_values(Jetstream::$roles),
+            "availablePermissions" => Jetstream::$permissions,
+            "defaultPermissions" => Jetstream::$defaultPermissions,
+            "permissions" => [
+                "canAddTeamMembers" => Gate::check("addTeamMember", $team),
+                "canDeleteTeam" => Gate::check("delete", $team),
+                "canRemoveTeamMembers" => Gate::check(
+                    "removeTeamMember",
+                    $team
+                ),
+                "canUpdateTeam" => Gate::check("update", $team),
+            ],
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,64 +69,9 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTeamControllerRequest $request, User $user)
+    public function store(Request $request, User $user)
     {
         //
-        //
-        // 1
-        // return DB::transaction(function () use ($input) {
-        //     return tap(
-        //         User::create([
-        //             "name" => $input["name"],
-        //             "email" => $input["email"],
-        //             "password" => Hash::make($input["password"]),
-        //         ]),
-        //         function (User $user) {
-        //             $this->createTeam($user);
-        //         }
-        //     );
-        // });
-        //
-        //
-        // 2
-        /**
-         * Create a personal team for the user.
-         */
-        // protected function createTeam(User $user): void
-        // {
-        //     $user->ownedTeams()->save(
-        //         Team::forceCreate([
-        //             "user_id" => $user->id,
-        //             "name" => explode(" ", $user->name, 2)[0] . "'s Team",
-        //             "personal_team" => true,
-        //         ])
-        //     );
-        // }
-        //
-        //
-        //
-        //
-        //
-        //
-        DB::transaction(function () use ($request, $user) {
-            $team = Team::create([
-                "user_id" => $request->user()->id,
-                "name" => $request->name,
-                "personal_team" => false,
-            ]);
-
-            // TODO: update user and set as users current team.
-            $user
-                ->forceFill([
-                    // "current_team_id" => $team->id,
-                    "current_team_id" => 7,
-                ])
-                ->update();
-        });
-
-        return redirect()
-            ->back()
-            ->with("success", "Team have been created successfully.");
     }
     /**
      * Display the specified resource.
@@ -104,9 +79,31 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $team = Auth::user()->currentTeam;
+
+        return Inertia::render(
+            "Teams/UpdateTeamInformation/UpdateTeamInformation",
+            [
+                "team" => $team->load("owner", "users", "teamInvitations"),
+            ]
+        );
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showDeleteForm()
+    {
+        $team = Auth::user()->currentTeam;
+
+        return Inertia::render("Teams/TeamDelete/TeamDelete", [
+            "team" => $team->load("owner", "users", "teamInvitations"),
+        ]);
     }
 
     /**

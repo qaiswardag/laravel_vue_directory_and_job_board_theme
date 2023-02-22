@@ -103,17 +103,24 @@ const updateTeamName = () => {
                     $page.props.team.owner.id === $page.props.user.id
                 "
             >
-                <p class="myPrimaryParagraph">You are owner of this Team.</p>
-                <p class="myPrimaryParagraph">
-                    Account Team owner
-                    {{
-                        $page.props.team.owner &&
-                        $page.props.team.owner.first_name
-                    }}
-                    {{
-                        $page.props.team.owner &&
-                        $page.props.team.owner.last_name
-                    }}
+                <p class="group flex items-center pr-2 py-2 myPrimaryParagraph">
+                    Your name
+                    <span class="px-2 py-1 bg-green-100 mx-2 rounded-md">
+                        {{
+                            $page.props.team.owner &&
+                            $page.props.team.owner.first_name
+                        }}
+                        {{
+                            $page.props.team.owner &&
+                            $page.props.team.owner.last_name
+                        }}
+                    </span>
+                    and current role
+                    <span
+                        class="px-2 py-1 bg-green-100 ml-2 rounded-md font-semibold"
+                    >
+                        {{ $page.props.currentUserTeamRole }}
+                    </span>
                 </p>
             </div>
             <div
@@ -123,16 +130,31 @@ const updateTeamName = () => {
                 "
             >
                 <p class="myPrimaryParagraph">
-                    Account owner of this Team is
+                    Account owner of this Team is:
 
-                    {{
-                        $page.props.team.owner &&
-                        $page.props.team.owner.first_name
-                    }}
-                    {{
-                        $page.props.team.owner &&
-                        $page.props.team.owner.last_name
-                    }}.
+                    <span class="px-2 py-1 bg-gray-100 mr-1 rounded-md">
+                        {{
+                            $page.props.team.owner &&
+                            $page.props.team.owner.first_name
+                        }}
+                        {{
+                            $page.props.team.owner &&
+                            $page.props.team.owner.last_name
+                        }}
+                    </span>
+                </p>
+                <p class="group flex items-center pr-2 py-2 myPrimaryParagraph">
+                    Your name
+                    <span class="px-2 py-1 bg-green-100 mx-2.5 rounded-md">
+                        {{ $page.props.user.first_name }}
+                        {{ $page.props.user.last_name }}
+                    </span>
+                    and current role
+                    <span
+                        class="px-2 py-1 bg-green-100 mx-2 rounded-md font-semibold"
+                    >
+                        {{ $page.props.currentUserTeamRole }}
+                    </span>
                 </p>
             </div>
         </template>
@@ -144,7 +166,7 @@ const updateTeamName = () => {
                     <div
                         class="flex flex-col justify-center items-center gap-2 mb-8 mt-4"
                     >
-                        <p class="myPrimaryParagraph">Account Team owner</p>
+                        <p class="myPrimaryParagraph">Team owner</p>
                         <div
                             v-show="
                                 $page.props.team.owner &&

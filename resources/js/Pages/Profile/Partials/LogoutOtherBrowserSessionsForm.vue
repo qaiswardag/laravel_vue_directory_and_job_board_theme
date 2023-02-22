@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/Actions/ActionMessage.vue";
 import ActionSection from "@/Components/ActionSection.vue";
@@ -9,8 +9,9 @@ import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
-defineProps({
+const props = defineProps({
     sessions: Array,
+    confirmsTwoFactorAuthentication: Boolean,
 });
 
 const modalShowConfirmingSessionLogout = ref(false);
@@ -103,7 +104,7 @@ const closeModal = () => {
             <div class="myInputsOrganization">
                 <div class="myInputGroup">
                     <!-- Other Browser Sessions -->
-                    <div v-if="sessions.length > 0" class="mt-5 space-y-6">
+                    <div class="mt-5 space-y-6">
                         <div
                             v-for="(session, i) in sessions"
                             :key="i"

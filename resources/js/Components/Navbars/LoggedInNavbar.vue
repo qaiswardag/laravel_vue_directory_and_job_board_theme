@@ -242,8 +242,8 @@ const notificationsSlideOverButton = function () {
                             class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                         >
                             <span
-                                class="myPrimaryParagraph block px-4 py-2 text-xs text-myPrimaryDarkGrayColor"
-                                >Manage Teams</span
+                                class="myPrimaryParagraph block px-4 py-2 text-xs text-myPrimaryMediumGrayColor"
+                                >Settings</span
                             >
                             <DropdownLink
                                 :href="
@@ -254,7 +254,7 @@ const notificationsSlideOverButton = function () {
                                 "
                                 :active="route().current('teams.show')"
                             >
-                                Teams Settings
+                                Team Settings
                             </DropdownLink>
                         </MenuItems>
                     </transition>
@@ -269,11 +269,48 @@ const notificationsSlideOverButton = function () {
                         class="flex ml-3 gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 pr-2"
                     >
                         <span class="sr-only">Open user menu</span>
-                        <img
-                            class="h-8 w-8 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
-                        />
+
+                        <div class="flex flex-col justify-center items-center">
+                            <div
+                                v-show="
+                                    $page.props.user &&
+                                    $page.props.user.profile_photo_path !== null
+                                "
+                            >
+                                <img
+                                    class="object-cover w-8 h-8 rounded-full"
+                                    :src="$page.props.user.profile_photo_url"
+                                    :alt="
+                                        $page.props.user.first_name +
+                                        $page.props.user.last_name
+                                    "
+                                />
+                            </div>
+
+                            <div
+                                v-show="
+                                    $page.props.user &&
+                                    $page.props.user.profile_photo_path === null
+                                "
+                                class="w-8 h-8 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                            >
+                                <span>
+                                    {{
+                                        $page.props.user.first_name
+                                            .charAt(0)
+                                            .toUpperCase()
+                                    }}
+                                </span>
+                                <span>
+                                    {{
+                                        $page.props.user.last_name
+                                            .charAt(0)
+                                            .toUpperCase()
+                                    }}
+                                </span>
+                            </div>
+                        </div>
+
                         <span>
                             {{ $page.props.user.first_name }}
                             {{ $page.props.user.last_name }}</span

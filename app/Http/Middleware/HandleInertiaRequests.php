@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
+use Inertia\Response;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -41,6 +43,18 @@ class HandleInertiaRequests extends Middleware
                 "success" => fn() => $request->session()->get("success"),
                 "error" => fn() => $request->session()->get("error"),
             ],
+            "currentUserTeamRole" =>
+                Auth::user() &&
+                Auth::user()->currentTeam &&
+                Auth::user()->teamRole(Auth::user()->currentTeam)->name
+                    ? Auth::user()->teamRole(Auth::user()->currentTeam)->name
+                    : null,
+            "currentUserTeam" =>
+                Auth::user() &&
+                Auth::user()->currentTeam &&
+                Auth::user()->currentTeam
+                    ? Auth::user()->currentTeam
+                    : null,
         ]);
     }
 }

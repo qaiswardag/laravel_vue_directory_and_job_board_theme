@@ -72,5 +72,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\EnsureIsSuperAdmin::class,
         "ensure.has.correct.role" =>
             \App\Http\Middleware\EnsureHasCorrectRole::class,
+        "ensure.can.destroy" => \App\Http\Middleware\EnsureCanDestroy::class,
     ];
 }
