@@ -9,11 +9,17 @@ import { useStore } from "vuex";
 import { computed } from "vue";
 import { router } from "@inertiajs/vue3";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
+import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 const props = defineProps({
     sessions: Array,
     confirmsTwoFactorAuthentication: Boolean,
 });
+
+const breadcrumbsLinks = [
+    { label: "Profile", url: "profile.show" },
+    { label: "Profile Security" },
+];
 </script>
 
 <template>
@@ -22,6 +28,9 @@ const props = defineProps({
             <h2 class="myPrimaryMainPageHeader">Profile Security</h2>
         </template>
         <template #description> Profile Security </template>
+        <template #breadcrumbs>
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+        </template>
 
         <LogoutOtherBrowserSessionsForm
             :sessions="sessions"

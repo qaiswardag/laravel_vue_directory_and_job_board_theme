@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers\LoggedIn\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,7 +14,7 @@ use Laravel\Jetstream\Jetstream;
 
 use Concerns\ConfirmsTwoFactorAuthentication;
 
-class UserProfileController extends Controller
+class UserSessionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -47,24 +47,7 @@ class UserProfileController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-    //  public function show(Request $request)
-    //  {
-    //      $this->validateTwoFactorAuthenticationState($request);
-
-    //      return Jetstream::inertia()->render($request, 'Profile/Show', [
-    //          'confirmsTwoFactorAuthentication' => Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm'),
-    //          'sessions' => $this->sessions($request)->all(),
-    //      ]);
-    //  }
-
-    public function showSessions(Request $request)
+    public function show(Request $request)
     {
         return Jetstream::Inertia()->render(
             $request,
@@ -128,17 +111,6 @@ class UserProfileController extends Controller
         return tap(new Agent(), function ($agent) use ($session) {
             $agent->setUserAgent($session->user_agent);
         });
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

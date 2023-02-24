@@ -7,6 +7,12 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import SearchBarWithOptions from "@/Components/SearchBars/SearchBarWithOptions.vue";
 import { onMounted, ref } from "vue";
+import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
+
+const breadcrumbsLinks = [
+    { label: "Admin Dashboard", url: "admin.dashboard" },
+    { label: "Users" },
+];
 
 const props = defineProps({
     users: {
@@ -147,6 +153,9 @@ onMounted(() => {
         </DynamicModal>
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Users</h2>
+        </template>
+        <template #breadcrumbs>
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
 
         <template #description></template>

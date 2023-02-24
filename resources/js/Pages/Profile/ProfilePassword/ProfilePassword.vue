@@ -9,14 +9,23 @@ import { useStore } from "vuex";
 import { computed } from "vue";
 import { router } from "@inertiajs/vue3";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
+import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
+
+const breadcrumbsLinks = [
+    { label: "Profile", url: "profile.show" },
+    { label: "Profile Password" },
+];
 </script>
 
 <template>
-    <LoggedInLayout title="Profile">
+    <LoggedInLayout title="Profile Password">
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Update Password</h2>
         </template>
-        <template #description>Update Profile</template>
+        <template #description>Update Profile Password</template>
+        <template #breadcrumbs>
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+        </template>
 
         <div>
             <div v-if="$page.props.jetstream.canUpdatePassword">

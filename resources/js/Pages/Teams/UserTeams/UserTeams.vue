@@ -3,6 +3,14 @@ import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import SwitchTeams from "../Partials/SwitchTeams.vue";
 import CreateTeamForm from "@/Pages/Teams/Partials/CreateTeamForm.vue";
 import SectionBorder from "@/Components/SectionBorder.vue";
+import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
+
+const breadcrumbsLinks = [
+    {
+        label: "Your Teams",
+        url: "user.teams",
+    },
+];
 </script>
 
 <template>
@@ -10,22 +18,24 @@ import SectionBorder from "@/Components/SectionBorder.vue";
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Your Teams</h2>
         </template>
-
         <template #description>
             This is Team index page ipsum dolor sit, amet consectetur
             adipisicing elit. Animi, distinctio.
         </template>
+        <template #breadcrumbs>
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+        </template>
 
         <div class="myPrimarySection">
             <div
-                class="divide-y divide-gray-200 rounded-lg shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
+                class="divide-y divide-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
             >
                 <div
                     class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center rounded-lg inline-flex p-3 ring-4 ring-white"
+                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +94,7 @@ import SectionBorder from "@/Components/SectionBorder.vue";
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center rounded-lg inline-flex p-3 ring-4 ring-white"
+                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

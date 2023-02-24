@@ -3,10 +3,10 @@ import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import ActionSection from "@/Components/ActionSection.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
-import DescriptionPlusCreate from "../../Components/Actions/DescriptionPlusCreate.vue";
+import CardHeadings from "@/Components/Actions/CardHeadings.vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import SubmitButton from "../../Components/Buttons/SubmitButton.vue";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
@@ -15,6 +15,23 @@ defineProps({
         required: true,
     },
 });
+
+const breadcrumbsLinks = [{ label: "Posts", url: "overview.posts.index" }];
+
+const routesCardHeadings = [
+    {
+        label: "All Posts",
+        routeName: "overview.posts.index",
+    },
+    {
+        label: "Create Post",
+        routeName: "overview.posts.create",
+    },
+    {
+        label: "Categories",
+        routeName: "overview.posts.create",
+    },
+];
 
 const modalShowDeletePost = ref(false);
 
@@ -82,11 +99,6 @@ const deletePost = (postId) => {
 const handleEdit = function (id) {
     console.log("handle edit function ran. post id is:", id);
 };
-
-const breadcrumbsLinks = [
-    { label: "Posts", url: "overview.posts.index" },
-    { label: "Add Post" },
-];
 </script>
 
 <template>
@@ -113,24 +125,21 @@ const breadcrumbsLinks = [
         <template #header>
             <h2 class="myPrimaryMainPageHeader">
                 Posts for
-                {{ $page.props.user && $page.props.user.current_team.name }}
+                {{ $page.props.user && $page.props.currentUserTeam.name }}
             </h2>
         </template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
 
-        <DescriptionPlusCreate>
-            <template #title>
-                <div class="py-4">
-                    Manage Posts for
-                    <span class="font-semibold">
-                        {{
-                            $page.props.user &&
-                            $page.props.user.current_team.name
-                        }}
-                    </span>
-                </div>
+        <CardHeadings :routesCardHeadings="routesCardHeadings">
+            <template #title
+                >Posts for
+                {{ $page.props.user && $page.props.user.current_team.name }}
+            </template>
+            <template #subTitle
+                >Lorem ipsum dolor sit amet consectetur adipisicing elit quam
+                corrupti consectetur.
             </template>
             <template #buttons>
                 <Link
@@ -138,29 +147,23 @@ const breadcrumbsLinks = [
                     type="button"
                     :href="route('overview.posts.create')"
                 >
-                    Add Category
+                    Categories
                 </Link>
                 <Link
                     class="myPrimaryButton"
                     type="button"
                     :href="route('overview.posts.create')"
                 >
-                    Lorem
-                </Link>
-                <Link
-                    class="myPrimaryButton"
-                    type="button"
-                    :href="route('overview.posts.create')"
-                >
-                    Add Post
+                    Create Post
                 </Link>
             </template>
-        </DescriptionPlusCreate>
+        </CardHeadings>
 
         <h1
             v-if="posts && posts.data.length <= 0"
             class="myPrimarySuccessAlertMessage"
         >
+            <!-- TODO: make a componenet for this kind of text -->
             No Posts yet
         </h1>
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Post;
+namespace App\Http\Controllers\LoggedIn\Post;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post\Post;
@@ -130,7 +130,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        //
         return redirect()
             ->back()
             ->with(

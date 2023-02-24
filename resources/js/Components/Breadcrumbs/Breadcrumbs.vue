@@ -16,7 +16,10 @@ const props = defineProps({
             :key="index"
         >
             <template v-if="link.url !== undefined">
-                <Link :href="route(link.url)" class="myPrimaryLink">
+                <Link
+                    :href="route(link.url, link.parameter)"
+                    class="myPrimaryLink"
+                >
                     {{ link.label }}
                 </Link>
             </template>

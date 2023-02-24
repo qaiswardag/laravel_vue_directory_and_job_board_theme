@@ -1,22 +1,46 @@
 <?php
 
-namespace App\Http\Controllers\Guets\Users;
+namespace App\Http\Controllers\LoggedIn\Team;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Teams\StoreTeamControllerRequest;
+use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Laravel\Jetstream\Contracts\CreatesTeams;
+use Laravel\Jetstream\Jetstream;
 
-class UserController extends Controller
+class TeamMemberController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Team $team)
     {
-        //
+        Gate::authorize("view", $team);
+
+        return Inertia::render("Teams/TeamMembers/TeamMembers", [
+            "team" => $team->load("owner", "users", "teamInvitations"),
+            "availableRoles" => array_values(Jetstream::$roles),
+            "availablePermissions" => Jetstream::$permissions,
+            "defaultPermissions" => Jetstream::$defaultPermissions,
+            "permissions" => [
+                "canAddTeamMembers" => Gate::check("addTeamMember", $team),
+                "canDeleteTeam" => Gate::check("delete", $team),
+                "canRemoveTeamMembers" => Gate::check(
+                    "removeTeamMember",
+                    $team
+                ),
+                "canUpdateTeam" => Gate::check("update", $team),
+            ],
+        ]);
     }
 
     /**
@@ -37,7 +61,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd("came to user controller and store method");
+        //
     }
 
     /**
@@ -46,11 +70,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return Inertia::render("Guests/Users/UserProfile", [
-            "userProfile" => $user,
-        ]);
+        //
     }
 
     /**

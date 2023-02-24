@@ -8,11 +8,14 @@ import UpdateProfileInformationForm from "@/Pages/Profile/Partials/UpdateProfile
 import { computed } from "vue";
 import { router } from "@inertiajs/vue3";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
+import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 const props = defineProps({
     sessions: Array,
     confirmsTwoFactorAuthentication: Boolean,
 });
+
+const breadcrumbsLinks = [{ label: "Profile", url: "profile.show" }];
 </script>
 
 <template>
@@ -20,17 +23,21 @@ const props = defineProps({
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Profile</h2>
         </template>
+        <template #description> Profile Settings </template>
+        <template #breadcrumbs>
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+        </template>
 
         <div class="myPrimarySection">
             <div
-                class="divide-y divide-gray-200 rounded-lg shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
+                class="divide-y divide-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
             >
                 <div
                     class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center rounded-lg inline-flex p-3 ring-4 ring-white"
+                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +96,7 @@ const props = defineProps({
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center rounded-lg inline-flex p-3 ring-4 ring-white"
+                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +153,7 @@ const props = defineProps({
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center rounded-lg inline-flex p-3 ring-4 ring-white"
+                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -201,9 +208,5 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-        <template #description>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi,
-            distinctio.
-        </template>
     </LoggedInLayout>
 </template>

@@ -7,6 +7,7 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import AvatarCardCenterSmall from "@/Components/Avatars/AvatarCardCenterSmall.vue";
+import ActionMessage from "@/Components/Actions/ActionMessage.vue";
 
 import { ref } from "@vue/reactivity";
 
@@ -89,7 +90,7 @@ const createTeam = () => {
     <FormSection
         @submitted="handleCreateTeam"
         :sidebarArea="false"
-        :actionsArea="false"
+        :actionsArea="true"
     >
         <template #title> Create Team </template>
 
@@ -115,6 +116,19 @@ const createTeam = () => {
                     <InputError :message="createTeamForm.errors.name" />
                 </div>
             </div>
+        </template>
+        <template #actions>
+            <SubmitButton
+                :disabled="createTeamForm.processing"
+                buttonText="Create Team"
+            >
+            </SubmitButton>
+            <ActionMessage
+                :on="createTeamForm.recentlySuccessful"
+                type="success"
+            >
+                Successfully Created your Team.
+            </ActionMessage>
         </template>
     </FormSection>
 </template>

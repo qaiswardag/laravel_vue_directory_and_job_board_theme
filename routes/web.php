@@ -1,12 +1,12 @@
 <?php
 
 use App\Actions\Fortify\CreateNewUser;
-use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\LoggedIn\Post\PostController;
 use App\Http\Controllers\Superadmin\DashboardController;
 use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\Teams\TeamController;
-use App\Http\Controllers\Guets\Users\UserController;
-use App\Http\Controllers\Users\UserProfileController;
+use App\Http\Controllers\Guest\User\UserController;
+use App\Http\Controllers\LoggedIn\User\UserSessionsController;
 use App\Http\Middleware\isSuperAdmin;
 use App\Models\Post\Post;
 use App\Models\Team;
@@ -60,8 +60,8 @@ Route::middleware([
         })->name("user.profile.password");
 
         Route::get("/user/profile/security", [
-            UserProfileController::class,
-            "showSessions",
+            UserSessionsController::class,
+            "show",
         ])->name("user.profile.security");
 
         // posts

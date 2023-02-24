@@ -188,13 +188,16 @@ const notificationsSlideOverButton = function () {
                 >
                     <Link
                         :href="
-                            route('teams.index', $page.props.user.current_team)
+                            route(
+                                'user.teams.switch',
+                                $page.props.user.current_team
+                            )
                         "
                         :class="{
-                            myPrimaryLink: route().current('teams.index'),
+                            myPrimaryLink: route().current('user.teams.switch'),
                         }"
                     >
-                        Select a Team
+                        No Team Selected
                     </Link>
                 </div>
             </template>

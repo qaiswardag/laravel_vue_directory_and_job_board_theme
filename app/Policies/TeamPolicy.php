@@ -115,7 +115,7 @@ class TeamPolicy
 
     public function removeGeneralResource(User $user, Team $team): bool
     {
-        dd("cøme here");
+        dd("cøme here to this policy!!!!");
         return $user->teamRole($team)->name == "Owner" ||
             $user->teamRole($team)->name == "Administrator";
     }

@@ -7,12 +7,21 @@ import UpdateTeamNameForm from "@/Pages/Teams/Partials/UpdateTeamNameForm.vue";
 import { ref } from "vue";
 import { router } from "@inertiajs/vue3";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
+import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 const props = defineProps({
     team: Object,
     availableRoles: Array,
     permissions: Object,
 });
+
+const breadcrumbsLinks = [
+    {
+        label: "Team Settings",
+        url: "teams.show",
+        parameter: props.team,
+    },
+];
 </script>
 
 <template>
@@ -20,17 +29,20 @@ const props = defineProps({
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Team Settings</h2>
         </template>
+        <template #breadcrumbs>
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+        </template>
 
         <div class="myPrimarySection">
             <div
-                class="divide-y divide-gray-200 rounded-lg shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
+                class="divide-y divide-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
             >
                 <div
                     class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center rounded-lg inline-flex p-3 ring-4 ring-white"
+                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +63,7 @@ const props = defineProps({
                     <div class="mt-8">
                         <h3 class="text-lg font-medium">
                             <Link
-                                :href="route('team.update.information')"
+                                :href="route('team.update.information', team)"
                                 class="focus:outline-none"
                             >
                                 <span
@@ -89,7 +101,7 @@ const props = defineProps({
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center rounded-lg inline-flex p-3 ring-4 ring-white"
+                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +122,7 @@ const props = defineProps({
                     <div class="mt-8">
                         <h3 class="text-lg font-medium">
                             <Link
-                                :href="route('team.members')"
+                                :href="route('team.members', team)"
                                 class="focus:outline-none"
                             >
                                 <span
@@ -146,7 +158,7 @@ const props = defineProps({
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center rounded-lg inline-flex p-3 ring-4 ring-white"
+                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +179,7 @@ const props = defineProps({
                     <div class="mt-8">
                         <h3 class="text-lg font-medium">
                             <Link
-                                :href="route('team.delete')"
+                                :href="route('team.delete', team)"
                                 class="focus:outline-none"
                             >
                                 <span

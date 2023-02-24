@@ -116,9 +116,7 @@ const updateTeamName = () => {
                         }}
                     </span>
                     and current role
-                    <span
-                        class="px-2 py-1 bg-green-100 ml-2 rounded-md font-semibold"
-                    >
+                    <span class="px-2 py-1 bg-green-100 ml-2 rounded-md">
                         {{ $page.props.currentUserTeamRole }}
                     </span>
                 </p>
@@ -143,16 +141,16 @@ const updateTeamName = () => {
                         }}
                     </span>
                 </p>
-                <p class="group flex items-center pr-2 py-2 myPrimaryParagraph">
+                <p
+                    class="group flex items-center pr-2 py-2 mt-2 myPrimaryParagraph"
+                >
                     Your name
                     <span class="px-2 py-1 bg-green-100 mx-2.5 rounded-md">
                         {{ $page.props.user.first_name }}
                         {{ $page.props.user.last_name }}
                     </span>
                     and current role
-                    <span
-                        class="px-2 py-1 bg-green-100 mx-2 rounded-md font-semibold"
-                    >
+                    <span class="px-2 py-1 bg-green-100 mx-2 rounded-md">
                         {{ $page.props.currentUserTeamRole }}
                     </span>
                 </p>

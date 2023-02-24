@@ -19,18 +19,64 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             <p
                 class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
-                <span class="self-start block">Current team:</span>
-                <span class="px-2 py-1 bg-gray-100 rounded-md ml-2">
+                <span class="self-start block">Current Team:</span>
+                <Link
+                    :href="
+                        route(
+                            'user.teams.switch',
+                            $page.props.user.current_team
+                        )
+                    "
+                    class="text-xs px-2 bg-gray-100 rounded-md ml-2"
+                    :class="{
+                        myPrimaryLink: route().current('user.teams.switch'),
+                    }"
+                >
                     {{ $page.props.currentUserTeam?.name }}
-                </span>
+                </Link>
             </p>
             <p
                 class="text-myPrimaryDarkGrayColor group flex justify-between items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
-                <span class="self-start">Your current role:</span>
-                <span class="px-2 py-1 bg-gray-100 rounded-md ml-2">
+                <span class="self-start">Current Team Role:</span>
+                <span class="px-2 bg-gray-100 rounded-md ml-2">
                     {{ $page.props.currentUserTeamRole }}
                 </span>
+            </p>
+        </template>
+
+        <template
+            v-if="
+                $page.props.user.all_teams.length > 0 &&
+                !$page.props.user.current_team &&
+                $page.props.jetstream.hasTeamFeatures
+            "
+        >
+            <p
+                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
+            >
+                <span class="self-start block">Current Team:</span>
+
+                <Link
+                    :href="
+                        route(
+                            'user.teams.switch',
+                            $page.props.user.current_team
+                        )
+                    "
+                    class="text-xs px-2 bg-gray-100 rounded-md ml-2 underline"
+                    :class="{
+                        myPrimaryLink: route().current('user.teams.switch'),
+                    }"
+                >
+                    No Team Selected
+                </Link>
+            </p>
+            <p
+                class="text-myPrimaryDarkGrayColor group flex justify-between items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
+            >
+                <span class="self-start">Current Team Role:</span>
+                <span class="px-2 bg-gray-100 rounded-md ml-2"> None </span>
             </p>
         </template>
         <SideBarLink
@@ -81,12 +127,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             "
         >
             <SideBarLink
-                :href="
-                    route(
-                        'overview.posts.index'
-                        // $page.props.user.current_team
-                    )
-                "
+                :href="route('overview.posts.index')"
                 :active="
                     route().current('overview.posts.index') ||
                     route().current('overview.posts.create')

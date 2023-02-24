@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class EnsureHasCorrectRole
+class EnsureCanCreateAndUpdate
 {
     /**
      * Handle an incoming request.

@@ -424,8 +424,8 @@ const displayAbleRole = (role) => {
                         No Pending Team Invitations
                     </div>
                     <div v-if="team.team_invitations.length > 0">
-                        These people have been invited to your team and have
-                        been sent an invitation email. They may join the team by
+                        These people have been invited to your Team and have
+                        been sent an invitation email. They may join the Team by
                         accepting the email invitation.
                     </div>
                 </template>
@@ -555,17 +555,6 @@ const displayAbleRole = (role) => {
                     >
                         <p class="myPrimaryParagraph">
                             You are owner of this Team.
-                        </p>
-                        <p class="myPrimaryParagraph">
-                            Team owner
-                            {{
-                                $page.props.team.owner &&
-                                $page.props.team.owner.first_name
-                            }}
-                            {{
-                                $page.props.team.owner &&
-                                $page.props.team.owner.last_name
-                            }}
                         </p>
                     </div>
 

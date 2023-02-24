@@ -70,7 +70,28 @@ const switchTeam = function (team) {
         <ActionSection :sidebarArea="false" :actionsArea="false">
             <template #title>Switch Teams</template>
 
-            <template #description> Switch to another Team.</template>
+            <template #description>
+                <template
+                    v-if="
+                        $page.props.user.all_teams.length > 0 &&
+                        !$page.props.user.current_team &&
+                        $page.props.jetstream.hasTeamFeatures
+                    "
+                >
+                    No Team Selected. Select a Team.
+                    <br />
+                </template>
+
+                <template
+                    v-if="
+                        $page.props.user.all_teams.length > 0 &&
+                        $page.props.user.current_team &&
+                        $page.props.jetstream.hasTeamFeatures
+                    "
+                >
+                    Switch to another Team.
+                </template>
+            </template>
 
             <template #main>
                 <div class="myInputsOrganization">

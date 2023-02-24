@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Post\PostController;
-use App\Http\Controllers\Teams\TeamController as TeamsTeamController;
+use App\Http\Controllers\LoggedIn\Team\TeamController as TeamTeamController;
+use App\Http\Controllers\LoggedIn\Team\TeamDeleteController;
+use App\Http\Controllers\LoggedIn\Team\TeamMemberController as TeamTeamMemberController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
@@ -158,19 +160,19 @@ Route::group(
                             );
                         })->name("user.teams.create");
 
-                        Route::get("/team/members", [
-                            TeamsTeamController::class,
-                            "teamMembers",
+                        Route::get("/team/members{team}", [
+                            TeamTeamMemberController::class,
+                            "index",
                         ])->name("team.members");
 
-                        Route::get("/team/delete", [
-                            TeamsTeamController::class,
-                            "showDeleteForm",
+                        Route::get("/team/delete{team}", [
+                            TeamDeleteController::class,
+                            "edit",
                         ])->name("team.delete");
 
-                        Route::get("/team/update", [
-                            TeamsTeamController::class,
-                            "show",
+                        Route::get("/team/update/{team}", [
+                            TeamTeamController::class,
+                            "edit",
                         ])->name("team.update.information");
                     }
                 });

@@ -10,6 +10,10 @@ import {
     BeakerIcon,
 } from "@heroicons/vue/24/outline";
 
+import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
+
+const breadcrumbsLinks = [{ label: "Admin Dashboard", url: "admin.dashboard" }];
+
 const actions = [
     {
         title: "Users",
@@ -34,29 +38,23 @@ const actions = [
             <h2 class="myPrimaryMainPageHeader">Super Admininistrator</h2>
         </template>
 
-        <template #description>
-            This is Super Admininistrator page ipsum dolor sit, amet consectetur
-            adipisicing elit. Animi, distinctio.
+        <template #description>Super Admininistrator Dashboard </template>
+        <template #breadcrumbs>
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
 
         <div class="myPrimarySection">
             <div
-                class="divide-y divide-gray-200 rounded-lg shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
+                class="divide-y divide-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
             >
                 <div
                     v-for="(action, actionIdx) in actions"
                     :key="action.title"
                     :class="[
-                        actionIdx === 0
-                            ? 'rounded-tl-lg rounded-tr-lg sm:rounded-tr-none'
-                            : '',
-                        actionIdx === 1 ? 'sm:rounded-tr-lg' : '',
-                        actionIdx === actions.length - 2
-                            ? 'sm:rounded-bl-lg'
-                            : '',
-                        actionIdx === actions.length - 1
-                            ? 'rounded-bl-lg rounded-br-lg sm:rounded-bl-none'
-                            : '',
+                        actionIdx === 0 ? '' : '',
+                        actionIdx === 1 ? '' : '',
+                        actionIdx === actions.length - 2 ? '' : '',
+                        actionIdx === actions.length - 1 ? '' : '',
                         'relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor',
                     ]"
                 >
@@ -65,7 +63,7 @@ const actions = [
                             :class="[
                                 action.iconBackground,
                                 action.iconForeground,
-                                'rounded-lg inline-flex p-3 ring-4 ring-white',
+                                'inline-flex p-3 ring-4 ring-white',
                             ]"
                         >
                             <component

@@ -8,12 +8,24 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import { ref } from "vue";
 import { router } from "@inertiajs/vue3";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
+import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 const props = defineProps({
     team: Object,
     availableRoles: Array,
     permissions: Object,
 });
+
+const breadcrumbsLinks = [
+    {
+        label: "Team Settings",
+        url: "teams.show",
+        parameter: props.team,
+    },
+    {
+        label: "Team Information",
+    },
+];
 
 const modalShowWhenNoTeamOwner = ref(false);
 
@@ -57,16 +69,19 @@ if (props.team.owner === null || props.team.owner === undefined) {
         // handle show modal for unique content
         modalShowWhenNoTeamOwner.value = false;
         // action
-        router.get(route("teams.index"));
+        router.get(route("user.teams"));
     };
     // end modal
 }
 </script>
 
 <template>
-    <LoggedInLayout title="Team Settings">
+    <LoggedInLayout title="Team Information">
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Team Information</h2>
+        </template>
+        <template #breadcrumbs>
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
         <DynamicModal
             :show="modalShowWhenNoTeamOwner"

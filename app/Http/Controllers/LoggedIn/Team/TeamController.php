@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Teams;
+namespace App\Http\Controllers\LoggedIn\Team;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Teams\StoreTeamControllerRequest;
@@ -17,32 +17,6 @@ use Laravel\Jetstream\Jetstream;
 
 class TeamController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function teamMembers()
-    {
-        $team = Auth::user()->currentTeam;
-
-        return Inertia::render("Teams/TeamMembers/TeamMembers", [
-            "team" => $team->load("owner", "users", "teamInvitations"),
-            "availableRoles" => array_values(Jetstream::$roles),
-            "availablePermissions" => Jetstream::$permissions,
-            "defaultPermissions" => Jetstream::$defaultPermissions,
-            "permissions" => [
-                "canAddTeamMembers" => Gate::check("addTeamMember", $team),
-                "canDeleteTeam" => Gate::check("delete", $team),
-                "canRemoveTeamMembers" => Gate::check(
-                    "removeTeamMember",
-                    $team
-                ),
-                "canUpdateTeam" => Gate::check("update", $team),
-            ],
-        ]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -81,29 +55,7 @@ class TeamController extends Controller
      */
     public function show()
     {
-        $team = Auth::user()->currentTeam;
-
-        return Inertia::render(
-            "Teams/UpdateTeamInformation/UpdateTeamInformation",
-            [
-                "team" => $team->load("owner", "users", "teamInvitations"),
-            ]
-        );
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showDeleteForm()
-    {
-        $team = Auth::user()->currentTeam;
-
-        return Inertia::render("Teams/TeamDelete/TeamDelete", [
-            "team" => $team->load("owner", "users", "teamInvitations"),
-        ]);
+        //
     }
 
     /**
@@ -112,9 +64,20 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Team $team)
     {
-        //
+        // $team = Auth::user()->currentTeam;
+        // $team = Jetstream::newTeamModel()->findOrFail($teamId);
+
+        Gate::authorize("view", $team);
+
+        return Inertia::render(
+            "Teams/UpdateTeamInformation/UpdateTeamInformation",
+            [
+                // "team" => $team->load("owner", "users", "teamInvitations"),
+                "team" => $team->load("owner"),
+            ]
+        );
     }
 
     /**
