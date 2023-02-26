@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Guest\User;
+namespace App\Http\Controllers\Guest\Post;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Post\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class UserController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,19 +16,19 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        // TO DO: show only users which status is not privat
-        $users = User::latest()
+        // TO DO: show only posts which status is not privat
+        $posts = Post::latest()
             ->when($request->query("search_query"), function ($query, $term) {
                 $query
                     ->where("title", "LIKE", "%" . $term . "%")
                     ->orWhere("content", "LIKE", "%" . $term . "%");
             })
             ->paginate(10);
-        // // append users
-        $users->appends($request->all());
+        // // append posts
+        $posts->appends($request->all());
         //
-        return Inertia::render("Guests/User/Index", [
-            "users" => $users,
+        return Inertia::render("Guests/Post/Index", [
+            "posts" => $posts,
         ]);
     }
 
@@ -50,7 +50,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd("came to user controller and store method");
+        //
     }
 
     /**
@@ -59,11 +59,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Post $post)
     {
-        // TO DO: show only user which status is not privat
-        return Inertia::render("Guests/User/Show", [
-            "user" => $user,
+        // TO DO: show only post which status is not privat
+        return Inertia::render("Guests/Post/Show", [
+            "post" => $post,
         ]);
     }
 

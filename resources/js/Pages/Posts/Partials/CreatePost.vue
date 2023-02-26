@@ -342,11 +342,6 @@ const createPost = () => {
                             </p>
                         </div>
                         <div class="myInputGroup">
-                            <InputLabel
-                                for="select_team"
-                                value="Post belongs to Team"
-                                class="mb-1"
-                            />
                             <Listbox as="div" v-model="createPostForm.team">
                                 <ListboxLabel class="myPrimaryInputLabel"
                                     >Post belongs to Team</ListboxLabel

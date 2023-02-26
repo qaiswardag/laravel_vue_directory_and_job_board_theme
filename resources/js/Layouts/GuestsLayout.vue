@@ -36,30 +36,55 @@ router.on("finish", () => {
         </Head>
         <Banner />
         <div class="my-6 pr-12">
-            <nav
-                class="myPrimaryParagraph font-medium text-base flex justify-end items-center myPrimaryGap"
-            >
+            <nav class="flex justify-end items-center myPrimaryGap">
                 <Link
-                    :href="route('home')"
+                    :href="route('dashboard')"
                     :class="{
-                        'myPrimaryLink text-base': route().current('home'),
+                        'myPrimaryLink myPrimaryParagraph':
+                            route().current('dashboard'),
                     }"
+                    class="myPrimaryParagraph"
                 >
-                    Home
+                    Dashboard
                 </Link>
+                <Link
+                    :href="route('users')"
+                    :class="{
+                        'myPrimaryParagraph myPrimaryParagraph':
+                            route().current('users'),
+                    }"
+                    class="myPrimaryParagraph"
+                >
+                    Users
+                </Link>
+                <Link
+                    :href="route('posts')"
+                    :class="{
+                        'myPrimaryParagraph myPrimaryParagraph':
+                            route().current('posts'),
+                    }"
+                    class="myPrimaryParagraph"
+                >
+                    Posts
+                </Link>
+
                 <Link
                     :href="route('login')"
                     :class="{
-                        'myPrimaryLink text-base': route().current('login'),
+                        'myPrimaryParagraph myPrimaryParagraph':
+                            route().current('login'),
                     }"
+                    class="myPrimaryParagraph"
                 >
                     Login
                 </Link>
                 <Link
                     :href="route('register')"
                     :class="{
-                        'myPrimaryLink text-base': route().current('register'),
+                        'myPrimaryParagraph myPrimaryParagraph':
+                            route().current('register'),
                     }"
+                    class="myPrimaryParagraph"
                 >
                     Register
                 </Link>

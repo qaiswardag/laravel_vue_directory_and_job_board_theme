@@ -113,7 +113,7 @@ class TeamPolicy
      * Determine whether the user can remove resource.
      */
 
-    public function removeGeneralResource(User $user, Team $team): bool
+    public function canCreateUpdateAndDelete(User $user, Team $team): bool
     {
         dd("cøme here to this policy!!!!");
         return $user->teamRole($team)->name == "Owner" ||

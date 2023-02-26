@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -27,7 +28,10 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $team = Team::findOrFail(Auth()->user()->current_team_id);
-        $posts = $team->posts()->paginate(2);
+        $posts = $team
+            ->posts()
+            ->latest()
+            ->paginate(2);
 
         return Inertia::render("Posts/Index", [
             "posts" => $posts,
@@ -55,26 +59,25 @@ class PostController extends Controller
     public function store(StorePostRequest $request, Post $post)
     {
         sleep(1);
+        // dd($request);
 
-        $title = $request->input("title");
-        $content = $request->input("content");
-        $user = $request->input("user");
-        $team = $request->input("team_id");
+        $title = $request->title;
+        $content = $request->content;
+        $userId = $request->user_id;
+        $team = $request->team;
 
         Post::create([
-            "user_id" => $user->id,
-            "team_id" => $team->id,
-            // created by below user
+            "user_id" => $userId,
+            "team_id" => $team["id"],
             "title" => $title,
             "slug" => $title,
-            "published" => $request->input("published"),
-            "image_cover_path" => "hi-i-am-path-for-image",
+            "published" => $request->published,
+            // "image_cover_path" => "hi-i-am-path-for-image",
             "content" => $content,
         ]);
 
         return redirect()->route("overview.posts.index");
     }
-
     /**
      * Display the specified resource.
      *

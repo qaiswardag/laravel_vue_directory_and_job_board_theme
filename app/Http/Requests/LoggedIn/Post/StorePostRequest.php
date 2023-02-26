@@ -24,7 +24,8 @@ class StorePostRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this);
+        // dd($this->team);
+
         return [
             "published" => [""],
             "title" => ["required", "min:2", "max:255"],
@@ -32,7 +33,7 @@ class StorePostRequest extends FormRequest
             "user_id" => ["required"],
             "team" => ["required"],
             "content" => ["required", "min:2", "max:255"],
-            "post_cover_image" => ["required"],
+            "post_cover_image" => [],
         ];
     }
 
@@ -44,6 +45,7 @@ class StorePostRequest extends FormRequest
      */
     public function withValidator($validator)
     {
+        // dd($this->team);
         $validator->after(function ($validator) {
             if ($this->team === null) {
                 $validator->errors()->add("team", "Team field is required.");

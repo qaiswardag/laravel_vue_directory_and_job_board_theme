@@ -176,6 +176,8 @@ const notificationsSlideOverButton = function () {
             <!--  -->
             <!-- Teams Management desktop - start -->
 
+            <Link class="myPrimaryParagraph" :href="route('home')"> Home </Link>
+
             <template
                 v-if="
                     $page.props.user.all_teams.length > 0 &&

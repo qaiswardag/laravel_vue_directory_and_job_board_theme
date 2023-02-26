@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Http\Controllers\Guest\Post\PostController as PostPostController;
 use App\Http\Controllers\LoggedIn\Post\PostController;
 use App\Http\Controllers\Superadmin\DashboardController;
 use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
@@ -107,6 +108,47 @@ Route::middleware([
 
 //
 //
+//
+//
+// guest routes start
+// middleware for group of pages
+Route::middleware([])
+    // group of pages
+    ->group(function () {
+        Route::get("/docs", function () {
+            return Inertia::render("Docs");
+        })->name("docs");
+        // users
+        Route::get("/users", [UserController::class, "index"])->name("users");
+        // unique user
+        Route::get("/users/user/{user}", [UserController::class, "show"])->name(
+            "users.show"
+        );
+        // posts
+        Route::get("/posts", [PostPostController::class, "index"])->name(
+            "posts"
+        );
+        // unique post
+        Route::get("/posts/post/{post}", [
+            PostPostController::class,
+            "show",
+        ])->name("posts.show");
+        //
+        //
+        //
+        //
+        //
+    });
+// guest routes end
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // group: super admin
 Route::middleware([
     "auth:sanctum",
@@ -142,31 +184,8 @@ Route::middleware([
 //
 //
 //
-// guest routes start
-// middleware for group of pages
-Route::middleware([])
-    // group of pages
-    ->group(function () {
-        Route::get("/docs", function () {
-            return Inertia::render("Docs");
-        })->name("docs");
-        //
-        // unique user
-        Route::get("/users/user/{user}", [UserController::class, "show"])->name(
-            "users.show"
-        );
-        // unique post
-        Route::get("/posts/post/{user}", [PostController::class, "show"])->name(
-            "posts.show"
-        );
-
-        //
-        //
-        //
-        //
-        //
-    });
-// guest routes end
+//
+//
 //
 //
 //

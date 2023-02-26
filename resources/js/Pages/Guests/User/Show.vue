@@ -12,26 +12,16 @@ defineProps({
     user: {
         required: true,
     },
-    userProfile: {
-        required: true,
-    },
 });
 </script>
 <template>
-    <GuestsLayout
-        :title="`${userProfile?.first_name} ${userProfile?.last_name}`"
-    >
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">
-                La la this is user profile page
-            </h2>
-        </template>
+    <GuestsLayout :title="`${user?.first_name} ${user?.last_name}`">
+        <template #header> </template>
         <div class="myPrimarySection">
-            <p>This is view for specific user</p>
-            <p>User first name is: {{ userProfile?.first_name }}</p>
-            <p>User last name is: {{ userProfile?.last_name }}</p>
-            <p class="mt-12">
-                rest of user data: {{ JSON.stringify(userProfile) }}
+            <p class="my-12">User: {{ JSON.stringify(user) }}</p>
+            <p class="text-3xl my-8">
+                {{ user.first_name }}
+                {{ user.last_name }}
             </p>
         </div>
     </GuestsLayout>
