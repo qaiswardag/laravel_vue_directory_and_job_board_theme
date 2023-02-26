@@ -23,14 +23,6 @@ const form = useForm({
     last_name: props.user.last_name,
     email: props.user.email,
     public: props.user.public ? true : false,
-});
-
-const formPhoto = useForm({
-    _method: "PUT",
-    first_name: props.user.first_name,
-    last_name: props.user.last_name,
-    email: props.user.email,
-    public: props.user.public ? true : false,
     photo: null,
 });
 
@@ -54,24 +46,10 @@ const photoPreview = ref(null);
 const photoInput = ref(null);
 
 const updateProfileInformation = () => {
-    form.post(route("user-profile-information.update"), {
-        errorBag: "updateProfileInformation",
-        preserveScroll: true,
-        onSuccess: () => {
-            clearPhotoFileInput();
-        },
-        onError: (err) => {
-            console.log("not able to update details!", err);
-        },
-        onFinish: () => {},
-    });
-};
-const updateProfilePhoto = () => {
     if (photoInput.value) {
-        formPhoto.photo = photoInput.value.files[0];
+        form.photo = photoInput.value.files[0];
     }
-
-    formPhoto.post(route("user-profile-information.update"), {
+    form.post(route("user-profile-information.update"), {
         errorBag: "updateProfileInformation",
         preserveScroll: true,
         onSuccess: () => {
@@ -149,122 +127,6 @@ const clearPhotoFileInput = () => {
 </script>
 
 <template>
-    <FormSection @submitted="updateProfilePhoto" :sidebarArea="false">
-        <template #title> Profile Photo </template>
-
-        <template #description> Update your account's profile photo. </template>
-
-        <template #main>
-            <div class="myInputsOrganization">
-                <div class="myInputGroup">
-                    <input
-                        ref="photoInput"
-                        type="file"
-                        class="hidden"
-                        @change="updatePhotoPreview"
-                    />
-                    <div
-                        class="flex flex-col justify-center items-center gap-2 mb-8 mt-4"
-                    >
-                        <div
-                            v-show="
-                                !photoPreview &&
-                                user.profile_photo_path !== null
-                            "
-                            class="mt-2"
-                        >
-                            <img
-                                class="object-cover w-16 h-16 rounded-full"
-                                :src="user.profile_photo_url"
-                                :alt="user.first_name + user.last_name"
-                            />
-                        </div>
-
-                        <div v-show="photoPreview !== null">
-                            <span
-                                class="block rounded-full w-16 h-16 bg-cover bg-no-repeat bg-center"
-                                :style="
-                                    'background-image: url(\'' +
-                                    photoPreview +
-                                    '\');'
-                                "
-                            />
-                        </div>
-
-                        <div
-                            v-show="
-                                user.profile_photo_path === null &&
-                                !photoPreview
-                            "
-                            class="w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
-                        >
-                            {{ user.first_name.charAt(0).toUpperCase() }}
-                            {{ user.last_name.charAt(0).toUpperCase() }}
-                        </div>
-                        <span
-                            class="flex flex-col items-center gap-1 myPrimaryParagraph"
-                        >
-                            <span>
-                                {{ user.first_name }}
-                                {{ user.last_name }}
-                            </span>
-                            <span>
-                                {{ $page.props.user.email }}
-                            </span>
-                        </span>
-                    </div>
-
-                    <div class="flex justify-center items-center myPrimaryGap">
-                        <SecondaryButton
-                            class="myPrimaryButton"
-                            type="button"
-                            @click.prevent="selectNewPhoto"
-                        >
-                            Upload Photo
-                        </SecondaryButton>
-
-                        <SecondaryButton
-                            v-show="
-                                photoPreview || user.profile_photo_path !== null
-                            "
-                            type="button"
-                            class="myPrimaryDeleteButton"
-                            @click.prevent="handleDeletePhoto"
-                        >
-                            Delete Photo
-                        </SecondaryButton>
-                    </div>
-
-                    <InputError :message="form.errors.photo" />
-                </div>
-            </div>
-        </template>
-
-        <template #actions>
-            <DynamicModal
-                :show="modalShowDeletePhoto"
-                :type="typeModal"
-                :gridColumnAmount="gridColumnModal"
-                :title="titleModal"
-                :description="descriptionModal"
-                :firstButtonText="firstButtonModal"
-                :secondButtonText="secondButtonModal"
-                :thirdButtonText="thirdButtonModal"
-                @firstModalButtonFunction="firstModalButtonFunction"
-                @secondModalButtonFunction="secondModalButtonFunction"
-                @thirdModalButtonFunction="thirdModalButtonFunction"
-            >
-                <header></header>
-                <main></main>
-            </DynamicModal>
-            <SubmitButton :disabled="formPhoto.processing" buttonText="Update">
-            </SubmitButton>
-            <ActionMessage :on="formPhoto.recentlySuccessful" type="success">
-                Successfully updated your Profile Information.
-            </ActionMessage>
-        </template>
-    </FormSection>
-    <SectionBorder />
     <FormSection @submitted="updateProfileInformation">
         <template #title> Profile Details </template>
 
@@ -274,6 +136,14 @@ const clearPhotoFileInput = () => {
 
         <template #main>
             <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Title & description
+                    </div>
+                    <p class="myPrimaryParagraph">
+                        Specify title & description.
+                    </p>
+                </div>
                 <div class="myInputGroup">
                     <InputLabel for="first_name" value="First name" />
                     <TextInput
@@ -330,6 +200,100 @@ const clearPhotoFileInput = () => {
                             address.
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Title & description
+                    </div>
+                    <p class="myPrimaryParagraph">
+                        Specify title & description.
+                    </p>
+                </div>
+                <div class="myInputGroup">
+                    <InputLabel for="email" value="Profile Image" />
+                    <input
+                        ref="photoInput"
+                        type="file"
+                        class="hidden"
+                        @change="updatePhotoPreview"
+                    />
+                    <div
+                        class="flex-col items-center gap-2 mb-8 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6"
+                    >
+                        <div
+                            v-show="
+                                !photoPreview &&
+                                user.profile_photo_path !== null
+                            "
+                            @click.prevent="selectNewPhoto"
+                            class="mt-2 cursor-pointer"
+                        >
+                            <img
+                                class="object-cover w-16 h-16 rounded-full"
+                                :src="user.profile_photo_url"
+                                :alt="user.first_name + user.last_name"
+                            />
+                        </div>
+
+                        <div v-show="photoPreview !== null">
+                            <span
+                                class="block rounded-full w-16 h-16 bg-cover bg-no-repeat bg-center"
+                                :style="
+                                    'background-image: url(\'' +
+                                    photoPreview +
+                                    '\');'
+                                "
+                            />
+                        </div>
+
+                        <div
+                            v-show="
+                                user.profile_photo_path === null &&
+                                !photoPreview
+                            "
+                            @click.prevent="selectNewPhoto"
+                            class="cursor-pointer w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                        >
+                            {{ user.first_name.charAt(0).toUpperCase() }}
+                            {{ user.last_name.charAt(0).toUpperCase() }}
+                        </div>
+                        <span
+                            class="flex flex-col items-center gap-1 myPrimaryParagraph"
+                        >
+                            <span>
+                                {{ user.first_name }}
+                                {{ user.last_name }}
+                            </span>
+                            <span>
+                                {{ $page.props.user.email }}
+                            </span>
+                        </span>
+                    </div>
+
+                    <div class="flex justify-center items-center myPrimaryGap">
+                        <button
+                            class="myPrimaryButton"
+                            type="button"
+                            @click.prevent="selectNewPhoto"
+                        >
+                            Upload New
+                        </button>
+
+                        <button
+                            v-show="
+                                photoPreview || user.profile_photo_path !== null
+                            "
+                            type="button"
+                            class="myPrimaryDeleteButton"
+                            @click.prevent="handleDeletePhoto"
+                        >
+                            Delete Photo
+                        </button>
+                    </div>
+
+                    <InputError :message="form.errors.photo" />
                 </div>
             </div>
         </template>
@@ -412,6 +376,22 @@ const clearPhotoFileInput = () => {
                 </div>
                 <InputError :message="form.errors.public" />
             </div>
+            <DynamicModal
+                :show="modalShowDeletePhoto"
+                :type="typeModal"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
+                <main></main>
+            </DynamicModal>
         </template>
         <template #actions>
             <SubmitButton :disabled="form.processing" buttonText="Update">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Superadmin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use PhpParser\Node\Expr\AssignOp\Concat;
 
@@ -17,21 +18,71 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::latest()
-            ->when($request->query("search_query"), function ($query, $term) {
-                $query
-                    ->where("first_name", "LIKE", "%" . $term . "%")
-                    ->orWhere("last_name", "LIKE", "%" . $term . "%");
-            })
-            ->paginate(10);
-        // // append users
-        $users->appends($request->all());
+        // $users = User::latest()
+        //     ->when($request->query("search_query"), function ($query, $term) {
+        //         $query
+        //             ->where("first_name", "LIKE", "%" . $term . "%")
+        //             ->orWhere("last_name", "LIKE", "%" . $term . "%");
+        //     })
+        //     ->paginate(10);
+        // // // append users
+        // $users->appends($request->all());
         //
+        $users = User::latest();
+
+        $users->when($request->filled("selected_category"), function (
+            $query
+        ) use ($request) {
+            $selectedCategory = $request->input("selected_category");
+
+            if ($selectedCategory === "id") {
+                // filter by user ID
+                $query->where("id", $request->input("search_query"));
+            }
+
+            if ($selectedCategory === "name") {
+                // filter by user name
+                $query->where(function ($subQuery) use ($request) {
+                    $subQuery
+                        ->where(
+                            "first_name",
+                            "LIKE",
+                            "%" . $request->input("search_query") . "%"
+                        )
+                        ->orWhere(
+                            "last_name",
+                            "LIKE",
+                            "%" . $request->input("search_query") . "%"
+                        )
+                        ->orWhere(
+                            DB::raw("CONCAT(first_name, ' ', last_name)"),
+                            "LIKE",
+                            "%" . $request->input("search_query") . "%"
+                        );
+                });
+            }
+
+            if ($selectedCategory === "email") {
+                // filter by user email
+                $query->where(
+                    "email",
+                    "LIKE",
+                    "%" . $request->input("search_query") . "%"
+                );
+            }
+        });
+
+        $users = $users->paginate(10);
+        // append users
+        $users->appends($request->all());
+
         return Inertia::render("Superadmin/Users/Index", [
             "users" => $users,
             "results" => $users->total(),
-            "search_query" => $request->search_query,
-            "selected_category" => $request->selected_category,
+            "oldInput" => [
+                "search_query" => $request->search_query,
+                "selected_category" => $request->selected_category,
+            ],
         ]);
     }
 

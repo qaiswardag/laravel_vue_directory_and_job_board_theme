@@ -148,10 +148,12 @@ const sidebarOpen = ref(false);
     <!-- Static sidebar for mobile - end -->
 
     <!-- Static sidebar for desktop - start -->
-    <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+    <div
+        class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col bg-white z-20"
+    >
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div
-            class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5"
+            class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 pt-5"
         >
             <div class="flex flex-shrink-0 items-center px-4">
                 <img

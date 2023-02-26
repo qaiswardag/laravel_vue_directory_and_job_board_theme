@@ -91,12 +91,15 @@ const deleteTeam = function () {
 
         <template #main>
             <div class="myInputsOrganization">
-                <p class="myPrimaryParagraph">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Atque eligendi a aut laborum consequatur labore saepe? Ullam
-                    dolore facere similique. Atque eligendi a aut laborum
-                    consequatur labore saepe? Ullam dolore facere similique?
-                </p>
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Delete Team {{ team.name }}
+                    </div>
+                    <p class="myPrimaryParagraph">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Blanditiis, accusamus.
+                    </p>
+                </div>
             </div>
             <DynamicModal
                 :show="modalShowDeleteTeam"

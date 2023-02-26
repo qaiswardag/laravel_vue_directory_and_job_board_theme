@@ -75,7 +75,7 @@ Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
     "verified",
-    "ensure.has.correct.role", // owner, administrator and editor
+    "ensure.can.create.and.update", // owner, administrator and editor
 ])
     // group of pages
     ->group(function () {

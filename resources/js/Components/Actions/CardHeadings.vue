@@ -37,7 +37,6 @@ defineProps({
                             <MenuButton
                                 class="-m-2 flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600"
                             >
-                                <span class="sr-only">Open options</span>
                                 <EllipsisVerticalIcon
                                     class="h-5 w-5"
                                     aria-hidden="true"
@@ -77,7 +76,27 @@ defineProps({
                                             route().current(item.routeName)
                                         "
                                     >
-                                        {{ item.label }}
+                                        <div class="flex gap-2 items-center">
+                                            <p>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="1.5"
+                                                    stroke="currentColor"
+                                                    class="w-4 h-4"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                                                    />
+                                                </svg>
+                                            </p>
+                                            <p>
+                                                {{ item.label }}
+                                            </p>
+                                        </div>
                                     </DropdownLink>
                                 </div>
                             </MenuItems>

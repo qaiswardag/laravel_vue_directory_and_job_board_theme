@@ -416,7 +416,7 @@ const displayAbleRole = (role) => {
             <SectionBorder />
 
             <!-- Team Member Invitations -->
-            <ActionSection :sidebarArea="false">
+            <ActionSection :sidebarArea="false" :actionsArea="false">
                 <template #title> Pending Team Invitations </template>
 
                 <template #description>
@@ -444,9 +444,7 @@ const displayAbleRole = (role) => {
 
                             <div v-if="team.team_invitations.length > 0">
                                 <div class="myTableContainer">
-                                    <div
-                                        class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
-                                    >
+                                    <div class="myTableSubContainer">
                                         <table class="myPrimaryTable">
                                             <caption
                                                 class="myPrimaryTableCaption"
@@ -538,7 +536,7 @@ const displayAbleRole = (role) => {
             <SectionBorder />
 
             <!-- Manage Team Members -->
-            <ActionSection :sidebarArea="false" class="mt-10 sm:mt-0">
+            <ActionSection :sidebarArea="false" :actionsArea="false">
                 <template #title>
                     Team Members at
                     {{ $page.props.user && $page.props.user.current_team.name }}
@@ -565,7 +563,7 @@ const displayAbleRole = (role) => {
                         "
                     >
                         <p class="myPrimaryParagraph">
-                            Account owner of this Team is
+                            Team owner is
 
                             {{
                                 $page.props.team.owner &&
@@ -574,7 +572,7 @@ const displayAbleRole = (role) => {
                             {{
                                 $page.props.team.owner &&
                                 $page.props.team.owner.last_name
-                            }}.
+                            }}
                         </p>
                     </div>
                 </template>
@@ -583,227 +581,210 @@ const displayAbleRole = (role) => {
                 <template #main>
                     <div class="myInputsOrganization">
                         <div class="myTableContainer">
-                            <div
-                                class="inline-block min-w-full align-middle px-1"
-                            >
-                                <div
-                                    class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 rounded"
-                                >
-                                    <table class="myPrimaryTable">
-                                        <caption class="myPrimaryTableCaption">
-                                            Team
-                                            <span class="font-semibold">
-                                                {{
-                                                    $page.props.user
-                                                        .current_team.name
-                                                }}
-                                            </span>
-                                        </caption>
-                                        <thead class="myPrimaryTableTHead">
-                                            <tr class="myPrimaryTableTr">
-                                                <th
-                                                    scope="col"
-                                                    class="myPrimaryTableTh"
-                                                >
-                                                    User
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    class="myPrimaryTableTh"
-                                                >
-                                                    Role
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    class="myPrimaryTableTh"
-                                                >
-                                                    Action
-                                                </th>
-                                            </tr>
-                                        </thead>
+                            <div class="myTableSubContainer">
+                                <table class="myPrimaryTable">
+                                    <caption class="myPrimaryTableCaption">
+                                        Team
+                                        <span class="font-semibold">
+                                            {{
+                                                $page.props.user.current_team
+                                                    .name
+                                            }}
+                                        </span>
+                                    </caption>
+                                    <thead class="myPrimaryTableTHead">
+                                        <tr class="myPrimaryTableTr">
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                User
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Role
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
 
-                                        <tbody class="myPrimaryTableTBody">
-                                            <TransitionGroup name="table">
-                                                <tr
-                                                    v-for="user in team &&
-                                                    team.users"
-                                                    :key="user.id"
-                                                    class="myPrimaryTableTBodyTr"
+                                    <tbody class="myPrimaryTableTBody">
+                                        <TransitionGroup name="table">
+                                            <tr
+                                                v-for="user in team &&
+                                                team.users"
+                                                :key="user.id"
+                                                class="myPrimaryTableTBodyTr"
+                                            >
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
                                                 >
-                                                    <td
-                                                        class="myPrimaryTableTBodyTd"
+                                                    <div
+                                                        class="flex items-center gap-2 mt-2"
                                                     >
                                                         <div
-                                                            class="flex items-center gap-2 mt-2"
+                                                            v-if="
+                                                                user &&
+                                                                user.profile_photo_path
+                                                            "
                                                         >
                                                             <div
-                                                                v-if="
-                                                                    user &&
-                                                                    user.profile_photo_path
-                                                                "
+                                                                class="h-12 w-12 flex-shrink-0"
                                                             >
-                                                                <div
-                                                                    class="h-12 w-12 flex-shrink-0"
-                                                                >
-                                                                    <img
-                                                                        class="object-cover w-12 h-12 rounded-full"
-                                                                        :src="
-                                                                            user.profile_photo_url
-                                                                        "
-                                                                        :alt="
-                                                                            user.first_name +
-                                                                            user.last_name
-                                                                        "
-                                                                    />
-                                                                </div>
+                                                                <img
+                                                                    class="object-cover w-12 h-12 rounded-full"
+                                                                    :src="
+                                                                        user.profile_photo_url
+                                                                    "
+                                                                    :alt="
+                                                                        user.first_name +
+                                                                        user.last_name
+                                                                    "
+                                                                />
                                                             </div>
+                                                        </div>
 
-                                                            <div
-                                                                v-if="
-                                                                    user &&
-                                                                    user.profile_photo_path ===
-                                                                        null
-                                                                "
-                                                                class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
-                                                            >
+                                                        <div
+                                                            v-if="
+                                                                user &&
+                                                                user.profile_photo_path ===
+                                                                    null
+                                                            "
+                                                            class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                                        >
+                                                            {{
+                                                                user.first_name
+                                                                    .charAt(0)
+                                                                    .toUpperCase()
+                                                            }}
+                                                            {{
+                                                                user.last_name
+                                                                    .charAt(0)
+                                                                    .toUpperCase()
+                                                            }}
+                                                        </div>
+                                                        <span
+                                                            class="flex flex-col items-left gap-1 myPrimaryParagraph"
+                                                        >
+                                                            <span>
                                                                 {{
                                                                     user.first_name
-                                                                        .charAt(
-                                                                            0
-                                                                        )
-                                                                        .toUpperCase()
                                                                 }}
                                                                 {{
                                                                     user.last_name
-                                                                        .charAt(
-                                                                            0
-                                                                        )
-                                                                        .toUpperCase()
                                                                 }}
-                                                            </div>
-                                                            <span
-                                                                class="flex flex-col items-left gap-1 myPrimaryParagraph"
-                                                            >
-                                                                <span>
-                                                                    {{
-                                                                        user.first_name
-                                                                    }}
-                                                                    {{
-                                                                        user.last_name
-                                                                    }}
-                                                                </span>
-                                                                <span>
-                                                                    {{
-                                                                        user.email
-                                                                    }}
-                                                                </span>
                                                             </span>
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        class="myPrimaryTableTBodyTd"
+                                                            <span>
+                                                                {{ user.email }}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <!-- Manage Team Member Role -->
+                                                    <button
+                                                        v-if="
+                                                            availableRoles.length
+                                                        "
+                                                        class="myPrimaryButtonNoBackground flex items-center gap-2"
+                                                        @click="
+                                                            manageRole(user)
+                                                        "
                                                     >
-                                                        <!-- Manage Team Member Role -->
-                                                        <button
+                                                        {{
+                                                            displayAbleRole(
+                                                                user.membership
+                                                                    .role
+                                                            )
+                                                        }}
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke-width="2"
+                                                            stroke="currentColor"
+                                                            class="w-5 h-5"
+                                                        >
+                                                            <path
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                                            />
+                                                        </svg>
+                                                    </button>
+                                                </td>
+
+                                                <!-- Cancel Team Invitation -->
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <!-- Leave Team -->
+                                                    <div
+                                                        class="flex items-center myPrimaryGap"
+                                                    >
+                                                        <DangerButton
                                                             v-if="
-                                                                availableRoles.length
+                                                                $page.props.user
+                                                                    .id ===
+                                                                user.id
                                                             "
-                                                            class="myPrimaryButtonNoBackground flex items-center gap-2"
                                                             @click="
-                                                                manageRole(user)
+                                                                handleLeaveTeam()
                                                             "
                                                         >
-                                                            {{
-                                                                displayAbleRole(
-                                                                    user
-                                                                        .membership
-                                                                        .role
-                                                                )
-                                                            }}
+                                                            Leave Team
+                                                        </DangerButton>
+                                                        <p
+                                                            class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryLightGrayColor text-black rounded-full py-2 px-4 font-semibold"
+                                                            v-if="
+                                                                $page.props.user
+                                                                    .id ===
+                                                                user.id
+                                                            "
+                                                        >
                                                             <svg
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 fill="none"
                                                                 viewBox="0 0 24 24"
                                                                 stroke-width="2"
                                                                 stroke="currentColor"
-                                                                class="w-5 h-5"
+                                                                class="w-4 h-4"
                                                             >
                                                                 <path
                                                                     stroke-linecap="round"
                                                                     stroke-linejoin="round"
-                                                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                                                                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
                                                                 />
                                                             </svg>
-                                                        </button>
-                                                    </td>
 
-                                                    <!-- Cancel Team Invitation -->
-                                                    <td
-                                                        class="myPrimaryTableTBodyTd"
-                                                    >
-                                                        <!-- Leave Team -->
-                                                        <div
-                                                            class="flex items-center myPrimaryGap"
+                                                            <span> You </span>
+                                                        </p>
+
+                                                        <!-- Remove Team Member -->
+                                                        <DangerButton
+                                                            @click="
+                                                                handleRemoveTeamMember(
+                                                                    user
+                                                                )
+                                                            "
                                                         >
-                                                            <DangerButton
-                                                                v-if="
-                                                                    $page.props
-                                                                        .user
-                                                                        .id ===
-                                                                    user.id
-                                                                "
-                                                                @click="
-                                                                    handleLeaveTeam()
-                                                                "
-                                                            >
-                                                                Leave Team
-                                                            </DangerButton>
-                                                            <p
-                                                                class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryLightGrayColor text-black rounded-full py-2 px-4 font-semibold"
-                                                                v-if="
-                                                                    $page.props
-                                                                        .user
-                                                                        .id ===
-                                                                    user.id
-                                                                "
-                                                            >
-                                                                <svg
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    fill="none"
-                                                                    viewBox="0 0 24 24"
-                                                                    stroke-width="2"
-                                                                    stroke="currentColor"
-                                                                    class="w-4 h-4"
-                                                                >
-                                                                    <path
-                                                                        stroke-linecap="round"
-                                                                        stroke-linejoin="round"
-                                                                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                                                                    />
-                                                                </svg>
-
-                                                                <span>
-                                                                    You
-                                                                </span>
-                                                            </p>
-
-                                                            <!-- Remove Team Member -->
-                                                            <DangerButton
-                                                                @click="
-                                                                    handleRemoveTeamMember(
-                                                                        user
-                                                                    )
-                                                                "
-                                                            >
-                                                                Remove User
-                                                            </DangerButton>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </TransitionGroup>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                            Remove User
+                                                        </DangerButton>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </TransitionGroup>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class EnsureCanCreateAndUpdate
@@ -18,22 +19,12 @@ class EnsureCanCreateAndUpdate
      */
     public function handle(Request $request, Closure $next)
     {
-        // current team: Auth::user()->currentTeam
-        // users team role for current team: Auth::user()->teamRole(Auth::user()->currentTeam)
-        //
-
-        //
-        //
-        if (
-            Auth::user()->teamRole(Auth::user()->currentTeam)->name ===
-                "Owner" ||
-            Auth::user()->teamRole(Auth::user()->currentTeam)->name ===
-                "Administrator" ||
-            Auth::user()->teamRole(Auth::user()->currentTeam)->name === "Editor"
-        ) {
+        // gate
+        if (Gate::allows("can-create-and-update")) {
             return $next($request);
         }
 
+        // not able to access through gate
         return Inertia::render("Error", [
             "customError" =>
                 "Check your current Role as your current Role does not allow you to perform this action.",

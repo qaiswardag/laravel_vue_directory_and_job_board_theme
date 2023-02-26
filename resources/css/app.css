@@ -137,7 +137,10 @@
     */
 
     .myTableContainer {
-        @apply overflow-x-auto myPrimarySection;
+        @apply overflow-x-auto myPrimarySection border border-gray-400 rounded;
+    }
+    .myTableSubContainer {
+        @apply min-w-full align-middle px-1;
     }
 
     .myPrimaryTable {
@@ -162,7 +165,7 @@
         @apply divide-x myPrimaryParagraph bg-white hover:bg-red-50;
     }
     .myPrimaryTableTBodyTd {
-        @apply px-6 py-4 whitespace-pre myPrimaryParagraph md:min-w-[9rem] min-w-[7rem];
+        @apply px-6 py-4 whitespace-pre myPrimaryParagraph md:min-w-[10rem] min-w-[7rem];
     }
 
     /*
@@ -182,6 +185,16 @@
 
     .myBreadcrumbsContainer {
         @apply flex items-center justify-start gap-1 py-2 pl-4 pr-2;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Search Bars
+    |--------------------------------------------------------------------------
+    */
+
+    .mysearchBarWithOptions {
+        @apply flex gap-1  bg-gray-200 py-2 px-2 rounded;
     }
 
     /*
@@ -207,11 +220,11 @@
         @apply md:w-4/12 flex flex-col myPrimaryGap;
     }
     .myPrimaryActions {
-        @apply px-4 py-6  rounded;
+        @apply px-4 py-6 rounded bg-gray-100 shadow-sm;
     }
 
     .myInputsOrganization {
-        @apply px-4 pt-8 pb-8 border border-myPrimaryMediumGrayColor rounded bg-gray-100;
+        @apply px-4 pt-8 pb-8 bg-white rounded shadow-sm;
     }
 
     .myPrimaryFormOrganizationHeaderDescriptionSection {
@@ -233,7 +246,7 @@
     }
 
     .myPrimaryInputLabel {
-        @apply mt-4 mb-2 block text-sm font-medium text-myPrimaryDarkGrayColor text-left;
+        @apply my-0 block text-sm font-medium text-myPrimaryDarkGrayColor text-left;
     }
 
     .myPrimaryInput {

@@ -101,7 +101,12 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
         </SideBarLink>
         <SideBarLink
             :href="route('profile.show')"
-            :active="route().current('profile.show')"
+            :active="
+                route().current('profile.show') ||
+                route().current('user.profile.update') ||
+                route().current('user.profile.password') ||
+                route().current('user.profile.security')
+            "
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +165,12 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
         >
             <SideBarLink
                 :href="route('teams.show', $page.props.user.current_team)"
-                :active="route().current('teams.show')"
+                :active="
+                    route().current('teams.show') ||
+                    route().current('team.update.information') ||
+                    route().current('team.members') ||
+                    route().current('team.delete')
+                "
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -183,7 +193,11 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 
         <SideBarLink
             :href="route('user.teams')"
-            :active="route().current('user.teams')"
+            :active="
+                route().current('user.teams') ||
+                route().current('user.teams.switch') ||
+                route().current('user.teams.create')
+            "
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -226,7 +240,10 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
         </SideBarLink>
         <SideBarLink
             :href="route('admin.dashboard')"
-            :active="route().current('admin.dashboard')"
+            :active="
+                route().current('admin.dashboard') ||
+                route().current('admin.users.index')
+            "
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"

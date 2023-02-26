@@ -1,13 +1,7 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
-import DeleteUserForm from "@/Pages/Profile/Partials/DeleteUserForm.vue";
-import LogoutOtherBrowserSessionsForm from "@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue";
-import SectionBorder from "@/Components/SectionBorder.vue";
-import UpdatePasswordForm from "@/Pages/Profile/Partials/UpdatePasswordForm.vue";
-import UpdateProfileInformationForm from "@/Pages/Profile/Partials/UpdateProfileInformationForm.vue";
-import { computed } from "vue";
+
 import { router } from "@inertiajs/vue3";
-import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 const props = defineProps({
@@ -15,13 +9,13 @@ const props = defineProps({
     confirmsTwoFactorAuthentication: Boolean,
 });
 
-const breadcrumbsLinks = [{ label: "Profile", url: "profile.show" }];
+const breadcrumbsLinks = [{ label: "Your Profile", url: "profile.show" }];
 </script>
 
 <template>
-    <LoggedInLayout title="Profile">
+    <LoggedInLayout title="Your Profile">
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Profile</h2>
+            <h2 class="myPrimaryMainPageHeader">Your Profile</h2>
         </template>
         <template #description> Profile Settings </template>
         <template #breadcrumbs>

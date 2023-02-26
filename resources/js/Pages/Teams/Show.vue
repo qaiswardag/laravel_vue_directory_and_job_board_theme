@@ -1,12 +1,6 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
-import DeleteTeamForm from "@/Pages/Teams/Partials/DeleteTeamForm.vue";
-import SectionBorder from "@/Components/SectionBorder.vue";
-import TeamMemberManager from "@/Pages/Teams/Partials/TeamMemberManager.vue";
-import UpdateTeamNameForm from "@/Pages/Teams/Partials/UpdateTeamNameForm.vue";
-import { ref } from "vue";
 import { router } from "@inertiajs/vue3";
-import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 const props = defineProps({

@@ -104,21 +104,9 @@ const updateTeamName = () => {
                 "
             >
                 <p class="group flex items-center pr-2 py-2 myPrimaryParagraph">
-                    Your name
-                    <span class="px-2 py-1 bg-green-100 mx-2 rounded-md">
-                        {{
-                            $page.props.team.owner &&
-                            $page.props.team.owner.first_name
-                        }}
-                        {{
-                            $page.props.team.owner &&
-                            $page.props.team.owner.last_name
-                        }}
-                    </span>
-                    and current role
-                    <span class="px-2 py-1 bg-green-100 ml-2 rounded-md">
-                        {{ $page.props.currentUserTeamRole }}
-                    </span>
+                    Your current Role is
+
+                    {{ $page.props.currentUserTeamRole }}
                 </p>
             </div>
             <div
@@ -128,9 +116,8 @@ const updateTeamName = () => {
                 "
             >
                 <p class="myPrimaryParagraph">
-                    Account owner of this Team is:
-
-                    <span class="px-2 py-1 bg-gray-100 mr-1 rounded-md">
+                    Team owner is
+                    <span>
                         {{
                             $page.props.team.owner &&
                             $page.props.team.owner.first_name
@@ -141,18 +128,9 @@ const updateTeamName = () => {
                         }}
                     </span>
                 </p>
-                <p
-                    class="group flex items-center pr-2 py-2 mt-2 myPrimaryParagraph"
-                >
-                    Your name
-                    <span class="px-2 py-1 bg-green-100 mx-2.5 rounded-md">
-                        {{ $page.props.user.first_name }}
-                        {{ $page.props.user.last_name }}
-                    </span>
-                    and current role
-                    <span class="px-2 py-1 bg-green-100 mx-2 rounded-md">
-                        {{ $page.props.currentUserTeamRole }}
-                    </span>
+                <p class="group flex items-center pr-2 myPrimaryParagraph">
+                    Your current Role is
+                    {{ $page.props.currentUserTeamRole }}
                 </p>
             </div>
         </template>

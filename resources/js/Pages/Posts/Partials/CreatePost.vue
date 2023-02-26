@@ -9,10 +9,31 @@ import TextInput from "@/Components/Forms/TextInput.vue";
 import TextArea from "@/Components/Forms/TextArea.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import { ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { Switch } from "@headlessui/vue";
-import SingleSelect from "@/Components/Forms/SingleSelect.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
+import {
+    Listbox,
+    ListboxButton,
+    ListboxLabel,
+    ListboxOption,
+    ListboxOptions,
+} from "@headlessui/vue";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
+
+const props = defineProps({
+    team: {
+        required: true,
+    },
+    user: {
+        required: true,
+    },
+});
+
+const breadcrumbsLinks = [
+    { label: "Posts", url: "overview.posts.index" },
+    { label: "Add Post" },
+];
 
 // start Quill Editor
 // define options
@@ -23,7 +44,7 @@ const globalOptions = {
     },
     placeholder: "Compose an epic...",
     readOnly: false,
-    theme: "bubble",
+    theme: "snow",
 
     //
     //
@@ -39,22 +60,22 @@ const globalOptions = {
     ],
 
     theme: "snow",
-    placeholder: "Description - short (optional)",
+    placeholder: "Description",
     readOnly: false,
 };
 // end Quill Editor
 
 const createPostForm = useForm({
     title: "",
+    slug: "",
     content: "",
     published: true,
-    team: "la la",
+    team: props.team,
+    user_id: props.user.id,
 });
 
 const handleCreatePost = function () {
-    console.log("ok, so you want to post a post!");
-
-    // store post
+    // try to store post
     createPost();
 };
 
@@ -63,33 +84,10 @@ const createPost = () => {
         errorBag: "createPost",
         preserveScroll: true,
         onSuccess: () => {},
-        onError: () => {
-            console.log("something went wrong posting the Post");
-        },
-        onFinish: () => {
-            console.log("came to on finish");
-        },
+        onError: () => {},
+        onFinish: () => {},
     });
 };
-
-const people = [
-    { id: 1, name: "Wade Cooper" },
-    { id: 2, name: "Arlene Mccoy" },
-    { id: 3, name: "Devon Webb" },
-    { id: 4, name: "Tom Cook" },
-    { id: 5, name: "Tanya Fox" },
-    { id: 6, name: "Hellen Schmidt" },
-    { id: 7, name: "Caroline Schultz" },
-    { id: 8, name: "Mason Heaney" },
-    { id: 9, name: "Claudie Smitham" },
-    { id: 10, name: "Emil Schaefer" },
-];
-
-const breadcrumbsLinks = [
-    { label: "Posts", url: "overview.posts.index" },
-    { label: "Add Post" },
-];
-// toggle end
 </script>
 
 <template>
@@ -100,7 +98,6 @@ const breadcrumbsLinks = [
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-
         <div>
             <FormSection @submitted="handleCreatePost">
                 <template #title> Post details </template>
@@ -108,8 +105,6 @@ const breadcrumbsLinks = [
 
                 <template #main>
                     <div class="myInputsOrganization">
-                        <div class="myPrimaryFormOrganizationHeader"></div>
-
                         <div
                             class="myPrimaryFormOrganizationHeaderDescriptionSection"
                         >
@@ -144,16 +139,13 @@ const breadcrumbsLinks = [
                             <TextInput
                                 placeholder="Post slug"
                                 id="slug"
-                                v-model="createPostForm.title"
+                                v-model="createPostForm.slug"
                                 type="text"
                                 class="block w-full mt-1"
                                 autofocus
                                 autocomplete="off"
-                                readonly
                             />
-                            <InputError
-                                :message="createPostForm.errors.title"
-                            />
+                            <InputError :message="createPostForm.errors.slug" />
                         </div>
 
                         <div class="myInputGroup">
@@ -165,7 +157,6 @@ const breadcrumbsLinks = [
                             <QuillEditor
                                 id="content"
                                 v-model:content="createPostForm.content"
-                                autofocus
                                 contentType="html"
                                 :options="globalOptions"
                                 class="rounded-b-md bg-white"
@@ -189,22 +180,56 @@ const breadcrumbsLinks = [
                             </p>
                         </div>
                         <div class="myInputGroup">
-                            <InputLabel
-                                for="title"
-                                value="Your Post title"
-                                class="mb-1"
-                            />
-                            <TextInput
-                                placeholder="Enter your title.."
-                                id="title"
-                                v-model="createPostForm.title"
-                                type="text"
-                                class="block w-full mt-1"
-                                autofocus
-                                autocomplete="off"
-                            />
+                            <div class="col-span-3">
+                                <label
+                                    class="block text-sm font-medium text-gray-700"
+                                    >Cover photo</label
+                                >
+                                <div
+                                    class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6"
+                                >
+                                    <div class="space-y-1 text-center">
+                                        <svg
+                                            class="mx-auto h-12 w-12 text-gray-400"
+                                            stroke="currentColor"
+                                            fill="none"
+                                            viewBox="0 0 48 48"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                        <div class="flex text-sm text-gray-600">
+                                            <InputLabel
+                                                for="file-upload"
+                                                value="Upload a file"
+                                                class="mb-1"
+                                            />
+
+                                            <input
+                                                id="file-upload"
+                                                name="file-upload"
+                                                type="file"
+                                                class="sr-only"
+                                            />
+
+                                            <p class="pl-1">or drag and drop</p>
+                                        </div>
+                                        <p class="text-xs text-gray-500">
+                                            PNG or JPG
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <InputError
-                                :message="createPostForm.errors.title"
+                                :message="
+                                    createPostForm.errors.post_cover_image
+                                "
                             />
                         </div>
                     </div>
@@ -322,68 +347,115 @@ const breadcrumbsLinks = [
                                 value="Post belongs to Team"
                                 class="mb-1"
                             />
-                            <SingleSelect
-                                :list="$page.props.user.all_teams"
-                                v-model="createPostForm.team"
-                            ></SingleSelect>
-                            <InputError
-                                :message="createPostForm.errors.team_id"
-                            />
-                        </div>
-                    </div>
-                    <div class="myInputsOrganization">
-                        <div
-                            class="myPrimaryFormOrganizationHeaderDescriptionSection"
-                        >
-                            <div class="myPrimaryFormOrganizationHeader">
-                                Lorem, ipsum dolor.
-                            </div>
-                            <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                        <div class="myInputGroup">
-                            <InputLabel
-                                for="title"
-                                value="Your Post title"
-                                class="mb-1"
-                            />
-                            <TextInput
-                                placeholder="Enter your title.."
-                                id="title"
-                                v-model="createPostForm.title"
-                                type="text"
-                                class="block w-full mt-1"
-                                autofocus
-                                autocomplete="off"
-                            />
-                            <InputError
-                                :message="createPostForm.errors.title"
-                            />
-                        </div>
-                        <div class="myInputGroup">
-                            <InputLabel
-                                for="title"
-                                value="Your Post title"
-                                class="mb-1"
-                            />
-                            <TextInput
-                                placeholder="Enter your title.."
-                                id="title"
-                                v-model="createPostForm.title"
-                                type="text"
-                                class="block w-full mt-1"
-                                autofocus
-                                autocomplete="off"
-                            />
-                            <InputError
-                                :message="createPostForm.errors.title"
-                            />
+                            <Listbox as="div" v-model="createPostForm.team">
+                                <ListboxLabel class="myPrimaryInputLabel"
+                                    >Post belongs to Team</ListboxLabel
+                                >
+                                <div class="relative mt-1">
+                                    <ListboxButton class="myPrimarySelect">
+                                        <span class="block truncate">
+                                            {{ createPostForm.team.name }}
+                                        </span>
+                                        <span
+                                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
+                                        >
+                                            <ChevronUpDownIcon
+                                                class="h-5 w-5 text-gray-400"
+                                                aria-hidden="true"
+                                            />
+                                        </span>
+                                    </ListboxButton>
+
+                                    <transition
+                                        leave-active-class="transition ease-in duration-100"
+                                        leave-from-class="opacity-100"
+                                        leave-to-class="opacity-0"
+                                    >
+                                        <ListboxOptions
+                                            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                        >
+                                            <ListboxOption
+                                                as="template"
+                                                v-for="team in user.all_teams"
+                                                :key="team.id"
+                                                :value="team"
+                                            >
+                                                <li
+                                                    class="hover:text-white hover:bg-myPrimaryDarkGrayColor"
+                                                    :class="[
+                                                        team.id ===
+                                                        createPostForm.team.id
+                                                            ? ''
+                                                            : '',
+                                                        'relative cursor-default select-none py-2 pl-3 pr-9',
+                                                    ]"
+                                                >
+                                                    <span
+                                                        :class="[
+                                                            team.id ===
+                                                            createPostForm.team
+                                                                .id
+                                                                ? 'font-normal'
+                                                                : 'font-normal',
+                                                            'block truncate',
+                                                        ]"
+                                                        >{{ team.name }}</span
+                                                    >
+                                                    <span
+                                                        v-if="
+                                                            team.id ===
+                                                            createPostForm.team
+                                                                .id
+                                                        "
+                                                        :class="[
+                                                            team.id ===
+                                                            createPostForm.team
+                                                                .id
+                                                                ? ''
+                                                                : '',
+                                                            'absolute inset-y-0 right-0 flex items-center pr-4',
+                                                        ]"
+                                                    >
+                                                        <CheckIcon
+                                                            :class="[
+                                                                team.id ===
+                                                                createPostForm
+                                                                    .team.id
+                                                                    ? ''
+                                                                    : 'text-white',
+                                                            ]"
+                                                            class="h-5 w-5"
+                                                            aria-hidden="true"
+                                                        />
+                                                    </span>
+                                                </li>
+                                            </ListboxOption>
+                                        </ListboxOptions>
+                                    </transition>
+                                </div>
+                            </Listbox>
+                            <InputError :message="createPostForm.errors.team" />
                         </div>
                     </div>
                 </template>
 
                 <template #actions>
+                    <div
+                        class="bg-red-50 rounded flex flex-col gap-myPrimaryGap py-4 px-4 my-8"
+                    >
+                        <div
+                            v-for="error in Object.values(
+                                createPostForm.errors
+                            )"
+                            :key="error"
+                        >
+                            <p
+                                class="myPrimaryParagraph text-myPrimaryDarkGrayColor"
+                            >
+                                {{ error }}
+                            </p>
+                        </div>
+                    </div>
                     <SubmitButton
                         :disabled="createPostForm.processing"
                         buttonText="Create Post"

@@ -160,6 +160,11 @@ Route::group(
                             );
                         })->name("user.teams.create");
 
+                        Route::get("/team/update/{team}", [
+                            TeamTeamController::class,
+                            "edit",
+                        ])->name("team.update.information");
+
                         Route::get("/team/members{team}", [
                             TeamTeamMemberController::class,
                             "index",
@@ -169,11 +174,6 @@ Route::group(
                             TeamDeleteController::class,
                             "edit",
                         ])->name("team.delete");
-
-                        Route::get("/team/update/{team}", [
-                            TeamTeamController::class,
-                            "edit",
-                        ])->name("team.update.information");
                     }
                 });
             }

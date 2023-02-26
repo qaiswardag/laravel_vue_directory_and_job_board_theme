@@ -102,7 +102,7 @@ const createTeam = () => {
             <div class="myInputsOrganization">
                 <div class="myInputGroup">
                     <p class="myPrimaryParagraph text-center">
-                        You will become Account owner of this Team
+                        You will become Owner of this Team
                     </p>
                     <AvatarCardCenterSmall></AvatarCardCenterSmall>
                     <InputLabel for="name" value="Team Name" />

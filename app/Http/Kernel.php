@@ -70,7 +70,7 @@ class Kernel extends HttpKernel
         "verified" => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         "ensure.is.super.admin" =>
             \App\Http\Middleware\EnsureIsSuperAdmin::class,
-        "ensure.has.correct.role" =>
+        "ensure.can.create.and.update" =>
             \App\Http\Middleware\EnsureCanCreateAndUpdate::class,
         "ensure.can.destroy" => \App\Http\Middleware\EnsureCanDestroy::class,
     ];

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\LoggedIn\Post;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoggedIn\Post\StorePostRequest;
 use App\Models\Post\Post;
 use App\Models\Team;
 use App\Models\User;
@@ -40,7 +41,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Posts/Partials/CreatePost");
+        return Inertia::render("Posts/Partials/CreatePost", [
+            "team" => Auth::user()->currentTeam,
+        ]);
     }
 
     /**
@@ -49,31 +52,22 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Post $post)
+    public function store(StorePostRequest $request, Post $post)
     {
         sleep(1);
-        dd($request);
-        // ->foreignId("team_id")
-        // dd($request);
 
         $title = $request->input("title");
         $content = $request->input("content");
-        //
-        //
-        // Validator::make($request, [
-        //     "title" => ["required", "string", "max:255"],
-        //     "content" => ["required", "string", "max:255"],
-        // ])->validateWithBag("createPost");
-        // //
-        //
+        $user = $request->input("user");
+        $team = $request->input("team_id");
 
         Post::create([
-            "user_id" => 1,
-            "team_id" => 1,
+            "user_id" => $user->id,
+            "team_id" => $team->id,
             // created by below user
             "title" => $title,
             "slug" => $title,
-            "published" => 1,
+            "published" => $request->input("published"),
             "image_cover_path" => "hi-i-am-path-for-image",
             "content" => $content,
         ]);
