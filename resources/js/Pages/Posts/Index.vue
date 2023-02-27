@@ -10,8 +10,11 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
-defineProps({
+const props = defineProps({
     posts: {
+        required: true,
+    },
+    currentUserTeam: {
         required: true,
     },
 });
@@ -82,17 +85,20 @@ const deletePostForm = useForm({});
 
 // form action
 const deletePost = (postId) => {
-    deletePostForm.delete(route("overview.posts.destroy", postId), {
-        preserveScroll: true,
-        onSuccess: () => (modalShowDeletePost.value = false),
-        onError: (err) => {
-            console.log("Something went wrong chaning role. Error:", err);
-        },
-        onFinish: (log) => {
-            // console.log("On finish. Here is the log:", log);
-            modalShowDeletePost.value = false;
-        },
-    });
+    deletePostForm.delete(
+        route("overview.posts.post.destroy", [
+            postId,
+            props.currentUserTeam.id,
+        ]),
+        {
+            preserveScroll: true,
+            onSuccess: () => (modalShowDeletePost.value = false),
+            onError: (err) => {},
+            onFinish: (log) => {
+                modalShowDeletePost.value = false;
+            },
+        }
+    );
 };
 
 // handle action
@@ -167,6 +173,8 @@ const handleEdit = function (id) {
             No Posts yet
         </h1>
 
+        <p class="my-4 pb-4">currentUserTeam from shared Data is:</p>
+        <p class="my-4">{{ currentUserTeam }}</p>
         <!-- TABLE START -->
         <div v-if="posts && posts.data.length >= 1" class="myTableContainer">
             <div class="myTableSubContainer">
@@ -199,6 +207,13 @@ const handleEdit = function (id) {
 
                             <th scope="col" class="myPrimaryTableTh">
                                 Team name
+                            </th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Update Date
+                            </th>
+
+                            <th scope="col" class="myPrimaryTableTh">
+                                Created Date
                             </th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Edit
@@ -267,6 +282,12 @@ const handleEdit = function (id) {
                                         $page.props.user &&
                                         $page.props.user.current_team.name
                                     }}
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    update date here
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    created date here
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

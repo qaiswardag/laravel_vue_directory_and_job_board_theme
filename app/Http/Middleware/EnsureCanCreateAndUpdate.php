@@ -20,7 +20,11 @@ class EnsureCanCreateAndUpdate
     public function handle(Request $request, Closure $next)
     {
         // gate
-        if (Gate::allows("can-create-and-update")) {
+        if (
+            Gate::forUser(Auth::user())->allows(
+                "for-middleware-can-create-and-update"
+            )
+        ) {
             return $next($request);
         }
 

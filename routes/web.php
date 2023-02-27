@@ -38,7 +38,7 @@ Route::get("/", function () {
     ]);
 })->name("home");
 
-// group: users who can read
+// Pages that are accessible to everyone who is authenticated
 Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
@@ -46,16 +46,12 @@ Route::middleware([
 ])
     // group of pages
     ->group(function () {
-        // dashboard
         Route::get("/dashboard", function () {
             return Inertia::render("Dashboard/Dashboard");
         })->name("dashboard");
-
-        // update profile and profile  security
         Route::get("/user/profile/update", function () {
             return Inertia::render("Profile/ProfileUpdate/ProfileUpdate");
         })->name("user.profile.update");
-
         Route::get("/user/profile/password", function () {
             return Inertia::render("Profile/ProfilePassword/ProfilePassword");
         })->name("user.profile.password");
@@ -64,54 +60,46 @@ Route::middleware([
             UserSessionsController::class,
             "show",
         ])->name("user.profile.security");
-
-        // posts
         Route::get("/overview/posts", [PostController::class, "index"])->name(
             "overview.posts.index"
         );
     });
-//
-// group: users within a team who can create, update and delete
-Route::middleware([
-    "auth:sanctum",
-    config("jetstream.auth_session"),
-    "verified",
-    "ensure.can.create.and.update", // owner, administrator and editor
-])
-    // group of pages
-    ->group(function () {
-        // posts
-        Route::get("/overview/posts/create", [
-            PostController::class,
-            "create",
-        ])->name("overview.posts.create");
-        Route::post("/overview/posts/store", [
-            PostController::class,
-            "store",
-        ])->name("overview.posts.store");
-    });
 
+// Pages that require can create and update authentication
 Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
     "verified",
-    "ensure.can.destroy", // owner, administrator
+    // "ensure.can.create.and.update", // editor, owner, administrator
+])->group(function () {
+    // posts
+    Route::get("/overview/posts/create", [
+        PostController::class,
+        "create",
+    ])->name("overview.posts.create");
+    Route::post("/overview/posts/store", [
+        PostController::class,
+        "store",
+    ])->name("overview.posts.store");
+});
+
+// Pages that require can destroy authentication
+Route::middleware([
+    "auth:sanctum",
+    config("jetstream.auth_session"),
+    "verified",
+    // "ensure.can.destroy", // owner, administrator
 ])
     // group of pages
     ->group(function () {
         // posts
-        Route::delete("/overview/posts/post/{post}", [
+        Route::delete("/overview/posts/post/{post}/{team}", [
             PostController::class,
             "destroy",
-        ])->name("overview.posts.destroy");
+        ])->name("overview.posts.post.destroy");
     });
 
-//
-//
-//
-//
-// guest routes start
-// middleware for group of pages
+// Pages for quests that are accessible to everyone
 Route::middleware([])
     // group of pages
     ->group(function () {
@@ -133,87 +121,30 @@ Route::middleware([])
             PostPostController::class,
             "show",
         ])->name("posts.show");
-        //
-        //
-        //
-        //
-        //
     });
-// guest routes end
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// group: super admin
+
+// Pages that are accessible only to superadmins
 Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
     "verified",
     "ensure.is.super.admin",
-])
-    // group of pages
-    ->group(function () {
-        // super admin dashboard
-        Route::get("/admin/dashboard", [
-            DashboardController::class,
-            "index",
-        ])->name("admin.dashboard");
+])->group(function () {
+    Route::get("/admin/dashboard", [DashboardController::class, "index"])->name(
+        "admin.dashboard"
+    );
+    Route::get("/admin/users", [
+        SuperadminUserController::class,
+        "index",
+    ])->name("admin.users");
+    Route::delete("/admin/users/user/{user}", [
+        SuperadminUserController::class,
+        "destroy",
+    ])->name("admin.users.user.destroy");
+});
 
-        // super admin — Users
-        Route::get("/admin/users", [
-            SuperadminUserController::class,
-            "index",
-        ])->name("admin.users.index");
-
-        Route::delete("/admin/users/user/{user}", [
-            SuperadminUserController::class,
-            "destroy",
-        ])->name("admin.user.destroy");
-
-        //
-        //
-        //
-        //
-        //
-    });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// test api
+// Pages for test
 Route::get("/test-me", function () {
-    // $posts = Post::where("team_id", 5)->paginate(2); // is working
-    //
-    //
-    // $posts = Team::findOrFail(5);
-    // $posts = $posts->posts()->paginate(); // is working
-    //
-    //
     $team = Team::findOrFail(5);
-    $posts = $team->posts()->get();
-
-    //
-    //
-    //
-    // $posts = Auth::user()->posts();
-    return $posts;
+    return $team;
 });

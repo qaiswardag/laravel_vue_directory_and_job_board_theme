@@ -81,7 +81,7 @@ const deleteUserForm = useForm({});
 
 // form action
 const deletePost = (userId) => {
-    deleteUserForm.delete(route("admin.user.destroy", userId), {
+    deleteUserForm.delete(route("admin.users.user.destroy", userId), {
         preserveScroll: true,
         onSuccess: () => (modalShowDeleteUser.value = false),
         onError: (err) => {},
@@ -112,7 +112,7 @@ const selectedUpdated = function (newSelect) {
 };
 
 const search = () => {
-    searchForm.get(route("admin.users.index"), {
+    searchForm.get(route("admin.users"), {
         preserveScroll: true,
         onSuccess: () => {},
         onError: (err) => {

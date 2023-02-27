@@ -20,7 +20,8 @@ class EnsureCanDestroy
     public function handle(Request $request, Closure $next)
     {
         // gate
-        if (Gate::allows("can-destroy")) {
+
+        if (Gate::forUser(Auth::user())->allows("for-middleware-can-destroy")) {
             return $next($request);
         }
 

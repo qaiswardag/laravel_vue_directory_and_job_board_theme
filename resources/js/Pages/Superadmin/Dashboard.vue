@@ -17,14 +17,14 @@ const breadcrumbsLinks = [{ label: "Admin Dashboard", url: "admin.dashboard" }];
 const actions = [
     {
         title: "Users",
-        href: "admin.users.index",
+        href: "admin.users",
         icon: UsersIcon,
         iconForeground: "text-myPrimaryBrandColor",
         iconBackground: "bg-gray-50",
     },
     {
         title: "Teams",
-        href: "admin.users.index",
+        href: "admin.users",
         icon: CheckBadgeIcon,
         iconForeground: "text-myPrimaryBrandColor",
         iconBackground: "bg-gray-50",

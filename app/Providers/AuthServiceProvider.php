@@ -25,20 +25,35 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
-        Gate::define("can-create-and-update", function ($user) {
+        // gate for can create and update
+        Gate::define("for-middleware-can-create-and-update", function ($user) {
             $allowedRoles = ["Owner", "Administrator", "Editor"];
+
             return in_array(
                 $user->teamRole($user->currentTeam)->name,
                 $allowedRoles
             );
         });
-        Gate::define("can-destroy", function ($user) {
+
+        // gate for can destroy
+        Gate::define("for-middleware-can-destroy", function ($user) {
             $allowedRoles = ["Owner", "Administrator"];
             return in_array(
                 $user->teamRole($user->currentTeam)->name,
                 $allowedRoles
             );
+        });
+        // gate for can create and update
+        Gate::define("can-create-and-update", function ($user, $team) {
+            $allowedRoles = ["Owner", "Administrator", "Editor"];
+
+            return in_array($user->teamRole($team)->name, $allowedRoles);
+        });
+
+        // gate for can destroy
+        Gate::define("can-destroy", function ($user, $team) {
+            $allowedRoles = ["Owner", "Administrator"];
+            return in_array($user->teamRole($team)->name, $allowedRoles);
         });
     }
 }

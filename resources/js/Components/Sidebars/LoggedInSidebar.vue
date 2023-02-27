@@ -242,7 +242,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             :href="route('admin.dashboard')"
             :active="
                 route().current('admin.dashboard') ||
-                route().current('admin.users.index')
+                route().current('admin.users')
             "
         >
             <svg

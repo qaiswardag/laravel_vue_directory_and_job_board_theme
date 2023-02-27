@@ -27,7 +27,8 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $team = Team::findOrFail(Auth()->user()->current_team_id);
+        // TODO: check if Team should be passed from front-end instead of using current Team from backend
+        $team = Team::findOrFail(Auth::user()->currentTeam->id);
         $posts = $team
             ->posts()
             ->latest()
@@ -56,19 +57,18 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request, Post $post)
+    public function store(StorePostRequest $request)
     {
-        sleep(1);
-        // dd($request);
+        $team = Team::findOrFail($request->team["id"]);
+        $this->authorize("can-create-and-update", $team);
 
         $title = $request->title;
         $content = $request->content;
         $userId = $request->user_id;
-        $team = $request->team;
 
         Post::create([
             "user_id" => $userId,
-            "team_id" => $team["id"],
+            "team_id" => $team->id,
             "title" => $title,
             "slug" => $title,
             "published" => $request->published,
@@ -86,7 +86,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        dd("show post method in controller. post is:", $post);
+        dd("show post method logged in controller. post is:", $post);
     }
 
     /**
@@ -118,12 +118,9 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post, Team $team)
     {
-        // dd(Auth::user());
-
-        // Gate::forUser($user)->check("removeTeamMember", $team)
-        // Gate::forUser(Auth::user())->check("removeGeneralResource", $post);
+        $this->authorize("can-destroy", $team);
 
         $post->delete();
 
