@@ -13,17 +13,17 @@ const props = defineProps({
         <div
             class="myPrimaryParagraph"
             v-for="(link, index) in links"
-            :key="index"
+            :key="link.label"
         >
-            <template v-if="link.url !== undefined">
+            <template v-if="link.route && link.route.name !== undefined">
                 <Link
-                    :href="route(link.url, link.parameter)"
+                    :href="route(link.route.name, link.route.parameters)"
                     class="myPrimaryLink"
                 >
                     {{ link.label }}
                 </Link>
             </template>
-            <template v-if="link.url === undefined">
+            <template v-if="link.label && link.route === undefined">
                 <span class="text-myPrimaryMediumGrayColor">
                     {{ link.label }}
                 </span>

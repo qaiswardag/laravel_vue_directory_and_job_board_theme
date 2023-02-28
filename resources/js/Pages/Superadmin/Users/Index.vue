@@ -8,9 +8,14 @@ import FormSection from "@/Components/Forms/FormSection.vue";
 import SearchBarWithOptions from "@/Components/SearchBars/SearchBarWithOptions.vue";
 import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
-
 const breadcrumbsLinks = [
-    { label: "Admin Dashboard", url: "admin.dashboard" },
+    {
+        label: "Admin Dashboard",
+        route: {
+            name: "admin.dashboard",
+            parameters: null,
+        },
+    },
     { label: "Users" },
 ];
 

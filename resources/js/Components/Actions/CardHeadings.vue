@@ -11,7 +11,7 @@ import {
 } from "@heroicons/vue/20/solid";
 
 defineProps({
-    routesCardHeadings: {
+    routesArray: {
         type: Array,
         required: true,
     },
@@ -61,20 +61,26 @@ defineProps({
                                     <span>Overview</span>
                                 </p>
                                 <div
-                                    v-for="item in routesCardHeadings"
-                                    :key="item.routeName"
+                                    v-for="routeItem in routesArray"
+                                    :key="routeItem.route.name"
                                     class="py-1"
                                     :class="{
                                         'bg-gray-50': route().current(
-                                            item.routeName
+                                            routeItem.route.name
                                         ),
                                     }"
                                 >
                                     <DropdownLink
-                                        v-if="item.routeName"
-                                        :href="route(item.routeName)"
+                                        :href="
+                                            route(
+                                                routeItem.route.name,
+                                                routeItem.route.parameters
+                                            )
+                                        "
                                         :active="
-                                            route().current(item.routeName)
+                                            route().current(
+                                                routeItem.route.name
+                                            )
                                         "
                                     >
                                         <div class="flex gap-2 items-center">
@@ -95,7 +101,7 @@ defineProps({
                                                 </svg>
                                             </p>
                                             <p>
-                                                {{ item.label }}
+                                                {{ routeItem.label }}
                                             </p>
                                         </div>
                                     </DropdownLink>

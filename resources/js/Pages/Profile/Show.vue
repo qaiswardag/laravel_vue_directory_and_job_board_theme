@@ -9,7 +9,15 @@ const props = defineProps({
     confirmsTwoFactorAuthentication: Boolean,
 });
 
-const breadcrumbsLinks = [{ label: "Your Profile", url: "profile.show" }];
+const breadcrumbsLinks = [
+    {
+        label: "Your Profile",
+        route: {
+            name: "profile.show",
+            parameters: null,
+        },
+    },
+];
 </script>
 
 <template>
@@ -59,7 +67,7 @@ const breadcrumbsLinks = [{ label: "Your Profile", url: "profile.show" }];
                                     class="absolute inset-0"
                                     aria-hidden="true"
                                 />
-                                Your Profile
+                                Profile Update
                             </Link>
                         </h3>
                         <p class="mt-2 text-sm text-gray-500">

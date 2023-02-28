@@ -13,8 +13,10 @@ const props = defineProps({
 const breadcrumbsLinks = [
     {
         label: "Team Settings",
-        url: "teams.show",
-        parameter: props.team,
+        route: {
+            name: "teams.show",
+            parameters: [props.team],
+        },
     },
     {
         label: "Team Information",

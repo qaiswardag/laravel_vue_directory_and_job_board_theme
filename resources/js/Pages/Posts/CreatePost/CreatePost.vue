@@ -32,10 +32,11 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "Posts",
-        // TODO: add team parameter to below route
-        //Maybe add url and parameter as an object: {urL: ..., parameter: [$team]
-        // url: "overview.posts.index"
+        label: "All Posts",
+        route: {
+            name: "overview.posts.index",
+            parameters: [props.currentUserTeam],
+        },
     },
     { label: "Add Post" },
 ];

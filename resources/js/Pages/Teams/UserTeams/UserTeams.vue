@@ -8,7 +8,10 @@ import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 const breadcrumbsLinks = [
     {
         label: "Your Teams",
-        url: "user.teams",
+        route: {
+            name: "user.teams",
+            parameters: null,
+        },
     },
 ];
 </script>

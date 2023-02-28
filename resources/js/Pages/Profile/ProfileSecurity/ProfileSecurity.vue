@@ -17,8 +17,16 @@ const props = defineProps({
 });
 
 const breadcrumbsLinks = [
-    { label: "Profile", url: "profile.show" },
-    { label: "Profile Security" },
+    {
+        label: "Your Profile",
+        route: {
+            name: "profile.show",
+            parameters: null,
+        },
+    },
+    {
+        label: "Profile Security",
+    },
 ];
 </script>
 

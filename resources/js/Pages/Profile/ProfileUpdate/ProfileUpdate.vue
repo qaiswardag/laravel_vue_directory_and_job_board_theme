@@ -12,8 +12,16 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 const breadcrumbsLinks = [
-    { label: "Profile", url: "profile.show" },
-    { label: "Profile Update" },
+    {
+        label: "Your Profile",
+        route: {
+            name: "profile.show",
+            parameters: null,
+        },
+    },
+    {
+        label: "Profile Update",
+    },
 ];
 </script>
 

@@ -12,7 +12,15 @@ import {
 
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
-const breadcrumbsLinks = [{ label: "Admin Dashboard", url: "admin.dashboard" }];
+const breadcrumbsLinks = [
+    {
+        label: "Admin Dashboard",
+        route: {
+            name: "admin.dashboard",
+            parameters: null,
+        },
+    },
+];
 
 const actions = [
     {

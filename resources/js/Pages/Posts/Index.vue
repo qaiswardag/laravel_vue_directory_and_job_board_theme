@@ -21,19 +21,28 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "Posts",
-        // TODO: add team parameter to below route.
-        //Maybe add url and parameter as an object: {urL: ..., parameter: [$team]
-        //url: "overview.posts.index"
+        label: "All Posts",
+        route: {
+            name: "overview.posts.index",
+            parameters: [props.currentUserTeam],
+        },
     },
 ];
 
-const routesCardHeadings = [
+const routesArray = [
     {
         label: "All Posts",
-        // TODO: add team parameter to below route
-        //Maybe add url and parameter as an object: {urL: ..., parameter: [$team]
-        // routeName: "overview.posts.index",
+        route: {
+            name: "overview.posts.index",
+            parameters: [props.currentUserTeam],
+        },
+    },
+    {
+        label: "Create Post",
+        route: {
+            name: "overview.posts.create",
+            parameters: [props.currentUserTeam.id],
+        },
     },
 ];
 
@@ -53,14 +62,14 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 // handle action
-const handleDelete = function (id, post) {
+const handleDelete = function (postId, post) {
     modalShowDeletePost.value = true;
 
     // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 2;
     titleModal.value = `Delete ${post.title}?`;
-    descriptionModal.value = `Are you sure you want to delete post  with title ${post.title}?`;
+    descriptionModal.value = `Are you sure you want to delete post with title ${post.title}?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Delete Post";
@@ -77,7 +86,7 @@ const handleDelete = function (id, post) {
     };
     // handle click
     thirdModalButtonFunction.value = function () {
-        deletePost(id);
+        deletePost(postId);
     };
     // end modal
 };
@@ -139,7 +148,7 @@ const handleEdit = function (id) {
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
 
-        <CardHeadings :routesCardHeadings="routesCardHeadings">
+        <CardHeadings :routesArray="routesArray">
             <template #title
                 >Posts for
                 {{ $page.props.user && $page.props.user.current_team.name }}
