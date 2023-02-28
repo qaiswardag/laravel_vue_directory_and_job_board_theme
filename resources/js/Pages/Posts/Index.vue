@@ -19,20 +19,21 @@ const props = defineProps({
     },
 });
 
-const breadcrumbsLinks = [{ label: "Posts", url: "overview.posts.index" }];
+const breadcrumbsLinks = [
+    {
+        label: "Posts",
+        // TODO: add team parameter to below route.
+        //Maybe add url and parameter as an object: {urL: ..., parameter: [$team]
+        //url: "overview.posts.index"
+    },
+];
 
 const routesCardHeadings = [
     {
         label: "All Posts",
-        routeName: "overview.posts.index",
-    },
-    {
-        label: "Create Post",
-        routeName: "overview.posts.create",
-    },
-    {
-        label: "Categories",
-        routeName: "overview.posts.create",
+        // TODO: add team parameter to below route
+        //Maybe add url and parameter as an object: {urL: ..., parameter: [$team]
+        // routeName: "overview.posts.index",
     },
 ];
 
@@ -151,14 +152,7 @@ const handleEdit = function (id) {
                 <Link
                     class="myPrimaryButton"
                     type="button"
-                    :href="route('overview.posts.create')"
-                >
-                    Categories
-                </Link>
-                <Link
-                    class="myPrimaryButton"
-                    type="button"
-                    :href="route('overview.posts.create')"
+                    :href="route('overview.posts.create', currentUserTeam.id)"
                 >
                     Create Post
                 </Link>
@@ -173,8 +167,6 @@ const handleEdit = function (id) {
             No Posts yet
         </h1>
 
-        <p class="my-4 pb-4">currentUserTeam from shared Data is:</p>
-        <p class="my-4">{{ currentUserTeam }}</p>
         <!-- TABLE START -->
         <div v-if="posts && posts.data.length >= 1" class="myTableContainer">
             <div class="myTableSubContainer">

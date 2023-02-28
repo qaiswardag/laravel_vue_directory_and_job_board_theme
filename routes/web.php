@@ -60,9 +60,10 @@ Route::middleware([
             UserSessionsController::class,
             "show",
         ])->name("user.profile.security");
-        Route::get("/overview/posts", [PostController::class, "index"])->name(
-            "overview.posts.index"
-        );
+        Route::get("/overview/posts/{team}", [
+            PostController::class,
+            "index",
+        ])->name("overview.posts.index");
     });
 
 // Pages that require can create and update authentication
@@ -73,7 +74,7 @@ Route::middleware([
     // "ensure.can.create.and.update", // editor, owner, administrator
 ])->group(function () {
     // posts
-    Route::get("/overview/posts/create", [
+    Route::get("/overview/posts/create/{team}", [
         PostController::class,
         "create",
     ])->name("overview.posts.create");

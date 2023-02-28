@@ -71,6 +71,7 @@ defineProps({
                                     }"
                                 >
                                     <DropdownLink
+                                        v-if="item.routeName"
                                         :href="route(item.routeName)"
                                         :active="
                                             route().current(item.routeName)

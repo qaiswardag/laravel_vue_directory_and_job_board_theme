@@ -25,10 +25,10 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Team $team)
     {
-        // TODO: check if Team should be passed from front-end instead of using current Team from backend
-        $team = Team::findOrFail(Auth::user()->currentTeam->id);
+        $this->authorize("can-read", $team);
+
         $posts = $team
             ->posts()
             ->latest()
@@ -44,11 +44,11 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Team $team)
     {
-        return Inertia::render("Posts/Partials/CreatePost", [
-            "team" => Auth::user()->currentTeam,
-        ]);
+        $this->authorize("can-create-and-update", $team);
+
+        return Inertia::render("Posts/Partials/CreatePost");
     }
 
     /**
@@ -59,6 +59,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        // use and find the Team from request as that is the Team user want to store a Post for
         $team = Team::findOrFail($request->team["id"]);
         $this->authorize("can-create-and-update", $team);
 
@@ -76,7 +77,10 @@ class PostController extends Controller
             "content" => $content,
         ]);
 
-        return redirect()->route("overview.posts.index");
+        // return current Team user is on and not the Team user is storing the post for
+        $currentTeam = Auth::user()->currentTeam;
+
+        return redirect()->route("overview.posts.index", $currentTeam);
     }
     /**
      * Display the specified resource.
@@ -84,7 +88,7 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post, Team $team)
     {
         dd("show post method logged in controller. post is:", $post);
     }
@@ -95,8 +99,9 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Post $post, Team $team)
     {
+        // $this->authorize("can-create-and-update", $team);
         //
     }
 
@@ -107,9 +112,9 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post, Team $team)
     {
-        //
+        // $this->authorize("can-create-and-update", $team);
     }
 
     /**

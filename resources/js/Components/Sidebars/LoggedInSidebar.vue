@@ -132,7 +132,12 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             "
         >
             <SideBarLink
-                :href="route('overview.posts.index')"
+                :href="
+                    route(
+                        'overview.posts.index',
+                        $page.props.user.current_team.id
+                    )
+                "
                 :active="
                     route().current('overview.posts.index') ||
                     route().current('overview.posts.create')

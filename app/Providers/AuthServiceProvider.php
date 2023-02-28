@@ -43,6 +43,14 @@ class AuthServiceProvider extends ServiceProvider
                 $allowedRoles
             );
         });
+
+        // gate for can create and update
+        Gate::define("can-read", function ($user, $team) {
+            $allowedRoles = ["Owner", "Administrator", "Editor", "Reader"];
+
+            return in_array($user->teamRole($team)->name, $allowedRoles);
+        });
+
         // gate for can create and update
         Gate::define("can-create-and-update", function ($user, $team) {
             $allowedRoles = ["Owner", "Administrator", "Editor"];

@@ -22,7 +22,7 @@ import {
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
 
 const props = defineProps({
-    team: {
+    currentUserTeam: {
         required: true,
     },
     user: {
@@ -31,7 +31,12 @@ const props = defineProps({
 });
 
 const breadcrumbsLinks = [
-    { label: "Posts", url: "overview.posts.index" },
+    {
+        label: "Posts",
+        // TODO: add team parameter to below route
+        //Maybe add url and parameter as an object: {urL: ..., parameter: [$team]
+        // url: "overview.posts.index"
+    },
     { label: "Add Post" },
 ];
 
@@ -70,7 +75,7 @@ const createPostForm = useForm({
     slug: "",
     content: "",
     published: true,
-    team: props.team,
+    team: props.currentUserTeam,
     user_id: props.user.id,
 });
 
