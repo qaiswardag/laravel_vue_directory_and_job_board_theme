@@ -41,7 +41,6 @@ const breadcrumbsLinks = [
                 :available-roles="availableRoles"
                 :user-permissions="permissions"
             />
-            <SectionBorder />
         </div>
     </LoggedInLayout>
 </template>

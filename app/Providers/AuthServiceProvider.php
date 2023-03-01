@@ -6,6 +6,7 @@ use App\Models\Team;
 use App\Policies\TeamPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Jetstream\Jetstream;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,42 +27,66 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // gate for can create and update
+        Gate::define("for-middleware-can-read", function ($user) {
+            $allowedRoles = ["Owner", "Administrator", "Editor", "Reader"];
+
+            if ($user->teamRole($user->currentTeam) !== null) {
+                return in_array(
+                    $user->teamRole($user->currentTeam)->name,
+                    $allowedRoles
+                );
+            }
+        });
+
+        // gate for can create and update
         Gate::define("for-middleware-can-create-and-update", function ($user) {
             $allowedRoles = ["Owner", "Administrator", "Editor"];
 
-            return in_array(
-                $user->teamRole($user->currentTeam)->name,
-                $allowedRoles
-            );
+            if ($user->teamRole($user->currentTeam) !== null) {
+                return in_array(
+                    $user->teamRole($user->currentTeam)->name,
+                    $allowedRoles
+                );
+            }
         });
 
         // gate for can destroy
         Gate::define("for-middleware-can-destroy", function ($user) {
             $allowedRoles = ["Owner", "Administrator"];
-            return in_array(
-                $user->teamRole($user->currentTeam)->name,
-                $allowedRoles
-            );
+
+            if ($user->teamRole($user->currentTeam) !== null) {
+                return in_array(
+                    $user->teamRole($user->currentTeam)->name,
+                    $allowedRoles
+                );
+            }
         });
 
         // gate for can create and update
         Gate::define("can-read", function ($user, $team) {
             $allowedRoles = ["Owner", "Administrator", "Editor", "Reader"];
 
-            return in_array($user->teamRole($team)->name, $allowedRoles);
+            if ($user->teamRole($team) !== null) {
+                return in_array($user->teamRole($team)->name, $allowedRoles);
+            }
         });
 
         // gate for can create and update
         Gate::define("can-create-and-update", function ($user, $team) {
             $allowedRoles = ["Owner", "Administrator", "Editor"];
 
-            return in_array($user->teamRole($team)->name, $allowedRoles);
+            if ($user->teamRole($team) !== null) {
+                return in_array($user->teamRole($team)->name, $allowedRoles);
+            }
         });
 
         // gate for can destroy
         Gate::define("can-destroy", function ($user, $team) {
             $allowedRoles = ["Owner", "Administrator"];
-            return in_array($user->teamRole($team)->name, $allowedRoles);
+
+            if ($user->teamRole($team) !== null) {
+                return in_array($user->teamRole($team)->name, $allowedRoles);
+            }
         });
     }
 }

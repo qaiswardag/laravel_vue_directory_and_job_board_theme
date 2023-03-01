@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\Post;
 use App\Models\Team;
 use App\Models\TeamInvitation;
@@ -215,7 +216,8 @@ class DatabaseSeeder extends Seeder
         User::factory(100)->create();
         // fake Posts
         Post::factory(250)->create();
-
+        // fake media
+        MediaLibrary::factory(100)->create();
         //
         //
         //

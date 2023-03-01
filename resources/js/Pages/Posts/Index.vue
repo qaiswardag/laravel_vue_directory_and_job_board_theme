@@ -176,18 +176,15 @@ const handleEdit = function (id) {
             No Posts yet
         </h1>
 
-        <!-- TABLE START -->
+        <!-- table start -->
         <div v-if="posts && posts.data.length >= 1" class="myTableContainer">
             <div class="myTableSubContainer">
                 <table class="myPrimaryTable">
                     <caption class="myPrimaryTableCaption">
-                        Your posts for Team:
-                        <span class="font-semibold">
-                            {{
-                                $page.props.user &&
-                                $page.props.user.current_team.name
-                            }}
-                        </span>
+                        {{
+                            $page.props.user &&
+                            $page.props.user.current_team.name
+                        }}
                     </caption>
                     <thead class="myPrimaryTableTHead">
                         <tr class="myPrimaryTableTr">
@@ -199,6 +196,7 @@ const handleEdit = function (id) {
                             <th scope="col" class="myPrimaryTableTh">
                                 Post Id
                             </th>
+                            <th scope="col" class="myPrimaryTableTh">Tags</th>
                             <th scope="col" class="myPrimaryTableTh">
                                 User Id
                             </th>
@@ -270,6 +268,9 @@ const handleEdit = function (id) {
 
                                 <td class="myPrimaryTableTBodyTd">
                                     {{ post.id }}
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    {{ post.tags }}
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
                                     {{ post.user_id }}
@@ -345,7 +346,7 @@ const handleEdit = function (id) {
                 </table>
             </div>
         </div>
-        <!-- TABLE END -->
+        <!-- table end -->
         <Pagination :links="posts?.links ? posts.links : []"></Pagination>
     </LoggedInLayout>
 </template>

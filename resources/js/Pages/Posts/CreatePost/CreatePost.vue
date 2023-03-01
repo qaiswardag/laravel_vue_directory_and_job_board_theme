@@ -12,6 +12,8 @@ import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { onMounted, ref, computed } from "vue";
 import { Switch } from "@headlessui/vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
+import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
+import Tags from "@/Components/Forms/Tags.vue";
 import {
     Listbox,
     ListboxButton,
@@ -19,7 +21,18 @@ import {
     ListboxOption,
     ListboxOptions,
 } from "@headlessui/vue";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
+
+import {
+    CheckIcon,
+    ChevronUpDownIcon,
+    XMarkIcon,
+} from "@heroicons/vue/20/solid";
+
+const showErrorNotifications = ref(false);
+
+const notificationsModalButton = function () {
+    showErrorNotifications.value = false;
+};
 
 const props = defineProps({
     currentUserTeam: {
@@ -78,8 +91,12 @@ const createPostForm = useForm({
     published: true,
     team: props.currentUserTeam,
     user_id: props.user.id,
+    tags: "One,Two,Three",
 });
 
+const firstTagsButton = function (tags) {
+    createPostForm.tags = tags;
+};
 const handleCreatePost = function () {
     // try to store post
     createPost();
@@ -122,11 +139,7 @@ const createPost = () => {
                             </p>
                         </div>
                         <div class="myInputGroup">
-                            <InputLabel
-                                for="title"
-                                value="Your Post title"
-                                class="mb-1"
-                            />
+                            <InputLabel for="title" value="Your Post title" />
                             <TextInput
                                 placeholder="Enter your title.."
                                 id="title"
@@ -141,7 +154,7 @@ const createPost = () => {
                             />
                         </div>
                         <div class="myInputGroup">
-                            <InputLabel for="slug" value="Slug" class="mb-1" />
+                            <InputLabel for="slug" value="Slug" />
                             <TextInput
                                 placeholder="Post slug"
                                 id="slug"
@@ -336,6 +349,27 @@ const createPost = () => {
                             :message="createPostForm.errors.published"
                         />
                     </div>
+                    <!-- tags - start -->
+                    <div class="myInputsOrganization">
+                        <div
+                            class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                        >
+                            <div class="myPrimaryFormOrganizationHeader">
+                                Tags
+                            </div>
+                            <p class="myPrimaryParagraph">
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                        <div class="myInputGroup">
+                            <Tags
+                                :tagsOnLoad="createPostForm.tags"
+                                @firstTagsButton="firstTagsButton"
+                            ></Tags>
+                            <InputError :message="createPostForm.errors.tags" />
+                        </div>
+                    </div>
+                    <!-- tags - end -->
                     <div class="myInputsOrganization">
                         <div
                             class="myPrimaryFormOrganizationHeaderDescriptionSection"
@@ -441,27 +475,46 @@ const createPost = () => {
                 </template>
 
                 <template #actions>
-                    <div
-                        class="bg-red-50 rounded flex flex-col gap-myPrimaryGap py-4 px-4 my-8"
-                    >
-                        <div
-                            v-for="error in Object.values(
-                                createPostForm.errors
-                            )"
-                            :key="error"
-                        >
-                            <p
-                                class="myPrimaryParagraph text-myPrimaryDarkGrayColor"
-                            >
-                                {{ error }}
-                            </p>
-                        </div>
-                    </div>
                     <SubmitButton
                         :disabled="createPostForm.processing"
                         buttonText="Create Post"
                     >
                     </SubmitButton>
+                    <div
+                        class="flex justify-end mt-4"
+                        v-if="Object.values(createPostForm.errors).length !== 0"
+                    >
+                        <div
+                            @click="showErrorNotifications = true"
+                            class="w-fit py-1 flex item-center gap-2 rounded-md px-2 cursor-pointer italic"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                                />
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
+                            </svg>
+                            <p class="myPrimaryParagraph">Show errors</p>
+                        </div>
+                    </div>
+                    <NotificationsFixedBottom
+                        :listOfMessages="Object.values(createPostForm.errors)"
+                        :show="showErrorNotifications"
+                        @notificationsModalButton="notificationsModalButton"
+                    ></NotificationsFixedBottom>
                 </template>
             </FormSection>
         </div>

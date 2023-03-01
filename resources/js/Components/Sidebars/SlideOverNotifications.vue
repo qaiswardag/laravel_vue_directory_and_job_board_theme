@@ -121,7 +121,7 @@ const notificationsSlideOverButton = function () {
 
                                             <a
                                                 href="#"
-                                                class="block myPrimaryLink primaryParagraph rounded"
+                                                class="block myPrimaryLink myPrimaryParagraph rounded"
                                             >
                                                 View all notifications
                                             </a>

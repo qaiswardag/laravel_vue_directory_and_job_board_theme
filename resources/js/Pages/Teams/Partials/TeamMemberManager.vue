@@ -289,8 +289,6 @@ const displayAbleRole = (role) => {
 <template>
     <div>
         <div>
-            <SectionBorder />
-
             <!-- Add Team Member -->
             <FormSection @submitted="addTeamMember" :sidebarArea="false">
                 <template #title> Add Team Member </template>

@@ -23,7 +23,7 @@ defineProps({
         <div class="bg-white px-4 py-5 sm:px-6">
             <div class="flex items-center space-x-3 gap-2 md:flex-row sm:flex-">
                 <div class="min-w-0 flex-1">
-                    <p class="myTertiaryHeader my-0">
+                    <p class="mySecondaryHeader my-0">
                         <slot name="title" />
                     </p>
                     <p class="myPrimaryParagraph text-xs pt-2">

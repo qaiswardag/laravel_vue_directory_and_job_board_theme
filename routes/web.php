@@ -7,6 +7,7 @@ use App\Http\Controllers\Superadmin\DashboardController;
 use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Guest\User\UserController;
+use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
 use App\Http\Middleware\isSuperAdmin;
 use App\Models\Post\Post;
@@ -64,6 +65,16 @@ Route::middleware([
             PostController::class,
             "index",
         ])->name("overview.posts.index");
+        // media
+        Route::get("/media/{team}", [
+            MediaLibraryController::class,
+            "index",
+        ])->name("media.index");
+        // media
+        Route::post("/media/store", [
+            MediaLibraryController::class,
+            "store",
+        ])->name("media.store");
     });
 
 // Pages that require can create and update authentication

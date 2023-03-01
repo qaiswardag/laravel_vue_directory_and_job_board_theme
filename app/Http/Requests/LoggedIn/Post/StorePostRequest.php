@@ -33,6 +33,7 @@ class StorePostRequest extends FormRequest
             "user_id" => ["required"],
             "team" => ["required"],
             "content" => ["required", "min:2", "max:255"],
+            "tags" => ["required"],
             "post_cover_image" => [],
         ];
     }

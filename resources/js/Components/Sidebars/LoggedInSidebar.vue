@@ -124,6 +124,36 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             </svg>
             Your Profile
         </SideBarLink>
+
+        <template
+            v-if="
+                $page.props.user.all_teams.length > 0 &&
+                $page.props.user.current_team &&
+                $page.props.jetstream.hasTeamFeatures
+            "
+        >
+            <SideBarLink
+                :href="route('media.index', $page.props.user.current_team.id)"
+                :active="route().current('media.index')"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                    />
+                </svg>
+                Media
+            </SideBarLink>
+        </template>
+
         <template
             v-if="
                 $page.props.user.all_teams.length > 0 &&
@@ -157,7 +187,6 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                         d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"
                     />
                 </svg>
-
                 Posts
             </SideBarLink>
         </template>
@@ -191,7 +220,6 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                         d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
                     />
                 </svg>
-
                 Team Settings
             </SideBarLink>
         </template>
@@ -218,7 +246,6 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                     d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"
                 />
             </svg>
-
             Your Teams
         </SideBarLink>
 
@@ -240,7 +267,6 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                     d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"
                 />
             </svg>
-
             Docs
         </SideBarLink>
         <SideBarLink
@@ -269,7 +295,6 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                 />
             </svg>
-
             Super Administrator
         </SideBarLink>
 
