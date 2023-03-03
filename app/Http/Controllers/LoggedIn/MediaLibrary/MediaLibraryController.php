@@ -36,6 +36,7 @@ class MediaLibraryController extends Controller
         $team = Team::findOrFail($request->team["id"]);
         $this->authorize("can-create-and-update", $team);
 
+        dd("request er:", $request->file("images"));
         dd("request er:", $request);
     }
 

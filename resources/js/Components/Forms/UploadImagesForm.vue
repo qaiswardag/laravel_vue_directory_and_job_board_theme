@@ -4,7 +4,6 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import { useForm } from "@inertiajs/vue3";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
-import UploadImagesForm from "../Forms/UploadImagesForm.vue";
 import {
     Dialog,
     DialogOverlay,

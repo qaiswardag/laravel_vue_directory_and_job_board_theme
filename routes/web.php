@@ -140,7 +140,7 @@ Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
     "verified",
-    "ensure.is.super.admin",
+    // "ensure.is.super.admin", // TODO: uncomment this middleware!
 ])->group(function () {
     Route::get("/admin/dashboard", [DashboardController::class, "index"])->name(
         "admin.dashboard"

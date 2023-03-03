@@ -91,6 +91,7 @@ const createPostForm = useForm({
     published: true,
     team: props.currentUserTeam,
     user_id: props.user.id,
+    thumbnail: "",
     tags: "One,Two,Three",
 });
 
@@ -224,14 +225,14 @@ const createPost = () => {
                                         </svg>
                                         <div class="flex text-sm text-gray-600">
                                             <InputLabel
-                                                for="file-upload"
-                                                value="Upload a file"
+                                                for="thumbnail"
+                                                value="Upload a thumbnail"
                                                 class="mb-1"
                                             />
 
                                             <input
-                                                id="file-upload"
-                                                name="file-upload"
+                                                id="thumbnail"
+                                                name="thumbnail"
                                                 type="file"
                                                 class="sr-only"
                                             />
@@ -246,9 +247,7 @@ const createPost = () => {
                             </div>
 
                             <InputError
-                                :message="
-                                    createPostForm.errors.post_cover_image
-                                "
+                                :message="createPostForm.errors.thumbnail"
                             />
                         </div>
                     </div>

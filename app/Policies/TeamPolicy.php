@@ -115,7 +115,6 @@ class TeamPolicy
 
     public function canCreateUpdateAndDelete(User $user, Team $team): bool
     {
-        dd("cøme here to this policy!!!!");
         return $user->teamRole($team)->name == "Owner" ||
             $user->teamRole($team)->name == "Administrator";
     }

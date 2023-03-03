@@ -2,6 +2,7 @@
 import { router } from "@inertiajs/vue3";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 </script>
+
 <template>
     <nav class="flex-1 space-y-1 px-2 pb-4" aria-label="menu">
         <p
@@ -295,7 +296,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                 />
             </svg>
-            Super Administrator
+            Superadmin
         </SideBarLink>
 
         <a

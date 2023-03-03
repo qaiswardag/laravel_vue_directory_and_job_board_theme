@@ -18,16 +18,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        // $users = User::latest()
-        //     ->when($request->query("search_query"), function ($query, $term) {
-        //         $query
-        //             ->where("first_name", "LIKE", "%" . $term . "%")
-        //             ->orWhere("last_name", "LIKE", "%" . $term . "%");
-        //     })
-        //     ->paginate(10);
-        // // // append users
-        // $users->appends($request->all());
-        //
+        $this->authorize("superadmin");
+
         $users = User::latest();
 
         $users->when($request->filled("selected_category"), function (
@@ -149,6 +141,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize("superadmin");
+
         sleep(1);
 
         $user->delete();

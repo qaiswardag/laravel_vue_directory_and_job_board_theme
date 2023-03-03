@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Team;
 use App\Policies\TeamPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Jetstream\Jetstream;
 
@@ -26,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // gate for can create and update
+        // middleware gate for can create and update
         Gate::define("for-middleware-can-read", function ($user) {
             $allowedRoles = ["Owner", "Administrator", "Editor", "Reader"];
 
@@ -38,7 +39,7 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
-        // gate for can create and update
+        // middleware gate for can create and update
         Gate::define("for-middleware-can-create-and-update", function ($user) {
             $allowedRoles = ["Owner", "Administrator", "Editor"];
 
@@ -50,7 +51,7 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
-        // gate for can destroy
+        // middleware gate for can destroy
         Gate::define("for-middleware-can-destroy", function ($user) {
             $allowedRoles = ["Owner", "Administrator"];
 
@@ -87,6 +88,11 @@ class AuthServiceProvider extends ServiceProvider
             if ($user->teamRole($team) !== null) {
                 return in_array($user->teamRole($team)->name, $allowedRoles);
             }
+        });
+
+        // superadmin gate for CRUD
+        Gate::define("superadmin", function () {
+            return Auth::user()->superadmin === 1 ? true : null;
         });
     }
 }

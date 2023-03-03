@@ -32,6 +32,9 @@ const props = defineProps({
     currentUserTeam: {
         required: true,
     },
+    user: {
+        required: true,
+    },
 });
 
 // tabs
@@ -129,7 +132,7 @@ const handleUploadImages = function () {
     titleMedia.value = "Media Library";
     descriptionMedia.value = null;
     firstButtonMedia.value = "Close";
-    secondButtonMedia.value = "Save changes";
+    secondButtonMedia.value = "Select image";
     thirdButtonMedia.value = null;
     // handle click
     firstMediaButtonFunction.value = function () {
@@ -157,6 +160,7 @@ const handleUploadImages = function () {
 
         <div class="myPrimarySection">
             <MediaLibraryModal
+                :user="user"
                 :team="currentUserTeam"
                 :open="showMediaLibraryModal"
                 :title="titleMedia"

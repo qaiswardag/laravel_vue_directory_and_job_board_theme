@@ -35,7 +35,7 @@ return new class extends Migration {
             //
             $table->string("slug");
             $table->boolean("published")->nullable();
-            $table->string("image_cover_path")->nullable();
+            $table->string("thumbnail")->nullable();
             $table->longText("content");
             $table->longText("title");
             $table->mediumText("tags")->nullable();

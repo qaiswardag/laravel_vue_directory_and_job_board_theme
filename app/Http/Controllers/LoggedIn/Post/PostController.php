@@ -73,7 +73,7 @@ class PostController extends Controller
             "title" => $title,
             "slug" => $title,
             "published" => $request->published,
-            // "image_cover_path" => "hi-i-am-path-for-image",
+            "thumbnail" => "hi-i-am-path-for-image",
             "content" => $content,
         ]);
 
