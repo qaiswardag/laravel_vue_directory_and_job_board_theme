@@ -7,8 +7,10 @@ use App\Http\Requests\LoggedIn\MediaLibrary\StoreMediaLibraryRequest;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class MediaLibraryController extends Controller
 {
@@ -32,104 +34,60 @@ class MediaLibraryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    // ...
+
     public function store(StoreMediaLibraryRequest $request)
     {
         // use and find the Team from request as that is the Team user want to store a Post for
         $team = Team::findOrFail($request->team["id"]);
         $this->authorize("can-create-and-update", $team);
 
-        // validate
-        $request->validate([
-            "images" => ["required"],
-        ]);
-        //
-        //
-        //
-        // chat gpt
-        // chat gpt
-        // chat gpt
-        // chat gpt
         $images = $request->input("images");
 
         foreach ($images as $image) {
-            // image->store("image");
-            // $data = base64_decode($image);
-            // $filename = uniqid() . ".jpg"; // generate a unique filename
-            // file_put_contents(public_path("images/" . $filename), $data);
-            //
-            dd("request er:", $image);
-            //
-            //
-            //
-            $img_name = "test-my-image-name";
-
-            // process the upload and save the file in storage
-            // returns false if image does not save
-            // $path = $file->storeAs('tmp/' . $folder, $fileName);
-            $path = $image->storeAs(
-                "images/site-" . $siteId,
-                $img_name . "." . $file->extension()
+            $img_name = Str::uuid()->toString(); // generate a unique ID for the image
+            $data = base64_decode(
+                preg_replace("#^data:image/\w+;base64,#i", "", $image["data"])
             );
-        }
 
-        // return back for testing - delete again
-        return redirect()->back();
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        // meeshop
-        // meeshop
-        // meeshop
-        // meeshop
-        // meeshop
-        // meeshop
-        // meeshop
-        // set file and file name
-        // if ($request->hasFile("image")) {
-        //     $file = $request->file("image");
-        //     $fileName = $file->getClientOriginalName();
-        // }
+            $path = $team->id . "-" . $img_name . "." . $image["extension"];
 
-        // $fileName = $file->getClientOriginalName();
-        // // set temporary folder
-        // $folder = uniqid() . "-" . now()->timestamp;
-
-        // image name
-        $img_name = "test-my-image-name";
-
-        // process the upload and save the file in storage
-        // returns false if image does not save
-        // $path = $file->storeAs('tmp/' . $folder, $fileName);
-        $path = $file->storeAs(
-            "images/site-" . $siteId,
-            $img_name . "." . $file->extension()
-        );
-
-        // 500 error if not saved or if path does not exist
-        if (!$path) {
-            return response()->json(
-                ["error" => "The file could not be saved"],
-                500
+            Storage::disk("public")->put(
+                "images/temp/" . $team->id . "/" . $path,
+                $data
             );
+
+            // move the image to the correct folder with a unique ID in the name
+            Storage::disk("public")->move(
+                "images/temp/" . $team->id . "/" . $path,
+
+                "images/" . $team->id . "/" . $path
+            );
+
+            // open the image using Intervention Image
+            $interventionImage = Image::make(
+                storage_path("app/public/images/" . $team->id . "/" . $path)
+            );
+
+            $extension = $interventionImage->extension;
+            $fileSizeKB = $interventionImage->filesize() / 1024; // divide by 1024 to convert bytes to KB
+
+            // get the image's dimensions
+            $width = $interventionImage->width();
+            $height = $interventionImage->height();
+
+            // Image eloquent
+            MediaLibrary::create([
+                "user_id" => $request->user_id,
+                "team_id" => $team->id,
+                "name" => null,
+                "path" => $path,
+                "size" => $fileSizeKB,
+                "width" => $width,
+                "height" => $height,
+            ]);
         }
-
-        //TODO: use composer package for image size: Intervention Image: https://image.intervention.io/v2/introduction/installation
-
-        // Image eloquent
-        MediaLibrary::create([
-            "user_id" => $request->user_id,
-            "team_id" => $team->id,
-            "name" => null,
-            "path" => $path,
-            "size" => $file->getSize(),
-            "width" => 1000,
-            "height" => 1000,
-        ]);
 
         return redirect()->back();
     }
