@@ -89,6 +89,7 @@ const updateImagesPreview = async () => {
         try {
             const results = await Promise.all(imagesPromise);
             photosPreview.value = results;
+            uploadImagesForm.images = photosPreview.value;
             console.log("images for preview:", photosPreview.value);
             isLoading.value = false;
         } catch (error) {
@@ -100,9 +101,7 @@ const updateImagesPreview = async () => {
 
 // submit
 const submit = () => {
-    console.log("submit fn ran");
-
-    uploadImagesForm.post(route("media.store"), {
+    uploadImagesForm.post(route("media.store", [props.team]), {
         // errorBag: "updateProfileInformation",
         preserveScroll: true,
         onSuccess: () => {
@@ -115,40 +114,18 @@ const submit = () => {
     });
 };
 
-const clearPreviewImages = () => {
-    photosPreview.value = [];
-};
-
-const handleDeleteSingleImage = function (image) {
-    console.log(
-        "you clicked handle delete single image. unique image is:",
-        image
-    );
+const handleDeleteSingleImage = function (index) {
+    // delete this image from submitting
+    photosPreview.value.splice(index, 1);
+    uploadImagesForm.images = photosPreview.value;
 };
 </script>
 
 <template>
-    <p class="my-4"></p>
-    <p @click="clearPreviewImages" class="my-4 text-green-600 cursor-pointer">
-        Click Me - clear images input
-    </p>
-    <p class="my-4">
-        is loading er:
-        {{ isLoading ? "true" : "false" }}
-    </p>
-
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
     <!-- image upload - start -->
     <form @submit.prevent="submit" enctype="multipart/form-data">
-        <div v-if="isLoading === false" class="myInputGroup">
-            <div class="col-span-3">
+        <div class="myInputGroup">
+            <div class="col-span-3 mb-4">
                 <label class="block text-sm font-medium text-gray-700"
                     >Cover photo</label
                 >
@@ -193,51 +170,40 @@ const handleDeleteSingleImage = function (image) {
                 </div>
             </div>
 
-            <InputError v-if="false" message="error" />
+            <InputError :message="uploadImagesForm.errors.images" />
         </div>
 
-        <!-- spinner start -->
-        <div v-if="isLoading">
-            <div class="text-center">
-                <div class="flex items-center justify-center">
-                    <div
-                        class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                        role="status"
-                    >
-                        <span
-                            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                            >Loading...</span
-                        >
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- spinner end -->
-
-        <div
-            class="overflow-y-scroll max-h-80 border-4 border-purple-600 p-2 m-2"
-        >
+        <div class="overflow-y-scroll max-h-80">
             <div
                 v-for="(image, index) in photosPreview.length !== 0 &&
                 photosPreview"
                 :key="index"
-                class="my-2 border-2 border-black rounded flex item-center justify-between"
+                class="rounded flex item-center justify-between py-2 my-4 border-b border-gray-200"
             >
-                <img :src="image" alt="image" class="w-16" />
-                <div
-                    class="border-2 border-green-100 px-2 rounded flex justify-center items-center"
-                >
-                    <span
-                        @click="handleDeleteSingleImage"
-                        class="myPrimaryDeleteButtonNoBackground"
-                        >Delete</span
-                    >
+                <img :src="image" alt="image" class="w-14 rounded-xl" />
+                <div class="pl-2 pr-4 flex justify-left items-center">
+                    <span @click="handleDeleteSingleImage(index)">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5 text-myErrorColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                            />
+                        </svg>
+                    </span>
                 </div>
             </div>
         </div>
 
         <SubmitButton
-            :disabled="uploadImagesForm.processing"
+            :disabled="isLoading || uploadImagesForm.processing"
             buttonText="Upload"
         >
         </SubmitButton>
