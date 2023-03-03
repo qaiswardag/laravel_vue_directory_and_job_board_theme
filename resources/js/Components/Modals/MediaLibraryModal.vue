@@ -1,10 +1,7 @@
 <script setup>
 import { computed, ref } from "vue";
-import InputError from "@/Components/Forms/InputError.vue";
-import InputLabel from "@/Components/Forms/InputLabel.vue";
-import { useForm } from "@inertiajs/vue3";
-import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
-import UploadImagesForm from "../Forms/UploadImagesForm.vue";
+import UploadImagesForm from "@/Components/Forms/UploadImagesForm.vue";
+import MediaLibraryGalleryList from "@/Components/GalleryList/MediaLibraryGalleryList.vue";
 import {
     Dialog,
     DialogOverlay,
@@ -95,92 +92,9 @@ const thirdButton = function () {
 };
 //
 //
-const changeSelected = function (clicked) {
-    console.log("clicked on changeSelected inside media modal");
+const changeSelectedMenuTab = function (clicked) {
+    console.log("clicked on changeSelectedMenuTab inside media modal");
     selected.value = clicked;
-};
-
-// form
-const uploadImagesForm = useForm({
-    images: [],
-    user_id: props.user.id,
-    team: props.team,
-});
-
-const imagesInput = ref([]);
-const photosPreview = ref([]);
-const isLoading = ref(false);
-
-// update images preview
-const updateImagesPreview = async () => {
-    isLoading.value = true;
-    if (imagesInput.value.length === 0) return;
-    if (imagesInput.value.length !== 0) {
-        const imagesPromise = Array.from(imagesInput.value.files).map(
-            (image) => {
-                return new Promise((resolve, reject) => {
-                    // set new reader
-                    try {
-                        const reader = new FileReader();
-
-                        // reader on load / e for e & target
-                        reader.onload = async (e) => {
-                            // response
-                            const response = e.target.result;
-                            resolve(response);
-                        };
-
-                        //
-                        //
-                        //
-                        // read as data url
-                        reader.readAsDataURL(image);
-
-                        //
-                    } catch (err) {
-                        isLoading.value = false;
-                        console.log("error uploading images:", err);
-                        reject(err);
-                    }
-                });
-                //
-                // end for each
-            }
-        );
-        // end promise
-
-        photosPreview.value = await Promise.all(imagesPromise);
-        isLoading.value = false;
-    }
-
-    //
-    //
-    //
-    //
-    photosPreview.value.forEach((uniquePreviewImage) => {
-        // console.log("unique preview image:", uniquePreviewImage);
-    });
-};
-
-// submit
-const submit = () => {
-    console.log("submit fn ran");
-
-    uploadImagesForm.post(route("media.store"), {
-        // errorBag: "updateProfileInformation",
-        preserveScroll: true,
-        onSuccess: () => {
-            console.log("form submitted successfully");
-        },
-        onError: (err) => {
-            console.log("form did not submit successfully. Error is:", err);
-        },
-        onFinish: () => {},
-    });
-};
-
-const clearPreviewImages = () => {
-    photosPreview.value = [];
 };
 </script>
 
@@ -227,17 +141,6 @@ const clearPreviewImages = () => {
                         <div
                             class="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full sm:p-6"
                         >
-                            <p class="my-4"></p>
-                            <p
-                                @click="clearPreviewImages"
-                                class="my-4 text-green-600 cursor-pointer"
-                            >
-                                Click Me - clear images input
-                            </p>
-                            <p class="my-4">
-                                is loading er:
-                                {{ isLoading ? "true" : "false" }}
-                            </p>
                             <div
                                 class="flex gap-2 justify-between items-center border-b border-gray-200 pb-2"
                             >
@@ -279,7 +182,7 @@ const clearPreviewImages = () => {
                                         <!-- Main content - start-->
                                         <main class="flex-1 overflow-y-auto">
                                             <div
-                                                class="pt-2 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8"
+                                                class="py-4 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8"
                                             >
                                                 <!-- Tabs -->
                                                 <div class="mt-2 sm:mt-2 mb-4">
@@ -320,7 +223,7 @@ const clearPreviewImages = () => {
                                                             >
                                                                 <div
                                                                     @click="
-                                                                        changeSelected(
+                                                                        changeSelectedMenuTab(
                                                                             tab.name
                                                                         )
                                                                     "
@@ -357,155 +260,10 @@ const clearPreviewImages = () => {
                                                     "
                                                 >
                                                     <!-- image upload - start -->
-                                                    <form
-                                                        @submit.prevent="submit"
-                                                        enctype="multipart/form-data"
-                                                    >
-                                                        <div
-                                                            v-if="
-                                                                isLoading ===
-                                                                false
-                                                            "
-                                                            class="myInputGroup"
-                                                        >
-                                                            <div
-                                                                class="col-span-3"
-                                                            >
-                                                                <label
-                                                                    class="block text-sm font-medium text-gray-700"
-                                                                    >Cover
-                                                                    photo</label
-                                                                >
-                                                                <div
-                                                                    class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-2 pb-2"
-                                                                >
-                                                                    <div
-                                                                        class="space-y-1 text-center"
-                                                                    >
-                                                                        <svg
-                                                                            class="mx-auto h-8 w-8 text-gray-400"
-                                                                            stroke="currentColor"
-                                                                            fill="none"
-                                                                            viewBox="0 0 48 48"
-                                                                            aria-hidden="true"
-                                                                        >
-                                                                            <path
-                                                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                                                                stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                            />
-                                                                        </svg>
-                                                                        <div
-                                                                            class="flex text-sm text-gray-600"
-                                                                        >
-                                                                            <InputLabel
-                                                                                class="text-myPrimaryBrandColor font-semibold cursor-pointer"
-                                                                                for="images"
-                                                                                value="Upload images"
-                                                                            />
-
-                                                                            <input
-                                                                                @change="
-                                                                                    updateImagesPreview(
-                                                                                        data
-                                                                                    )
-                                                                                "
-                                                                                ref="imagesInput"
-                                                                                id="images"
-                                                                                type="file"
-                                                                                multiple
-                                                                                class="sr-only"
-                                                                            />
-
-                                                                            <p
-                                                                                class="pl-1"
-                                                                            >
-                                                                                or
-                                                                                drag
-                                                                                and
-                                                                                drop
-                                                                            </p>
-                                                                        </div>
-                                                                        <p
-                                                                            class="text-xs text-gray-500"
-                                                                        >
-                                                                            PNG
-                                                                            or
-                                                                            JPG
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <InputError
-                                                                v-if="false"
-                                                                message="
-                                                               error
-                                                            "
-                                                            />
-                                                        </div>
-
-                                                        <!-- spinner start -->
-                                                        <div v-if="isLoading">
-                                                            <div
-                                                                class="text-center"
-                                                            >
-                                                                <div
-                                                                    class="flex items-center justify-center"
-                                                                >
-                                                                    <div
-                                                                        class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                                                                        role="status"
-                                                                    >
-                                                                        <span
-                                                                            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                                                                            >Loading...</span
-                                                                        >
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- spinner end -->
-
-                                                        <div
-                                                            class="overflow-y-scroll max-h-96 border-4 border-purple-600 p-2 m-2"
-                                                        >
-                                                            <div
-                                                                v-for="(
-                                                                    image, index
-                                                                ) in photosPreview.length !==
-                                                                    0 &&
-                                                                photosPreview"
-                                                                :key="index"
-                                                                class="p-4 my-6 border-2 border-black rounded flex item-center justify-between"
-                                                            >
-                                                                <img
-                                                                    :src="image"
-                                                                    alt="image"
-                                                                    class="w-24"
-                                                                />
-                                                                <div
-                                                                    class="border-2 border-green-100 px-2 rounded flex justify-center items-center"
-                                                                >
-                                                                    <p
-                                                                        class="text-xs"
-                                                                    >
-                                                                        Action
-                                                                        button
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <SubmitButton
-                                                            :disabled="
-                                                                uploadImagesForm.processing
-                                                            "
-                                                            buttonText="Upload"
-                                                        >
-                                                        </SubmitButton>
-                                                    </form>
+                                                    <UploadImagesForm
+                                                        :team="team"
+                                                        :user="user"
+                                                    ></UploadImagesForm>
                                                     <!-- image upload - end -->
                                                 </div>
                                                 <div
@@ -515,9 +273,7 @@ const clearPreviewImages = () => {
                                                     "
                                                 >
                                                     <!-- image gallary - start -->
-
-                                                    your images will come here
-
+                                                    <MediaLibraryGalleryList></MediaLibraryGalleryList>
                                                     <!-- image gallary - end -->
                                                 </div>
                                                 <div
