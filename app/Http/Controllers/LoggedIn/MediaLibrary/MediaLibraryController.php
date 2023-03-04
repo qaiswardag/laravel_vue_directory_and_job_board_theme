@@ -46,6 +46,7 @@ class MediaLibraryController extends Controller
         $images = $request->input("images");
 
         foreach ($images as $image) {
+            dd($image);
             $img_name = Str::uuid()->toString(); // generate a unique ID for the image
             $data = base64_decode(
                 preg_replace("#^data:image/\w+;base64,#i", "", $image["data"])
@@ -70,8 +71,7 @@ class MediaLibraryController extends Controller
                 storage_path("app/public/images/" . $team->id . "/" . $path)
             );
 
-            $extension = $interventionImage->extension;
-            $fileSizeKB = $interventionImage->filesize() / 1024; // divide by 1024 to convert bytes to KB
+            $sizeKB = $interventionImage->filesize() / 1024; // divide by 1024 to convert bytes to KB
 
             // get the image's dimensions
             $width = $interventionImage->width();
@@ -83,7 +83,7 @@ class MediaLibraryController extends Controller
                 "team_id" => $team->id,
                 "name" => null,
                 "path" => $path,
-                "size" => $fileSizeKB,
+                "size" => $sizeKB,
                 "width" => $width,
                 "height" => $height,
             ]);

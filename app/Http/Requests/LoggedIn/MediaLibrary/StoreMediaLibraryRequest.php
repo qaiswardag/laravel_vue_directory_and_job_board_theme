@@ -3,6 +3,7 @@
 namespace App\Http\Requests\LoggedIn\MediaLibrary;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class StoreMediaLibraryRequest extends FormRequest
 {
@@ -36,8 +37,16 @@ class StoreMediaLibraryRequest extends FormRequest
     {
         // dd($this->team);
         $validator->after(function ($validator) {
-            if ($this->team === null) {
-                $validator->errors()->add("team", "Team field is required.");
+            foreach ($this->images as $image) {
+                // dd($image);
+                if ($image["fileSizeKB"] >= 2000) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            $image["imageUploadId"],
+                            "File size must not be larger than."
+                        );
+                }
             }
         });
 

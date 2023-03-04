@@ -4,6 +4,9 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import { useForm } from "@inertiajs/vue3";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
+import { v4 as uuidv4 } from "uuid";
+
+console.log("se:", uuidv4());
 
 const selected = ref("Upload");
 
@@ -40,7 +43,7 @@ const uploadImagesForm = useForm({
 });
 
 const imagesInput = ref([]);
-
+const imagesPreview = ref([]);
 const isLoading = ref(false);
 
 // update images preview
@@ -71,12 +74,14 @@ const loadBlob = (file) => {
                 const fileName = file.name;
                 const ext = file.name.split(".").pop();
                 const fileSizeKB = (file.size / 1024).toFixed(2); // Convert file size to KB and round to 2 decimal places
+                const imageUploadId = uuidv4();
                 URL.revokeObjectURL(dataURL);
                 resolve({
                     data: tempImg.src,
                     extension: ext,
                     fileName: fileName,
                     fileSizeKB: fileSizeKB,
+                    imageUploadId: imageUploadId,
                 });
             };
             tempImg.onerror = (error) => {
@@ -105,8 +110,8 @@ const updateImagesPreview = async () => {
 
         try {
             const results = await Promise.all(imagesPromise);
-            uploadImagesForm.images = results;
-            console.log("images for preview:", uploadImagesForm.images);
+            imagesPreview.value = results;
+            console.log("images for preview:", imagesPreview.value);
             isLoading.value = false;
         } catch (error) {
             isLoading.value = false;
@@ -135,7 +140,7 @@ const submit = () => {
 
 const handleDeleteSingleImage = function (index) {
     // delete this image from submitting
-    uploadImagesForm.images.splice(index, 1);
+    imagesPreview.value.splice(index, 1);
 };
 </script>
 
@@ -147,6 +152,7 @@ const handleDeleteSingleImage = function (index) {
                 <label class="block text-sm font-medium text-gray-700"
                     >Upload images</label
                 >
+
                 <div
                     class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-2 pb-2"
                 >
@@ -216,8 +222,8 @@ const handleDeleteSingleImage = function (index) {
 
         <div v-if="isLoading === false" class="overflow-y-scroll max-h-80">
             <div
-                v-for="(image, index) in uploadImagesForm.images.length !== 0 &&
-                uploadImagesForm.images"
+                v-for="(image, index) in imagesPreview.length !== 0 &&
+                imagesPreview"
                 :key="index"
                 class="rounded flex-wrap flex item-center justify-between py-2 my-4 border-b border-gray-200"
             >
@@ -237,6 +243,29 @@ const handleDeleteSingleImage = function (index) {
                         {{ image.fileSizeKB }} KB
                     </p>
                 </div>
+
+                <p class="py-4">FRØNT: {{ image.imageUploadId }}</p>
+                <p></p>
+                <p class="py-4">
+                    BACK:
+                    <br />
+                    {{ uploadImagesForm.errors.imageUploadId }}
+                </p>
+
+                <p
+                    v-if="
+                        uploadImagesForm.errors.imageUploadId ===
+                        image?.imageUploadId
+                    "
+                    class="myPrimaryInputError"
+                >
+                    your error will come her:
+                    {{
+                        uploadImagesForm.errors.imageUploadId ===
+                        image?.imageUploadId
+                    }}
+                </p>
+                <InputError :message="uploadImagesForm.errors.image_" />
                 <div
                     @click="handleDeleteSingleImage(index)"
                     class="pl-2 pr-4 flex justify-left items-center cursor-pointer"
