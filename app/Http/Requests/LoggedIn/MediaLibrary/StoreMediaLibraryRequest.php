@@ -35,16 +35,28 @@ class StoreMediaLibraryRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        // dd($this->team);
         $validator->after(function ($validator) {
+            if (count($this->images) >= 6) {
+                $validator->errors()->add("images", "Max files upload is 6.");
+                return;
+            }
+
             foreach ($this->images as $image) {
-                // dd($image);
-                if ($image["fileSizeKB"] >= 2000) {
+                $imageId = $image["image_upload_id"];
+                $image = $image["file"];
+
+                if (
+                    $image->getSize() !== false &&
+                    $image->getSize() / 1024 >= 2000
+                ) {
+                    $validator->errors()->add($imageId, "File size is to big.");
+                }
+                if ($image->getSize() === false) {
                     $validator
                         ->errors()
                         ->add(
-                            $image["imageUploadId"],
-                            "File size must not be larger than."
+                            $imageId,
+                            "Our application can not read the file size as it is to big."
                         );
                 }
             }

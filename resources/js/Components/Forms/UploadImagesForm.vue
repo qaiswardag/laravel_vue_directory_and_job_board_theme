@@ -75,6 +75,12 @@ const loadBlob = (file) => {
                 const ext = file.name.split(".").pop();
                 const fileSizeKB = (file.size / 1024).toFixed(2); // Convert file size to KB and round to 2 decimal places
                 const imageUploadId = uuidv4();
+
+                uploadImagesForm.images.push({
+                    file: file,
+                    image_upload_id: imageUploadId,
+                }); //
+
                 URL.revokeObjectURL(dataURL);
                 resolve({
                     data: tempImg.src,
@@ -97,6 +103,7 @@ const loadBlob = (file) => {
 };
 
 const updateImagesPreview = async () => {
+    console.log("images:", uploadImagesForm.images);
     isLoading.value = true;
 
     if (imagesInput.value.length === 0) return;
@@ -111,7 +118,7 @@ const updateImagesPreview = async () => {
         try {
             const results = await Promise.all(imagesPromise);
             imagesPreview.value = results;
-            console.log("images for preview:", imagesPreview.value);
+
             isLoading.value = false;
         } catch (error) {
             isLoading.value = false;
@@ -132,7 +139,7 @@ const submit = () => {
             console.log("form submitted successfully");
         },
         onError: (err) => {
-            console.log("form did not submit successfully. Error is:", err);
+            console.log("form did not submit successfully");
         },
         onFinish: () => {},
     });
@@ -141,6 +148,7 @@ const submit = () => {
 const handleDeleteSingleImage = function (index) {
     // delete this image from submitting
     imagesPreview.value.splice(index, 1);
+    uploadImagesForm.images.splice(index, 1);
 };
 </script>
 
@@ -148,6 +156,7 @@ const handleDeleteSingleImage = function (index) {
     <!-- image upload - start -->
     <form @submit.prevent="submit" enctype="multipart/form-data">
         <div class="myInputGroup">
+            length for submit: {{ uploadImagesForm.images.length }}
             <div class="col-span-3 mb-4">
                 <label class="block text-sm font-medium text-gray-700"
                     >Upload images</label
@@ -194,7 +203,7 @@ const handleDeleteSingleImage = function (index) {
                 </div>
             </div>
 
-            <InputError :message="uploadImagesForm.errors.images" />
+            <InputError :message="uploadImagesForm.errors?.images" />
         </div>
 
         <div v-if="isLoading === true" class="overflow-y-scroll max-h-80">
@@ -225,68 +234,60 @@ const handleDeleteSingleImage = function (index) {
                 v-for="(image, index) in imagesPreview.length !== 0 &&
                 imagesPreview"
                 :key="index"
-                class="rounded flex-wrap flex item-center justify-between py-2 my-4 border-b border-gray-200"
+                class="py-2 my-1 border-b border-gray-200"
             >
-                <div class="flex items-center gap-2">
-                    <img
-                        :src="image.data"
-                        alt="image"
-                        class="w-14 rounded-xl"
-                    />
-                    <p class="myPrimaryParagraph text-xs py-2">
-                        {{ image.fileName }}
-                    </p>
+                <div class="rounded flex-wrap flex item-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <img
+                            :src="image.data"
+                            alt="image"
+                            class="w-14 rounded-xl"
+                        />
+                        <p class="myPrimaryParagraph text-xs py-2">
+                            {{ image.fileName }}
+                        </p>
 
-                    <p
-                        class="myPrimaryParagraph text-xs py-2 border-l border-gray-200 pl-2"
-                    >
-                        {{ image.fileSizeKB }} KB
-                    </p>
-                </div>
-
-                <p class="py-4">FRØNT: {{ image.imageUploadId }}</p>
-                <p></p>
-                <p class="py-4">
-                    BACK:
-                    <br />
-                    {{ uploadImagesForm.errors.imageUploadId }}
-                </p>
-
-                <p
-                    v-if="
-                        uploadImagesForm.errors.imageUploadId ===
-                        image?.imageUploadId
-                    "
-                    class="myPrimaryInputError"
-                >
-                    your error will come her:
-                    {{
-                        uploadImagesForm.errors.imageUploadId ===
-                        image?.imageUploadId
-                    }}
-                </p>
-                <InputError :message="uploadImagesForm.errors.image_" />
-                <div
-                    @click="handleDeleteSingleImage(index)"
-                    class="pl-2 pr-4 flex justify-left items-center cursor-pointer"
-                >
-                    <span>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5 text-myErrorColor"
+                        <p
+                            class="myPrimaryParagraph text-xs py-2 border-l border-gray-200 pl-2"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                        </svg>
-                    </span>
+                            {{ image.fileSizeKB }} KB
+                        </p>
+                    </div>
+
+                    <div
+                        @click="handleDeleteSingleImage(index)"
+                        class="pl-2 pr-4 flex justify-left items-center cursor-pointer"
+                    >
+                        <span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5 text-myErrorColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                />
+                            </svg>
+                        </span>
+                    </div>
                 </div>
+
+                <template
+                    v-for="errorId in Object.keys(uploadImagesForm.errors)"
+                    :key="errorId"
+                >
+                    <span
+                        class="pt-2 myPrimaryInputError"
+                        v-if="errorId === image.imageUploadId"
+                    >
+                        Error: {{ uploadImagesForm.errors[errorId] }}
+                    </span>
+                </template>
             </div>
         </div>
 

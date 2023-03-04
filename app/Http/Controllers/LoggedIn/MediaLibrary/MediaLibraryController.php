@@ -43,39 +43,20 @@ class MediaLibraryController extends Controller
         $team = Team::findOrFail($request->team["id"]);
         $this->authorize("can-create-and-update", $team);
 
-        $images = $request->input("images");
+        foreach ($request->images as $image) {
+            dd("see", $image->getClientOriginalName());
+            $fileName = $image->getClientOriginalName();
+            $fileSize = $image->getSize();
 
-        foreach ($images as $image) {
-            dd($image);
             $img_name = Str::uuid()->toString(); // generate a unique ID for the image
-            $data = base64_decode(
-                preg_replace("#^data:image/\w+;base64,#i", "", $image["data"])
+
+            // process the upload and save the file in storage
+            // returns false if image does not save
+            // $path = $file->storeAs('tmp/' . $folder, $fileName);
+            $path = $image->storeAs(
+                "qais",
+                $img_name . "." . $image->extension()
             );
-
-            $path = $team->id . "-" . $img_name . "." . $image["extension"];
-
-            Storage::disk("public")->put(
-                "images/temp/" . $team->id . "/" . $path,
-                $data
-            );
-
-            // move the image to the correct folder with a unique ID in the name
-            Storage::disk("public")->move(
-                "images/temp/" . $team->id . "/" . $path,
-
-                "images/" . $team->id . "/" . $path
-            );
-
-            // open the image using Intervention Image
-            $interventionImage = Image::make(
-                storage_path("app/public/images/" . $team->id . "/" . $path)
-            );
-
-            $sizeKB = $interventionImage->filesize() / 1024; // divide by 1024 to convert bytes to KB
-
-            // get the image's dimensions
-            $width = $interventionImage->width();
-            $height = $interventionImage->height();
 
             // Image eloquent
             MediaLibrary::create([
@@ -83,9 +64,9 @@ class MediaLibraryController extends Controller
                 "team_id" => $team->id,
                 "name" => null,
                 "path" => $path,
-                "size" => $sizeKB,
-                "width" => $width,
-                "height" => $height,
+                "size" => 1000,
+                "width" => 1000,
+                "height" => 1000,
             ]);
         }
 
