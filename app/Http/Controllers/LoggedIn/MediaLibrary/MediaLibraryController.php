@@ -44,33 +44,79 @@ class MediaLibraryController extends Controller
         $this->authorize("can-create-and-update", $team);
 
         foreach ($request->images as $image) {
-            dd("see", $image->getClientOriginalName());
-            $fileName = $image->getClientOriginalName();
+            $teamReferenceId = $team->reference_id;
+            $image = $image["file"];
+            $timestamp = now()->timestamp;
+
+            // original client file name
+            $originalClientFileName = $image->getClientOriginalName();
+
+            // extract the filename without the extension using pathinfo()
+            $filenameWithoutExtension = pathinfo(
+                $originalClientFileName,
+                PATHINFO_FILENAME
+            );
+
+            // slugify the filename without the extension
+            $slugifiedFilename = Str::slug($filenameWithoutExtension, "-");
+
             $fileSize = $image->getSize();
 
-            $img_name = Str::uuid()->toString(); // generate a unique ID for the image
+            // get the current timestamp
+            $timestamp = time();
+            // generate a unique ID for the image
+            $randomString = Str::random(rand(8, 12)) . strval($timestamp);
+            // convert the random string to lowercase using strtolower()
+            $randomString = strtolower($randomString);
 
-            // process the upload and save the file in storage
-            // returns false if image does not save
-            // $path = $file->storeAs('tmp/' . $folder, $fileName);
-            $path = $image->storeAs(
-                "qais",
-                $img_name . "." . $image->extension()
-            );
+            // get the current year and month in YYYY/MM format
+            $currentYearMonth = date("Y/m"); // get the current year and month in YYYY/MM format
+            // replace the forward slash with a dash using str_replace()
+            $currentYearMonth = str_replace("/", "-", $currentYearMonth);
+
+            $path =
+                $teamReferenceId .
+                "/" .
+                $slugifiedFilename .
+                "-" .
+                $currentYearMonth .
+                "-" .
+                $randomString .
+                "." .
+                $image->extension();
+
+            // check if the path already exists in the media_libraries table
+            if (MediaLibrary::where("path", $path)->exists()) {
+                // If the path already exists, change the path
+                $path =
+                    $teamReferenceId .
+                    "/" .
+                    $slugifiedFilename .
+                    "-" .
+                    $currentYearMonth .
+                    "-" .
+                    $randomString .
+                    "." .
+                    $image->extension();
+            }
+
+            $filePath = $image->storeAs($path);
 
             // Image eloquent
             MediaLibrary::create([
                 "user_id" => $request->user_id,
                 "team_id" => $team->id,
                 "name" => null,
-                "path" => $path,
+                "path" => $filePath,
                 "size" => 1000,
                 "width" => 1000,
                 "height" => 1000,
             ]);
         }
 
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->with("success", "Successfully uploaded images.");
     }
 
     /**

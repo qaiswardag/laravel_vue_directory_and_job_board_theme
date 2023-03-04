@@ -217,7 +217,7 @@ class DatabaseSeeder extends Seeder
         // fake Posts
         Post::factory(250)->create();
         // fake media
-        MediaLibrary::factory(100)->create();
+        // MediaLibrary::factory(100)->create();
         //
         //
         //

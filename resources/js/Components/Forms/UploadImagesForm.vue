@@ -36,74 +36,42 @@ const props = defineProps({
 });
 
 // form
-const uploadImagesForm = useForm({
+const form = useForm({
     images: [],
     user_id: props.user.id,
     team: props.team,
 });
 
-const imagesInput = ref([]);
 const imagesPreview = ref([]);
+const imagesInput = ref([]);
 const isLoading = ref(false);
 
 // update images preview
-const loadImage = (blob) => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = new Image();
-            img.onload = () => {
-                resolve(img);
-            };
-            img.onerror = (error) => {
-                reject(error);
-            };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(blob);
-    });
-};
-
 const loadBlob = (file) => {
     return new Promise((resolve, reject) => {
+        const imageUploadId = uuidv4();
         const reader = new FileReader();
-        reader.onload = () => {
-            const tempImg = new Image();
-            tempImg.onload = () => {
-                const dataURL = URL.createObjectURL(file);
-                const fileName = file.name;
-                const ext = file.name.split(".").pop();
-                const fileSizeKB = (file.size / 1024).toFixed(2); // Convert file size to KB and round to 2 decimal places
-                const imageUploadId = uuidv4();
-
-                uploadImagesForm.images.push({
-                    file: file,
-                    image_upload_id: imageUploadId,
-                }); //
-
-                URL.revokeObjectURL(dataURL);
-                resolve({
-                    data: tempImg.src,
-                    extension: ext,
-                    fileName: fileName,
-                    fileSizeKB: fileSizeKB,
-                    imageUploadId: imageUploadId,
-                });
-            };
-            tempImg.onerror = (error) => {
-                reject(error);
-            };
-            tempImg.src = reader.result;
+        reader.onload = (event) => {
+            const imageUrl = event.target.result;
+            form.images.push({
+                image_upload_id: imageUploadId,
+                file: file,
+            });
+            imagesPreview.value.push({
+                preview_url: imageUrl,
+                image_upload_id: imageUploadId,
+            });
+            resolve();
         };
-        reader.onerror = (error) => {
-            reject(error);
+        reader.onerror = (event) => {
+            reject(event.target.error);
         };
         reader.readAsDataURL(file);
     });
 };
 
 const updateImagesPreview = async () => {
-    console.log("images:", uploadImagesForm.images);
+    console.log("images:", form.images);
     isLoading.value = true;
 
     if (imagesInput.value.length === 0) return;
@@ -111,20 +79,17 @@ const updateImagesPreview = async () => {
     if (imagesInput.value.length !== 0) {
         const imagesPromise = Array.from(imagesInput.value.files).map(
             (image) => {
+                console.log("image er:", image);
                 return loadBlob(image);
             }
         );
 
         try {
-            const results = await Promise.all(imagesPromise);
-            imagesPreview.value = results;
-
+            await Promise.all(imagesPromise); // wait for all images to be loaded
             isLoading.value = false;
         } catch (error) {
             isLoading.value = false;
             console.log("error uploading images:", error);
-        } finally {
-            isLoading.value = false;
         }
     }
 };
@@ -132,23 +97,35 @@ const updateImagesPreview = async () => {
 //
 // submit
 const submit = () => {
-    uploadImagesForm.post(route("media.store", [props.team]), {
+    form.post(route("media.store", [props.team]), {
         // errorBag: "updateProfileInformation",
         preserveScroll: true,
         onSuccess: () => {
             console.log("form submitted successfully");
         },
         onError: (err) => {
-            console.log("form did not submit successfully");
+            console.log("form did not submit successfully:", err);
         },
         onFinish: () => {},
     });
 };
 
-const handleDeleteSingleImage = function (index) {
-    // delete this image from submitting
-    imagesPreview.value.splice(index, 1);
-    uploadImagesForm.images.splice(index, 1);
+const handleDeleteSingleImage = function (image_upload_id) {
+    console.log("id er:", image_upload_id);
+    // delete image form submitting and from images preview array
+
+    const imageIndex = form.images.findIndex(
+        (image) => image.image_upload_id === image_upload_id
+    );
+    if (imageIndex !== -1) {
+        form.images.splice(imageIndex, 1);
+    }
+    const previewIndex = imagesPreview.value.findIndex(
+        (preview) => preview.image_upload_id === image_upload_id
+    );
+    if (previewIndex !== -1) {
+        imagesPreview.value.splice(previewIndex, 1);
+    }
 };
 </script>
 
@@ -156,7 +133,10 @@ const handleDeleteSingleImage = function (index) {
     <!-- image upload - start -->
     <form @submit.prevent="submit" enctype="multipart/form-data">
         <div class="myInputGroup">
-            length for submit: {{ uploadImagesForm.images.length }}
+            <p class="py-2">length for submit: {{ form.images.length }}</p>
+            <p class="py-2">
+                length of images preview array: {{ imagesPreview.length }}
+            </p>
             <div class="col-span-3 mb-4">
                 <label class="block text-sm font-medium text-gray-700"
                     >Upload images</label
@@ -203,7 +183,7 @@ const handleDeleteSingleImage = function (index) {
                 </div>
             </div>
 
-            <InputError :message="uploadImagesForm.errors?.images" />
+            <InputError :message="form.errors?.images" />
         </div>
 
         <div v-if="isLoading === true" class="overflow-y-scroll max-h-80">
@@ -239,7 +219,7 @@ const handleDeleteSingleImage = function (index) {
                 <div class="rounded flex-wrap flex item-center justify-between">
                     <div class="flex items-center gap-2">
                         <img
-                            :src="image.data"
+                            :src="image.preview_url"
                             alt="image"
                             class="w-14 rounded-xl"
                         />
@@ -255,7 +235,7 @@ const handleDeleteSingleImage = function (index) {
                     </div>
 
                     <div
-                        @click="handleDeleteSingleImage(index)"
+                        @click="handleDeleteSingleImage(image.image_upload_id)"
                         class="pl-2 pr-4 flex justify-left items-center cursor-pointer"
                     >
                         <span>
@@ -278,14 +258,14 @@ const handleDeleteSingleImage = function (index) {
                 </div>
 
                 <template
-                    v-for="errorId in Object.keys(uploadImagesForm.errors)"
+                    v-for="errorId in Object.keys(form.errors)"
                     :key="errorId"
                 >
                     <span
                         class="pt-2 myPrimaryInputError"
-                        v-if="errorId === image.imageUploadId"
+                        v-if="errorId === image.image_upload_id"
                     >
-                        Error: {{ uploadImagesForm.errors[errorId] }}
+                        Error: {{ form.errors[errorId] }}
                     </span>
                 </template>
             </div>
@@ -293,7 +273,7 @@ const handleDeleteSingleImage = function (index) {
 
         <div v-if="isLoading === false">
             <SubmitButton
-                :disabled="uploadImagesForm.processing"
+                :disabled="form.processing"
                 buttonText="Upload Images"
             >
             </SubmitButton>

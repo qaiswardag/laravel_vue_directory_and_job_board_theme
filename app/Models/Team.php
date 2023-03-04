@@ -8,6 +8,7 @@ use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
+use Illuminate\Support\Str;
 
 class Team extends JetstreamTeam
 {
@@ -45,5 +46,39 @@ class Team extends JetstreamTeam
     public function posts()
     {
         return $this->hasMany(Post::class, "team_id", "id");
+    }
+
+    /**
+     * Generate a unique reference ID for the model.
+     *
+     * The function is being called automatically by Laravel's
+     * Eloquent ORM when a new Team model instance is being created.
+     *
+     *
+     * The creating event is fired when a new instance of
+     * the model is being created and saved to the database.
+     * This event is fired just before the model is actually
+     * saved, which means that you can use it to modify
+     * any attributes on the model before it's saved.
+     * In this case, the boot method in the model is used
+     * to register the creating event listener, which generates
+     * a unique reference ID for the new team instance.
+     *
+     */
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($team) {
+            do {
+                // generate a random string
+                $randomString = Str::random(rand(8, 12));
+                // convert the random string to lowercase using strtolower
+                $team->reference_id = strtolower($randomString);
+            } while (
+                static::where("reference_id", $team->reference_id)->exists()
+            );
+        });
     }
 }

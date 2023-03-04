@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->integer("user_id");
             $table->integer("team_id");
             $table->string("name")->nullable();
-            $table->string("path");
+            $table->string("path")->unique();
             $table->string("size");
             $table->string("width");
             $table->string("height");

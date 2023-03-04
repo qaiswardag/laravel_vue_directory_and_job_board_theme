@@ -3,6 +3,7 @@
 namespace Database\Factories\MediaLibrary;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MediaLibrary>
@@ -19,7 +20,7 @@ class MediaLibraryFactory extends Factory
         return [
             "user_id" => 1,
             "team_id" => 1,
-            "path" => "my-path-string",
+            "path" => Str::random(rand(8, 12)),
             "size" => 1000,
             "width" => 1000,
             "height" => 1000,

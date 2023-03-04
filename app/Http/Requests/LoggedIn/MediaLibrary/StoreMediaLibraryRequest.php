@@ -36,7 +36,17 @@ class StoreMediaLibraryRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            if (count($this->images) >= 6) {
+            if ($this->images === null) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "images",
+                        "Images is null. No images have been submitted."
+                    );
+                return;
+            }
+
+            if (count($this->images) >= 7) {
                 $validator->errors()->add("images", "Max files upload is 6.");
                 return;
             }
@@ -51,7 +61,7 @@ class StoreMediaLibraryRequest extends FormRequest
                 ) {
                     $validator->errors()->add($imageId, "File size is to big.");
                 }
-                if ($image->getSize() === false) {
+                if ($image->getSize() === false && $image) {
                     $validator
                         ->errors()
                         ->add(
