@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
 use App\Http\Controllers\Guest\Post\PostController as PostPostController;
 use App\Http\Controllers\LoggedIn\Post\PostController;
 use App\Http\Controllers\Superadmin\DashboardController;
@@ -44,6 +45,7 @@ Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
     "verified",
+    // "ensure.can.read", // reader, editor, owner, administrator
 ])
     // group of pages
     ->group(function () {
@@ -65,7 +67,14 @@ Route::middleware([
             PostController::class,
             "index",
         ])->name("overview.posts.index");
+
         // media
+        // media index api
+        Route::get("/media/api/{team}", [
+            LoggedInMediaLibraryController::class,
+            "index",
+        ])->name("media.api");
+
         Route::get("/media/{team}", [
             MediaLibraryController::class,
             "index",

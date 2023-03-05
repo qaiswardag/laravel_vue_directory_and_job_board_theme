@@ -42,18 +42,13 @@ const firstButtonClick = function () {
                 '': TableStyle,
             }"
         >
-            <Transition name="bounce">
-                <div v-if="disabled && !TableStyle" role="status">
-                    <SmallUniversalSpinner></SmallUniversalSpinner>
-                </div>
-            </Transition>
             <button
                 @click="firstButtonClick"
                 :type="type"
                 :disabled="disabled"
                 class="myPrimaryButton"
                 :class="{
-                    'opacity-25 cursor-default': disabled,
+                    'opacity-60 cursor-default': disabled,
                     'md:min-w-[9rem] min-w-[7rem]': !TableStyle,
                     'min-w-auto': TableStyle,
                     myPrimaryDeleteButton: ButtonStyleDelete,
@@ -67,7 +62,22 @@ const firstButtonClick = function () {
                 <span v-show="!disabled">
                     <slot />
                 </span>
-                {{ disabled ? "Loading..." : buttonText }}
+                <span class="flex gap-1 items-center justify-center">
+                    {{ disabled ? "Loading" : buttonText }}
+                    <template v-if="disabled && !TableStyle">
+                        <div class="flex gap-0.5">
+                            <div
+                                class="w-0.5 h-0.5 rounded-full animate-pulse bg-white"
+                            ></div>
+                            <div
+                                class="w-0.5 h-0.5 rounded-full animate-pulse bg-white"
+                            ></div>
+                            <div
+                                class="w-0.5 h-0.5 rounded-full animate-pulse bg-white"
+                            ></div>
+                        </div>
+                    </template>
+                </span>
             </button>
         </div>
     </div>

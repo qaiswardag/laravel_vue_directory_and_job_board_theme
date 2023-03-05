@@ -428,6 +428,13 @@ const TestSubmitButtonTwice = function () {
                                 buttonText="Do something"
                             >
                             </SubmitButton>
+                            <SubmitButton
+                                :ButtonStyleDelete="false"
+                                @firstButtonClick="TestSubmitButtonTwice"
+                                :disabled="true"
+                                buttonText="Universal"
+                            >
+                            </SubmitButton>
                         </div>
                     </div>
                 </div>

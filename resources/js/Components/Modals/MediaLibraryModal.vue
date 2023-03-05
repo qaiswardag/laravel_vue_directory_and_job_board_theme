@@ -26,7 +26,7 @@ import {
 
 const selected = ref("Upload");
 
-const tabs = [
+const tabs = ref([
     {
         name: "Upload",
         current: true,
@@ -35,12 +35,7 @@ const tabs = [
         name: "Media library",
         current: false,
     },
-    {
-        name: "Unsplash",
-        href: "#",
-        current: false,
-    },
-];
+]);
 
 const props = defineProps({
     team: {
@@ -93,8 +88,13 @@ const thirdButton = function () {
 //
 //
 const changeSelectedMenuTab = function (clicked) {
-    console.log("clicked on changeSelectedMenuTab inside media modal");
     selected.value = clicked;
+};
+//
+//
+//
+const uploadOnSuccess = function () {
+    selected.value = "Media library";
 };
 </script>
 
@@ -206,9 +206,6 @@ const changeSelectedMenuTab = function (clicked) {
                                                             <option>
                                                                 Media library
                                                             </option>
-                                                            <option>
-                                                                Unsplash.com
-                                                            </option>
                                                         </select>
                                                     </div>
                                                     <div
@@ -255,34 +252,28 @@ const changeSelectedMenuTab = function (clicked) {
                                                 </div>
 
                                                 <div
-                                                    v-show="
-                                                        selected === 'Upload'
-                                                    "
+                                                    v-if="selected === 'Upload'"
                                                 >
                                                     <!-- image upload - start -->
                                                     <UploadImagesForm
                                                         :team="team"
                                                         :user="user"
+                                                        @uploadOnSuccess="
+                                                            uploadOnSuccess
+                                                        "
                                                     ></UploadImagesForm>
                                                     <!-- image upload - end -->
                                                 </div>
                                                 <div
-                                                    v-show="
+                                                    v-if="
                                                         selected ===
                                                         'Media library'
                                                     "
                                                 >
                                                     <!-- image gallary - start -->
-                                                    <MediaLibraryGalleryList></MediaLibraryGalleryList>
-                                                    <!-- image gallary - end -->
-                                                </div>
-                                                <div
-                                                    v-show="
-                                                        selected === 'Unsplash'
-                                                    "
-                                                >
-                                                    <!-- image gallary - start -->
-                                                    Unsplash images here
+                                                    <MediaLibraryGalleryList
+                                                        :team="team"
+                                                    ></MediaLibraryGalleryList>
                                                     <!-- image gallary - end -->
                                                 </div>
                                             </div>
@@ -291,19 +282,12 @@ const changeSelectedMenuTab = function (clicked) {
 
                                         <!-- Details sidebar start-->
                                         <aside
-                                            class="w-96 bg-white pl-8 pr-2 border-l border-gray-200 overflow-y-auto"
+                                            class="w-72 bg-white pl-8 pr-2 border-l border-gray-200"
                                         >
                                             <div class="pb-16 space-y-6">
                                                 <div>
-                                                    <div
-                                                        class="bg-gray-600 min-h-[10rem] min-w-[20rem] block w-full aspect-w-10 aspect-h-7 rounded-lg overflow-hidden"
-                                                    >
-                                                        <div
-                                                            class="block aspect-w-10 aspect-h-7 overflow-hidden object-cover object-center w-full rounded-md"
-                                                        >
-                                                            image source here
-                                                        </div>
-                                                    </div>
+                                                    image source here
+
                                                     <div
                                                         class="mt-4 flex items-start justify-between"
                                                     >

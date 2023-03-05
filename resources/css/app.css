@@ -34,6 +34,11 @@
     .myPrimaryParagraph {
         @apply text-sm font-normal text-gray-700;
     }
+
+    .myPrimaryParagraphError {
+        @apply mt-1 italic block text-sm font-medium text-myErrorColor text-left;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Headers
@@ -194,7 +199,7 @@
     */
 
     .mysearchBarWithOptions {
-        @apply flex gap-1  bg-gray-200 py-2 px-2 rounded;
+        @apply flex gap-1  bg-gray-100 py-2 px-2 rounded;
     }
 
     /*

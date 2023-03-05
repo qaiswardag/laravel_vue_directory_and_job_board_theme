@@ -22,6 +22,7 @@ class StoreMediaLibraryRequest extends FormRequest
      */
     public function rules(): array
     {
+        sleep(1);
         return [
             "images" => ["required"],
         ];
@@ -47,7 +48,9 @@ class StoreMediaLibraryRequest extends FormRequest
             }
 
             if (count($this->images) >= 7) {
-                $validator->errors()->add("images", "Max files upload is 6.");
+                $validator
+                    ->errors()
+                    ->add("images", "Max files upload is 6 per time.");
                 return;
             }
 

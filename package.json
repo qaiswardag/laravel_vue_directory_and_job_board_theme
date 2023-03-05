@@ -24,6 +24,7 @@
         "@headlessui/vue": "^1.7.7",
         "@heroicons/vue": "^2.0.13",
         "@vueup/vue-quill": "^1.1.0",
+        "laravel-vue-pagination": "^4.0.0",
         "nprogress": "^0.2.0",
         "use-lightweight-fetch": "^1.1.0",
         "uuid": "^9.0.0",
