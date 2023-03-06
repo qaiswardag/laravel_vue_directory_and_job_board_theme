@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import UploadImagesForm from "@/Components/Forms/UploadImagesForm.vue";
 import MediaLibraryGalleryList from "@/Components/GalleryList/MediaLibraryGalleryList.vue";
 import {
@@ -23,6 +23,20 @@ import {
     ViewGridIconSolid,
     ViewListIcon,
 } from "@heroicons/vue/24/outline";
+import { useForm } from "@inertiajs/vue3";
+import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
+import InputError from "@/Components/Forms/InputError.vue";
+import InputLabel from "@/Components/Forms/InputLabel.vue";
+import TextInput from "@/Components/Forms/TextInput.vue";
+
+import { useStore } from "vuex";
+
+// store
+const store = useStore();
+
+const getCurrentImage = computed(() => {
+    return store.getters["mediaLibrary/getCurrentImage"];
+});
 
 const selected = ref("Upload");
 
@@ -91,11 +105,48 @@ const changeSelectedMenuTab = function (clicked) {
     selected.value = clicked;
 };
 //
-//
-//
 const uploadOnSuccess = function () {
     selected.value = "Media library";
 };
+
+//
+const oldValueName = computed(() => {
+    return getCurrentImage.value?.currentImage?.name;
+});
+//
+//
+//
+// form
+const form = useForm({
+    name: oldValueName,
+    image_id: null,
+});
+//
+//
+const handleImageUpdate = function (imageId) {
+    form.image_id = imageId;
+
+    form.post(route("media.update", [props.team.id]), {
+        errorBag: "updateProfileInformation",
+        preserveScroll: true,
+        onSuccess: () => {
+            console.log("successfully updated");
+
+            // reset form
+            form.reset();
+            // dispatch
+            store.dispatch("mediaLibrary/getImage", {
+                mediaLibraryId: imageId,
+                teamId: props.team.id,
+            });
+        },
+        onError: (err) => {},
+        onFinish: () => {},
+    });
+};
+//
+//
+//
 </script>
 
 <template>
@@ -149,6 +200,8 @@ const uploadOnSuccess = function () {
                                     class="tertiaryHeader my-0 py-0"
                                 >
                                     {{ title }}
+                                    {{ team.name }}
+                                    {{ team.id }}
                                 </DialogTitle>
 
                                 <div class="flex-end">
@@ -280,46 +333,169 @@ const uploadOnSuccess = function () {
                                         </main>
                                         <!-- Main content - end-->
 
-                                        <!-- Details sidebar start-->
+                                        <!-- Details sidebar - upload start-->
                                         <aside
-                                            class="w-72 bg-white pl-8 pr-2 border-l border-gray-200"
+                                            v-if="selected === 'Media library'"
+                                            aria-label="sidebar"
+                                            class="w-72 bg-white pl-2 pr-2 border-l border-gray-200"
                                         >
-                                            <div class="pb-16 space-y-6">
+                                            <div
+                                                v-if="
+                                                    getCurrentImage &&
+                                                    getCurrentImage.currentImage ===
+                                                        null
+                                                "
+                                                class="pb-16 space-y-6"
+                                            >
+                                                <p class="myPrimaryParagraph">
+                                                    No image selected
+                                                </p>
+                                            </div>
+                                            <div
+                                                v-if="
+                                                    getCurrentImage &&
+                                                    getCurrentImage.currentImage
+                                                "
+                                                class="pb-16 space-y-6"
+                                            >
                                                 <div>
-                                                    image source here
+                                                    <img
+                                                        class="mx-auto block h-96 w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                        :src="`/${getCurrentImage.currentImage.path}`"
+                                                        alt="image"
+                                                    />
 
-                                                    <div
-                                                        class="mt-4 flex items-start justify-between"
-                                                    >
-                                                        <div>
-                                                            <h2
-                                                                class="text-lg font-medium text-gray-900"
-                                                            >
-                                                                <span
-                                                                    class="sr-only"
-                                                                    >Details for
-                                                                </span>
-                                                                Image name
-                                                            </h2>
-                                                            <p
-                                                                class="text-sm font-medium text-gray-500"
-                                                            >
-                                                                Image size
-                                                            </p>
-                                                        </div>
-                                                        <button
-                                                            type="button"
-                                                            class="ml-4 bg-white rounded-full h-8 w-8 flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor"
+                                                    <div>
+                                                        <h2
+                                                            class="mySecondaryHeader my-3"
                                                         >
-                                                            <HeartIcon
-                                                                class="h-6 w-6"
-                                                                aria-hidden="true"
-                                                            />
                                                             <span
                                                                 class="sr-only"
-                                                                >Favorite</span
+                                                                >Details for
+                                                            </span>
+
+                                                            {{
+                                                                getCurrentImage
+                                                                    .currentImage
+                                                                    .name
+                                                                    ? getCurrentImage
+                                                                          .currentImage
+                                                                          .name
+                                                                    : "not added"
+                                                            }}
+                                                        </h2>
+                                                        <p
+                                                            class="myPrimaryParagraph"
+                                                        >
+                                                            Image size:
+
+                                                            <span
+                                                                class="font-semibold"
                                                             >
-                                                        </button>
+                                                                {{
+                                                                    Number(
+                                                                        getCurrentImage
+                                                                            .currentImage
+                                                                            .size
+                                                                    ).toFixed(0)
+                                                                }}
+                                                                KB
+                                                            </span>
+                                                        </p>
+
+                                                        <form
+                                                            @submit.prevent="
+                                                                handleImageUpdate(
+                                                                    getCurrentImage
+                                                                        .currentImage
+                                                                        .id
+                                                                )
+                                                            "
+                                                        >
+                                                            <div
+                                                                class="myInputsOrganization my-4 p-2 border border-myPrimaryLightGrayColor rounded"
+                                                            >
+                                                                <div
+                                                                    class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                                                                ></div>
+
+                                                                <InputError
+                                                                    :message="
+                                                                        form
+                                                                            .errors
+                                                                            .name
+                                                                    "
+                                                                />
+                                                                <InputLabel
+                                                                    for="name"
+                                                                    value="Image name"
+                                                                />
+                                                                <div
+                                                                    class="flex gap-2 item-center flex-col"
+                                                                >
+                                                                    <div
+                                                                        class="flex gap-2 item-center"
+                                                                    >
+                                                                        <TextInput
+                                                                            placeholder="Image name.."
+                                                                            id="title"
+                                                                            v-model="
+                                                                                form.name
+                                                                            "
+                                                                            type="text"
+                                                                            autofocus
+                                                                            autocomplete="off"
+                                                                        />
+                                                                        <button
+                                                                            @click="
+                                                                                handleImageUpdate(
+                                                                                    getCurrentImage
+                                                                                        .currentImage
+                                                                                        .id
+                                                                                )
+                                                                            "
+                                                                            :disabled="
+                                                                                form.processing
+                                                                            "
+                                                                            type="button"
+                                                                            class="myPrimaryButton py-2"
+                                                                        >
+                                                                            <svg
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                fill="none"
+                                                                                viewBox="0 0 24 24"
+                                                                                stroke-width="1.5"
+                                                                                stroke="currentColor"
+                                                                                class="w-6 h-6"
+                                                                            >
+                                                                                <path
+                                                                                    stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                                                                                />
+                                                                            </svg>
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <SubmitButton
+                                                                        class="min-w-full"
+                                                                        :disabled="
+                                                                            form.processing
+                                                                        "
+                                                                        buttonText="Update"
+                                                                        type="button"
+                                                                        @firstButtonClick="
+                                                                            handleImageUpdate(
+                                                                                getCurrentImage
+                                                                                    .currentImage
+                                                                                    .id
+                                                                            )
+                                                                        "
+                                                                    >
+                                                                    </SubmitButton>
+                                                                </div>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                                 <div>
@@ -342,7 +518,57 @@ const uploadOnSuccess = function () {
                                                             <dd
                                                                 class="text-gray-900"
                                                             >
-                                                                4032 x 3024
+                                                                {{
+                                                                    getCurrentImage
+                                                                        .currentImage
+                                                                        .width
+                                                                }}
+                                                                x
+                                                                {{
+                                                                    getCurrentImage
+                                                                        .currentImage
+                                                                        .height
+                                                                }}
+                                                            </dd>
+                                                        </div>
+
+                                                        <div
+                                                            class="py-3 flex justify-between text-sm font-medium"
+                                                        >
+                                                            <dt
+                                                                class="text-gray-500"
+                                                            >
+                                                                Size
+                                                            </dt>
+                                                            <dd
+                                                                class="text-gray-900"
+                                                            >
+                                                                {{
+                                                                    Number(
+                                                                        getCurrentImage
+                                                                            .currentImage
+                                                                            .size
+                                                                    ).toFixed(0)
+                                                                }}
+                                                                KB
+                                                            </dd>
+                                                        </div>
+                                                        <div
+                                                            class="py-3 flex justify-between text-sm font-medium"
+                                                        >
+                                                            <dt
+                                                                class="text-gray-500"
+                                                            >
+                                                                Image Id
+                                                            </dt>
+                                                            <dd
+                                                                class="text-gray-900"
+                                                            >
+                                                                {{
+                                                                    getCurrentImage
+                                                                        .currentImage
+                                                                        .id
+                                                                }}
                                                             </dd>
                                                         </div>
                                                     </dl>
@@ -433,7 +659,136 @@ const uploadOnSuccess = function () {
                                                 </div>
                                             </div>
                                         </aside>
-                                        <!-- Details sidebar end-->
+                                        <!-- Details sidebar - uplpoad end-->
+                                        <!-- Details sidebar - upload start-->
+                                        <aside
+                                            v-if="selected === 'Upload'"
+                                            aria-label="sidebar"
+                                            class="w-72 bg-white pl-2 pr-2 border-l border-gray-200"
+                                        >
+                                            <div class="pb-16 space-y-6">
+                                                <div>
+                                                    image source here
+
+                                                    <div>
+                                                        <h2
+                                                            class="text-lg font-medium text-gray-900"
+                                                        >
+                                                            <span
+                                                                class="sr-only"
+                                                                >Details for
+                                                            </span>
+
+                                                            name here
+                                                        </h2>
+                                                        <p
+                                                            class="myPrimaryParagraph"
+                                                        >
+                                                            Image size:
+
+                                                            <span
+                                                                class="font-semibold"
+                                                            >
+                                                                0000000 KB
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h3
+                                                        class="font-medium text-gray-900"
+                                                    >
+                                                        Information
+                                                    </h3>
+                                                    <dl
+                                                        class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
+                                                    >
+                                                        <div
+                                                            class="py-3 flex justify-between text-sm font-medium"
+                                                        >
+                                                            <dt
+                                                                class="text-gray-500"
+                                                            >
+                                                                Dimensions
+                                                            </dt>
+                                                            <dd
+                                                                class="text-gray-900"
+                                                            >
+                                                                00000 x 00000
+                                                            </dd>
+                                                        </div>
+                                                    </dl>
+                                                </div>
+
+                                                <div
+                                                    class="border-t border-gray-200 mt-2 sm:mt-2 pt-4"
+                                                >
+                                                    <div
+                                                        class="sm:flex justify-center sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
+                                                    >
+                                                        <div
+                                                            v-if="
+                                                                firstButtonText &&
+                                                                false
+                                                            "
+                                                            class="w-full"
+                                                        >
+                                                            <button
+                                                                ref="firstButtonRef"
+                                                                class="myPrimaryButton bg-gray-700 hover:bg-gray-800 text-white focus:ring-gray-700"
+                                                                type="button"
+                                                                @click="
+                                                                    firstButton
+                                                                "
+                                                            >
+                                                                {{
+                                                                    firstButtonText
+                                                                }}
+                                                            </button>
+                                                        </div>
+
+                                                        <div
+                                                            v-if="
+                                                                secondButtonText
+                                                            "
+                                                            class="w-full"
+                                                        >
+                                                            <button
+                                                                class="myPrimaryButton w-full"
+                                                                type="button"
+                                                                @click="
+                                                                    secondButton
+                                                                "
+                                                            >
+                                                                {{
+                                                                    secondButtonText
+                                                                }}
+                                                            </button>
+                                                        </div>
+
+                                                        <div
+                                                            v-if="
+                                                                thirdButtonText
+                                                            "
+                                                            class="w-full"
+                                                        >
+                                                            <button
+                                                                class="myPrimaryDeleteButton w-full"
+                                                                type="button"
+                                                                @click="
+                                                                    thirdButton
+                                                                "
+                                                            >
+                                                                {{
+                                                                    thirdButtonText
+                                                                }}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aside>
+                                        <!-- Details sidebar - uplpoad end-->
                                     </div>
                                     <!--content media library - end-->
                                 </div>
@@ -445,11 +800,9 @@ const uploadOnSuccess = function () {
                                     class="text-sm text-gray-600 mt-4 mb-10"
                                 ></div>
                                 <header>
-                                    2
                                     <slot name="header"></slot>
                                 </header>
                                 <main>
-                                    3
                                     <slot></slot>
                                 </main>
                             </div>

@@ -223,7 +223,7 @@ const handleDeleteSingleImage = function (image_upload_id) {
                             <img
                                 :src="image.preview_url"
                                 alt="image"
-                                class="h-14 w-14 object-cover rounded-xl"
+                                class="h-14 w-14 object-cover rounded-md"
                             />
                             <p class="myPrimaryParagraph text-xs py-2">
                                 {{ image.file_name }}

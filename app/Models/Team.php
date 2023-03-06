@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\Post;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Jetstream\Events\TeamCreated;
@@ -46,6 +47,10 @@ class Team extends JetstreamTeam
     public function posts()
     {
         return $this->hasMany(Post::class, "team_id", "id");
+    }
+    public function media()
+    {
+        return $this->hasMany(MediaLibrary::class, "team_id", "id");
     }
 
     /**

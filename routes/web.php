@@ -70,17 +70,25 @@ Route::middleware([
 
         // media
         // media index api
-        Route::get("/media/api/{team}", [
+        Route::get("/overview/media/index/{team}", [
             LoggedInMediaLibraryController::class,
             "index",
-        ])->name("media.api");
+        ]);
+        Route::get("/overview/media/edit/{mediaLibrary}/{team}", [
+            LoggedInMediaLibraryController::class,
+            "edit",
+        ]);
 
-        Route::get("/media/{team}", [
+        // media
+        Route::get("/overview/media/{team}", [
             MediaLibraryController::class,
             "index",
         ])->name("media.index");
-        // media
-        Route::post("/media/store", [
+        Route::post("/overview/media/image/update/{team}", [
+            MediaLibraryController::class,
+            "update",
+        ])->name("media.update");
+        Route::post("/overview/media/store", [
             MediaLibraryController::class,
             "store",
         ])->name("media.store");

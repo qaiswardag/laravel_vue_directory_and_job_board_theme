@@ -47,7 +47,8 @@ class StoreMediaLibraryRequest extends FormRequest
                 return;
             }
 
-            if (count($this->images) >= 7) {
+            // TODO: change count to 7
+            if (count($this->images) >= 18) {
                 $validator
                     ->errors()
                     ->add("images", "Max files upload is 6 per time.");

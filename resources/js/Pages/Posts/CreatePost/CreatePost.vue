@@ -14,6 +14,8 @@ import { Switch } from "@headlessui/vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import Tags from "@/Components/Forms/Tags.vue";
+import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
+
 import {
     Listbox,
     ListboxButton,
@@ -27,6 +29,49 @@ import {
     ChevronUpDownIcon,
     XMarkIcon,
 } from "@heroicons/vue/20/solid";
+
+// use media library
+const showMediaLibraryModal = ref(false);
+// modal content
+const titleMedia = ref("");
+const descriptionMedia = ref("");
+const firstButtonMedia = ref("");
+const secondButtonMedia = ref(null);
+const thirdButtonMedia = ref(null);
+// set dynamic modal handle functions
+const firstMediaButtonFunction = ref(null);
+const secondMediaButtonFunction = ref(null);
+const thirdMediaButtonFunction = ref(null);
+
+const handleUploadCoverImage = function () {
+    // handle show media library modal
+    showMediaLibraryModal.value = true;
+
+    // set media library modal standards
+    titleMedia.value = "Media Library";
+    descriptionMedia.value = null;
+    firstButtonMedia.value = "Close";
+    secondButtonMedia.value = "Select image";
+    thirdButtonMedia.value = "third button";
+    // handle click
+    firstMediaButtonFunction.value = function () {
+        // handle show media library modal
+        showMediaLibraryModal.value = false;
+    };
+    //
+    // handle click
+    secondMediaButtonFunction.value = function () {
+        // handle show media library modal
+        showMediaLibraryModal.value = false;
+    };
+    // handle click
+    thirdMediaButtonFunction.value = function () {
+        console.log("clicked third button");
+        // handle show media library modal
+        showMediaLibraryModal.value = false;
+    };
+    // end modal
+};
 
 const showErrorNotifications = ref(false);
 
@@ -123,6 +168,7 @@ const createPost = () => {
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
         <div>
+            <p>createPostForm.team: {{ createPostForm.team }}</p>
             <FormSection @submitted="handleCreatePost">
                 <template #title> Post details </template>
                 <template #description> Create a new Post. </template>
@@ -139,6 +185,7 @@ const createPost = () => {
                                 Specify title & description.
                             </p>
                         </div>
+                        <!-- post title start -->
                         <div class="myInputGroup">
                             <InputLabel for="title" value="Your Post title" />
                             <TextInput
@@ -154,6 +201,8 @@ const createPost = () => {
                                 :message="createPostForm.errors.title"
                             />
                         </div>
+                        <!-- post title end -->
+                        <!-- post slug start -->
                         <div class="myInputGroup">
                             <InputLabel for="slug" value="Slug" />
                             <TextInput
@@ -167,7 +216,9 @@ const createPost = () => {
                             />
                             <InputError :message="createPostForm.errors.slug" />
                         </div>
+                        <!-- post slug end -->
 
+                        <!-- post content start -->
                         <div class="myInputGroup">
                             <InputLabel
                                 for="content"
@@ -186,74 +237,12 @@ const createPost = () => {
                                 :message="createPostForm.errors.content"
                             />
                         </div>
-                    </div>
-
-                    <div class="myInputsOrganization">
-                        <div
-                            class="myPrimaryFormOrganizationHeaderDescriptionSection"
-                        >
-                            <div class="myPrimaryFormOrganizationHeader">
-                                Something here
-                            </div>
-                            <p class="myPrimaryParagraph">
-                                Lorem ipsum dolor sit.
-                            </p>
-                        </div>
-                        <div class="myInputGroup">
-                            <div class="col-span-3">
-                                <label
-                                    class="block text-sm font-medium text-gray-700"
-                                    >Cover photo</label
-                                >
-                                <div
-                                    class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6"
-                                >
-                                    <div class="space-y-1 text-center">
-                                        <svg
-                                            class="mx-auto h-12 w-12 text-gray-400"
-                                            stroke="currentColor"
-                                            fill="none"
-                                            viewBox="0 0 48 48"
-                                            aria-hidden="true"
-                                        >
-                                            <path
-                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                            />
-                                        </svg>
-                                        <div class="flex text-sm text-gray-600">
-                                            <InputLabel
-                                                for="thumbnail"
-                                                value="Upload a thumbnail"
-                                                class="mb-1"
-                                            />
-
-                                            <input
-                                                id="thumbnail"
-                                                name="thumbnail"
-                                                type="file"
-                                                class="sr-only"
-                                            />
-
-                                            <p class="pl-1">or drag and drop</p>
-                                        </div>
-                                        <p class="text-xs text-gray-500">
-                                            PNG or JPG
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <InputError
-                                :message="createPostForm.errors.thumbnail"
-                            />
-                        </div>
+                        <!-- post content end -->
                     </div>
                 </template>
 
                 <template #sidebar>
+                    <!-- post status - start -->
                     <div class="myInputsOrganization">
                         <div
                             class="myPrimaryFormOrganizationHeaderDescriptionSection"
@@ -348,6 +337,33 @@ const createPost = () => {
                             :message="createPostForm.errors.published"
                         />
                     </div>
+                    <!-- post status - end -->
+                    <!-- cover image - start -->
+                    <div class="myInputsOrganization">
+                        <div
+                            class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                        >
+                            <div class="myPrimaryFormOrganizationHeader">
+                                Cover Image
+                            </div>
+                            <p class="myPrimaryParagraph">
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                        <div class="myInputGroup">
+                            <button
+                                @click="handleUploadCoverImage"
+                                type="button"
+                                class="myPrimaryButton"
+                            >
+                                Select Cover Image
+                            </button>
+                            <InputError
+                                :message="createPostForm.errors.thumbnail"
+                            />
+                        </div>
+                    </div>
+                    <!-- cover image - end -->
                     <!-- tags - start -->
                     <div class="myInputsOrganization">
                         <div
@@ -369,6 +385,7 @@ const createPost = () => {
                         </div>
                     </div>
                     <!-- tags - end -->
+
                     <div class="myInputsOrganization">
                         <div
                             class="myPrimaryFormOrganizationHeaderDescriptionSection"
@@ -509,6 +526,20 @@ const createPost = () => {
                             <p class="myPrimaryParagraph">Show errors</p>
                         </div>
                     </div>
+                    <MediaLibraryModal
+                        :user="user"
+                        :team="createPostForm.team"
+                        :open="showMediaLibraryModal"
+                        :title="titleMedia"
+                        :description="descriptionMedia"
+                        :firstButtonText="firstButtonMedia"
+                        :secondButtonText="secondButtonMedia"
+                        :thirdButtonText="thirdButtonMedia"
+                        @firstMediaButtonFunction="firstMediaButtonFunction"
+                        @secondMediaButtonFunction="secondMediaButtonFunction"
+                        @thirdMediaButtonFunction="thirdMediaButtonFunction"
+                    >
+                    </MediaLibraryModal>
                     <NotificationsFixedBottom
                         :listOfMessages="Object.values(createPostForm.errors)"
                         :show="showErrorNotifications"

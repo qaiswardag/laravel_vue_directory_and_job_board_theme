@@ -131,8 +131,8 @@ const handleUploadImages = function () {
     // set media library modal standards
     titleMedia.value = "Media Library";
     descriptionMedia.value = null;
-    firstButtonMedia.value = "Close";
-    secondButtonMedia.value = "Select image";
+    firstButtonMedia.value = null;
+    secondButtonMedia.value = null;
     thirdButtonMedia.value = null;
     // handle click
     firstMediaButtonFunction.value = function () {

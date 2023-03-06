@@ -75,6 +75,7 @@ class PostController extends Controller
             "published" => $request->published,
             "thumbnail" => "hi-i-am-path-for-image",
             "content" => $content,
+            "tags" => $request->tags,
         ]);
 
         // return current Team user is on and not the Team user is storing the post for

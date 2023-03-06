@@ -16,11 +16,14 @@ class MediaLibraryController extends Controller
     {
         $this->authorize("can-read", $team);
 
-        $media = MediaLibrary::latest()
+        $media = $team
+            ->media()
+            ->latest()
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("name", "LIKE", "%" . $term . "%");
             })
             ->paginate(24);
+
         //
 
         // return
@@ -46,17 +49,25 @@ class MediaLibraryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(MediaLibrary $mediaLibrary, Team $team)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(MediaLibrary $mediaLibrary, Team $team)
     {
+        // testing
+        // return response()->json($mediaLibrary->id, 200);
+        // return response()->json($team, 200);
+
+        $this->authorize("can-read", $team);
+
         //
+
+        // return
+        return $mediaLibrary;
     }
 
     /**

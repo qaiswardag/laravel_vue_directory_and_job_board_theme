@@ -34,7 +34,7 @@ class StorePostRequest extends FormRequest
             "team" => ["required"],
             "content" => ["required", "min:2", "max:255"],
             "tags" => ["required"],
-            "thumbnail" => [],
+            "thumbnail" => ["required"],
         ];
     }
 

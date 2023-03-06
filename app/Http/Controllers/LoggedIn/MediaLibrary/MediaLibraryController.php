@@ -60,8 +60,6 @@ class MediaLibraryController extends Controller
             // slugify the filename without the extension
             $slugifiedFilename = Str::slug($filenameWithoutExtension, "-");
 
-            $fileSize = $image->getSize();
-
             // get the current timestamp
             $timestamp = time();
             // generate a unique ID for the image
@@ -74,6 +72,9 @@ class MediaLibraryController extends Controller
             // replace the forward slash with a dash using str_replace()
             $currentYearMonth = str_replace("/", "-", $currentYearMonth);
 
+            // extension
+            $extension = $image->extension();
+
             $path =
                 $teamReferenceId .
                 "/" .
@@ -83,7 +84,7 @@ class MediaLibraryController extends Controller
                 "-" .
                 $randomString .
                 "." .
-                $image->extension();
+                $extension;
 
             // check if the path already exists in the media_libraries table
             if (MediaLibrary::where("path", $path)->exists()) {
@@ -97,20 +98,40 @@ class MediaLibraryController extends Controller
                     "-" .
                     $randomString .
                     "." .
-                    $image->extension();
+                    $extension;
             }
 
             $filePath = $image->storeAs($path);
+
+            // path in the database
+            $pathDB =
+                "uploads/" .
+                $teamReferenceId .
+                "/" .
+                $slugifiedFilename .
+                "-" .
+                $currentYearMonth .
+                "-" .
+                $randomString .
+                "." .
+                $extension;
+
+            // file size
+            $fileSizeKb = number_format($image->getSize() / 1024, 2); // convert to KB and 2 decimal
+
+            list($width, $height) = getimagesize(
+                public_path("uploads/" . $filePath)
+            );
 
             // Image eloquent
             MediaLibrary::create([
                 "user_id" => $request->user_id,
                 "team_id" => $team->id,
                 "name" => null,
-                "path" => $filePath,
-                "size" => 1000,
-                "width" => 1000,
-                "height" => 1000,
+                "path" => $pathDB,
+                "size" => $fileSizeKb,
+                "width" => $width,
+                "height" => $height,
             ]);
         }
 
@@ -122,7 +143,7 @@ class MediaLibraryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MediaLibrary $mediaLibrary)
+    public function show(MediaLibrary $mediaLibrary, Team $team)
     {
         // $this->authorize("can-read", $team);
     }
@@ -138,9 +159,17 @@ class MediaLibraryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MediaLibrary $mediaLibrary)
+    public function update(Request $request, Team $team)
     {
-        // $this->authorize("can-create-and-update", $team);
+        $this->authorize("can-create-and-update", $team);
+
+        $request->validate([
+            "name" => ["required", "min:1", "max:255"],
+        ]);
+
+        $image = MediaLibrary::findOrFail($request->image_id);
+        $image->name = $request->name;
+        $image->save();
     }
 
     /**

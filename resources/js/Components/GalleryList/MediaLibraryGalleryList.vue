@@ -3,6 +3,10 @@ import { onMounted, ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { vueFetch } from "use-lightweight-fetch";
 import { TailwindPagination } from "laravel-vue-pagination";
+import { useStore } from "vuex";
+
+// store
+const store = useStore();
 
 // use fetch package
 const {
@@ -33,57 +37,26 @@ const images = ref([]);
 
 // get media
 const getMedia = function (page) {
-    handleData(
-        `/media/api/${props.team.id}/?page=${page}&per_page=3`,
-        {},
-        {
-            additionalCallTime: 0,
-            abortTimeoutTime: 8000,
-        }
-    );
+    handleData(`/overview/media/index/${props.team.id}/?page=${page}`);
 };
 //
 // get result for "laravel pagination" package
-const getResultsForPage = async (page = 1) => {
+const getResultsForPage = (page = 1) => {
     getMedia(page);
 };
 //
-//
-const handleImageClick = function (imageId) {
-    console.log("image is:", imageId);
+// handle image click
+const handleImageClick = function (mediaLibraryId) {
+    // dispatch
+    store.dispatch("mediaLibrary/getImage", {
+        mediaLibraryId: mediaLibraryId,
+        teamId: props.team.id,
+    });
 };
-//
 //
 onMounted(() => {
     getMedia(1);
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// form
-//const form = useForm({});
-
-// onMounted(() => {
-//     form.get(route("media.api", [props.team.id]), {
-//         preserveScroll: true,
-//         onSuccess: () => {
-//             console.log("form ran successfully");
-//         },
-//         onError: (err) => {
-//             console.log("form did not ran successfully:");
-//         },
-//         onFinish: () => {},
-//     });
-// });
 </script>
 
 <template>
@@ -122,7 +95,10 @@ onMounted(() => {
         </button>
     </div>
 
-    <p v-if="isError" class="myPrimaryParagraphError">{{ isError }}</p>
+    <p v-if="isError && !isSuccess" class="myPrimaryParagraphError">
+        {{ isError }}
+    </p>
+
     <div class="overflow-y-scroll max-h-[40rem] min-h-[30rem] mt-2 mb-4 p-4">
         <div
             v-if="isLoading === true && (isError === null || isError === false)"
@@ -146,15 +122,17 @@ onMounted(() => {
                 (isError === null || isError === false)
             "
         >
-            <div class="grid md:grid-cols-4 grid-cols-2 myPrimaryGap">
+            <div
+                class="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 myPrimaryGap"
+            >
                 <template
                     v-for="image in media && media.data && media.data"
                     :key="image.id"
                 >
                     <img
                         @click="handleImageClick(image.id)"
-                        class="mx-auto block w-20 h-full rounded-lg object-cover object-center cursor-pointer hover:shadow-sm hover:scale-105 transition-all"
-                        :src="`/storage/${image.path}`"
+                        class="mx-auto block w-24 h-full rounded-lg object-cover object-center cursor-pointer hover:shadow-sm hover:scale-105 transition-all"
+                        :src="`/${image.path}`"
                         alt="image"
                     />
                 </template>
