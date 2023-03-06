@@ -46,35 +46,6 @@ export default {
             // // context & send to mutation
             context.commit("setCurrentImage", { currentImage: fetchedImage });
         },
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        // // load media library images
-        // async loadMediaLibrary(context, page) {
-        //     // use fetch
-        //     const { loadData } = useFetch();
-        //     // try
-        //     try {
-        //         const data = await loadData(
-        //             `/api/media-library?page=${page}`,
-        //             {},
-        //             { additionalCallTime: 0 }
-        //         );
-        //         // context & send to mutation
-        //         context.commit("setMedia", data);
-        //         // catch errors
-        //     } catch (err) {
-        //         throw err;
-        //     }
-        // },
-        //
-        //
-        //
-        //
         // end action
     },
 };

@@ -150,9 +150,9 @@ const handleUploadImages = function () {
 </script>
 
 <template>
-    <LoggedInLayout title="Team Settings">
+    <LoggedInLayout title="Media">
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Team Settings</h2>
+            <h2 class="myPrimaryMainPageHeader">Media</h2>
         </template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

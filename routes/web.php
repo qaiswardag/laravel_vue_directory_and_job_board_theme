@@ -88,6 +88,12 @@ Route::middleware([
             MediaLibraryController::class,
             "update",
         ])->name("media.update");
+
+        Route::post("/overview/media/image/destroy/{team}", [
+            MediaLibraryController::class,
+            "destroy",
+        ])->name("media.destroy");
+
         Route::post("/overview/media/store", [
             MediaLibraryController::class,
             "store",

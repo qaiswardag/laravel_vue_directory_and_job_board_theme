@@ -175,8 +175,18 @@ class MediaLibraryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MediaLibrary $mediaLibrary)
+    public function destroy(Request $request, Team $team)
     {
-        // $this->authorize("can-destroy", $team);
+        $this->authorize("can-destroy", $team);
+        $image = MediaLibrary::findOrFail($request->image_id);
+
+        $imagePath = $image->path;
+
+        // delete the image file from the public folder
+        if (Storage::disk("public")->exists($imagePath)) {
+            Storage::disk("public")->delete($imagePath);
+        }
+        // delete the image record from the dat
+        $image->delete();
     }
 }

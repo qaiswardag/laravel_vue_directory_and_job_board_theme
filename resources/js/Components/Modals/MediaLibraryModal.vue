@@ -30,6 +30,7 @@ import InputLabel from "@/Components/Forms/InputLabel.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 
 import { useStore } from "vuex";
+import { PlayCircleIcon } from "@heroicons/vue/20/solid";
 
 // store
 const store = useStore();
@@ -117,6 +118,10 @@ const oldValueName = computed(() => {
 //
 //
 // form
+const formDeleteImage = useForm({
+    image_id: null,
+});
+// form
 const form = useForm({
     name: oldValueName,
     image_id: null,
@@ -127,7 +132,6 @@ const handleImageUpdate = function (imageId) {
     form.image_id = imageId;
 
     form.post(route("media.update", [props.team.id]), {
-        errorBag: "updateProfileInformation",
         preserveScroll: true,
         onSuccess: () => {
             console.log("successfully updated");
@@ -141,6 +145,24 @@ const handleImageUpdate = function (imageId) {
             });
         },
         onError: (err) => {},
+        onFinish: () => {},
+    });
+};
+
+const handleDeleteImage = function (imageId) {
+    formDeleteImage.image_id = imageId;
+
+    formDeleteImage.post(route("media.destroy", [props.team.id]), {
+        preserveScroll: true,
+        onSuccess: () => {
+            console.log("successfully deleted image");
+
+            // dispatch
+            store.commit("mediaLibrary/setCurrentImage", null);
+        },
+        onError: (err) => {
+            console.log("did not work:", err);
+        },
         onFinish: () => {},
     });
 };
@@ -341,9 +363,11 @@ const handleImageUpdate = function (imageId) {
                                         >
                                             <div
                                                 v-if="
-                                                    getCurrentImage &&
-                                                    getCurrentImage.currentImage ===
-                                                        null
+                                                    (getCurrentImage &&
+                                                        Object.keys(
+                                                            getCurrentImage
+                                                        ).length === 0) ||
+                                                    getCurrentImage === null
                                                 "
                                                 class="pb-16 space-y-6"
                                             >
@@ -574,22 +598,43 @@ const handleImageUpdate = function (imageId) {
                                                     </dl>
                                                 </div>
 
-                                                <div
-                                                    class="flex gap-2 justify-between"
+                                                <form
+                                                    @submit.prevent="
+                                                        handleDeleteImage(
+                                                            getCurrentImage
+                                                                .currentImage.id
+                                                        )
+                                                    "
                                                 >
-                                                    <button
-                                                        type="button"
-                                                        class="myPrimaryButton bg-gray-600 text-white hover:bg-gray-700 hover:text-white focus:ring-gray-600"
+                                                    <div
+                                                        class="my-2 flex items-center myPrimaryGap"
                                                     >
-                                                        Download
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        class="myPrimaryDeleteButton"
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </div>
+                                                        <p
+                                                            class="myPrimaryParagraph"
+                                                        >
+                                                            Delete
+                                                        </p>
+                                                        <SubmitButton
+                                                            class="w-full"
+                                                            :ButtonStyleDelete="
+                                                                true
+                                                            "
+                                                            :disabled="
+                                                                formDeleteImage.processing
+                                                            "
+                                                            buttonText="Delete"
+                                                            type="button"
+                                                            @firstButtonClick="
+                                                                handleDeleteImage(
+                                                                    getCurrentImage
+                                                                        .currentImage
+                                                                        .id
+                                                                )
+                                                            "
+                                                        >
+                                                        </SubmitButton>
+                                                    </div>
+                                                </form>
 
                                                 <div
                                                     class="border-t border-gray-200 mt-2 sm:mt-2 pt-4"

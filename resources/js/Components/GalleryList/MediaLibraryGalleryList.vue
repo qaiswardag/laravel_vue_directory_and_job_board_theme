@@ -38,6 +38,13 @@ const images = ref([]);
 // get media
 const getMedia = function (page) {
     handleData(`/overview/media/index/${props.team.id}/?page=${page}`);
+
+    // dispatch
+    store.dispatch("mediaLibrary/getImage", {
+        mediaLibraryId: mediaLibraryId,
+        teamId: props.team.id,
+        page: page,
+    });
 };
 //
 // get result for "laravel pagination" package
