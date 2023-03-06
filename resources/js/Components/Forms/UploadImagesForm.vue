@@ -123,9 +123,7 @@ const submit = () => {
 };
 
 const handleDeleteSingleImage = function (image_upload_id) {
-    console.log("id er:", image_upload_id);
     // delete image form submitting and from images preview array
-
     const imageIndex = form.images.findIndex(
         (image) => image.image_upload_id === image_upload_id
     );

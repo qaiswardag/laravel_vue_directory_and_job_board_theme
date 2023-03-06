@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { vueFetch } from "use-lightweight-fetch";
 import { TailwindPagination } from "laravel-vue-pagination";
@@ -8,16 +8,6 @@ import { useStore } from "vuex";
 // store
 const store = useStore();
 
-// use fetch package
-const {
-    handleData,
-    fetchedData: media,
-    isError,
-    validationProperties,
-    isLoading,
-    isSuccess,
-} = vueFetch();
-
 // handle search
 const handleSearch = function () {
     console.log("search me");
@@ -25,23 +15,25 @@ const handleSearch = function () {
 
 // props
 const props = defineProps({
-    media: {
-        // required: true,
-    },
     team: {
         required: true,
     },
+});
+
+const getCurrentMedia = computed(() => {
+    return store.getters["mediaLibrary/getCurrentMedia"];
+});
+
+const getCurrentImage = computed(() => {
+    return store.getters["mediaLibrary/getCurrentImage"];
 });
 
 const images = ref([]);
 
 // get media
 const getMedia = function (page) {
-    handleData(`/overview/media/index/${props.team.id}/?page=${page}`);
-
     // dispatch
-    store.dispatch("mediaLibrary/getImage", {
-        mediaLibraryId: mediaLibraryId,
+    store.dispatch("mediaLibrary/loadMedia", {
         teamId: props.team.id,
         page: page,
     });
@@ -55,7 +47,7 @@ const getResultsForPage = (page = 1) => {
 // handle image click
 const handleImageClick = function (mediaLibraryId) {
     // dispatch
-    store.dispatch("mediaLibrary/getImage", {
+    store.dispatch("mediaLibrary/loadImage", {
         mediaLibraryId: mediaLibraryId,
         teamId: props.team.id,
     });
@@ -102,13 +94,21 @@ onMounted(() => {
         </button>
     </div>
 
-    <p v-if="isError && !isSuccess" class="myPrimaryParagraphError">
-        {{ isError }}
-    </p>
+    <div
+        v-if="getCurrentMedia && getCurrentMedia.isError"
+        class="myPrimaryParagraphError"
+    >
+        {{ getCurrentMedia.isError }}
+    </div>
 
     <div class="overflow-y-scroll max-h-[40rem] min-h-[30rem] mt-2 mb-4 p-4">
         <div
-            v-if="isLoading === true && (isError === null || isError === false)"
+            v-if="
+                getCurrentMedia &&
+                getCurrentMedia.isLoading === true &&
+                (getCurrentMedia.isError === null ||
+                    getCurrentMedia.isError === false)
+            "
         >
             <div class="flex items-center justify-center min-h-80 max-h-80">
                 <div
@@ -124,21 +124,27 @@ onMounted(() => {
         </div>
         <div
             v-if="
-                isLoading === false &&
-                media &&
-                (isError === null || isError === false)
+                getCurrentMedia &&
+                getCurrentMedia.isLoading === false &&
+                (getCurrentMedia.isError === null ||
+                    getCurrentMedia.isError === false)
             "
         >
             <div
                 class="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 myPrimaryGap"
             >
                 <template
-                    v-for="image in media && media.data && media.data"
+                    v-for="image in getCurrentMedia &&
+                    getCurrentMedia.fetchedMedia.data"
                     :key="image.id"
                 >
                     <img
                         @click="handleImageClick(image.id)"
-                        class="mx-auto block w-24 h-full rounded-lg object-cover object-center cursor-pointer hover:shadow-sm hover:scale-105 transition-all"
+                        class="mx-auto block h-32 w-full rounded-lg object-cover object-center cursor-pointer hover:shadow-sm hover:scale-105 transition-all"
+                        :class="{
+                            'border-spacing-8 border-2 border-red-400':
+                                image.id === getCurrentImage?.currentImage?.id,
+                        }"
                         :src="`/${image.path}`"
                         alt="image"
                     />
@@ -148,18 +154,14 @@ onMounted(() => {
     </div>
 
     <div
-        v-if="
-            isLoading === false &&
-            media &&
-            (isError === null || isError === false)
-        "
+        v-if="getCurrentMedia && getCurrentMedia.fetchedMedia"
         class="text-center mt-4"
     >
         <TailwindPagination
             :active-classes="['bg-black', 'text-white', 'border-black']"
             :limit="2"
             class="mt-4 flex justify-center items-center"
-            :data="media"
+            :data="getCurrentMedia.fetchedMedia"
             @pagination-change-page="getResultsForPage"
         >
         </TailwindPagination>

@@ -109,12 +109,6 @@ const changeSelectedMenuTab = function (clicked) {
 const uploadOnSuccess = function () {
     selected.value = "Media library";
 };
-
-//
-const oldValueName = computed(() => {
-    return getCurrentImage.value?.currentImage?.name;
-});
-//
 //
 //
 // form
@@ -123,7 +117,7 @@ const formDeleteImage = useForm({
 });
 // form
 const form = useForm({
-    name: oldValueName,
+    name: "",
     image_id: null,
 });
 //
@@ -139,7 +133,7 @@ const handleImageUpdate = function (imageId) {
             // reset form
             form.reset();
             // dispatch
-            store.dispatch("mediaLibrary/getImage", {
+            store.dispatch("mediaLibrary/loadImage", {
                 mediaLibraryId: imageId,
                 teamId: props.team.id,
             });
@@ -159,6 +153,11 @@ const handleDeleteImage = function (imageId) {
 
             // dispatch
             store.commit("mediaLibrary/setCurrentImage", null);
+            // dispatch
+            store.dispatch("mediaLibrary/loadMedia", {
+                teamId: props.team.id,
+                page: undefined,
+            });
         },
         onError: (err) => {
             console.log("did not work:", err);
@@ -166,9 +165,6 @@ const handleDeleteImage = function (imageId) {
         onFinish: () => {},
     });
 };
-//
-//
-//
 </script>
 
 <template>
@@ -355,7 +351,7 @@ const handleDeleteImage = function (imageId) {
                                         </main>
                                         <!-- Main content - end-->
 
-                                        <!-- Details sidebar - upload start-->
+                                        <!-- Details sidebar - media library start-->
                                         <aside
                                             v-if="selected === 'Media library'"
                                             aria-label="sidebar"
@@ -378,20 +374,64 @@ const handleDeleteImage = function (imageId) {
                                             <div
                                                 v-if="
                                                     getCurrentImage &&
-                                                    getCurrentImage.currentImage
+                                                    getCurrentImage.isError
+                                                "
+                                                class="myPrimaryParagraphError"
+                                            >
+                                                {{ getCurrentImage.isError }}
+                                            </div>
+
+                                            <!--  -->
+                                            <!--  -->
+                                            <div
+                                                v-if="
+                                                    getCurrentImage &&
+                                                    getCurrentImage.isLoading ===
+                                                        true &&
+                                                    (getCurrentImage.isError ===
+                                                        null ||
+                                                        getCurrentImage.isError ===
+                                                            false)
+                                                "
+                                            >
+                                                <div
+                                                    class="flex items-center justify-center pt-12"
+                                                >
+                                                    <div
+                                                        class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                                        role="status"
+                                                    >
+                                                        <span
+                                                            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                                                            >Loading...</span
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                v-if="
+                                                    getCurrentImage &&
+                                                    getCurrentImage.currentImage &&
+                                                    getCurrentImage.isLoading ===
+                                                        false &&
+                                                    (getCurrentImage.isError ===
+                                                        null ||
+                                                        getCurrentImage.isError ===
+                                                            false)
                                                 "
                                                 class="pb-16 space-y-6"
                                             >
                                                 <div>
                                                     <img
-                                                        class="mx-auto block h-96 w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                        class="mx-auto block h-72 w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
                                                         :src="`/${getCurrentImage.currentImage.path}`"
                                                         alt="image"
                                                     />
 
                                                     <div>
                                                         <h2
-                                                            class="mySecondaryHeader my-3"
+                                                            class="mySecondaryHeader py-2"
                                                         >
                                                             <span
                                                                 class="sr-only"
@@ -408,24 +448,6 @@ const handleDeleteImage = function (imageId) {
                                                                     : "not added"
                                                             }}
                                                         </h2>
-                                                        <p
-                                                            class="myPrimaryParagraph"
-                                                        >
-                                                            Image size:
-
-                                                            <span
-                                                                class="font-semibold"
-                                                            >
-                                                                {{
-                                                                    Number(
-                                                                        getCurrentImage
-                                                                            .currentImage
-                                                                            .size
-                                                                    ).toFixed(0)
-                                                                }}
-                                                                KB
-                                                            </span>
-                                                        </p>
 
                                                         <form
                                                             @submit.prevent="
@@ -437,19 +459,8 @@ const handleDeleteImage = function (imageId) {
                                                             "
                                                         >
                                                             <div
-                                                                class="myInputsOrganization my-4 p-2 border border-myPrimaryLightGrayColor rounded"
+                                                                class="myInputsOrganization mt-2 mb-8 pt-4 pr-0 pb-4 pl-0 border-b-2 border-myPrimaryMediumGrayColor rounded-none"
                                                             >
-                                                                <div
-                                                                    class="myPrimaryFormOrganizationHeaderDescriptionSection"
-                                                                ></div>
-
-                                                                <InputError
-                                                                    :message="
-                                                                        form
-                                                                            .errors
-                                                                            .name
-                                                                    "
-                                                                />
                                                                 <InputLabel
                                                                     for="name"
                                                                     value="Image name"
@@ -460,63 +471,50 @@ const handleDeleteImage = function (imageId) {
                                                                     <div
                                                                         class="flex gap-2 item-center"
                                                                     >
-                                                                        <TextInput
-                                                                            placeholder="Image name.."
-                                                                            id="title"
-                                                                            v-model="
-                                                                                form.name
-                                                                            "
-                                                                            type="text"
-                                                                            autofocus
-                                                                            autocomplete="off"
-                                                                        />
-                                                                        <button
-                                                                            @click="
-                                                                                handleImageUpdate(
-                                                                                    getCurrentImage
-                                                                                        .currentImage
-                                                                                        .id
-                                                                                )
-                                                                            "
-                                                                            :disabled="
-                                                                                form.processing
-                                                                            "
-                                                                            type="button"
-                                                                            class="myPrimaryButton py-2"
+                                                                        <div
+                                                                            class="mt-1 relative flex items-center w-full"
                                                                         >
-                                                                            <svg
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                fill="none"
-                                                                                viewBox="0 0 24 24"
-                                                                                stroke-width="1.5"
-                                                                                stroke="currentColor"
-                                                                                class="w-6 h-6"
+                                                                            <input
+                                                                                placeholder="Image name.."
+                                                                                id="title"
+                                                                                v-model="
+                                                                                    form.name
+                                                                                "
+                                                                                type="text"
+                                                                                autofocus
+                                                                                autocomplete="off"
+                                                                                class="myPrimaryInput"
+                                                                                @keydown.enter.tab.prevent="
+                                                                                    handleImageUpdate(
+                                                                                        getCurrentImage
+                                                                                            .currentImage
+                                                                                            .id
+                                                                                    )
+                                                                                "
+                                                                            />
+                                                                            <div
+                                                                                class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5"
                                                                             >
-                                                                                <path
-                                                                                    stroke-linecap="round"
-                                                                                    stroke-linejoin="round"
-                                                                                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-                                                                                />
-                                                                            </svg>
-                                                                        </button>
+                                                                                <kbd
+                                                                                    class="inline-flex items-center border border-gray-200 rounded px-2 text-xs font-sans font-medium text-gray-400"
+                                                                                >
+                                                                                    ⏎
+                                                                                </kbd>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-
-                                                                    <SubmitButton
-                                                                        class="min-w-full"
-                                                                        :disabled="
-                                                                            form.processing
+                                                                    <p
+                                                                        v-if="
+                                                                            form.errors
                                                                         "
-                                                                        buttonText="Update"
-                                                                        type="button"
-                                                                        @firstButtonClick="
-                                                                            handleImageUpdate(
-                                                                                getCurrentImage
-                                                                                    .currentImage
-                                                                                    .id
-                                                                            )
-                                                                        "
+                                                                        class="myPrimaryInputError"
                                                                     >
-                                                                    </SubmitButton>
+                                                                        {{
+                                                                            form
+                                                                                .errors
+                                                                                .name
+                                                                        }}
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -532,7 +530,7 @@ const handleDeleteImage = function (imageId) {
                                                         class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
                                                     >
                                                         <div
-                                                            class="py-3 flex justify-between text-sm font-medium"
+                                                            class="py-3 flex justify-between text-sm font-medium items-center"
                                                         >
                                                             <dt
                                                                 class="text-gray-500"
@@ -557,7 +555,7 @@ const handleDeleteImage = function (imageId) {
                                                         </div>
 
                                                         <div
-                                                            class="py-3 flex justify-between text-sm font-medium"
+                                                            class="py-3 flex justify-between text-sm font-medium items-center"
                                                         >
                                                             <dt
                                                                 class="text-gray-500"
@@ -578,7 +576,7 @@ const handleDeleteImage = function (imageId) {
                                                             </dd>
                                                         </div>
                                                         <div
-                                                            class="py-3 flex justify-between text-sm font-medium"
+                                                            class="py-3 flex justify-between text-sm font-medium items-center"
                                                         >
                                                             <dt
                                                                 class="text-gray-500"
@@ -595,57 +593,74 @@ const handleDeleteImage = function (imageId) {
                                                                 }}
                                                             </dd>
                                                         </div>
+                                                        <div
+                                                            class="py-3 flex justify-between text-sm font-medium items-center"
+                                                        >
+                                                            <dt
+                                                                class="text-myErrorColor"
+                                                            >
+                                                                Delete
+                                                            </dt>
+                                                            <dd
+                                                                class="text-gray-900"
+                                                            >
+                                                                <form
+                                                                    @submit.prevent="
+                                                                        handleDeleteImage(
+                                                                            getCurrentImage
+                                                                                .currentImage
+                                                                                .id
+                                                                        )
+                                                                    "
+                                                                >
+                                                                    <SubmitButton
+                                                                        :ButtonStyleDelete="
+                                                                            true
+                                                                        "
+                                                                        :TableStyle="
+                                                                            true
+                                                                        "
+                                                                        :disabled="
+                                                                            false
+                                                                        "
+                                                                        buttonText=""
+                                                                        type="button"
+                                                                        @firstButtonClick="
+                                                                            handleDeleteImage(
+                                                                                getCurrentImage
+                                                                                    .currentImage
+                                                                                    .id
+                                                                            )
+                                                                        "
+                                                                    >
+                                                                        <svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            fill="none"
+                                                                            viewBox="0 0 24 24"
+                                                                            stroke-width="1.5"
+                                                                            stroke="currentColor"
+                                                                            class="w-5 h-5"
+                                                                        >
+                                                                            <path
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                            />
+                                                                        </svg>
+                                                                    </SubmitButton>
+                                                                </form>
+                                                            </dd>
+                                                        </div>
                                                     </dl>
                                                 </div>
 
-                                                <form
-                                                    @submit.prevent="
-                                                        handleDeleteImage(
-                                                            getCurrentImage
-                                                                .currentImage.id
-                                                        )
-                                                    "
-                                                >
-                                                    <div
-                                                        class="my-2 flex items-center myPrimaryGap"
-                                                    >
-                                                        <p
-                                                            class="myPrimaryParagraph"
-                                                        >
-                                                            Delete
-                                                        </p>
-                                                        <SubmitButton
-                                                            class="w-full"
-                                                            :ButtonStyleDelete="
-                                                                true
-                                                            "
-                                                            :disabled="
-                                                                formDeleteImage.processing
-                                                            "
-                                                            buttonText="Delete"
-                                                            type="button"
-                                                            @firstButtonClick="
-                                                                handleDeleteImage(
-                                                                    getCurrentImage
-                                                                        .currentImage
-                                                                        .id
-                                                                )
-                                                            "
-                                                        >
-                                                        </SubmitButton>
-                                                    </div>
-                                                </form>
-
-                                                <div
-                                                    class="border-t border-gray-200 mt-2 sm:mt-2 pt-4"
-                                                >
+                                                <div class="mt-2 sm:mt-2 pt-4">
                                                     <div
                                                         class="sm:flex justify-center sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
                                                     >
                                                         <div
                                                             v-if="
-                                                                firstButtonText &&
-                                                                false
+                                                                firstButtonText
                                                             "
                                                             class="w-full"
                                                         >
@@ -704,7 +719,7 @@ const handleDeleteImage = function (imageId) {
                                                 </div>
                                             </div>
                                         </aside>
-                                        <!-- Details sidebar - uplpoad end-->
+                                        <!-- Details sidebar - media library end-->
                                         <!-- Details sidebar - upload start-->
                                         <aside
                                             v-if="selected === 'Upload'"
@@ -749,7 +764,7 @@ const handleDeleteImage = function (imageId) {
                                                         class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
                                                     >
                                                         <div
-                                                            class="py-3 flex justify-between text-sm font-medium"
+                                                            class="py-3 flex justify-between text-sm font-medium items-center"
                                                         >
                                                             <dt
                                                                 class="text-gray-500"
@@ -764,76 +779,9 @@ const handleDeleteImage = function (imageId) {
                                                         </div>
                                                     </dl>
                                                 </div>
-
-                                                <div
-                                                    class="border-t border-gray-200 mt-2 sm:mt-2 pt-4"
-                                                >
-                                                    <div
-                                                        class="sm:flex justify-center sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
-                                                    >
-                                                        <div
-                                                            v-if="
-                                                                firstButtonText &&
-                                                                false
-                                                            "
-                                                            class="w-full"
-                                                        >
-                                                            <button
-                                                                ref="firstButtonRef"
-                                                                class="myPrimaryButton bg-gray-700 hover:bg-gray-800 text-white focus:ring-gray-700"
-                                                                type="button"
-                                                                @click="
-                                                                    firstButton
-                                                                "
-                                                            >
-                                                                {{
-                                                                    firstButtonText
-                                                                }}
-                                                            </button>
-                                                        </div>
-
-                                                        <div
-                                                            v-if="
-                                                                secondButtonText
-                                                            "
-                                                            class="w-full"
-                                                        >
-                                                            <button
-                                                                class="myPrimaryButton w-full"
-                                                                type="button"
-                                                                @click="
-                                                                    secondButton
-                                                                "
-                                                            >
-                                                                {{
-                                                                    secondButtonText
-                                                                }}
-                                                            </button>
-                                                        </div>
-
-                                                        <div
-                                                            v-if="
-                                                                thirdButtonText
-                                                            "
-                                                            class="w-full"
-                                                        >
-                                                            <button
-                                                                class="myPrimaryDeleteButton w-full"
-                                                                type="button"
-                                                                @click="
-                                                                    thirdButton
-                                                                "
-                                                            >
-                                                                {{
-                                                                    thirdButtonText
-                                                                }}
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </aside>
-                                        <!-- Details sidebar - uplpoad end-->
+                                        <!-- Details sidebar end-->
                                     </div>
                                     <!--content media library - end-->
                                 </div>

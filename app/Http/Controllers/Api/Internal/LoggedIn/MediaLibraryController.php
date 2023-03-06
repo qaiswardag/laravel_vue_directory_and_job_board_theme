@@ -22,7 +22,7 @@ class MediaLibraryController extends Controller
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("name", "LIKE", "%" . $term . "%");
             })
-            ->paginate(24);
+            ->paginate(8);
 
         //
 

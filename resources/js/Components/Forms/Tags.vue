@@ -63,7 +63,7 @@ const deleteTag = function (e) {
                     <div
                         :data-tag="tag"
                         @click="deleteTag"
-                        class="flex flex-wrap justify-center items-center gap-2 bg-green-500 text-white font-semibold text-sm px-3 py-2 cursor-pointer rounded-2xl hover:bg-red-500"
+                        class="flex flex-wrap justify-center items-center gap-2 bg-myPrimaryBrandColor text-white font-semibold text-sm px-3 py-2 cursor-pointer rounded-2xl hover:bg-red-500"
                     >
                         <p :data-tag="tag">
                             {{ tag }}

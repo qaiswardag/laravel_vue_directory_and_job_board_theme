@@ -36,7 +36,7 @@
     }
 
     .myPrimaryParagraphError {
-        @apply mt-1 italic block text-sm font-medium text-myErrorColor text-left;
+        @apply mt-1 italic block text-sm font-medium text-myErrorColor text-left tracking-wide;
     }
 
     /*
@@ -119,7 +119,7 @@
     }
 
     .mySecondaryButtonNoBackground {
-        @apply font-semibold  text-myPrimaryBrandColor;
+        @apply font-semibold  text-myPrimaryDarkGrayColor;
     }
 
     .myPrimaryDeleteButtonNoBackground {
