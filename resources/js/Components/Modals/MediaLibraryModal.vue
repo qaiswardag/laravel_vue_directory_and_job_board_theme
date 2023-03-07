@@ -15,7 +15,6 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { useForm } from "@inertiajs/vue3";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
-
 import { useStore } from "vuex";
 
 // store
@@ -24,6 +23,16 @@ const store = useStore();
 const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
 });
+
+const getCurrentMedia = computed(() => {
+    return store.getters["mediaLibrary/getCurrentMedia"];
+});
+
+const getCurrentPreviewImage = computed(() => {
+    return store.getters["mediaLibrary/getCurrentPreviewImage"];
+});
+
+const search_query = ref("");
 
 const selected = ref("Upload");
 
@@ -109,19 +118,33 @@ const form = useForm({
 //
 //
 const handleImageUpdate = function (imageId) {
+    // search query
+    search_query.value = getCurrentMedia.value?.fetchedMedia?.search_query;
+
+    //  page = getCurrentMedia.value.fetchedMedia.current_clicked_page;
+    let currentClickedPage =
+        getCurrentMedia.value?.fetchedMedia?.current_clicked_page;
+
+    // set image id
     form.image_id = imageId;
 
     form.post(route("media.update", [props.team.id]), {
         preserveScroll: true,
         onSuccess: () => {
-            console.log("successfully updated");
-
             // reset form
             form.reset();
             // dispatch
             store.dispatch("mediaLibrary/loadImage", {
                 mediaLibraryId: imageId,
                 teamId: props.team.id,
+            });
+
+            //
+            // dispatch
+            store.dispatch("mediaLibrary/loadMedia", {
+                teamId: props.team.id,
+                page: currentClickedPage,
+                search_query: search_query.value,
             });
         },
         onError: (err) => {},
@@ -130,6 +153,12 @@ const handleImageUpdate = function (imageId) {
 };
 
 const handleDeleteImage = function (imageId) {
+    // search query
+    search_query.value = getCurrentMedia.value?.fetchedMedia?.search_query;
+    // let page = getCurrentMedia.value.fetchedMedia.current_clicked_page;
+    let currentClickedPage =
+        getCurrentMedia.value?.fetchedMedia?.current_clicked_page;
+    // set image id
     formDeleteImage.image_id = imageId;
 
     formDeleteImage.post(route("media.destroy", [props.team.id]), {
@@ -142,7 +171,8 @@ const handleDeleteImage = function (imageId) {
             // dispatch
             store.dispatch("mediaLibrary/loadMedia", {
                 teamId: props.team.id,
-                page: undefined,
+                page: currentClickedPage,
+                search_query: search_query.value,
             });
         },
         onError: (err) => {
@@ -205,7 +235,6 @@ const handleDeleteImage = function (imageId) {
                                 >
                                     {{ title }}
                                     {{ team.name }}
-                                    {{ team.id }}
                                 </DialogTitle>
 
                                 <div class="flex-end">
@@ -379,6 +408,7 @@ const handleDeleteImage = function (imageId) {
                                                         getCurrentImage.isError ===
                                                             false)
                                                 "
+                                                class="mx-auto block h-72 w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
                                             >
                                                 <div
                                                     class="flex items-center justify-center pt-12"
@@ -410,20 +440,15 @@ const handleDeleteImage = function (imageId) {
                                             >
                                                 <div>
                                                     <img
-                                                        class="mx-auto block h-72 w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                        class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
                                                         :src="`/${getCurrentImage.currentImage.path}`"
                                                         alt="image"
                                                     />
 
                                                     <div>
                                                         <h2
-                                                            class="mySecondaryHeader py-2"
+                                                            class="mySecondaryHeader py-2 break-words"
                                                         >
-                                                            <span
-                                                                class="sr-only"
-                                                                >Details for
-                                                            </span>
-
                                                             {{
                                                                 getCurrentImage
                                                                     .currentImage
@@ -431,7 +456,7 @@ const handleDeleteImage = function (imageId) {
                                                                     ? getCurrentImage
                                                                           .currentImage
                                                                           .name
-                                                                    : "not added"
+                                                                    : "–"
                                                             }}
                                                         </h2>
 
@@ -445,7 +470,7 @@ const handleDeleteImage = function (imageId) {
                                                             "
                                                         >
                                                             <div
-                                                                class="myInputsOrganization mt-2 mb-8 pt-4 pr-0 pb-4 pl-0 border-b-2 border-myPrimaryMediumGrayColor rounded-none"
+                                                                class="myInputsOrganization mt-2 mb-8 pt-4 pr-0 pb-4 pl-0 border-b border-myPrimaryMediumGrayColor rounded-none"
                                                             >
                                                                 <InputLabel
                                                                     for="name"
@@ -712,34 +737,42 @@ const handleDeleteImage = function (imageId) {
                                             aria-label="sidebar"
                                             class="w-72 bg-white pl-2 pr-2 border-l border-gray-200"
                                         >
-                                            <div class="pb-16 space-y-6">
+                                            <div
+                                                v-if="
+                                                    getCurrentPreviewImage ===
+                                                    null
+                                                "
+                                                class="pb-16 space-y-6"
+                                            >
+                                                <p class="myPrimaryParagraph">
+                                                    No image selected
+                                                </p>
+                                            </div>
+                                            <div
+                                                v-if="
+                                                    getCurrentPreviewImage !==
+                                                    null
+                                                "
+                                                class="pb-16 space-y-6"
+                                            >
+                                                <img
+                                                    :src="
+                                                        getCurrentPreviewImage.preview_url
+                                                    "
+                                                    class="mx-auto block h-72 w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                    alt="image"
+                                                />
+
                                                 <div>
-                                                    image source here
-
-                                                    <div>
-                                                        <h2
-                                                            class="text-lg font-medium text-gray-900"
-                                                        >
-                                                            <span
-                                                                class="sr-only"
-                                                                >Details for
-                                                            </span>
-
-                                                            name here
-                                                        </h2>
-                                                        <p
-                                                            class="myPrimaryParagraph"
-                                                        >
-                                                            Image size:
-
-                                                            <span
-                                                                class="font-semibold"
-                                                            >
-                                                                0000000 KB
-                                                            </span>
-                                                        </p>
-                                                    </div>
+                                                    <h2
+                                                        class="mySecondaryHeader py-2 break-words"
+                                                    >
+                                                        {{
+                                                            getCurrentPreviewImage.file_name
+                                                        }}
+                                                    </h2>
                                                 </div>
+
                                                 <div>
                                                     <h3
                                                         class="font-medium text-gray-900"
@@ -755,12 +788,17 @@ const handleDeleteImage = function (imageId) {
                                                             <dt
                                                                 class="text-gray-500"
                                                             >
-                                                                Dimensions
+                                                                Size
                                                             </dt>
                                                             <dd
                                                                 class="text-gray-900"
                                                             >
-                                                                00000 x 00000
+                                                                {{
+                                                                    Number(
+                                                                        getCurrentPreviewImage.file_size
+                                                                    ).toFixed(0)
+                                                                }}
+                                                                KB
                                                             </dd>
                                                         </div>
                                                     </dl>

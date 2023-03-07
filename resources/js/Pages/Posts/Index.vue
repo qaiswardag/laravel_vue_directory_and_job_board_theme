@@ -235,6 +235,13 @@ const handleEdit = function (id) {
                                     <div class="flex items-center">
                                         <div class="h-12 w-12 flex-shrink-0">
                                             <img
+                                                v-if="post.thumbnail"
+                                                class="h-12 w-12 rounded-full object-cover"
+                                                :src="`/${post.thumbnail}`"
+                                                alt=""
+                                            />
+                                            <img
+                                                v-if="post.thumbnail === null"
                                                 class="h-12 w-12 rounded-full object-cover"
                                                 src="https://emirateswoman.com/wp-content/uploads/2022/03/Arab-Fashion-Week-2022.png"
                                                 alt=""

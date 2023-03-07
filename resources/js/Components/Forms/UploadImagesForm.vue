@@ -6,6 +6,10 @@ import { useForm } from "@inertiajs/vue3";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { v4 as uuidv4 } from "uuid";
 import { usePromise } from "@/helpers/use-promise";
+import { useStore } from "vuex";
+
+// store
+const store = useStore();
 
 const emit = defineEmits(["uploadOnSuccess"]);
 
@@ -49,6 +53,7 @@ const form = useForm({
 });
 
 const imagesPreview = ref([]);
+const currentImagePreview = ref([]);
 const imagesInput = ref([]);
 const isLoading = ref(false);
 
@@ -79,7 +84,6 @@ const loadBlob = (file) => {
 };
 
 const updateImagesPreview = async () => {
-    console.log("images:", form.images);
     isLoading.value = true;
 
     if (imagesInput.value.length === 0) return;
@@ -101,7 +105,6 @@ const updateImagesPreview = async () => {
             isLoading.value = false;
         } catch (error) {
             isLoading.value = false;
-            console.log("error uploading images:", error);
         }
     }
 };
@@ -136,6 +139,19 @@ const handleDeleteSingleImage = function (image_upload_id) {
     if (previewIndex !== -1) {
         imagesPreview.value.splice(previewIndex, 1);
     }
+
+    store.commit("mediaLibrary/setCurrentPreviewImage", null);
+};
+
+const clickedImage = function (imageId) {
+    currentImagePreview.value = imagesPreview.value.find(
+        (image) => image.image_upload_id === imageId
+    );
+
+    store.commit(
+        "mediaLibrary/setCurrentPreviewImage",
+        currentImagePreview.value
+    );
 };
 </script>
 
@@ -192,7 +208,7 @@ const handleDeleteSingleImage = function (image_upload_id) {
             <InputError :message="form.errors?.images" />
         </div>
 
-        <div class="overflow-y-scroll max-h-[40rem] min-h-[30rem] mt-2 mb-4">
+        <div class="overflow-y-scroll max-h-[30rem] min-h-[15rem] mt-2 mb-4">
             <div v-if="isLoading === true">
                 <div class="flex items-center justify-center">
                     <div
@@ -219,14 +235,11 @@ const handleDeleteSingleImage = function (image_upload_id) {
                     >
                         <div class="flex items-center gap-2">
                             <img
+                                @click="clickedImage(image.image_upload_id)"
                                 :src="image.preview_url"
                                 alt="image"
-                                class="h-14 w-14 object-cover rounded-md"
+                                class="h-14 w-14 object-cover rounded-md cursor-pointer"
                             />
-                            <p class="myPrimaryParagraph text-xs py-2">
-                                {{ image.file_name }}
-                            </p>
-
                             <p
                                 class="myPrimaryParagraph text-xs py-2 border-l border-gray-200 pl-2"
                             >

@@ -15,6 +15,16 @@ class MediaLibraryController extends Controller
     public function index(Request $request, Team $team)
     {
         $this->authorize("can-read", $team);
+        $searchQuery = "";
+        $currentClickedPage = "";
+
+        $totalResults = $team
+            ->media()
+
+            ->when($request->query("search_query"), function ($query, $term) {
+                $query->where("name", "LIKE", "%" . $term . "%");
+            })
+            ->count();
 
         $media = $team
             ->media()
@@ -22,12 +32,24 @@ class MediaLibraryController extends Controller
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("name", "LIKE", "%" . $term . "%");
             })
-            ->paginate(8);
+            ->paginate(24);
 
-        //
+        // check for search_query
+        if ($request->search_query !== null) {
+            $searchQuery = $request->search_query;
+        }
+        // check for current page
+        if ($request->page !== null) {
+            $currentClickedPage = $request->page;
+        }
 
         // return
-        return $media;
+        return [
+            "media" => $media,
+            "search_query" => $searchQuery,
+            "current_clicked_page" => $currentClickedPage,
+            "total_results" => $totalResults,
+        ];
     }
 
     /**

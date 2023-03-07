@@ -6,7 +6,6 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import TextArea from "@/Components/Forms/TextArea.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { onMounted, ref, computed } from "vue";
@@ -15,6 +14,7 @@ import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import Tags from "@/Components/Forms/Tags.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
+import { useStore } from "vuex";
 
 import {
     Listbox,
@@ -29,6 +29,13 @@ import {
     ChevronUpDownIcon,
     XMarkIcon,
 } from "@heroicons/vue/20/solid";
+
+// store
+const store = useStore();
+
+const getCurrentImage = computed(() => {
+    return store.getters["mediaLibrary/getCurrentImage"];
+});
 
 // use media library
 const showMediaLibraryModal = ref(false);
@@ -52,7 +59,7 @@ const handleUploadCoverImage = function () {
     descriptionMedia.value = null;
     firstButtonMedia.value = "Close";
     secondButtonMedia.value = "Select image";
-    thirdButtonMedia.value = "third button";
+    thirdButtonMedia.value = null;
     // handle click
     firstMediaButtonFunction.value = function () {
         // handle show media library modal
@@ -61,12 +68,7 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        // handle show media library modal
-        showMediaLibraryModal.value = false;
-    };
-    // handle click
-    thirdMediaButtonFunction.value = function () {
-        console.log("clicked third button");
+        createPostForm.thumbnail = getCurrentImage.value.currentImage.path;
         // handle show media library modal
         showMediaLibraryModal.value = false;
     };
@@ -168,7 +170,6 @@ const createPost = () => {
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
         <div>
-            <p>createPostForm.team: {{ createPostForm.team }}</p>
             <FormSection @submitted="handleCreatePost">
                 <template #title> Post details </template>
                 <template #description> Create a new Post. </template>
@@ -350,13 +351,38 @@ const createPost = () => {
                                 Lorem ipsum dolor sit amet.
                             </p>
                         </div>
+                        <img
+                            v-if="
+                                createPostForm.thumbnail &&
+                                createPostForm.thumbnail.length !== 0
+                            "
+                            @click="handleUploadCoverImage"
+                            class="mx-auto block my-t-2 mb-6 w-full hover:shadow-sm hover:scale-105 transition-all rounded-lg object-cover object-center cursor-pointer"
+                            alt="cover image"
+                            :src="`/${createPostForm.thumbnail}`"
+                        />
                         <div class="myInputGroup">
                             <button
                                 @click="handleUploadCoverImage"
                                 type="button"
-                                class="myPrimaryButton"
+                                class="myPrimaryButton gap-2 items-center"
                             >
-                                Select Cover Image
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-4 h-4"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                                    />
+                                </svg>
+
+                                Cover Image
                             </button>
                             <InputError
                                 :message="createPostForm.errors.thumbnail"
@@ -523,7 +549,13 @@ const createPost = () => {
                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                 />
                             </svg>
-                            <p class="myPrimaryParagraph">Show errors</p>
+                            <p class="myPrimaryParagraph">
+                                Show
+                                {{
+                                    Object.values(createPostForm.errors).length
+                                }}
+                                errors
+                            </p>
                         </div>
                     </div>
                     <MediaLibraryModal

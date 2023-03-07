@@ -25,6 +25,7 @@ export default {
     state: {
         currentImage: {},
         currentMedia: null,
+        currentPreviewImage: null,
         // end state
     },
 
@@ -35,6 +36,9 @@ export default {
         },
         getCurrentMedia(state) {
             return state.currentMedia;
+        },
+        getCurrentPreviewImage(state) {
+            return state.currentPreviewImage;
         },
 
         // end getters
@@ -48,6 +52,9 @@ export default {
         setCurrentMedia(state, payload) {
             state.currentMedia = payload;
         },
+        setCurrentPreviewImage(state, payload) {
+            state.currentPreviewImage = payload;
+        },
 
         // end mutations
     },
@@ -56,9 +63,16 @@ export default {
     actions: {
         // get images
         loadMedia(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
             // fetch media
             handleGetImages(
-                `/overview/media/index/${data.teamId}/?page=${data.page}`
+                `/overview/media/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
             // context & send to mutation
             context.commit("setCurrentMedia", {

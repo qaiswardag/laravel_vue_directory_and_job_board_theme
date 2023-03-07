@@ -60,6 +60,26 @@ class StoreMediaLibraryRequest extends FormRequest
                 $image = $image["file"];
 
                 if (
+                    !$image->isValid() ||
+                    !$image->getMimeType() ||
+                    !$image->isReadable() ||
+                    !$image->isFile() ||
+                    !$image->getSize() ||
+                    !$image->getClientMimeType() ||
+                    !in_array($image->getClientOriginalExtension(), [
+                        "jpg",
+                        "jpeg",
+                        "png",
+                        "gif",
+                        "webp",
+                    ]) ||
+                    !$image->isValid()
+                ) {
+                    $validator
+                        ->errors()
+                        ->add($imageId, "File type not allowed.");
+                }
+                if (
                     $image->getSize() !== false &&
                     $image->getSize() / 1024 >= 2000
                 ) {
@@ -70,7 +90,7 @@ class StoreMediaLibraryRequest extends FormRequest
                         ->errors()
                         ->add(
                             $imageId,
-                            "Our application can not read the file size as it is to big."
+                            "Our servers can not read the file size as it is to big."
                         );
                 }
             }

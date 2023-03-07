@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
 
 class MediaLibraryController extends Controller
 {
@@ -88,7 +89,7 @@ class MediaLibraryController extends Controller
 
             // check if the path already exists in the media_libraries table
             if (MediaLibrary::where("path", $path)->exists()) {
-                // If the path already exists, change the path
+                // if the path already exists, change the path
                 $path =
                     $teamReferenceId .
                     "/" .
@@ -182,11 +183,30 @@ class MediaLibraryController extends Controller
 
         $imagePath = $image->path;
 
-        // delete the image file from the public folder
-        if (Storage::disk("public")->exists($imagePath)) {
-            Storage::disk("public")->delete($imagePath);
+        if (file_exists(public_path($imagePath)) === false) {
+            // delete the image record from the dat
+            $image->delete();
+
+            return back()->with(
+                "error",
+                "The file you requested to delete does not exist on the server. Record has been deleted from database."
+            );
         }
+
+        // delete the file from the public directory
+        if (file_exists(public_path($imagePath)) === true) {
+            File::delete(public_path($imagePath));
+        }
+
+        //
+        //
+        //
         // delete the image record from the dat
         $image->delete();
+
+        return back()->with(
+            "success",
+            "The image has been successfully deleted."
+        );
     }
 }
