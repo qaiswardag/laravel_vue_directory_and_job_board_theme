@@ -1,3 +1,80 @@
+<script setup>
+import Modal from "@/Components/Modals/Modal.vue";
+import {
+    CheckIcon,
+    ExclamationCircleIcon,
+    BellIcon,
+} from "@heroicons/vue/24/outline";
+import {} from "@headlessui/vue";
+
+defineProps({
+    show: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+        required: false,
+    },
+    disabledWhichButton: {
+        type: String,
+        default: "",
+        required: false,
+    },
+    maxWidth: {
+        type: String,
+        required: false,
+        default: "2xl",
+    },
+    gridColumnAmount: {
+        type: Number,
+        required: true,
+    },
+    type: {
+        type: String,
+        required: true,
+    },
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        required: true,
+    },
+    firstButtonText: {
+        type: String,
+    },
+    secondButtonText: {
+        type: String,
+    },
+    thirdButtonText: {
+        type: String,
+    },
+});
+
+const emit = defineEmits([
+    "firstModalButtonFunction",
+    "secondModalButtonFunction",
+    "thirdModalButtonFunction",
+]);
+
+// first button function
+const firstButton = function () {
+    emit("firstModalButtonFunction");
+};
+// second button  function
+const secondButton = function () {
+    emit("secondModalButtonFunction");
+};
+
+// third button function
+const thirdButton = function () {
+    emit("thirdModalButtonFunction");
+};
+</script>
+
 <template>
     <Modal :show="show" @close="firstButton" :maxWidth="maxWidth">
         <slot name="content" />
@@ -424,83 +501,6 @@
         </div>
     </Modal>
 </template>
-
-<script setup>
-import Modal from "@/Components/Modals/Modal.vue";
-import {
-    CheckIcon,
-    ExclamationCircleIcon,
-    BellIcon,
-} from "@heroicons/vue/24/outline";
-import {} from "@headlessui/vue";
-
-defineProps({
-    show: {
-        type: Boolean,
-        default: false,
-        required: true,
-    },
-    disabled: {
-        type: Boolean,
-        default: false,
-        required: false,
-    },
-    disabledWhichButton: {
-        type: String,
-        default: "",
-        required: false,
-    },
-    maxWidth: {
-        type: String,
-        required: false,
-        default: "2xl",
-    },
-    gridColumnAmount: {
-        type: Number,
-        required: true,
-    },
-    type: {
-        type: String,
-        required: true,
-    },
-    title: {
-        type: String,
-        required: true,
-    },
-    description: {
-        required: true,
-    },
-    firstButtonText: {
-        type: String,
-    },
-    secondButtonText: {
-        type: String,
-    },
-    thirdButtonText: {
-        type: String,
-    },
-});
-
-const emit = defineEmits([
-    "firstModalButtonFunction",
-    "secondModalButtonFunction",
-    "thirdModalButtonFunction",
-]);
-
-// first button function
-const firstButton = function () {
-    emit("firstModalButtonFunction");
-};
-// second button  function
-const secondButton = function () {
-    emit("secondModalButtonFunction");
-};
-
-// third button function
-const thirdButton = function () {
-    emit("thirdModalButtonFunction");
-};
-</script>
 
 <style scope>
 /*

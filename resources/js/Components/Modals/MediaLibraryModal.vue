@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import UploadImagesForm from "@/Components/Forms/UploadImagesForm.vue";
 import MediaLibraryGalleryList from "@/Components/GalleryList/MediaLibraryGalleryList.vue";
 import {
@@ -12,25 +12,11 @@ import {
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
 // new version
-import {
-    CheckIcon,
-    HeartIcon,
-    MenuAlt2Icon,
-    PencilIcon,
-    PlusSmIconOutline,
-    PlusSmIconSolid,
-    SearchIcon,
-    ViewGridIconSolid,
-    ViewListIcon,
-} from "@heroicons/vue/24/outline";
 import { useForm } from "@inertiajs/vue3";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
-import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
-import TextInput from "@/Components/Forms/TextInput.vue";
 
 import { useStore } from "vuex";
-import { PlayCircleIcon } from "@heroicons/vue/20/solid";
 
 // store
 const store = useStore();
