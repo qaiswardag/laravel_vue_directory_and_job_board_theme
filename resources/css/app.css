@@ -28,7 +28,16 @@
 
     /*
     |--------------------------------------------------------------------------
-    | primaryParagraphs
+    | Thumbnail
+    |--------------------------------------------------------------------------
+    */
+
+    .myPrimarythumbnailInsertPreview {
+        @apply mx-auto block mt-2 mb-6 w-full hover:shadow-sm hover:scale-105 transition-all rounded-lg object-cover object-center cursor-pointer;
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Primary paragraphs
     |--------------------------------------------------------------------------
     */
     .myPrimaryParagraph {

@@ -232,29 +232,38 @@ const handleEdit = function (id) {
                                 :key="post.id"
                             >
                                 <td class="myPrimaryTableTBodyTd">
-                                    <div class="flex items-center">
-                                        <div class="h-12 w-12 flex-shrink-0">
+                                    <div
+                                        class="flex items-center justify-start myPrimaryGap"
+                                    >
+                                        <div
+                                            v-if="post.thumbnail"
+                                            class="h-16 w-16 flex-shrink-0"
+                                        >
                                             <img
-                                                v-if="post.thumbnail"
-                                                class="h-12 w-12 rounded-full object-cover"
+                                                class="h-16 w-16 rounded-full object-cover"
                                                 :src="`/${post.thumbnail}`"
                                                 alt=""
                                             />
+                                        </div>
+                                        <div
+                                            v-if="post.thumbnail === null"
+                                            class="h-16 w-16 flex-shrink-0"
+                                        >
                                             <img
-                                                v-if="post.thumbnail === null"
-                                                class="h-12 w-12 rounded-full object-cover"
+                                                class="h-16 w-16 rounded-full object-cover"
                                                 src="https://emirateswoman.com/wp-content/uploads/2022/03/Arab-Fashion-Week-2022.png"
                                                 alt=""
                                             />
-                                        </div>
-                                        <div class="ml-4">
-                                            {{ post.title }}
                                         </div>
                                     </div>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
-                                    {{ post.title }}
+                                    <span
+                                        class="text-myPrimaryBrandColor font-semibold"
+                                    >
+                                        {{ post.title }}
+                                    </span>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

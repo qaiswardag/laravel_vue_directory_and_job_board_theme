@@ -24,8 +24,9 @@ return new class extends Migration {
                 ->onDelete("cascade")
                 ->constrained();
             //
-            //
             $table->string("name");
+            $table->string("thumbnail")->nullable();
+            $table->boolean("public")->nullable();
             $table->boolean("personal_team");
             $table->timestamps();
         });

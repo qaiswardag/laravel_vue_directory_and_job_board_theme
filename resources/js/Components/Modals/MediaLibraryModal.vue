@@ -397,7 +397,6 @@ const handleDeleteImage = function (imageId) {
                                             </div>
 
                                             <!--  -->
-                                            <!--  -->
                                             <div
                                                 v-if="
                                                     getCurrentImage &&
@@ -429,6 +428,8 @@ const handleDeleteImage = function (imageId) {
                                                 v-if="
                                                     getCurrentImage &&
                                                     getCurrentImage.currentImage &&
+                                                    getCurrentImage.currentImage
+                                                        .mediaLibrary &&
                                                     getCurrentImage.isLoading ===
                                                         false &&
                                                     (getCurrentImage.isError ===
@@ -441,7 +442,7 @@ const handleDeleteImage = function (imageId) {
                                                 <div>
                                                     <img
                                                         class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                                                        :src="`/${getCurrentImage.currentImage.path}`"
+                                                        :src="`/${getCurrentImage.currentImage.mediaLibrary.path}`"
                                                         alt="image"
                                                     />
 
@@ -452,9 +453,11 @@ const handleDeleteImage = function (imageId) {
                                                             {{
                                                                 getCurrentImage
                                                                     .currentImage
+                                                                    .mediaLibrary
                                                                     .name
                                                                     ? getCurrentImage
                                                                           .currentImage
+                                                                          .mediaLibrary
                                                                           .name
                                                                     : "–"
                                                             }}
@@ -465,6 +468,7 @@ const handleDeleteImage = function (imageId) {
                                                                 handleImageUpdate(
                                                                     getCurrentImage
                                                                         .currentImage
+                                                                        .mediaLibrary
                                                                         .id
                                                                 )
                                                             "
@@ -499,6 +503,7 @@ const handleDeleteImage = function (imageId) {
                                                                                     handleImageUpdate(
                                                                                         getCurrentImage
                                                                                             .currentImage
+                                                                                            .mediaLibrary
                                                                                             .id
                                                                                     )
                                                                                 "
@@ -554,12 +559,14 @@ const handleDeleteImage = function (imageId) {
                                                                 {{
                                                                     getCurrentImage
                                                                         .currentImage
+                                                                        .mediaLibrary
                                                                         .width
                                                                 }}
                                                                 x
                                                                 {{
                                                                     getCurrentImage
                                                                         .currentImage
+                                                                        .mediaLibrary
                                                                         .height
                                                                 }}
                                                             </dd>
@@ -577,11 +584,10 @@ const handleDeleteImage = function (imageId) {
                                                                 class="text-gray-900"
                                                             >
                                                                 {{
-                                                                    Number(
-                                                                        getCurrentImage
-                                                                            .currentImage
-                                                                            .size
-                                                                    ).toFixed(0)
+                                                                    getCurrentImage
+                                                                        .currentImage
+                                                                        .mediaLibrary
+                                                                        .size
                                                                 }}
                                                                 KB
                                                             </dd>
@@ -600,7 +606,33 @@ const handleDeleteImage = function (imageId) {
                                                                 {{
                                                                     getCurrentImage
                                                                         .currentImage
+                                                                        .mediaLibrary
                                                                         .id
+                                                                }}
+                                                            </dd>
+                                                        </div>
+                                                        <div
+                                                            class="py-3 flex justify-between text-sm font-medium items-center"
+                                                        >
+                                                            <dt
+                                                                class="text-gray-500"
+                                                            >
+                                                                Uploaded by
+                                                            </dt>
+                                                            <dd
+                                                                class="text-gray-900"
+                                                            >
+                                                                {{
+                                                                    getCurrentImage
+                                                                        .currentImage
+                                                                        .uploadedBy
+                                                                        .firstName
+                                                                }}
+                                                                {{
+                                                                    getCurrentImage
+                                                                        .currentImage
+                                                                        .uploadedBy
+                                                                        .lastName
                                                                 }}
                                                             </dd>
                                                         </div>
@@ -620,6 +652,7 @@ const handleDeleteImage = function (imageId) {
                                                                         handleDeleteImage(
                                                                             getCurrentImage
                                                                                 .currentImage
+                                                                                .mediaLibrary
                                                                                 .id
                                                                         )
                                                                     "
@@ -640,6 +673,7 @@ const handleDeleteImage = function (imageId) {
                                                                             handleDeleteImage(
                                                                                 getCurrentImage
                                                                                     .currentImage
+                                                                                    .mediaLibrary
                                                                                     .id
                                                                             )
                                                                         "

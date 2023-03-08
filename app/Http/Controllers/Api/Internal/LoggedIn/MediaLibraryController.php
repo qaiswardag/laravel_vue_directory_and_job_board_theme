@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Internal\LoggedIn;
 use App\Http\Controllers\Controller;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MediaLibraryController extends Controller
@@ -80,16 +81,19 @@ class MediaLibraryController extends Controller
      */
     public function edit(MediaLibrary $mediaLibrary, Team $team)
     {
-        // testing
-        // return response()->json($mediaLibrary->id, 200);
-        // return response()->json($team, 200);
-
         $this->authorize("can-read", $team);
 
-        //
+        $uploadedBy = User::findOrFail($mediaLibrary->user_id);
+        $uploadedBy = [
+            "firstName" => $uploadedBy->first_name,
+            "lastName" => $uploadedBy->last_name,
+        ];
 
         // return
-        return $mediaLibrary;
+        return [
+            "mediaLibrary" => $mediaLibrary,
+            "uploadedBy" => $uploadedBy,
+        ];
     }
 
     /**

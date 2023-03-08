@@ -110,7 +110,13 @@ const switchTeam = function (team) {
                                                 scope="col"
                                                 class="myPrimaryTableTh"
                                             >
-                                                Team
+                                                Cover image
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Team Name
                                             </th>
 
                                             <th
@@ -123,13 +129,19 @@ const switchTeam = function (team) {
                                                 scope="col"
                                                 class="myPrimaryTableTh"
                                             >
+                                                Status
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
                                                 Account Team Owner
                                             </th>
                                             <th
                                                 scope="col"
                                                 class="myPrimaryTableTh"
                                             >
-                                                Your Role in this Team
+                                                Your Role
                                             </th>
                                             <th
                                                 scope="col"
@@ -154,7 +166,59 @@ const switchTeam = function (team) {
                                                     "
                                                 >
                                                     <div
-                                                        class="flex items-center myPrimaryGap"
+                                                        class="flex items-center myPrimaryGap justify-start"
+                                                        v-if="
+                                                            $page.props.user
+                                                                .all_teams
+                                                                .length > 0
+                                                        "
+                                                    >
+                                                        <div
+                                                            v-if="
+                                                                team.thumbnail
+                                                            "
+                                                            class="h-16 w-16 flex-shrink-0"
+                                                        >
+                                                            <img
+                                                                @click="
+                                                                    handleSwitchToTeam(
+                                                                        team
+                                                                    )
+                                                                "
+                                                                class="w-16 h-16 rounded-full object-cover cursor-pointer"
+                                                                :src="`/${team.thumbnail}`"
+                                                                alt="image"
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            v-if="
+                                                                team.thumbnail ===
+                                                                null
+                                                            "
+                                                            class="h-16 w-16 flex-shrink-0"
+                                                        >
+                                                            <img
+                                                                @click="
+                                                                    handleSwitchToTeam(
+                                                                        team
+                                                                    )
+                                                                "
+                                                                class="block h-16 w-16 rounded-full object-cover cursor-pointer"
+                                                                src="https://emirateswoman.com/wp-content/uploads/2022/03/Arab-Fashion-Week-2022.png"
+                                                                alt="image"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <form
+                                                    @submit.prevent="
+                                                        handleSwitchToTeam(team)
+                                                    "
+                                                >
+                                                    <div
+                                                        class="flex items-center myPrimaryGap justify-start"
                                                         v-if="
                                                             $page.props.user
                                                                 .all_teams
@@ -162,7 +226,7 @@ const switchTeam = function (team) {
                                                         "
                                                     >
                                                         <button
-                                                            class="myPrimaryButtonNoBackground text-myPrimaryDarkGrayColor w-full flex items-center myPrimaryGap py-2"
+                                                            class="myPrimaryButtonNoBackground text-myPrimaryDarkGrayColor flex items-center gap-2"
                                                             :class="{
                                                                 'text-myPrimaryBrandColor':
                                                                     team.id ===
@@ -206,10 +270,34 @@ const switchTeam = function (team) {
                                                 {{ team.id }}
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
+                                                <span
+                                                    :class="
+                                                        team.public
+                                                            ? 'bg-green-100'
+                                                            : 'bg-red-100 text-myErrorColor'
+                                                    "
+                                                    class="inline-flex rounded-full px-2 font-semibold leading-5 text-green-800"
+                                                    >{{
+                                                        team.public
+                                                            ? "Public"
+                                                            : "Privat"
+                                                    }}</span
+                                                >
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
                                                 {{ team.user_id }}
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
-                                                descripe user role for this team
+                                                {{
+                                                    team.membership
+                                                        ? team.membership.role
+                                                              .charAt(0)
+                                                              .toUpperCase() +
+                                                          team.membership.role.slice(
+                                                              1
+                                                          )
+                                                        : "Owner"
+                                                }}
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
                                                 <form

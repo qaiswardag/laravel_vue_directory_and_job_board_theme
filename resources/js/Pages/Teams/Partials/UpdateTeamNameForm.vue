@@ -7,7 +7,6 @@ import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
-import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import AvatarCardCenterSmall from "@/Components/Avatars/AvatarCardCenterSmall.vue";
 import { ref, computed } from "@vue/reactivity";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
@@ -22,43 +21,9 @@ const props = defineProps({
     permissions: Object,
 });
 
-const modalShowUpdateTeam = ref(false);
-
-// modal content
-const typeModal = ref("");
-const gridColumnModal = ref(Number(1));
-const titleModal = ref("");
-const descriptionModal = ref("");
-const firstButtonModal = ref("");
-const secondButtonModal = ref(null);
-const thirdButtonModal = ref(null);
-// set dynamic modal handle functions
-const firstModalButtonFunction = ref(null);
-const secondModalButtonFunction = ref(null);
-const thirdModalButtonFunction = ref(null);
-
 const handleUpdateTeam = function () {
-    // handle show modal for unique content
-    modalShowUpdateTeam.value = true;
-    // set modal standards
-    typeModal.value = "success";
-    gridColumnModal.value = 2;
-    titleModal.value = "Update team";
-    descriptionModal.value = "Are you sure you want to update this team?";
-    firstButtonModal.value = "Close";
-    secondButtonModal.value = null;
-    thirdButtonModal.value = "Update";
-    // handle click
-    firstModalButtonFunction.value = function () {
-        // handle show modal for unique content
-        modalShowUpdateTeam.value = false;
-    };
-    // handle click
-    thirdModalButtonFunction.value = function () {
-        updateTeamName();
-        // handle show modal for unique content
-        modalShowUpdateTeam.value = false;
-    };
+    updateTeam();
+
     // end modal
 };
 
@@ -68,7 +33,7 @@ const form = useForm({
     public: props.team.public ? true : false,
 });
 
-const updateTeamName = () => {
+const updateTeam = () => {
     form.put(route("teams.update", props.team), {
         // error bag validation
         errorBag: "updateTeam",
@@ -116,31 +81,20 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        form.thumbnail = getCurrentImage.value.currentImage.path;
+        form.thumbnail = getCurrentImage.value.currentImage.mediaLibrary.path;
         // handle show media library modal
         showMediaLibraryModal.value = false;
     };
     // end modal
 };
+
+const handleRemoveCoverImage = function () {
+    form.thumbnail = null;
+    // end modal
+};
 </script>
 
 <template>
-    <DynamicModal
-        :show="modalShowUpdateTeam"
-        :type="typeModal"
-        :gridColumnAmount="gridColumnModal"
-        :title="titleModal"
-        :description="descriptionModal"
-        :firstButtonText="firstButtonModal"
-        :secondButtonText="secondButtonModal"
-        :thirdButtonText="thirdButtonModal"
-        @firstModalButtonFunction="firstModalButtonFunction"
-        @secondModalButtonFunction="secondModalButtonFunction"
-        @thirdModalButtonFunction="thirdModalButtonFunction"
-    >
-        <header></header>
-        <main></main>
-    </DynamicModal>
     <FormSection @submitted="handleUpdateTeam" :sidebarArea="true">
         <template #title>
             {{ $page.props.team && $page.props.team.name }}
@@ -189,62 +143,6 @@ const handleUploadCoverImage = function () {
             <!-- Team Owner Information -->
             <div class="myInputsOrganization">
                 <div class="myInputGroup">
-                    <div
-                        class="flex flex-col justify-center items-center gap-2 mb-8 mt-4"
-                    >
-                        <p class="myPrimaryParagraph">Team owner</p>
-                        <div
-                            v-show="
-                                $page.props.team.owner &&
-                                $page.props.team.owner.profile_photo_path !==
-                                    null
-                            "
-                            class="mt-2"
-                        >
-                            <img
-                                class="object-cover w-16 h-16 rounded-full"
-                                :src="$page.props.team.owner.profile_photo_url"
-                                :alt="
-                                    $page.props.team.owner.first_name +
-                                    $page.props.team.owner.last_name
-                                "
-                            />
-                        </div>
-
-                        <div
-                            v-show="
-                                $page.props.team.owner &&
-                                $page.props.team.owner.profile_photo_path ===
-                                    null
-                            "
-                            class="w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
-                        >
-                            {{
-                                $page.props.team.owner.first_name
-                                    .charAt(0)
-                                    .toUpperCase()
-                            }}
-                            {{
-                                $page.props.team.owner.last_name
-                                    .charAt(0)
-                                    .toUpperCase()
-                            }}
-                        </div>
-                        <span
-                            class="flex flex-col items-center gap-1 myPrimaryParagraph"
-                        >
-                            <span>
-                                {{ $page.props.team.owner.first_name }}
-                                {{ $page.props.team.owner.last_name }}
-                            </span>
-                            <span>
-                                {{ $page.props.team.owner.email }}
-                            </span>
-                        </span>
-                    </div>
-                    <!--  -->
-                    <!--  -->
-                    <!--  -->
                     <InputLabel for="name" value="Update Team Name" />
                     <TextInput id="name" v-model="form.name" type="text" />
                     <InputError :message="form.errors.name" />
@@ -253,6 +151,7 @@ const handleUploadCoverImage = function () {
         </template>
         <template #sidebar>
             <!-- post status - start -->
+
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
@@ -262,16 +161,16 @@ const handleUploadCoverImage = function () {
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
                 >
                     <InputLabel
-                        :value="form.published ? 'Public' : 'Private'"
+                        :value="form.public ? 'Public' : 'Private'"
                         :class="{
-                            'text-myPrimaryBrandColor': form.published,
-                            'text-myErrorColor': !form.published,
+                            'text-myPrimaryBrandColor': form.public,
+                            'text-myErrorColor': !form.public,
                         }"
                     />
                     <Switch
-                        v-model="form.published"
+                        v-model="form.public"
                         :class="[
-                            form.published
+                            form.public
                                 ? 'bg-myPrimaryBrandColor'
                                 : 'bg-gray-200',
                             'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2',
@@ -280,15 +179,13 @@ const handleUploadCoverImage = function () {
                         <span class="sr-only">Use setting</span>
                         <span
                             :class="[
-                                form.published
-                                    ? 'translate-x-5'
-                                    : 'translate-x-0',
+                                form.public ? 'translate-x-5' : 'translate-x-0',
                                 'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
                             ]"
                         >
                             <span
                                 :class="[
-                                    form.published
+                                    form.public
                                         ? 'opacity-0 ease-out duration-100'
                                         : 'opacity-100 ease-in duration-200',
                                     'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
@@ -311,7 +208,7 @@ const handleUploadCoverImage = function () {
                             </span>
                             <span
                                 :class="[
-                                    form.published
+                                    form.public
                                         ? 'opacity-100 ease-in duration-200'
                                         : 'opacity-0 ease-out duration-100',
                                     'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
@@ -331,7 +228,7 @@ const handleUploadCoverImage = function () {
                         </span>
                     </Switch>
                 </div>
-                <InputError :message="form.errors.published" />
+                <InputError :message="form.errors.public" />
             </div>
             <!-- post status - end -->
             <!-- cover image - start -->
@@ -347,11 +244,13 @@ const handleUploadCoverImage = function () {
                 <img
                     v-if="form.thumbnail && form.thumbnail.length !== 0"
                     @click="handleUploadCoverImage"
-                    class="mx-auto block my-t-2 mb-6 w-full hover:shadow-sm hover:scale-105 transition-all rounded-lg object-cover object-center cursor-pointer"
+                    class="myPrimarythumbnailInsertPreview"
                     alt="cover image"
                     :src="`/${form.thumbnail}`"
                 />
-                <div class="myInputGroup">
+                <div
+                    class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
+                >
                     <button
                         @click="handleUploadCoverImage"
                         type="button"
@@ -374,7 +273,74 @@ const handleUploadCoverImage = function () {
 
                         Cover Image
                     </button>
-                    <InputError :message="form.errors.thumbnail" />
+                    <div v-if="form && form.thumbnail">
+                        <svg
+                            @click="handleRemoveCoverImage"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5 text-myErrorColor cursor-pointer"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                            />
+                        </svg>
+                    </div>
+                </div>
+                <InputError :message="form.errors.thumbnail" />
+            </div>
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Team owner
+                    </div>
+                </div>
+                <div class="flex flex-col justify-start gap-2 mb-8 mt-4">
+                    <div
+                        v-show="
+                            $page.props.team.owner &&
+                            $page.props.team.owner.profile_photo_path !== null
+                        "
+                        class="mt-2"
+                    >
+                        <img
+                            class="object-cover w-16 h-16 rounded-full"
+                            :src="$page.props.team.owner.profile_photo_url"
+                            :alt="
+                                $page.props.team.owner.first_name +
+                                $page.props.team.owner.last_name
+                            "
+                        />
+                    </div>
+
+                    <div
+                        v-show="
+                            $page.props.team.owner &&
+                            $page.props.team.owner.profile_photo_path === null
+                        "
+                        class="w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                    >
+                        {{
+                            $page.props.team.owner.first_name
+                                .charAt(0)
+                                .toUpperCase()
+                        }}
+                        {{
+                            $page.props.team.owner.last_name
+                                .charAt(0)
+                                .toUpperCase()
+                        }}
+                    </div>
+                    <span class="flex flex-col gap-1 myPrimaryParagraph">
+                        <span>
+                            {{ $page.props.team.owner.first_name }}
+                            {{ $page.props.team.owner.last_name }}
+                        </span>
+                    </span>
                 </div>
             </div>
 

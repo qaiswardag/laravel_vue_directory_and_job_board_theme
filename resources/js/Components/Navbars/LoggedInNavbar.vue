@@ -195,6 +195,7 @@ const notificationsSlideOverButton = function () {
                                 $page.props.user.current_team
                             )
                         "
+                        class="myPrimaryParagraph"
                         :class="{
                             myPrimaryLink: route().current('user.teams.switch'),
                         }"
@@ -213,7 +214,7 @@ const notificationsSlideOverButton = function () {
             >
                 <Menu as="div" class="relative">
                     <MenuButton
-                        class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 py-2 px-2"
+                        class="myPrimaryParagraph flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 py-2 px-2"
                     >
                         <span class="sr-only">Open user menu</span>
                         <div>
@@ -297,7 +298,7 @@ const notificationsSlideOverButton = function () {
                                     $page.props.user &&
                                     $page.props.user.profile_photo_path === null
                                 "
-                                class="w-8 h-8 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                class="myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
                             >
                                 <span>
                                     {{
@@ -316,7 +317,7 @@ const notificationsSlideOverButton = function () {
                             </div>
                         </div>
 
-                        <span>
+                        <span class="myPrimaryParagraph">
                             {{ $page.props.user.first_name }}
                             {{ $page.props.user.last_name }}</span
                         >

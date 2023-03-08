@@ -68,10 +68,15 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        createPostForm.thumbnail = getCurrentImage.value.currentImage.path;
+        createPostForm.thumbnail =
+            getCurrentImage.value.currentImage.mediaLibrary.path;
         // handle show media library modal
         showMediaLibraryModal.value = false;
     };
+    // end modal
+};
+const handleRemoveCoverImage = function () {
+    createPostForm.thumbnail = null;
     // end modal
 };
 
@@ -357,11 +362,13 @@ const createPost = () => {
                                 createPostForm.thumbnail.length !== 0
                             "
                             @click="handleUploadCoverImage"
-                            class="mx-auto block my-t-2 mb-6 w-full hover:shadow-sm hover:scale-105 transition-all rounded-lg object-cover object-center cursor-pointer"
+                            class="myPrimarythumbnailInsertPreview"
                             alt="cover image"
                             :src="`/${createPostForm.thumbnail}`"
                         />
-                        <div class="myInputGroup">
+                        <div
+                            class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
+                        >
                             <button
                                 @click="handleUploadCoverImage"
                                 type="button"
@@ -384,10 +391,32 @@ const createPost = () => {
 
                                 Cover Image
                             </button>
-                            <InputError
-                                :message="createPostForm.errors.thumbnail"
-                            />
+
+                            <div
+                                v-if="
+                                    createPostForm && createPostForm.thumbnail
+                                "
+                            >
+                                <svg
+                                    @click="handleRemoveCoverImage"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-5 h-5 text-myErrorColor cursor-pointer"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                    />
+                                </svg>
+                            </div>
                         </div>
+                        <InputError
+                            :message="createPostForm.errors.thumbnail"
+                        />
                     </div>
                     <!-- cover image - end -->
                     <!-- tags - start -->

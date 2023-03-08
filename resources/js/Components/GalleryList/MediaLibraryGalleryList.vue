@@ -192,7 +192,8 @@ onMounted(() => {
                             :class="{
                                 'border-spacing-8 border-4 border-myPrimaryBrandColor':
                                     image.id ===
-                                    getCurrentImage?.currentImage?.id,
+                                    getCurrentImage?.currentImage?.mediaLibrary
+                                        ?.id,
                             }"
                             :src="`/${image.path}`"
                             alt="image"

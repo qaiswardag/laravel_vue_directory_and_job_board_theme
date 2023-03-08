@@ -20,47 +20,44 @@ class UserController extends Controller
     {
         $this->authorize("superadmin");
 
+        $searchQuery = $request->input("search_query");
+
+        if (is_array($searchQuery)) {
+            $searchQuery = implode(",", $searchQuery);
+        }
+
         $users = User::latest();
 
         $users->when($request->filled("selected_category"), function (
             $query
-        ) use ($request) {
+        ) use ($request, $searchQuery) {
             $selectedCategory = $request->input("selected_category");
 
             if ($selectedCategory === "id") {
                 // filter by user ID
-                $query->where("id", $request->input("search_query"));
+                $query->whereIn("id", $searchQuery);
             }
 
             if ($selectedCategory === "name") {
                 // filter by user name
-                $query->where(function ($subQuery) use ($request) {
+                $query->where(function ($subQuery) use (
+                    $request,
+                    $searchQuery
+                ) {
                     $subQuery
-                        ->where(
-                            "first_name",
-                            "LIKE",
-                            "%" . $request->input("search_query") . "%"
-                        )
-                        ->orWhere(
-                            "last_name",
-                            "LIKE",
-                            "%" . $request->input("search_query") . "%"
-                        )
+                        ->where("first_name", "LIKE", "%" . $searchQuery . "%")
+                        ->orWhere("last_name", "LIKE", "%" . $searchQuery . "%")
                         ->orWhere(
                             DB::raw("CONCAT(first_name, ' ', last_name)"),
                             "LIKE",
-                            "%" . $request->input("search_query") . "%"
+                            "%" . $searchQuery . "%"
                         );
                 });
             }
 
             if ($selectedCategory === "email") {
                 // filter by user email
-                $query->where(
-                    "email",
-                    "LIKE",
-                    "%" . $request->input("search_query") . "%"
-                );
+                $query->where("email", "LIKE", "%" . $searchQuery . "%");
             }
         });
 
@@ -72,8 +69,8 @@ class UserController extends Controller
             "users" => $users,
             "results" => $users->total(),
             "oldInput" => [
-                "search_query" => $request->search_query,
-                "selected_category" => $request->selected_category,
+                "search_query" => $request->input("search_query"),
+                "selected_category" => $request->input("selected_category"),
             ],
         ]);
     }

@@ -32,6 +32,8 @@ class CreateTeam implements CreatesTeams
         $user->switchTeam(
             $team = $user->ownedTeams()->create([
                 "name" => $input["name"],
+                "thumbnail" => null,
+                "public" => null,
                 // if user do not own and user is creating thier first team make that team thier personal team
                 // "personal_team" => $userTeams->count() ? false : true,
                 "personal_team" => false,

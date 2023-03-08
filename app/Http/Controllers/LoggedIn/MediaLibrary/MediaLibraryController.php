@@ -47,7 +47,6 @@ class MediaLibraryController extends Controller
         foreach ($request->images as $image) {
             $teamReferenceId = $team->reference_id;
             $image = $image["file"];
-            $timestamp = now()->timestamp;
 
             // original client file name
             $originalClientFileName = $image->getClientOriginalName();
@@ -118,11 +117,14 @@ class MediaLibraryController extends Controller
                 $extension;
 
             // file size
-            $fileSizeKb = number_format($image->getSize() / 1024, 2); // convert to KB and 2 decimal
+            $fileSizeKb = intval($image->getSize() / 1024);
 
             list($width, $height) = getimagesize(
                 public_path("uploads/" . $filePath)
             );
+
+            $width = intval($width);
+            $height = intval($height);
 
             // Image eloquent
             MediaLibrary::create([

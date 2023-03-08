@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Team;
+use App\Models\User;
 use App\Policies\TeamPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // middleware gate for can create and update
-        Gate::define("for-middleware-can-read", function ($user) {
+        Gate::define("for-middleware-can-read", function (User $user) {
             $allowedRoles = ["Owner", "Administrator", "Editor", "Reader"];
 
             if ($user->teamRole($user->currentTeam) !== null) {
@@ -40,7 +41,9 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // middleware gate for can create and update
-        Gate::define("for-middleware-can-create-and-update", function ($user) {
+        Gate::define("for-middleware-can-create-and-update", function (
+            User $user
+        ) {
             $allowedRoles = ["Owner", "Administrator", "Editor"];
 
             if ($user->teamRole($user->currentTeam) !== null) {
@@ -52,7 +55,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // middleware gate for can destroy
-        Gate::define("for-middleware-can-destroy", function ($user) {
+        Gate::define("for-middleware-can-destroy", function (User $user) {
             $allowedRoles = ["Owner", "Administrator"];
 
             if ($user->teamRole($user->currentTeam) !== null) {
@@ -64,7 +67,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // gate for can create and update
-        Gate::define("can-read", function ($user, $team) {
+        Gate::define("can-read", function (User $user, Team $team) {
             $allowedRoles = ["Owner", "Administrator", "Editor", "Reader"];
 
             if ($user->teamRole($team) !== null) {
@@ -73,7 +76,10 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // gate for can create and update
-        Gate::define("can-create-and-update", function ($user, $team) {
+        Gate::define("can-create-and-update", function (
+            User $user,
+            Team $team
+        ) {
             $allowedRoles = ["Owner", "Administrator", "Editor"];
 
             if ($user->teamRole($team) !== null) {
@@ -82,7 +88,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // gate for can destroy
-        Gate::define("can-destroy", function ($user, $team) {
+        Gate::define("can-destroy", function (User $user, Team $team) {
             $allowedRoles = ["Owner", "Administrator"];
 
             if ($user->teamRole($team) !== null) {
@@ -91,8 +97,8 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // superadmin gate for CRUD
-        Gate::define("superadmin", function () {
-            return Auth::user()->superadmin === 1 ? true : null;
+        Gate::define("superadmin", function (User $user) {
+            return $user->superadmin === 1 ? true : null;
         });
     }
 }

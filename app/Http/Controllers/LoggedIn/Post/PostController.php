@@ -34,8 +34,12 @@ class PostController extends Controller
             ->latest()
             ->paginate(2);
 
+        // post created by
+        // $createdBy = User::findOrFail($post->user_id);
+
         return Inertia::render("Posts/Index", [
             "posts" => $posts,
+            "createdBy" => $posts,
         ]);
     }
 
