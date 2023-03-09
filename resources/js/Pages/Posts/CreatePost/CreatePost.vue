@@ -144,7 +144,7 @@ const createPostForm = useForm({
     team: props.currentUserTeam,
     user_id: props.user.id,
     thumbnail: "",
-    tags: "One,Two,Three",
+    tags: "",
 });
 
 const firstTagsButton = function (tags) {
@@ -565,7 +565,7 @@ const createPost = () => {
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class="w-5 h-5"
+                                class="w-4 h-4 text-myErrorColor"
                             >
                                 <path
                                     stroke-linecap="round"
@@ -578,7 +578,9 @@ const createPost = () => {
                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                 />
                             </svg>
-                            <p class="myPrimaryParagraph">
+                            <p
+                                class="myPrimaryParagraph text-xs text-myErrorColor py-0 my-0"
+                            >
                                 Show
                                 {{
                                     Object.values(createPostForm.errors).length

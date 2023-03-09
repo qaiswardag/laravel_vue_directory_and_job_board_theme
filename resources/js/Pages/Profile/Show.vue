@@ -39,7 +39,7 @@ const breadcrumbsLinks = [
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
+                            class="rounded bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ const breadcrumbsLinks = [
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
+                            class="rounded bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +155,7 @@ const breadcrumbsLinks = [
                 >
                     <div>
                         <span
-                            class="bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
+                            class="rounded bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

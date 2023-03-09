@@ -5,11 +5,6 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 
 <template>
     <nav class="flex-1 space-y-1 px-2 pb-4" aria-label="menu">
-        <p
-            class="text-myPrimaryDarkGrayColor group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
-        >
-            Navigation
-        </p>
         <template
             v-if="
                 $page.props.user.all_teams.length > 0 &&
