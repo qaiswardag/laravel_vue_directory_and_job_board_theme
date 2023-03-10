@@ -7,6 +7,7 @@ use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class MediaLibraryController extends Controller
 {
@@ -83,11 +84,21 @@ class MediaLibraryController extends Controller
     {
         $this->authorize("can-read", $team);
 
-        $uploadedBy = User::findOrFail($mediaLibrary->user_id);
-        $uploadedBy = [
-            "firstName" => $uploadedBy->first_name,
-            "lastName" => $uploadedBy->last_name,
-        ];
+        $uploadedBy = User::find($mediaLibrary->user_id);
+
+        if ($uploadedBy !== null) {
+            $uploadedBy = [
+                "firstName" => $uploadedBy->first_name,
+                "lastName" => $uploadedBy->last_name,
+            ];
+        }
+
+        if ($uploadedBy === null) {
+            $uploadedBy = [
+                "firstName" => "Unknown",
+                "lastName" => "Unknown",
+            ];
+        }
 
         // return
         return [

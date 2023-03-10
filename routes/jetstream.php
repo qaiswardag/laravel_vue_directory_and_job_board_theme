@@ -111,8 +111,12 @@ Route::group(
                             TeamController::class,
                             "update",
                         ])->name("teams.update");
+                        // Route::delete("/teams/{team}", [
+                        //     TeamController::class,
+                        //     "destroy",
+                        // ])->name("teams.destroy");
                         Route::delete("/teams/{team}", [
-                            TeamController::class,
+                            TeamDeleteController::class,
                             "destroy",
                         ])->name("teams.destroy");
                         Route::put("/current-team", [

@@ -176,9 +176,9 @@ class MediaLibraryController extends Controller
         $this->authorize("can-destroy", $team);
         $image = MediaLibrary::findOrFail($request->image_id);
 
-        $imagePath = $image->path;
+        $imagePath = public_path("uploads/" . $image->path);
 
-        if (file_exists(public_path($imagePath)) === false) {
+        if (file_exists($imagePath) === false) {
             // delete the image record from the dat
             $image->delete();
 
@@ -189,8 +189,8 @@ class MediaLibraryController extends Controller
         }
 
         // delete the file from the public directory
-        if (file_exists(public_path($imagePath)) === true) {
-            File::delete(public_path($imagePath));
+        if (file_exists($imagePath) === true) {
+            File::delete($imagePath);
         }
 
         //

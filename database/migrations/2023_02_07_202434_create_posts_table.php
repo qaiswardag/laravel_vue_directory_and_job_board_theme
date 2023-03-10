@@ -15,13 +15,16 @@ return new class extends Migration {
         Schema::create("posts", function (Blueprint $table) {
             $table->id();
 
-            // user
-            $table
-                ->foreignId("user_id")
-                ->references("id")
-                ->on("users")
-                ->onDelete("cascade")
-                ->constrained();
+            $table->integer("user_id");
+
+            // // user
+            // $table
+            //     ->foreignId("user_id")
+            //     ->references("id")
+            //     ->on("users")
+            //     ->onDelete("cascade")
+            //     ->constrained();
+
             // team
             $table
                 ->foreignId("team_id")

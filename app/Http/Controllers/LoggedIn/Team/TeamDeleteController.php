@@ -7,6 +7,10 @@ use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Laravel\Jetstream\Jetstream;
+use Laravel\Jetstream\Actions\ValidateTeamDeletion;
+use Laravel\Jetstream\Contracts\DeletesTeams;
+use Illuminate\Support\Facades\File;
 
 class TeamDeleteController extends Controller
 {
@@ -85,8 +89,28 @@ class TeamDeleteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $teamId)
     {
-        //
+        $team = Jetstream::newTeamModel()->findOrFail($teamId);
+
+        $this->authorize("can-destroy", $team);
+
+        app(ValidateTeamDeletion::class)->validate($request->user(), $team);
+
+        $deleter = app(DeletesTeams::class);
+
+        $path = public_path("uploads/" . $team->reference_id);
+
+        // delete Team public folder
+        if (File::exists($path) === true) {
+            File::deleteDirectory($path);
+        }
+
+        // delete team
+        $deleter->delete($team);
+
+        return redirect()
+            ->route("dashboard")
+            ->with("success", "Successfully deleted the Team.");
     }
 }

@@ -62,20 +62,10 @@ const firstButtonClick = function () {
                 <span v-show="!disabled">
                     <slot />
                 </span>
-                <span class="flex gap-1 items-center justify-center">
+                <span class="flex gap-2 items-center justify-center">
                     {{ disabled ? "Loading" : buttonText }}
                     <template v-if="disabled && !TableStyle">
-                        <div class="flex gap-0.5">
-                            <div
-                                class="w-0.5 h-0.5 rounded-full animate-pulse bg-white"
-                            ></div>
-                            <div
-                                class="w-0.5 h-0.5 rounded-full animate-pulse bg-white"
-                            ></div>
-                            <div
-                                class="w-0.5 h-0.5 rounded-full animate-pulse bg-white"
-                            ></div>
-                        </div>
+                        <SmallUniversalSpinner></SmallUniversalSpinner>
                     </template>
                 </span>
             </button>
