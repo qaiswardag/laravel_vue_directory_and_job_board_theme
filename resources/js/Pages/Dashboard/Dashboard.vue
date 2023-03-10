@@ -6,6 +6,9 @@ const props = defineProps({
     currentUserTeam: {
         required: true,
     },
+    user: {
+        required: true,
+    },
 });
 
 const people = [
@@ -53,6 +56,8 @@ const people = [
         <div class="myPrimarySection">
             <p class="my-4 pb-4">currentUserTeam from shared Data is:</p>
             <p class="my-4">{{ currentUserTeam }}</p>
+            <p class="mb-4 mt-12 pb-4">user:</p>
+            <p class="my-4">{{ user }}</p>
         </div>
     </LoggedInLayout>
 </template>

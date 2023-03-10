@@ -78,7 +78,7 @@ class Team extends JetstreamTeam
         static::creating(function ($team) {
             do {
                 // generate a random string
-                $randomString = Str::random(rand(8, 12));
+                $randomString = Str::random(rand(8, 14));
                 // convert the random string to lowercase using strtolower
                 $team->reference_id = strtolower($randomString);
             } while (

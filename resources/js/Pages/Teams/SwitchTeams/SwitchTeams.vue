@@ -38,7 +38,7 @@ const breadcrumbsLinks = [
             "
         >
             <!-- TODO: make a componenet for this kind of text -->
-            <h1 class="myPrimaryHeader">You are not in any Team</h1>
+            <h1 class="myPrimaryHeaderMessage">You are not in any Team</h1>
         </div>
 
         <template

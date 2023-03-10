@@ -442,7 +442,7 @@ const handleDeleteImage = function (imageId) {
                                                 <div>
                                                     <img
                                                         class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                                                        :src="`/${getCurrentImage.currentImage.mediaLibrary.path}`"
+                                                        :src="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path}`"
                                                         alt="image"
                                                     />
 

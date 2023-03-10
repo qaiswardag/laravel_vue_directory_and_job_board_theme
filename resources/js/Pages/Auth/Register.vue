@@ -5,9 +5,7 @@ import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vu
 import Checkbox from "@/Components/Forms/Checkbox.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
-import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 
@@ -15,6 +13,7 @@ const form = useForm({
     first_name: "",
     last_name: "",
     email: "",
+    username: "",
     password: "",
     password_confirmation: "",
     terms: false,
@@ -90,8 +89,20 @@ const submit = () => {
                             id="email"
                             v-model="form.email"
                             type="email"
+                            autofocus
+                            autocomplete="email"
                         />
                         <InputError :message="form.errors.email" />
+                    </div>
+                    <div class="myInputGroup">
+                        <InputLabel for="username" value="username" />
+                        <TextInput
+                            id="username"
+                            v-model="form.username"
+                            type="text"
+                            autocomplete="off"
+                        />
+                        <InputError :message="form.errors.username" />
                     </div>
 
                     <div class="myInputGroup">

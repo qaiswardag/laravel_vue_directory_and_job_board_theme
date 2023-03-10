@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import { useForm } from "@inertiajs/vue3";
@@ -153,6 +153,12 @@ const clickedImage = function (imageId) {
         currentImagePreview.value
     );
 };
+
+onMounted(() => {
+    if (imagesPreview.value.length === 0) {
+        store.commit("mediaLibrary/setCurrentPreviewImage", null);
+    }
+});
 </script>
 
 <template>
@@ -240,6 +246,9 @@ const clickedImage = function (imageId) {
                                 alt="image"
                                 class="h-14 w-14 object-cover rounded-md cursor-pointer"
                             />
+                            <p class="myPrimaryParagraph text-xs py-2">
+                                {{ image.file_name }}
+                            </p>
                             <p
                                 class="myPrimaryParagraph text-xs py-2 border-l border-gray-200 pl-2"
                             >

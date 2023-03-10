@@ -195,7 +195,7 @@ onMounted(() => {
                                     getCurrentImage?.currentImage?.mediaLibrary
                                         ?.id,
                             }"
-                            :src="`/${image.path}`"
+                            :src="`/uploads/${image.path}`"
                             alt="image"
                         />
                         <p

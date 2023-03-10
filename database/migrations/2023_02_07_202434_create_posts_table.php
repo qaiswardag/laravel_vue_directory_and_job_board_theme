@@ -33,11 +33,11 @@ return new class extends Migration {
             // $table->foreignId("team_id");
             //
             //
+            $table->longText("title");
             $table->string("slug");
+            $table->longText("content");
             $table->boolean("published")->nullable();
             $table->string("thumbnail")->nullable();
-            $table->longText("content");
-            $table->longText("title");
             $table->mediumText("tags")->nullable();
             $table->timestamps();
         });

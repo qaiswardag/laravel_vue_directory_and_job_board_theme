@@ -364,7 +364,7 @@ const createPost = () => {
                             @click="handleUploadCoverImage"
                             class="myPrimarythumbnailInsertPreview"
                             alt="cover image"
-                            :src="`/${createPostForm.thumbnail}`"
+                            :src="`/uploads/${createPostForm.thumbnail}`"
                         />
                         <div
                             class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"

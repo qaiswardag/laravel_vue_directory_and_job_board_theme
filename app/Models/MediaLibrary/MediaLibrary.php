@@ -21,5 +21,14 @@ class MediaLibrary extends Model
      *
      * @var string<int, string>
      */
-    protected $guarded = [];
+
+    protected $fillable = [
+        "user_id",
+        "team_id",
+        "name",
+        "path",
+        "size",
+        "width",
+        "height",
+    ];
 }

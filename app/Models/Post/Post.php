@@ -10,9 +10,19 @@ class Post extends Model
     use HasFactory;
 
     /**
-     * All attributes are s assignable.
+     * Not all attributes are s assignable.
      *
      * @var string<int, string>
      */
-    protected $guarded = [];
+
+    protected $fillable = [
+        "user_id",
+        "team_id",
+        "title",
+        "slug",
+        "content",
+        "published",
+        "thumbnail",
+        "tags",
+    ];
 }

@@ -186,7 +186,7 @@ const switchTeam = function (team) {
                                                                     )
                                                                 "
                                                                 class="w-16 h-16 rounded-full object-cover cursor-pointer"
-                                                                :src="`/${team.thumbnail}`"
+                                                                :src="`/uploads/${team.thumbnail}`"
                                                                 alt="image"
                                                             />
                                                         </div>

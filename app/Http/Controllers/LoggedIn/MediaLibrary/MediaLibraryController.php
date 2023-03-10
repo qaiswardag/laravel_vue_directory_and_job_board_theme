@@ -62,13 +62,15 @@ class MediaLibraryController extends Controller
 
             // get the current timestamp
             $timestamp = time();
+
             // generate a unique ID for the image
-            $randomString = Str::random(rand(8, 12)) . strval($timestamp);
+            $randomString = Str::random(rand(8, 14)) . strval($timestamp);
             // convert the random string to lowercase using strtolower()
             $randomString = strtolower($randomString);
 
             // get the current year and month in YYYY/MM format
-            $currentYearMonth = date("Y/m"); // get the current year and month in YYYY/MM format
+            $currentYearYear = date("Y"); // get the current year and month in YYYY/MM format
+            $currentYearMonth = date("m"); // get the current year and month in YYYY/MM format
             // replace the forward slash with a dash using str_replace()
             $currentYearMonth = str_replace("/", "-", $currentYearMonth);
 
@@ -78,9 +80,11 @@ class MediaLibraryController extends Controller
             $path =
                 $teamReferenceId .
                 "/" .
-                $slugifiedFilename .
-                "-" .
+                $currentYearYear .
+                "/" .
                 $currentYearMonth .
+                "/" .
+                $slugifiedFilename .
                 "-" .
                 $randomString .
                 "." .
@@ -92,35 +96,24 @@ class MediaLibraryController extends Controller
                 $path =
                     $teamReferenceId .
                     "/" .
-                    $slugifiedFilename .
-                    "-" .
+                    $currentYearYear .
+                    "/" .
                     $currentYearMonth .
+                    "/" .
+                    $slugifiedFilename .
                     "-" .
                     $randomString .
                     "." .
                     $extension;
             }
 
-            $filePath = $image->storeAs($path);
-
-            // path in the database
-            $pathDB =
-                "uploads/" .
-                $teamReferenceId .
-                "/" .
-                $slugifiedFilename .
-                "-" .
-                $currentYearMonth .
-                "-" .
-                $randomString .
-                "." .
-                $extension;
+            $image->storeAs($path);
 
             // file size
             $fileSizeKb = intval($image->getSize() / 1024);
 
             list($width, $height) = getimagesize(
-                public_path("uploads/" . $filePath)
+                public_path("uploads/" . $path)
             );
 
             $width = intval($width);
@@ -131,7 +124,7 @@ class MediaLibraryController extends Controller
                 "user_id" => $request->user_id,
                 "team_id" => $team->id,
                 "name" => null,
-                "path" => $pathDB,
+                "path" => $path,
                 "size" => $fileSizeKb,
                 "width" => $width,
                 "height" => $height,

@@ -246,7 +246,7 @@ const handleRemoveCoverImage = function () {
                     @click="handleUploadCoverImage"
                     class="myPrimarythumbnailInsertPreview"
                     alt="cover image"
-                    :src="`/${form.thumbnail}`"
+                    :src="`/uploads/${form.thumbnail}`"
                 />
                 <div
                     class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"

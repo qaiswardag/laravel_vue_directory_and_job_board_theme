@@ -66,9 +66,6 @@ class TeamController extends Controller
      */
     public function edit(Team $team)
     {
-        // $team = Auth::user()->currentTeam;
-        // $team = Jetstream::newTeamModel()->findOrFail($teamId);
-
         Gate::authorize("view", $team);
 
         return Inertia::render(

@@ -29,6 +29,7 @@ class UserFactory extends Factory
             "first_name" => $this->faker->firstName(),
             "last_name" => $this->faker->lastName(),
             "email" => $this->faker->unique()->safeEmail(),
+            "username" => $this->faker->unique()->username(),
             "email_verified_at" => now(),
             "password" => Hash::make("123456"), // password
             "two_factor_secret" => null,

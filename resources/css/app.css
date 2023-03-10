@@ -11,8 +11,8 @@
     .myPrimarySection {
         @apply lg:py-8 md:py-8 py-8;
     }
-    .myPrimarySuccessAlertMessage {
-        @apply myPrimarySection myPrimaryHeader text-myPrimaryBrandColor text-center;
+    .myPrimaryHeaderMessage {
+        @apply myPrimarySection myPrimaryHeader text-myPrimaryDarkGrayColor text-center;
     }
     .myPrimaryWarningAlertMessage {
         @apply myPrimarySection myPrimaryHeader text-yellow-400 text-center;
@@ -265,6 +265,9 @@
 
     .myPrimaryInput {
         @apply block w-full sm:text-sm font-medium text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3  border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
+    }
+    .myPrimaryInputReadonly {
+        @apply myPrimaryInput bg-gray-50 focus:ring-0 focus:bg-gray-100 focus:border-myPrimaryMediumGrayColor;
     }
 
     .myPrimarySearchInput {
