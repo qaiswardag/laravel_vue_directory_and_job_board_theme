@@ -77,10 +77,6 @@ const deleteUserProfile = () => {
         onFinish: () => form.reset(),
     });
 };
-// Qais code end
-// Qais code end
-// Qais code end
-// Qais code end
 
 const confirmUserDeletion = () => {
     confirmingUserDeletion.value = true;

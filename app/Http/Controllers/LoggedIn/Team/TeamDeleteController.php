@@ -11,6 +11,9 @@ use Laravel\Jetstream\Jetstream;
 use Laravel\Jetstream\Actions\ValidateTeamDeletion;
 use Laravel\Jetstream\Contracts\DeletesTeams;
 use Illuminate\Support\Facades\File;
+use Laravel\Fortify\Actions\ConfirmPassword;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Validation\ValidationException;
 
 class TeamDeleteController extends Controller
 {
@@ -89,11 +92,24 @@ class TeamDeleteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $teamId)
+    public function destroy(Request $request, $teamId, StatefulGuard $guard)
     {
         $team = Jetstream::newTeamModel()->findOrFail($teamId);
 
         $this->authorize("can-destroy", $team);
+
+        // passwrod confirm
+        $confirmed = app(ConfirmPassword::class)(
+            $guard,
+            $request->user(),
+            $request->password
+        );
+
+        if (!$confirmed) {
+            throw ValidationException::withMessages([
+                "password" => __("The password is incorrect."),
+            ]);
+        }
 
         app(ValidateTeamDeletion::class)->validate($request->user(), $team);
 

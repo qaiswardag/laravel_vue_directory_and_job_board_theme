@@ -15,6 +15,9 @@ const emit = defineEmits(["uploadOnSuccess"]);
 
 // first button function
 const uploadOnSuccess = function () {
+    store.commit("mediaLibrary/setCurrentPreviewImage", null);
+    imagesPreview.value = [];
+    imagesInput.value = [];
     emit("uploadOnSuccess");
 };
 
@@ -53,8 +56,8 @@ const form = useForm({
 });
 
 const imagesPreview = ref([]);
-const currentImagePreview = ref([]);
 const imagesInput = ref([]);
+const currentImagePreview = ref([]);
 const isLoading = ref(false);
 
 // update images preview
@@ -158,6 +161,9 @@ onMounted(() => {
     if (imagesPreview.value.length === 0) {
         store.commit("mediaLibrary/setCurrentPreviewImage", null);
     }
+
+    imagesPreview.value = [];
+    imagesInput.value = [];
 });
 </script>
 

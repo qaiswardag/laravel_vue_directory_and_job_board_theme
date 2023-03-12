@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
 import ActionSection from "@/Components/ActionSection.vue";
 import DangerButton from "@/Components/Buttons/DangerButton.vue";
 import InputError from "@/Components/Forms/InputError.vue";
@@ -9,6 +8,8 @@ import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import { useForm } from "@inertiajs/vue3";
+import InputLabel from "@/Components/Forms/InputLabel.vue";
 
 const props = defineProps({
     team: Object,
@@ -74,12 +75,8 @@ const deleteTeam = function () {
         onSuccess: (log) => {
             modalShowDeleteTeam.value = false;
         },
-        onError: (err) => {
-            modalShowDeleteTeam.value = false;
-        },
-        onFinish: (log) => {
-            modalShowDeleteTeam.value = false;
-        },
+        onError: () => passwordInput.value.focus(),
+        onFinish: () => form.reset(),
     });
 };
 </script>
@@ -117,12 +114,22 @@ const deleteTeam = function () {
                 @thirdModalButtonFunction="thirdModalButtonFunction"
             >
                 <header></header>
-                <main></main>
+                <main>
+                    <div class="myInputGroup">
+                        <InputLabel for="roles" value="Enter Password" />
+                        <TextInput
+                            ref="passwordInput"
+                            v-model="form.password"
+                            type="password"
+                            placeholder="Password"
+                            @keyup.enter="handleDeleteTeam"
+                        />
+
+                        <InputError :message="form.errors.password" />
+                    </div>
+                </main>
             </DynamicModal>
         </template>
-
-        <!-- TODO: Add "confirms password" middleware to delete team
-            right now, team can be deleted without password confirmation -->
 
         <template #actions>
             <SubmitButton
