@@ -23,6 +23,8 @@ class UserController extends Controller
                     ->where("title", "LIKE", "%" . $term . "%")
                     ->orWhere("content", "LIKE", "%" . $term . "%");
             })
+            ->select("first_name", "last_name", "username")
+
             ->paginate(10);
         // // append users
         $users->appends($request->all());
@@ -59,8 +61,20 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($username)
     {
+        $username = urldecode($username);
+
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+            return Inertia::render("Error", [
+                "customError" =>
+                    "Username can only contain letters, numbers, and underscores.",
+                "status" => 404,
+            ]);
+        }
+
+        $user = User::where("username", $username)->firstOrFail();
+
         // TO DO: show only user which status is not privat
         return Inertia::render("Guests/User/Show", [
             "user" => $user,

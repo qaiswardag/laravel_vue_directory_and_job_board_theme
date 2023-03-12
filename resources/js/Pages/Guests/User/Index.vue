@@ -17,17 +17,28 @@ defineProps({
 <template>
     <GuestsLayout title="Posts">
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Users</h2>
+            <h2 class="myPrimaryMainPageHeader">
+                Users: {{ JSON.stringify(users) }}
+            </h2>
         </template>
         <div class="myPrimarySection">
             <h1 class="my-8 text-4xl text-center">Users</h1>
             <div v-for="user in users.data" :key="user.id">
                 <div class="my-12 mx-24 border-2 border-red-400 p-4">
-                    <Link :href="route('users.show', user.id)">
+                    <p class="my-4 mb-8">user: {{ user }}</p>
+                    <Link
+                        class="myPrimaryLink text-2xl font-semibold mt-4"
+                        :href="
+                            route(
+                                'users.show',
+                                encodeURIComponent(user.username)
+                            )
+                        "
+                    >
                         {{ user.first_name }} {{ user.last_name }}
                     </Link>
 
-                    <p class="my-4">
+                    <p class="my-8">
                         Public Status: {{ user.public ? "Public" : "Private" }}
                     </p>
                     <p class="my-4">user id is: {{ user.id }}</p>

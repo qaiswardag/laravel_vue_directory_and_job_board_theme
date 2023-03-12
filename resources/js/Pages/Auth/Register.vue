@@ -102,6 +102,12 @@ const submit = () => {
                             type="text"
                             autocomplete="off"
                         />
+                        <p class="myPrimaryParagraph">
+                            Your username must be between 4-15 characters in
+                            length and can only contain letters (A-Z) numbers
+                            (0-9) and underscores. Special characters and spaces
+                            are not allowed.
+                        </p>
                         <InputError :message="form.errors.username" />
                     </div>
 
@@ -145,7 +151,6 @@ const submit = () => {
                                     id="terms"
                                     v-model:checked="form.terms"
                                     name="terms"
-                                    required
                                 />
 
                                 <div class="ml-2">

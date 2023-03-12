@@ -14,7 +14,10 @@ return new class extends Migration {
             $table->id();
             // $table->foreignId("user_id")->index(); // original row structure
             //
-            $table->string("reference_id")->unique();
+            $table
+                ->string("reference_id")
+                ->unique()
+                ->index();
 
             $table
                 ->foreignId("user_id")

@@ -25,13 +25,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $fakeFirstName = $this->faker->firstName();
+        $fakeLastName = $this->faker->lastName();
+        $fakeUserName = $fakeFirstName . "_" . $fakeLastName;
         return [
-            "first_name" => $this->faker->firstName(),
-            "last_name" => $this->faker->lastName(),
+            "first_name" => $fakeFirstName,
+            "last_name" => $fakeLastName,
+            "username" => $fakeUserName,
             "email" => $this->faker->unique()->safeEmail(),
-            "username" => $this->faker->unique()->username(),
             "email_verified_at" => now(),
-            "password" => Hash::make("123456"), // password
+            "password" => Hash::make("123456"),
             "two_factor_secret" => null,
             "two_factor_recovery_codes" => null,
             "remember_token" => Str::random(10),

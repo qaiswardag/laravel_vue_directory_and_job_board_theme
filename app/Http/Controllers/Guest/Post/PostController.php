@@ -23,6 +23,7 @@ class PostController extends Controller
                     ->where("title", "LIKE", "%" . $term . "%")
                     ->orWhere("content", "LIKE", "%" . $term . "%");
             })
+            ->select("title", "slug", "id", "content", "published")
             ->paginate(10);
         // // append posts
         $posts->appends($request->all());
