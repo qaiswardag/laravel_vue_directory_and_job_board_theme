@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guest\Post;
 use App\Http\Controllers\Controller;
 use App\Models\Post\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -16,18 +17,70 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        // TO DO: show only posts which status is not privat
         $posts = Post::latest()
             ->when($request->query("search_query"), function ($query, $term) {
                 $query
                     ->where("title", "LIKE", "%" . $term . "%")
                     ->orWhere("content", "LIKE", "%" . $term . "%");
             })
-            ->select("title", "slug", "id", "content", "published")
+            ->where(function ($query) {
+                // Show all published posts for everyone
+                $query->where(function ($query) {
+                    $query->where("published", 1)->orWhere(function ($query) {
+                        // Show published posts for users belonging to the team
+
+                        $query->where(function ($query) {
+                            $query
+                                ->where(function ($query) {
+                                    $query->where("published", 1);
+                                    if (
+                                        Auth::user() &&
+                                        Auth::user()->current_team_id
+                                    ) {
+                                        $query->orWhere(
+                                            "team_id",
+                                            Auth::user()->current_team_id
+                                        );
+                                    }
+                                })
+                                ->orWhere(function ($query) {
+                                    if (
+                                        Auth::user() &&
+                                        Auth::user()->current_team_id
+                                    ) {
+                                        $query
+                                            ->where(
+                                                "team_id",
+                                                Auth::user()->current_team_id
+                                            )
+                                            ->where("published", 0);
+                                    }
+                                });
+                        });
+                    });
+                });
+                // Show published and private posts for superadmin
+                if (Auth::user() && Auth::user()->superadmin) {
+                    $query->orWhere("published", 0);
+                }
+            })
+            ->with(["team:id,name,thumbnail", "user:id,first_name,last_name"])
             ->paginate(10);
-        // // append posts
-        $posts->appends($request->all());
-        //
+
+        $posts->makeHidden(["id", "user_id", "team_id"]);
+
+        $posts->transform(function ($post) {
+            if ($post->user) {
+                $post->user->makeHidden(["id", "profile_photo_url"]);
+            }
+
+            if ($post->team) {
+                $post->team->makeHidden(["id"]);
+            }
+
+            return $post;
+        });
+
         return Inertia::render("Guests/Post/Index", [
             "posts" => $posts,
         ]);
@@ -60,9 +113,48 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
-        // TO DO: show only post which status is not privat
+        $post = Post::where("slug", $slug)
+            ->with(["team:id,name,thumbnail", "user:id,first_name,last_name"])
+            ->firstOrFail();
+
+        if ($post->published === 0 && !Auth::check()) {
+            abort(404);
+        }
+
+        $post->makeHidden(["user_id", "team_id"]);
+
+        // Make the user id hidden
+        if ($post->user) {
+            $post->user->makeHidden(["id", "profile_photo_url"]);
+        }
+
+        if ($post->team) {
+            $post->team->makeHidden(["id"]);
+        }
+
+        if ($post->published === 0 && Auth::user()->superadmin === 1) {
+            return Inertia::render("Guests/Post/Show", [
+                "post" => $post,
+            ]);
+        }
+        if (
+            $post->published === 0 &&
+            $post->team_id !== Auth::user()->current_team_id
+        ) {
+            return Inertia::render("Error", [
+                "customError" => "Please try another route.",
+                "status" => 404,
+            ]);
+        }
+
+        if ($post->published === 0 && Auth::user()->superadmin === 1) {
+            return Inertia::render("Guests/Post/Show", [
+                "post" => $post,
+            ]);
+        }
+
         return Inertia::render("Guests/Post/Show", [
             "post" => $post,
         ]);

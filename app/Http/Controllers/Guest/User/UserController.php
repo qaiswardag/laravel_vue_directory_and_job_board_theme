@@ -68,7 +68,7 @@ class UserController extends Controller
         if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
             return Inertia::render("Error", [
                 "customError" =>
-                    "Username can only contain letters, numbers, and underscores.",
+                    "The URL can only consist of letters, numbers, and underscores. Special characters are not allowed.",
                 "status" => 404,
             ]);
         }

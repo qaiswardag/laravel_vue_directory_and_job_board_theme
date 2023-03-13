@@ -28,7 +28,9 @@ defineProps({
                         {{ post }}
                     </p>
                     <Link
-                        :href="route('posts.show', post.id)"
+                        :href="
+                            route('posts.show', [encodeURIComponent(post.slug)])
+                        "
                         class="myPrimaryLink text-2xl font-semibold mt-4"
                     >
                         {{ post.title }}

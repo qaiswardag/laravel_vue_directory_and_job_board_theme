@@ -31,7 +31,7 @@ defineProps({
                         :href="
                             route(
                                 'users.show',
-                                encodeURIComponent(user.username)
+                                encodeURIComponent(user.username.toLowerCase())
                             )
                         "
                     >

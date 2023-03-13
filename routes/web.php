@@ -152,7 +152,7 @@ Route::middleware([])
             "posts"
         );
         // unique post
-        Route::get("/posts/post/{post}", [
+        Route::get("/posts/post/{slug}", [
             PostPostController::class,
             "show",
         ])->name("posts.show");

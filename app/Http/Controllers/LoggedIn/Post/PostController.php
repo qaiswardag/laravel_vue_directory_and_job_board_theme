@@ -17,6 +17,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -71,11 +72,29 @@ class PostController extends Controller
         $content = $request->content;
         $userId = $request->user_id;
 
+        $slug = Str::lower(Str::slug($request->slug, "_"));
+
+        // check if the slug already exists
+        if (Post::where("slug", $slug)->exists()) {
+            // if the slug already exists, add a suffix to make it unique
+            $maxSuffixes =
+                Post::where("slug", "like", "{$slug}_%")->count() + 1;
+            $suffix = 1;
+            do {
+                $newSlug = $suffix > 1 ? "{$slug}_{$suffix}" : $slug;
+                $suffix++;
+            } while (
+                Post::where("slug", $newSlug)->exists() &&
+                $suffix <= $maxSuffixes
+            );
+            $slug = $newSlug;
+        }
+
         Post::create([
             "user_id" => $userId,
             "team_id" => $team->id,
             "title" => $title,
-            "slug" => $title,
+            "slug" => $slug,
             "published" => $request->published,
             "thumbnail" => $request->thumbnail,
             "content" => $content,

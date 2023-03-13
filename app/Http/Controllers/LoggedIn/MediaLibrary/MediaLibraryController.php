@@ -58,7 +58,7 @@ class MediaLibraryController extends Controller
             );
 
             // slugify the filename without the extension
-            $slugifiedFilename = Str::slug($filenameWithoutExtension, "-");
+            $slugifyFilename = Str::slug($filenameWithoutExtension, "_");
 
             // get the current timestamp
             $timestamp = time();
@@ -70,9 +70,7 @@ class MediaLibraryController extends Controller
 
             // get the current year and month in YYYY/MM format
             $currentYearYear = date("Y"); // get the current year and month in YYYY/MM format
-            $currentYearMonth = date("m"); // get the current year and month in YYYY/MM format
-            // replace the forward slash with a dash using str_replace()
-            $currentYearMonth = str_replace("/", "-", $currentYearMonth);
+            $currentMonth = date("m"); // get the current year and month in YYYY/MM format
 
             // extension
             $extension = $image->extension();
@@ -82,10 +80,10 @@ class MediaLibraryController extends Controller
                 "/" .
                 $currentYearYear .
                 "/" .
-                $currentYearMonth .
+                $currentMonth .
                 "/" .
-                $slugifiedFilename .
-                "-" .
+                $slugifyFilename .
+                "_" .
                 $randomString .
                 "." .
                 $extension;
@@ -98,10 +96,10 @@ class MediaLibraryController extends Controller
                     "/" .
                     $currentYearYear .
                     "/" .
-                    $currentYearMonth .
+                    $currentMonth .
                     "/" .
-                    $slugifiedFilename .
-                    "-" .
+                    $slugifyFilename .
+                    "_" .
                     $randomString .
                     "." .
                     $extension;
@@ -142,6 +140,15 @@ class MediaLibraryController extends Controller
     public function show(MediaLibrary $mediaLibrary, Team $team)
     {
         // $this->authorize("can-read", $team);
+        // if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+        //     return Inertia::render("Error", [
+        //         "customError" =>
+        //             "The URL can only consist of letters, numbers, and underscores. Special characters are not allowed.",
+        //         "status" => 404,
+        //     ]);
+        // }
+
+        // dd();
     }
 
     /**
