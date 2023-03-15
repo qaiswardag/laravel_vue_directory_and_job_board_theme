@@ -1,7 +1,6 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
-import ActionSection from "@/Components/ActionSection.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
 import CardHeadings from "@/Components/Actions/CardHeadings.vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";

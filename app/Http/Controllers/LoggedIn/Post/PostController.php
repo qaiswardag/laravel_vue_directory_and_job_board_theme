@@ -76,18 +76,13 @@ class PostController extends Controller
 
         // check if the slug already exists
         if (Post::where("slug", $slug)->exists()) {
-            // if the slug already exists, add a suffix to make it unique
-            $maxSuffixes =
-                Post::where("slug", "like", "{$slug}_%")->count() + 1;
+            // if the slug already exists, add a prefix to make it unique
             $suffix = 1;
             do {
-                $newSlug = $suffix > 1 ? "{$slug}_{$suffix}" : $slug;
+                $uniqueSlug = $suffix . "_" . $slug;
                 $suffix++;
-            } while (
-                Post::where("slug", $newSlug)->exists() &&
-                $suffix <= $maxSuffixes
-            );
-            $slug = $newSlug;
+            } while (Post::where("slug", $uniqueSlug)->exists());
+            $slug = $uniqueSlug;
         }
 
         Post::create([
@@ -106,6 +101,7 @@ class PostController extends Controller
 
         return redirect()->route("overview.posts.index", $currentTeam);
     }
+
     /**
      * Display the specified resource.
      *

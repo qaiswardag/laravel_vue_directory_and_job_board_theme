@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -16,19 +17,32 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        // TO DO: show only users which status is not privat
         $users = User::latest()
             ->when($request->query("search_query"), function ($query, $term) {
                 $query
                     ->where("title", "LIKE", "%" . $term . "%")
                     ->orWhere("content", "LIKE", "%" . $term . "%");
             })
-            ->select("first_name", "last_name", "username")
-
+            ->when(
+                Auth::user() && Auth::user()->superadmin === 1,
+                function ($query) {
+                    // if the logged-in user is a superadmin, include all users
+                    return $query;
+                },
+                function ($query) {
+                    // if the logged-in user is not a superadmin, exclude users with public = 0
+                    return $query->where(function ($query) {
+                        $query
+                            ->where("public", "!=", 0)
+                            ->orWhere("id", "=", Auth::id()); // include the current user
+                    });
+                }
+            )
+            ->select("first_name", "last_name", "username", "public")
             ->paginate(10);
-        // // append users
+
         $users->appends($request->all());
-        //
+
         return Inertia::render("Guests/User/Index", [
             "users" => $users,
         ]);
@@ -73,9 +87,24 @@ class UserController extends Controller
             ]);
         }
 
-        $user = User::where("username", $username)->firstOrFail();
+        $user = User::where("username", $username)
+            ->when(
+                Auth::user() && Auth::user()->superadmin === 1,
+                function ($query) {
+                    // if the logged-in user is a superadmin, include all users
+                    return $query;
+                },
+                function ($query) {
+                    // if the logged-in user is not a superadmin, exclude users with public = 0
+                    return $query->where(function ($query) {
+                        $query
+                            ->where("public", "!=", 0)
+                            ->orWhere("id", "=", Auth::id()); // include the current user
+                    });
+                }
+            )
+            ->firstOrFail();
 
-        // TO DO: show only user which status is not privat
         return Inertia::render("Guests/User/Show", [
             "user" => $user,
         ]);

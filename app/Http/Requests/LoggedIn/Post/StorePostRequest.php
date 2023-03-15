@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\LoggedIn\Post;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Validator;
 
@@ -39,7 +40,13 @@ class StorePostRequest extends FormRequest
             // SQL code on your database.
 
             "title" => ["required", "string", "min:2", "max:255"],
-            "slug" => ["required", "string", "min:2", "max:255"],
+            "slug" => [
+                "required",
+                "string",
+                "min:2",
+                "max:255",
+                Rule::unique("posts", "slug"),
+            ],
 
             // If user_id is a foreign key column that references the id column of the users table,
             // you can use the exists validation rule to ensure that the value of user_id exists in

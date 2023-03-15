@@ -2,6 +2,7 @@
 import { Head, router } from "@inertiajs/vue3";
 import Banner from "@/Components/Banners/Banner.vue";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
+import GuestsNavbar from "../Components/Navbars/GuestsNavbar.vue";
 
 import { ref } from "vue";
 
@@ -35,64 +36,12 @@ router.on("finish", () => {
             />
         </Head>
         <Banner />
-        <div class="my-6 pr-12">
-            <nav class="flex justify-end items-center myPrimaryGap">
-                <Link
-                    :href="route('dashboard')"
-                    :class="{
-                        'myPrimaryLink myPrimaryParagraph':
-                            route().current('dashboard'),
-                    }"
-                    class="myPrimaryParagraph"
-                >
-                    Dashboard
-                </Link>
-                <Link
-                    :href="route('users')"
-                    :class="{
-                        'myPrimaryParagraph myPrimaryParagraph':
-                            route().current('users'),
-                    }"
-                    class="myPrimaryParagraph"
-                >
-                    Users
-                </Link>
-                <Link
-                    :href="route('posts')"
-                    :class="{
-                        'myPrimaryParagraph myPrimaryParagraph':
-                            route().current('posts'),
-                    }"
-                    class="myPrimaryParagraph"
-                >
-                    Posts
-                </Link>
+        <GuestsNavbar></GuestsNavbar>
 
-                <Link
-                    :href="route('login')"
-                    :class="{
-                        'myPrimaryParagraph myPrimaryParagraph':
-                            route().current('login'),
-                    }"
-                    class="myPrimaryParagraph"
-                >
-                    Login
-                </Link>
-                <Link
-                    :href="route('register')"
-                    :class="{
-                        'myPrimaryParagraph myPrimaryParagraph':
-                            route().current('register'),
-                    }"
-                    class="myPrimaryParagraph"
-                >
-                    Register
-                </Link>
-            </nav>
-        </div>
-
-        <div class="min-h-screen bg-gray-100">
-            <!-- Page Content -->
+        <slot name="header" />
+        <div
+            class="mx-auto max-w-7xl min-h-screen px-4 sm:px-6 md:px-8 pb-12 bg-gray-100 rounded"
+        >
             <main>
                 <slot />
             </main>

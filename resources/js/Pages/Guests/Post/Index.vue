@@ -21,12 +21,9 @@ defineProps({
         </template>
         <div class="myPrimarySection">
             <h1 class="my-8 text-4xl text-center">Posts</h1>
+
             <div v-for="post in posts.data" :key="post.id">
                 <div class="my-12 mx-24 border-2 border-red-400 p-4">
-                    <p class="my-4 mb-8">
-                        Post:
-                        {{ post }}
-                    </p>
                     <Link
                         :href="
                             route('posts.show', [encodeURIComponent(post.slug)])
@@ -35,6 +32,17 @@ defineProps({
                     >
                         {{ post.title }}
                     </Link>
+                    <p class="my-8">
+                        slug:
+                        <br />
+                        {{ post.slug }}
+                    </p>
+                    <p class="mb-8">
+                        slug with encode URI Component:
+                        <br />
+                        {{ encodeURIComponent(post.slug) }}
+                    </p>
+
                     <p class="my-8">
                         Publish Status:
                         {{ post.published ? "Published" : "Private" }}

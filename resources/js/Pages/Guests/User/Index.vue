@@ -17,9 +17,7 @@ defineProps({
 <template>
     <GuestsLayout title="Posts">
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">
-                Users: {{ JSON.stringify(users) }}
-            </h2>
+            <h2 class="myPrimaryMainPageHeader">Users</h2>
         </template>
         <div class="myPrimarySection">
             <h1 class="my-8 text-4xl text-center">Users</h1>

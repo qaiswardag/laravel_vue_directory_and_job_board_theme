@@ -16,15 +16,16 @@ defineProps({
 <template>
     <div class="myPrimarySection">
         <div>
-            <div class="myPrimaryFormWithActions">
-                <SectionTitle>
-                    <template #title>
+            <div>
+                <div class="text-center my-8">
+                    <p class="text-3xl">
                         <slot name="title" />
-                    </template>
-                    <template #description>
+                    </p>
+
+                    <p class="myPrimaryParagraph">
                         <slot name="description" />
-                    </template>
-                </SectionTitle>
+                    </p>
+                </div>
 
                 <slot name="header" />
                 <div
@@ -33,7 +34,7 @@ defineProps({
                 >
                     <div
                         :class="{ 'md:w-full': sidebarArea === false }"
-                        class="myPrimaryFormMain"
+                        class="md:w-8/12 flex flex-col myPrimaryGap bg-white px-4 py-4"
                     >
                         <slot name="main" />
                     </div>
@@ -41,18 +42,14 @@ defineProps({
                     <template v-if="sidebarArea === true">
                         <div
                             :class="{ 'md:w-full': sidebarArea === false }"
-                            class="myPrimaryFormSidebar"
+                            class="md:w-4/12 flex flex-col myPrimaryGap bg-white px-4 py-4"
                         >
                             <slot name="sidebar" />
                         </div>
                     </template>
                 </div>
 
-                <template v-if="actionsArea === true">
-                    <div class="myPrimaryActions">
-                        <slot name="actions" />
-                    </div>
-                </template>
+                <slot name="actions" />
             </div>
         </div>
     </div>

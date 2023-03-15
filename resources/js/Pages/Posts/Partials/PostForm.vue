@@ -17,7 +17,6 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
 import slugify from "slugify";
 import config from "@/utils/config";
-import PostForm from "@/Partials/PostForm.vue";
 
 import {
     Listbox,
@@ -205,8 +204,6 @@ const createPost = () => {
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
         <div>
-            <PostForm></PostForm>
-            <div class="my-96"></div>
             <FormSection @submitted="handleCreatePost">
                 <template #title> Post details </template>
                 <template #description> Create a new Post. </template>

@@ -60,7 +60,7 @@ class PostController extends Controller
                     });
                 });
                 // Show published and private posts for superadmin
-                if (Auth::user() && Auth::user()->superadmin) {
+                if (Auth::user() && Auth::user()->superadmin === 1) {
                     $query->orWhere("published", 0);
                 }
             })
@@ -123,7 +123,7 @@ class PostController extends Controller
             abort(404);
         }
 
-        $post->makeHidden(["user_id", "team_id"]);
+        $post->makeHidden(["id", "user_id", "team_id"]);
 
         // Make the user id hidden
         if ($post->user) {
