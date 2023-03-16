@@ -10,6 +10,9 @@ const props = defineProps({
     user: {
         required: true,
     },
+    post: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
@@ -32,6 +35,10 @@ const breadcrumbsLinks = [
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-        <PostForm :currentUserTeam="currentUserTeam" :user="user"></PostForm>
+        <PostForm
+            :currentUserTeam="currentUserTeam"
+            :user="user"
+            :post="post"
+        ></PostForm>
     </LoggedInLayout>
 </template>

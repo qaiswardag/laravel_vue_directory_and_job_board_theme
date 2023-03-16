@@ -266,7 +266,9 @@ const handleDeleteImage = function (imageId) {
                                         class="flex-1 flex items-stretch overflow-hidden mt-2"
                                     >
                                         <!-- Main content - start-->
-                                        <main class="flex-1 overflow-y-auto">
+                                        <main
+                                            class="flex-1 overflow-y-auto relativ"
+                                        >
                                             <div
                                                 class="py-4 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8"
                                             >
@@ -370,7 +372,7 @@ const handleDeleteImage = function (imageId) {
                                         <aside
                                             v-if="selected === 'Media library'"
                                             aria-label="sidebar"
-                                            class="w-72 bg-white pl-2 pr-2 border-l border-gray-200"
+                                            class="w-72 min-h-[25rem] bg-white pl-2 pr-2 border-l border-gray-200"
                                         >
                                             <div
                                                 v-if="
@@ -407,7 +409,7 @@ const handleDeleteImage = function (imageId) {
                                                         getCurrentImage.isError ===
                                                             false)
                                                 "
-                                                class="mx-auto block h-72 w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
                                             >
                                                 <div
                                                     class="flex items-center justify-center pt-12"

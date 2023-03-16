@@ -2,12 +2,12 @@
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
-use App\Http\Controllers\Guest\Post\PostController as PostPostController;
+use App\Http\Controllers\Guests\Post\PostController as PostPostController;
 use App\Http\Controllers\LoggedIn\Post\PostController;
 use App\Http\Controllers\Superadmin\DashboardController;
 use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\Teams\TeamController;
-use App\Http\Controllers\Guest\User\UserController;
+use App\Http\Controllers\Guests\User\UserController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
 use App\Http\Middleware\isSuperAdmin;
@@ -112,6 +112,16 @@ Route::middleware([
         PostController::class,
         "create",
     ])->name("overview.posts.create");
+
+    Route::get("/overview/posts/store/{post}/{team}", [
+        PostController::class,
+        "edit",
+    ])->name("overview.posts.post.edit");
+
+    Route::post("/overview/posts/post/store/{post}", [
+        PostController::class,
+        "update",
+    ])->name("overview.posts.update");
     Route::post("/overview/posts/store", [
         PostController::class,
         "store",
@@ -144,7 +154,7 @@ Route::middleware([])
         // users
         Route::get("/users", [UserController::class, "index"])->name("users");
         // unique user
-        Route::get("/users/user/{user}", [UserController::class, "show"])->name(
+        Route::get("/users/{user}", [UserController::class, "show"])->name(
             "users.show"
         );
         // posts
@@ -152,10 +162,9 @@ Route::middleware([])
             "posts"
         );
         // unique post
-        Route::get("/posts/post/{slug}", [
-            PostPostController::class,
-            "show",
-        ])->name("posts.show");
+        Route::get("/posts/{slug}", [PostPostController::class, "show"])
+            ->where("slug", "[A-Za-z0-9/_-]+")
+            ->name("posts.show");
     });
 
 // Pages that are accessible only to superadmins

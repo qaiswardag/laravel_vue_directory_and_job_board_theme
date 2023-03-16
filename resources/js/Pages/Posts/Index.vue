@@ -111,8 +111,10 @@ const deletePost = (postId) => {
 };
 
 // handle action
-const handleEdit = function (id) {
-    console.log("handle edit function ran. post id is:", id);
+const handleEdit = function (postId) {
+    router.get(
+        route("overview.posts.post.edit", [postId, props.currentUserTeam.id])
+    );
 };
 
 // form
@@ -311,11 +313,20 @@ const handleSearch = function () {
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
-                                    <span
-                                        class="text-myPrimaryBrandColor font-semibold"
+                                    <Link
+                                        :href="
+                                            decodeURIComponent(
+                                                route('posts.show', [post.slug])
+                                            )
+                                        "
+                                        class="myPrimaryLink text-2xl font-semibold mt-4"
                                     >
-                                        {{ post.title }}
-                                    </span>
+                                        <span
+                                            class="text-myPrimaryBrandColor font-semibold"
+                                        >
+                                            {{ post.title }}
+                                        </span>
+                                    </Link>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

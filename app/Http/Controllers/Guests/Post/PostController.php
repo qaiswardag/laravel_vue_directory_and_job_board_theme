@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Guest\Post;
+namespace App\Http\Controllers\Guests\Post;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post\Post;
@@ -81,7 +81,7 @@ class PostController extends Controller
             return $post;
         });
 
-        return Inertia::render("Guests/Post/Index", [
+        return Inertia::render("Guests/Posts/Index", [
             "posts" => $posts,
         ]);
     }
@@ -115,12 +115,18 @@ class PostController extends Controller
      */
     public function show($slug)
     {
+        $postShow = "Guests/Posts/Show";
+        $slug = urldecode($slug);
+
         $post = Post::where("slug", $slug)
             ->with(["team:id,name,thumbnail", "user:id,first_name,last_name"])
             ->firstOrFail();
 
         if ($post->published === 0 && !Auth::check()) {
-            abort(404);
+            return Inertia::render("Error", [
+                "customError" => "Please try another route.",
+                "status" => 404,
+            ]);
         }
 
         $post->makeHidden(["id", "user_id", "team_id"]);
@@ -135,7 +141,7 @@ class PostController extends Controller
         }
 
         if ($post->published === 0 && Auth::user()->superadmin === 1) {
-            return Inertia::render("Guests/Post/Show", [
+            return Inertia::render($postShow, [
                 "post" => $post,
             ]);
         }
@@ -150,12 +156,12 @@ class PostController extends Controller
         }
 
         if ($post->published === 0 && Auth::user()->superadmin === 1) {
-            return Inertia::render("Guests/Post/Show", [
+            return Inertia::render($postShow, [
                 "post" => $post,
             ]);
         }
 
-        return Inertia::render("Guests/Post/Show", [
+        return Inertia::render($postShow, [
             "post" => $post,
         ]);
     }

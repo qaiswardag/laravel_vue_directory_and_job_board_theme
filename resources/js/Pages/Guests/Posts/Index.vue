@@ -26,7 +26,7 @@ defineProps({
                 <div class="my-12 mx-24 border-2 border-red-400 p-4">
                     <Link
                         :href="
-                            route('posts.show', [encodeURIComponent(post.slug)])
+                            decodeURIComponent(route('posts.show', [post.slug]))
                         "
                         class="myPrimaryLink text-2xl font-semibold mt-4"
                     >
@@ -34,18 +34,16 @@ defineProps({
                     </Link>
                     <p class="my-8">
                         slug:
-                        <br />
-                        {{ post.slug }}
-                    </p>
-                    <p class="mb-8">
-                        slug with encode URI Component:
-                        <br />
-                        {{ encodeURIComponent(post.slug) }}
+                        <span class="text-red-600">
+                            {{ post.slug }}
+                        </span>
                     </p>
 
-                    <p class="my-8">
+                    <p class="my-8 text-xl">
                         Publish Status:
-                        {{ post.published ? "Published" : "Private" }}
+                        <span class="text-purple-600 font-semibold">
+                            {{ post.published ? "Published" : "Private" }}
+                        </span>
                     </p>
                     <p class="my-4">post id is: {{ post.id }}</p>
                 </div>

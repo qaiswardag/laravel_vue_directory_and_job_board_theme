@@ -112,32 +112,54 @@ onMounted(() => {
                 Search
             </button>
         </div>
-        <div
-            v-if="
-                getCurrentMedia &&
-                getCurrentMedia.fetchedMedia &&
-                getCurrentMedia.fetchedMedia.media &&
-                getCurrentMedia.fetchedMedia.media.data &&
-                getCurrentMedia.isLoading === false &&
-                (getCurrentMedia.isError === null ||
-                    getCurrentMedia.isError === false)
-            "
-        >
+
+        <div class="flex items-center min-h-[2.5rem] bg-red-300">
             <div
-                class="flex justify-start items-center"
-                v-if="getCurrentMedia.fetchedMedia.total_results !== 0"
+                v-if="
+                    getCurrentMedia &&
+                    getCurrentMedia.fetchedMedia &&
+                    getCurrentMedia.fetchedMedia.media &&
+                    getCurrentMedia.fetchedMedia.media.data &&
+                    getCurrentMedia.isLoading === false &&
+                    (getCurrentMedia.isError === null ||
+                        getCurrentMedia.isError === false)
+                "
             >
-                <p
-                    class="myPrimaryParagraph text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor rounded my-2 px-2 py-1 text-xs"
+                <div
+                    class="flex justify-start items-center"
+                    v-if="getCurrentMedia.fetchedMedia.total_results !== 0"
                 >
-                    Results
-                    {{ getCurrentMedia.fetchedMedia.total_results }}
-                </p>
+                    <p
+                        class="myPrimaryParagraph text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor rounded my-1 px-2 py-2 text-xs"
+                    >
+                        Results
+                        {{ getCurrentMedia.fetchedMedia.total_results }}
+                    </p>
+                </div>
             </div>
         </div>
     </form>
 
-    <div class="overflow-y-scroll max-h-[30rem] min-h-[15rem] mt-2 mb-4 p-4">
+    <div
+        v-if="
+            getCurrentMedia &&
+            getCurrentMedia.fetchedMedia &&
+            getCurrentMedia.fetchedMedia.media &&
+            getCurrentMedia.fetchedMedia.total_results !== 0
+        "
+        class="scale-90 text-center bottom-0 w-full my-2 border-t border-b border-gray-200 py-2"
+    >
+        <TailwindPagination
+            :active-classes="['bg-black', 'text-white', 'border-black']"
+            :limit="2"
+            class="flex justify-center items-center"
+            :data="getCurrentMedia.fetchedMedia.media"
+            @pagination-change-page="getResultsForPage"
+        >
+        </TailwindPagination>
+    </div>
+
+    <div class="overflow-y-scroll mt-2 mb-4 p-4">
         <div
             v-if="
                 getCurrentMedia &&
@@ -146,7 +168,9 @@ onMounted(() => {
                     getCurrentMedia.isError === false)
             "
         >
-            <div class="flex items-center justify-center min-h-80 max-h-80">
+            <div
+                class="flex items-center justify-center max-h-[30rem] min-h-[25rem]"
+            >
                 <div
                     class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                     role="status"
@@ -170,14 +194,14 @@ onMounted(() => {
             "
         >
             <div
-                class=""
                 v-if="getCurrentMedia.fetchedMedia.total_results === 0"
+                class="min-h-[25rem]"
             >
-                <p class="myPrimaryParagraph">Media Library is empty.</p>
+                <p class="myPrimaryParagraph">No images.</p>
             </div>
 
             <div
-                class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 myPrimaryGap"
+                class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 myPrimaryGap max-h-[30rem] min-h-[25rem]"
             >
                 <template
                     v-for="image in getCurrentMedia &&
@@ -207,23 +231,5 @@ onMounted(() => {
                 </template>
             </div>
         </div>
-    </div>
-
-    <div
-        v-if="
-            getCurrentMedia &&
-            getCurrentMedia.fetchedMedia &&
-            getCurrentMedia.fetchedMedia.media
-        "
-        class="text-center mt-4"
-    >
-        <TailwindPagination
-            :active-classes="['bg-black', 'text-white', 'border-black']"
-            :limit="2"
-            class="mt-4 flex justify-center items-center"
-            :data="getCurrentMedia.fetchedMedia.media"
-            @pagination-change-page="getResultsForPage"
-        >
-        </TailwindPagination>
     </div>
 </template>

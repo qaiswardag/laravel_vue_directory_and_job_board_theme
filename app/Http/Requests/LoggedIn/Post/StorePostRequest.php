@@ -25,9 +25,7 @@ class StorePostRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this->team);
-
-        return [
+        $rules = [
             "published" => [""],
             // If you do not include the string validation rule for a text input like title.
             // it may allow non-string values to be submitted and saved in the database.
@@ -40,13 +38,7 @@ class StorePostRequest extends FormRequest
             // SQL code on your database.
 
             "title" => ["required", "string", "min:2", "max:255"],
-            "slug" => [
-                "required",
-                "string",
-                "min:2",
-                "max:255",
-                Rule::unique("posts", "slug"),
-            ],
+            "slug" => ["required", "string", "min:2", "max:255"],
 
             // If user_id is a foreign key column that references the id column of the users table,
             // you can use the exists validation rule to ensure that the value of user_id exists in
@@ -74,6 +66,20 @@ class StorePostRequest extends FormRequest
             "tags" => ["required", "string", "max:255"],
             "thumbnail" => ["required", "string", "max:255"],
         ];
+
+        // // Verify whether the post is both defined and contains a valid ID value.
+        // if ($this->post && $this->post->id !== null) {
+        //     $rules["slug"][] = Rule::unique("posts", "slug")->ignore(
+        //         $this->post->id
+        //     );
+        // }
+
+        // // if post is not defined.
+        // if ($this->post === null) {
+        //     $rules["slug"][] = Rule::unique("posts", "slug");
+        // }
+
+        return $rules;
     }
 
     /**
@@ -95,7 +101,7 @@ class StorePostRequest extends FormRequest
         if ($validator->fails()) {
             return back()->with(
                 "error",
-                "There was an error with your submission. Please make sure all fields are filled in correctly."
+                "Please complete all fields correctly to proceed."
             );
         }
 

@@ -100,7 +100,7 @@ class StoreMediaLibraryRequest extends FormRequest
         if ($validator->fails()) {
             return back()->with(
                 "error",
-                "There was an error with your submission."
+                "Oops! Something went wrong. Please try again.."
             );
         }
 

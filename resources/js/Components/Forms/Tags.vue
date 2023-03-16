@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps({
     tagsOnLoad: {
@@ -9,13 +9,22 @@ const props = defineProps({
 
 const error = ref(null);
 const vueTag = ref("");
-const tagsEntered = ref([]);
+// const tagsEntered = ref([]);
 const emit = defineEmits(["firstTagsButton"]);
 const regexSpecialCharacters = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
-if (props.tagsOnLoad.length !== 0) {
-    tagsEntered.value = props.tagsOnLoad.split(",");
-}
+// if (props.tagsOnLoad.length !== 0) {
+//     tagsEntered.value = props.tagsOnLoad.split(",");
+// }
+
+const tagsEntered = computed(() => {
+    if (props.tagsOnLoad.length !== 0) {
+        return props.tagsOnLoad.split(",");
+    }
+    if (props.tagsOnLoad.length === 0) {
+        return [];
+    }
+});
 
 // handle input
 const handleInput = function () {

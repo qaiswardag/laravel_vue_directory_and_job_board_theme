@@ -74,15 +74,15 @@ class PostController extends Controller
 
         $slug = Str::lower(Str::slug($request->slug, "_"));
 
+        // generate a unique number for each post
+        $postNumber = rand(100000, 10000000);
+        $slug = "$postNumber . " / " . $slug"; // create the unique post slug
+
         // check if the slug already exists
         if (Post::where("slug", $slug)->exists()) {
             // if the slug already exists, add a prefix to make it unique
-            $suffix = 1;
-            do {
-                $uniqueSlug = $suffix . "_" . $slug;
-                $suffix++;
-            } while (Post::where("slug", $uniqueSlug)->exists());
-            $slug = $uniqueSlug;
+            $postNumber = rand(100000, 10000000);
+            $slug = $postNumber . "/" . $slug; // create the unique post slug
         }
 
         Post::create([
@@ -122,8 +122,11 @@ class PostController extends Controller
      */
     public function edit(Post $post, Team $team)
     {
-        // $this->authorize("can-create-and-update", $team);
-        //
+        $this->authorize("can-create-and-update", $team);
+
+        return Inertia::render("Posts/UpdatePost/UpdatePost", [
+            "post" => $post,
+        ]);
     }
 
     /**
@@ -133,9 +136,46 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post, Team $team)
+    public function update(StorePostRequest $request, Post $post)
     {
-        // $this->authorize("can-create-and-update", $team);
+        // use and find the Team from request as that is
+        // the Team user want to store a Post for.
+        $team = Team::findOrFail($request->team["id"]);
+
+        // Extracts the numbers at the beginning of the slug.
+        // Extracted from 123456/my_post is 123456.
+        // The regex /^(\d+)\// means start with one or more digits (\d+).
+        // followed by a forward slash (\).
+        // The digits are captured in $matches[1].
+        preg_match("/^(\d+)\//", $post->slug, $matches);
+        $postNumbers = $matches[1];
+
+        // Combines the extracted numbers with the slug from the request.
+        // 123456 with request slug, example: my_updated_slug.
+        // to create a new slug in the format of "numbers/slug".
+        // Example: 123456/my_updated_slug.
+        $slug = $postNumbers . "/" . $request->slug;
+        dd("slug som bliver gemt er nu:", $slug);
+
+        $title = $request->title;
+        $content = $request->content;
+        $userId = $request->user_id;
+
+        $post->update([
+            "user_id" => $userId,
+            "team_id" => $team->id,
+            "title" => $title,
+            "slug" => $slug,
+            "published" => $request->published,
+            "thumbnail" => $request->thumbnail,
+            "content" => $content,
+            "tags" => $request->tags,
+        ]);
+
+        // return current Team user is on and not the Team user is storing the post for
+        $currentTeam = Auth::user()->currentTeam;
+
+        return redirect()->route("overview.posts.index", $currentTeam);
     }
 
     /**
