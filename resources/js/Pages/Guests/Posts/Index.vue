@@ -25,9 +25,7 @@ defineProps({
             <div v-for="post in posts.data" :key="post.id">
                 <div class="my-12 mx-24 border-2 border-red-400 p-4">
                     <Link
-                        :href="
-                            decodeURIComponent(route('posts.show', [post.slug]))
-                        "
+                        :href="route('posts.show', [post.slug_id, post.slug])"
                         class="myPrimaryLink text-2xl font-semibold mt-4"
                     >
                         {{ post.title }}

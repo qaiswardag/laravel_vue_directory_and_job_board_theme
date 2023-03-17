@@ -162,8 +162,11 @@ Route::middleware([])
             "posts"
         );
         // unique post
-        Route::get("/posts/{slug}", [PostPostController::class, "show"])
-            ->where("slug", "[A-Za-z0-9/_-]+")
+        Route::get("/posts/{slug_id}/{slug}", [
+            PostPostController::class,
+            "show",
+        ])
+            // ->where("slug", "[A-Za-z0-9/_-]+")
             ->name("posts.show");
     });
 

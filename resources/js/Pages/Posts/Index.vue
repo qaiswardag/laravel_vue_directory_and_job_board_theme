@@ -315,9 +315,10 @@ const handleSearch = function () {
                                 <td class="myPrimaryTableTBodyTd">
                                     <Link
                                         :href="
-                                            decodeURIComponent(
-                                                route('posts.show', [post.slug])
-                                            )
+                                            route('posts.show', [
+                                                post.slug_id,
+                                                post.slug,
+                                            ])
                                         "
                                         class="myPrimaryLink text-2xl font-semibold mt-4"
                                     >

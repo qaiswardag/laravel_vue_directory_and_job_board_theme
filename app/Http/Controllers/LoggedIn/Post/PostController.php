@@ -72,29 +72,35 @@ class PostController extends Controller
         $content = $request->content;
         $userId = $request->user_id;
 
+        // slug
         $slug = Str::lower(Str::slug($request->slug, "_"));
 
-        // generate a unique number for each post
-        $postNumber = rand(100000, 10000000);
-        $slug = "$postNumber . " / " . $slug"; // create the unique post slug
+        $slugId = 100; // the starting value of the slug_id
 
-        // check if the slug already exists
-        if (Post::where("slug", $slug)->exists()) {
-            // if the slug already exists, add a prefix to make it unique
-            $postNumber = rand(100000, 10000000);
-            $slug = $postNumber . "/" . $slug; // create the unique post slug
-        }
+        do {
+            $slugExists = Post::where([
+                ["slug", "=", $slug],
+                ["slug_id", "=", $slugId],
+            ])->exists();
+
+            if ($slugExists) {
+                $slugId++; // increment the slug_id if the slug already exists
+            }
+        } while ($slugExists);
 
         Post::create([
             "user_id" => $userId,
             "team_id" => $team->id,
             "title" => $title,
             "slug" => $slug,
+            "slug_id" => $slugId,
             "published" => $request->published,
             "thumbnail" => $request->thumbnail,
             "content" => $content,
             "tags" => $request->tags,
         ]);
+
+        // $slug = "$slug_id . " / " . $slug"; // create the unique post slug
 
         // return current Team user is on and not the Team user is storing the post for
         $currentTeam = Auth::user()->currentTeam;

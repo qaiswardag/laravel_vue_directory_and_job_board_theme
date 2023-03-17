@@ -26,6 +26,7 @@ class Post extends Model
         "published",
         "thumbnail",
         "tags",
+        "slug_id",
     ];
 
     // Define the relationship with the Team model

@@ -34,6 +34,7 @@ class PostFactory extends Factory
             "content" => $this->faker->sentence(rand(20, 60), false),
             "published" => rand(0, 1),
             "tags" => "Summer,Dubai,Event,FashionShow",
+            "slug_id" => rand(100000, 1000000),
         ];
     }
 }

@@ -42,6 +42,7 @@ return new class extends Migration {
             $table->boolean("published")->nullable();
             $table->string("thumbnail")->nullable();
             $table->mediumText("tags")->nullable();
+            $table->integer("slug_id")->unsigned();
             $table->timestamps();
         });
     }

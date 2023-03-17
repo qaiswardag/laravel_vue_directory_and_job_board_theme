@@ -113,12 +113,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($slugId, $slug)
     {
-        $postShow = "Guests/Posts/Show";
+        $postRenderView = "Guests/Posts/Show";
         $slug = urldecode($slug);
 
-        $post = Post::where("slug", $slug)
+        $post = Post::where([["slug", "=", $slug], ["slug_id", "=", $slugId]])
             ->with(["team:id,name,thumbnail", "user:id,first_name,last_name"])
             ->firstOrFail();
 
@@ -141,7 +141,7 @@ class PostController extends Controller
         }
 
         if ($post->published === 0 && Auth::user()->superadmin === 1) {
-            return Inertia::render($postShow, [
+            return Inertia::render($postRenderView, [
                 "post" => $post,
             ]);
         }
@@ -156,12 +156,12 @@ class PostController extends Controller
         }
 
         if ($post->published === 0 && Auth::user()->superadmin === 1) {
-            return Inertia::render($postShow, [
+            return Inertia::render($postRenderView, [
                 "post" => $post,
             ]);
         }
 
-        return Inertia::render($postShow, [
+        return Inertia::render($postRenderView, [
             "post" => $post,
         ]);
     }
