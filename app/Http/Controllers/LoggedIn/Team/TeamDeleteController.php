@@ -98,7 +98,7 @@ class TeamDeleteController extends Controller
 
         $this->authorize("can-destroy", $team);
 
-        // passwrod confirm
+        // Password confirm
         $confirmed = app(ConfirmPassword::class)(
             $guard,
             $request->user(),
@@ -117,7 +117,6 @@ class TeamDeleteController extends Controller
 
         $path = public_path("uploads/" . $team->reference_id);
 
-        // delete Team public folder
         if (File::exists($path) === true) {
             File::deleteDirectory($path);
         }

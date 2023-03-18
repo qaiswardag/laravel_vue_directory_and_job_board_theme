@@ -28,6 +28,7 @@ class PostController extends Controller
      */
     public function index(Request $request, Team $team)
     {
+        // Authorize the current team that the user is on, rather than the team that the user is storing the post for.
         $this->authorize("can-read", $team);
 
         $posts = $team
@@ -64,7 +65,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        // use and find the Team from request as that is the Team user want to store a Post for
+        // Find the current team that the user is on, rather than the team that the user is storing the post for.
         $team = Team::findOrFail($request->team["id"]);
         $this->authorize("can-create-and-update", $team);
 
@@ -75,7 +76,7 @@ class PostController extends Controller
         // slug
         $slug = Str::lower(Str::slug($request->slug, "_"));
 
-        $slugId = 100; // the starting value of the slug_id
+        $slugId = 1000000; // the starting value of the slug_id
 
         do {
             $slugExists = Post::where([
@@ -100,9 +101,7 @@ class PostController extends Controller
             "tags" => $request->tags,
         ]);
 
-        // $slug = "$slug_id . " / " . $slug"; // create the unique post slug
-
-        // return current Team user is on and not the Team user is storing the post for
+        // Return the current team that the user is on, rather than the team that the user is storing the post for.
         $currentTeam = Auth::user()->currentTeam;
 
         return redirect()->route("overview.posts.index", $currentTeam);
@@ -128,6 +127,7 @@ class PostController extends Controller
      */
     public function edit(Post $post, Team $team)
     {
+        // Authorize the current team that the user is on, rather than the team that the user is storing the post for.
         $this->authorize("can-create-and-update", $team);
 
         return Inertia::render("Posts/UpdatePost/UpdatePost", [
@@ -144,32 +144,20 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, Post $post)
     {
-        // use and find the Team from request as that is
-        // the Team user want to store a Post for.
+        // Find the current team that the user is on, rather than the team that the user is storing the post for.
         $team = Team::findOrFail($request->team["id"]);
+        $this->authorize("can-create-and-update", $team);
 
-        // Extracts the numbers at the beginning of the slug.
-        // Extracted from 123456/my_post is 123456.
-        // The regex /^(\d+)\// means start with one or more digits (\d+).
-        // followed by a forward slash (\).
-        // The digits are captured in $matches[1].
-        preg_match("/^(\d+)\//", $post->slug, $matches);
-        $postNumbers = $matches[1];
-
-        // Combines the extracted numbers with the slug from the request.
-        // 123456 with request slug, example: my_updated_slug.
-        // to create a new slug in the format of "numbers/slug".
-        // Example: 123456/my_updated_slug.
-        $slug = $postNumbers . "/" . $request->slug;
-        dd("slug som bliver gemt er nu:", $slug);
+        $slug = $request->slug;
 
         $title = $request->title;
         $content = $request->content;
+        $teamId = $request->team["id"];
         $userId = $request->user_id;
 
         $post->update([
             "user_id" => $userId,
-            "team_id" => $team->id,
+            "team_id" => $teamId,
             "title" => $title,
             "slug" => $slug,
             "published" => $request->published,
@@ -178,7 +166,7 @@ class PostController extends Controller
             "tags" => $request->tags,
         ]);
 
-        // return current Team user is on and not the Team user is storing the post for
+        // Return the current team that the user is on, rather than the team that the user is storing the post for.
         $currentTeam = Auth::user()->currentTeam;
 
         return redirect()->route("overview.posts.index", $currentTeam);

@@ -205,7 +205,6 @@ onMounted(() => {
         createPostForm.content = props.post.content;
         createPostForm.published = props.post.published === 1 ? true : false;
         // createPostForm.team = props.post.team;
-        createPostForm.user_id = props.post.user_id;
         createPostForm.thumbnail = props.post.thumbnail;
         createPostForm.tags = props.post.tags;
     }

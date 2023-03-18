@@ -185,7 +185,7 @@ class MediaLibraryController extends Controller
 
         $imagePath = public_path("uploads/" . $image->path);
 
-        if (file_exists($imagePath) === false) {
+        if (File::exists($imagePath) === false) {
             // delete the image record from the dat
             $image->delete();
 
@@ -196,12 +196,10 @@ class MediaLibraryController extends Controller
         }
 
         // delete the file from the public directory
-        if (file_exists($imagePath) === true) {
+        if (File::exists($imagePath) === true) {
             File::delete($imagePath);
         }
 
-        //
-        //
         //
         // delete the image record from the dat
         $image->delete();
