@@ -21,6 +21,7 @@ const form = useForm({
     _method: "PUT",
     first_name: props.user.first_name,
     last_name: props.user.last_name,
+    username: props.user.username,
     email: props.user.email,
     public: props.user.public ? true : false,
     photo: null,
@@ -147,6 +148,7 @@ const clearPhotoFileInput = () => {
                     <div class="relative flex items-center">
                         <TextInput
                             id="user_name"
+                            v-model="form.username"
                             :value="user.username"
                             type="text"
                             autocomplete="off"
@@ -154,7 +156,7 @@ const clearPhotoFileInput = () => {
                             class="myPrimaryInputReadonly"
                         />
                         <div
-                            class="absolute inset-y-0 right-0 pr-1.5 flex items-center"
+                            class="absolute inset-y-0 right-0 pr-1.5 flex items-center cursor-pointer"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -172,9 +174,15 @@ const clearPhotoFileInput = () => {
                             </svg>
                         </div>
                     </div>
-
-                    <InputError :message="form.errors.first_name" />
+                    <p class="myPrimaryParagraph">
+                        Your username must be between 4-15 characters in length
+                        and can only contain letters (A-Z) numbers (0-9) and
+                        underscores. Special characters and spaces are not
+                        allowed.
+                    </p>
+                    <InputError :message="form.errors.username" />
                 </div>
+
                 <div class="myInputGroup">
                     <InputLabel for="first_name" value="First name" />
                     <TextInput

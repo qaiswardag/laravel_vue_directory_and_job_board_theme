@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
             "first_name" => "Marilyn",
             "last_name" => "Monroe",
             "email" => "mjm@myself.ae",
-            "username" => "marilyn.monroe",
             "current_team_id" => 4,
             "password" => Hash::make("123456"),
         ]);
@@ -45,7 +44,6 @@ class DatabaseSeeder extends Seeder
             "first_name" => "Oprah",
             "last_name" => "Winfrey",
             "email" => "ow@myself.ae",
-            "username" => "oprah.winfrey",
             "current_team_id" => 5,
             "password" => Hash::make("123456"),
         ]);
@@ -62,7 +60,6 @@ class DatabaseSeeder extends Seeder
             "first_name" => "Ingrid",
             "last_name" => "Bergman",
             "email" => "ib@myself.ae",
-            "username" => "ingrid.bergman",
             "current_team_id" => 6,
             "password" => Hash::make("123456"),
         ]);
@@ -75,17 +72,15 @@ class DatabaseSeeder extends Seeder
         ]);
         //
         //
-        //
-        //
-        //
-        // // Qais, Shaun and Mie user and team creations
+
+        // Qais, Shaun and Mie user and team creations
+
         // Qais Wardag
         User::factory()->create([
             "id" => 1,
             "first_name" => "Qais",
             "last_name" => "Wardag",
             "email" => "qw@myself.ae",
-            "username" => "qais.wardag",
             "public" => true,
             "current_team_id" => 1,
             "superadmin" => true,
@@ -104,7 +99,7 @@ class DatabaseSeeder extends Seeder
             "first_name" => "Shaun",
             "last_name" => "Pelling",
             "email" => "sp@myself.ae",
-            "username" => "shaun.pelling",
+
             "public" => false,
             "current_team_id" => 2,
             "password" => Hash::make("123456"),
@@ -123,7 +118,7 @@ class DatabaseSeeder extends Seeder
             "first_name" => "Mie",
             "last_name" => "Mortensen",
             "email" => "mm@myself.ae",
-            "username" => "mie.mortensen",
+
             "public" => true,
             "current_team_id" => 3,
             "password" => Hash::make("123456"),

@@ -63,4 +63,28 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $appends = ["profile_photo_url"];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $number = 100000; // set a default number
+            $firstName = $user->first_name;
+            $lastName = $user->last_name;
+
+            do {
+                // generate a new username using the first name, last name, and number
+                $username = Str::lower(
+                    Str::slug($firstName . "_" . $lastName . "_" . $number, "_")
+                );
+                $number++; // increment the number
+
+                // check if the username already exists in the database
+            } while (static::where("username", $username)->exists());
+
+            // assign the unique username to the user model
+            $user->username = $username;
+        });
+    }
 }

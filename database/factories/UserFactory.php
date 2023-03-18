@@ -27,11 +27,10 @@ class UserFactory extends Factory
     {
         $fakeFirstName = $this->faker->firstName();
         $fakeLastName = $this->faker->lastName();
-        $fakeUserName = $fakeFirstName . "_" . $fakeLastName;
+
         return [
             "first_name" => $fakeFirstName,
             "last_name" => $fakeLastName,
-            "username" => $fakeUserName,
             "email" => $this->faker->unique()->safeEmail(),
             "email_verified_at" => now(),
             "password" => Hash::make("123456"),
@@ -40,6 +39,7 @@ class UserFactory extends Factory
             "remember_token" => Str::random(10),
             "profile_photo_path" => null,
             "current_team_id" => null,
+            "public" => rand(0, 1),
         ];
     }
 

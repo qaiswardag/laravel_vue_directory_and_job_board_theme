@@ -13,7 +13,6 @@ const form = useForm({
     first_name: "",
     last_name: "",
     email: "",
-    username: "",
     password: "",
     password_confirmation: "",
     terms: false,
@@ -93,22 +92,6 @@ const submit = () => {
                             autocomplete="email"
                         />
                         <InputError :message="form.errors.email" />
-                    </div>
-                    <div class="myInputGroup">
-                        <InputLabel for="username" value="username" />
-                        <TextInput
-                            id="username"
-                            v-model="form.username"
-                            type="text"
-                            autocomplete="off"
-                        />
-                        <p class="myPrimaryParagraph">
-                            Your username must be between 4-15 characters in
-                            length and can only contain letters (A-Z) numbers
-                            (0-9) and underscores. Special characters and spaces
-                            are not allowed.
-                        </p>
-                        <InputError :message="form.errors.username" />
                     </div>
 
                     <div class="myInputGroup">
