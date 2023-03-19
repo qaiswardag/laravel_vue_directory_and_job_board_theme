@@ -35,79 +35,10 @@ const props = defineProps({
     user: {
         required: true,
     },
+    images: {
+        required: true,
+    },
 });
-
-// tabs
-const tabs = [
-    { name: "Recently Viewed", href: "#", current: true },
-    { name: "Recently Added", href: "#", current: false },
-    { name: "Favorited", href: "#", current: false },
-];
-
-const images = [
-    {
-        name: "IMG_4985.HEIC",
-        size: "3.9 MB",
-        source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-        current: true,
-    },
-    {
-        name: "IMG_4985.HEIC",
-        size: "3.9 MB",
-        source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-        current: true,
-    },
-    {
-        name: "IMG_4985.HEIC",
-        size: "3.9 MB",
-        source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-        current: true,
-    },
-    {
-        name: "IMG_4985.HEIC",
-        size: "3.9 MB",
-        source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-        current: true,
-    },
-    {
-        name: "IMG_4985.HEIC",
-        size: "3.9 MB",
-        source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-        current: true,
-    },
-    {
-        name: "IMG_4985.HEIC",
-        size: "3.9 MB",
-        source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-        current: true,
-    },
-    {
-        name: "IMG_4985.HEIC",
-        size: "3.9 MB",
-        source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-        current: true,
-    },
-    {
-        name: "IMG_4985.HEIC",
-        size: "3.9 MB",
-        source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-        current: true,
-    },
-    // More files...
-];
-
-const currentFile = {
-    name: "IMG_4985.HEIC",
-    size: "3.9 MB",
-    source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-    information: {
-        "Uploaded by": "Marie Culver",
-        Created: "June 8, 2020",
-        "Last modified": "June 8, 2020",
-        Dimensions: "4032 x 3024",
-        Resolution: "72 x 72",
-    },
-};
 
 // media library modal
 
@@ -173,246 +104,86 @@ const handleUploadImages = function () {
                 @thirdMediaButtonFunction="thirdMediaButtonFunction"
             >
             </MediaLibraryModal>
-            <div class="my-4">
-                <PrimaryButton @click="handleUploadImages"
-                    >Upload images</PrimaryButton
-                >
-            </div>
+
             <div>
-                <!-- Main content -->
-                <div
-                    class="grid grid-cols-12 myPrimaryGap overflow-hidden bg-white rounded-xl"
+                <PrimaryButton
+                    @click="handleUploadImages"
+                    class="mb-4 myPrimaryButton gap-2 items-center"
                 >
-                    <!-- main gallary overview -->
-                    <main class="flex-1 overflow-y-auto col-span-8">
-                        <div
-                            class="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8"
-                        >
-                            <div class="flex">
-                                <h1 class="tertiaryHeader">Photos</h1>
-                            </div>
-
-                            <!-- Tabs -->
-                            <!-- gallery images - start -->
-                            <div>
-                                <div class="mt-3 sm:mt-2">
-                                    <div class="sm:hidden">
-                                        <label for="tabs" class="sr-only"
-                                            >Select a tab</label
-                                        >
-                                        <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-                                        <select
-                                            id="tabs"
-                                            name="tabs"
-                                            class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:text-sm"
-                                        >
-                                            <option selected="">
-                                                Recently Viewed
-                                            </option>
-                                            <option>Recently Added</option>
-                                            <option>Favorited</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <div
-                                            class="flex items-center border-b border-gray-200"
-                                        >
-                                            <nav
-                                                class="-mb-px flex flex-1 space-x-6 xl:space-x-8"
-                                                aria-label="Tabs"
-                                            >
-                                                <a
-                                                    v-for="tab in tabs"
-                                                    :key="tab.id"
-                                                    :href="tab.href"
-                                                    :aria-current="
-                                                        tab.current
-                                                            ? 'page'
-                                                            : undefined
-                                                    "
-                                                    :class="[
-                                                        tab.current
-                                                            ? 'border-emerald-500 text-emerald-600'
-                                                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-                                                        'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
-                                                    ]"
-                                                    >{{ tab.name }}</a
-                                                >
-                                            </nav>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Gallery -->
-                                <section
-                                    class="mt-8 pb-16"
-                                    aria-labelledby="gallery-heading"
-                                >
-                                    <h2 id="gallery-heading" class="sr-only">
-                                        Recently viewed
-                                    </h2>
-                                    <ul
-                                        role="list"
-                                        class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
-                                    >
-                                        <li
-                                            v-for="file in images"
-                                            :key="file.name"
-                                            class="relative"
-                                        >
-                                            <div
-                                                class="rounded-lg bg-gray-100']"
-                                            >
-                                                <img
-                                                    :src="file.source"
-                                                    :alt="file.name"
-                                                    class="lg:h-48 xl:w-full h-48 w-full rounded-md object-cover"
-                                                />
-                                            </div>
-                                            <div
-                                                class="mt-1 py-2 px-2 pointer-events-none block text-xs text-white bg-gray-800 break-words border border-gray-5 rounded-lg"
-                                            >
-                                                <p>Name: {{ file.name }}</p>
-                                                <p>
-                                                    Size:
-                                                    {{
-                                                        (
-                                                            file.size / 1000
-                                                        ).toFixed(2)
-                                                    }}
-                                                    KB
-                                                </p>
-                                                <p>Width: {{ file.width }}</p>
-                                                <p>Height: {{ file.height }}</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </section>
-
-                                <hr />
-                                <template>
-                                    <ul
-                                        role="list"
-                                        class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
-                                    >
-                                        <li
-                                            v-for="file in images"
-                                            :key="file.source"
-                                            class="relative"
-                                        >
-                                            <div
-                                                class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-myPrimaryBrandColor focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
-                                            >
-                                                <img
-                                                    :src="file.source"
-                                                    alt=""
-                                                    class="pointer-events-none object-cover group-hover:opacity-75"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    class="absolute inset-0 focus:outline-none"
-                                                >
-                                                    <span class="sr-only"
-                                                        >View details for
-                                                        {{ file.title }}</span
-                                                    >
-                                                </button>
-                                            </div>
-                                            <p
-                                                class="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900"
-                                            >
-                                                {{ file.title }}
-                                            </p>
-                                            <p
-                                                class="pointer-events-none block text-sm font-medium text-gray-500"
-                                            >
-                                                {{ file.size }}
-                                            </p>
-                                        </li>
-                                    </ul>
-                                </template>
-                            </div>
-                            <!-- gallery images - end -->
-                        </div>
-                    </main>
-
-                    <!-- details sidebar -->
-                    <aside
-                        class="overflow-y-auto border-l border-gray-200 bg-white p-8 col-span-4"
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-4 h-4"
                     >
-                        <div class="space-y-6 pb-16">
-                            <div>
-                                <div
-                                    class="aspect-h-7 block overflow-hidden rounded-lg"
-                                >
-                                    <img
-                                        :src="currentFile.source"
-                                        alt=""
-                                        class="object-cover"
-                                    />
-                                </div>
-                                <div
-                                    class="mt-4 flex items-start justify-between"
-                                >
-                                    <div>
-                                        <h2
-                                            class="text-lg font-medium text-gray-900"
-                                        >
-                                            <span class="sr-only"
-                                                >Details for </span
-                                            >{{ currentFile.name }}
-                                        </h2>
-                                        <p
-                                            class="text-sm font-medium text-gray-500"
-                                        >
-                                            {{ currentFile.size }}
-                                        </p>
-                                    </div>
-                                    <button
-                                        type="button"
-                                        class="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                                    >
-                                        <span class="sr-only">Favorite</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-gray-900">
-                                    Information
-                                </h3>
-                                <dl
-                                    class="mt-2 divide-y divide-gray-200 border-t border-b border-gray-200"
-                                >
-                                    <div
-                                        v-for="key in Object.keys(
-                                            currentFile.information
-                                        )"
-                                        :key="key"
-                                        class="flex justify-between py-3 text-sm font-medium"
-                                    >
-                                        <dt class="text-gray-500">{{ key }}</dt>
-                                        <dd
-                                            class="whitespace-nowrap text-gray-900"
-                                        >
-                                            {{ currentFile.information[key] }}
-                                        </dd>
-                                    </div>
-                                </dl>
-                            </div>
-                            <div class="flex items-center myPrimaryGap">
-                                <button type="button" class="myPrimaryButton">
-                                    Download
-                                </button>
-                                <button
-                                    type="button"
-                                    class="myPrimaryDeleteButton"
-                                >
-                                    Delete
-                                </button>
-                            </div>
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                        ></path>
+                    </svg>
+                    Upload images
+                </PrimaryButton>
+                <p class="myPrimaryParagraph">
+                    Manage or upload new images to your collection to keep your
+                    visual assets up-to-date. You can easily organize and sort
+                    your images, and quickly find the ones you need with our
+                    search and filter tools.
+                </p>
+                <p class="myPrimaryParagraph mt-8 mb-4">
+                    With the ability to upload new images, you can ensure that
+                    your collection is always expanding with fresh, high-quality
+                    visual content that represents your brand and meets your
+                    business needs. Whether you need to update your website,
+                    social media profiles, or marketing materials, managing and
+                    uploading new images is a simple and effective way to stay
+                    ahead of the competition.
+                </p>
+            </div>
+
+            <div class="mt-6 mb-6">
+                <p class="myPrimaryParagraph mt-8 mb-4">
+                    You are currently viewing the latest 10 images uploaded by
+                    your team. These images are sorted by date, with the most
+                    recent ones displayed first.
+                </p>
+                <ul
+                    role="list"
+                    class="grid grid-cols-2 myPrimaryGap sm:grid-cols-3 lg:grid-cols-4"
+                >
+                    <li
+                        v-for="file in images"
+                        :key="file.id"
+                        class="relative border border-myPrimaryLightGrayColor p-4 rounded"
+                    >
+                        <div
+                            class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
+                        >
+                            <img
+                                :src="`/uploads/${file.path}`"
+                                alt=""
+                                class="pointer-events-none object-cover group-hover:opacity-75"
+                            />
                         </div>
-                    </aside>
-                </div>
+
+                        <dl
+                            class="myPrimaryParagraph text-xs mt-2 border-b border-gray-200 divide-y divide-gray-200"
+                        >
+                            <div class="py-3 flex justify-between items-center">
+                                <dt class="">Dimensions</dt>
+                                <dd class="">
+                                    {{ file.width }} x {{ file.height }}
+                                </dd>
+                            </div>
+                            <div class="py-3 flex justify-between items-center">
+                                <dt class="">Size</dt>
+                                <dd class="">{{ file.size }} KB</dd>
+                            </div>
+                        </dl>
+                    </li>
+                </ul>
             </div>
         </div>
     </LoggedInLayout>

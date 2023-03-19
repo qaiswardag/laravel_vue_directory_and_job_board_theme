@@ -147,19 +147,21 @@ onMounted(() => {
             getCurrentMedia.fetchedMedia.media &&
             getCurrentMedia.fetchedMedia.total_results !== 0
         "
-        class="scale-90 text-center bottom-0 w-full my-2 border-t border-b border-gray-200 py-2"
+        class="scale-90 text-center bottom-0 w-full my-2 border-b border-gray-200 py-2"
     >
         <TailwindPagination
             :active-classes="['bg-black', 'text-white', 'border-black']"
             :limit="2"
-            class="flex justify-center items-center"
+            :class="['flex', 'justify-center', 'items-center', 'rounded-full']"
             :data="getCurrentMedia.fetchedMedia.media"
             @pagination-change-page="getResultsForPage"
         >
         </TailwindPagination>
     </div>
 
-    <div class="overflow-y-scroll mt-2 mb-4 p-4">
+    <div
+        class="overflow-y-scroll mb-4 p-4 border border-myPrimaryMediumGrayColor rounded"
+    >
         <div
             v-if="
                 getCurrentMedia &&
@@ -201,7 +203,7 @@ onMounted(() => {
             </div>
 
             <div
-                class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 myPrimaryGap max-h-[30rem] min-h-[25rem]"
+                class="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 myPrimaryGap max-h-[30rem] min-h-[25rem]"
             >
                 <template
                     v-for="image in getCurrentMedia &&
@@ -209,12 +211,14 @@ onMounted(() => {
                     getCurrentMedia.fetchedMedia.media.data"
                     :key="image.id"
                 >
-                    <div>
+                    <div
+                        @click="handleImageClick(image.id)"
+                        class="border border-myPrimaryLightGrayColor rounded px-2 p-2 cursor-pointer"
+                    >
                         <img
-                            @click="handleImageClick(image.id)"
-                            class="mx-auto block h-28 w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm hover:scale-105 transition-all"
+                            class="group aspect-w-10 aspect-h-7 h-32 block w-full overflow-hidden rounded bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer"
                             :class="{
-                                'border-spacing-8 border-4 border-myPrimaryBrandColor':
+                                '':
                                     image.id ===
                                     getCurrentImage?.currentImage?.mediaLibrary
                                         ?.id,
@@ -222,11 +226,63 @@ onMounted(() => {
                             :src="`/uploads/${image.path}`"
                             alt="image"
                         />
+
                         <p
                             class="myPrimaryParagraph text-xs italic pl-1 break-words"
+                        ></p>
+
+                        <dl
+                            class="myPrimaryParagraph text-xs mt-2 border-gray-200 divide-y divide-gray-200"
                         >
-                            {{ image.name ? image.name : "–" }}
-                        </p>
+                            <div class="py-3 flex justify-between items-center">
+                                <dt class="">Selected</dt>
+                                <dd
+                                    v-if="
+                                        image.id ===
+                                        getCurrentImage?.currentImage
+                                            ?.mediaLibrary?.id
+                                    "
+                                    class=""
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="2"
+                                        stroke="currentColor"
+                                        class="w-4 h-4 text-green-600"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M4.5 12.75l6 6 9-13.5"
+                                        />
+                                    </svg>
+                                </dd>
+                            </div>
+                            <div class="py-2 flex justify-between gap-2">
+                                <dt class="text-left">Width:</dt>
+                                <dd class="text-right">
+                                    {{ image.width }}
+                                </dd>
+                            </div>
+                            <div class="py-2 flex justify-between gap-2">
+                                <dt class="text-left">Height:</dt>
+                                <dd class="text-right">
+                                    {{ image.height }}
+                                </dd>
+                            </div>
+                            <div class="py-2 flex justify-between gap-2">
+                                <dt class="text-left">Size:</dt>
+                                <dd class="text-right">{{ image.size }} KB</dd>
+                            </div>
+                            <div class="py-2 flex justify-between gap-2">
+                                <dt class="text-left">Name:</dt>
+                                <dd class="text-right">
+                                    {{ image.name ? image.name : "–" }}
+                                </dd>
+                            </div>
+                        </dl>
                     </div>
                 </template>
             </div>

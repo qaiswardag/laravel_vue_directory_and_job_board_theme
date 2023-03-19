@@ -21,7 +21,14 @@ class MediaLibraryController extends Controller
     public function index(Team $team)
     {
         $this->authorize("can-read", $team);
-        return Inertia::render("Media/Media");
+
+        $images = MediaLibrary::latest()
+            ->take(10)
+            ->get();
+
+        return Inertia::render("Media/Media", [
+            "images" => $images,
+        ]);
     }
 
     /**
