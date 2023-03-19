@@ -44,6 +44,8 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: [
+                    "Roboto",
+                    "Gill Sans",
                     "Gill Sans",
                     "Century Gothic",
                     "Verdana",

@@ -222,21 +222,18 @@ const handleSearch = function () {
             </div>
         </form>
 
-        <h1
-            v-if="posts && posts.data.length <= 0"
-            class="myPrimaryHeaderMessage"
-        >
-            No Posts yet
-        </h1>
-        <p class="myPrimaryParagraph">
-            Looks like there are no posts yet! Why not be the first to share
-            your thoughts and ideas with the community? Creating a post is easy
-            - just click on the 'Create Post' button and get started.
-        </p>
-        <p class="myPrimaryParagraph mt-2">
-            Share your expertise, ask questions, and start a conversation with
-            your fellow community members.
-        </p>
+        <template v-if="posts && posts.data.length <= 0">
+            <h1 class="myPrimaryHeaderMessage">No Posts yet</h1>
+            <p class="myPrimaryParagraph">
+                Looks like there are no posts yet! Why not be the first to share
+                your thoughts and ideas with the community? Creating a post is
+                easy - just click on the 'Create Post' button and get started.
+            </p>
+            <p class="myPrimaryParagraph mt-2">
+                Share your expertise, ask questions, and start a conversation
+                with your fellow community members.
+            </p>
+        </template>
 
         <!-- table start -->
         <div v-if="posts && posts.data.length >= 1" class="myTableContainer">

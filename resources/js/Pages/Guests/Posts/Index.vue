@@ -22,29 +22,36 @@ defineProps({
         <div class="myPrimarySection">
             <h1 class="my-8 text-4xl text-center">Posts</h1>
 
-            <div v-for="post in posts.data" :key="post.id">
-                <div class="my-12 mx-24 border-2 border-red-400 p-4">
+            <div class="grid grid-cols-4 myPrimaryGap">
+                <div
+                    class="p-4 bg-white rounded min-h-[20rem]"
+                    v-for="post in posts.data"
+                    :key="post.id"
+                >
                     <Link
                         :href="route('posts.show', [post.slug_id, post.slug])"
-                        class="myPrimaryLink text-2xl font-semibold mt-4"
+                        class="myTertiaryHeader"
                     >
                         {{ post.title }}
                     </Link>
-                    <p class="my-8">
-                        slug:
-                        <span class="text-red-600">
-                            {{ post.slug }}
-                        </span>
-                    </p>
 
-                    <p class="my-8 text-xl">
-                        Publish Status:
-                        <span class="text-purple-600 font-semibold">
-                            {{ post.published ? "Published" : "Private" }}
-                        </span>
-                    </p>
-                    <p class="my-4">post id is: {{ post.id }}</p>
-                    <p class="mt-12 mb-8">Post is: {{ post }}</p>
+                    <!-- team details - start -->
+                    <div v-if="post.team.length !== 0">
+                        <div v-if="post.team.name">
+                            <p class="myPrimaryParagraph">Team:</p>
+                            <p class="myPrimaryParagraph">
+                                {{ post.team.name }}
+                            </p>
+                        </div>
+                        <div v-if="post.team.logo">
+                            <img
+                                class="inset-0 -z-10 w-16 h-16 object-cover rounded-md"
+                                alt="cover image"
+                                :src="`/uploads/${post.team.logo}`"
+                            />
+                        </div>
+                    </div>
+                    <!-- team details - end -->
                 </div>
             </div>
         </div>

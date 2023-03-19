@@ -73,7 +73,7 @@ class PostController extends Controller
                 "team:id,name,thumbnail,logo,public",
                 "user:id,first_name,last_name",
             ])
-            ->paginate(10);
+            ->paginate(24);
 
         // Hide certain attributes from the response
         $posts->makeHidden(["id", "user_id", "team_id"]);
