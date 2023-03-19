@@ -369,10 +369,6 @@ const switchTeam = function (team) {
                                                     "
                                                     class="myPrimaryButtonNoBackground"
                                                 >
-                                                    <span
-                                                        class="absolute inset-0"
-                                                        aria-hidden="true"
-                                                    />
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         fill="none"
