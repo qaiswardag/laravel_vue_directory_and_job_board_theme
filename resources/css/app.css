@@ -33,7 +33,7 @@
     */
 
     .myPrimarythumbnailInsertPreview {
-        @apply mx-auto block mt-2 mb-6 w-full hover:shadow-sm hover:scale-105 transition-all rounded-md object-cover object-center cursor-pointer;
+        @apply mx-auto block mt-2 mb-6 w-full max-h-[25rem] hover:shadow-sm transition-all rounded-md object-cover object-center cursor-pointer;
     }
     /*
     |--------------------------------------------------------------------------

@@ -144,6 +144,7 @@ const postForm = useForm({
     user_id: props.user.id,
     thumbnail: "",
     tags: "",
+    show_author: true,
 });
 
 const productSlugLock = ref("");
@@ -204,6 +205,7 @@ onMounted(() => {
         // postForm.slug = props.post.slug;
         postForm.content = props.post.content;
         postForm.published = props.post.published === 1 ? true : false;
+        postForm.show_author = props.post.show_author === 1 ? true : false;
         // postForm.team = props.post.team;
         postForm.thumbnail = props.post.thumbnail;
         postForm.tags = props.post.tags;
@@ -248,7 +250,7 @@ onMounted(() => {
                     <InputLabel for="slug" value="Slug" />
                     <div class="relative flex items-center">
                         <TextInput
-                            placeholder="Post slug - lock er låst"
+                            placeholder="Post slug"
                             id="slug"
                             v-model="postForm.slug"
                             type="text"
@@ -283,7 +285,7 @@ onMounted(() => {
                     <InputLabel for="slug" value="Slug" />
                     <div class="relative flex items-center">
                         <TextInput
-                            placeholder="Post slug - lock er open"
+                            placeholder="Post slug"
                             id="slug"
                             v-model="productSlugLock"
                             type="text"
@@ -422,6 +424,99 @@ onMounted(() => {
                 <InputError :message="postForm.errors.published" />
             </div>
             <!-- post status - end -->
+            <!-- post show author - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Show author
+                    </div>
+                    <p class="myPrimaryParagraph">
+                        Author: {{ user.first_name }} {{ user.last_name }}
+                    </p>
+                    <p
+                        v-if="formType === 'update'"
+                        class="myPrimaryParagraph italic mt-4"
+                    >
+                        The author of this post will be updated to the user who
+                        last edited the post.
+                    </p>
+                </div>
+                <div
+                    class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
+                >
+                    <InputLabel
+                        :value="postForm.show_author ? 'Show' : 'Hide'"
+                        :class="{
+                            'text-myPrimaryBrandColor': postForm.show_author,
+                            'text-myErrorColor': !postForm.show_author,
+                        }"
+                    />
+                    <Switch
+                        v-model="postForm.show_author"
+                        :class="[
+                            postForm.show_author
+                                ? 'bg-myPrimaryBrandColor'
+                                : 'bg-gray-200',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2',
+                        ]"
+                    >
+                        <span class="sr-only">Use setting</span>
+                        <span
+                            :class="[
+                                postForm.show_author
+                                    ? 'translate-x-5'
+                                    : 'translate-x-0',
+                                'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                            ]"
+                        >
+                            <span
+                                :class="[
+                                    postForm.show_author
+                                        ? 'opacity-0 ease-out duration-100'
+                                        : 'opacity-100 ease-in duration-200',
+                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                ]"
+                                aria-hidden="true"
+                            >
+                                <svg
+                                    class="h-3 w-3 text-gray-400"
+                                    fill="none"
+                                    viewBox="0 0 12 12"
+                                >
+                                    <path
+                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </span>
+                            <span
+                                :class="[
+                                    postForm.show_author
+                                        ? 'opacity-100 ease-in duration-200'
+                                        : 'opacity-0 ease-out duration-100',
+                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                ]"
+                                aria-hidden="true"
+                            >
+                                <svg
+                                    class="h-3 w-3 text-myPrimaryBrandColor"
+                                    fill="currentColor"
+                                    viewBox="0 0 12 12"
+                                >
+                                    <path
+                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
+                                    />
+                                </svg>
+                            </span>
+                        </span>
+                    </Switch>
+                </div>
+                <InputError :message="postForm.errors.show_author" />
+            </div>
+            <!-- post show author - end -->
             <!-- cover image - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">

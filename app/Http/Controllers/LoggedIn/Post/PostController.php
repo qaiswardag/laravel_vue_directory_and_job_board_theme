@@ -99,6 +99,7 @@ class PostController extends Controller
             "thumbnail" => $request->thumbnail,
             "content" => $content,
             "tags" => $request->tags,
+            "show_author" => $request->show_author,
         ]);
 
         // Return the current team that the user is on, rather than the team that the user is storing the post for.
@@ -164,6 +165,7 @@ class PostController extends Controller
             "thumbnail" => $request->thumbnail,
             "content" => $content,
             "tags" => $request->tags,
+            "show_author" => $request->show_author,
         ]);
 
         // Return the current team that the user is on, rather than the team that the user is storing the post for.

@@ -29,6 +29,7 @@ class PostFactory extends Factory
         return [
             "team_id" => $randomUserFromTeam->id, // Qais Wardag, Shaun Pelling, Mie Mortensens Team etc.
             "user_id" => $randomUserFromTeam->user_id, // Qais Wardag, Shaun Pelling or Mie Mortensen,
+            "show_author" => rand(1, 2),
             "title" => $title,
             "slug" => $slug,
             "content" => $this->faker->sentence(rand(20, 60), false),

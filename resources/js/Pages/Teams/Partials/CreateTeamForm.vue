@@ -96,7 +96,6 @@ const createTeam = () => {
         <template #title> Create Team </template>
 
         <template #description>
-            <p>er: {{ form }}</p>
             Create a new team to collaborate with others on projects.
             <br />
             You will become Owner of this Team.

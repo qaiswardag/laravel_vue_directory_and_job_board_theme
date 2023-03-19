@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create("media_libraries", function (Blueprint $table) {
             $table->id();
-            $table->integer("user_id");
+            $table->integer("user_id")->unsigned();
 
             // // user
             // $table
