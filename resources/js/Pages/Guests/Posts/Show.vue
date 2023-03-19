@@ -56,30 +56,47 @@ defineProps({
                     </p>
                 </div>
                 <p v-html="post.content" class="text-base"></p>
+
+                <p class="mt-40">post is: {{ post }}</p>
             </template>
 
             <template #sidebar>
-                <div>
-                    <div>
-                        <p class="myTertiaryHeader">
-                            Created by: {{ post.user.first_name }}
-                            {{ post.user.last_name }}
-                        </p>
-                    </div>
-                </div>
-
-                <div>
-                    <img
-                        v-if="post.team.thumbnail"
-                        class="inset-0 -z-10 min-h-[10rem] max-h-[15rem] w-full object-cover rounded-md"
-                        alt="cover image"
-                        :src="`/uploads/${post.team.thumbnail}`"
-                    />
-                    <p class="myTertiaryHeader">
-                        Team:
-                        {{ post.team.name }}
+                <!-- author details - start -->
+                <div v-if="post.show_author === 1 && post.user.length !== 0">
+                    <p class="myPrimaryParagraph">Author:</p>
+                    <p class="myPrimaryParagraph">
+                        {{ post.user.first_name }}
+                        {{ post.user.last_name }}
                     </p>
                 </div>
+                <!-- author details - end -->
+
+                <!-- team details - start -->
+                <div v-if="post.team.length !== 0">
+                    <div v-if="post.team.name">
+                        <p class="myPrimaryParagraph">Team:</p>
+                        <p class="myPrimaryParagraph">
+                            {{ post.team.name }}
+                        </p>
+                    </div>
+                    <div v-if="post.team.logo">
+                        <p class="myPrimaryParagraph">Logo:</p>
+                        <img
+                            class="border border-gray-400 inset-0 -z-10 min-h-[10rem] max-h-[15rem] w-full object-cover rounded-md"
+                            alt="cover image"
+                            :src="`/uploads/${post.team.logo}`"
+                        />
+                    </div>
+                    <div v-if="post.team.thumbnail">
+                        <p class="myPrimaryParagraph">Cover image:</p>
+                        <img
+                            class="inset-0 -z-10 min-h-[10rem] max-h-[15rem] w-full object-cover rounded-md"
+                            alt="cover image"
+                            :src="`/uploads/${post.team.thumbnail}`"
+                        />
+                    </div>
+                </div>
+                <!-- team details - end -->
             </template>
             <template #actions> action area </template>
         </DefaultTemplate>

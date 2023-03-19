@@ -91,7 +91,7 @@ const handleUploadCoverImage = function () {
 };
 const handleUploadLogo = function () {
     // handle show media library modal
-    showMediaLibraryModalLogo.value = true;
+    showMediaLibraryModal.value = true;
 
     // set media library modal standards
     titleMedia.value = "Media Library";
@@ -102,14 +102,14 @@ const handleUploadLogo = function () {
     // handle click
     firstMediaButtonFunction.value = function () {
         // handle show media library modal
-        showMediaLibraryModalLogo.value = false;
+        showMediaLibraryModal.value = false;
     };
     //
     // handle click
     secondMediaButtonFunction.value = function () {
         form.logo = getCurrentImage.value.currentImage.mediaLibrary.path;
         // handle show media library modal
-        showMediaLibraryModalLogo.value = false;
+        showMediaLibraryModal.value = false;
     };
     // end modal
 };
@@ -438,20 +438,6 @@ const handleRemoveLogo = function () {
                 :user="$page.props.user"
                 :team="team"
                 :open="showMediaLibraryModal"
-                :title="titleMedia"
-                :description="descriptionMedia"
-                :firstButtonText="firstButtonMedia"
-                :secondButtonText="secondButtonMedia"
-                :thirdButtonText="thirdButtonMedia"
-                @firstMediaButtonFunction="firstMediaButtonFunction"
-                @secondMediaButtonFunction="secondMediaButtonFunction"
-                @thirdMediaButtonFunction="thirdMediaButtonFunction"
-            >
-            </MediaLibraryModal>
-            <MediaLibraryModal
-                :user="$page.props.user"
-                :team="team"
-                :open="showMediaLibraryModalLogo"
                 :title="titleMedia"
                 :description="descriptionMedia"
                 :firstButtonText="firstButtonMedia"

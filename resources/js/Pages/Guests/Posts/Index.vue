@@ -44,6 +44,7 @@ defineProps({
                         </span>
                     </p>
                     <p class="my-4">post id is: {{ post.id }}</p>
+                    <p class="mt-12 mb-8">Post is: {{ post }}</p>
                 </div>
             </div>
         </div>

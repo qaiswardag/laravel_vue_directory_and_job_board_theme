@@ -69,20 +69,48 @@ class PostController extends Controller
                 }
             })
             // Eager load related teams and users
-            ->with(["team:id,name,thumbnail", "user:id,first_name,last_name"])
+            ->with([
+                "team:id,name,thumbnail,logo,public",
+                "user:id,first_name,last_name",
+            ])
             ->paginate(10);
 
-        // Hide certain attributes from the JSON response
+        // Hide certain attributes from the response
         $posts->makeHidden(["id", "user_id", "team_id"]);
 
         // Transform the posts
         $posts->transform(function ($post) {
+            // if ($post->user) {
+            //     $post->user->makeHidden(["id", "profile_photo_url"]);
+            // }
+
+            // if ($post->team) {
+            //     $post->team->makeHidden(["id"]);
+            // }
+
+            // Make the user id hidden from the response
             if ($post->user) {
                 $post->user->makeHidden(["id", "profile_photo_url"]);
             }
 
+            // Check if show_author flag is true or 1, if not hide user details
+            if ($post->show_author === 0) {
+                $post->user->makeHidden(
+                    array_keys($post->user->getAttributes())
+                );
+            }
+
+            // Make the team id hidden from the response
             if ($post->team) {
                 $post->team->makeHidden(["id"]);
+            }
+
+            // Check if team public flag is true or 1, if not hide team details
+
+            if ($post->team->public === 0) {
+                $post->team->makeHidden(
+                    array_keys($post->team->getAttributes())
+                );
             }
 
             return $post;
@@ -133,7 +161,7 @@ class PostController extends Controller
         // Find the post with the given slugId and slug, including related teams and users
         $post = Post::where([["slug", "=", $slug], ["slug_id", "=", $slugId]])
             ->with([
-                "team:id,name,thumbnail", // Include team data in the post object.
+                "team:id,name,thumbnail,logo,public", // Include team data in the post object.
                 "user:id,first_name,last_name", // Include user data in the post object.
             ])
             ->firstOrFail();
@@ -149,14 +177,24 @@ class PostController extends Controller
         // Hide certain attributes from the JSON response
         $post->makeHidden(["id", "user_id", "team_id"]);
 
-        // Make the user id hidden from the JSON response
+        // Make the user id hidden from the response
         if ($post->user) {
             $post->user->makeHidden(["id", "profile_photo_url"]);
         }
 
-        // Make the team id hidden from the JSON response
+        // Check if show_author flag is true or 1, if not hide user details
+        if ($post->show_author === 0) {
+            $post->user->makeHidden(array_keys($post->user->getAttributes()));
+        }
+
+        // Make the team id hidden from the response
         if ($post->team) {
             $post->team->makeHidden(["id"]);
+        }
+
+        // Check if team public flag is true or 1, if not hide team details
+        if ($post->team->public === 0) {
+            $post->team->makeHidden(array_keys($post->team->getAttributes()));
         }
 
         // If the post is unpublished and the user is a superadmin, render the post anyway
