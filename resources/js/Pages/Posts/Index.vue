@@ -226,9 +226,17 @@ const handleSearch = function () {
             v-if="posts && posts.data.length <= 0"
             class="myPrimaryHeaderMessage"
         >
-            <!-- TODO: make a componenet for this kind of text -->
             No Posts yet
         </h1>
+        <p class="myPrimaryParagraph">
+            Looks like there are no posts yet! Why not be the first to share
+            your thoughts and ideas with the community? Creating a post is easy
+            - just click on the 'Create Post' button and get started.
+        </p>
+        <p class="myPrimaryParagraph mt-2">
+            Share your expertise, ask questions, and start a conversation with
+            your fellow community members.
+        </p>
 
         <!-- table start -->
         <div v-if="posts && posts.data.length >= 1" class="myTableContainer">

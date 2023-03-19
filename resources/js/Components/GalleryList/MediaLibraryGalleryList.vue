@@ -199,7 +199,13 @@ onMounted(() => {
                 v-if="getCurrentMedia.fetchedMedia.total_results === 0"
                 class="min-h-[25rem]"
             >
-                <p class="myPrimaryParagraph">No images.</p>
+                <p class="myPrimaryParagraph">
+                    It looks like there are no images for your team yet.
+                </p>
+                <p class="myPrimaryParagraph mt-2">
+                    Why not upload some visual assets to enhance your team's
+                    work? Uploading images is quick and easy.
+                </p>
             </div>
 
             <div
