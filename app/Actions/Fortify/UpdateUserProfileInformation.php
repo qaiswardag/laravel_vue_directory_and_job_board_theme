@@ -46,7 +46,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 Rule::unique("users")->ignore($user->id),
                 "string",
                 "min:4",
-                "max:20",
+                "max:60",
                 "regex:/^[a-zA-Z0-9_]+$/u",
 
                 // regular expression `/^[a-zA-Z0-9_]+$/u`

@@ -26,7 +26,7 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            "published" => [""],
+            "published" => ["boolean"],
             // If you do not include the string validation rule for a text input like title.
             // it may allow non-string values to be submitted and saved in the database.
             // This could potentially cause security issues or errors in your application,

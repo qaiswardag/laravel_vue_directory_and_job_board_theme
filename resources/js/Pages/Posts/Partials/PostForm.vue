@@ -84,7 +84,7 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        createPostForm.thumbnail =
+        postForm.thumbnail =
             getCurrentImage.value.currentImage.mediaLibrary.path;
         // handle show media library modal
         showMediaLibraryModal.value = false;
@@ -92,7 +92,7 @@ const handleUploadCoverImage = function () {
     // end modal
 };
 const handleRemoveCoverImage = function () {
-    createPostForm.thumbnail = null;
+    postForm.thumbnail = null;
     // end modal
 };
 
@@ -135,7 +135,7 @@ const globalOptions = {
 // slug logic
 const slugIsOpen = ref(false);
 
-const createPostForm = useForm({
+const postForm = useForm({
     title: "",
     slug: "",
     content: "",
@@ -148,9 +148,9 @@ const createPostForm = useForm({
 
 const productSlugLock = ref("");
 
-createPostForm.slug = computed(() => {
+postForm.slug = computed(() => {
     if (slugIsOpen.value === false) {
-        return slugify(createPostForm.title, config.slugifyOptions);
+        return slugify(postForm.title, config.slugifyOptions);
     }
     if (slugIsOpen.value === true) {
         return slugify(productSlugLock.value, config.slugifyOptions);
@@ -168,7 +168,7 @@ const handleOpenLock = function () {
 };
 
 const firstTagsButton = function (tags) {
-    createPostForm.tags = tags;
+    postForm.tags = tags;
 };
 const handleCreatePost = function () {
     // try to store post
@@ -177,7 +177,7 @@ const handleCreatePost = function () {
 
 const createPost = () => {
     if (formType.value === "create") {
-        createPostForm.post(route("overview.posts.store"), {
+        postForm.post(route("overview.posts.store"), {
             preserveScroll: true,
             onSuccess: () => {},
             onError: () => {},
@@ -185,7 +185,7 @@ const createPost = () => {
         });
     }
     if (formType.value === "update") {
-        createPostForm.post(route("overview.posts.update", props.post.id), {
+        postForm.post(route("overview.posts.update", props.post.id), {
             preserveScroll: true,
             onSuccess: () => {},
             onError: () => {},
@@ -200,16 +200,16 @@ onMounted(() => {
         console.log("hentet post er:", props.post);
         console.log("hentet tags er:", props.post.tags);
         formType.value = "update";
-        createPostForm.title = props.post.title;
-        // createPostForm.slug = props.post.slug;
-        createPostForm.content = props.post.content;
-        createPostForm.published = props.post.published === 1 ? true : false;
-        // createPostForm.team = props.post.team;
-        createPostForm.thumbnail = props.post.thumbnail;
-        createPostForm.tags = props.post.tags;
+        postForm.title = props.post.title;
+        // postForm.slug = props.post.slug;
+        postForm.content = props.post.content;
+        postForm.published = props.post.published === 1 ? true : false;
+        // postForm.team = props.post.team;
+        postForm.thumbnail = props.post.thumbnail;
+        postForm.tags = props.post.tags;
     }
 
-    // createPostForm = props.post;
+    // postForm = props.post;
 });
 </script>
 
@@ -220,7 +220,6 @@ onMounted(() => {
 
         <template #main>
             <div class="myInputsOrganization">
-                <p class="my-12">Update post is: {{ post }}</p>
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Title & description
@@ -235,13 +234,13 @@ onMounted(() => {
                     <TextInput
                         placeholder="Enter your title.."
                         id="title"
-                        v-model="createPostForm.title"
+                        v-model="postForm.title"
                         type="text"
                         class="block w-full mt-1"
                         autofocus
                         autocomplete="off"
                     />
-                    <InputError :message="createPostForm.errors.title" />
+                    <InputError :message="postForm.errors.title" />
                 </div>
                 <!-- post title end -->
                 <!-- post slug start -->
@@ -251,7 +250,7 @@ onMounted(() => {
                         <TextInput
                             placeholder="Post slug - lock er låst"
                             id="slug"
-                            v-model="createPostForm.slug"
+                            v-model="postForm.slug"
                             type="text"
                             class="block w-full mt-1 myPrimaryInputReadonly"
                             autofocus
@@ -278,7 +277,7 @@ onMounted(() => {
                             </svg>
                         </div>
                     </div>
-                    <InputError :message="createPostForm.errors.slug" />
+                    <InputError :message="postForm.errors.slug" />
                 </div>
                 <div v-if="slugIsOpen === true" class="myInputGroup">
                     <InputLabel for="slug" value="Slug" />
@@ -313,9 +312,9 @@ onMounted(() => {
                         </div>
                     </div>
                     <p class="myPrimaryParagraph italic">
-                        {{ createPostForm.slug }}
+                        {{ postForm.slug }}
                     </p>
-                    <InputError :message="createPostForm.errors.slug" />
+                    <InputError :message="postForm.errors.slug" />
                 </div>
                 <!-- post slug end -->
 
@@ -323,18 +322,18 @@ onMounted(() => {
                 <div class="myInputGroup">
                     <InputLabel
                         for="content"
-                        value="Text editor"
+                        value="Post description"
                         class="mb-1"
                     />
                     <QuillEditor
                         id="content"
-                        v-model:content="createPostForm.content"
+                        v-model:content="postForm.content"
                         contentType="html"
                         :options="globalOptions"
                         class="rounded-b-md bg-white"
                     >
                     </QuillEditor>
-                    <InputError :message="createPostForm.errors.content" />
+                    <InputError :message="postForm.errors.content" />
                 </div>
                 <!-- post content end -->
             </div>
@@ -351,19 +350,16 @@ onMounted(() => {
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
                 >
                     <InputLabel
-                        :value="
-                            createPostForm.published ? 'Published' : 'Private'
-                        "
+                        :value="postForm.published ? 'Published' : 'Private'"
                         :class="{
-                            'text-myPrimaryBrandColor':
-                                createPostForm.published,
-                            'text-myErrorColor': !createPostForm.published,
+                            'text-myPrimaryBrandColor': postForm.published,
+                            'text-myErrorColor': !postForm.published,
                         }"
                     />
                     <Switch
-                        v-model="createPostForm.published"
+                        v-model="postForm.published"
                         :class="[
-                            createPostForm.published
+                            postForm.published
                                 ? 'bg-myPrimaryBrandColor'
                                 : 'bg-gray-200',
                             'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2',
@@ -372,7 +368,7 @@ onMounted(() => {
                         <span class="sr-only">Use setting</span>
                         <span
                             :class="[
-                                createPostForm.published
+                                postForm.published
                                     ? 'translate-x-5'
                                     : 'translate-x-0',
                                 'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
@@ -380,7 +376,7 @@ onMounted(() => {
                         >
                             <span
                                 :class="[
-                                    createPostForm.published
+                                    postForm.published
                                         ? 'opacity-0 ease-out duration-100'
                                         : 'opacity-100 ease-in duration-200',
                                     'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
@@ -403,7 +399,7 @@ onMounted(() => {
                             </span>
                             <span
                                 :class="[
-                                    createPostForm.published
+                                    postForm.published
                                         ? 'opacity-100 ease-in duration-200'
                                         : 'opacity-0 ease-out duration-100',
                                     'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
@@ -423,7 +419,7 @@ onMounted(() => {
                         </span>
                     </Switch>
                 </div>
-                <InputError :message="createPostForm.errors.published" />
+                <InputError :message="postForm.errors.published" />
             </div>
             <!-- post status - end -->
             <!-- cover image - start -->
@@ -437,14 +433,11 @@ onMounted(() => {
                     </p>
                 </div>
                 <img
-                    v-if="
-                        createPostForm.thumbnail &&
-                        createPostForm.thumbnail.length !== 0
-                    "
+                    v-if="postForm.thumbnail && postForm.thumbnail.length !== 0"
                     @click="handleUploadCoverImage"
                     class="myPrimarythumbnailInsertPreview"
                     alt="cover image"
-                    :src="`/uploads/${createPostForm.thumbnail}`"
+                    :src="`/uploads/${postForm.thumbnail}`"
                 />
                 <div
                     class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
@@ -472,7 +465,7 @@ onMounted(() => {
                         Cover Image
                     </button>
 
-                    <div v-if="createPostForm && createPostForm.thumbnail">
+                    <div v-if="postForm && postForm.thumbnail">
                         <svg
                             @click="handleRemoveCoverImage"
                             xmlns="http://www.w3.org/2000/svg"
@@ -490,7 +483,7 @@ onMounted(() => {
                         </svg>
                     </div>
                 </div>
-                <InputError :message="createPostForm.errors.thumbnail" />
+                <InputError :message="postForm.errors.thumbnail" />
             </div>
             <!-- cover image - end -->
             <!-- tags - start -->
@@ -503,10 +496,10 @@ onMounted(() => {
                 </div>
                 <div class="myInputGroup">
                     <Tags
-                        :tagsOnLoad="createPostForm.tags"
+                        :tagsOnLoad="postForm.tags"
                         @firstTagsButton="firstTagsButton"
                     ></Tags>
-                    <InputError :message="createPostForm.errors.tags" />
+                    <InputError :message="postForm.errors.tags" />
                 </div>
             </div>
             <!-- tags - end -->
@@ -521,14 +514,14 @@ onMounted(() => {
                     </p>
                 </div>
                 <div class="myInputGroup">
-                    <Listbox as="div" v-model="createPostForm.team">
+                    <Listbox as="div" v-model="postForm.team">
                         <ListboxLabel class="myPrimaryInputLabel"
                             >Post belongs to Team</ListboxLabel
                         >
                         <div class="relative mt-1">
                             <ListboxButton class="myPrimarySelect">
                                 <span class="block truncate">
-                                    {{ createPostForm.team.name }}
+                                    {{ postForm.team.name }}
                                 </span>
                                 <span
                                     class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
@@ -557,8 +550,7 @@ onMounted(() => {
                                         <li
                                             class="hover:text-white hover:bg-myPrimaryDarkGrayColor"
                                             :class="[
-                                                team.id ===
-                                                createPostForm.team.id
+                                                team.id === postForm.team.id
                                                     ? ''
                                                     : '',
                                                 'relative cursor-default select-none py-2 pl-3 pr-9',
@@ -566,8 +558,7 @@ onMounted(() => {
                                         >
                                             <span
                                                 :class="[
-                                                    team.id ===
-                                                    createPostForm.team.id
+                                                    team.id === postForm.team.id
                                                         ? 'font-normal'
                                                         : 'font-normal',
                                                     'block truncate',
@@ -576,12 +567,10 @@ onMounted(() => {
                                             >
                                             <span
                                                 v-if="
-                                                    team.id ===
-                                                    createPostForm.team.id
+                                                    team.id === postForm.team.id
                                                 "
                                                 :class="[
-                                                    team.id ===
-                                                    createPostForm.team.id
+                                                    team.id === postForm.team.id
                                                         ? ''
                                                         : '',
                                                     'absolute inset-y-0 right-0 flex items-center pr-4',
@@ -590,7 +579,7 @@ onMounted(() => {
                                                 <CheckIcon
                                                     :class="[
                                                         team.id ===
-                                                        createPostForm.team.id
+                                                        postForm.team.id
                                                             ? ''
                                                             : 'text-white',
                                                     ]"
@@ -604,20 +593,17 @@ onMounted(() => {
                             </transition>
                         </div>
                     </Listbox>
-                    <InputError :message="createPostForm.errors.team" />
+                    <InputError :message="postForm.errors.team" />
                 </div>
             </div>
         </template>
 
         <template #actions>
-            <SubmitButton
-                :disabled="createPostForm.processing"
-                buttonText="Save"
-            >
+            <SubmitButton :disabled="postForm.processing" buttonText="Save">
             </SubmitButton>
             <div
                 class="flex justify-end mt-4"
-                v-if="Object.values(createPostForm.errors).length !== 0"
+                v-if="Object.values(postForm.errors).length !== 0"
             >
                 <div
                     @click="showErrorNotifications = true"
@@ -646,14 +632,14 @@ onMounted(() => {
                         class="myPrimaryParagraph text-xs text-myErrorColor py-0 my-0"
                     >
                         Show
-                        {{ Object.values(createPostForm.errors).length }}
+                        {{ Object.values(postForm.errors).length }}
                         errors
                     </p>
                 </div>
             </div>
             <MediaLibraryModal
                 :user="user"
-                :team="createPostForm.team"
+                :team="postForm.team"
                 :open="showMediaLibraryModal"
                 :title="titleMedia"
                 :description="descriptionMedia"
@@ -666,7 +652,7 @@ onMounted(() => {
             >
             </MediaLibraryModal>
             <NotificationsFixedBottom
-                :listOfMessages="Object.values(createPostForm.errors)"
+                :listOfMessages="Object.values(postForm.errors)"
                 :show="showErrorNotifications"
                 @notificationsModalButton="notificationsModalButton"
             ></NotificationsFixedBottom>

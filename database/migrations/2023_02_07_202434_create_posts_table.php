@@ -39,7 +39,7 @@ return new class extends Migration {
             $table->longText("title");
             $table->string("slug");
             $table->longText("content");
-            $table->boolean("published")->nullable();
+            $table->boolean("published");
             $table->string("thumbnail")->nullable();
             $table->mediumText("tags")->nullable();
             $table->integer("slug_id")->unsigned();

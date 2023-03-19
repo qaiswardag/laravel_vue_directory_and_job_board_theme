@@ -29,7 +29,7 @@ class Team extends JetstreamTeam
      *
      * @var string<int, string>
      */
-    protected $fillable = ["user_id", "name", "personal_team"];
+    protected $fillable = ["user_id", "name", "personal_team", "public"];
 
     /**
      * The event map for the model.
@@ -78,9 +78,13 @@ class Team extends JetstreamTeam
         static::creating(function ($team) {
             do {
                 // generate a random string
-                $randomString = Str::random(rand(8, 14));
+
+                $randomSlugString = Str::lower(
+                    Str::slug(Str::random(rand(8, 14)), "_")
+                );
+
                 // convert the random string to lowercase using strtolower
-                $team->reference_id = strtolower($randomString);
+                $team->reference_id = strtolower($randomSlugString);
             } while (
                 static::where("reference_id", $team->reference_id)->exists()
             );

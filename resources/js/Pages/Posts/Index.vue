@@ -320,7 +320,7 @@ const handleSearch = function () {
                                                 post.slug,
                                             ])
                                         "
-                                        class="myPrimaryLink text-2xl font-semibold mt-4"
+                                        class="myPrimaryLink font-semibold mt-4"
                                     >
                                         <span
                                             class="text-myPrimaryBrandColor font-semibold"

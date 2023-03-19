@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             "id" => 4,
             "user_id" => User::find(4)->id,
             "name" => "RCA Records",
+            "public" => true,
             "personal_team" => false,
         ]);
         // Oprah Winfrey
@@ -52,6 +53,7 @@ class DatabaseSeeder extends Seeder
             "id" => 5,
             "user_id" => User::find(5)->id,
             "name" => "Harpo Productions Oprah",
+            "public" => true,
             "personal_team" => false,
         ]);
         // Ingrid Bergman
@@ -68,6 +70,7 @@ class DatabaseSeeder extends Seeder
             "id" => 6,
             "user_id" => User::find(6)->id,
             "name" => "IBI Interiors",
+            "public" => true,
             "personal_team" => false,
         ]);
         //
@@ -91,6 +94,7 @@ class DatabaseSeeder extends Seeder
             "id" => 1,
             "user_id" => User::find(1)->id,
             "name" => "Owened by Qais",
+            "public" => true,
             "personal_team" => false,
         ]);
         // Shaun Pelling
@@ -109,6 +113,7 @@ class DatabaseSeeder extends Seeder
             "id" => 2,
             "user_id" => User::find(2)->id,
             "name" => "Owened by Shaun",
+            "public" => true,
             "personal_team" => false,
         ]);
 
@@ -128,6 +133,7 @@ class DatabaseSeeder extends Seeder
             "id" => 3,
             "user_id" => User::find(3)->id,
             "name" => "Owened by Mie",
+            "public" => true,
             "personal_team" => false,
         ]);
 
