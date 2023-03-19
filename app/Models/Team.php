@@ -29,7 +29,13 @@ class Team extends JetstreamTeam
      *
      * @var string<int, string>
      */
-    protected $fillable = ["user_id", "name", "personal_team", "public"];
+    protected $fillable = [
+        "user_id",
+        "name",
+        "personal_team",
+        "public",
+        "logo",
+    ];
 
     /**
      * The event map for the model.

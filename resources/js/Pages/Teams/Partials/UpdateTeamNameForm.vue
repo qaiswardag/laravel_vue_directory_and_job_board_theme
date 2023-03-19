@@ -30,6 +30,7 @@ const handleUpdateTeam = function () {
 const form = useForm({
     name: props.team.name,
     thumbnail: props.team.thumbnail,
+    logo: props.team.logo,
     public: props.team.public ? true : false,
 });
 
@@ -52,6 +53,7 @@ const getCurrentImage = computed(() => {
 
 // use media library
 const showMediaLibraryModal = ref(false);
+const showMediaLibraryModalLogo = ref(false);
 // modal content
 const titleMedia = ref("");
 const descriptionMedia = ref("");
@@ -87,10 +89,36 @@ const handleUploadCoverImage = function () {
     };
     // end modal
 };
+const handleUploadLogo = function () {
+    // handle show media library modal
+    showMediaLibraryModalLogo.value = true;
+
+    // set media library modal standards
+    titleMedia.value = "Media Library";
+    descriptionMedia.value = null;
+    firstButtonMedia.value = "Close";
+    secondButtonMedia.value = "Select image";
+    thirdButtonMedia.value = null;
+    // handle click
+    firstMediaButtonFunction.value = function () {
+        // handle show media library modal
+        showMediaLibraryModalLogo.value = false;
+    };
+    //
+    // handle click
+    secondMediaButtonFunction.value = function () {
+        form.logo = getCurrentImage.value.currentImage.mediaLibrary.path;
+        // handle show media library modal
+        showMediaLibraryModalLogo.value = false;
+    };
+    // end modal
+};
 
 const handleRemoveCoverImage = function () {
     form.thumbnail = null;
-    // end modal
+};
+const handleRemoveLogo = function () {
+    form.logo = null;
 };
 </script>
 
@@ -151,7 +179,6 @@ const handleRemoveCoverImage = function () {
         </template>
         <template #sidebar>
             <!-- post status - start -->
-
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
@@ -231,6 +258,67 @@ const handleRemoveCoverImage = function () {
                 <InputError :message="form.errors.public" />
             </div>
             <!-- post status - end -->
+            <!-- logo - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Logo</div>
+                    <p class="myPrimaryParagraph">
+                        Lorem ipsum dolor sit amet.
+                    </p>
+                </div>
+                <img
+                    v-if="form.logo && form.logo.length !== 0"
+                    @click="handleUploadLogo"
+                    class="myPrimarythumbnailLogo"
+                    alt="Logo"
+                    :src="`/uploads/${form.logo}`"
+                />
+                <div
+                    class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
+                >
+                    <button
+                        @click="handleUploadLogo"
+                        type="button"
+                        class="myPrimaryButton gap-2 items-center"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-4 h-4"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                            />
+                        </svg>
+
+                        Logo
+                    </button>
+                    <div v-if="form && form.logo">
+                        <svg
+                            @click="handleRemoveLogo"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5 text-myErrorColor cursor-pointer"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                            />
+                        </svg>
+                    </div>
+                </div>
+                <InputError :message="form.errors.logo" />
+            </div>
+            <!-- logo - end -->
             <!-- cover image - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -293,6 +381,8 @@ const handleRemoveCoverImage = function () {
                 </div>
                 <InputError :message="form.errors.thumbnail" />
             </div>
+            <!-- cover image - end -->
+
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -348,6 +438,20 @@ const handleRemoveCoverImage = function () {
                 :user="$page.props.user"
                 :team="team"
                 :open="showMediaLibraryModal"
+                :title="titleMedia"
+                :description="descriptionMedia"
+                :firstButtonText="firstButtonMedia"
+                :secondButtonText="secondButtonMedia"
+                :thirdButtonText="thirdButtonMedia"
+                @firstMediaButtonFunction="firstMediaButtonFunction"
+                @secondMediaButtonFunction="secondMediaButtonFunction"
+                @thirdMediaButtonFunction="thirdMediaButtonFunction"
+            >
+            </MediaLibraryModal>
+            <MediaLibraryModal
+                :user="$page.props.user"
+                :team="team"
+                :open="showMediaLibraryModalLogo"
                 :title="titleMedia"
                 :description="descriptionMedia"
                 :firstButtonText="firstButtonMedia"

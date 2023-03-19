@@ -29,6 +29,7 @@ return new class extends Migration {
             //
             $table->string("name");
             $table->string("thumbnail")->nullable();
+            $table->string("logo")->nullable();
             $table->boolean("public");
             $table->boolean("personal_team");
             $table->timestamps();

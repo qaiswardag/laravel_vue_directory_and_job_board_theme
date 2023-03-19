@@ -23,6 +23,7 @@ class UpdateTeamName implements UpdatesTeamNames
         Validator::make($input, [
             "name" => ["required", "string", "max:255"],
             "thumbnail" => ["required", "string", "max:255"],
+            "logo" => ["required", "string", "max:255"],
             "public" => ["boolean"],
         ])->validateWithBag("updateTeam");
 
@@ -30,6 +31,7 @@ class UpdateTeamName implements UpdatesTeamNames
             ->forceFill([
                 "name" => $input["name"],
                 "thumbnail" => $input["thumbnail"],
+                "logo" => $input["logo"],
                 "public" => $input["public"],
             ])
             ->save();
