@@ -81,7 +81,6 @@ const handleDelete = function (id, user) {
     // end modal
 };
 // form
-const searchField = ref(null);
 const deleteUserForm = useForm({});
 
 // form action

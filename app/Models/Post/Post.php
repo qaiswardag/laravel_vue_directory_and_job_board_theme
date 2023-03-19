@@ -28,6 +28,7 @@ class Post extends Model
         "tags",
         "slug_id",
         "show_author",
+        "author_id",
     ];
 
     // Define the relationship with the Team model
