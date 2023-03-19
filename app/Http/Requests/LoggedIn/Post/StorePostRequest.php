@@ -51,7 +51,7 @@ class StorePostRequest extends FormRequest
             // provides an additional layer of validation to ensure that the foreign key reference
             // is valid at the application level as well.
             "user_id" => ["required", "integer", "exists:users,id"],
-            "author_id" => ["integer", "exists:users,id"],
+            "author_id" => ["nullable", "integer", "exists:users,id"],
 
             "team" => ["required"],
 

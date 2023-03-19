@@ -17,7 +17,10 @@ return new class extends Migration {
 
             $table->integer("user_id")->unsigned();
             $table->boolean("show_author");
-            $table->integer("author_id")->index();
+            $table
+                ->integer("author_id")
+                ->nullable()
+                ->index();
 
             // // user
             // $table
