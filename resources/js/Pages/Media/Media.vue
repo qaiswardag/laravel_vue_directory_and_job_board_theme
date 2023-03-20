@@ -145,7 +145,7 @@ const handleUploadImages = function () {
 
             <div class="mt-6 mb-6">
                 <p class="myPrimaryParagraph mt-8 mb-4">
-                    You are currently viewing the latest 10 images uploaded by
+                    You are currently viewing the latest 16 images uploaded by
                     your team. These images are sorted by date, with the most
                     recent ones displayed first.
                 </p>

@@ -23,10 +23,11 @@ class TeamFactory extends Factory
     public function definition(): array
     {
         return [
+            "id" => 1,
             "name" => $this->faker->unique()->company(),
-            "user_id" => User::factory(),
+            "user_id" => 1,
             "public" => true,
-            "personal_team" => true,
+            "personal_team" => false,
         ];
     }
 }

@@ -403,11 +403,7 @@ const handleDeleteImage = function (imageId) {
                                                 v-if="
                                                     getCurrentImage &&
                                                     getCurrentImage.isLoading ===
-                                                        true &&
-                                                    (getCurrentImage.isError ===
-                                                        null ||
-                                                        getCurrentImage.isError ===
-                                                            false)
+                                                        true
                                                 "
                                                 class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
                                             >

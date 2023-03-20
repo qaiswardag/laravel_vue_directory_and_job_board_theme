@@ -49,6 +49,7 @@ class Team extends JetstreamTeam
     ];
 
     // protected $with = ["posts"];
+    // protected $with = ["teamUsers"];
 
     public function posts()
     {
@@ -57,6 +58,14 @@ class Team extends JetstreamTeam
     public function media()
     {
         return $this->hasMany(MediaLibrary::class, "team_id", "id");
+    }
+    public function owner()
+    {
+        return $this->belongsTo(User::class, "user_id", "id");
+    }
+    public function teamUsers()
+    {
+        return $this->belongsToMany(User::class, "team_user");
     }
 
     /**

@@ -66,7 +66,11 @@ onMounted(() => {
 
 <template>
     <div
-        v-if="getCurrentMedia && getCurrentMedia.isError"
+        v-if="
+            getCurrentMedia &&
+            getCurrentMedia.isLoading === false &&
+            getCurrentMedia.isError
+        "
         class="myPrimaryParagraphError"
     >
         {{ getCurrentMedia.isError }}
@@ -120,7 +124,6 @@ onMounted(() => {
                     getCurrentMedia.fetchedMedia &&
                     getCurrentMedia.fetchedMedia.media &&
                     getCurrentMedia.fetchedMedia.media.data &&
-                    getCurrentMedia.isLoading === false &&
                     (getCurrentMedia.isError === null ||
                         getCurrentMedia.isError === false)
                 "
@@ -162,14 +165,7 @@ onMounted(() => {
     <div
         class="overflow-y-scroll mb-4 p-4 border border-myPrimaryMediumGrayColor rounded"
     >
-        <div
-            v-if="
-                getCurrentMedia &&
-                getCurrentMedia.isLoading === true &&
-                (getCurrentMedia.isError === null ||
-                    getCurrentMedia.isError === false)
-            "
-        >
+        <div v-if="getCurrentMedia && getCurrentMedia.isLoading === true">
             <div
                 class="flex items-center justify-center max-h-[30rem] min-h-[25rem]"
             >

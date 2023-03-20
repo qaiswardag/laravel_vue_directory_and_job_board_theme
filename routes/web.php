@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
 use App\Http\Controllers\LoggedIn\Post\PostController;
@@ -74,33 +75,20 @@ Route::middleware([
             LoggedInMediaLibraryController::class,
             "index",
         ]);
-        Route::get("/overview/media/edit/{mediaLibrary}/{team}", [
-            LoggedInMediaLibraryController::class,
-            "edit",
-        ]);
-
         // media
         Route::get("/overview/media/{team}", [
             MediaLibraryController::class,
             "index",
         ])->name("media.index");
-        Route::post("/overview/media/image/update/{team}", [
-            MediaLibraryController::class,
-            "update",
-        ])->name("media.update");
 
-        Route::post("/overview/media/image/destroy/{team}", [
-            MediaLibraryController::class,
-            "destroy",
-        ])->name("media.destroy");
-
-        Route::post("/overview/media/store", [
-            MediaLibraryController::class,
-            "store",
-        ])->name("media.store");
+        // attach user to resource
+        Route::get("/overview/attach/users/index/{team}", [
+            AttachUserController::class,
+            "index",
+        ])->name("attach.user.index");
     });
 
-// Pages that require can create and update authentication
+// Pages that require can store, create and update authentication
 Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
@@ -126,6 +114,19 @@ Route::middleware([
         PostController::class,
         "store",
     ])->name("overview.posts.store");
+    //media
+    Route::get("/overview/media/edit/{mediaLibrary}/{team}", [
+        LoggedInMediaLibraryController::class,
+        "edit",
+    ]);
+    Route::post("/overview/media/image/update/{team}", [
+        MediaLibraryController::class,
+        "update",
+    ])->name("media.update");
+    Route::post("/overview/media/store", [
+        MediaLibraryController::class,
+        "store",
+    ])->name("media.store");
 });
 
 // Pages that require can destroy authentication
@@ -142,6 +143,11 @@ Route::middleware([
             PostController::class,
             "destroy",
         ])->name("overview.posts.post.destroy");
+        // media
+        Route::post("/overview/media/image/destroy/{team}", [
+            MediaLibraryController::class,
+            "destroy",
+        ])->name("media.destroy");
     });
 
 // Pages for quests that are accessible to everyone
@@ -165,9 +171,7 @@ Route::middleware([])
         Route::get("/posts/{slug_id}/{slug}", [
             PostPostController::class,
             "show",
-        ])
-            // ->where("slug", "[A-Za-z0-9/_-]+")
-            ->name("posts.show");
+        ])->name("posts.show");
     });
 
 // Pages that are accessible only to superadmins

@@ -62,8 +62,6 @@ class UserController extends Controller
         });
 
         $users = $users->paginate(10);
-        // append users
-        $users->appends($request->all());
 
         return Inertia::render("Superadmin/Users/Index", [
             "users" => $users,

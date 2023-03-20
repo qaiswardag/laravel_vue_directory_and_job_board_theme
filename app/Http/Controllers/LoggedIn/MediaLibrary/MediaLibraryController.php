@@ -23,7 +23,7 @@ class MediaLibraryController extends Controller
         $this->authorize("can-read", $team);
 
         $images = MediaLibrary::latest()
-            ->take(10)
+            ->take(16)
             ->get();
 
         return Inertia::render("Media/Media", [

@@ -16,7 +16,7 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
 import slugify from "slugify";
 import config from "@/utils/config";
-import SearchUser from "@/Components/Search/SearchUser.vue";
+import SearchUserModal from "@/Components/Search/SearchUserModal.vue";
 
 import {
     Listbox,
@@ -835,7 +835,7 @@ onMounted(() => {
                 @thirdMediaButtonFunction="thirdMediaButtonFunction"
             >
             </MediaLibraryModal>
-            <SearchUser
+            <SearchUserModal
                 :user="user"
                 :team="postForm.team"
                 :show="modalShowAddAuthor"
@@ -850,7 +850,7 @@ onMounted(() => {
                     secondModalButtonSearchAuthorFunction
                 "
             >
-            </SearchUser>
+            </SearchUserModal>
             <NotificationsFixedBottom
                 :listOfMessages="Object.values(postForm.errors)"
                 :show="showErrorNotifications"
