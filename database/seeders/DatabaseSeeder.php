@@ -152,8 +152,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Users joined Qais Wardags team
-        //
-        // Shaun Pelling joined joined Qais Wardags team
         TeamUser::factory()->create([
             "team_id" => Team::find(1)->id, // Qais Wardag
             "user_id" => User::find(2)->id, // Shaun Pelling
@@ -169,17 +167,17 @@ class DatabaseSeeder extends Seeder
         TeamUser::factory()->create([
             "team_id" => Team::find(1)->id, // Qais Wardag's team
             "user_id" => User::find(4)->id, // Marilyn
-            "role" => "reader",
+            "role" => "admin",
         ]);
         TeamUser::factory()->create([
             "team_id" => Team::find(1)->id, // Qais Wardag's team
             "user_id" => User::find(5)->id, // Oprah
-            "role" => "reader",
+            "role" => "editor",
         ]);
         TeamUser::factory()->create([
             "team_id" => Team::find(1)->id, // Qais Wardag's team
             "user_id" => User::find(6)->id, // Ingrid
-            "role" => "reader",
+            "role" => "editor",
         ]);
 
         //

@@ -21,40 +21,76 @@ class AttachUserController extends Controller
         // TODO: Ability to add team owner as Author
         // TODO: Filter Role: "Reader" out
 
-        $teamId = $team->id;
         $searchQuery = $request->input("search_query");
 
         if (is_array($searchQuery)) {
             $searchQuery = implode(",", $searchQuery);
         }
 
+        $owner = $team->owner()->first();
+
+        $owner = collect($owner)->only([
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+        ]);
+
         $users = $team
-            // ->owner()
             ->teamUsers()
+            ->where("team_user.role", "<>", "reader") // exclude users with the role 'reader'
             ->latest()
-            // Search informations
             ->when($request->query("search_query"), function (
                 $query,
                 $searchQuery
             ) {
                 $query
-                    ->where("email", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("first_name", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("first_name", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere(
-                        DB::raw("CONCAT(first_name, ' ', last_name)"),
-                        "LIKE",
-                        "%" . $searchQuery . "%"
-                    );
+                    ->where(function ($query) use ($searchQuery) {
+                        $query
+                            ->where("email", "LIKE", "%" . $searchQuery . "%")
+                            ->orWhere(
+                                "first_name",
+                                "LIKE",
+                                "%" . $searchQuery . "%"
+                            )
+                            ->orWhere(
+                                "last_name",
+                                "LIKE",
+                                "%" . $searchQuery . "%"
+                            )
+                            ->orWhere(
+                                DB::raw("CONCAT(first_name, ' ', last_name)"),
+                                "LIKE",
+                                "%" . $searchQuery . "%"
+                            );
+                    })
+                    ->whereNotExists(function ($query) {
+                        $query
+                            ->select(DB::raw(1))
+                            ->from("team_user")
+                            ->whereColumn("users.id", "team_user.user_id")
+                            ->where("team_user.role", "reader");
+                    });
             })
-            ->with([
-                "teams" => function ($query) use ($team) {
-                    $query->where("teams.id", $team->id)->with(["owner"]);
-                },
-            ])
+            ->select(
+                "users.id",
+                "users.first_name",
+                "users.last_name",
+                "users.email",
+                "team_user.role"
+            )
             ->paginate(2);
 
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
         return [
+            "owner" => $owner,
             "users" => $users,
             // "results" => $users->total(),
             "oldInput" => [

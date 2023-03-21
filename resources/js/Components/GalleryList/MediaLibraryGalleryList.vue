@@ -205,7 +205,7 @@ onMounted(() => {
             </div>
 
             <div
-                class="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 myPrimaryGap max-h-[30rem] min-h-[25rem]"
+                class="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 myPrimaryGap max-h-[35rem] min-h-[30rem]"
             >
                 <template
                     v-for="image in getCurrentMedia &&

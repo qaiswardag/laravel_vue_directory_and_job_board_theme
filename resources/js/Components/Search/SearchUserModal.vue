@@ -79,7 +79,13 @@ const secondButton = function () {
         <div
             class="w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle px-4 py-4"
         >
-            <p>er: {{ getCurrentUsers }}</p>
+            <p class="my-8">
+                owner er: {{ getCurrentUsers?.fetchedData?.owner }}
+            </p>
+            <p class="my-8">
+                users data er: {{ getCurrentUsers?.fetchedData?.users }}
+            </p>
+            <p class="my-8">getCurrentUsers data er: {{ getCurrentUsers }}</p>
             <div
                 class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
             >
