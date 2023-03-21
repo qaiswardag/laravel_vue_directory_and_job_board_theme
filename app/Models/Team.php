@@ -59,6 +59,14 @@ class Team extends JetstreamTeam
     {
         return $this->hasMany(MediaLibrary::class, "team_id", "id");
     }
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     public function owner()
     {
         return $this->belongsTo(User::class, "user_id", "id");
@@ -67,6 +75,14 @@ class Team extends JetstreamTeam
     {
         return $this->belongsToMany(User::class, "team_user");
     }
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
 
     /**
      * Generate a unique reference ID for the model.

@@ -1,6 +1,6 @@
 <script setup>
 import Modal from "@/Components/Modals/Modal.vue";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { TailwindPagination } from "laravel-vue-pagination";
 import { useStore } from "vuex";
 
@@ -68,6 +68,10 @@ const firstButton = function () {
 const secondButton = function () {
     emit("secondModalButtonSearchAuthorFunction");
 };
+
+// onMounted(() => {
+//     handleSearch(1);
+// });
 </script>
 
 <template>
@@ -75,6 +79,7 @@ const secondButton = function () {
         <div
             class="w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle px-4 py-4"
         >
+            <p>er: {{ getCurrentUsers }}</p>
             <div
                 class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
             >
@@ -227,10 +232,66 @@ const secondButton = function () {
                                     :key="user.id"
                                     class="rounded-md bg-myPrimaryLightGrayColor hover:bg-opacity-70 py-4 pl-4 pr-2 cursor-pointer"
                                 >
+                                    <div
+                                        class="flex items-center gap-2 mt-2 bg-red-200 py-2 px-2 rounded my-4"
+                                    >
+                                        <div
+                                            v-if="
+                                                user && user.profile_photo_path
+                                            "
+                                        >
+                                            <div
+                                                class="h-12 w-12 flex-shrink-0"
+                                            >
+                                                <img
+                                                    class="object-cover w-12 h-12 rounded-full"
+                                                    :src="
+                                                        user.profile_photo_url
+                                                    "
+                                                    :alt="
+                                                        user.first_name +
+                                                        user.last_name
+                                                    "
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            v-if="
+                                                user &&
+                                                user.profile_photo_path === null
+                                            "
+                                            class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                        >
+                                            {{
+                                                user.first_name
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                            }}
+                                            {{
+                                                user.last_name
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                            }}
+                                        </div>
+                                        <span
+                                            class="flex flex-col items-left gap-1 myPrimaryParagraph text-xs"
+                                        >
+                                            <span>
+                                                {{ user.first_name }}
+                                                {{ user.last_name }}
+                                            </span>
+                                            <span>
+                                                {{ user.email }}
+                                            </span>
+                                            <span> Editor </span>
+                                        </span>
+                                    </div>
+
                                     <p
                                         class="myPrimaryParagraph text-xs font-semibold"
                                     >
-                                        {{ user.first_name }}
+                                        Name: {{ user.first_name }}
                                         {{ user.last_name }}
                                     </p>
                                     <p class="myPrimaryParagraph text-xs">
@@ -249,7 +310,7 @@ const secondButton = function () {
                     class="w-72 bg-white pl-2 pr-2 border-l border-gray-200"
                 >
                     <div class="pb-16 space-y-6">
-                        <p class="myPrimaryParagraph">No image selected</p>
+                        <p class="myPrimaryParagraph">No user selected</p>
                     </div>
                     <!--v-if-->
                 </aside>

@@ -64,6 +64,11 @@ class User extends Authenticatable
      */
     protected $appends = ["profile_photo_url"];
 
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

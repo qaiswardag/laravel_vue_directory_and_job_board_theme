@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -18,15 +19,15 @@ class AttachUserController extends Controller
     {
         $this->authorize("can-read", $team);
         // TODO: Ability to add team owner as Author
-        // TODO: Filter Role Read out
+        // TODO: Filter Role: "Reader" out
 
+        $teamId = $team->id;
         $searchQuery = $request->input("search_query");
 
         if (is_array($searchQuery)) {
             $searchQuery = implode(",", $searchQuery);
         }
 
-        // $users = $team->teamUsers();
         $users = $team
             // ->owner()
             ->teamUsers()
@@ -46,19 +47,12 @@ class AttachUserController extends Controller
                         "%" . $searchQuery . "%"
                     );
             })
+            ->with([
+                "teams" => function ($query) use ($team) {
+                    $query->where("teams.id", $team->id)->with(["owner"]);
+                },
+            ])
             ->paginate(2);
-
-        // // filter by users name
-        // $query = where(function ($subQuery) use ($searchQuery) {
-        //     $subQuery
-        //         ->where("first_name", "LIKE", "%" . $searchQuery . "%")
-        //         ->orWhere("last_name", "LIKE", "%" . $searchQuery . "%")
-        //         ->orWhere(
-        //             DB::raw("CONCAT(first_name, ' ', last_name)"),
-        //             "LIKE",
-        //             "%" . $searchQuery . "%"
-        //         );
-        // });
 
         return [
             "users" => $users,
