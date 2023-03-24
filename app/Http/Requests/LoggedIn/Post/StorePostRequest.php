@@ -93,9 +93,18 @@ class StorePostRequest extends FormRequest
     public function withValidator($validator)
     {
         // dd($this->team);
+
         $validator->after(function ($validator) {
             if ($this->team === null) {
-                $validator->errors()->add("team", "Team field is required.");
+                $validator
+                    ->errors()
+                    ->add("team", "The team field is required.");
+            }
+
+            if ($this->show_author === true) {
+                $validator
+                    ->errors()
+                    ->add("author", "The author field is required.");
             }
         });
 

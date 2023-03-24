@@ -15,6 +15,7 @@ export default {
     // state
     state: {
         users: [],
+        attachedUsers: [],
         // end state
     },
 
@@ -23,6 +24,9 @@ export default {
         getCurrentUsers(state) {
             return state.users;
         },
+        getCurrentAttachedUsers(state) {
+            return state.attachedUsers;
+        },
         // end getters
     },
 
@@ -30,6 +34,10 @@ export default {
     mutations: {
         setCurrentUsers(state, payload) {
             state.users = payload;
+        },
+
+        setCurrentAttachedUsers(state, payload) {
+            state.attachedUsers = payload;
         },
 
         // end mutations
@@ -45,13 +53,11 @@ export default {
             if (data.page === undefined) {
                 data.page = "";
             }
-            console.log("came here:", data);
 
             // fetch media
             handleGetUsers(
                 `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
-            console.log("and here");
             // context & send to mutation
             context.commit("setCurrentUsers", {
                 fetchedData: fetchedUsers,

@@ -89,6 +89,8 @@ class PostController extends Controller
             }
         } while ($slugExists);
 
+        dd("author is in controller store:", $request->author);
+
         Post::create([
             "user_id" => $userId,
             "team_id" => $team->id,
@@ -100,7 +102,7 @@ class PostController extends Controller
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
-            "author_id" => $request->author_id,
+            "author_id" => null,
         ]);
 
         // Return the current team that the user is on, rather than the team that the user is storing the post for.
@@ -167,7 +169,7 @@ class PostController extends Controller
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
-            "author_id" => $request->author_id,
+            "author_id" => null,
         ]);
 
         // Return the current team that the user is on, rather than the team that the user is storing the post for.

@@ -185,7 +185,7 @@ const postForm = useForm({
     thumbnail: "",
     tags: "",
     show_author: true,
-    author_id: "",
+    author: "",
 });
 
 const productSlugLock = ref("");
@@ -250,7 +250,7 @@ onMounted(() => {
         // postForm.team = props.post.team;
         postForm.thumbnail = props.post.thumbnail;
         postForm.tags = props.post.tags;
-        postForm.author_id = props.post.author_id;
+        postForm.author = props.post.author;
     }
 
     // postForm = props.post;
@@ -473,9 +473,6 @@ onMounted(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Show author
                     </div>
-                    <p class="myPrimaryParagraph">
-                        Author: {{ user.first_name }} {{ user.last_name }}
-                    </p>
                     <p
                         v-if="formType === 'update'"
                         class="myPrimaryParagraph italic mt-4"
@@ -603,7 +600,7 @@ onMounted(() => {
                         </svg>
                     </div>
                 </div>
-                <InputError :message="postForm.errors.author_id" />
+                <InputError :message="postForm.errors.author" />
             </div>
             <!-- post show author - end -->
             <!-- cover image - start -->

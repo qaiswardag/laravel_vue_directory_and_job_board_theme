@@ -18,8 +18,6 @@ class AttachUserController extends Controller
     public function index(Request $request, Team $team)
     {
         $this->authorize("can-read", $team);
-        // TODO: Ability to add team owner as Author
-        // TODO: Filter Role: "Reader" out
 
         $searchQuery = $request->input("search_query");
 
@@ -104,7 +102,6 @@ class AttachUserController extends Controller
         //
 
         return [
-            "owner" => $owner,
             "users" => $users,
             // "results" => $users->total(),
             "oldInput" => [

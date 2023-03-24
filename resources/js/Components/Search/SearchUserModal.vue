@@ -35,14 +35,17 @@ const props = defineProps({
 const store = useStore();
 
 const getCurrentUsers = computed(() => {
-    return store.getters["users/getCurrentUsers"];
+    return store.getters["attachedUsers/getCurrentUsers"];
+});
+const getCurrentAttachedUsers = computed(() => {
+    return store.getters["attachedUsers/getCurrentAttachedUsers"];
 });
 //
 const search_query = ref("");
 // handle search
 const handleSearch = function (page) {
     // dispatch
-    store.dispatch("users/loadUsers", {
+    store.dispatch("attachedUsers/loadUsers", {
         teamId: props.team.id,
         page: page,
         search_query: search_query.value,
@@ -69,6 +72,10 @@ const secondButton = function () {
     emit("secondModalButtonSearchAuthorFunction");
 };
 
+const handleAttachUser = function (userId) {
+    console.log("attach user with ud:", userId);
+};
+
 onMounted(() => {
     handleSearch(1);
 });
@@ -85,7 +92,6 @@ onMounted(() => {
                 <h3 class="tertiaryHeader my-0 py-0">
                     {{ title }}
                 </h3>
-
                 <div @click="firstButton" class="flex-end">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -106,6 +112,7 @@ onMounted(() => {
             </div>
 
             <!-- content start -->
+            <p>getCurrentAttachedUsers: {{ getCurrentAttachedUsers }}</p>
             <div class="flex-1 flex items-stretch overflow-hidden mt-2">
                 <main class="flex-1 overflow-y-auto relativ">
                     <div class="py-4 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8">
@@ -223,71 +230,93 @@ onMounted(() => {
                             "
                         >
                             <div
-                                class="flex flex-col myPrimaryGap min-h-[20rem] w-full overflow-y-scroll"
+                                class="flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 p-2"
                             >
                                 <div
                                     v-for="user in getCurrentUsers.fetchedData
                                         .users.data"
                                     :key="user.id"
-                                    class="w-full rounded-md bg-myPrimaryLightGrayColor hover:bg-opacity-70 py-4 pl-4 pr-2 cursor-pointer"
+                                    class="cursor-pointer hover:bg-gray-50 px-2"
                                 >
                                     <div
-                                        class="flex items-center gap-2 my-4 overflow-y-scroll"
+                                        class="flex justify-between items-center"
                                     >
-                                        <!-- start photo -->
                                         <div
-                                            class="flex-shrink-0"
-                                            v-show="
-                                                user &&
-                                                user.profile_photo_path !== null
-                                            "
+                                            class="flex items-center gap-2 my-4 overflow-y-scroll"
                                         >
-                                            <img
-                                                class="object-cover w-12 h-12 rounded-full"
-                                                :src="`/uploads/${user.profile_photo_path}`"
-                                                :alt="
-                                                    user.first_name +
-                                                    user.last_name
+                                            <!-- start photo -->
+                                            <div
+                                                class="flex-shrink-0"
+                                                v-show="
+                                                    user &&
+                                                    user.profile_photo_path !==
+                                                        null
                                                 "
-                                            />
-                                        </div>
+                                            >
+                                                <img
+                                                    v-if="
+                                                        user.profile_photo_path !==
+                                                        null
+                                                    "
+                                                    class="object-cover w-12 h-12 rounded-full"
+                                                    :src="`/uploads/${user.profile_photo_path}`"
+                                                    :alt="
+                                                        user.first_name +
+                                                        user.last_name
+                                                    "
+                                                />
+                                            </div>
 
-                                        <div
-                                            v-show="
-                                                user &&
-                                                user.profile_photo_path === null
-                                            "
-                                            class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
-                                        >
-                                            <span>
-                                                {{
-                                                    user.first_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-                                                }}
-                                            </span>
-                                            <span>
-                                                {{
-                                                    user.last_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-                                                }}
+                                            <div
+                                                v-show="
+                                                    user &&
+                                                    user.profile_photo_path ===
+                                                        null
+                                                "
+                                                class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                            >
+                                                <span>
+                                                    {{
+                                                        user.first_name
+                                                            .charAt(0)
+                                                            .toUpperCase()
+                                                    }}
+                                                </span>
+                                                <span>
+                                                    {{
+                                                        user.last_name
+                                                            .charAt(0)
+                                                            .toUpperCase()
+                                                    }}
+                                                </span>
+                                            </div>
+
+                                            <!-- end photo -->
+                                            <span
+                                                class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                            >
+                                                <span>
+                                                    {{ user.first_name }}
+                                                    {{ user.last_name }}
+                                                </span>
+                                                <span>
+                                                    {{ user.email }}
+                                                </span>
+                                                <span>
+                                                    Role: {{ user.role }}
+                                                </span>
                                             </span>
                                         </div>
-
-                                        <!-- end photo -->
-                                        <span
-                                            class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                        >
-                                            <span>
-                                                {{ user.first_name }}
-                                                {{ user.last_name }}
-                                            </span>
-                                            <span>
-                                                {{ user.email }}
-                                            </span>
-                                            <span> Role: {{ user.role }} </span>
-                                        </span>
+                                        <div>
+                                            <button
+                                                @click="
+                                                    handleAttachUser(user.id)
+                                                "
+                                                class="myPrimaryButton text-xs"
+                                            >
+                                                + Add
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
