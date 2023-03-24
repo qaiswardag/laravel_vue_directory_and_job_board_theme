@@ -34,56 +34,70 @@ class AttachUserController extends Controller
             "first_name",
             "last_name",
             "email",
+            "profile_photo_path",
+            "profile_photo_url",
         ]);
 
-        $users = $team
-            ->teamUsers()
-            ->where("team_user.role", "<>", "reader") // exclude users with the role 'reader'
-            ->latest()
+        $users = User::query()
+            ->join("team_user", function ($join) use ($team) {
+                $join
+                    ->on("users.id", "=", "team_user.user_id")
+                    ->where("team_user.team_id", "=", $team->id);
+            })
+            ->join("teams", "team_user.team_id", "=", "teams.id")
+            ->where("team_user.role", "<>", "reader")
             ->when($request->query("search_query"), function (
                 $query,
                 $searchQuery
             ) {
+                $query->where(function ($query) use ($searchQuery) {
+                    $query
+                        ->where("email", "LIKE", "%" . $searchQuery . "%")
+                        ->orWhere(
+                            "first_name",
+                            "LIKE",
+                            "%" . $searchQuery . "%"
+                        )
+                        ->orWhere("last_name", "LIKE", "%" . $searchQuery . "%")
+                        ->orWhere(
+                            DB::raw('CONCAT(first_name, " ", last_name)'),
+                            "LIKE",
+                            "%" . $searchQuery . "%"
+                        );
+                });
+            })
+            ->whereNotExists(function ($query) {
                 $query
-                    ->where(function ($query) use ($searchQuery) {
-                        $query
-                            ->where("email", "LIKE", "%" . $searchQuery . "%")
-                            ->orWhere(
-                                "first_name",
-                                "LIKE",
-                                "%" . $searchQuery . "%"
-                            )
-                            ->orWhere(
-                                "last_name",
-                                "LIKE",
-                                "%" . $searchQuery . "%"
-                            )
-                            ->orWhere(
-                                DB::raw("CONCAT(first_name, ' ', last_name)"),
-                                "LIKE",
-                                "%" . $searchQuery . "%"
-                            );
-                    })
-                    ->whereNotExists(function ($query) {
-                        $query
-                            ->select(DB::raw(1))
-                            ->from("team_user")
-                            ->whereColumn("users.id", "team_user.user_id")
-                            ->where("team_user.role", "reader");
-                    });
+                    ->select(DB::raw(1))
+                    ->from("team_user")
+                    ->whereColumn("users.id", "team_user.user_id")
+                    ->where("team_user.role", "reader");
             })
             ->select(
                 "users.id",
                 "users.first_name",
                 "users.last_name",
                 "users.email",
+                "users.profile_photo_path",
                 "team_user.role"
             )
             ->paginate(2);
 
         //
         //
-        //
+        if ($users->currentPage() === 1) {
+            $ownerDetails = collect([
+                "id" => $owner["id"],
+                "first_name" => $owner["first_name"],
+                "last_name" => $owner["last_name"],
+                "email" => $owner["email"],
+                "role" => "owner",
+                "profile_photo_path" => $owner["profile_photo_path"],
+                "profile_photo_url" => $owner["profile_photo_url"],
+            ]);
+
+            $users->prepend($ownerDetails);
+        }
         //
         //
         //

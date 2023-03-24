@@ -290,8 +290,8 @@ const notificationsSlideOverButton = function () {
                                 "
                             >
                                 <img
-                                    class="object-cover w-8 h-8 rounded-full"
-                                    :src="$page.props.user.profile_photo_url"
+                                    class="object-cover w-8 h-8 rounded-full flex-shrink-0"
+                                    :src="`/uploads/${$page.props.user.profile_photo_path}`"
                                     :alt="
                                         $page.props.user.first_name +
                                         $page.props.user.last_name

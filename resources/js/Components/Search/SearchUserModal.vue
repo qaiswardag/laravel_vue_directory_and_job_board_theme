@@ -69,9 +69,9 @@ const secondButton = function () {
     emit("secondModalButtonSearchAuthorFunction");
 };
 
-// onMounted(() => {
-//     handleSearch(1);
-// });
+onMounted(() => {
+    handleSearch(1);
+});
 </script>
 
 <template>
@@ -79,13 +79,6 @@ const secondButton = function () {
         <div
             class="w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle px-4 py-4"
         >
-            <p class="my-8">
-                owner er: {{ getCurrentUsers?.fetchedData?.owner }}
-            </p>
-            <p class="my-8">
-                users data er: {{ getCurrentUsers?.fetchedData?.users }}
-            </p>
-            <p class="my-8">getCurrentUsers data er: {{ getCurrentUsers }}</p>
             <div
                 class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
             >
@@ -230,58 +223,61 @@ const secondButton = function () {
                             "
                         >
                             <div
-                                class="flex flex-col myPrimaryGap min-h-[20rem]"
+                                class="flex flex-col myPrimaryGap min-h-[20rem] w-full overflow-y-scroll"
                             >
                                 <div
                                     v-for="user in getCurrentUsers.fetchedData
                                         .users.data"
                                     :key="user.id"
-                                    class="rounded-md bg-myPrimaryLightGrayColor hover:bg-opacity-70 py-4 pl-4 pr-2 cursor-pointer"
+                                    class="w-full rounded-md bg-myPrimaryLightGrayColor hover:bg-opacity-70 py-4 pl-4 pr-2 cursor-pointer"
                                 >
                                     <div
-                                        class="flex items-center gap-2 mt-2 bg-red-200 py-2 px-2 rounded my-4"
+                                        class="flex items-center gap-2 my-4 overflow-y-scroll"
                                     >
+                                        <!-- start photo -->
                                         <div
-                                            v-if="
-                                                user && user.profile_photo_path
+                                            class="flex-shrink-0"
+                                            v-show="
+                                                user &&
+                                                user.profile_photo_path !== null
                                             "
                                         >
-                                            <div
-                                                class="h-12 w-12 flex-shrink-0"
-                                            >
-                                                <img
-                                                    class="object-cover w-12 h-12 rounded-full"
-                                                    :src="
-                                                        user.profile_photo_url
-                                                    "
-                                                    :alt="
-                                                        user.first_name +
-                                                        user.last_name
-                                                    "
-                                                />
-                                            </div>
+                                            <img
+                                                class="object-cover w-12 h-12 rounded-full"
+                                                :src="`/uploads/${user.profile_photo_path}`"
+                                                :alt="
+                                                    user.first_name +
+                                                    user.last_name
+                                                "
+                                            />
                                         </div>
 
                                         <div
-                                            v-if="
+                                            v-show="
                                                 user &&
                                                 user.profile_photo_path === null
                                             "
-                                            class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                            class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
                                         >
-                                            {{
-                                                user.first_name
-                                                    .charAt(0)
-                                                    .toUpperCase()
-                                            }}
-                                            {{
-                                                user.last_name
-                                                    .charAt(0)
-                                                    .toUpperCase()
-                                            }}
+                                            <span>
+                                                {{
+                                                    user.first_name
+                                                        .charAt(0)
+                                                        .toUpperCase()
+                                                }}
+                                            </span>
+                                            <span>
+                                                {{
+                                                    user.last_name
+                                                        .charAt(0)
+                                                        .toUpperCase()
+                                                }}
+                                            </span>
                                         </div>
+
+                                        <!-- end photo -->
                                         <span
-                                            class="flex flex-col items-left gap-1 myPrimaryParagraph text-xs"
+                                            class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                         >
                                             <span>
                                                 {{ user.first_name }}
@@ -290,22 +286,9 @@ const secondButton = function () {
                                             <span>
                                                 {{ user.email }}
                                             </span>
-                                            <span> Editor </span>
+                                            <span> Role: {{ user.role }} </span>
                                         </span>
                                     </div>
-
-                                    <p
-                                        class="myPrimaryParagraph text-xs font-semibold"
-                                    >
-                                        Name: {{ user.first_name }}
-                                        {{ user.last_name }}
-                                    </p>
-                                    <p class="myPrimaryParagraph text-xs">
-                                        Email: {{ user.email }}
-                                    </p>
-                                    <p class="myPrimaryParagraph text-xs">
-                                        Role: {{ user }}
-                                    </p>
                                 </div>
                             </div>
                         </template>

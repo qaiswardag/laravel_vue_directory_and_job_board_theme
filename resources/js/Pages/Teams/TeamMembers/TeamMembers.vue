@@ -34,6 +34,10 @@ const breadcrumbsLinks = [
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
 
+        <p class="my-8 font-semibold">All Props:</p>
+        <p class="my-8">team: {{ team }}</p>
+        <p class="my-8">team: {{ availableRoles }}</p>
+        <p class="my-8">team: {{ permissions }}</p>
         <div v-if="team.owner !== null && team.owner !== undefined">
             <TeamMemberManager
                 class="mt-10 sm:mt-0"

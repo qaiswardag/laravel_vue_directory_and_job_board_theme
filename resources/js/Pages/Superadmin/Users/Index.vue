@@ -226,9 +226,7 @@ onMounted(() => {
                                                 >
                                                     <img
                                                         class="object-cover w-12 h-12 rounded-full"
-                                                        :src="
-                                                            user.profile_photo_url
-                                                        "
+                                                        :src="`/uploads/${user.profile_photo_path}`"
                                                         :alt="
                                                             user.first_name +
                                                             user.last_name
