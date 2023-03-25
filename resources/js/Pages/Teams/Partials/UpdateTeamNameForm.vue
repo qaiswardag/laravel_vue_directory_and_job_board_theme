@@ -399,7 +399,7 @@ const handleRemoveLogo = function () {
                     >
                         <img
                             class="object-cover w-16 h-16 rounded-full"
-                            :src="$page.props.team.owner.profile_photo_url"
+                            :src="`/uploads/${$page.props.team.owner.profile_photo_path}`"
                             :alt="
                                 $page.props.team.owner.first_name +
                                 $page.props.team.owner.last_name

@@ -51,6 +51,9 @@ const store = useStore();
 const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
 });
+const getCurrentAttachedUsers = computed(() => {
+    return store.getters["attachedUsers/getCurrentAttachedUsers"];
+});
 
 const formType = ref("create");
 
@@ -115,16 +118,16 @@ const handleAddAuthor = function () {
     titleModalSearchAuthor.value = "Add author";
     descriptionModalSearchAuthor.value = "Add Post author";
     firstButtonModalSearchAuthor.value = "Close";
-    secondButtonModalSearchAuthor.value = "Select Author";
+    secondButtonModalSearchAuthor.value = "Save";
     // handle click
     firstModalButtonSearchAuthorFunction.value = function () {
-        console.log("clicked first button search author modal");
         // handle show modal for unique content
         modalShowAddAuthor.value = false;
     };
     // handle click
     secondModalButtonSearchAuthorFunction.value = function () {
-        console.log("clicked second button search author modal");
+        postForm.author = getCurrentAttachedUsers.value;
+
         // handle show modal for unique content
         modalShowAddAuthor.value = false;
     };
@@ -132,8 +135,10 @@ const handleAddAuthor = function () {
     // end modal
 };
 
-const handleRemoveAuthor = function () {
-    postForm.author = null;
+const filteredUsers = ref([]);
+const handleRemoveAttachedUser = function (userId) {
+    // filter the array to exclude user with matching ID
+    postForm.author = postForm.author.filter((user) => user.id !== userId);
 };
 
 const showErrorNotifications = ref(false);
@@ -185,7 +190,7 @@ const postForm = useForm({
     thumbnail: "",
     tags: "",
     show_author: true,
-    author: "",
+    author: [],
 });
 
 const productSlugLock = ref("");
@@ -263,6 +268,7 @@ onMounted(() => {
         <template #description> Create a new Post. </template>
 
         <template #main>
+            <p class="my-12">author er: {{ postForm.author }}</p>
             <p class="my-12">Post er: {{ postForm }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -556,51 +562,141 @@ onMounted(() => {
                 </div>
                 <InputError :message="postForm.errors.show_author" />
 
-                <div
-                    class="mt-12 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
-                >
-                    <button
-                        @click="handleAddAuthor"
-                        type="button"
-                        class="myPrimaryButton gap-2 items-center"
+                <div v-if="postForm.show_author === true">
+                    <div
+                        class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4"
+                        <button
+                            @click="handleAddAuthor"
+                            type="button"
+                            class="myPrimaryButton gap-2 items-center"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                            />
-                        </svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-4 h-4"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                                />
+                            </svg>
 
-                        Add Author
-                    </button>
-
-                    <div v-if="postForm && postForm.author">
-                        <svg
-                            @click="handleRemoveAuthor"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5 text-myErrorColor cursor-pointer"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                        </svg>
+                            Add Author
+                        </button>
                     </div>
+
+                    <div
+                        class="p-2 mt-4"
+                        :class="
+                            postForm.author.length === 0
+                                ? 'bg-white'
+                                : 'bg-gray-50'
+                        "
+                    >
+                        <div
+                            v-if="postForm.author.length !== 0"
+                            class="p-2 mt-4 rounded-md min-h-[4rem] max-h-[35rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        >
+                            <div
+                                v-for="user in postForm.author"
+                                :key="user.id"
+                                class="hover:bg-white px-2"
+                            >
+                                <div
+                                    class="flex justify-between items-center rounded"
+                                >
+                                    <div
+                                        class="flex items-center gap-2 my-4 overflow-y-scroll"
+                                    >
+                                        <!-- start photo -->
+                                        <div
+                                            class="flex-shrink-0"
+                                            v-show="
+                                                user &&
+                                                user.profile_photo_path !== null
+                                            "
+                                        >
+                                            <img
+                                                v-if="
+                                                    user.profile_photo_path !==
+                                                    null
+                                                "
+                                                class="object-cover w-12 h-12 rounded-full"
+                                                :src="`/uploads/${user.profile_photo_path}`"
+                                                :alt="
+                                                    user.first_name +
+                                                    user.last_name
+                                                "
+                                            />
+                                        </div>
+
+                                        <div
+                                            v-show="
+                                                user &&
+                                                user.profile_photo_path === null
+                                            "
+                                            class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                        >
+                                            <span>
+                                                {{
+                                                    user.first_name
+                                                        .charAt(0)
+                                                        .toUpperCase()
+                                                }}
+                                            </span>
+                                            <span>
+                                                {{
+                                                    user.last_name
+                                                        .charAt(0)
+                                                        .toUpperCase()
+                                                }}
+                                            </span>
+                                        </div>
+
+                                        <!-- end photo -->
+                                        <span
+                                            class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                        >
+                                            <span>
+                                                {{ user.first_name }}
+                                                {{ user.last_name }}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div
+                                        @click="
+                                            handleRemoveAttachedUser(user.id)
+                                        "
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="2"
+                                            stroke="currentColor"
+                                            class="w-4 h-4 text-myErrorColor cursor-pointer"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="postForm.author.length === 0" class="space-y-6">
+                        <p class="myPrimaryParagraph">No author selected</p>
+                    </div>
+                    <InputError :message="postForm.errors.author" />
                 </div>
-                <InputError :message="postForm.errors.author" />
             </div>
             <!-- post show author - end -->
             <!-- cover image - start -->

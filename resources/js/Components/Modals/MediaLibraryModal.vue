@@ -372,7 +372,7 @@ const handleDeleteImage = function (imageId) {
                                         <aside
                                             v-if="selected === 'Media library'"
                                             aria-label="sidebar"
-                                            class="w-72 min-h-[25rem] bg-white pl-2 pr-2 border-l border-gray-200"
+                                            class="w-72 min-h-[25rem] bg-white pl-2 pr-2 border-l border-gray-200 overflow-y-scroll"
                                         >
                                             <div
                                                 v-if="
@@ -772,7 +772,7 @@ const handleDeleteImage = function (imageId) {
                                         <aside
                                             v-if="selected === 'Upload'"
                                             aria-label="sidebar"
-                                            class="w-72 bg-white pl-2 pr-2 border-l border-gray-200"
+                                            class="w-72 min-h-[25rem] bg-white pl-2 pr-2 border-l border-gray-200 overflow-y-scroll"
                                         >
                                             <div
                                                 v-if="

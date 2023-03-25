@@ -41,6 +41,8 @@ const getCurrentAttachedUsers = computed(() => {
     return store.getters["attachedUsers/getCurrentAttachedUsers"];
 });
 //
+const filteredUsers = ref([]);
+//
 const search_query = ref("");
 // handle search
 const handleSearch = function (page) {
@@ -72,8 +74,15 @@ const secondButton = function () {
     emit("secondModalButtonSearchAuthorFunction");
 };
 
-const handleAttachUser = function (userId) {
-    console.log("attach user with ud:", userId);
+const handleAttachUser = function (user) {
+    store.commit("attachedUsers/setCurrentAttachedUsers", user);
+};
+const handleRemoveAttachedUser = function (userId) {
+    // filter the array to exclude user with matching ID
+    filteredUsers.value = getCurrentAttachedUsers.value.filter(
+        (user) => user.id !== userId
+    );
+    store.commit("attachedUsers/setRemoveAttachedUser", filteredUsers.value);
 };
 
 onMounted(() => {
@@ -112,7 +121,6 @@ onMounted(() => {
             </div>
 
             <!-- content start -->
-            <p>getCurrentAttachedUsers: {{ getCurrentAttachedUsers }}</p>
             <div class="flex-1 flex items-stretch overflow-hidden mt-2">
                 <main class="flex-1 overflow-y-auto relativ">
                     <div class="py-4 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8">
@@ -236,7 +244,7 @@ onMounted(() => {
                                     v-for="user in getCurrentUsers.fetchedData
                                         .users.data"
                                     :key="user.id"
-                                    class="cursor-pointer hover:bg-gray-50 px-2"
+                                    class="hover:bg-gray-50 px-2"
                                 >
                                     <div
                                         class="flex justify-between items-center"
@@ -309,9 +317,7 @@ onMounted(() => {
                                         </div>
                                         <div>
                                             <button
-                                                @click="
-                                                    handleAttachUser(user.id)
-                                                "
+                                                @click="handleAttachUser(user)"
                                                 class="myPrimaryButton text-xs"
                                             >
                                                 + Add
@@ -325,10 +331,108 @@ onMounted(() => {
                 </main>
                 <aside
                     aria-label="sidebar"
-                    class="w-72 bg-white pl-2 pr-2 border-l border-gray-200"
+                    class="w-72 min-h-[25rem] max-h-[35rem] bg-gray-50 pl-2 border-l border-gray-200 overflow-y-scroll"
                 >
-                    <div class="pb-16 space-y-6">
-                        <p class="myPrimaryParagraph">No user selected</p>
+                    <div
+                        v-if="getCurrentAttachedUsers.length === 0"
+                        class="pb-16 space-y-6"
+                    >
+                        <p class="myPrimaryParagraph text-xs p-2">
+                            No users added
+                        </p>
+                    </div>
+
+                    <div
+                        v-if="getCurrentAttachedUsers.length !== 0"
+                        class="flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 p-2"
+                    >
+                        <p class="myPrimaryParagraph pb-2 italic text-xs">
+                            Added Users
+                        </p>
+                        <div
+                            v-for="user in getCurrentAttachedUsers"
+                            :key="user.id"
+                            class="px-2 hover:bg-white"
+                        >
+                            <div class="flex justify-between items-center">
+                                <div
+                                    class="flex items-center gap-2 my-4 overflow-y-scroll"
+                                >
+                                    <!-- start photo -->
+                                    <div
+                                        class="flex-shrink-0"
+                                        v-show="
+                                            user &&
+                                            user.profile_photo_path !== null
+                                        "
+                                    >
+                                        <img
+                                            v-if="
+                                                user.profile_photo_path !== null
+                                            "
+                                            class="object-cover w-12 h-12 rounded-full"
+                                            :src="`/uploads/${user.profile_photo_path}`"
+                                            :alt="
+                                                user.first_name + user.last_name
+                                            "
+                                        />
+                                    </div>
+
+                                    <div
+                                        v-show="
+                                            user &&
+                                            user.profile_photo_path === null
+                                        "
+                                        class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                    >
+                                        <span>
+                                            {{
+                                                user.first_name
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                            }}
+                                        </span>
+                                        <span>
+                                            {{
+                                                user.last_name
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                            }}
+                                        </span>
+                                    </div>
+
+                                    <!-- end photo -->
+                                    <span
+                                        class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                    >
+                                        <span>
+                                            {{ user.first_name }}
+                                            {{ user.last_name }}
+                                        </span>
+                                        <span>
+                                            {{ user.email }}
+                                        </span>
+                                        <span> Role: {{ user.role }} </span>
+                                    </span>
+                                </div>
+                                <div @click="handleRemoveAttachedUser(user.id)">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="2"
+                                        stroke="currentColor"
+                                        class="w-4 h-4 text-myErrorColor cursor-pointer"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!--v-if-->
                 </aside>

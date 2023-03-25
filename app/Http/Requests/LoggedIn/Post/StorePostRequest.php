@@ -92,8 +92,6 @@ class StorePostRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        // dd($this->team);
-
         $validator->after(function ($validator) {
             if ($this->team === null) {
                 $validator
@@ -101,10 +99,37 @@ class StorePostRequest extends FormRequest
                     ->add("team", "The team field is required.");
             }
 
-            if ($this->show_author === true) {
+            // validation for author
+            if (
+                ($this->show_author === true && $this->author === null) ||
+                ($this->show_author === true &&
+                    gettype($this->author) === "array" &&
+                    count($this->author) === 0)
+            ) {
                 $validator
                     ->errors()
-                    ->add("author", "The author field is required.");
+                    ->add(
+                        "author",
+                        "The author field is required, when show author is set to true."
+                    );
+            }
+
+            if ($this->author !== null && gettype($this->author) !== "array") {
+                $validator
+                    ->errors()
+                    ->add("author", "Author field must be an array.");
+            }
+            if (
+                $this->author !== null &&
+                gettype($this->author) === "array" &&
+                count($this->author) >= 3
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "author",
+                        "This post is limited to a maximum of two authors."
+                    );
             }
         });
 

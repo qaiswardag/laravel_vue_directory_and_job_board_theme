@@ -37,6 +37,18 @@ export default {
         },
 
         setCurrentAttachedUsers(state, payload) {
+            // check if user already exists in the array
+            const userExists = state.attachedUsers.some(
+                (user) => user.id === payload.id
+            );
+
+            // if user does not exist, push to array
+            // if (userExists === false) {
+            if (true) {
+                state.attachedUsers.unshift(payload);
+            }
+        },
+        setRemoveAttachedUser(state, payload) {
             state.attachedUsers = payload;
         },
 
