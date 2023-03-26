@@ -283,10 +283,18 @@ onMounted(() => {
         postForm.thumbnail = props.post.thumbnail;
         postForm.tags = props.post.tags;
         //
-        if (props.post.show_author === 1) {
+
+        // check if the post author is available and should be displayed
+        if (props.post.show_author === 1 && props.postAuthor !== null) {
+            // add the author to the postForm
             postForm.author.push(props.postAuthor);
         }
-        // postForm.author = props.post.author;
+
+        // check if the post author is not available or should not be displayed
+        if (props.post.show_author === 1 && props.postAuthor === null) {
+            // clear the postForm author field
+            postForm.author = [];
+        }
     }
 
     // postForm = props.post;
@@ -299,9 +307,7 @@ onMounted(() => {
         <template #description> Create a new Post. </template>
 
         <template #main>
-            <p class="my-12">author er: {{ postForm.author }}</p>
             <p class="my-12">Post er: {{ postForm }}</p>
-            <p class="my-12">Post from author er: {{ postForm.author }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -630,13 +636,17 @@ onMounted(() => {
                                 : 'bg-gray-50'
                         "
                     >
+                        <p
+                            v-if="postForm.author.length !== 0"
+                            class="myPrimaryParagraph italic text-xs py-4"
+                        >
+                            Added {{ postForm.author.length }} author
+                        </p>
+
                         <div
                             v-if="postForm.author.length !== 0"
-                            class="p-2 mt-4 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                            class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                         >
-                            <p class="myPrimaryParagraph pb-2 italic text-xs">
-                                Added {{ postForm.author.length }} author
-                            </p>
                             <div
                                 v-for="user in postForm.author"
                                 :key="user.id"

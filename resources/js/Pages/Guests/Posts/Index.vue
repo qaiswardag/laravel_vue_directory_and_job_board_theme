@@ -51,6 +51,12 @@ defineProps({
                             />
                         </div>
                     </div>
+
+                    <p class="my-12">show author: {{ post.show_author }}</p>
+                    <p class="my-2">author: {{ post.author }}</p>
+                    <p class="my-12 break-all whitespace-pre-line">
+                        post: {{ post }}
+                    </p>
                     <!-- team details - end -->
                 </div>
             </div>

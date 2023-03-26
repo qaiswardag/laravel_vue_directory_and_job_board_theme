@@ -219,6 +219,20 @@ class DatabaseSeeder extends Seeder
 
         // fake Users
         User::factory(100)->create();
+
+        // add users to Qais's Team
+        foreach (range(7, 50) as $num) {
+            TeamUser::factory()->create([
+                "team_id" => Team::find(1)->id, // Qais Wardag's team
+                "user_id" => User::find($num)->id, // User as $num
+                "role" => "editor",
+            ]);
+
+            if ($num == 50) {
+                break;
+            }
+        }
+
         // fake Posts
         Post::factory(100)->create();
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guests\Post;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -72,11 +73,12 @@ class PostController extends Controller
             ->with([
                 "team:id,name,thumbnail,logo,public",
                 "user:id,first_name,last_name",
+                "author:id,first_name,last_name",
             ])
             ->paginate(24);
 
         // Hide certain attributes from the response
-        $posts->makeHidden(["id", "user_id", "team_id"]);
+        $posts->makeHidden(["id", "user_id", "team_id", "author_id"]);
 
         // Transform the posts
         $posts->transform(function ($post) {
@@ -90,23 +92,26 @@ class PostController extends Controller
 
             // Make the user id hidden from the response
             if ($post->user) {
-                $post->user->makeHidden(["id", "profile_photo_url"]);
+                $post->user->makeHidden([
+                    "id",
+                    "profile_photo_url",
+                    "profile_photo_path",
+                ]);
             }
 
-            // Check if show_author flag is true or 1, if not hide user details
-            if ($post->show_author === 0) {
+            // User: Check if show_author flag is true or 1, if not hide user details
+            if ($post->show_author === 0 || $post->show_author === 1) {
                 $post->user->makeHidden(
                     array_keys($post->user->getAttributes())
                 );
             }
 
-            // Make the team id hidden from the response
+            // Team: Make the team id hidden from the response
             if ($post->team) {
                 $post->team->makeHidden(["id"]);
             }
 
-            // Check if team public flag is true or 1, if not hide team details
-
+            // Team: Check if team public flag is true or 1, if not hide team details
             if ($post->team->public === 0) {
                 $post->team->makeHidden(
                     array_keys($post->team->getAttributes())
@@ -166,6 +171,18 @@ class PostController extends Controller
             ])
             ->firstOrFail();
 
+        // dd("post er:", $post);
+
+        $author = null;
+        // Check if the post has an author and the author ID is not null
+        if ($post->show_author === 1 && $post->author_id !== null) {
+            $author = User::select(
+                "first_name",
+                "last_name",
+                "username"
+            )->findOrFail($post->author_id);
+        }
+
         // If the post is unpublished and the user is not authenticated, return a 404 error
         if ($post->published === 0 && !Auth::check()) {
             return Inertia::render("Error", [
@@ -174,22 +191,25 @@ class PostController extends Controller
             ]);
         }
 
-        // Hide certain attributes from the JSON response
-        $post->makeHidden(["id", "user_id", "team_id"]);
+        // Post: hide certain attributes from the JSON response
+        $post->makeHidden(["id", "user_id", "team_id", "author_id"]);
 
-        // Make the user id hidden from the response
+        // User: hide the user id from the response
         if ($post->user) {
-            $post->user->makeHidden(["id", "profile_photo_url"]);
+            $post->user->makeHidden([
+                "id",
+                "profile_photo_url",
+                "profile_photo_path",
+            ]);
+        }
+        // Team: hide the team id from the response
+        if ($post->team) {
+            $post->team->makeHidden(["id"]);
         }
 
         // Check if show_author flag is true or 1, if not hide user details
-        if ($post->show_author === 0) {
+        if ($post->show_author === 0 || $post->show_author === 1) {
             $post->user->makeHidden(array_keys($post->user->getAttributes()));
-        }
-
-        // Make the team id hidden from the response
-        if ($post->team) {
-            $post->team->makeHidden(["id"]);
         }
 
         // Check if team public flag is true or 1, if not hide team details
@@ -218,6 +238,7 @@ class PostController extends Controller
         // Render the post
         return Inertia::render($postRenderView, [
             "post" => $post,
+            "author" => $author,
         ]);
     }
 

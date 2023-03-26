@@ -89,8 +89,13 @@ class PostController extends Controller
             }
         } while ($slugExists);
 
+        // Initialize the $authorId variable to null
         $authorId = null;
+        // Check if the "show_author" property of the $request object is true
+        // and the "author" property of the $request object is not null
         if ($request->show_author === true && $request->author !== null) {
+            // If both conditions are met, assign the ID of the first author
+            // in the "author" property of the request object to the $authorId variable
             $authorId = $request->author[0]["id"];
         }
 
@@ -178,8 +183,11 @@ class PostController extends Controller
         $teamId = $request->team["id"];
         $userId = $request->user_id;
 
+        // Initialize the $authorId variable to null
         $authorId = null;
-        if ($post->show_author === 1 && $post->author_id !== null) {
+        // Check if the "show_author" property of the $post object is set to 1 and the "author" property of the $request object is not null
+        if ($post->show_author === 1 && $request->author !== null) {
+            // If both conditions are met, assign the ID of the first author in the "author" property of the request object to the $authorId variable
             $authorId = $request->author[0]["id"];
         }
 

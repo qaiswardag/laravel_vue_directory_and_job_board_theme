@@ -9,6 +9,9 @@ defineProps({
     post: {
         required: true,
     },
+    author: {
+        required: false,
+    },
 });
 </script>
 <template>
@@ -57,16 +60,21 @@ defineProps({
                 </div>
                 <p v-html="post.content" class="text-base"></p>
 
-                <p class="mt-40">post is: {{ post }}</p>
+                <p class="mt-16">show author: {{ post.show_author }}</p>
+                <p class="my-2">author is: {{ author }}</p>
+                <p class="my-16">post is: {{ post }}</p>
             </template>
 
             <template #sidebar>
                 <!-- author details - start -->
-                <div v-if="post.show_author === 1 && post.user.length !== 0">
+                <div v-if="post.show_author === 1 && author !== null">
                     <p class="myPrimaryParagraph">Author:</p>
                     <p class="myPrimaryParagraph">
-                        {{ post.user.first_name }}
-                        {{ post.user.last_name }}
+                        {{ author.first_name }}
+                        {{ author.last_name }}
+                    </p>
+                    <p class="myPrimaryParagraph">
+                        Username: {{ author.username }}
                     </p>
                 </div>
                 <!-- author details - end -->
