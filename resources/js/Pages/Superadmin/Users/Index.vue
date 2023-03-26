@@ -119,9 +119,7 @@ const search = () => {
     searchForm.get(route("admin.users"), {
         preserveScroll: true,
         onSuccess: () => {},
-        onError: (err) => {
-            console.log("An error came for the search");
-        },
+        onError: (err) => {},
         onFinish: () => {},
     });
 };

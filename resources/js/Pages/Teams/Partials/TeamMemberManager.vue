@@ -128,9 +128,7 @@ const cancelTeamInvitation = (invitation) => {
         {
             preserveScroll: true,
             onSuccess: () => (modalShowCancelTeamInvitation.value = false),
-            onError: (err) => {
-                console.log("Something went wrong chaning role. Error:", err);
-            },
+            onError: (err) => {},
             onFinish: (err) => {
                 modalShowCancelTeamInvitation.value = false;
             },
@@ -175,9 +173,7 @@ const updateRole = () => {
         {
             preserveScroll: true,
             onSuccess: () => (modalShowCurrentlyManagingRole.value = false),
-            onError: (err) => {
-                console.log("Something went wrong chaning role. Error:", err);
-            },
+            onError: (err) => {},
             onFinish: () => {
                 modalShowCurrentlyManagingRole.value = false;
             },
@@ -219,9 +215,7 @@ const leaveTeam = () => {
         route("team-members.destroy", [props.team, usePage().props.user]),
         {
             preserveScroll: true,
-            onError: (err) => {
-                console.log("Error leaving team:", err);
-            },
+            onError: (err) => {},
             onSuccess: () => {
                 modalShowLeaveTeam.value = false;
             },

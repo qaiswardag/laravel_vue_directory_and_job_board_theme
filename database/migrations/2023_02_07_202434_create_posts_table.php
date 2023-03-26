@@ -15,14 +15,8 @@ return new class extends Migration {
         Schema::create("posts", function (Blueprint $table) {
             $table->id();
 
+            // user
             $table->integer("user_id")->unsigned();
-            $table->boolean("show_author");
-            $table
-                ->integer("author_id")
-                ->nullable()
-                ->index();
-
-            // // user
             // $table
             //     ->foreignId("user_id")
             //     ->references("id")
@@ -31,6 +25,7 @@ return new class extends Migration {
             //     ->constrained();
 
             // team
+            // $table->foreignId("team_id");
             $table
                 ->foreignId("team_id")
                 ->references("id")
@@ -38,9 +33,13 @@ return new class extends Migration {
                 ->onDelete("cascade")
                 ->constrained();
             //
-            // $table->foreignId("team_id");
             //
             //
+            $table->boolean("show_author");
+            $table
+                ->integer("author_id")
+                ->nullable()
+                ->index();
             $table->longText("title");
             $table->string("slug");
             $table->longText("content");

@@ -56,9 +56,7 @@ const updateProfileInformation = () => {
         onSuccess: () => {
             clearPhotoFileInput();
         },
-        onError: (err) => {
-            console.log("not able to update details!", err);
-        },
+        onError: (err) => {},
         onFinish: () => {},
     });
 };
@@ -259,7 +257,7 @@ const clearPhotoFileInput = () => {
                         class="flex-col items-center gap-2 mb-8 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6"
                     >
                         <div
-                            v-show="
+                            v-if="
                                 !photoPreview &&
                                 user.profile_photo_path !== null
                             "
@@ -273,7 +271,7 @@ const clearPhotoFileInput = () => {
                             />
                         </div>
 
-                        <div v-show="photoPreview !== null">
+                        <div v-if="photoPreview !== null">
                             <span
                                 class="block rounded-full w-16 h-16 bg-cover bg-no-repeat bg-center"
                                 :style="
@@ -285,7 +283,7 @@ const clearPhotoFileInput = () => {
                         </div>
 
                         <div
-                            v-show="
+                            v-if="
                                 user.profile_photo_path === null &&
                                 !photoPreview
                             "
@@ -318,7 +316,7 @@ const clearPhotoFileInput = () => {
                         </button>
 
                         <button
-                            v-show="
+                            v-if="
                                 photoPreview || user.profile_photo_path !== null
                             "
                             type="button"

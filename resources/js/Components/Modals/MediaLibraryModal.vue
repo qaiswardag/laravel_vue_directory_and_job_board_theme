@@ -164,8 +164,6 @@ const handleDeleteImage = function (imageId) {
     formDeleteImage.post(route("media.destroy", [props.team.id]), {
         preserveScroll: true,
         onSuccess: () => {
-            console.log("successfully deleted image");
-
             // dispatch
             store.commit("mediaLibrary/setCurrentImage", null);
             // dispatch
@@ -175,9 +173,7 @@ const handleDeleteImage = function (imageId) {
                 search_query: search_query.value,
             });
         },
-        onError: (err) => {
-            console.log("did not work:", err);
-        },
+        onError: (err) => {},
         onFinish: () => {},
     });
 };

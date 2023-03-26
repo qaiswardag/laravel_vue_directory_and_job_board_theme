@@ -2,7 +2,7 @@
 <template>
     <div class="flex flex-col justify-center items-center gap-2 mb-8 mt-4">
         <div
-            v-show="
+            v-if="
                 $page.props.user && $page.props.user.profile_photo_path !== null
             "
             class="mt-2"
@@ -15,7 +15,7 @@
         </div>
 
         <div
-            v-show="
+            v-if="
                 $page.props.user && $page.props.user.profile_photo_path === null
             "
             class="w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"

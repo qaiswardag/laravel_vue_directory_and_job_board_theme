@@ -62,7 +62,6 @@ const runMe = ref(false);
 //
 //
 const TestSubmitButtonTwice = function () {
-    console.log("you clicked me");
     runMe.value = true;
 
     // set timer

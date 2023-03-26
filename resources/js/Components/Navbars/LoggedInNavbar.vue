@@ -284,7 +284,7 @@ const notificationsSlideOverButton = function () {
                         <div class="flex flex-col justify-center items-center">
                             <div
                                 class="myPrimaryParagraph font-semibold leading-6"
-                                v-show="
+                                v-if="
                                     $page.props.user &&
                                     $page.props.user.profile_photo_path !== null
                                 "
@@ -300,7 +300,7 @@ const notificationsSlideOverButton = function () {
                             </div>
 
                             <div
-                                v-show="
+                                v-if="
                                     $page.props.user &&
                                     $page.props.user.profile_photo_path === null
                                 "

@@ -40,9 +40,7 @@ const updateTeam = () => {
         errorBag: "updateTeam",
         preserveScroll: true,
         onSuccess: (log) => {},
-        onError: (err) => {
-            console.log("error is:", err);
-        },
+        onError: (err) => {},
         onFinish: () => {},
     });
 };
@@ -391,7 +389,7 @@ const handleRemoveLogo = function () {
                 </div>
                 <div class="flex flex-col justify-start gap-2 mb-8 mt-4">
                     <div
-                        v-show="
+                        v-if="
                             $page.props.team.owner &&
                             $page.props.team.owner.profile_photo_path !== null
                         "
@@ -408,7 +406,7 @@ const handleRemoveLogo = function () {
                     </div>
 
                     <div
-                        v-show="
+                        v-if="
                             $page.props.team.owner &&
                             $page.props.team.owner.profile_photo_path === null
                         "

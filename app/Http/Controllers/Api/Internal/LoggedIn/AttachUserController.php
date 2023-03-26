@@ -32,6 +32,7 @@ class AttachUserController extends Controller
             "first_name",
             "last_name",
             "email",
+            "username",
             "profile_photo_path",
             "profile_photo_url",
         ]);
@@ -75,6 +76,7 @@ class AttachUserController extends Controller
                 "users.id",
                 "users.first_name",
                 "users.last_name",
+                "users.username",
                 "users.email",
                 "users.profile_photo_path",
                 "team_user.role"
@@ -88,6 +90,7 @@ class AttachUserController extends Controller
                 "id" => $owner["id"],
                 "first_name" => $owner["first_name"],
                 "last_name" => $owner["last_name"],
+                "username" => $owner["username"],
                 "email" => $owner["email"],
                 "role" => "owner",
                 "profile_photo_path" => $owner["profile_photo_path"],

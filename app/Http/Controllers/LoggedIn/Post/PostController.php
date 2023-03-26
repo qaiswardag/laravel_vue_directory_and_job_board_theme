@@ -89,7 +89,10 @@ class PostController extends Controller
             }
         } while ($slugExists);
 
-        dd("author is in controller store:", $request->author);
+        $authorId = null;
+        if ($request->show_author === true && $request->author !== null) {
+            $authorId = $request->author[0]["id"];
+        }
 
         Post::create([
             "user_id" => $userId,
@@ -102,7 +105,7 @@ class PostController extends Controller
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
-            "author_id" => null,
+            "author_id" => $authorId,
         ]);
 
         // Return the current team that the user is on, rather than the team that the user is storing the post for.
@@ -134,8 +137,24 @@ class PostController extends Controller
         // Authorize the current team that the user is on, rather than the team that the user is storing the post for.
         $this->authorize("can-create-and-update", $team);
 
+        $author = null;
+
+        if ($post->show_author === 1 && $post->author_id !== null) {
+            $user = User::findOrFail($post->author_id);
+            $author = [
+                "id" => $user->id,
+                "first_name" => $user->first_name,
+                "last_name" => $user->last_name,
+                "username" => $user->username,
+                "email" => $user->email,
+                "profile_photo_path" => $user->profile_photo_path,
+                "profile_photo_url" => $user->profile_photo_url,
+            ];
+        }
+
         return Inertia::render("Posts/UpdatePost/UpdatePost", [
             "post" => $post,
+            "postAuthor" => $author,
         ]);
     }
 
@@ -159,6 +178,11 @@ class PostController extends Controller
         $teamId = $request->team["id"];
         $userId = $request->user_id;
 
+        $authorId = null;
+        if ($post->show_author === 1 && $post->author_id !== null) {
+            $authorId = $request->author[0]["id"];
+        }
+
         $post->update([
             "user_id" => $userId,
             "team_id" => $teamId,
@@ -169,7 +193,7 @@ class PostController extends Controller
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
-            "author_id" => null,
+            "author_id" => $authorId,
         ]);
 
         // Return the current team that the user is on, rather than the team that the user is storing the post for.

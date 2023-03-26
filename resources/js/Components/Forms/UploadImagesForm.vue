@@ -121,9 +121,7 @@ const submit = () => {
         onSuccess: () => {
             uploadOnSuccess();
         },
-        onError: (err) => {
-            console.log("form did not submit successfully:");
-        },
+        onError: (err) => {},
         onFinish: () => {},
     });
 };

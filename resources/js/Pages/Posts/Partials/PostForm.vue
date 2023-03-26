@@ -43,6 +43,10 @@ const props = defineProps({
         default: null,
         required: false,
     },
+    postAuthor: {
+        default: null,
+        required: false,
+    },
 });
 
 // store
@@ -92,6 +96,7 @@ const handleUploadCoverImage = function () {
             getCurrentImage.value.currentImage.mediaLibrary.path;
         // handle show media library modal
         showMediaLibraryModal.value = false;
+        return;
     };
     // end modal
 };
@@ -102,7 +107,6 @@ const handleRemoveCoverImage = function () {
 const modalShowAddAuthor = ref(false);
 
 // modal content
-const gridColumnModal = ref(Number(1));
 const titleModalSearchAuthor = ref("");
 const descriptionModalSearchAuthor = ref("");
 const firstButtonModalSearchAuthor = ref("");
@@ -126,7 +130,32 @@ const handleAddAuthor = function () {
     };
     // handle click
     secondModalButtonSearchAuthorFunction.value = function () {
-        postForm.author = getCurrentAttachedUsers.value;
+        // reasons why using the spread operator to create a non-reactive copy of an
+        // array is generally considered better than using JSON.stringify
+        // and JSON.parse to achieve the same result:
+
+        // 1. Performance:
+        // The spread operator is generally faster than using JSON.stringify and JSON.parse
+        // to create a non-reactive copy of an array.
+        // This is because the spread operator is a built-in JavaScript feature,
+        // whereas JSON.stringify and JSON.parse require parsing and serializing data,
+        // which can be computationally expensive for large arrays.
+
+        // 2. Maintainability:
+        // Using the spread operator to create a non-reactive copy of an array is more
+        // maintainable than using JSON.stringify and JSON.parse because it is more
+        // concise and easier to read. The spread operator clearly indicates that a new array
+        // is being created, whereas the JSON.stringify and JSON.parse approach requires
+        // multiple function calls and string manipulations,
+        // which can be harder to read and understand.
+
+        // 3. Compatibility: The spread operator is a standard JavaScript feature that is
+        // supported by all modern browsers and Node.js, whereas JSON.stringify and JSON.parse
+        // may not be available in older browsers or
+        // environments that do not support ECMAScript 5.
+        const currentAttachedUsers = [...getCurrentAttachedUsers.value];
+        // Set post form author to the non-reactive copy
+        postForm.author = currentAttachedUsers;
 
         // handle show modal for unique content
         modalShowAddAuthor.value = false;
@@ -244,8 +273,6 @@ const createPost = () => {
 // get unique post if needs to be updated
 onMounted(() => {
     if (props.post !== null) {
-        console.log("hentet post er:", props.post);
-        console.log("hentet tags er:", props.post.tags);
         formType.value = "update";
         postForm.title = props.post.title;
         // postForm.slug = props.post.slug;
@@ -255,7 +282,11 @@ onMounted(() => {
         // postForm.team = props.post.team;
         postForm.thumbnail = props.post.thumbnail;
         postForm.tags = props.post.tags;
-        postForm.author = props.post.author;
+        //
+        if (props.post.show_author === 1) {
+            postForm.author.push(props.postAuthor);
+        }
+        // postForm.author = props.post.author;
     }
 
     // postForm = props.post;
@@ -270,6 +301,7 @@ onMounted(() => {
         <template #main>
             <p class="my-12">author er: {{ postForm.author }}</p>
             <p class="my-12">Post er: {{ postForm }}</p>
+            <p class="my-12">Post from author er: {{ postForm.author }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -600,8 +632,11 @@ onMounted(() => {
                     >
                         <div
                             v-if="postForm.author.length !== 0"
-                            class="p-2 mt-4 rounded-md min-h-[4rem] max-h-[35rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                            class="p-2 mt-4 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                         >
+                            <p class="myPrimaryParagraph pb-2 italic text-xs">
+                                Added {{ postForm.author.length }} author
+                            </p>
                             <div
                                 v-for="user in postForm.author"
                                 :key="user.id"
@@ -616,16 +651,12 @@ onMounted(() => {
                                         <!-- start photo -->
                                         <div
                                             class="flex-shrink-0"
-                                            v-show="
+                                            v-if="
                                                 user &&
                                                 user.profile_photo_path !== null
                                             "
                                         >
                                             <img
-                                                v-if="
-                                                    user.profile_photo_path !==
-                                                    null
-                                                "
                                                 class="object-cover w-12 h-12 rounded-full"
                                                 :src="`/uploads/${user.profile_photo_path}`"
                                                 :alt="
@@ -636,7 +667,7 @@ onMounted(() => {
                                         </div>
 
                                         <div
-                                            v-show="
+                                            v-if="
                                                 user &&
                                                 user.profile_photo_path === null
                                             "
@@ -696,6 +727,12 @@ onMounted(() => {
                         <p class="myPrimaryParagraph">No author selected</p>
                     </div>
                     <InputError :message="postForm.errors.author" />
+                    <p
+                        v-if="postForm.author.length >= 2"
+                        class="myPrimaryParagraphError"
+                    >
+                        Maximum one author is allowed.
+                    </p>
                 </div>
             </div>
             <!-- post show author - end -->
@@ -948,7 +985,14 @@ onMounted(() => {
                 :listOfMessages="Object.values(postForm.errors)"
                 :show="showErrorNotifications"
                 @notificationsModalButton="notificationsModalButton"
-            ></NotificationsFixedBottom>
+            >
+                <div class="flex items-center justify-start gap-2">
+                    <p class="myPrimaryParagraphError">
+                        {{ Object.values(postForm.errors).length }}
+                        errors
+                    </p>
+                </div>
+            </NotificationsFixedBottom>
         </template>
     </FormSection>
 </template>

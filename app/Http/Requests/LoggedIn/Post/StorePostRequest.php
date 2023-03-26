@@ -122,13 +122,13 @@ class StorePostRequest extends FormRequest
             if (
                 $this->author !== null &&
                 gettype($this->author) === "array" &&
-                count($this->author) >= 3
+                count($this->author) >= 2
             ) {
                 $validator
                     ->errors()
                     ->add(
                         "author",
-                        "This post is limited to a maximum of two authors."
+                        "This post is limited to a maximum of one author."
                     );
             }
         });

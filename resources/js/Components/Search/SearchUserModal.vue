@@ -56,7 +56,6 @@ const handleSearch = function (page) {
 
 // get result for "laravel pagination" package
 const getResultsForPage = (page = 1) => {
-    console.log("get result for page ran.");
     handleSearch(page);
 };
 
@@ -238,13 +237,13 @@ onMounted(() => {
                             "
                         >
                             <div
-                                class="flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 p-2"
+                                class="flex flex-col w-full gap-1 divide-gray-200 p-2"
                             >
                                 <div
                                     v-for="user in getCurrentUsers.fetchedData
                                         .users.data"
                                     :key="user.id"
-                                    class="hover:bg-gray-50 px-2"
+                                    class="hover:bg-gray-50 px-2 overflow-y-scroll border border-myPrimaryLightGrayColor divide-y rounded"
                                 >
                                     <div
                                         class="flex justify-between items-center"
@@ -255,7 +254,7 @@ onMounted(() => {
                                             <!-- start photo -->
                                             <div
                                                 class="flex-shrink-0"
-                                                v-show="
+                                                v-if="
                                                     user &&
                                                     user.profile_photo_path !==
                                                         null
@@ -276,7 +275,7 @@ onMounted(() => {
                                             </div>
 
                                             <div
-                                                v-show="
+                                                v-if="
                                                     user &&
                                                     user.profile_photo_path ===
                                                         null
@@ -347,7 +346,7 @@ onMounted(() => {
                         class="flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 p-2"
                     >
                         <p class="myPrimaryParagraph pb-2 italic text-xs">
-                            Added Users
+                            Added {{ getCurrentAttachedUsers.length }} Users
                         </p>
                         <div
                             v-for="user in getCurrentAttachedUsers"
@@ -361,15 +360,12 @@ onMounted(() => {
                                     <!-- start photo -->
                                     <div
                                         class="flex-shrink-0"
-                                        v-show="
+                                        v-if="
                                             user &&
                                             user.profile_photo_path !== null
                                         "
                                     >
                                         <img
-                                            v-if="
-                                                user.profile_photo_path !== null
-                                            "
                                             class="object-cover w-12 h-12 rounded-full"
                                             :src="`/uploads/${user.profile_photo_path}`"
                                             :alt="
@@ -379,7 +375,7 @@ onMounted(() => {
                                     </div>
 
                                     <div
-                                        v-show="
+                                        v-if="
                                             user &&
                                             user.profile_photo_path === null
                                         "

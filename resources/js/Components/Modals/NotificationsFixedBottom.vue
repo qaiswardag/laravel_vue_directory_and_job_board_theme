@@ -50,7 +50,7 @@ const notificationsModalButton = function () {
                                 <p
                                     class="myPrimaryParagraph mt-2 mb-2 font-semibold"
                                 >
-                                    <span> Description </span>
+                                    <slot></slot>
                                 </p>
                                 <p
                                     v-if="listOfMessages.length === 0"
@@ -59,20 +59,23 @@ const notificationsModalButton = function () {
                                     No Messages
                                 </p>
 
-                                <div v-if="listOfMessages.length !== 0">
-                                    <div
+                                <ul
+                                    v-if="listOfMessages.length !== 0"
+                                    class="list-disc list-outside"
+                                >
+                                    <li
                                         v-for="(
                                             message, index
                                         ) in listOfMessages"
                                         :key="index"
                                     >
-                                        <p
+                                        <span
                                             class="myPrimaryParagraph text-myPrimaryDarkGrayColor"
                                         >
                                             {{ message }}
-                                        </p>
-                                    </div>
-                                </div>
+                                        </span>
+                                    </li>
+                                </ul>
                             </div>
                             <div class="ml-4 flex flex-shrink-0">
                                 <button
