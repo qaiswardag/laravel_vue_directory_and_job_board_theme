@@ -43,7 +43,8 @@ export default {
             );
 
             // if user does not exist, push to array
-            if (userExists === false) {
+            // if (userExists === false) {
+            if (true) {
                 state.attachedUsers.unshift(payload);
             }
         },

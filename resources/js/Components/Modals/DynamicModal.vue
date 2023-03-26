@@ -147,7 +147,7 @@ const thirdButton = function () {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="2"
+                        stroke-width="1.5"
                         stroke="currentColor"
                         aria-hidden="true"
                         class="h-6 w-6 text-myPrimaryDarkGrayColor self-center cursor-pointer"
@@ -217,7 +217,7 @@ const thirdButton = function () {
                                         <svg
                                             aria-hidden="true"
                                             class="w-4 h-4 animate-spin text-white-600 fill-gray-800 flex items-center"
-                                            stroke-width="2"
+                                            stroke-width="1.5"
                                             viewBox="0 0 100 101"
                                             fill="none"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -278,7 +278,7 @@ const thirdButton = function () {
                                             <svg
                                                 aria-hidden="true"
                                                 class="w-4 h-4 animate-spin text-white-600 fill-gray-800 flex items-center"
-                                                stroke-width="2"
+                                                stroke-width="1.5"
                                                 viewBox="0 0 100 101"
                                                 fill="none"
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -338,7 +338,7 @@ const thirdButton = function () {
                                             <svg
                                                 aria-hidden="true"
                                                 class="w-4 h-4 animate-spin text-white-600 fill-gray-800 flex items-center"
-                                                stroke-width="2"
+                                                stroke-width="1.5"
                                                 viewBox="0 0 100 101"
                                                 fill="none"
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -399,7 +399,7 @@ const thirdButton = function () {
                                             <svg
                                                 aria-hidden="true"
                                                 class="w-4 h-4 animate-spin text-white-600 fill-gray-800 flex items-center"
-                                                stroke-width="2"
+                                                stroke-width="1.5"
                                                 viewBox="0 0 100 101"
                                                 fill="none"
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -460,7 +460,7 @@ const thirdButton = function () {
                                             <svg
                                                 aria-hidden="true"
                                                 class="w-4 h-4 animate-spin text-white-600 fill-gray-800 flex items-center"
-                                                stroke-width="2"
+                                                stroke-width="1.5"
                                                 viewBox="0 0 100 101"
                                                 fill="none"
                                                 xmlns="http://www.w3.org/2000/svg"

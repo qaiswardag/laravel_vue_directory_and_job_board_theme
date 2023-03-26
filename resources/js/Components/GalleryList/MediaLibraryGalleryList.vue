@@ -93,7 +93,7 @@ onMounted(() => {
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            stroke-width="2"
+                            stroke-width="1.5"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                         ></path>
                     </svg>
@@ -250,7 +250,7 @@ onMounted(() => {
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
                                         viewBox="0 0 24 24"
-                                        stroke-width="2"
+                                        stroke-width="1.5"
                                         stroke="currentColor"
                                         class="w-4 h-4 text-green-600"
                                     >

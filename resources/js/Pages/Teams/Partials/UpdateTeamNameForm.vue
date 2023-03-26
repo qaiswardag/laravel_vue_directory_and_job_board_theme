@@ -225,7 +225,7 @@ const handleRemoveLogo = function () {
                                     <path
                                         d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
                                         stroke="currentColor"
-                                        stroke-width="2"
+                                        stroke-width="1.5"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                     />

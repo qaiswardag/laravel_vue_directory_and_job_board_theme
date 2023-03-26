@@ -100,12 +100,13 @@ class AttachUserController extends Controller
             $users->prepend($ownerDetails);
         }
         //
-        //
-        //
+        $count = $users->total() + 1; // 1 for the team owner
+
         //
 
         return [
             "users" => $users,
+            "count" => $count,
             // "results" => $users->total(),
             "oldInput" => [
                 "search_query" => $request->input("search_query"),

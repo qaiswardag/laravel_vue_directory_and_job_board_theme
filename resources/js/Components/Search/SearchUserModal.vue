@@ -90,7 +90,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Modal :show="show" @close="firstButton" maxWidth="5xl">
+    <Modal :show="show" @close="firstButton" maxWidth="5xl" minHeight="5xl">
         <div
             class="w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle px-4 py-4"
         >
@@ -105,7 +105,7 @@ onMounted(() => {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="2"
+                        stroke-width="1.5"
                         stroke="currentColor"
                         aria-hidden="true"
                         class="h-6 w-6 text-myPrimaryDarkGrayColor self-center cursor-pointer"
@@ -120,9 +120,11 @@ onMounted(() => {
             </div>
 
             <!-- content start -->
-            <div class="flex-1 flex items-stretch overflow-hidden mt-2">
-                <main class="flex-1 overflow-y-auto relativ">
-                    <div class="py-4 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8">
+            <div
+                class="h-full flex md:flex-row flex-col myPrimaryGap overflow-hidden mt-2 py-4 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8 overflow-y-scroll"
+            >
+                <main class="overflow-y-auto relativ w-full">
+                    <div>
                         <form class="mb-4" @submit.prevent="handleSearch(1)">
                             <div class="mysearchBarWithOptions">
                                 <div class="relative w-full">
@@ -140,7 +142,7 @@ onMounted(() => {
                                             <path
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
-                                                stroke-width="2"
+                                                stroke-width="1.5"
                                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                                             ></path>
                                         </svg>
@@ -236,91 +238,101 @@ onMounted(() => {
                                 getCurrentUsers.fetchedData.total_results !== 0
                             "
                         >
+                            <p class="myPrimaryParagraph pb-2 italic text-xs">
+                                Total
+                                {{ getCurrentUsers.fetchedData.count }} users.
+                            </p>
                             <div
-                                class="flex flex-col w-full gap-1 divide-gray-200 p-2"
+                                class="h-full md:max-h-[30rem] max-h-[13rem] overflow-y-scroll"
                             >
                                 <div
-                                    v-for="user in getCurrentUsers.fetchedData
-                                        .users.data"
-                                    :key="user.id"
-                                    class="hover:bg-gray-50 px-2 overflow-y-scroll border border-myPrimaryLightGrayColor divide-y rounded"
+                                    class="flex flex-col w-full gap-1 divide-gray-200"
                                 >
                                     <div
-                                        class="flex justify-between items-center"
+                                        v-for="user in getCurrentUsers
+                                            .fetchedData.users.data"
+                                        :key="user.id"
+                                        class="hover:bg-gray-50 px-2 border border-myPrimaryLightGrayColor divide-y rounded"
                                     >
                                         <div
-                                            class="flex items-center gap-2 my-4 overflow-y-scroll"
+                                            class="flex justify-between items-center"
                                         >
-                                            <!-- start photo -->
                                             <div
-                                                class="flex-shrink-0"
-                                                v-if="
-                                                    user &&
-                                                    user.profile_photo_path !==
-                                                        null
-                                                "
+                                                class="flex items-center gap-2 my-4"
                                             >
-                                                <img
+                                                <!-- start photo -->
+                                                <div
+                                                    class="flex-shrink-0"
                                                     v-if="
+                                                        user &&
                                                         user.profile_photo_path !==
-                                                        null
+                                                            null
                                                     "
-                                                    class="object-cover w-12 h-12 rounded-full"
-                                                    :src="`/uploads/${user.profile_photo_path}`"
-                                                    :alt="
-                                                        user.first_name +
-                                                        user.last_name
+                                                >
+                                                    <img
+                                                        v-if="
+                                                            user.profile_photo_path !==
+                                                            null
+                                                        "
+                                                        class="object-cover w-12 h-12 rounded-full"
+                                                        :src="`/uploads/${user.profile_photo_path}`"
+                                                        :alt="
+                                                            user.first_name +
+                                                            user.last_name
+                                                        "
+                                                    />
+                                                </div>
+
+                                                <div
+                                                    v-if="
+                                                        user &&
+                                                        user.profile_photo_path ===
+                                                            null
                                                     "
-                                                />
-                                            </div>
+                                                    class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                                >
+                                                    <span>
+                                                        {{
+                                                            user.first_name
+                                                                .charAt(0)
+                                                                .toUpperCase()
+                                                        }}
+                                                    </span>
+                                                    <span>
+                                                        {{
+                                                            user.last_name
+                                                                .charAt(0)
+                                                                .toUpperCase()
+                                                        }}
+                                                    </span>
+                                                </div>
 
-                                            <div
-                                                v-if="
-                                                    user &&
-                                                    user.profile_photo_path ===
-                                                        null
-                                                "
-                                                class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
-                                            >
-                                                <span>
-                                                    {{
-                                                        user.first_name
-                                                            .charAt(0)
-                                                            .toUpperCase()
-                                                    }}
-                                                </span>
-                                                <span>
-                                                    {{
-                                                        user.last_name
-                                                            .charAt(0)
-                                                            .toUpperCase()
-                                                    }}
+                                                <!-- end photo -->
+                                                <span
+                                                    class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                                >
+                                                    <span>
+                                                        {{ user.first_name }}
+                                                        {{ user.last_name }}
+                                                    </span>
+                                                    <span>
+                                                        {{ user.email }}
+                                                    </span>
+                                                    <span>
+                                                        Role: {{ user.role }}
+                                                    </span>
                                                 </span>
                                             </div>
-
-                                            <!-- end photo -->
-                                            <span
-                                                class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                            >
-                                                <span>
-                                                    {{ user.first_name }}
-                                                    {{ user.last_name }}
-                                                </span>
-                                                <span>
-                                                    {{ user.email }}
-                                                </span>
-                                                <span>
-                                                    Role: {{ user.role }}
-                                                </span>
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <button
-                                                @click="handleAttachUser(user)"
-                                                class="myPrimaryButton text-xs"
-                                            >
-                                                + Add
-                                            </button>
+                                            <div>
+                                                <button
+                                                    @click="
+                                                        handleAttachUser(user)
+                                                    "
+                                                    class="myPrimaryButton text-xs"
+                                                >
+                                                    + Add
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -330,7 +342,7 @@ onMounted(() => {
                 </main>
                 <aside
                     aria-label="sidebar"
-                    class="w-72 min-h-[25rem] max-h-[35rem] bg-gray-50 pl-2 border-l border-gray-200 overflow-y-scroll"
+                    class="h-full md:max-h-[38rem] max-h-[12rem] md:w-3/5 w-full bg-gray-50 pl-2 border border-gray-200 overflow-y-scroll rounded"
                 >
                     <div
                         v-if="getCurrentAttachedUsers.length === 0"
@@ -416,7 +428,7 @@ onMounted(() => {
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
                                         viewBox="0 0 24 24"
-                                        stroke-width="2"
+                                        stroke-width="1.5"
                                         stroke="currentColor"
                                         class="w-4 h-4 text-myErrorColor cursor-pointer"
                                     >
@@ -436,7 +448,9 @@ onMounted(() => {
         </div>
         <!-- content end -->
 
-        <div class="flex flex-col px-6 py-4 bg-gray-100 text-right">
+        <div
+            class="flex flex-col px-6 py-4 bg-gray-100 text-right absolute bottom-0 left-0 right-0"
+        >
             <div
                 class="sm:grid sm:gap-3 sm:grid-cols-2 grid gap-4 sm:grid-flow-row-dense md:w-full"
             >

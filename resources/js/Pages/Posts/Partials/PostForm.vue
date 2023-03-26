@@ -348,7 +348,7 @@ onMounted(() => {
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
-                                stroke-width="2"
+                                stroke-width="1.5"
                                 stroke="currentColor"
                                 class="w-5 h-5 text-myErrorColor"
                             >
@@ -474,7 +474,7 @@ onMounted(() => {
                                     <path
                                         d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
                                         stroke="currentColor"
-                                        stroke-width="2"
+                                        stroke-width="1.5"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                     />
@@ -564,7 +564,7 @@ onMounted(() => {
                                     <path
                                         d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
                                         stroke="currentColor"
-                                        stroke-width="2"
+                                        stroke-width="1.5"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                     />
@@ -708,7 +708,7 @@ onMounted(() => {
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
                                             viewBox="0 0 24 24"
-                                            stroke-width="2"
+                                            stroke-width="1.5"
                                             stroke="currentColor"
                                             class="w-4 h-4 text-myErrorColor cursor-pointer"
                                         >
