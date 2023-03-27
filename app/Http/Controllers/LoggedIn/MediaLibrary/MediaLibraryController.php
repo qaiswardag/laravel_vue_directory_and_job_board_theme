@@ -118,9 +118,23 @@ class MediaLibraryController extends Controller
             // file size
             $fileSizeKb = intval($image->getSize() / 1024);
 
-            list($width, $height) = getimagesize(
-                public_path("uploads/" . $path)
-            );
+            $width = null;
+            $height = null;
+            // check if file exists
+            if (File::exists("uploads/" . $path) === true) {
+                // The exif_imagetype function is a built-in PHP function that returns the image
+                // type of a file. In this case, the function is used to check if the file located
+                // at the path "uploads/" . $path is an image file. If the function returns a value
+                // that is not false, it means that the file is an image file, and the condition
+                // will evaluate to true.
+                $imageType = exif_imagetype(public_path("uploads/" . $path));
+                // If `imageType` is not false it means that the file is an image file
+                if ($imageType !== false) {
+                    list($width, $height) = getimagesize(
+                        public_path("uploads/" . $path)
+                    );
+                }
+            }
 
             $width = intval($width);
             $height = intval($height);
