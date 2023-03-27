@@ -190,9 +190,6 @@ onMounted(() => {
                             <th scope="col" class="myPrimaryTableTh">
                                 User id
                             </th>
-                            <th scope="col" class="myPrimaryTableTh">
-                                Account Owner of Team(s)
-                            </th>
                             <th scope="col" class="myPrimaryTableTh">Edit</th>
                             <th scope="col" class="myPrimaryTableTh">Delete</th>
                         </tr>
@@ -301,10 +298,6 @@ onMounted(() => {
                                 <td class="myPrimaryTableTBodyTd">
                                     {{ user.id }}
                                 </td>
-                                <td class="myPrimaryTableTBodyTd">
-                                    team name here
-                                </td>
-
                                 <td class="myPrimaryTableTBodyTd">
                                     <button
                                         @click="handleEdit(user.id)"

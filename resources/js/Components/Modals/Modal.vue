@@ -12,7 +12,9 @@ const props = defineProps({
     },
     minHeight: {
         type: String,
-        default: "5xl",
+    },
+    maxHeight: {
+        type: String,
     },
 });
 
@@ -58,20 +60,6 @@ const maxWidthClass = computed(() => {
         "5xl": "sm:max-w-5xl",
     }[props.maxWidth];
 });
-const minHeightClass = computed(() => {
-    return {
-        sm: "sm:max-w-sm",
-        md: "sm:max-w-md",
-        lg: "sm:max-w-lg",
-        xl: "sm:max-w-xl",
-        "2xl": "sm:max-w-2xl",
-        "3xl": "sm:max-w-3xl",
-        "4xl": "sm:max-w-4xl",
-        "5xl": "sm:max-w-5xl",
-    }[props.minHeight];
-});
-
-console.log("er:", minHeightClass.value);
 </script>
 
 <template>
@@ -109,8 +97,12 @@ console.log("er:", minHeightClass.value);
                 >
                     <div
                         v-show="show"
-                        class="min-h-[50rem] max-h-[50rem] mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
-                        :class="maxWidthClass"
+                        class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
+                        :class="[
+                            maxWidthClass ? maxWidthClass : '',
+                            minHeight ? minHeight : '',
+                            maxHeight ? maxHeight : '',
+                        ]"
                     >
                         <slot v-if="show" />
                     </div>

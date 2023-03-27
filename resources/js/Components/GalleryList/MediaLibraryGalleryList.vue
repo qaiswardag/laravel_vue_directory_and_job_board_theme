@@ -117,7 +117,7 @@ onMounted(() => {
             </button>
         </div>
 
-        <div class="flex items-center min-h-[2.5rem] bg-red-300">
+        <div class="flex items-center min-h-[2.5rem]">
             <div
                 v-if="
                     getCurrentMedia &&
@@ -163,12 +163,10 @@ onMounted(() => {
     </div>
 
     <div
-        class="overflow-y-scroll mb-4 p-4 border border-myPrimaryMediumGrayColor rounded"
+        class="overflow-y-scroll md:min-h-[35rem] md:max-h-[35rem] min-h-[15rem] max-h-[15rem] p-4 border border-myPrimaryLightGrayColor rounded"
     >
         <div v-if="getCurrentMedia && getCurrentMedia.isLoading === true">
-            <div
-                class="flex items-center justify-center max-h-[30rem] min-h-[25rem]"
-            >
+            <div class="flex items-center justify-center">
                 <div
                     class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                     role="status"
@@ -191,21 +189,14 @@ onMounted(() => {
                     getCurrentMedia.isError === false)
             "
         >
-            <div
-                v-if="getCurrentMedia.fetchedMedia.total_results === 0"
-                class="min-h-[25rem]"
-            >
+            <div v-if="getCurrentMedia.fetchedMedia.total_results === 0">
                 <p class="myPrimaryParagraph">
-                    It looks like there are no images for your team yet.
-                </p>
-                <p class="myPrimaryParagraph mt-2">
-                    Why not upload some visual assets to enhance your team's
-                    work? Uploading images is quick and easy.
+                    It looks like there are no images..
                 </p>
             </div>
 
             <div
-                class="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 myPrimaryGap max-h-[35rem] min-h-[30rem]"
+                class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 myPrimaryGap"
             >
                 <template
                     v-for="image in getCurrentMedia &&
@@ -218,7 +209,7 @@ onMounted(() => {
                         class="border border-myPrimaryLightGrayColor rounded px-2 p-2 cursor-pointer"
                     >
                         <img
-                            class="group aspect-w-10 aspect-h-7 h-32 block w-full overflow-hidden rounded bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer"
+                            class="h-32 w-full object-cover overflow-hidden rounded bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer"
                             :class="{
                                 '':
                                     image.id ===
@@ -261,22 +252,6 @@ onMounted(() => {
                                         />
                                     </svg>
                                 </dd>
-                            </div>
-                            <div class="py-2 flex justify-between gap-2">
-                                <dt class="text-left">Width:</dt>
-                                <dd class="text-right">
-                                    {{ image.width }}
-                                </dd>
-                            </div>
-                            <div class="py-2 flex justify-between gap-2">
-                                <dt class="text-left">Height:</dt>
-                                <dd class="text-right">
-                                    {{ image.height }}
-                                </dd>
-                            </div>
-                            <div class="py-2 flex justify-between gap-2">
-                                <dt class="text-left">Size:</dt>
-                                <dd class="text-right">{{ image.size }} KB</dd>
                             </div>
                             <div class="py-2 flex justify-between gap-2">
                                 <dt class="text-left">Name:</dt>

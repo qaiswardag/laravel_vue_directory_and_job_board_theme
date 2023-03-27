@@ -188,7 +188,7 @@ const handleDeleteImage = function (imageId) {
                 @close="firstButton"
             >
                 <div
-                    class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+                    class="flex items-end justify-center pt-4 px-4 pb-20 text-center sm:block sm:p-0"
                 >
                     <TransitionChild
                         as="template"
@@ -220,7 +220,7 @@ const handleDeleteImage = function (imageId) {
                         leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     >
                         <div
-                            class="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full sm:p-6"
+                            class="relative min-h-[60rem] max-h-[60rem] inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full sm:p-6"
                         >
                             <div
                                 class="flex gap-2 justify-between items-center border-b border-gray-200 pb-2"
@@ -259,15 +259,11 @@ const handleDeleteImage = function (imageId) {
                                 <div class="flex-1">
                                     <!--content media library - start-->
                                     <div
-                                        class="flex-1 flex items-stretch overflow-hidden mt-2"
+                                        class="flex-1 flex md:flex-row myPrimaryGap flex-col items-stretch overflow-hidden mt-2"
                                     >
                                         <!-- Main content - start-->
-                                        <main
-                                            class="flex-1 overflow-y-auto relativ"
-                                        >
-                                            <div
-                                                class="py-4 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8"
-                                            >
+                                        <main class="flex-1 relativ">
+                                            <div class="py-4 max-w-7xl mx-auto">
                                                 <!-- Tabs -->
                                                 <div class="mt-2 sm:mt-2 mb-4">
                                                     <!-- Tabs Mobile -->
@@ -368,56 +364,345 @@ const handleDeleteImage = function (imageId) {
                                         <aside
                                             v-if="selected === 'Media library'"
                                             aria-label="sidebar"
-                                            class="w-72 min-h-[25rem] bg-white pl-2 pr-2 border-l border-gray-200 overflow-y-scroll"
+                                            class="md:w-72 relative min-h-[55rem] max-h-[55rem]"
                                         >
                                             <div
-                                                v-if="
-                                                    (getCurrentImage &&
-                                                        Object.keys(
-                                                            getCurrentImage
-                                                        ).length === 0) ||
-                                                    getCurrentImage === null
-                                                "
-                                                class="pb-16 space-y-6"
-                                            >
-                                                <p class="myPrimaryParagraph">
-                                                    No image selected
-                                                </p>
-                                            </div>
-                                            <div
-                                                v-if="
-                                                    getCurrentImage &&
-                                                    getCurrentImage.isError
-                                                "
-                                                class="myPrimaryParagraphError"
-                                            >
-                                                {{ getCurrentImage.isError }}
-                                            </div>
-
-                                            <!--  -->
-                                            <div
-                                                v-if="
-                                                    getCurrentImage &&
-                                                    getCurrentImage.isLoading ===
-                                                        true
-                                                "
-                                                class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                class="md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white pl-2 pr-2 border border-gray-200 rounded"
                                             >
                                                 <div
-                                                    class="flex items-center justify-center pt-12"
+                                                    v-if="
+                                                        (getCurrentImage &&
+                                                            Object.keys(
+                                                                getCurrentImage
+                                                            ).length === 0) ||
+                                                        getCurrentImage === null
+                                                    "
+                                                    class="pb-16 space-y-6"
+                                                >
+                                                    <p
+                                                        class="myPrimaryParagraph"
+                                                    >
+                                                        No image selected
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    v-if="
+                                                        getCurrentImage &&
+                                                        getCurrentImage.isError
+                                                    "
+                                                    class="myPrimaryParagraphError"
+                                                >
+                                                    {{
+                                                        getCurrentImage.isError
+                                                    }}
+                                                </div>
+
+                                                <!--  -->
+                                                <div
+                                                    v-if="
+                                                        getCurrentImage &&
+                                                        getCurrentImage.isLoading ===
+                                                            true
+                                                    "
+                                                    class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
                                                 >
                                                     <div
-                                                        class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                                                        role="status"
+                                                        class="flex items-center justify-center pt-12"
                                                     >
-                                                        <span
-                                                            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                                                            >Loading...</span
+                                                        <div
+                                                            class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                                            role="status"
                                                         >
+                                                            <span
+                                                                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                                                                >Loading...</span
+                                                            >
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div
+                                                    v-if="
+                                                        getCurrentImage &&
+                                                        getCurrentImage.currentImage &&
+                                                        getCurrentImage
+                                                            .currentImage
+                                                            .mediaLibrary &&
+                                                        getCurrentImage.isLoading ===
+                                                            false &&
+                                                        (getCurrentImage.isError ===
+                                                            null ||
+                                                            getCurrentImage.isError ===
+                                                                false)
+                                                    "
+                                                    class="pb-16 space-y-6"
+                                                >
+                                                    <div>
+                                                        <a
+                                                            :href="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path.toLowerCase()}`"
+                                                            target="_blank"
+                                                        >
+                                                            <img
+                                                                class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                                :src="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path}`"
+                                                                alt="image"
+                                                            />
+                                                        </a>
+
+                                                        <div>
+                                                            <h2
+                                                                class="mySecondaryHeader py-2 break-words"
+                                                            >
+                                                                {{
+                                                                    getCurrentImage
+                                                                        .currentImage
+                                                                        .mediaLibrary
+                                                                        .name
+                                                                        ? getCurrentImage
+                                                                              .currentImage
+                                                                              .mediaLibrary
+                                                                              .name
+                                                                        : "–"
+                                                                }}
+                                                            </h2>
+
+                                                            <form
+                                                                @submit.prevent="
+                                                                    handleImageUpdate(
+                                                                        getCurrentImage
+                                                                            .currentImage
+                                                                            .mediaLibrary
+                                                                            .id
+                                                                    )
+                                                                "
+                                                            >
+                                                                <div
+                                                                    class="myInputsOrganization mt-2 mb-8 pt-4 pr-0 pb-4 pl-0 border-b border-myPrimaryMediumGrayColor rounded-none"
+                                                                >
+                                                                    <InputLabel
+                                                                        for="name"
+                                                                        value="Image name"
+                                                                    />
+                                                                    <div
+                                                                        class="flex gap-2 item-center flex-col"
+                                                                    >
+                                                                        <div
+                                                                            class="flex gap-2 item-center"
+                                                                        >
+                                                                            <div
+                                                                                class="mt-1 relative flex items-center w-full"
+                                                                            >
+                                                                                <input
+                                                                                    placeholder="Image name.."
+                                                                                    id="title"
+                                                                                    v-model="
+                                                                                        form.name
+                                                                                    "
+                                                                                    type="text"
+                                                                                    autofocus
+                                                                                    autocomplete="off"
+                                                                                    class="myPrimaryInput"
+                                                                                    @keydown.enter.tab.prevent="
+                                                                                        handleImageUpdate(
+                                                                                            getCurrentImage
+                                                                                                .currentImage
+                                                                                                .mediaLibrary
+                                                                                                .id
+                                                                                        )
+                                                                                    "
+                                                                                />
+                                                                                <div
+                                                                                    class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5"
+                                                                                >
+                                                                                    <kbd
+                                                                                        class="inline-flex items-center border border-gray-200 rounded px-2 text-xs font-sans font-medium text-gray-400"
+                                                                                    >
+                                                                                        ⏎
+                                                                                    </kbd>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <p
+                                                                            v-if="
+                                                                                form.errors
+                                                                            "
+                                                                            class="myPrimaryInputError"
+                                                                        >
+                                                                            {{
+                                                                                form
+                                                                                    .errors
+                                                                                    .name
+                                                                            }}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h3
+                                                            class="font-medium text-gray-900"
+                                                        >
+                                                            Information
+                                                        </h3>
+                                                        <dl
+                                                            class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
+                                                        >
+                                                            <div
+                                                                class="py-3 flex justify-between text-sm font-medium items-center"
+                                                            >
+                                                                <dt
+                                                                    class="text-gray-500"
+                                                                >
+                                                                    Dimensions
+                                                                </dt>
+                                                                <dd
+                                                                    class="text-gray-900"
+                                                                >
+                                                                    {{
+                                                                        getCurrentImage
+                                                                            .currentImage
+                                                                            .mediaLibrary
+                                                                            .width
+                                                                    }}
+                                                                    x
+                                                                    {{
+                                                                        getCurrentImage
+                                                                            .currentImage
+                                                                            .mediaLibrary
+                                                                            .height
+                                                                    }}
+                                                                </dd>
+                                                            </div>
+
+                                                            <div
+                                                                class="py-3 flex justify-between text-sm font-medium items-center"
+                                                            >
+                                                                <dt
+                                                                    class="text-gray-500"
+                                                                >
+                                                                    Size
+                                                                </dt>
+                                                                <dd
+                                                                    class="text-gray-900"
+                                                                >
+                                                                    {{
+                                                                        getCurrentImage
+                                                                            .currentImage
+                                                                            .mediaLibrary
+                                                                            .size
+                                                                    }}
+                                                                    KB
+                                                                </dd>
+                                                            </div>
+                                                            <div
+                                                                class="py-3 flex justify-between text-sm font-medium items-center"
+                                                            >
+                                                                <dt
+                                                                    class="text-gray-500"
+                                                                >
+                                                                    Image Id
+                                                                </dt>
+                                                                <dd
+                                                                    class="text-gray-900"
+                                                                >
+                                                                    {{
+                                                                        getCurrentImage
+                                                                            .currentImage
+                                                                            .mediaLibrary
+                                                                            .id
+                                                                    }}
+                                                                </dd>
+                                                            </div>
+                                                            <div
+                                                                class="py-3 flex justify-between text-sm font-medium items-center"
+                                                            >
+                                                                <dt
+                                                                    class="text-gray-500"
+                                                                >
+                                                                    Uploaded by
+                                                                </dt>
+                                                                <dd
+                                                                    class="text-gray-900"
+                                                                >
+                                                                    {{
+                                                                        getCurrentImage
+                                                                            .currentImage
+                                                                            .uploadedBy
+                                                                            .firstName
+                                                                    }}
+                                                                    {{
+                                                                        getCurrentImage
+                                                                            .currentImage
+                                                                            .uploadedBy
+                                                                            .lastName
+                                                                    }}
+                                                                </dd>
+                                                            </div>
+                                                            <div
+                                                                class="py-3 flex justify-between text-sm font-medium items-center"
+                                                            >
+                                                                <dt
+                                                                    class="text-myErrorColor"
+                                                                >
+                                                                    Delete
+                                                                </dt>
+                                                                <dd
+                                                                    class="text-gray-900"
+                                                                >
+                                                                    <form
+                                                                        @submit.prevent="
+                                                                            handleDeleteImage(
+                                                                                getCurrentImage
+                                                                                    .currentImage
+                                                                                    .mediaLibrary
+                                                                                    .id
+                                                                            )
+                                                                        "
+                                                                    >
+                                                                        <SubmitButton
+                                                                            :ButtonStyleDelete="
+                                                                                true
+                                                                            "
+                                                                            :TableStyle="
+                                                                                true
+                                                                            "
+                                                                            :disabled="
+                                                                                false
+                                                                            "
+                                                                            buttonText=""
+                                                                            type="button"
+                                                                            @firstButtonClick="
+                                                                                handleDeleteImage(
+                                                                                    getCurrentImage
+                                                                                        .currentImage
+                                                                                        .mediaLibrary
+                                                                                        .id
+                                                                                )
+                                                                            "
+                                                                        >
+                                                                            <svg
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                fill="none"
+                                                                                viewBox="0 0 24 24"
+                                                                                stroke-width="1.5"
+                                                                                stroke="currentColor"
+                                                                                class="w-5 h-5"
+                                                                            >
+                                                                                <path
+                                                                                    stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                                />
+                                                                            </svg>
+                                                                        </SubmitButton>
+                                                                    </form>
+                                                                </dd>
+                                                            </div>
+                                                        </dl>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div
                                                 v-if="
                                                     getCurrentImage &&
@@ -431,335 +716,46 @@ const handleDeleteImage = function (imageId) {
                                                         getCurrentImage.isError ===
                                                             false)
                                                 "
-                                                class="pb-16 space-y-6"
+                                                class="absolute bottom-0 right-0 left-0 px-2 my-2 sm:flex justify-center sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
                                             >
-                                                <div>
-                                                    <a
-                                                        :href="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path.toLowerCase()}`"
-                                                        target="_blank"
+                                                <div
+                                                    v-if="firstButtonText"
+                                                    class="w-full"
+                                                >
+                                                    <button
+                                                        ref="firstButtonRef"
+                                                        class="myPrimaryButton bg-gray-700 hover:bg-gray-800 text-white focus:ring-gray-700"
+                                                        type="button"
+                                                        @click="firstButton"
                                                     >
-                                                        <img
-                                                            class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                                                            :src="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path}`"
-                                                            alt="image"
-                                                        />
-                                                    </a>
-
-                                                    <div>
-                                                        <h2
-                                                            class="mySecondaryHeader py-2 break-words"
-                                                        >
-                                                            {{
-                                                                getCurrentImage
-                                                                    .currentImage
-                                                                    .mediaLibrary
-                                                                    .name
-                                                                    ? getCurrentImage
-                                                                          .currentImage
-                                                                          .mediaLibrary
-                                                                          .name
-                                                                    : "–"
-                                                            }}
-                                                        </h2>
-
-                                                        <form
-                                                            @submit.prevent="
-                                                                handleImageUpdate(
-                                                                    getCurrentImage
-                                                                        .currentImage
-                                                                        .mediaLibrary
-                                                                        .id
-                                                                )
-                                                            "
-                                                        >
-                                                            <div
-                                                                class="myInputsOrganization mt-2 mb-8 pt-4 pr-0 pb-4 pl-0 border-b border-myPrimaryMediumGrayColor rounded-none"
-                                                            >
-                                                                <InputLabel
-                                                                    for="name"
-                                                                    value="Image name"
-                                                                />
-                                                                <div
-                                                                    class="flex gap-2 item-center flex-col"
-                                                                >
-                                                                    <div
-                                                                        class="flex gap-2 item-center"
-                                                                    >
-                                                                        <div
-                                                                            class="mt-1 relative flex items-center w-full"
-                                                                        >
-                                                                            <input
-                                                                                placeholder="Image name.."
-                                                                                id="title"
-                                                                                v-model="
-                                                                                    form.name
-                                                                                "
-                                                                                type="text"
-                                                                                autofocus
-                                                                                autocomplete="off"
-                                                                                class="myPrimaryInput"
-                                                                                @keydown.enter.tab.prevent="
-                                                                                    handleImageUpdate(
-                                                                                        getCurrentImage
-                                                                                            .currentImage
-                                                                                            .mediaLibrary
-                                                                                            .id
-                                                                                    )
-                                                                                "
-                                                                            />
-                                                                            <div
-                                                                                class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5"
-                                                                            >
-                                                                                <kbd
-                                                                                    class="inline-flex items-center border border-gray-200 rounded px-2 text-xs font-sans font-medium text-gray-400"
-                                                                                >
-                                                                                    ⏎
-                                                                                </kbd>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <p
-                                                                        v-if="
-                                                                            form.errors
-                                                                        "
-                                                                        class="myPrimaryInputError"
-                                                                    >
-                                                                        {{
-                                                                            form
-                                                                                .errors
-                                                                                .name
-                                                                        }}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <h3
-                                                        class="font-medium text-gray-900"
-                                                    >
-                                                        Information
-                                                    </h3>
-                                                    <dl
-                                                        class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
-                                                    >
-                                                        <div
-                                                            class="py-3 flex justify-between text-sm font-medium items-center"
-                                                        >
-                                                            <dt
-                                                                class="text-gray-500"
-                                                            >
-                                                                Dimensions
-                                                            </dt>
-                                                            <dd
-                                                                class="text-gray-900"
-                                                            >
-                                                                {{
-                                                                    getCurrentImage
-                                                                        .currentImage
-                                                                        .mediaLibrary
-                                                                        .width
-                                                                }}
-                                                                x
-                                                                {{
-                                                                    getCurrentImage
-                                                                        .currentImage
-                                                                        .mediaLibrary
-                                                                        .height
-                                                                }}
-                                                            </dd>
-                                                        </div>
-
-                                                        <div
-                                                            class="py-3 flex justify-between text-sm font-medium items-center"
-                                                        >
-                                                            <dt
-                                                                class="text-gray-500"
-                                                            >
-                                                                Size
-                                                            </dt>
-                                                            <dd
-                                                                class="text-gray-900"
-                                                            >
-                                                                {{
-                                                                    getCurrentImage
-                                                                        .currentImage
-                                                                        .mediaLibrary
-                                                                        .size
-                                                                }}
-                                                                KB
-                                                            </dd>
-                                                        </div>
-                                                        <div
-                                                            class="py-3 flex justify-between text-sm font-medium items-center"
-                                                        >
-                                                            <dt
-                                                                class="text-gray-500"
-                                                            >
-                                                                Image Id
-                                                            </dt>
-                                                            <dd
-                                                                class="text-gray-900"
-                                                            >
-                                                                {{
-                                                                    getCurrentImage
-                                                                        .currentImage
-                                                                        .mediaLibrary
-                                                                        .id
-                                                                }}
-                                                            </dd>
-                                                        </div>
-                                                        <div
-                                                            class="py-3 flex justify-between text-sm font-medium items-center"
-                                                        >
-                                                            <dt
-                                                                class="text-gray-500"
-                                                            >
-                                                                Uploaded by
-                                                            </dt>
-                                                            <dd
-                                                                class="text-gray-900"
-                                                            >
-                                                                {{
-                                                                    getCurrentImage
-                                                                        .currentImage
-                                                                        .uploadedBy
-                                                                        .firstName
-                                                                }}
-                                                                {{
-                                                                    getCurrentImage
-                                                                        .currentImage
-                                                                        .uploadedBy
-                                                                        .lastName
-                                                                }}
-                                                            </dd>
-                                                        </div>
-                                                        <div
-                                                            class="py-3 flex justify-between text-sm font-medium items-center"
-                                                        >
-                                                            <dt
-                                                                class="text-myErrorColor"
-                                                            >
-                                                                Delete
-                                                            </dt>
-                                                            <dd
-                                                                class="text-gray-900"
-                                                            >
-                                                                <form
-                                                                    @submit.prevent="
-                                                                        handleDeleteImage(
-                                                                            getCurrentImage
-                                                                                .currentImage
-                                                                                .mediaLibrary
-                                                                                .id
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    <SubmitButton
-                                                                        :ButtonStyleDelete="
-                                                                            true
-                                                                        "
-                                                                        :TableStyle="
-                                                                            true
-                                                                        "
-                                                                        :disabled="
-                                                                            false
-                                                                        "
-                                                                        buttonText=""
-                                                                        type="button"
-                                                                        @firstButtonClick="
-                                                                            handleDeleteImage(
-                                                                                getCurrentImage
-                                                                                    .currentImage
-                                                                                    .mediaLibrary
-                                                                                    .id
-                                                                            )
-                                                                        "
-                                                                    >
-                                                                        <svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            fill="none"
-                                                                            viewBox="0 0 24 24"
-                                                                            stroke-width="1.5"
-                                                                            stroke="currentColor"
-                                                                            class="w-5 h-5"
-                                                                        >
-                                                                            <path
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                                            />
-                                                                        </svg>
-                                                                    </SubmitButton>
-                                                                </form>
-                                                            </dd>
-                                                        </div>
-                                                    </dl>
+                                                        {{ firstButtonText }}
+                                                    </button>
                                                 </div>
 
-                                                <div class="mt-2 sm:mt-2 pt-4">
-                                                    <div
-                                                        class="sm:flex justify-center sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
+                                                <div
+                                                    v-if="secondButtonText"
+                                                    class="w-full"
+                                                >
+                                                    <button
+                                                        class="myPrimaryButton w-full"
+                                                        type="button"
+                                                        @click="secondButton"
                                                     >
-                                                        <div
-                                                            v-if="
-                                                                firstButtonText
-                                                            "
-                                                            class="w-full"
-                                                        >
-                                                            <button
-                                                                ref="firstButtonRef"
-                                                                class="myPrimaryButton bg-gray-700 hover:bg-gray-800 text-white focus:ring-gray-700"
-                                                                type="button"
-                                                                @click="
-                                                                    firstButton
-                                                                "
-                                                            >
-                                                                {{
-                                                                    firstButtonText
-                                                                }}
-                                                            </button>
-                                                        </div>
+                                                        {{ secondButtonText }}
+                                                    </button>
+                                                </div>
 
-                                                        <div
-                                                            v-if="
-                                                                secondButtonText
-                                                            "
-                                                            class="w-full"
-                                                        >
-                                                            <button
-                                                                class="myPrimaryButton w-full"
-                                                                type="button"
-                                                                @click="
-                                                                    secondButton
-                                                                "
-                                                            >
-                                                                {{
-                                                                    secondButtonText
-                                                                }}
-                                                            </button>
-                                                        </div>
-
-                                                        <div
-                                                            v-if="
-                                                                thirdButtonText
-                                                            "
-                                                            class="w-full"
-                                                        >
-                                                            <button
-                                                                class="myPrimaryDeleteButton w-full"
-                                                                type="button"
-                                                                @click="
-                                                                    thirdButton
-                                                                "
-                                                            >
-                                                                {{
-                                                                    thirdButtonText
-                                                                }}
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                                                <div
+                                                    v-if="thirdButtonText"
+                                                    class="w-full"
+                                                >
+                                                    <button
+                                                        class="myPrimaryDeleteButton w-full"
+                                                        type="button"
+                                                        @click="thirdButton"
+                                                    >
+                                                        {{ thirdButtonText }}
+                                                    </button>
                                                 </div>
                                             </div>
                                         </aside>
@@ -768,7 +764,7 @@ const handleDeleteImage = function (imageId) {
                                         <aside
                                             v-if="selected === 'Upload'"
                                             aria-label="sidebar"
-                                            class="w-72 min-h-[25rem] bg-white pl-2 pr-2 border-l border-gray-200 overflow-y-scroll"
+                                            class="md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white pl-2 pr-2 border border-gray-200 rounded"
                                         >
                                             <div
                                                 v-if="

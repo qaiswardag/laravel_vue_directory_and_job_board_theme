@@ -90,7 +90,13 @@ onMounted(() => {
 </script>
 
 <template>
-    <Modal :show="show" @close="firstButton" maxWidth="5xl" minHeight="5xl">
+    <Modal
+        :show="show"
+        @close="firstButton"
+        maxWidth="5xl"
+        minHeight="min-h-[50rem]"
+        maxHeight="max-h-[50rem]"
+    >
         <div
             class="w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle px-4 py-4"
         >

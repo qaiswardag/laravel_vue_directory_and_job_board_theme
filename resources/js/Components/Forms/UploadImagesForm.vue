@@ -218,7 +218,16 @@ onMounted(() => {
             <InputError :message="form.errors?.images" />
         </div>
 
-        <div class="overflow-y-scroll max-h-[30rem] min-h-[15rem] mt-2 mb-4">
+        <p
+            v-if="imagesPreview.length !== 0 && isLoading === false"
+            class="myPrimaryParagraph pb-2 italic text-xs"
+        >
+            Images {{ imagesPreview.length }}
+        </p>
+
+        <div
+            class="overflow-y-scroll md:min-h-[30rem] md:max-h-[30rem] min-h-[15rem] max-h-[15rem]"
+        >
             <div v-if="isLoading === true">
                 <div class="flex items-center justify-center">
                     <div
@@ -300,11 +309,11 @@ onMounted(() => {
             </div>
         </div>
 
-        <div v-if="isLoading === false && imagesPreview.length !== 0">
-            <SubmitButton
-                :disabled="form.processing"
-                buttonText="Upload Images"
-            >
+        <div
+            v-if="isLoading === false && imagesPreview.length !== 0"
+            class="py-2"
+        >
+            <SubmitButton :disabled="form.processing" buttonText="Upload">
             </SubmitButton>
         </div>
     </form>
