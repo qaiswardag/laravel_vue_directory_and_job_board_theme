@@ -53,10 +53,7 @@ return [
     |
     */
 
-    "url" => env(
-        "APP_URL",
-        "https://phplaravel-960987-3354440.cloudwaysapps.com"
-    ),
+    "url" => env("APP_URL", "http://localhost"),
 
     "asset_url" => env("ASSET_URL"),
 
