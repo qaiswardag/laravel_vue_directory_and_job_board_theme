@@ -65,7 +65,7 @@ export default {
                 data.page = "";
             }
 
-            // fetch media
+            // fetch users
             handleGetUsers(
                 `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
