@@ -54,6 +54,8 @@ class PostController extends Controller
     {
         $this->authorize("can-create-and-update", $team);
 
+        dd(env("APP_URL"), env("ASSET_URL"));
+
         return Inertia::render("Posts/CreatePost/CreatePost");
     }
 
