@@ -199,10 +199,12 @@ const sidebarOpen = ref(false);
 
     <!-- Topbar - start -->
     <div class="flex flex-1 flex-col md:pl-64">
-        <div class="sticky top-0 z-10 flex h-16 flex-shrink-0">
+        <div
+            class="sticky top-0 z-10 flex flex-shrink-0 justify-end items-center bg-white border-b-2 border-red-300"
+        >
             <button
                 type="button"
-                class="border-r px-4 text-myPrimaryDarkGrayColor focus:outline-none focus:ring-2 focus:ring-inset focus:ring-myPrimaryBrandColor md:hidden bg-white border-b-2 border-gray-200"
+                class="px-4 text-myPrimaryDarkGrayColor focus:outline-none focus:ring-2 focus:ring-inset focus:ring-myPrimaryBrandColor md:hidden bg-white"
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>

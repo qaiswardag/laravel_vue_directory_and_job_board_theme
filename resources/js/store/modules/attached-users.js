@@ -56,7 +56,7 @@ export default {
 
     // actions
     actions: {
-        // get images
+        // get users
         loadUsers(context, data) {
             if (data.search_query === undefined) {
                 data.search_query = "";
@@ -67,7 +67,7 @@ export default {
 
             // fetch users
             handleGetUsers(
-                `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
+                `//overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
             // context & send to mutation
             context.commit("setCurrentUsers", {

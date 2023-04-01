@@ -28,14 +28,37 @@ import {
 import { MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
 import ApplicationMark from "@/Components/MarkComponents/ApplicationMark.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import DynamicMenuModal from "@/Components/Modals/DynamicMenuModal.vue";
+
+// updated menu
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import {
+    ChevronDownIcon,
+    PhoneIcon,
+    PlayCircleIcon,
+} from "@heroicons/vue/20/solid";
+import {
+    ArrowPathIcon,
+    ChartPieIcon,
+    CursorArrowRaysIcon,
+    FingerPrintIcon,
+    SquaresPlusIcon,
+} from "@heroicons/vue/24/outline";
 
 // notification slide over
 const showNotificationsSlideOver = ref(false);
 
-// search modal
+// modal
+const modalShowTeamMenu = ref(false);
 const modalShowSearchAnything = ref(false);
 const modalShowSwitchTeams = ref(false);
 const modalShowLogout = ref(false);
+
+// modal menu content
+const titleMenuModal = ref("");
+const firstMenuButtonModal = ref("");
+// set menu modal handle functions
+const firstModalMenuButtonFunction = ref(null);
 
 // modal content
 const typeModal = ref("");
@@ -49,6 +72,19 @@ const thirdButtonModal = ref(null);
 const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
+
+const handleTeamMenuItemClick = () => {
+    // handle show modal for unique content
+    modalShowTeamMenu.value = true;
+    // set modal standards
+    titleMenuModal.value = "Menu";
+    // handle click
+    firstModalMenuButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowTeamMenu.value = false;
+    };
+    // end menu modal
+};
 
 const handleLogout = () => {
     // handle show modal for unique content
@@ -98,6 +134,49 @@ const handleNotificationsSlideOver = function () {
 const notificationsSlideOverButton = function () {
     showNotificationsSlideOver.value = false;
 };
+
+//
+//
+//
+//
+//
+// updated menu
+const solutions = [
+    {
+        name: "Analytics",
+        description: "Get a better understanding of your traffic",
+        href: "#",
+        icon: ChartPieIcon,
+    },
+    {
+        name: "Engagement",
+        description: "Speak directly to your customers",
+        href: "#",
+        icon: CursorArrowRaysIcon,
+    },
+    {
+        name: "Security",
+        description: "Your customers' data will be safe and secure",
+        href: "#",
+        icon: FingerPrintIcon,
+    },
+    {
+        name: "Integrations",
+        description: "Connect with third-party tools",
+        href: "#",
+        icon: SquaresPlusIcon,
+    },
+    {
+        name: "Automations",
+        description: "Build strategic funnels that will convert",
+        href: "#",
+        icon: ArrowPathIcon,
+    },
+];
+const callsToAction = [
+    { name: "Watch demo", href: "#", icon: PlayCircleIcon },
+    { name: "Contact sales", href: "#", icon: PhoneIcon },
+];
 </script>
 <template>
     <SearchAnythingModal
@@ -111,6 +190,88 @@ const notificationsSlideOverButton = function () {
         @notificationsSlideOverButton="notificationsSlideOverButton"
     >
     </SlideOverNotifications>
+    <DynamicMenuModal
+        :show="modalShowTeamMenu"
+        :title="titleMenuModal"
+        @firstModalMenuButtonFunction="firstModalMenuButtonFunction"
+    >
+        <main>
+            <div class="flex flex-col gap-1">
+                <p
+                    class="myPrimaryParagraph italic text-xs py-2 px-2 bg-gray-50 rounded-lg"
+                >
+                    Team
+                </p>
+                <div
+                    class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50"
+                >
+                    <div
+                        class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white"
+                    >
+                        <svg
+                            class="h-5 w-5 text-gray-600 group-hover:text-indigo-600"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M16.712 4.33a9.027 9.027 0 011.652 1.306c.51.51.944 1.064 1.306 1.652M16.712 4.33l-3.448 4.138m3.448-4.138a9.014 9.014 0 00-9.424 0M19.67 7.288l-4.138 3.448m4.138-3.448a9.014 9.014 0 010 9.424m-4.138-5.976a3.736 3.736 0 00-.88-1.388 3.737 3.737 0 00-1.388-.88m2.268 2.268a3.765 3.765 0 010 2.528m-2.268-4.796a3.765 3.765 0 00-2.528 0m4.796 4.796c-.181.506-.475.982-.88 1.388a3.736 3.736 0 01-1.388.88m2.268-2.268l4.138 3.448m0 0a9.027 9.027 0 01-1.306 1.652c-.51.51-1.064.944-1.652 1.306m0 0l-3.448-4.138m3.448 4.138a9.014 9.014 0 01-9.424 0m5.976-4.138a3.765 3.765 0 01-2.528 0m0 0a3.736 3.736 0 01-1.388-.88 3.737 3.737 0 01-.88-1.388m2.268 2.268L7.288 19.67m0 0a9.024 9.024 0 01-1.652-1.306 9.027 9.027 0 01-1.306-1.652m0 0l4.138-3.448M4.33 16.712a9.014 9.014 0 010-9.424m4.138 5.976a3.765 3.765 0 010-2.528m0 0c.181-.506.475-.982.88-1.388a3.736 3.736 0 011.388-.88m-2.268 2.268L4.33 7.288m6.406 1.18L7.288 4.33m0 0a9.024 9.024 0 00-1.652 1.306A9.025 9.025 0 004.33 7.288"
+                            ></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <a href="#" class="font-semibold text-gray-900">
+                            Help center
+                            <span class="absolute inset-0"></span>
+                        </a>
+                        <p class="mt-1 text-gray-600">
+                            Get all of your questions answered
+                        </p>
+                    </div>
+                </div>
+                <p
+                    class="myPrimaryParagraph italic text-xs py-2 px-2 bg-gray-50 rounded-lg"
+                >
+                    Account
+                </p>
+
+                <form @submit.prevent="handleLogout">
+                    <div
+                        @click="handleLogout"
+                        class="hover:bg-gray-50 group relative flex gap-x-6 rounded-lg p-4 cursor-pointer"
+                    >
+                        <div
+                            class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white"
+                        >
+                            <svg
+                                class="h-5 w-5 text-gray-600 group-hover:text-indigo-600"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                                />
+                            </svg>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="font-semibold text-gray-900">
+                                Log Out
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </DynamicMenuModal>
     <DynamicModal
         :show="modalShowLogout"
         :type="typeModal"
@@ -127,104 +288,36 @@ const notificationsSlideOverButton = function () {
         <header></header>
         <main></main>
     </DynamicModal>
-    <div
-        class="bg-white flex flex-1 justify-between pr-4 border-b-2 border-gray-800"
+    <DynamicModal
+        :show="modalShowLogout"
+        :type="typeModal"
+        :gridColumnAmount="gridColumnModal"
+        :title="titleModal"
+        :description="descriptionModal"
+        :firstButtonText="firstButtonModal"
+        :secondButtonText="secondButtonModal"
+        :thirdButtonText="thirdButtonModal"
+        @firstModalButtonFunction="firstModalButtonFunction"
+        @secondModalButtonFunction="secondModalButtonFunction"
+        @thirdModalButtonFunction="thirdModalButtonFunction"
     >
-        <div class="flex flex-1">
-            <div class="ml-4 flex items-center md:ml-6 gap-8">
-                <form class="w-full flex md:ml-0" @submit.prevent>
-                    <label for="search-field" class="sr-only">
-                        Search anything...
-                    </label>
-                    <div
-                        class="relative w-full text-myPrimaryDarkGrayColor focus-within:text-myPrimaryDarkGrayColor"
-                    >
-                        <div
-                            class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-4 h-4"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                />
-                            </svg>
-                        </div>
-                        <input
-                            id="search-field"
-                            class="cursor-pointer block w-full h-full pl-8 pr-3 py-2 border-transparent text-myPrimaryDarkGrayColor font-semibold placeholder-gray-500 placeholder:font-semibold focus:outline-none focus:placeholder-myPrimaryDarkGrayColor focus:ring-0 focus:border-transparent sm:text-sm"
-                            @click.prevent="handleSearchAnything"
-                            placeholder="Search anything..."
-                            readonly
-                            type="search"
-                            autocomplete="off"
-                            name="search"
-                        />
-                    </div>
-                </form>
-            </div>
-        </div>
+        <header></header>
+        <main></main>
+    </DynamicModal>
 
+    <!-- search anything - start -->
+    <div class="flex flex-1">
         <div class="ml-4 flex items-center md:ml-6 gap-8">
-            <!--  -->
-            <!-- Teams Management desktop - start -->
-
-            <Link
-                class="myPrimaryParagraph font-semibold leading-6"
-                :href="route('home')"
-            >
-                Home
-            </Link>
-
-            <template
-                v-if="
-                    $page.props.user.all_teams.length > 0 &&
-                    !$page.props.user.current_team &&
-                    $page.props.jetstream.hasTeamFeatures
-                "
-            >
+            <form class="w-full flex md:ml-0" @submit.prevent>
+                <label for="search-field" class="sr-only">
+                    Search anything...
+                </label>
                 <div
-                    class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 py-2 px-2"
+                    class="relative w-full text-myPrimaryDarkGrayColor focus-within:text-myPrimaryDarkGrayColor"
                 >
-                    <Link
-                        :href="
-                            route(
-                                'user.teams.switch',
-                                $page.props.user.current_team
-                            )
-                        "
-                        class="myPrimaryParagraph font-semibold leading-6"
-                        :class="{
-                            myPrimaryLink: route().current('user.teams.switch'),
-                        }"
+                    <div
+                        class="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-3"
                     >
-                        No Team Selected
-                    </Link>
-                </div>
-            </template>
-
-            <template
-                v-if="
-                    $page.props.user.all_teams.length > 0 &&
-                    $page.props.user.current_team &&
-                    $page.props.jetstream.hasTeamFeatures
-                "
-            >
-                <Menu as="div" class="relative">
-                    <MenuButton
-                        class="flex gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 py-2 px-2"
-                    >
-                        <span class="sr-only">Open user menu</span>
-                        <div class="myPrimaryParagraph font-semibold leading-6">
-                            {{ $page.props.user.current_team.name }}
-                        </div>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -236,129 +329,112 @@ const notificationsSlideOverButton = function () {
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
                             />
                         </svg>
-                    </MenuButton>
-
-                    <transition
-                        enter-active-class="transition ease-out duration-100"
-                        enter-from-class="transform opacity-0 scale-95"
-                        enter-to-class="transform opacity-100 scale-100"
-                        leave-active-class="transition ease-in duration-75"
-                        leave-from-class="transform opacity-100 scale-100"
-                        leave-to-class="transform opacity-0 scale-95"
-                    >
-                        <MenuItems
-                            class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                        >
-                            <span
-                                class="myPrimaryParagraph block px-4 py-2 text-xs text-myPrimaryMediumGrayColor"
-                                >Settings</span
-                            >
-                            <DropdownLink
-                                :href="
-                                    route(
-                                        'teams.show',
-                                        $page.props.user.current_team
-                                    )
-                                "
-                                :active="route().current('teams.show')"
-                            >
-                                Team Settings
-                            </DropdownLink>
-                        </MenuItems>
-                    </transition>
-                </Menu>
-            </template>
-            <!-- Teams Management desktop - end -->
-
-            <!-- Profile dropdown - start -->
-            <Menu as="div" class="relative">
-                <div>
-                    <MenuButton
-                        class="flex ml-3 gap-2 max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 pr-2"
-                    >
-                        <span class="sr-only">Open user menu</span>
-
-                        <div class="flex flex-col justify-center items-center">
-                            <div
-                                class="myPrimaryParagraph font-semibold leading-6"
-                                v-if="
-                                    $page.props.user &&
-                                    $page.props.user.profile_photo_path !== null
-                                "
-                            >
-                                <img
-                                    class="object-cover w-8 h-8 rounded-full flex-shrink-0"
-                                    :src="`/uploads/${$page.props.user.profile_photo_path}`"
-                                    :alt="
-                                        $page.props.user.first_name +
-                                        $page.props.user.last_name
-                                    "
-                                />
-                            </div>
-
-                            <div
-                                v-if="
-                                    $page.props.user &&
-                                    $page.props.user.profile_photo_path === null
-                                "
-                                class="myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
-                            >
-                                <span>
-                                    {{
-                                        $page.props.user.first_name
-                                            .charAt(0)
-                                            .toUpperCase()
-                                    }}
-                                </span>
-                                <span>
-                                    {{
-                                        $page.props.user.last_name
-                                            .charAt(0)
-                                            .toUpperCase()
-                                    }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <span
-                            class="myPrimaryParagraph font-semibold leading-6"
-                        >
-                            {{ $page.props.user.first_name }}
-                            {{ $page.props.user.last_name }}</span
-                        >
-                    </MenuButton>
+                    </div>
+                    <input
+                        id="search-field"
+                        class="cursor-pointer block w-full h-full pl-8 pr-3 border-transparent placeholder-gray-500 focus:outline-none border-0 focus:ring-0 sm:text-sm font-medium text-myPrimaryDarkGrayColor rounded-md py-6 px-3"
+                        @click.prevent="handleSearchAnything"
+                        placeholder="Search anything..."
+                        readonly
+                        type="search"
+                        autocomplete="off"
+                        name="search"
+                    />
                 </div>
-                <transition
-                    enter-active-class="transition ease-out duration-100"
-                    enter-from-class="transform opacity-0 scale-95"
-                    enter-to-class="transform opacity-100 scale-100"
-                    leave-active-class="transition ease-in duration-75"
-                    leave-from-class="transform opacity-100 scale-100"
-                    leave-to-class="transform opacity-0 scale-95"
-                >
-                    <MenuItems
-                        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            </form>
+        </div>
+    </div>
+    <!-- search anything - end -->
+    <header class="w-6/1">
+        <nav
+            class="mx-auto flex gap-4 max-w-7xl items-center justify-end px-6 lg:px-8"
+            aria-label="Global"
+        >
+            <Link
+                class="flex gap-2 items-center rounded-full px-4 py-1.5"
+                :href="route('home')"
+            >
+                <div class="flex items-center">
+                    <div
+                        class="text-sm font-semibold text-myPrimaryDarkGrayColor cursor-pointer"
                     >
-                        <DropdownLink
-                            :href="route('profile.show')"
-                            :active="route().current('profile.show')"
-                        >
-                            Your Profile
-                        </DropdownLink>
+                        Home
+                    </div>
+                </div>
+            </Link>
+            <div
+                @click="handleTeamMenuItemClick"
+                class="focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 cursor-pointer flex gap-2 items-center rounded-full px-4 py-1.5 shadow-sm ring-1 ring-gray-400 hover:ring-2 hover:ring-myPrimaryBrandColor"
+            >
+                <div
+                    v-if="
+                        $page.props.user &&
+                        $page.props.user.profile_photo_path !== null
+                    "
+                >
+                    <img
+                        class="object-cover w-6 h-6 rounded-full flex-shrink-0"
+                        :src="`/uploads/${$page.props.user.profile_photo_path}`"
+                        :alt="
+                            $page.props.user.first_name +
+                            $page.props.user.last_name
+                        "
+                    />
+                </div>
+                <div
+                    v-if="
+                        $page.props.user &&
+                        $page.props.user.profile_photo_path === null
+                    "
+                    class="myPrimaryParagraph w-6 h-6 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                >
+                    <span>
+                        {{
+                            $page.props.user.first_name.charAt(0).toUpperCase()
+                        }}
+                    </span>
+                    <span>
+                        {{ $page.props.user.last_name.charAt(0).toUpperCase() }}
+                    </span>
+                </div>
+                <div class="flex items-center">
+                    <div
+                        class="text-sm font-semibold text-myPrimaryDarkGrayColor cursor-pointer"
+                    >
+                        Menu
+                    </div>
+                    <ChevronDownIcon
+                        class="h-5 w-5 text-gray-600 ml-1"
+                        aria-hidden="true"
+                    />
+                </div>
+            </div>
 
-                        <form @submit.prevent="handleLogout">
-                            <DropdownLink as="button" :active="false">
-                                Log Out
-                            </DropdownLink>
-                        </form>
-                    </MenuItems>
-                </transition>
-            </Menu>
-            <!-- Profile dropdown - end -->
-
+            <template
+                v-if="
+                    $page.props.user.all_teams.length > 0 &&
+                    !$page.props.user.current_team &&
+                    $page.props.jetstream.hasTeamFeatures
+                "
+            >
+                <Link
+                    :href="
+                        route(
+                            'user.teams.switch',
+                            $page.props.user.current_team
+                        )
+                    "
+                    class="hidden lg:block myPrimaryParagraph font-semibold leading-6"
+                    :class="{
+                        myPrimaryLink: route().current('user.teams.switch'),
+                    }"
+                >
+                    Select Team
+                </Link>
+            </template>
             <button
                 type="button"
                 class="rounded-full p-1 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2"
@@ -370,6 +446,6 @@ const notificationsSlideOverButton = function () {
                     aria-hidden="true"
                 />
             </button>
-        </div>
-    </div>
+        </nav>
+    </header>
 </template>

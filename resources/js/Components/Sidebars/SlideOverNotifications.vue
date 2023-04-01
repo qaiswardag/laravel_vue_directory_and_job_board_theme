@@ -19,7 +19,7 @@ const props = defineProps({
 const notifications = [
     {
         title: "Eepteur sint occaecat cupidatat non proident",
-        image: "https://images.unsplash.com/photo-1674507888194-85b1859fc034?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80",
+        image: "https://assets.hermes.com/is/image/hermesedito/P_169_WRTW_HEADER_PE22_1?wid=1200",
         description:
             "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
     },
@@ -30,9 +30,21 @@ const notifications = [
     },
     {
         title: "Duis aute irure",
-        image: "https://images.unsplash.com/photo-1661956602116-aa6865609028?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1964&q=80",
+        image: "https://cdn.luxe.digital/media/20220711135910/best-luxury-brands-2022-chanel-luxe-digital.jpg.webp",
         description:
             "Publishing industries for previewing layouts and visual mockups.",
+    },
+    {
+        title: "Unique design and customer loyalty schemes",
+        image: "https://hips.hearstapps.com/hmg-prod/images/hbz-dolcegabbana-queens-lori-harvey-1551975747.jpg?crop=1.00xw:0.755xh;0,0.0962xh&resize=1200:*",
+        description:
+            "Unique design and customer loyalty schemes. Unique design and customer loyalty schemes",
+    },
+    {
+        title: "Chanel remains a privately held company owned",
+        image: "https://cdn.mos.cms.futurecdn.net/L7urWTEUAQBuKpPcrQLgzj.jpg",
+        description:
+            "Chanel remains a privately held company owned by Alain and Gerard Wertheimer, grandsons of Pierre Wertheimer, an early business partner of Coco Chanel.",
     },
 ];
 // emit
@@ -146,7 +158,7 @@ const notificationsSlideOverButton = function () {
                                                     >
                                                         <a
                                                             href="#"
-                                                            class="text-sm font-medium text-myPrimaryDarkGrayColor mb-4 mt-2 block"
+                                                            class="text-sm font-semibold text-myPrimaryDarkGrayColor mb-4 mt-2 block"
                                                         >
                                                             {{
                                                                 notification.title

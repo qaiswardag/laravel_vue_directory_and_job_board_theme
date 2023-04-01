@@ -1,154 +1,326 @@
-<template>
-    <header class="bg-white border-b border-gray-200">
-        <nav
-            class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
-            aria-label="Global"
-        >
-            <div class="flex lg:flex-1">
-                <a href="#" class="-m-1.5 p-1.5">
-                    <span class="sr-only">Your Company</span>
-                    <img
-                        class="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt=""
-                    />
-                </a>
-            </div>
-            <div class="flex lg:hidden">
-                <button
-                    type="button"
-                    class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                    @click="mobileMenuOpen = true"
-                >
-                    <span class="sr-only">Open main menu</span>
-                    <Bars3Icon class="h-6 w-6" aria-hidden="true" />
-                </button>
-            </div>
-            <div class="hidden lg:flex lg:gap-x-12">
-                <template v-if="$page.props.user !== null">
-                    <Link
-                        :href="route('dashboard')"
-                        :class="{
-                            'text-myPrimaryBrandColor':
-                                route().current('dashboard'),
-                            'text-sm font-semibold leading-6 text-myPrimaryDarkGrayColor': true,
-                        }"
-                        class="myPrimaryParagraph"
-                    >
-                        Dashboard
-                    </Link>
-                </template>
-                <Link
-                    :href="route('users')"
-                    :class="{
-                        'text-myPrimaryBrandColor': route().current('users'),
-                        'text-sm font-semibold leading-6 text-myPrimaryDarkGrayColor': true,
-                    }"
-                    class="myPrimaryParagraph"
-                >
-                    Users
-                </Link>
-                <Link
-                    :href="route('posts')"
-                    :class="{
-                        'text-myPrimaryBrandColor': route().current('posts'),
-                        'text-sm font-semibold leading-6 text-myPrimaryDarkGrayColor': true,
-                    }"
-                    class="myPrimaryParagraph"
-                >
-                    Posts
-                </Link>
-            </div>
+<script setup>
+import {
+    Popover,
+    PopoverButton,
+    PopoverGroup,
+    PopoverPanel,
+} from "@headlessui/vue";
+import {
+    MagnifyingGlassIcon,
+    ShoppingBagIcon,
+} from "@heroicons/vue/24/outline";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
-            <template v-if="$page.props.user === null">
+const navigation = {
+    categories: [
+        {
+            name: "Women",
+            clothing: [
+                [
+                    { name: "Tops", href: "#" },
+                    { name: "Dresses", href: "#" },
+                    { name: "Pants", href: "#" },
+                    { name: "Denim", href: "#" },
+                    { name: "Sweaters", href: "#" },
+                    { name: "T-Shirts", href: "#" },
+                ],
+                [
+                    { name: "Jackets", href: "#" },
+                    { name: "Activewear", href: "#" },
+                    { name: "Shorts", href: "#" },
+                    { name: "Swimwear", href: "#" },
+                    { name: "Browse All", href: "#" },
+                ],
+            ],
+            accessories: [
+                { name: "Shoes", href: "#" },
+                { name: "Jewelry", href: "#" },
+                { name: "Handbags", href: "#" },
+                { name: "Socks", href: "#" },
+                { name: "Hats", href: "#" },
+                { name: "Browse All", href: "#" },
+            ],
+            categories: [
+                { name: "New Arrivals", href: "#" },
+                { name: "Sale", href: "#" },
+                { name: "Basic Tees", href: "#" },
+                { name: "Artwork Tees", href: "#" },
+            ],
+        },
+    ],
+    other: [
+        { name: "Company", href: "#" },
+        { name: "Stores", href: "#" },
+    ],
+};
+</script>
+
+<template>
+    <div class="bg-white">
+        <header class="relative bg-white">
+            <nav aria-label="Top" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div
-                    class="hidden lg:flex lg:flex-1 lg:justify-end myPrimaryGap"
+                    class="border-b border-gray-200 px-4 pb-14 sm:px-0 sm:pb-0"
                 >
-                    <Link
-                        :href="route('login')"
-                        :class="{
-                            'text-myPrimaryBrandColor':
-                                route().current('login'),
-                            'text-sm font-semibold leading-6 text-myPrimaryDarkGrayColor': true,
-                        }"
-                        class="myPrimaryParagraph"
-                    >
-                        Login
-                    </Link>
-                    <Link
-                        :href="route('register')"
-                        :class="{
-                            'text-myPrimaryBrandColor':
-                                route().current('register'),
-                            'text-sm font-semibold leading-6 text-myPrimaryDarkGrayColor': true,
-                        }"
-                        class="myPrimaryParagraph"
-                    >
-                        Register
-                    </Link>
-                </div>
-            </template>
-        </nav>
-        <Dialog
-            as="div"
-            class="lg:hidden"
-            @close="mobileMenuOpen = false"
-            :open="mobileMenuOpen"
-        >
-            <div class="fixed inset-0 z-10" />
-            <DialogPanel
-                class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
-            >
-                <div class="flex items-center justify-between">
-                    <a href="#" class="-m-1.5 p-1.5">
-                        <span class="sr-only">Your Company</span>
-                        <img
-                            class="h-8 w-auto"
-                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                            alt=""
-                        />
-                    </a>
-                    <button
-                        type="button"
-                        class="-m-2.5 rounded-md p-2.5 text-gray-700"
-                        @click="mobileMenuOpen = false"
-                    >
-                        <span class="sr-only">Close menu</span>
-                        <XMarkIcon class="h-6 w-6" aria-hidden="true" />
-                    </button>
-                </div>
-                <div class="mt-6 flow-root">
-                    <div class="-my-6 divide-y divide-gray-500/10">
-                        <div class="space-y-2 py-6">
-                            <Link
-                                :href="route('dashboard')"
-                                :class="{
-                                    'myPrimaryLink myPrimaryParagraph':
-                                        route().current('dashboard'),
-                                }"
-                                class="myPrimaryParagraph"
-                            >
-                                Dashboard
-                            </Link>
+                    <div class="flex h-16 items-center justify-between">
+                        <!-- Logo -->
+                        <div class="flex flex-1">
+                            <a href="#">
+                                <span class="sr-only">Your Company</span>
+                                <img
+                                    class="h-8 w-auto"
+                                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                                    alt=""
+                                />
+                            </a>
                         </div>
-                        <div class="py-6">
+
+                        <!-- Flyout menus -->
+                        <PopoverGroup
+                            class="absolute inset-x-0 bottom-0 sm:static sm:flex-1 sm:self-stretch"
+                        >
+                            <div
+                                class="flex h-14 space-x-8 overflow-x-auto border-t px-4 pb-px sm:h-full sm:justify-center sm:overflow-visible sm:border-t-0 sm:pb-0"
+                            >
+                                <Popover
+                                    v-for="(
+                                        category, categoryIdx
+                                    ) in navigation.categories"
+                                    :key="categoryIdx"
+                                    class="flex"
+                                    v-slot="{ open }"
+                                >
+                                    <div class="relative flex">
+                                        <PopoverButton
+                                            :class="[
+                                                open
+                                                    ? 'border-indigo-600 text-indigo-600'
+                                                    : 'border-transparent text-gray-700 hover:text-gray-800',
+                                                'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out',
+                                            ]"
+                                            >{{ category.name }}</PopoverButton
+                                        >
+                                    </div>
+
+                                    <transition
+                                        enter-active-class="transition ease-out duration-200"
+                                        enter-from-class="opacity-0"
+                                        enter-to-class="opacity-100"
+                                        leave-active-class="transition ease-in duration-150"
+                                        leave-from-class="opacity-100"
+                                        leave-to-class="opacity-0"
+                                    >
+                                        <PopoverPanel
+                                            class="absolute inset-x-0 top-full text-gray-500 sm:text-sm"
+                                        >
+                                            <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
+                                            <div
+                                                class="absolute inset-0 top-1/2 bg-white shadow"
+                                                aria-hidden="true"
+                                            />
+
+                                            <div class="relative bg-white">
+                                                <div
+                                                    class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+                                                >
+                                                    <div
+                                                        class="grid grid-cols-1 items-start gap-x-6 gap-y-10 pb-12 pt-10 md:grid-cols-2 lg:gap-x-8"
+                                                    >
+                                                        <div
+                                                            class="grid grid-cols-1 gap-x-6 gap-y-10 lg:gap-x-8"
+                                                        >
+                                                            <div>
+                                                                <p
+                                                                    id="clothing-heading"
+                                                                    class="font-medium text-gray-900"
+                                                                >
+                                                                    Clothing
+                                                                </p>
+                                                                <div
+                                                                    class="mt-4 border-t border-gray-200 pt-6 sm:grid sm:grid-cols-2 sm:gap-x-6"
+                                                                >
+                                                                    <ul
+                                                                        role="list"
+                                                                        aria-labelledby="clothing-heading"
+                                                                        class="space-y-6 sm:space-y-4"
+                                                                    >
+                                                                        <li
+                                                                            v-for="item in category
+                                                                                .clothing[0]"
+                                                                            :key="
+                                                                                item.name
+                                                                            "
+                                                                            class="flex"
+                                                                        >
+                                                                            <a
+                                                                                :href="
+                                                                                    item.href
+                                                                                "
+                                                                                class="hover:text-gray-800"
+                                                                                >{{
+                                                                                    item.name
+                                                                                }}</a
+                                                                            >
+                                                                        </li>
+                                                                    </ul>
+                                                                    <ul
+                                                                        role="list"
+                                                                        aria-label="More clothing"
+                                                                        class="mt-6 space-y-6 sm:mt-0 sm:space-y-4"
+                                                                    >
+                                                                        <li
+                                                                            v-for="item in category
+                                                                                .clothing[1]"
+                                                                            :key="
+                                                                                item.name
+                                                                            "
+                                                                            class="flex"
+                                                                        >
+                                                                            <a
+                                                                                :href="
+                                                                                    item.href
+                                                                                "
+                                                                                class="hover:text-gray-800"
+                                                                                >{{
+                                                                                    item.name
+                                                                                }}</a
+                                                                            >
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:gap-x-8"
+                                                        >
+                                                            <div>
+                                                                <p
+                                                                    id="accessories-heading"
+                                                                    class="font-medium text-gray-900"
+                                                                >
+                                                                    Accessories
+                                                                </p>
+                                                                <ul
+                                                                    role="list"
+                                                                    aria-labelledby="accessories-heading"
+                                                                    class="mt-4 space-y-6 border-t border-gray-200 pt-6 sm:space-y-4"
+                                                                >
+                                                                    <li
+                                                                        v-for="item in category.accessories"
+                                                                        :key="
+                                                                            item.name
+                                                                        "
+                                                                        class="flex"
+                                                                    >
+                                                                        <a
+                                                                            :href="
+                                                                                item.href
+                                                                            "
+                                                                            class="hover:text-gray-800"
+                                                                            >{{
+                                                                                item.name
+                                                                            }}</a
+                                                                        >
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div>
+                                                                <p
+                                                                    id="categories-heading"
+                                                                    class="font-medium text-gray-900"
+                                                                >
+                                                                    Categories
+                                                                </p>
+                                                                <ul
+                                                                    role="list"
+                                                                    aria-labelledby="categories-heading"
+                                                                    class="mt-4 space-y-6 border-t border-gray-200 pt-6 sm:space-y-4"
+                                                                >
+                                                                    <li
+                                                                        v-for="item in category.categories"
+                                                                        :key="
+                                                                            item.name
+                                                                        "
+                                                                        class="flex"
+                                                                    >
+                                                                        <a
+                                                                            :href="
+                                                                                item.href
+                                                                            "
+                                                                            class="hover:text-gray-800"
+                                                                            >{{
+                                                                                item.name
+                                                                            }}</a
+                                                                        >
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </PopoverPanel>
+                                    </transition>
+                                </Popover>
+
+                                <a
+                                    v-for="item in navigation.other"
+                                    :key="item.name"
+                                    :href="item.href"
+                                    class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                    >{{ item.name }}</a
+                                >
+                                <Link
+                                    class="flex gap-2 items-center rounded-full px-4 py-2"
+                                    :href="route('dashboard')"
+                                >
+                                    <div class="flex items-center">
+                                        <div
+                                            class="text-sm font-semibold text-myPrimaryDarkGrayColor cursor-pointer"
+                                        >
+                                            Dashboard
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
+                        </PopoverGroup>
+
+                        <div class="flex flex-1 items-center justify-end">
+                            <!-- Search -->
                             <a
                                 href="#"
-                                class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                >Log in</a
+                                class="p-2 text-gray-400 hover:text-gray-500"
                             >
+                                <span class="sr-only">Search</span>
+                                <MagnifyingGlassIcon
+                                    class="h-6 w-6"
+                                    aria-hidden="true"
+                                />
+                            </a>
+
+                            <!-- Cart -->
+                            <div class="ml-4 flow-root lg:ml-8">
+                                <a
+                                    href="#"
+                                    class="group -m-2 flex items-center p-2"
+                                >
+                                    <ShoppingBagIcon
+                                        class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                        aria-hidden="true"
+                                    />
+                                    <span
+                                        class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
+                                        >0</span
+                                    >
+                                    <span class="sr-only"
+                                        >items in cart, view bag</span
+                                    >
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </DialogPanel>
-        </Dialog>
-    </header>
+            </nav>
+        </header>
+    </div>
 </template>
-
-<script setup>
-import { ref } from "vue";
-import { Dialog, DialogPanel } from "@headlessui/vue";
-import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
-
-const mobileMenuOpen = ref(false);
-</script>

@@ -36,7 +36,12 @@ router.on("finish", () => {
             />
         </Head>
         <Banner />
-        <GuestsNavbar></GuestsNavbar>
+
+        <!-- Topbar - start -->
+
+        <div class="sticky top-0 z-10 bg-white border-b-2 border-red-300">
+            <GuestsNavbar></GuestsNavbar>
+        </div>
 
         <slot name="header" />
         <div

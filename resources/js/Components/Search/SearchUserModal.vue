@@ -34,6 +34,8 @@ const props = defineProps({
 // store
 const store = useStore();
 
+const frontEndError = ref(null);
+
 const getCurrentUsers = computed(() => {
     return store.getters["attachedUsers/getCurrentUsers"];
 });
@@ -73,8 +75,38 @@ const secondButton = function () {
     emit("secondModalButtonSearchAuthorFunction");
 };
 
+const isUserAlreadyAdded = function (user) {
+    const isUserExists = getCurrentAttachedUsers.value.some(
+        (u) => u.id === user.id
+    );
+
+    // User with matching ID already exists
+    if (isUserExists === true) {
+        return true;
+    }
+    // User with matching ID do not exists
+    if (isUserExists === false) {
+        return false;
+    }
+};
+
 const handleAttachUser = function (user) {
-    store.commit("attachedUsers/setCurrentAttachedUsers", user);
+    const isUserExists = getCurrentAttachedUsers.value.some(
+        (u) => u.id === user.id
+    );
+
+    // User with matching ID already exists
+    if (isUserExists === true) {
+        frontEndError.value = {
+            id: user.id,
+            error: "User aldready added.",
+        };
+    }
+    // User with matching ID do not exists
+    if (isUserExists === false) {
+        frontEndError.value = null;
+        store.commit("attachedUsers/setCurrentAttachedUsers", user);
+    }
 };
 const handleRemoveAttachedUser = function (userId) {
     // filter the array to exclude user with matching ID
@@ -334,11 +366,77 @@ onMounted(() => {
                                                     @click="
                                                         handleAttachUser(user)
                                                     "
-                                                    class="myPrimaryButton text-xs"
+                                                    class="myPrimaryButton text-xs flex gap-1"
+                                                    :class="[
+                                                        isUserAlreadyAdded(user)
+                                                            ? 'opacity-50 cursor-default'
+                                                            : '',
+                                                    ]"
                                                 >
-                                                    + Add
+                                                    <div
+                                                        v-if="
+                                                            isUserAlreadyAdded(
+                                                                user
+                                                            ) === false
+                                                        "
+                                                    >
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke-width="2"
+                                                            stroke="currentColor"
+                                                            class="w-3 h-3"
+                                                        >
+                                                            <path
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                d="M12 4.5v15m7.5-7.5h-15"
+                                                            />
+                                                        </svg>
+                                                    </div>
+                                                    <div
+                                                        v-if="
+                                                            isUserAlreadyAdded(
+                                                                user
+                                                            ) === true
+                                                        "
+                                                    >
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke-width="1.5"
+                                                            stroke="currentColor"
+                                                            class="w-3 h-3"
+                                                        >
+                                                            <path
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                d="M4.5 12.75l6 6 9-13.5"
+                                                            />
+                                                        </svg>
+                                                    </div>
+                                                    <span>
+                                                        {{
+                                                            isUserAlreadyAdded(
+                                                                user
+                                                            )
+                                                                ? "Added"
+                                                                : "Add"
+                                                        }}
+                                                    </span>
                                                 </button>
                                             </div>
+                                        </div>
+                                        <div
+                                            v-if="
+                                                frontEndError &&
+                                                frontEndError.id === user.id
+                                            "
+                                            class="myPrimaryParagraphError py-2 text-xs italic"
+                                        >
+                                            {{ frontEndError.error }}
                                         </div>
                                     </div>
                                 </div>

@@ -640,7 +640,7 @@ onMounted(() => {
                             v-if="postForm.author.length !== 0"
                             class="myPrimaryParagraph italic text-xs py-4"
                         >
-                            Added {{ postForm.author.length }} author
+                            Added {{ postForm.author.length }} author(s)
                         </p>
 
                         <div

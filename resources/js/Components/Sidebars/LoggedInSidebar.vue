@@ -4,7 +4,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 </script>
 
 <template>
-    <nav class="flex-1 space-y-1 px-2 pb-4" aria-label="menu">
+    <nav class="flex-1 space-y-2 px-2 pb-4" aria-label="menu">
         <template
             v-if="
                 $page.props.user.all_teams.length > 0 &&
