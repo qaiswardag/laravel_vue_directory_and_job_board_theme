@@ -1,4 +1,5 @@
 import { vueFetch } from "use-lightweight-fetch";
+import axios from "axios";
 
 // get users
 const {
@@ -57,7 +58,7 @@ export default {
     // actions
     actions: {
         // get users
-        async loadUsers(context, data) {
+        loadUsers(context, data) {
             if (data.search_query === undefined) {
                 data.search_query = "";
             }
@@ -70,21 +71,24 @@ export default {
             //     `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             // );
 
-            const res = await fetch(
-                `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
-            );
+            axios
+                .get(
+                    `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
+                )
+                .then(function (response) {
+                    // handle success
+                    let res = response;
+                    console.log("res er:", res);
 
-            console.log("res er:", res);
-            const data2 = await res.json();
-            console.log("data er:", data2);
+                    context.commit("setCurrentUsers", {
+                        fetchedData: res.data,
+                        isError: isErrorUsers,
+                        isLoading: isLoadingUsers,
+                        isSuccess: isSuccessUsers,
+                    });
+                });
 
             // context & send to mutation
-            context.commit("setCurrentUsers", {
-                fetchedData: data2,
-                isError: isErrorUsers,
-                isLoading: isLoadingUsers,
-                isSuccess: isSuccessUsers,
-            });
         },
         // end action
     },
