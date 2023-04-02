@@ -57,7 +57,7 @@ export default {
     // actions
     actions: {
         // get users
-        loadUsers(context, data) {
+        async loadUsers(context, data) {
             if (data.search_query === undefined) {
                 data.search_query = "";
             }
@@ -66,12 +66,20 @@ export default {
             }
 
             // fetch users
-            handleGetUsers(
+            // handleGetUsers(
+            //     `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
+            // );
+
+            const res = await fetch(
                 `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
+
+            const data2 = await res.json();
+            console.log("data er:", data2);
+
             // context & send to mutation
             context.commit("setCurrentUsers", {
-                fetchedData: fetchedUsers,
+                fetchedData: data2,
                 isError: isErrorUsers,
                 isLoading: isLoadingUsers,
                 isSuccess: isSuccessUsers,
