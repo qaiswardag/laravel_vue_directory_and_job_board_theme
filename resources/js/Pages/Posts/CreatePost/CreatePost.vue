@@ -4,6 +4,12 @@ import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import PostForm from "@/Pages/Posts/Partials/PostForm.vue";
 
 const props = defineProps({
+    currentUserTeamRole: {
+        required: false,
+    },
+    currentUserTeamRole: {
+        required: true,
+    },
     currentUserTeam: {
         required: true,
     },
@@ -32,6 +38,10 @@ const breadcrumbsLinks = [
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-        <PostForm :currentUserTeam="currentUserTeam" :user="user"></PostForm>
+        <PostForm
+            :currentUserTeam="currentUserTeam"
+            :currentUserTeamRole="currentUserTeamRole"
+            :user="user"
+        ></PostForm>
     </LoggedInLayout>
 </template>

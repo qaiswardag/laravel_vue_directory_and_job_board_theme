@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
@@ -43,17 +44,30 @@ class HandleInertiaRequests extends Middleware
                 "success" => fn() => $request->session()->get("success"),
                 "error" => fn() => $request->session()->get("error"),
             ],
+            // "currentUserTeamRole" =>
+            //     Auth::user() &&
+            //     Auth::user()->currentTeam &&
+            //     Auth::user()->teamRole(Auth::user()->currentTeam)->name
+            //         ? Auth::user()->teamRole(Auth::user()->currentTeam)->name
+            //         : null,
+            //
+            //
+            //
+            //
             "currentUserTeamRole" =>
                 Auth::user() &&
-                Auth::user()->currentTeam &&
-                Auth::user()->teamRole(Auth::user()->currentTeam)->name
-                    ? Auth::user()->teamRole(Auth::user()->currentTeam)->name
+                Auth::user()->current_team_id !== 0 &&
+                Auth::user()->current_team_id
+                    ? Auth::user()->teamRole(
+                        Team::find(Auth::user()->current_team_id)
+                    )
                     : null,
+
             "currentUserTeam" =>
                 Auth::user() &&
-                Auth::user()->currentTeam &&
-                Auth::user()->currentTeam
-                    ? Auth::user()->currentTeam
+                Auth::user()->current_team_id !== 0 &&
+                Auth::user()->current_team_id
+                    ? Team::find(Auth::user()->current_team_id)
                     : null,
         ]);
     }

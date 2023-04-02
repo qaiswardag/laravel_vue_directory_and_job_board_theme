@@ -78,20 +78,14 @@ class PostController extends Controller
             ->paginate(24);
 
         // Hide certain attributes from the response
-        $posts->makeHidden(["id", "user_id", "team_id", "author_id"]);
-
-        // Transform the posts
         $posts->transform(function ($post) {
-            // if ($post->user) {
-            //     $post->user->makeHidden(["id", "profile_photo_url"]);
-            // }
-
-            // if ($post->team) {
-            //     $post->team->makeHidden(["id"]);
-            // }
+            if ($post !== null && $post->author !== null) {
+                $post->makeHidden(["id", "user_id", "team_id", "author_id"]);
+            }
 
             // Make the user id hidden from the response
-            if ($post->user) {
+
+            if ($post !== null && $post->user !== null) {
                 $post->user->makeHidden([
                     "id",
                     "profile_photo_url",
@@ -100,19 +94,27 @@ class PostController extends Controller
             }
 
             // User: Check if show_author flag is true or 1, if not hide user details
-            if ($post->show_author === 0 || $post->show_author === 1) {
+            if (
+                $post !== null &&
+                $post->user !== null &&
+                ($post->show_author === 0 || $post->show_author === 1)
+            ) {
                 $post->user->makeHidden(
                     array_keys($post->user->getAttributes())
                 );
             }
 
             // Team: Make the team id hidden from the response
-            if ($post->team) {
+            if ($post !== null && $post->team !== null) {
                 $post->team->makeHidden(["id"]);
             }
 
             // Team: Check if team public flag is true or 1, if not hide team details
-            if ($post->team->public === 0) {
+            if (
+                $post !== null &&
+                $post->team !== null &&
+                $post->team->public === 0
+            ) {
                 $post->team->makeHidden(
                     array_keys($post->team->getAttributes())
                 );
@@ -171,16 +173,13 @@ class PostController extends Controller
             ])
             ->firstOrFail();
 
-        // dd("post er:", $post);
-
         $author = null;
+
         // Check if the post has an author and the author ID is not null
         if ($post->show_author === 1 && $post->author_id !== null) {
-            $author = User::select(
-                "first_name",
-                "last_name",
-                "username"
-            )->findOrFail($post->author_id);
+            $author = User::select("first_name", "last_name", "username")->find(
+                $post->author_id
+            );
         }
 
         // If the post is unpublished and the user is not authenticated, return a 404 error
@@ -191,11 +190,17 @@ class PostController extends Controller
             ]);
         }
 
-        // Post: hide certain attributes from the JSON response
-        $post->makeHidden(["id", "user_id", "team_id", "author_id"]);
+        // if ($posts->first() && $posts->first()->author !== null) {
+        //     $posts->makeHidden(["id", "user_id", "team_id", "author_id"]);
+        // }
+
+        if ($author !== null) {
+            // Post: hide certain attributes from the JSON response
+            $post->makeHidden(["id", "user_id", "team_id", "author_id"]);
+        }
 
         // User: hide the user id from the response
-        if ($post->user) {
+        if ($post->user !== null) {
             $post->user->makeHidden([
                 "id",
                 "profile_photo_url",
@@ -207,8 +212,11 @@ class PostController extends Controller
             $post->team->makeHidden(["id"]);
         }
 
-        // Check if show_author flag is true or 1, if not hide user details
-        if ($post->show_author === 0 || $post->show_author === 1) {
+        // Check if show_author flag is 1, if not hide user details
+        if (
+            ($post->show_author === 0 || $post->show_author === 1) &&
+            $author !== null
+        ) {
             $post->user->makeHidden(array_keys($post->user->getAttributes()));
         }
 

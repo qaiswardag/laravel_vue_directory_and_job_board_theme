@@ -100,21 +100,18 @@ Route::group(
                             "create",
                         ])->name("teams.create");
                         Route::post("/teams", [
-                            TeamController::class,
+                            TeamTeamController::class,
                             "store",
                         ])->name("teams.store");
                         Route::get("/teams/{team}", [
                             TeamController::class,
-                            "show", // TODO: check array of user vs team details
+                            "show",
                         ])->name("teams.show");
                         Route::put("/teams/{team}", [
                             TeamController::class,
                             "update",
                         ])->name("teams.update");
-                        // Route::delete("/teams/{team}", [
-                        //     TeamController::class,
-                        //     "destroy",
-                        // ])->name("teams.destroy");
+
                         Route::delete("/teams/{team}", [
                             TeamDeleteController::class,
                             "destroy",

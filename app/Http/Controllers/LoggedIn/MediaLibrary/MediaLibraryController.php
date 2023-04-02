@@ -22,8 +22,9 @@ class MediaLibraryController extends Controller
     {
         $this->authorize("can-read", $team);
 
-        $images = MediaLibrary::latest()
-            ->where("team_id", $team->id)
+        $images = $team
+            ->media()
+            ->latest()
             ->take(16)
             ->get();
 

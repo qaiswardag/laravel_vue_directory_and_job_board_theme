@@ -43,9 +43,17 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
-        //
+        $creator = app(CreatesTeams::class);
+
+        $team = $creator->create($request->user(), $request->all());
+
+        // return $this->redirectPath($creator);
+
+        return redirect()->route("team.update.information", [
+            "team" => $team->load("owner"),
+        ]);
     }
     /**
      * Display the specified resource.

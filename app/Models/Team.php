@@ -48,9 +48,6 @@ class Team extends JetstreamTeam
         "deleted" => TeamDeleted::class,
     ];
 
-    // protected $with = ["posts"];
-    // protected $with = ["teamUsers"];
-
     public function posts()
     {
         return $this->hasMany(Post::class, "team_id", "id");

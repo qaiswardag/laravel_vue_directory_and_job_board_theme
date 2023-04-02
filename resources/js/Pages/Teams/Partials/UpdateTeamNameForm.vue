@@ -136,7 +136,7 @@ const handleRemoveLogo = function () {
                 <p class="group flex items-center pr-2 py-2 myPrimaryParagraph">
                     Your current Role is
 
-                    {{ $page.props.currentUserTeamRole }}
+                    {{ $page.props.currentUserTeamRole?.name }}
                 </p>
             </div>
             <div
@@ -160,7 +160,7 @@ const handleRemoveLogo = function () {
                 </p>
                 <p class="group flex items-center pr-2 myPrimaryParagraph">
                     Your current Role is
-                    {{ $page.props.currentUserTeamRole }}
+                    {{ $page.props.currentUserTeamRole?.name }}
                 </p>
             </div>
         </template>

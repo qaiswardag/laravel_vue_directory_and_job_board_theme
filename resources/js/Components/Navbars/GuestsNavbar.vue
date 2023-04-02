@@ -111,7 +111,7 @@ const navigation = {
                                         leave-to-class="opacity-0"
                                     >
                                         <PopoverPanel
-                                            class="absolute inset-x-0 top-full text-gray-500 sm:text-sm"
+                                            class="absolute inset-x-0 top-full text-gray-500 sm:text-sm bg-red-300"
                                         >
                                             <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
                                             <div

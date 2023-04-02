@@ -123,19 +123,7 @@ const switchTeam = function (team) {
                                                 scope="col"
                                                 class="myPrimaryTableTh"
                                             >
-                                                Team id
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                class="myPrimaryTableTh"
-                                            >
                                                 Status
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                class="myPrimaryTableTh"
-                                            >
-                                                Account Team Owner
                                             </th>
                                             <th
                                                 scope="col"
@@ -273,9 +261,6 @@ const switchTeam = function (team) {
                                             </td>
 
                                             <td class="myPrimaryTableTBodyTd">
-                                                {{ team.id }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
                                                 <span
                                                     :class="
                                                         team.public
@@ -290,9 +275,7 @@ const switchTeam = function (team) {
                                                     }}</span
                                                 >
                                             </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ team.user_id }}
-                                            </td>
+
                                             <td class="myPrimaryTableTBodyTd">
                                                 {{
                                                     team.membership

@@ -3,6 +3,9 @@ import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Dashboard from "@/Components/Dashboard/Dashboard.vue";
 
 const props = defineProps({
+    currentUserTeamRole: {
+        required: true,
+    },
     currentUserTeam: {
         required: true,
     },
@@ -54,10 +57,16 @@ const people = [
         <Dashboard />
 
         <div class="myPrimarySection overflow-hidden">
-            <p class="my-4 pb-4 whitespace-pre-line">
-                currentUserTeam from shared Data is:
+            <p class="my-4 pb-16 whitespace-pre-line">
+                currentUserTeamRole from shared Data is:
+                <br />
+                {{ currentUserTeamRole }}
             </p>
-            <p class="my-4 whitespace-pre-line">{{ currentUserTeam }}</p>
+            <p class="my-4 pb-16 whitespace-pre-line">
+                currentUserTeam from shared Data is:
+                <br />
+                {{ currentUserTeam }}
+            </p>
             <p class="mb-4 mt-12 pb-4 whitespace-pre-line">user:</p>
             <p class="my-4 whitespace-pre-line">{{ user }}</p>
         </div>

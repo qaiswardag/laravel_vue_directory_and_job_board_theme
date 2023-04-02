@@ -28,13 +28,28 @@ class PostController extends Controller
      */
     public function index(Request $request, Team $team)
     {
-        // Authorize the current team that the user is on, rather than the team that the user is storing the post for.
+        $searchQuery = $request->input("search_query");
+
+        // Check $searchQuery is an array
+        // If it is, the implode function joins the elements of the array into a comma-separated string
+        if (is_array($searchQuery)) {
+            $searchQuery = implode(",", $searchQuery);
+        }
+
+        // Authorize the team that the user has selected to store the post for, rather than the team that the user is currently on.
         $this->authorize("can-read", $team);
 
         $posts = $team
             ->posts()
+            ->where(function ($query) use ($searchQuery) {
+                $query
+                    ->where("title", "like", "%" . $searchQuery . "%")
+                    ->orWhere("content", "like", "%" . $searchQuery . "%");
+            })
             ->latest()
-            ->paginate(2);
+            ->paginate(10);
+
+        $posts->appends($request->all());
 
         // post created by
         // $createdBy = User::findOrFail($post->user_id);
@@ -42,6 +57,9 @@ class PostController extends Controller
         return Inertia::render("Posts/Index", [
             "posts" => $posts,
             "createdBy" => $posts,
+            "oldInput" => [
+                "search_query" => $request->input("search_query"),
+            ],
         ]);
     }
 
@@ -144,22 +162,30 @@ class PostController extends Controller
      */
     public function edit(Post $post, Team $team)
     {
-        // Authorize the current team that the user is on, rather than the team that the user is storing the post for.
+        // Authorize the team that the user has selected to store the post for, rather than the team that the user is currently on.
         $this->authorize("can-create-and-update", $team);
 
         $author = null;
 
         if ($post->show_author === 1 && $post->author_id !== null) {
-            $user = User::findOrFail($post->author_id);
-            $author = [
-                "id" => $user->id,
-                "first_name" => $user->first_name,
-                "last_name" => $user->last_name,
-                "username" => $user->username,
-                "email" => $user->email,
-                "profile_photo_path" => $user->profile_photo_path,
-                "profile_photo_url" => $user->profile_photo_url,
-            ];
+            $user = User::find($post->author_id);
+            // In case user have deleted thier profile
+            // set author to null
+            if ($user === null) {
+                $author = null;
+            }
+            // If user exist
+            if ($user !== null) {
+                $author = [
+                    "id" => $user->id,
+                    "first_name" => $user->first_name,
+                    "last_name" => $user->last_name,
+                    "username" => $user->username,
+                    "email" => $user->email,
+                    "profile_photo_path" => $user->profile_photo_path,
+                    "profile_photo_url" => $user->profile_photo_url,
+                ];
+            }
         }
 
         return Inertia::render("Posts/UpdatePost/UpdatePost", [

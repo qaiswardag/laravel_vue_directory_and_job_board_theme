@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { onMounted, onUpdated, ref } from "vue";
 
 const props = defineProps({
     tagsOnLoad: {
@@ -9,22 +9,9 @@ const props = defineProps({
 
 const error = ref(null);
 const vueTag = ref("");
-// const tagsEntered = ref([]);
+const tagsEntered = ref([]);
 const emit = defineEmits(["firstTagsButton"]);
 const regexSpecialCharacters = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-
-// if (props.tagsOnLoad.length !== 0) {
-//     tagsEntered.value = props.tagsOnLoad.split(",");
-// }
-
-const tagsEntered = computed(() => {
-    if (props.tagsOnLoad.length !== 0) {
-        return props.tagsOnLoad.split(",");
-    }
-    if (props.tagsOnLoad.length === 0) {
-        return [];
-    }
-});
 
 // handle input
 const handleInput = function () {
@@ -62,6 +49,22 @@ const deleteTag = function (e) {
     });
     emit("firstTagsButton", tagsEntered.value.toString(","));
 };
+
+console.log("KØRRRRRRRRRRRRE DEEEENNNNNEEEE");
+onMounted(() => {
+    console.log("tagsOnLoad:", props.tagsOnLoad);
+    console.log("en");
+    console.log("er:", props.tagsOnLoad);
+
+    if (props.tagsOnLoad.length !== 0) {
+        console.log("to");
+        tagsEntered.value = props.tagsOnLoad.split(",");
+    }
+    if (props.tagsOnLoad.length === 0) {
+        console.log("tre");
+        tagsEntered.value = [];
+    }
+});
 </script>
 
 <template>

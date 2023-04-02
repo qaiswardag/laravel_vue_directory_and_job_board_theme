@@ -367,7 +367,7 @@ const handleDeleteImage = function (imageId) {
                                             class="md:w-72 relative min-h-[55rem] max-h-[55rem]"
                                         >
                                             <div
-                                                class="md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white pl-2 pr-2 border border-gray-200 rounded"
+                                                class="md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
                                             >
                                                 <div
                                                     v-if="
@@ -377,7 +377,7 @@ const handleDeleteImage = function (imageId) {
                                                             ).length === 0) ||
                                                         getCurrentImage === null
                                                     "
-                                                    class="pb-16 space-y-6"
+                                                    class="pb-16 space-y-6 md:px-3 sm:px-2 pt-2"
                                                 >
                                                     <p
                                                         class="myPrimaryParagraph"
@@ -437,18 +437,20 @@ const handleDeleteImage = function (imageId) {
                                                     "
                                                     class="pb-16 space-y-6"
                                                 >
-                                                    <div>
-                                                        <a
-                                                            :href="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path.toLowerCase()}`"
-                                                            target="_blank"
-                                                        >
-                                                            <img
-                                                                class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                                                                :src="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path}`"
-                                                                alt="image"
-                                                            />
-                                                        </a>
+                                                    <a
+                                                        :href="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path.toLowerCase()}`"
+                                                        target="_blank"
+                                                    >
+                                                        <img
+                                                            class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                            :src="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path}`"
+                                                            alt="image"
+                                                        />
+                                                    </a>
 
+                                                    <div
+                                                        class="md:px-3 sm:px-2"
+                                                    >
                                                         <div>
                                                             <h2
                                                                 class="mySecondaryHeader py-2 break-words"
@@ -538,141 +540,120 @@ const handleDeleteImage = function (imageId) {
                                                                 </div>
                                                             </form>
                                                         </div>
-                                                    </div>
-                                                    <div>
-                                                        <h3
-                                                            class="font-medium text-gray-900"
-                                                        >
-                                                            Information
-                                                        </h3>
-                                                        <dl
-                                                            class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
-                                                        >
-                                                            <div
-                                                                class="py-3 flex justify-between text-sm font-medium items-center"
+                                                        <div>
+                                                            <h3
+                                                                class="font-medium text-gray-900"
                                                             >
-                                                                <dt
-                                                                    class="text-gray-500"
-                                                                >
-                                                                    Dimensions
-                                                                </dt>
-                                                                <dd
-                                                                    class="text-gray-900"
-                                                                >
-                                                                    {{
-                                                                        getCurrentImage
-                                                                            .currentImage
-                                                                            .mediaLibrary
-                                                                            .width
-                                                                    }}
-                                                                    x
-                                                                    {{
-                                                                        getCurrentImage
-                                                                            .currentImage
-                                                                            .mediaLibrary
-                                                                            .height
-                                                                    }}
-                                                                </dd>
-                                                            </div>
-
-                                                            <div
-                                                                class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                Information
+                                                            </h3>
+                                                            <dl
+                                                                class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
                                                             >
-                                                                <dt
-                                                                    class="text-gray-500"
+                                                                <div
+                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
                                                                 >
-                                                                    Size
-                                                                </dt>
-                                                                <dd
-                                                                    class="text-gray-900"
-                                                                >
-                                                                    {{
-                                                                        getCurrentImage
-                                                                            .currentImage
-                                                                            .mediaLibrary
-                                                                            .size
-                                                                    }}
-                                                                    KB
-                                                                </dd>
-                                                            </div>
-                                                            <div
-                                                                class="py-3 flex justify-between text-sm font-medium items-center"
-                                                            >
-                                                                <dt
-                                                                    class="text-gray-500"
-                                                                >
-                                                                    Image Id
-                                                                </dt>
-                                                                <dd
-                                                                    class="text-gray-900"
-                                                                >
-                                                                    {{
-                                                                        getCurrentImage
-                                                                            .currentImage
-                                                                            .mediaLibrary
-                                                                            .id
-                                                                    }}
-                                                                </dd>
-                                                            </div>
-                                                            <div
-                                                                class="py-3 flex justify-between text-sm font-medium items-center"
-                                                            >
-                                                                <dt
-                                                                    class="text-gray-500"
-                                                                >
-                                                                    Uploaded by
-                                                                </dt>
-                                                                <dd
-                                                                    class="text-gray-900"
-                                                                >
-                                                                    {{
-                                                                        getCurrentImage
-                                                                            .currentImage
-                                                                            .uploadedBy
-                                                                            .firstName
-                                                                    }}
-                                                                    {{
-                                                                        getCurrentImage
-                                                                            .currentImage
-                                                                            .uploadedBy
-                                                                            .lastName
-                                                                    }}
-                                                                </dd>
-                                                            </div>
-                                                            <div
-                                                                class="py-3 flex justify-between text-sm font-medium items-center"
-                                                            >
-                                                                <dt
-                                                                    class="text-myErrorColor"
-                                                                >
-                                                                    Delete
-                                                                </dt>
-                                                                <dd
-                                                                    class="text-gray-900"
-                                                                >
-                                                                    <form
-                                                                        @submit.prevent="
-                                                                            handleDeleteImage(
-                                                                                getCurrentImage
-                                                                                    .currentImage
-                                                                                    .mediaLibrary
-                                                                                    .id
-                                                                            )
-                                                                        "
+                                                                    <dt
+                                                                        class="text-gray-500"
                                                                     >
-                                                                        <SubmitButton
-                                                                            :ButtonStyleDelete="
-                                                                                true
-                                                                            "
-                                                                            :TableStyle="
-                                                                                true
-                                                                            "
-                                                                            :disabled="
-                                                                                false
-                                                                            "
-                                                                            buttonText=""
-                                                                            type="button"
-                                                                            @firstButtonClick="
+                                                                        Dimensions
+                                                                    </dt>
+                                                                    <dd
+                                                                        class="text-gray-900"
+                                                                    >
+                                                                        {{
+                                                                            getCurrentImage
+                                                                                .currentImage
+                                                                                .mediaLibrary
+                                                                                .width
+                                                                        }}
+                                                                        x
+                                                                        {{
+                                                                            getCurrentImage
+                                                                                .currentImage
+                                                                                .mediaLibrary
+                                                                                .height
+                                                                        }}
+                                                                    </dd>
+                                                                </div>
+
+                                                                <div
+                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                >
+                                                                    <dt
+                                                                        class="text-gray-500"
+                                                                    >
+                                                                        Size
+                                                                    </dt>
+                                                                    <dd
+                                                                        class="text-gray-900"
+                                                                    >
+                                                                        {{
+                                                                            getCurrentImage
+                                                                                .currentImage
+                                                                                .mediaLibrary
+                                                                                .size
+                                                                        }}
+                                                                        KB
+                                                                    </dd>
+                                                                </div>
+                                                                <div
+                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                >
+                                                                    <dt
+                                                                        class="text-gray-500"
+                                                                    >
+                                                                        Image Id
+                                                                    </dt>
+                                                                    <dd
+                                                                        class="text-gray-900"
+                                                                    >
+                                                                        {{
+                                                                            getCurrentImage
+                                                                                .currentImage
+                                                                                .mediaLibrary
+                                                                                .id
+                                                                        }}
+                                                                    </dd>
+                                                                </div>
+                                                                <div
+                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                >
+                                                                    <dt
+                                                                        class="text-gray-500"
+                                                                    >
+                                                                        Uploaded
+                                                                        by
+                                                                    </dt>
+                                                                    <dd
+                                                                        class="text-gray-900"
+                                                                    >
+                                                                        {{
+                                                                            getCurrentImage
+                                                                                .currentImage
+                                                                                .uploadedBy
+                                                                                .firstName
+                                                                        }}
+                                                                        {{
+                                                                            getCurrentImage
+                                                                                .currentImage
+                                                                                .uploadedBy
+                                                                                .lastName
+                                                                        }}
+                                                                    </dd>
+                                                                </div>
+                                                                <div
+                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                >
+                                                                    <dt
+                                                                        class="text-myErrorColor"
+                                                                    >
+                                                                        Delete
+                                                                    </dt>
+                                                                    <dd
+                                                                        class="text-gray-900"
+                                                                    >
+                                                                        <form
+                                                                            @submit.prevent="
                                                                                 handleDeleteImage(
                                                                                     getCurrentImage
                                                                                         .currentImage
@@ -681,25 +662,47 @@ const handleDeleteImage = function (imageId) {
                                                                                 )
                                                                             "
                                                                         >
-                                                                            <svg
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                fill="none"
-                                                                                viewBox="0 0 24 24"
-                                                                                stroke-width="1.5"
-                                                                                stroke="currentColor"
-                                                                                class="w-5 h-5"
+                                                                            <SubmitButton
+                                                                                :ButtonStyleDelete="
+                                                                                    true
+                                                                                "
+                                                                                :TableStyle="
+                                                                                    true
+                                                                                "
+                                                                                :disabled="
+                                                                                    false
+                                                                                "
+                                                                                buttonText=""
+                                                                                type="button"
+                                                                                @firstButtonClick="
+                                                                                    handleDeleteImage(
+                                                                                        getCurrentImage
+                                                                                            .currentImage
+                                                                                            .mediaLibrary
+                                                                                            .id
+                                                                                    )
+                                                                                "
                                                                             >
-                                                                                <path
-                                                                                    stroke-linecap="round"
-                                                                                    stroke-linejoin="round"
-                                                                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                                                />
-                                                                            </svg>
-                                                                        </SubmitButton>
-                                                                    </form>
-                                                                </dd>
-                                                            </div>
-                                                        </dl>
+                                                                                <svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    fill="none"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    stroke-width="1.5"
+                                                                                    stroke="currentColor"
+                                                                                    class="w-5 h-5"
+                                                                                >
+                                                                                    <path
+                                                                                        stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                                    />
+                                                                                </svg>
+                                                                            </SubmitButton>
+                                                                        </form>
+                                                                    </dd>
+                                                                </div>
+                                                            </dl>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -764,14 +767,14 @@ const handleDeleteImage = function (imageId) {
                                         <aside
                                             v-if="selected === 'Upload'"
                                             aria-label="sidebar"
-                                            class="md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white pl-2 pr-2 border border-gray-200 rounded"
+                                            class="md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
                                         >
                                             <div
                                                 v-if="
                                                     getCurrentPreviewImage ===
                                                     null
                                                 "
-                                                class="pb-16 space-y-6"
+                                                class="pb-16 space-y-6 md:px-3 sm:px-2 pt-2"
                                             >
                                                 <p class="myPrimaryParagraph">
                                                     No image selected
@@ -792,45 +795,49 @@ const handleDeleteImage = function (imageId) {
                                                     alt="image"
                                                 />
 
-                                                <div>
-                                                    <h2
-                                                        class="mySecondaryHeader py-2 break-words"
-                                                    >
-                                                        {{
-                                                            getCurrentPreviewImage.file_name
-                                                        }}
-                                                    </h2>
-                                                </div>
-
-                                                <div>
-                                                    <h3
-                                                        class="font-medium text-gray-900"
-                                                    >
-                                                        Information
-                                                    </h3>
-                                                    <dl
-                                                        class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
-                                                    >
-                                                        <div
-                                                            class="py-3 flex justify-between text-sm font-medium items-center"
+                                                <div class="md:px-3 sm:px-2">
+                                                    <div>
+                                                        <h2
+                                                            class="mySecondaryHeader py-2 break-words"
                                                         >
-                                                            <dt
-                                                                class="text-gray-500"
+                                                            {{
+                                                                getCurrentPreviewImage.file_name
+                                                            }}
+                                                        </h2>
+                                                    </div>
+
+                                                    <div>
+                                                        <h3
+                                                            class="font-medium text-gray-900"
+                                                        >
+                                                            Information
+                                                        </h3>
+                                                        <dl
+                                                            class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
+                                                        >
+                                                            <div
+                                                                class="py-3 flex justify-between text-sm font-medium items-center"
                                                             >
-                                                                Size
-                                                            </dt>
-                                                            <dd
-                                                                class="text-gray-900"
-                                                            >
-                                                                {{
-                                                                    Number(
-                                                                        getCurrentPreviewImage.file_size
-                                                                    ).toFixed(0)
-                                                                }}
-                                                                KB
-                                                            </dd>
-                                                        </div>
-                                                    </dl>
+                                                                <dt
+                                                                    class="text-gray-500"
+                                                                >
+                                                                    Size
+                                                                </dt>
+                                                                <dd
+                                                                    class="text-gray-900"
+                                                                >
+                                                                    {{
+                                                                        Number(
+                                                                            getCurrentPreviewImage.file_size
+                                                                        ).toFixed(
+                                                                            0
+                                                                        )
+                                                                    }}
+                                                                    KB
+                                                                </dd>
+                                                            </div>
+                                                        </dl>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </aside>

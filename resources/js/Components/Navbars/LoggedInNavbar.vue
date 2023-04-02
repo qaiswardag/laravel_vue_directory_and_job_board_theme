@@ -367,7 +367,7 @@ const callsToAction = [
             </Link>
             <div
                 @click="handleTeamMenuItemClick"
-                class="focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 cursor-pointer flex gap-2 items-center rounded-full px-4 py-1.5 shadow-sm ring-1 ring-gray-400 hover:ring-2 hover:ring-myPrimaryBrandColor"
+                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-4 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor"
             >
                 <div
                     v-if="
@@ -376,7 +376,7 @@ const callsToAction = [
                     "
                 >
                     <img
-                        class="object-cover w-6 h-6 rounded-full flex-shrink-0"
+                        class="object-cover w-7 h-7 rounded-full flex-shrink-0"
                         :src="`/uploads/${$page.props.user.profile_photo_path}`"
                         :alt="
                             $page.props.user.first_name +
@@ -389,7 +389,7 @@ const callsToAction = [
                         $page.props.user &&
                         $page.props.user.profile_photo_path === null
                     "
-                    class="myPrimaryParagraph w-6 h-6 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                    class="myPrimaryParagraph w-7 h-7 text-[10px] gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-semibold text-white"
                 >
                     <span>
                         {{
@@ -406,10 +406,6 @@ const callsToAction = [
                     >
                         Menu
                     </div>
-                    <ChevronDownIcon
-                        class="h-5 w-5 text-gray-600 ml-1"
-                        aria-hidden="true"
-                    />
                 </div>
             </div>
 
@@ -437,7 +433,7 @@ const callsToAction = [
             </template>
             <button
                 type="button"
-                class="rounded-full p-1 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2"
+                class="rounded-full p-1 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor focus:outline-none hover:ring-2 hover:ring-myPrimaryBrandColor focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2"
             >
                 <span class="sr-only">View notifications</span>
                 <BellIcon

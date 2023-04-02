@@ -33,7 +33,7 @@ use Laravel\Jetstream\Jetstream;
 */
 
 Route::get("/", function () {
-    dd(env("APP_URL"), env("ASSET_URL"), env("APP_NAME"));
+    // dd(env("APP_URL"), env("ASSET_URL"), env("APP_NAME"));
     return Inertia::render("Home/Home", [
         "canLogin" => Route::has("login"),
         "canRegister" => Route::has("register"),

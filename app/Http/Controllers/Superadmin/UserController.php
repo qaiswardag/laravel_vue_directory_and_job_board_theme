@@ -22,6 +22,8 @@ class UserController extends Controller
 
         $searchQuery = $request->input("search_query");
 
+        // Check $searchQuery is an array
+        // If it is, the implode function joins the elements of the array into a comma-separated string
         if (is_array($searchQuery)) {
             $searchQuery = implode(",", $searchQuery);
         }
@@ -34,8 +36,10 @@ class UserController extends Controller
             $selectedCategory = $request->input("selected_category");
 
             if ($selectedCategory === "id") {
+                // Convert $searchQuery to an array of IDs using the explode function
+                $idArray = explode(",", $searchQuery);
                 // filter by user ID
-                $query->whereIn("id", $searchQuery);
+                $query->whereIn("id", $idArray);
             }
 
             if ($selectedCategory === "name") {
@@ -62,6 +66,8 @@ class UserController extends Controller
         });
 
         $users = $users->paginate(10);
+
+        $users->appends($request->all());
 
         return Inertia::render("Superadmin/Users/Index", [
             "users" => $users,

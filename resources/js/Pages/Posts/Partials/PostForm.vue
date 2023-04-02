@@ -8,7 +8,7 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import { onMounted, ref, computed } from "vue";
+import { ref, computed, onBeforeMount } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import Tags from "@/Components/Forms/Tags.vue";
@@ -33,6 +33,9 @@ import {
 } from "@heroicons/vue/20/solid";
 
 const props = defineProps({
+    currentUserTeamRole: {
+        required: false,
+    },
     currentUserTeam: {
         required: true,
     },
@@ -271,7 +274,7 @@ const createPost = () => {
 };
 
 // get unique post if needs to be updated
-onMounted(() => {
+onBeforeMount(() => {
     if (props.post !== null) {
         formType.value = "update";
         postForm.title = props.post.title;
@@ -296,8 +299,6 @@ onMounted(() => {
             postForm.author = [];
         }
     }
-
-    // postForm = props.post;
 });
 </script>
 
@@ -307,7 +308,6 @@ onMounted(() => {
         <template #description> Create a new Post. </template>
 
         <template #main>
-            <p class="my-12">Post er: {{ postForm }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">

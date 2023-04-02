@@ -30,7 +30,7 @@ const description = computed(() => {
         500: "Whoops, something went wrong on our servers.",
         405: "Sorry, this method is not allowed",
         404: "Sorry, the page or content you are looking for could not be found.",
-        403: "Sorry, you are forbidden from accessing this page.",
+        403: "Sorry, you are forbidden from accessing this page or perform this action.",
     }[props.status];
 });
 

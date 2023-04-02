@@ -36,7 +36,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             >
                 <span class="self-start">Current Team Role:</span>
                 <span class="px-2 bg-gray-100 rounded-md ml-2">
-                    {{ $page.props.currentUserTeamRole }}
+                    {{ $page.props.currentUserTeamRole?.name }}
                 </span>
             </p>
         </template>

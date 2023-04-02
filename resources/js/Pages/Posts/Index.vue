@@ -6,7 +6,7 @@ import CardHeadings from "@/Components/Actions/CardHeadings.vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 const props = defineProps({
@@ -15,6 +15,11 @@ const props = defineProps({
     },
     currentUserTeam: {
         required: true,
+    },
+    oldInput: {
+        search_query: {
+            required: false,
+        },
     },
 });
 
@@ -118,13 +123,24 @@ const handleEdit = function (postId) {
 };
 
 // form
-const form = useForm({
+const searchForm = useForm({
     search_query: "",
 });
 
 const handleSearch = function () {
-    console.log("search me");
+    searchForm.get(route("overview.posts.index", [props.currentUserTeam.id]), {
+        preserveScroll: true,
+        onSuccess: () => {},
+        onError: (err) => {},
+        onFinish: () => {},
+    });
 };
+
+onMounted(() => {
+    if (props.oldInput?.search_query) {
+        searchForm.search_query = props.oldInput.search_query;
+    }
+});
 </script>
 
 <template>
@@ -202,7 +218,7 @@ const handleSearch = function () {
                             </svg>
                         </div>
                         <input
-                            :value="form.search_query"
+                            v-model="searchForm.search_query"
                             type="search"
                             id="search_query"
                             class="myPrimarySearchInput"
@@ -223,16 +239,8 @@ const handleSearch = function () {
         </form>
 
         <template v-if="posts && posts.data.length <= 0">
-            <h1 class="myPrimaryHeaderMessage">No Posts yet</h1>
-            <p class="myPrimaryParagraph">
-                Looks like there are no posts yet! Why not be the first to share
-                your thoughts and ideas with the community? Creating a post is
-                easy - just click on the 'Create Post' button and get started.
-            </p>
-            <p class="myPrimaryParagraph mt-2">
-                Share your expertise, ask questions, and start a conversation
-                with your fellow community members.
-            </p>
+            <h1 class="myPrimaryHeaderMessage">No Posts</h1>
+            <p class="myPrimaryParagraph">Looks like there are no posts!</p>
         </template>
 
         <!-- table start -->
