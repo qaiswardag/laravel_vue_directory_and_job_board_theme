@@ -74,6 +74,7 @@ export default {
                 `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
 
+            console.log("res er:", res);
             const data2 = await res.json();
             console.log("data er:", data2);
 
