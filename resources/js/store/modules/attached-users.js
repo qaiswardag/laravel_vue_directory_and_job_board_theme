@@ -1,5 +1,4 @@
 import { vueFetch } from "use-lightweight-fetch";
-import axios from "axios";
 
 // get users
 const {
@@ -67,28 +66,16 @@ export default {
             }
 
             // fetch users
-            // handleGetUsers(
-            //     `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
-            // );
-
-            axios
-                .get(
-                    `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
-                )
-                .then(function (response) {
-                    // handle success
-                    let res = response;
-                    console.log("res er:", res);
-
-                    context.commit("setCurrentUsers", {
-                        fetchedData: res.data,
-                        isError: isErrorUsers,
-                        isLoading: isLoadingUsers,
-                        isSuccess: isSuccessUsers,
-                    });
-                });
-
+            handleGetUsers(
+                `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
+            );
             // context & send to mutation
+            context.commit("setCurrentUsers", {
+                fetchedData: fetchedUsers,
+                isError: isErrorUsers,
+                isLoading: isLoadingUsers,
+                isSuccess: isSuccessUsers,
+            });
         },
         // end action
     },

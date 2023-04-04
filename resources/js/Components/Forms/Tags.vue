@@ -50,18 +50,11 @@ const deleteTag = function (e) {
     emit("firstTagsButton", tagsEntered.value.toString(","));
 };
 
-console.log("KØRRRRRRRRRRRRE DEEEENNNNNEEEE");
 onMounted(() => {
-    console.log("tagsOnLoad:", props.tagsOnLoad);
-    console.log("en");
-    console.log("er:", props.tagsOnLoad);
-
     if (props.tagsOnLoad.length !== 0) {
-        console.log("to");
         tagsEntered.value = props.tagsOnLoad.split(",");
     }
     if (props.tagsOnLoad.length === 0) {
-        console.log("tre");
         tagsEntered.value = [];
     }
 });
