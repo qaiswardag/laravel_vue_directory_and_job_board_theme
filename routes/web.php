@@ -51,8 +51,8 @@ Route::middleware([
 ])
     // group of pages
     ->group(function () {
-        dump(config()->all());
         Route::get("/dashboard", function () {
+            dump(config()->all());
             return Inertia::render("Dashboard/Dashboard");
         })->name("dashboard");
         Route::get("/user/profile/update", function () {
