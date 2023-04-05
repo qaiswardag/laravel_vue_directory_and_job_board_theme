@@ -51,6 +51,7 @@ Route::middleware([
 ])
     // group of pages
     ->group(function () {
+        dump(config()->all());
         Route::get("/dashboard", function () {
             return Inertia::render("Dashboard/Dashboard");
         })->name("dashboard");
