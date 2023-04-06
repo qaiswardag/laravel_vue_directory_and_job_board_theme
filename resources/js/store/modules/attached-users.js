@@ -67,11 +67,7 @@ export default {
 
             // fetch users
             handleGetUsers(
-                `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`,
-                {
-                    mode: "same-origin",
-                    credentials: "include",
-                }
+                `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
             // context & send to mutation
             context.commit("setCurrentUsers", {
