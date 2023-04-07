@@ -1,6 +1,7 @@
 <?php
 /**
  * GIT DEPLOYMENT SCRIPT
+ * Test from local v.1
  *
  * Used for automatically deploying websites via GitHub
  *
