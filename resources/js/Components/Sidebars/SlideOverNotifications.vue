@@ -50,7 +50,7 @@ const notifications = [
 // emit
 const emit = defineEmits(["notificationsSlideOverButton"]);
 
-// search anything modal button
+// button
 const notificationsSlideOverButton = function () {
     emit("notificationsSlideOverButton");
 };
@@ -86,11 +86,11 @@ const notificationsSlideOverButton = function () {
                                     class="pointer-events-auto w-screen max-w-md"
                                 >
                                     <div
-                                        class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl"
+                                        class="flex h-full flex-col overflow-y-scroll bg-white pt-3 pb-6 shadow-xl"
                                     >
                                         <div class="px-4 sm:px-6">
                                             <div
-                                                class="flex items-start justify-between"
+                                                class="flex items-center justify-between"
                                             >
                                                 <DialogTitle
                                                     class="mySecondaryHeader"
@@ -102,7 +102,7 @@ const notificationsSlideOverButton = function () {
                                                 >
                                                     <button
                                                         type="button"
-                                                        class="rounded-md bg-white text-myPrimaryBrandColor hover:text-myPrimaryBrandColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2"
+                                                        class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
                                                         @click="
                                                             $emit(
                                                                 'notificationsSlideOverButton'

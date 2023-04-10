@@ -241,11 +241,9 @@ postForm.slug = computed(() => {
 const handleCloseLock = function () {
     slugIsOpen.value = false;
 };
-
 const handleOpenLock = function () {
     slugIsOpen.value = true;
 };
-
 const firstTagsButton = function (tags) {
     postForm.tags = tags;
 };

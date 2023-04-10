@@ -1,5 +1,6 @@
 <script setup>
 import SlideOverNotifications from "@/Components/Sidebars/SlideOverNotifications.vue";
+import SlideOverPrimaryMenu from "@/Components/Sidebars/SlideOverPrimaryMenu.vue";
 import { ref } from "vue";
 import { Head, router } from "@inertiajs/vue3";
 import SearchAnythingModal from "@/Components/Modals/SearchAnythingModal.vue";
@@ -22,6 +23,7 @@ import {
     FolderIcon,
     HomeIcon,
     InboxIcon,
+    UserIcon,
     UsersIcon,
     XMarkIcon,
 } from "@heroicons/vue/24/outline";
@@ -43,10 +45,12 @@ import {
     CursorArrowRaysIcon,
     FingerPrintIcon,
     SquaresPlusIcon,
+    Bars2Icon,
 } from "@heroicons/vue/24/outline";
 
-// notification slide over
+// slide over
 const showNotificationsSlideOver = ref(false);
+const showPrimaryMenuSlideOver = ref(false);
 
 // modal
 const modalShowTeamMenu = ref(false);
@@ -73,7 +77,7 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-const handleTeamMenuItemClick = () => {
+const handleMenuMenuItem = () => {
     // handle show modal for unique content
     modalShowTeamMenu.value = true;
     // set modal standards
@@ -126,6 +130,11 @@ const handleSearchAnything = function () {
     modalShowSearchAnything.value = true;
 };
 
+// handle primary slideoer menu
+const handlePrimaryMenuSlideOver = function () {
+    console.log("came here");
+    showPrimaryMenuSlideOver.value = true;
+};
 // handle notifications window
 const handleNotificationsSlideOver = function () {
     showNotificationsSlideOver.value = true;
@@ -134,49 +143,10 @@ const handleNotificationsSlideOver = function () {
 const notificationsSlideOverButton = function () {
     showNotificationsSlideOver.value = false;
 };
-
-//
-//
-//
-//
-//
-// updated menu
-const solutions = [
-    {
-        name: "Analytics",
-        description: "Get a better understanding of your traffic",
-        href: "#",
-        icon: ChartPieIcon,
-    },
-    {
-        name: "Engagement",
-        description: "Speak directly to your customers",
-        href: "#",
-        icon: CursorArrowRaysIcon,
-    },
-    {
-        name: "Security",
-        description: "Your customers' data will be safe and secure",
-        href: "#",
-        icon: FingerPrintIcon,
-    },
-    {
-        name: "Integrations",
-        description: "Connect with third-party tools",
-        href: "#",
-        icon: SquaresPlusIcon,
-    },
-    {
-        name: "Automations",
-        description: "Build strategic funnels that will convert",
-        href: "#",
-        icon: ArrowPathIcon,
-    },
-];
-const callsToAction = [
-    { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-    { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
+// close primary menu window
+const primaryMenuSlideOverButton = function () {
+    showPrimaryMenuSlideOver.value = false;
+};
 </script>
 <template>
     <SearchAnythingModal
@@ -184,12 +154,16 @@ const callsToAction = [
         @searchAnythingModalButton="searchAnythingModalButton"
     >
     </SearchAnythingModal>
-
     <SlideOverNotifications
         :open="showNotificationsSlideOver"
         @notificationsSlideOverButton="notificationsSlideOverButton"
     >
     </SlideOverNotifications>
+    <SlideOverPrimaryMenu
+        :open="showPrimaryMenuSlideOver"
+        @primaryMenuSlideOverButton="primaryMenuSlideOverButton"
+    >
+    </SlideOverPrimaryMenu>
     <DynamicMenuModal
         :show="modalShowTeamMenu"
         :title="titleMenuModal"
@@ -309,9 +283,6 @@ const callsToAction = [
     <div class="flex flex-1">
         <div class="ml-4 flex items-center md:ml-6 gap-8">
             <form class="w-full flex md:ml-0" @submit.prevent>
-                <label for="search-field" class="sr-only">
-                    Search anything...
-                </label>
                 <div
                     class="relative w-full text-myPrimaryDarkGrayColor focus-within:text-myPrimaryDarkGrayColor"
                 >
@@ -335,7 +306,7 @@ const callsToAction = [
                     </div>
                     <input
                         id="search-field"
-                        class="cursor-pointer block w-full h-full pl-8 pr-3 border-transparent placeholder-gray-500 focus:outline-none border-0 focus:ring-0 sm:text-sm font-medium text-myPrimaryDarkGrayColor rounded-md py-6 px-3"
+                        class="text-sm cursor-pointer block w-full h-full pl-8 pr-3 border-transparent placeholder-gray-500 focus:outline-none border-0 focus:ring-0 font-medium text-myPrimaryDarkGrayColor rounded-md py-6 px-3"
                         @click.prevent="handleSearchAnything"
                         placeholder="Search anything..."
                         readonly
@@ -348,26 +319,21 @@ const callsToAction = [
         </div>
     </div>
     <!-- search anything - end -->
-    <header class="w-6/1">
+    <header class="w-6/1 text-sm">
         <nav
             class="mx-auto flex gap-4 max-w-7xl items-center justify-end px-6 lg:px-8"
             aria-label="Global"
         >
             <Link
-                class="flex gap-2 items-center rounded-full px-4 py-1.5"
+                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
                 :href="route('home')"
             >
-                <div class="flex items-center">
-                    <div
-                        class="text-sm font-semibold text-myPrimaryDarkGrayColor cursor-pointer"
-                    >
-                        Home
-                    </div>
-                </div>
+                <HomeIcon class="h-6 w-6" aria-hidden="true" />
             </Link>
+
             <div
-                @click="handleTeamMenuItemClick"
-                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-4 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor"
+                @click="handleMenuMenuItem"
+                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
             >
                 <div
                     v-if="
@@ -376,7 +342,7 @@ const callsToAction = [
                     "
                 >
                     <img
-                        class="object-cover w-7 h-7 rounded-full flex-shrink-0"
+                        class="object-cover w-9 h-9 rounded-full flex-shrink-0"
                         :src="`/uploads/${$page.props.user.profile_photo_path}`"
                         :alt="
                             $page.props.user.first_name +
@@ -384,63 +350,35 @@ const callsToAction = [
                         "
                     />
                 </div>
-                <div
+                <button
                     v-if="
                         $page.props.user &&
                         $page.props.user.profile_photo_path === null
                     "
-                    class="myPrimaryParagraph w-7 h-7 text-[10px] gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-semibold text-white"
+                    @click="handleMenuMenuItem"
+                    type="button"
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
                 >
-                    <span>
-                        {{
-                            $page.props.user.first_name.charAt(0).toUpperCase()
-                        }}
-                    </span>
-                    <span>
-                        {{ $page.props.user.last_name.charAt(0).toUpperCase() }}
-                    </span>
-                </div>
-                <div class="flex items-center">
-                    <div
-                        class="text-sm font-semibold text-myPrimaryDarkGrayColor cursor-pointer"
-                    >
-                        Menu
-                    </div>
-                </div>
+                    <UserIcon class="h-6 w-6" aria-hidden="true" />
+                </button>
             </div>
 
-            <template
-                v-if="
-                    $page.props.user.all_teams.length > 0 &&
-                    !$page.props.user.current_team &&
-                    $page.props.jetstream.hasTeamFeatures
-                "
-            >
-                <Link
-                    :href="
-                        route(
-                            'user.teams.switch',
-                            $page.props.user.current_team
-                        )
-                    "
-                    class="hidden lg:block myPrimaryParagraph font-semibold leading-6"
-                    :class="{
-                        myPrimaryLink: route().current('user.teams.switch'),
-                    }"
-                >
-                    Select Team
-                </Link>
-            </template>
             <button
+                @click="handleNotificationsSlideOver"
                 type="button"
-                class="rounded-full p-1 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor focus:outline-none hover:ring-2 hover:ring-myPrimaryBrandColor focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2"
+                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
             >
                 <span class="sr-only">View notifications</span>
-                <BellIcon
-                    @click="handleNotificationsSlideOver"
-                    class="h-6 w-6"
-                    aria-hidden="true"
-                />
+                <BellIcon class="h-6 w-6" aria-hidden="true" />
+            </button>
+
+            <button
+                @click="handlePrimaryMenuSlideOver"
+                type="button"
+                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
+            >
+                <span class="sr-only">View notifications</span>
+                <Bars2Icon class="h-6 w-6" aria-hidden="true" />
             </button>
         </nav>
     </header>

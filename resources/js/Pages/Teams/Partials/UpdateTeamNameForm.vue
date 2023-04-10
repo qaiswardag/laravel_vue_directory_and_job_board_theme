@@ -12,6 +12,7 @@ import { ref, computed } from "@vue/reactivity";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
 import { Switch } from "@headlessui/vue";
+import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 
 // store
 const store = useStore();
@@ -117,6 +118,12 @@ const handleRemoveCoverImage = function () {
 };
 const handleRemoveLogo = function () {
     form.logo = null;
+};
+
+const showErrorNotifications = ref(false);
+
+const notificationsModalButton = function () {
+    showErrorNotifications.value = false;
 };
 </script>
 
@@ -451,9 +458,59 @@ const handleRemoveLogo = function () {
         <template #actions>
             <SubmitButton :disabled="form.processing" buttonText="Update">
             </SubmitButton>
+            <div
+                class="flex justify-end mt-4"
+                v-if="Object.values(form.errors).length !== 0"
+            >
+                <div
+                    @click="showErrorNotifications = true"
+                    class="w-fit py-1 flex item-center gap-2 rounded-md px-2 cursor-pointer italic"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-4 h-4 text-myErrorColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        />
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                    </svg>
+                    <p
+                        class="myPrimaryParagraph text-xs text-myErrorColor py-0 my-0"
+                    >
+                        Show
+                        {{ Object.values(form.errors).length }}
+                        errors
+                    </p>
+                </div>
+            </div>
+
             <ActionMessage :on="form.recentlySuccessful" type="success">
                 Successfully updated your team.
             </ActionMessage>
+
+            <NotificationsFixedBottom
+                :listOfMessages="Object.values(form.errors)"
+                :show="showErrorNotifications"
+                @notificationsModalButton="notificationsModalButton"
+            >
+                <div class="flex items-center justify-start gap-2">
+                    <p class="myPrimaryParagraphError">
+                        {{ Object.values(form.errors).length }}
+                        errors
+                    </p>
+                </div>
+            </NotificationsFixedBottom>
         </template>
     </FormSection>
 </template>

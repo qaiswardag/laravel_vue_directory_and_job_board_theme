@@ -15,7 +15,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             <p
                 class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
-                <span class="self-start block">Current Team:</span>
+                <span>Current Team:</span>
                 <Link
                     :href="
                         route(
@@ -23,7 +23,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                             $page.props.user.current_team
                         )
                     "
-                    class="text-xs px-2 bg-gray-100 rounded-md ml-2"
+                    class="text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.switch'),
                     }"
@@ -32,12 +32,23 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                 </Link>
             </p>
             <p
-                class="text-myPrimaryDarkGrayColor group flex justify-between items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
+                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
-                <span class="self-start">Current Team Role:</span>
-                <span class="px-2 bg-gray-100 rounded-md ml-2">
+                <span>Current Role:</span>
+                <Link
+                    :href="
+                        route(
+                            'user.teams.switch',
+                            $page.props.user.current_team
+                        )
+                    "
+                    class="text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    :class="{
+                        myPrimaryLink: route().current('user.teams.switch'),
+                    }"
+                >
                     {{ $page.props.currentUserTeamRole?.name }}
-                </span>
+                </Link>
             </p>
         </template>
 
@@ -60,7 +71,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                             $page.props.user.current_team
                         )
                     "
-                    class="text-xs px-2 bg-gray-100 rounded-md ml-2 underline"
+                    class="text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.switch'),
                     }"
@@ -69,10 +80,24 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                 </Link>
             </p>
             <p
-                class="text-myPrimaryDarkGrayColor group flex justify-between items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
+                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
-                <span class="self-start">Current Team Role:</span>
-                <span class="px-2 bg-gray-100 rounded-md ml-2"> None </span>
+                <span class="self-start block">Current Team Role:</span>
+
+                <Link
+                    :href="
+                        route(
+                            'user.teams.switch',
+                            $page.props.user.current_team
+                        )
+                    "
+                    class="text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    :class="{
+                        myPrimaryLink: route().current('user.teams.switch'),
+                    }"
+                >
+                    None
+                </Link>
             </p>
         </template>
         <SideBarLink
