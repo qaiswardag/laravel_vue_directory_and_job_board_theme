@@ -150,7 +150,6 @@ class PostController extends Controller
      */
     public function show(Post $post, Team $team)
     {
-        dd("show post method logged in controller. post is:", $post);
         // $this->authorize("can-read", $team);
     }
 

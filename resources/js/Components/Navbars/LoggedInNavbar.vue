@@ -16,7 +16,11 @@ import {
     TransitionRoot,
 } from "@headlessui/vue";
 import {
+    AdjustmentsHorizontalIcon,
+    ArrowRightCircleIcon,
+    ArrowRightIcon,
     Bars3BottomLeftIcon,
+    Bars3Icon,
     BellIcon,
     CalendarIcon,
     ChartBarIcon,
@@ -55,8 +59,6 @@ const showPrimaryMenuSlideOver = ref(false);
 // modal
 const modalShowTeamMenu = ref(false);
 const modalShowSearchAnything = ref(false);
-const modalShowSwitchTeams = ref(false);
-const modalShowLogout = ref(false);
 
 // modal menu content
 const titleMenuModal = ref("");
@@ -77,7 +79,7 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-const handleMenuMenuItem = () => {
+const handleMenuUserItem = () => {
     // handle show modal for unique content
     modalShowTeamMenu.value = true;
     // set modal standards
@@ -91,33 +93,7 @@ const handleMenuMenuItem = () => {
 };
 
 const handleLogout = () => {
-    // handle show modal for unique content
-    modalShowLogout.value = true;
-    // set modal standards
-    typeModal.value = "success";
-    gridColumnModal.value = 2;
-    titleModal.value = "Logout";
-    descriptionModal.value = "Are you sure you want to logout?";
-    firstButtonModal.value = "Close";
-    secondButtonModal.value = null;
-    thirdButtonModal.value = "Logout";
-    // handle click
-    firstModalButtonFunction.value = function () {
-        // handle show modal for unique content
-        modalShowLogout.value = false;
-    };
-    // handle click
-    secondModalButtonFunction.value = function () {
-        // handle show modal for unique content
-        modalShowLogout.value = false;
-    };
-    // handle click
-    thirdModalButtonFunction.value = function () {
-        router.post(route("logout"));
-        // handle show modal for unique content
-        modalShowLogout.value = false;
-    };
-    // end modal
+    router.post(route("logout"));
 };
 
 // serach anything modal button (close)
@@ -170,115 +146,107 @@ const primaryMenuSlideOverButton = function () {
         @firstModalMenuButtonFunction="firstModalMenuButtonFunction"
     >
         <main>
-            <div class="flex flex-col gap-1">
+            <div class="myPrimaryParagraph flex flex-col gap-1">
                 <p
-                    class="myPrimaryParagraph italic text-xs py-2 px-2 bg-gray-50 rounded-lg"
+                    class="myPrimaryParagraph italic text-xs py-2 px-2 rounded-lg bg-gray-50"
                 >
-                    Team
+                    Logged in as {{ $page.props.user.first_name }}
+                    {{ $page.props.user.last_name }}
                 </p>
-                <div
-                    class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50"
+                <p
+                    class="myPrimaryParagraph italic text-xs py-2 px-2 rounded-lg mt-2"
+                >
+                    Manage Team
+                </p>
+
+                <template
+                    v-if="
+                        $page.props.user.all_teams.length > 0 &&
+                        $page.props.user.current_team &&
+                        $page.props.jetstream.hasTeamFeatures
+                    "
+                >
+                    <Link
+                        :href="
+                            route('teams.show', $page.props.user.current_team)
+                        "
+                    >
+                        <div
+                            class="group relative flex gap-x-6 rounded-lg px-4 py-2 items-center bg-gray-50 hover:underline"
+                            :class="[
+                                route().current('teams.show') ||
+                                route().current('team.update.information') ||
+                                route().current('team.members') ||
+                                route().current('team.delete')
+                                    ? 'bg-myPrimaryBrandColor text-white'
+                                    : '',
+                            ]"
+                        >
+                            <div
+                                class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
+                            >
+                                <AdjustmentsHorizontalIcon
+                                    class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
+                                />
+                            </div>
+                            <div>Team Settings</div>
+                        </div>
+                    </Link>
+                </template>
+
+                <p class="italic text-xs py-2 px-2 rounded-lg">
+                    Manage Account
+                </p>
+
+                <Link
+                    :href="route('profile.show')"
+                    :active="
+                        route().current('profile.show') ||
+                        route().current('user.profile.update') ||
+                        route().current('user.profile.password') ||
+                        route().current('user.profile.security')
+                    "
                 >
                     <div
-                        class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white"
+                        class="group relative flex gap-x-6 rounded-lg px-4 py-2 items-center bg-gray-50 hover:underline"
+                        :class="[
+                            route().current('profile.show') ||
+                            route().current('user.profile.update') ||
+                            route().current('user.profile.password') ||
+                            route().current('user.profile.security')
+                                ? 'bg-myPrimaryBrandColor text-white'
+                                : '',
+                        ]"
                     >
-                        <svg
-                            class="h-5 w-5 text-gray-600 group-hover:text-indigo-600"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            aria-hidden="true"
+                        <div
+                            class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M16.712 4.33a9.027 9.027 0 011.652 1.306c.51.51.944 1.064 1.306 1.652M16.712 4.33l-3.448 4.138m3.448-4.138a9.014 9.014 0 00-9.424 0M19.67 7.288l-4.138 3.448m4.138-3.448a9.014 9.014 0 010 9.424m-4.138-5.976a3.736 3.736 0 00-.88-1.388 3.737 3.737 0 00-1.388-.88m2.268 2.268a3.765 3.765 0 010 2.528m-2.268-4.796a3.765 3.765 0 00-2.528 0m4.796 4.796c-.181.506-.475.982-.88 1.388a3.736 3.736 0 01-1.388.88m2.268-2.268l4.138 3.448m0 0a9.027 9.027 0 01-1.306 1.652c-.51.51-1.064.944-1.652 1.306m0 0l-3.448-4.138m3.448 4.138a9.014 9.014 0 01-9.424 0m5.976-4.138a3.765 3.765 0 01-2.528 0m0 0a3.736 3.736 0 01-1.388-.88 3.737 3.737 0 01-.88-1.388m2.268 2.268L7.288 19.67m0 0a9.024 9.024 0 01-1.652-1.306 9.027 9.027 0 01-1.306-1.652m0 0l4.138-3.448M4.33 16.712a9.014 9.014 0 010-9.424m4.138 5.976a3.765 3.765 0 010-2.528m0 0c.181-.506.475-.982.88-1.388a3.736 3.736 0 011.388-.88m-2.268 2.268L4.33 7.288m6.406 1.18L7.288 4.33m0 0a9.024 9.024 0 00-1.652 1.306A9.025 9.025 0 004.33 7.288"
-                            ></path>
-                        </svg>
+                            <UserIcon
+                                class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
+                            />
+                        </div>
+                        <div>Your Profile</div>
                     </div>
-                    <div>
-                        <a href="#" class="font-semibold text-gray-900">
-                            Help center
-                            <span class="absolute inset-0"></span>
-                        </a>
-                        <p class="mt-1 text-gray-600">
-                            Get all of your questions answered
-                        </p>
-                    </div>
-                </div>
-                <p
-                    class="myPrimaryParagraph italic text-xs py-2 px-2 bg-gray-50 rounded-lg"
-                >
-                    Account
-                </p>
+                </Link>
 
                 <form @submit.prevent="handleLogout">
                     <div
                         @click="handleLogout"
-                        class="hover:bg-gray-50 group relative flex gap-x-6 rounded-lg p-4 cursor-pointer"
+                        class="hover:bg-gray-50 group relative flex gap-x-6 rounded-lg px-4 py-2 cursor-pointer bg-gray-50 items-center hover:underline"
                     >
                         <div
-                            class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white"
+                            class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
                         >
-                            <svg
-                                class="h-5 w-5 text-gray-600 group-hover:text-indigo-600"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                                />
-                            </svg>
+                            <ArrowRightIcon
+                                class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
+                            />
                         </div>
-                        <div class="flex items-center">
-                            <div class="font-semibold text-gray-900">
-                                Log Out
-                            </div>
-                        </div>
+                        <div>Log out</div>
                     </div>
                 </form>
             </div>
         </main>
     </DynamicMenuModal>
-    <DynamicModal
-        :show="modalShowLogout"
-        :type="typeModal"
-        :gridColumnAmount="gridColumnModal"
-        :title="titleModal"
-        :description="descriptionModal"
-        :firstButtonText="firstButtonModal"
-        :secondButtonText="secondButtonModal"
-        :thirdButtonText="thirdButtonModal"
-        @firstModalButtonFunction="firstModalButtonFunction"
-        @secondModalButtonFunction="secondModalButtonFunction"
-        @thirdModalButtonFunction="thirdModalButtonFunction"
-    >
-        <header></header>
-        <main></main>
-    </DynamicModal>
-    <DynamicModal
-        :show="modalShowLogout"
-        :type="typeModal"
-        :gridColumnAmount="gridColumnModal"
-        :title="titleModal"
-        :description="descriptionModal"
-        :firstButtonText="firstButtonModal"
-        :secondButtonText="secondButtonModal"
-        :thirdButtonText="thirdButtonModal"
-        @firstModalButtonFunction="firstModalButtonFunction"
-        @secondModalButtonFunction="secondModalButtonFunction"
-        @thirdModalButtonFunction="thirdModalButtonFunction"
-    >
-        <header></header>
-        <main></main>
-    </DynamicModal>
-
     <!-- search anything - start -->
     <div class="flex flex-1">
         <div class="ml-4 flex items-center md:ml-6 gap-8">
@@ -332,10 +300,11 @@ const primaryMenuSlideOverButton = function () {
             </Link>
 
             <div
-                @click="handleMenuMenuItem"
+                @click="handleMenuUserItem"
                 class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
             >
                 <div
+                    class="h-9 w-9 flex-shrink-0"
                     v-if="
                         $page.props.user &&
                         $page.props.user.profile_photo_path !== null
@@ -355,7 +324,7 @@ const primaryMenuSlideOverButton = function () {
                         $page.props.user &&
                         $page.props.user.profile_photo_path === null
                     "
-                    @click="handleMenuMenuItem"
+                    @click="handleMenuUserItem"
                     type="button"
                     class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
                 >
@@ -378,7 +347,7 @@ const primaryMenuSlideOverButton = function () {
                 class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
             >
                 <span class="sr-only">View notifications</span>
-                <Bars2Icon class="h-6 w-6" aria-hidden="true" />
+                <Bars3Icon class="h-6 w-6" aria-hidden="true" />
             </button>
         </nav>
     </header>

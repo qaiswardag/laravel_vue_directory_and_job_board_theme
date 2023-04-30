@@ -14,11 +14,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      * Validate and update the given user's profile information.
      *
      * @param  array<string, string>  $input
+     * @var \Illuminate\Validation\Validator $validator
      */
-    public function update(User $user, array $input): void
+    public function update(User $user, array $input)
     {
         sleep(1);
-        Validator::make($input, [
+        $validator = Validator::make($input, [
             "first_name" => ["required", "string", "max:255"],
             "last_name" => ["required", "string", "max:255"],
             "email" => [
@@ -80,7 +81,17 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
             "public" => ["boolean"],
             "photo" => ["nullable", "mimes:jpg,jpeg,png", "max:1024"],
-        ])->validateWithBag("updateProfileInformation");
+        ]);
+
+        // if validator fails
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator, "updateProfileInformation") // Pass validation errors to the session
+                ->with(
+                    "error",
+                    "Please complete all fields correctly to proceed."
+                );
+        }
 
         if (isset($input["photo"])) {
             $user->updateProfilePhoto($input["photo"]);

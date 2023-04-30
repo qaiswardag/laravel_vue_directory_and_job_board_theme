@@ -29,7 +29,7 @@ const firstButton = function () {
 </script>
 
 <template>
-    <Modal :show="show" @close="firstButton">
+    <Modal :show="show" @close="firstButton" maxWidth="md">
         <div
             class="flex flex-row-reverse items-center justify-between py-4 px-4"
         >
