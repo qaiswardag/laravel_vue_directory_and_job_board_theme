@@ -52,7 +52,7 @@ Route::middleware([
     // group of pages
     ->group(function () {
         Route::get("/dashboard", function () {
-            // dd(config()->all());
+            dd(config()->all());
             return Inertia::render("Dashboard/Dashboard");
         })->name("dashboard");
         Route::get("/user/profile/update", function () {
