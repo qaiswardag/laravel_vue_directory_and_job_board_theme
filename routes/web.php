@@ -33,6 +33,7 @@ use Laravel\Jetstream\Jetstream;
 */
 
 Route::get("/", function () {
+    dd(config()->all());
     // dd(env("APP_URL"), env("ASSET_URL"), env("APP_NAME"));
     return Inertia::render("Home/Home", [
         "canLogin" => Route::has("login"),
@@ -52,7 +53,6 @@ Route::middleware([
     // group of pages
     ->group(function () {
         Route::get("/dashboard", function () {
-            dd(config()->all());
             return Inertia::render("Dashboard/Dashboard");
         })->name("dashboard");
         Route::get("/user/profile/update", function () {
