@@ -218,7 +218,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // fake Users
-        User::factory(100)->create();
+        // comment below for test
+        // User::factory(100)->create();
 
         // add users to Qais's Team
         foreach (range(7, 50) as $num) {
