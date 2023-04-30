@@ -27,8 +27,6 @@ class AppServiceProvider extends ServiceProvider
         if (env("APP_ENV") === "production") {
             // enforce https
             URL::forceScheme("https");
-            // disable debugbar
-            $this->app["debugbar"]->disable();
         }
     }
 }
