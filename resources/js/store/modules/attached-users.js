@@ -65,6 +65,7 @@ export default {
                 data.page = "";
             }
 
+            console.log("come her");
             const res = await fetch(
                 `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
