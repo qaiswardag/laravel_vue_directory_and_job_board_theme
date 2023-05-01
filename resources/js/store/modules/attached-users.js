@@ -65,23 +65,13 @@ export default {
                 data.page = "";
             }
 
-            console.log("come her");
-            const res = await fetch(
-                `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
+            handleGetUsers(
+                route("attach.user.index", {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
             );
-
-            console.log("res er:", res);
-
-            const body = await res.json();
-            console.log("body er:", body);
-
-            // handleGetUsers(
-            //     route("attach.user.index", {
-            //         teamId: data.teamId,
-            //         search_query: data.search_query,
-            //         page: data.page,
-            //     })
-            // );
 
             // handleGetUsers(
             //     `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
@@ -89,8 +79,7 @@ export default {
 
             // context & send to mutation
             context.commit("setCurrentUsers", {
-                // fetchedData: fetchedUsers,
-                fetchedData: body,
+                fetchedData: fetchedUsers,
                 isError: isErrorUsers,
                 isLoading: isLoadingUsers,
                 isSuccess: isSuccessUsers,
