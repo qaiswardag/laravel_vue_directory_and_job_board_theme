@@ -67,7 +67,7 @@ export default {
 
             console.log("protocol er:", window.DOMAIN);
             handleGetUsers(
-                `${window.DOMAIN}/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
+                `${window.DOMAIN}/test-overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
 
             // context & send to mutation
