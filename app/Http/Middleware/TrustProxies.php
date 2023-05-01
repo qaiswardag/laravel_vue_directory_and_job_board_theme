@@ -12,6 +12,8 @@ class TrustProxies extends Middleware
      *
      * @var array<int, string>|string|null
      */
+
+    // TODO: Do not trust all proxies
     // protected $proxies = ["142.93.103.12"];
     protected $proxies = "*";
 

@@ -39,7 +39,7 @@ const submit = () => {
     });
 };
 
-console.log("it is:", route("login"));
+console.log("route is:", route("login"));
 </script>
 
 <template>
