@@ -233,8 +233,6 @@ postForm.slug = computed(() => {
     }
     if (slugIsOpen.value === true) {
         return slugify(productSlugLock.value, config.slugifyOptions);
-
-        return productSlugLock.value;
     }
 });
 

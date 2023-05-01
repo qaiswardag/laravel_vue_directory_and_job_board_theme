@@ -14,6 +14,8 @@ class TrustProxies extends Middleware
      */
 
     // TODO: Do not trust all proxies
+    // In a production environment, it's recommended to set the proxies
+    // value to the IP addresses of your reverse proxy server(s) instead of using *.
     // protected $proxies = ["142.93.103.12"];
     protected $proxies = "*";
 
