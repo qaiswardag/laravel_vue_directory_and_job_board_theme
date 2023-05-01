@@ -218,11 +218,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // fake Users
-        // comment below for test
+        // TODO: commented below for test - making issues in production. Therefor uncomment again.
         // User::factory(100)->create();
 
         // add users to Qais's Team
-        // comment below for test
+        // TODO: commented below for test - making issues in production. Therefor uncomment again.
         // foreach (range(7, 50) as $num) {
         //     TeamUser::factory()->create([
         //         "team_id" => Team::find(1)->id, // Qais Wardag's team

@@ -15,7 +15,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             <p
                 class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
-                <span>Current Team:</span>
+                <span>Team:</span>
                 <Link
                     :href="
                         route(
@@ -23,18 +23,27 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                             $page.props.user.current_team
                         )
                     "
-                    class="text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    class="flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.switch'),
                     }"
                 >
+                    <template v-if="$page.props.currentUserTeam?.logo !== null">
+                        <div class="h-8 w-8 flex-shrink-0">
+                            <img
+                                class="w-8 h-8 rounded-full object-cover cursor-pointer"
+                                :src="`/uploads/${$page.props.currentUserTeam?.logo}`"
+                                alt="team logo"
+                            />
+                        </div>
+                    </template>
                     {{ $page.props.currentUserTeam?.name }}
                 </Link>
             </p>
             <p
                 class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
-                <span>Current Role:</span>
+                <span>Role:</span>
                 <Link
                     :href="
                         route(
