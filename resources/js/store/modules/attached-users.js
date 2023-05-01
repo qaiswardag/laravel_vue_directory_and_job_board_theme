@@ -69,7 +69,10 @@ export default {
                 `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
 
+            console.log("res er:", res);
+
             const body = await res.json();
+            console.log("body er:", body);
 
             // handleGetUsers(
             //     route("attach.user.index", {
