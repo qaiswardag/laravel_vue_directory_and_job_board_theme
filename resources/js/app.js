@@ -7,8 +7,6 @@ import { createInertiaApp, Link } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
-window.DOMAIN = "https://myself-5stzj.ondigitalocean.app/";
-
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 createInertiaApp({

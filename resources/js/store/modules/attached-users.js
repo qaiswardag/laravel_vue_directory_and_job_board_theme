@@ -57,7 +57,7 @@ export default {
     // actions
     actions: {
         // get users
-        loadUsers(context, data) {
+        async loadUsers(context, data) {
             if (data.search_query === undefined) {
                 data.search_query = "";
             }
@@ -65,9 +65,14 @@ export default {
                 data.page = "";
             }
 
-            console.log("protocol er:", window.DOMAIN);
+            console.log(
+                "ok:",
+                await fetch(
+                    `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
+                )
+            );
             handleGetUsers(
-                `${window.DOMAIN}/test-overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
+                `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
 
             // context & send to mutation
