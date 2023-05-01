@@ -65,6 +65,7 @@ export default {
                 data.page = "";
             }
 
+            console.log("protocol er:", window.DOMAIN);
             handleGetUsers(
                 `${window.DOMAIN}/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
