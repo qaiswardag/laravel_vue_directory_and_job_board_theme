@@ -57,7 +57,7 @@ export default {
     // actions
     actions: {
         // get users
-        loadUsers(context, data) {
+        async loadUsers(context, data) {
             if (data.search_query === undefined) {
                 data.search_query = "";
             }
@@ -65,19 +65,28 @@ export default {
                 data.page = "";
             }
 
-            console.log(
-                "ok:",
-                fetch(
-                    `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
-                )
-            );
-            handleGetUsers(
+            const res = await fetch(
                 `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
             );
 
+            const body = await res.json();
+
+            // handleGetUsers(
+            //     route("attach.user.index", {
+            //         teamId: data.teamId,
+            //         search_query: data.search_query,
+            //         page: data.page,
+            //     })
+            // );
+
+            // handleGetUsers(
+            //     `/overview/attach/users/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
+            // );
+
             // context & send to mutation
             context.commit("setCurrentUsers", {
-                fetchedData: fetchedUsers,
+                // fetchedData: fetchedUsers,
+                fetchedData: body,
                 isError: isErrorUsers,
                 isLoading: isLoadingUsers,
                 isSuccess: isSuccessUsers,
