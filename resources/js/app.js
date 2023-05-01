@@ -6,6 +6,7 @@ import { createApp, h } from "vue";
 import { createInertiaApp, Link } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
+import axios from "axios";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -20,6 +21,8 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.vue")
         ),
     setup({ el, App, props, plugin }) {
+        axios.defaults.baseURL = import.meta.env.VITE_APP_URL; // set the baseURL for axios
+
         return createApp({ render: () => h(App, props) })
             .use(store)
             .use(plugin)
