@@ -70,10 +70,14 @@ export default {
                 data.page = "";
             }
 
-            // fetch media
             handleGetImages(
-                `/overview/media/index/${data.teamId}/?search_query=${data.search_query}&page=${data.page}`
+                route("overview.media.index", {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
             );
+
             // context & send to mutation
             context.commit("setCurrentMedia", {
                 fetchedMedia: fetchedMedia,
@@ -86,10 +90,13 @@ export default {
         //
         // get image
         loadImage(context, data) {
-            // fetch image
             handleGetImage(
-                `/overview/media/edit/${data.mediaLibraryId}/${data.teamId}`
+                route("media.edit", {
+                    mediaLibrary: data.mediaLibraryId,
+                    team: data.teamId,
+                })
             );
+
             // // context & send to mutation
             context.commit("setCurrentImage", {
                 currentImage: fetchedImage,

@@ -33,7 +33,7 @@ use Laravel\Jetstream\Jetstream;
 */
 
 Route::get("/", function () {
-    dd(config()->all());
+    // dd(config()->all());
     // dd(env("APP_URL"), env("ASSET_URL"), env("APP_NAME"));
     return Inertia::render("Home/Home", [
         "canLogin" => Route::has("login"),
@@ -76,7 +76,7 @@ Route::middleware([
         Route::get("/overview/media/index/{team}", [
             LoggedInMediaLibraryController::class,
             "index",
-        ]);
+        ])->name("overview.media.index");
         // media
         Route::get("/overview/media/{team}", [
             MediaLibraryController::class,
@@ -120,7 +120,7 @@ Route::middleware([
     Route::get("/overview/media/edit/{mediaLibrary}/{team}", [
         LoggedInMediaLibraryController::class,
         "edit",
-    ]);
+    ])->name("media.edit");
     Route::post("/overview/media/image/update/{team}", [
         MediaLibraryController::class,
         "update",
