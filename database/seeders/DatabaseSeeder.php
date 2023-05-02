@@ -74,6 +74,15 @@ class DatabaseSeeder extends Seeder
             "personal_team" => false,
         ]);
         //
+        // Karl Lagerfeld
+        User::factory()->create([
+            "id" => 7,
+            "first_name" => "Karl",
+            "last_name" => "Lagerfeld",
+            "email" => "kl@myself.ae",
+            "current_team_id" => 6,
+            "password" => Hash::make("123456"),
+        ]);
         //
 
         // Qais, Shaun and Mie user and team creations
@@ -163,6 +172,11 @@ class DatabaseSeeder extends Seeder
             "user_id" => User::find(3)->id, // Mie Mortensen
             "role" => "reader", // editor
         ]);
+        TeamUser::factory()->create([
+            "team_id" => Team::find(1)->id, // Qais Wardag
+            "user_id" => User::find(7)->id, // Karl Lagerfeld
+            "role" => "admin", // editor
+        ]);
         // Marilyn, Oprah and Ingrid joined Qais Wardags team
         TeamUser::factory()->create([
             "team_id" => Team::find(1)->id, // Qais Wardag's team
@@ -223,7 +237,7 @@ class DatabaseSeeder extends Seeder
 
         // add users to Qais's Team
         // TODO: commented below for test - making issues in production. Therefor uncomment again.
-        // foreach (range(7, 50) as $num) {
+        // foreach (range(8, 50) as $num) {
         //     TeamUser::factory()->create([
         //         "team_id" => Team::find(1)->id, // Qais Wardag's team
         //         "user_id" => User::find($num)->id, // User as $num

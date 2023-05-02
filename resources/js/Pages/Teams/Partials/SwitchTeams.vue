@@ -197,8 +197,8 @@ const switchTeam = function (team) {
                                                                         ? 'cursor-default'
                                                                         : 'cursor-pointer',
                                                                 ]"
-                                                                :src="`/uploads/${team.thumbnail}`"
-                                                                alt="image"
+                                                                :src="`/uploads/${team.logo}`"
+                                                                alt="logo"
                                                             />
                                                         </div>
                                                         <div
