@@ -93,7 +93,7 @@ class DatabaseSeeder extends Seeder
         Team::factory()->create([
             "id" => 1,
             "user_id" => User::find(1)->id,
-            "name" => "Owened by Qais",
+            "name" => "Pandora",
             "public" => true,
             "personal_team" => false,
         ]);
