@@ -187,7 +187,7 @@ const handleUploadImages = function () {
                                     <img
                                         :src="`/uploads/${file.path}`"
                                         alt=""
-                                        class="pointer-events-none object-cover group-hover:opacity-75"
+                                        class="w-full pointer-events-none object-cover group-hover:opacity-75"
                                     />
                                 </div>
 

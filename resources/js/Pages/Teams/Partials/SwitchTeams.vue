@@ -1,8 +1,5 @@
 <script setup>
 import ActionSection from "@/Components/ActionSection.vue";
-import DropdownLink from "../../../Components/Dropdowns/DropdownLink.vue";
-import NavLink from "../../../Components/Navbars/NavLink.vue";
-import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
@@ -24,7 +21,11 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-const handleSwitchToTeam = (team) => {
+const handleSwitchToTeam = (team, currentTeamId) => {
+    if (team.id === currentTeamId) {
+        return;
+    }
+
     modalShowSwitchTeam.value = true;
 
     // set modal standards
@@ -156,7 +157,11 @@ const switchTeam = function (team) {
                                             <td class="myPrimaryTableTBodyTd">
                                                 <form
                                                     @submit.prevent="
-                                                        handleSwitchToTeam(team)
+                                                        handleSwitchToTeam(
+                                                            team,
+                                                            $page.props.user
+                                                                .current_team_id
+                                                        )
                                                     "
                                                 >
                                                     <div
@@ -176,10 +181,22 @@ const switchTeam = function (team) {
                                                             <img
                                                                 @click="
                                                                     handleSwitchToTeam(
-                                                                        team
+                                                                        team,
+                                                                        $page
+                                                                            .props
+                                                                            .user
+                                                                            .current_team_id
                                                                     )
                                                                 "
-                                                                class="w-16 h-16 rounded-full object-cover cursor-pointer"
+                                                                class="w-16 h-16 rounded-full object-cover"
+                                                                :class="[
+                                                                    team.id ===
+                                                                    $page.props
+                                                                        .user
+                                                                        .current_team_id
+                                                                        ? 'cursor-default'
+                                                                        : 'cursor-pointer',
+                                                                ]"
                                                                 :src="`/uploads/${team.thumbnail}`"
                                                                 alt="image"
                                                             />
@@ -194,10 +211,22 @@ const switchTeam = function (team) {
                                                             <img
                                                                 @click="
                                                                     handleSwitchToTeam(
-                                                                        team
+                                                                        team,
+                                                                        $page
+                                                                            .props
+                                                                            .user
+                                                                            .current_team_id
                                                                     )
                                                                 "
-                                                                class="block h-16 w-16 rounded-full object-cover cursor-pointer"
+                                                                class="block h-16 w-16 rounded-full object-cover"
+                                                                :class="[
+                                                                    team.id ===
+                                                                    $page.props
+                                                                        .user
+                                                                        .current_team_id
+                                                                        ? 'cursor-default'
+                                                                        : 'cursor-pointer',
+                                                                ]"
                                                                 src="https://emirateswoman.com/wp-content/uploads/2022/03/Arab-Fashion-Week-2022.png"
                                                                 alt="image"
                                                             />
@@ -208,7 +237,11 @@ const switchTeam = function (team) {
                                             <td class="myPrimaryTableTBodyTd">
                                                 <form
                                                     @submit.prevent="
-                                                        handleSwitchToTeam(team)
+                                                        handleSwitchToTeam(
+                                                            team,
+                                                            $page.props.user
+                                                                .current_team_id
+                                                        )
                                                     "
                                                 >
                                                     <div
@@ -222,7 +255,7 @@ const switchTeam = function (team) {
                                                         <button
                                                             class="myPrimaryButtonNoBackground text-myPrimaryDarkGrayColor flex items-center gap-2"
                                                             :class="{
-                                                                'text-myPrimaryBrandColor':
+                                                                'text-myPrimaryBrandColor cursor-default':
                                                                     team.id ===
                                                                     $page.props
                                                                         .user
@@ -291,7 +324,11 @@ const switchTeam = function (team) {
                                             <td class="myPrimaryTableTBodyTd">
                                                 <form
                                                     @submit.prevent="
-                                                        handleSwitchToTeam(team)
+                                                        handleSwitchToTeam(
+                                                            team,
+                                                            $page.props.user
+                                                                .current_team_id
+                                                        )
                                                     "
                                                 >
                                                     <div
@@ -303,9 +340,9 @@ const switchTeam = function (team) {
                                                         "
                                                     >
                                                         <button
-                                                            class="myPrimaryButton flex items-center myPrimaryGap py-2"
+                                                            class="myPrimaryButton flex items-center myPrimaryGap py-2 cursor-default"
                                                             :class="{
-                                                                'bg-gray-600 hover:bg-gray-700 focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus-visible:ring-2 focus-visible:ring-gray-600':
+                                                                'bg-gray-600 hover:bg-gray-700 focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus-visible:ring-2 focus-visible:ring-gray-600 cursor-pointer':
                                                                     team.id !==
                                                                     $page.props
                                                                         .user

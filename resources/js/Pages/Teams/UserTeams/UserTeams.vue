@@ -1,8 +1,5 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
-import SwitchTeams from "../Partials/SwitchTeams.vue";
-import CreateTeamForm from "@/Pages/Teams/Partials/CreateTeamForm.vue";
-import SectionBorder from "@/Components/SectionBorder.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 const breadcrumbsLinks = [

@@ -1,3 +1,4 @@
+# In terminal, run: chmod +x build.sh
 #!/bin/bash
 
 # This is a custom build script for a Laravel project on Digital Ocean App Platform.
