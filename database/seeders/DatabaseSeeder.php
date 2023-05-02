@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
             "first_name" => "Karl",
             "last_name" => "Lagerfeld",
             "email" => "kl@myself.ae",
-            "current_team_id" => 6,
+            "current_team_id" => 1,
             "password" => Hash::make("123456"),
         ]);
         //
