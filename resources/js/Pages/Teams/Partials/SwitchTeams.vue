@@ -197,7 +197,7 @@ const switchTeam = function (team) {
                                                                         ? 'cursor-default'
                                                                         : 'cursor-pointer',
                                                                 ]"
-                                                                :src="`/uploads/${team.logo}`"
+                                                                :src="`/storage/uploads/${team.logo}`"
                                                                 alt="logo"
                                                             />
                                                         </div>
@@ -227,7 +227,7 @@ const switchTeam = function (team) {
                                                                         ? 'cursor-default'
                                                                         : 'cursor-pointer',
                                                                 ]"
-                                                                src="https://emirateswoman.com/wp-content/uploads/2022/03/Arab-Fashion-Week-2022.png"
+                                                                src="https://emirateswoman.com/wp-content/storage/uploads/2022/03/Arab-Fashion-Week-2022.png"
                                                                 alt="image"
                                                             />
                                                         </div>

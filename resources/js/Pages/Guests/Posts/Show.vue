@@ -27,7 +27,7 @@ defineProps({
                     class="bg-green-200 rounded-md"
                 >
                     <img
-                        :src="`/uploads/${post.thumbnail}`"
+                        :src="`/storage/uploads/${post.thumbnail}`"
                         alt=""
                         class="inset-0 -z-10 min-h-[25rem] max-h-[35rem] w-full object-cover rounded-md"
                     />
@@ -92,7 +92,7 @@ defineProps({
                         <img
                             class="border border-gray-400 inset-0 -z-10 min-h-[10rem] max-h-[15rem] w-full object-cover rounded-md"
                             alt="cover image"
-                            :src="`/uploads/${post.team.logo}`"
+                            :src="`/storage/uploads/${post.team.logo}`"
                         />
                     </div>
                     <div v-if="post.team.thumbnail">
@@ -100,7 +100,7 @@ defineProps({
                         <img
                             class="inset-0 -z-10 min-h-[10rem] max-h-[15rem] w-full object-cover rounded-md"
                             alt="cover image"
-                            :src="`/uploads/${post.team.thumbnail}`"
+                            :src="`/storage/uploads/${post.team.thumbnail}`"
                         />
                     </div>
                 </div>

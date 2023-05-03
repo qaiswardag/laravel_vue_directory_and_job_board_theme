@@ -266,7 +266,7 @@ const clearPhotoFileInput = () => {
                         >
                             <img
                                 class="object-cover w-16 h-16 rounded-full"
-                                :src="`/uploads/${user.profile_photo_path}`"
+                                :src="`/storage/${user.profile_photo_path}`"
                                 :alt="user.first_name + user.last_name"
                             />
                         </div>

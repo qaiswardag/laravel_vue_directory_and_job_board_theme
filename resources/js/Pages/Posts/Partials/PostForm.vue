@@ -664,7 +664,7 @@ onBeforeMount(() => {
                                         >
                                             <img
                                                 class="object-cover w-12 h-12 rounded-full"
-                                                :src="`/uploads/${user.profile_photo_path}`"
+                                                :src="`/storage/uploads/${user.profile_photo_path}`"
                                                 :alt="
                                                     user.first_name +
                                                     user.last_name
@@ -757,7 +757,7 @@ onBeforeMount(() => {
                     @click="handleUploadCoverImage"
                     class="myPrimarythumbnailInsertPreview"
                     alt="cover image"
-                    :src="`/uploads/${postForm.thumbnail}`"
+                    :src="`/storage/uploads/${postForm.thumbnail}`"
                 />
                 <div
                     class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"

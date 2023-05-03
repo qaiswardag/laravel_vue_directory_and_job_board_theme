@@ -308,7 +308,7 @@ onMounted(() => {
                                         >
                                             <img
                                                 class="h-16 w-16 rounded-full object-cover"
-                                                :src="`/uploads/${post.thumbnail}`"
+                                                :src="`/storage/uploads/${post.thumbnail}`"
                                                 alt=""
                                             />
                                         </div>
@@ -318,7 +318,7 @@ onMounted(() => {
                                         >
                                             <img
                                                 class="h-16 w-16 rounded-full object-cover"
-                                                src="https://emirateswoman.com/wp-content/uploads/2022/03/Arab-Fashion-Week-2022.png"
+                                                src="https://emirateswoman.com/wp-content/storage/uploads/2022/03/Arab-Fashion-Week-2022.png"
                                                 alt=""
                                             />
                                         </div>

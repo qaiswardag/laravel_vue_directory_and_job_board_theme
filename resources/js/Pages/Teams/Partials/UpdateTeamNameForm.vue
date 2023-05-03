@@ -276,7 +276,7 @@ const notificationsModalButton = function () {
                     @click="handleUploadLogo"
                     class="myPrimarythumbnailLogo"
                     alt="Logo"
-                    :src="`/uploads/${form.logo}`"
+                    :src="`/storage/uploads/${form.logo}`"
                 />
                 <div
                     class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
@@ -339,7 +339,7 @@ const notificationsModalButton = function () {
                     @click="handleUploadCoverImage"
                     class="myPrimarythumbnailInsertPreview"
                     alt="cover image"
-                    :src="`/uploads/${form.thumbnail}`"
+                    :src="`/storage/uploads/${form.thumbnail}`"
                 />
                 <div
                     class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
@@ -404,7 +404,7 @@ const notificationsModalButton = function () {
                     >
                         <img
                             class="object-cover w-16 h-16 rounded-full"
-                            :src="`/uploads/${$page.props.team.owner.profile_photo_path}`"
+                            :src="`/storage/uploads/${$page.props.team.owner.profile_photo_path}`"
                             :alt="
                                 $page.props.team.owner.first_name +
                                 $page.props.team.owner.last_name

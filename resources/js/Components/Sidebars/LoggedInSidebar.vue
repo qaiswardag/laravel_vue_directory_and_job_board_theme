@@ -32,7 +32,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                         <div class="h-8 w-8 flex-shrink-0">
                             <img
                                 class="w-8 h-8 rounded-full object-cover cursor-pointer"
-                                :src="`/uploads/${$page.props.currentUserTeam?.logo}`"
+                                :src="`/storage/uploads/${$page.props.currentUserTeam?.logo}`"
                                 alt="team logo"
                             />
                         </div>

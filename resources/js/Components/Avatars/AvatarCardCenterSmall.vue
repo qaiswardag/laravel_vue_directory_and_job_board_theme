@@ -9,7 +9,7 @@
         >
             <img
                 class="object-cover w-16 h-16 rounded-full"
-                :src="`/uploads/${$page.props.user.profile_photo_path}`"
+                :src="`/storage/uploads/${$page.props.user.profile_photo_path}`"
                 :alt="$page.props.user.first_name + $page.props.user.last_name"
             />
         </div>

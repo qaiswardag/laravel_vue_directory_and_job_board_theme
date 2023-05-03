@@ -47,7 +47,7 @@ defineProps({
                             <img
                                 class="inset-0 -z-10 w-16 h-16 object-cover rounded-md"
                                 alt="cover image"
-                                :src="`/uploads/${post.team.logo}`"
+                                :src="`/storage/uploads/${post.team.logo}`"
                             />
                         </div>
                     </div>

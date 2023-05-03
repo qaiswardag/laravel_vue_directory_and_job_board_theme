@@ -438,12 +438,12 @@ const handleDeleteImage = function (imageId) {
                                                     class="pb-16 space-y-6"
                                                 >
                                                     <a
-                                                        :href="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path.toLowerCase()}`"
+                                                        :href="`/storage/uploads/${getCurrentImage.currentImage.mediaLibrary.path.toLowerCase()}`"
                                                         target="_blank"
                                                     >
                                                         <img
                                                             class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                                                            :src="`/uploads/${getCurrentImage.currentImage.mediaLibrary.path}`"
+                                                            :src="`/storage/uploads/${getCurrentImage.currentImage.mediaLibrary.path}`"
                                                             alt="image"
                                                         />
                                                     </a>
