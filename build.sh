@@ -10,5 +10,10 @@ apt-get update
 # Install PHP exif extension
 apt-get install -y php8.2-exif
 
-# Create a symlink for the storage folder
+# Create/Recreate the storage symlink
 php artisan storage:link
+
+# Optimize the application
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
