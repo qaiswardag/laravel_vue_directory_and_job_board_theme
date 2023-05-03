@@ -114,7 +114,8 @@ class MediaLibraryController extends Controller
                     $extension;
             }
 
-            $image->storeAs($path);
+            // $image->storeAs($path);
+            $image->storeAs("uploads", $path, ["disk" => "public"]);
 
             // file size
             $fileSizeKb = intval($image->getSize() / 1024);
