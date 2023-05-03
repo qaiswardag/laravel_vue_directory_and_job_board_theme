@@ -404,7 +404,7 @@ const notificationsModalButton = function () {
                     >
                         <img
                             class="object-cover w-16 h-16 rounded-full"
-                            :src="`/storage/uploads/${$page.props.team.owner.profile_photo_path}`"
+                            :src="`/storage/${$page.props.team.owner.profile_photo_path}`"
                             :alt="
                                 $page.props.team.owner.first_name +
                                 $page.props.team.owner.last_name

@@ -312,7 +312,7 @@ const primaryMenuSlideOverButton = function () {
                 >
                     <img
                         class="object-cover w-9 h-9 rounded-full flex-shrink-0"
-                        :src="`/storage/uploads/${$page.props.user.profile_photo_path}`"
+                        :src="`/storage/${$page.props.user.profile_photo_path}`"
                         :alt="
                             $page.props.user.first_name +
                             $page.props.user.last_name
