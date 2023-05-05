@@ -58,7 +58,7 @@ const people = [
 
         <div class="myPrimarySection overflow-hidden">
             <p class="my-4 pb-16 whitespace-pre-line">
-                currentUserTeamRole from shared Data is:
+                currentUserTeamRole from shared Data is - test 1:
                 <br />
                 {{ currentUserTeamRole }}
             </p>
