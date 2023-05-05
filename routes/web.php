@@ -38,14 +38,14 @@ Route::get("/", function () {
 
     //
     //
-    dd([
-        "FILESYSTEM_DRIVER" => env("FILESYSTEM_DRIVER"),
-        "SPACES_KEY" => env("SPACES_KEY"),
-        "SPACES_SECRET" => env("SPACES_SECRET"),
-        "SPACES_REGION" => env("SPACES_REGION"),
-        "SPACES_BUCKET" => env("SPACES_BUCKET"),
-        "SPACES_ENDPOINT" => env("SPACES_ENDPOINT"),
-    ]);
+    // dd([
+    //     "FILESYSTEM_DRIVER" => env("FILESYSTEM_DRIVER"),
+    //     "SPACES_KEY" => env("SPACES_KEY"),
+    //     "SPACES_SECRET" => env("SPACES_SECRET"),
+    //     "SPACES_REGION" => env("SPACES_REGION"),
+    //     "SPACES_BUCKET" => env("SPACES_BUCKET"),
+    //     "SPACES_ENDPOINT" => env("SPACES_ENDPOINT"),
+    // ]);
     //
     //
     return Inertia::render("Home/Home", [
