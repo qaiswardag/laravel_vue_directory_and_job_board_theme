@@ -51,6 +51,16 @@ return [
             "throw" => false,
         ],
 
+        "spaces" => [
+            "driver" => "s3",
+            "key" => env("SPACES_KEY"),
+            "secret" => env("SPACES_SECRET"),
+            "region" => env("SPACES_REGION"),
+            "bucket" => env("SPACES_BUCKET"),
+            "url" => env("SPACES_ENDPOINT"),
+            "visibility" => "public",
+        ],
+
         "s3" => [
             "driver" => "s3",
             "key" => env("AWS_ACCESS_KEY_ID"),
