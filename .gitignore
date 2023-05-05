@@ -21,4 +21,5 @@ yarn-error.log
 /public/js/app.js
 /public/uploads/
 /storage/uploads
+/storage/app/public
 
