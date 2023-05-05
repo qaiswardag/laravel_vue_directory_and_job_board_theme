@@ -23,8 +23,8 @@ class UpdateTeamName implements UpdatesTeamNames
 
         $validator = Validator::make($input, [
             "name" => ["required", "string", "max:255"],
-            "thumbnail" => ["required", "string", "max:255"],
-            "logo" => ["required", "string", "max:255"],
+            "thumbnail" => ["string", "max:255"],
+            "logo" => ["string", "max:255"],
             "public" => ["boolean"],
         ]);
 
