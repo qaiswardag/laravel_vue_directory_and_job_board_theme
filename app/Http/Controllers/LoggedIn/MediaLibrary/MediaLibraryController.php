@@ -114,7 +114,6 @@ class MediaLibraryController extends Controller
                     $extension;
             }
 
-            // $image->storeAs($path);
             $image->storeAs("uploads", $path, ["disk" => "public"]);
 
             // file size
@@ -207,7 +206,8 @@ class MediaLibraryController extends Controller
         $this->authorize("can-destroy", $team);
         $image = MediaLibrary::findOrFail($request->image_id);
 
-        $imagePath = public_path("uploads/" . $image->path);
+        // $imagePath = public_path("uploads/" . $image->path);
+        $imagePath = storage_path("app/public/uploads/" . $image->path);
 
         if (File::exists($imagePath) === false) {
             // delete the image record from the dat

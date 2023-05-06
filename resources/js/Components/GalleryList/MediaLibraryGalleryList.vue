@@ -206,10 +206,10 @@ onMounted(() => {
                 >
                     <div
                         @click="handleImageClick(image.id)"
-                        class="border border-myPrimaryLightGrayColor rounded px-2 p-2 cursor-pointer"
+                        class="border border-myPrimaryLightGrayColor rounded px-2 p-2 cursor-pointer bg-gray-50"
                     >
                         <img
-                            class="h-32 w-full object-cover overflow-hidden rounded bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer"
+                            class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer"
                             :class="{
                                 '':
                                     image.id ===
