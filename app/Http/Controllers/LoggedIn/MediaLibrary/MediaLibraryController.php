@@ -124,6 +124,8 @@ class MediaLibraryController extends Controller
             $image->storeAs("uploads", $path, ["disk" => "public"]);
 
             // Save additional image sizes - start
+            // Save additional image sizes - start
+            // Save additional image sizes - start
 
             // Create thumbnail, medium, and large image sizes
             $sizes = [
@@ -155,19 +157,48 @@ class MediaLibraryController extends Controller
                     "." .
                     $extension;
 
-                $img = Image::make(storage_path("app/public/uploads/" . $path));
-                $img->resize($width, $height, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                });
-
-                $img->save(
-                    storage_path("app/public/uploads/" . $resizedImagePath)
+                $imageType = exif_imagetype(
+                    storage_path("app/public/uploads/" . $path)
                 );
 
-                $imagePaths[$sizeName . "_path"] = $resizedImagePath;
+                // Check if the image can be resized using Image Intervention
+                if (
+                    $imageType === 2 || // IMAGETYPE_JPEG
+                    $imageType === 3 || // IMAGETYPE_PNG
+                    $imageType === 6 || // IMAGETYPE_BMP
+                    $imageType === 18 // IMAGETYPE_WEBP
+                ) {
+                    // Create a new Image Intervention instance for the original image
+                    $img = Image::make(
+                        storage_path("app/public/uploads/" . $path)
+                    );
+
+                    // Resize the image, maintaining aspect ratio and allowing upsizing
+                    $img->resize($width, $height, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+
+                    // Save the resized image to storage
+                    $img->save(
+                        storage_path("app/public/uploads/" . $resizedImagePath)
+                    );
+
+                    // Add the path to the resized image to the array of image paths
+                    $imagePaths[$sizeName . "_path"] = $resizedImagePath;
+                } else {
+                    // If the image cannot be resized, use the original image for all image sizes
+                    $imagePaths = [
+                        "path" => $path,
+                        "thumbnail_path" => $path,
+                        "medium_path" => $path,
+                        "large_path" => $path,
+                    ];
+                }
             }
 
+            // Save additional image sizes - end
+            // Save additional image sizes - end
             // Save additional image sizes - end
 
             // file size
