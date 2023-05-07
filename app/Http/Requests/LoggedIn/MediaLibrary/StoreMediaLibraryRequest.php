@@ -22,7 +22,6 @@ class StoreMediaLibraryRequest extends FormRequest
      */
     public function rules(): array
     {
-        sleep(1);
         return [
             "images" => ["required"],
         ];

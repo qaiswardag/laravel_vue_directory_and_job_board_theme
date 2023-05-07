@@ -82,7 +82,7 @@ class MediaLibraryController extends Controller
             $currentMonth = date("m"); // get the current year and month in YYYY/MM format
 
             // extension
-            $extension = $image->extension();
+            $extension = $image->getClientOriginalExtension();
 
             $path =
                 $teamReferenceId .
@@ -120,6 +120,8 @@ class MediaLibraryController extends Controller
                     "." .
                     $extension;
             }
+
+            // dd("image is:", $image);
 
             $image->storeAs("uploads", $path, ["disk" => "public"]);
 
