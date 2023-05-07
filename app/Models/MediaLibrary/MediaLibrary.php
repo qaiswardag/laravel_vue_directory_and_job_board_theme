@@ -30,5 +30,8 @@ class MediaLibrary extends Model
         "size",
         "width",
         "height",
+        "thumbnail_path",
+        "medium_path",
+        "large_path",
     ];
 }

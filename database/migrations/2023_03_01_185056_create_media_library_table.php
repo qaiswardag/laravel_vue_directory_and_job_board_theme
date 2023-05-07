@@ -13,15 +13,6 @@ return new class extends Migration {
         Schema::create("media_libraries", function (Blueprint $table) {
             $table->id();
             $table->integer("user_id")->unsigned();
-
-            // // user
-            // $table
-            //     ->foreignId("user_id")
-            //     ->references("id")
-            //     ->on("users")
-            //     ->onDelete("cascade")
-            //     ->constrained();
-            // team
             $table
                 ->foreignId("team_id")
                 ->references("id")
@@ -31,6 +22,9 @@ return new class extends Migration {
 
             $table->string("name")->nullable();
             $table->string("path")->unique();
+            $table->string("thumbnail_path")->nullable();
+            $table->string("medium_path")->nullable();
+            $table->string("large_path")->nullable();
             $table->string("size");
             $table->string("width");
             $table->string("height");
