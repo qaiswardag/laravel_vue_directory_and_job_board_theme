@@ -30,8 +30,17 @@ const handleUpdateTeam = function () {
 
 const form = useForm({
     name: props.team.name,
-    thumbnail: props.team.thumbnail,
-    logo: props.team.logo,
+
+    cover_image_original: props.team.cover_image_original,
+    cover_image_thumbnail: props.team.cover_image_thumbnail,
+    cover_image_medium: props.team.cover_image_medium,
+    cover_image_large: props.team.cover_image_large,
+
+    logo_original: props.team.logo_original,
+    logo_thumbnail: props.team.logo_thumbnail,
+    logo_medium: props.team.logo_medium,
+    logo_large: props.team.logo_large,
+
     public: props.team.public ? true : false,
 });
 
@@ -82,7 +91,15 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        form.thumbnail = getCurrentImage.value.currentImage.mediaLibrary.path;
+        form.cover_image_original =
+            getCurrentImage.value.currentImage?.mediaLibrary?.path;
+        form.cover_image_thumbnail =
+            getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
+        form.cover_image_medium =
+            getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
+        form.cover_image_large =
+            getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
+
         // handle show media library modal
         showMediaLibraryModal.value = false;
     };
@@ -106,7 +123,14 @@ const handleUploadLogo = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        form.logo = getCurrentImage.value.currentImage.mediaLibrary.path;
+        form.logo_original =
+            getCurrentImage.value.currentImage?.mediaLibrary?.path;
+        form.logo_thumbnail =
+            getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
+        form.logo_medium =
+            getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
+        form.logo_large =
+            getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
         // handle show media library modal
         showMediaLibraryModal.value = false;
     };
@@ -114,10 +138,16 @@ const handleUploadLogo = function () {
 };
 
 const handleRemoveCoverImage = function () {
-    form.thumbnail = null;
+    form.cover_image_original = null;
+    form.cover_image_thumbnail = null;
+    form.cover_image_medium = null;
+    form.cover_image_large = null;
 };
 const handleRemoveLogo = function () {
-    form.logo = null;
+    form.logo_original = null;
+    form.logo_thumbnail = null;
+    form.logo_medium = null;
+    form.logo_large = null;
 };
 
 const showErrorNotifications = ref(false);
@@ -272,11 +302,11 @@ const notificationsModalButton = function () {
                     </p>
                 </div>
                 <img
-                    v-if="form.logo && form.logo.length !== 0"
+                    v-if="form.logo_medium && form.logo_medium.length !== 0"
                     @click="handleUploadLogo"
                     class="myPrimarythumbnailLogo"
                     alt="Logo"
-                    :src="`/storage/uploads/${form.logo}`"
+                    :src="`/storage/uploads/${form.logo_medium}`"
                 />
                 <div
                     class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
@@ -303,7 +333,9 @@ const notificationsModalButton = function () {
 
                         Logo
                     </button>
-                    <div v-if="form && form.logo">
+                    <div
+                        v-if="form.logo_medium && form.logo_medium.length !== 0"
+                    >
                         <svg
                             @click="handleRemoveLogo"
                             xmlns="http://www.w3.org/2000/svg"
@@ -321,7 +353,10 @@ const notificationsModalButton = function () {
                         </svg>
                     </div>
                 </div>
-                <InputError :message="form.errors.logo" />
+                <InputError :message="form.errors.logo_original" />
+                <InputError :message="form.errors.logo_thumbnail" />
+                <InputError :message="form.errors.logo_medium" />
+                <InputError :message="form.errors.logo_large" />
             </div>
             <!-- logo - end -->
             <!-- cover image - start -->
@@ -335,11 +370,14 @@ const notificationsModalButton = function () {
                     </p>
                 </div>
                 <img
-                    v-if="form.thumbnail && form.thumbnail.length !== 0"
+                    v-if="
+                        form.cover_image_medium &&
+                        form.cover_image_medium.length !== 0
+                    "
                     @click="handleUploadCoverImage"
                     class="myPrimarythumbnailInsertPreview"
                     alt="cover image"
-                    :src="`/storage/uploads/${form.thumbnail}`"
+                    :src="`/storage/uploads/${form.cover_image_medium}`"
                 />
                 <div
                     class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
@@ -366,7 +404,12 @@ const notificationsModalButton = function () {
 
                         Cover Image
                     </button>
-                    <div v-if="form && form.thumbnail">
+                    <div
+                        v-if="
+                            form.cover_image_medium &&
+                            form.cover_image_medium.length !== 0
+                        "
+                    >
                         <svg
                             @click="handleRemoveCoverImage"
                             xmlns="http://www.w3.org/2000/svg"
@@ -384,7 +427,10 @@ const notificationsModalButton = function () {
                         </svg>
                     </div>
                 </div>
-                <InputError :message="form.errors.thumbnail" />
+                <InputError :message="form.errors.cover_image_original" />
+                <InputError :message="form.errors.cover_image_thumbnail" />
+                <InputError :message="form.errors.cover_image_medium" />
+                <InputError :message="form.errors.cover_image_large" />
             </div>
             <!-- cover image - end -->
 

@@ -129,7 +129,12 @@ class PostController extends Controller
             "slug" => $slug,
             "slug_id" => $slugId,
             "published" => $request->published,
-            "thumbnail" => $request->thumbnail,
+
+            "cover_image_original" => $request->cover_image_original,
+            "cover_image_thumbnail" => $request->cover_image_thumbnail,
+            "cover_image_medium" => $request->cover_image_medium,
+            "cover_image_large" => $request->cover_image_large,
+
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
@@ -232,7 +237,12 @@ class PostController extends Controller
             "title" => $title,
             "slug" => $slug,
             "published" => $request->published,
-            "thumbnail" => $request->thumbnail,
+
+            "cover_image_original" => $request->cover_image_original,
+            "cover_image_thumbnail" => $request->cover_image_thumbnail,
+            "cover_image_medium" => $request->cover_image_medium,
+            "cover_image_large" => $request->cover_image_large,
+
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,

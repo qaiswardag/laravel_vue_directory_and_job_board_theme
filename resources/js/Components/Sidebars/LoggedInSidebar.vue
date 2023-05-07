@@ -16,6 +16,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                 class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
                 <span>Team:</span>
+
                 <Link
                     :href="
                         route(
@@ -28,12 +29,16 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                         myPrimaryLink: route().current('user.teams.switch'),
                     }"
                 >
-                    <template v-if="$page.props.currentUserTeam?.logo !== null">
+                    <template
+                        v-if="
+                            $page.props.currentUserTeam?.logo_thumbnail !== null
+                        "
+                    >
                         <div class="h-8 w-8 flex-shrink-0">
                             <img
                                 class="w-8 h-8 rounded-full object-cover cursor-pointer"
-                                :src="`/storage/uploads/${$page.props.currentUserTeam?.logo}`"
-                                alt="team logo"
+                                :src="`/storage/uploads/${$page.props.currentUserTeam?.logo_thumbnail}`"
+                                alt="Logo"
                             />
                         </div>
                     </template>

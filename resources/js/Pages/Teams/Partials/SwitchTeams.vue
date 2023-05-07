@@ -174,7 +174,7 @@ const switchTeam = function (team) {
                                                     >
                                                         <div
                                                             v-if="
-                                                                team.thumbnail
+                                                                team.logo_medium
                                                             "
                                                             class="h-16 w-16 flex-shrink-0"
                                                         >
@@ -197,38 +197,8 @@ const switchTeam = function (team) {
                                                                         ? 'cursor-default'
                                                                         : 'cursor-pointer',
                                                                 ]"
-                                                                :src="`/storage/uploads/${team.logo}`"
+                                                                :src="`/storage/uploads/${team.logo_medium}`"
                                                                 alt="logo"
-                                                            />
-                                                        </div>
-                                                        <div
-                                                            v-if="
-                                                                team.thumbnail ===
-                                                                null
-                                                            "
-                                                            class="h-16 w-16 flex-shrink-0"
-                                                        >
-                                                            <img
-                                                                @click="
-                                                                    handleSwitchToTeam(
-                                                                        team,
-                                                                        $page
-                                                                            .props
-                                                                            .user
-                                                                            .current_team_id
-                                                                    )
-                                                                "
-                                                                class="block h-16 w-16 rounded-full object-cover"
-                                                                :class="[
-                                                                    team.id ===
-                                                                    $page.props
-                                                                        .user
-                                                                        .current_team_id
-                                                                        ? 'cursor-default'
-                                                                        : 'cursor-pointer',
-                                                                ]"
-                                                                src="https://emirateswoman.com/wp-content/uploads/2021/04/Sheikha-Sana-Al-Maktoum-.png"
-                                                                alt="image"
                                                             />
                                                         </div>
                                                     </div>

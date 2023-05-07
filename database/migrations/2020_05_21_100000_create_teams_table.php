@@ -28,8 +28,17 @@ return new class extends Migration {
                 ->constrained();
             //
             $table->string("name");
-            $table->string("thumbnail")->nullable();
-            $table->string("logo")->nullable();
+
+            $table->string("cover_image_original")->nullable();
+            $table->string("cover_image_thumbnail")->nullable();
+            $table->string("cover_image_medium")->nullable();
+            $table->string("cover_image_large")->nullable();
+
+            $table->string("logo_original")->nullable();
+            $table->string("logo_thumbnail")->nullable();
+            $table->string("logo_medium")->nullable();
+            $table->string("logo_large")->nullable();
+
             $table->boolean("public");
             $table->boolean("personal_team");
             $table->timestamps();

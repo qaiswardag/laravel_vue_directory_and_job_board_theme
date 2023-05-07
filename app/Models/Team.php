@@ -34,7 +34,16 @@ class Team extends JetstreamTeam
         "name",
         "personal_team",
         "public",
-        "logo",
+
+        "cover_image_original",
+        "cover_image_thumbnail",
+        "cover_image_medium",
+        "cover_image_large",
+
+        "logo_original",
+        "logo_thumbnail",
+        "logo_medium",
+        "logo_large",
     ];
 
     /**

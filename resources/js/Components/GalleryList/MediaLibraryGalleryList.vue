@@ -216,7 +216,7 @@ onMounted(() => {
                                     getCurrentImage?.currentImage?.mediaLibrary
                                         ?.id,
                             }"
-                            :src="`/storage/uploads/${image.path}`"
+                            :src="`/storage/uploads/${image.medium_path}`"
                             alt="image"
                         />
 

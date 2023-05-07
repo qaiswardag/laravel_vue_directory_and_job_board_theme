@@ -95,8 +95,19 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        postForm.thumbnail =
-            getCurrentImage.value.currentImage.mediaLibrary.path;
+        //
+        //
+        //
+        //
+        postForm.cover_image_original =
+            getCurrentImage.value.currentImage?.mediaLibrary?.path;
+        postForm.cover_image_thumbnail =
+            getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
+        postForm.cover_image_medium =
+            getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
+        postForm.cover_image_large =
+            getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
+
         // handle show media library modal
         showMediaLibraryModal.value = false;
         return;
@@ -104,7 +115,10 @@ const handleUploadCoverImage = function () {
     // end modal
 };
 const handleRemoveCoverImage = function () {
-    postForm.thumbnail = null;
+    postForm.cover_image_original = null;
+    postForm.cover_image_thumbnail = null;
+    postForm.cover_image_medium = null;
+    postForm.cover_image_large = null;
 };
 
 const modalShowAddAuthor = ref(false);
@@ -219,7 +233,12 @@ const postForm = useForm({
     published: true,
     team: props.currentUserTeam,
     user_id: props.user.id,
-    thumbnail: "",
+
+    cover_image_original: "",
+    cover_image_thumbnail: "",
+    cover_image_medium: "",
+    cover_image_large: "",
+
     tags: "",
     show_author: true,
     author: [],
@@ -278,8 +297,12 @@ onBeforeMount(() => {
         postForm.content = props.post.content;
         postForm.published = props.post.published === 1 ? true : false;
         postForm.show_author = props.post.show_author === 1 ? true : false;
-        // postForm.team = props.post.team;
-        postForm.thumbnail = props.post.thumbnail;
+
+        postForm.cover_image_original = props.post.cover_image_original;
+        postForm.cover_image_thumbnail = props.post.cover_image_thumbnail;
+        postForm.cover_image_medium = props.post.cover_image_medium;
+        postForm.cover_image_large = props.post.cover_image_large;
+
         postForm.tags = props.post.tags;
         //
 
@@ -752,12 +775,16 @@ onBeforeMount(() => {
                         Lorem ipsum dolor sit amet.
                     </p>
                 </div>
+
                 <img
-                    v-if="postForm.thumbnail && postForm.thumbnail.length !== 0"
+                    v-if="
+                        postForm.cover_image_medium &&
+                        postForm.cover_image_medium.length !== 0
+                    "
                     @click="handleUploadCoverImage"
                     class="myPrimarythumbnailInsertPreview"
                     alt="cover image"
-                    :src="`/storage/uploads/${postForm.thumbnail}`"
+                    :src="`/storage/uploads/${postForm.cover_image_medium}`"
                 />
                 <div
                     class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
@@ -785,7 +812,7 @@ onBeforeMount(() => {
                         Cover Image
                     </button>
 
-                    <div v-if="postForm && postForm.thumbnail">
+                    <div v-if="postForm && postForm.cover_image_medium">
                         <svg
                             @click="handleRemoveCoverImage"
                             xmlns="http://www.w3.org/2000/svg"
@@ -803,7 +830,10 @@ onBeforeMount(() => {
                         </svg>
                     </div>
                 </div>
-                <InputError :message="postForm.errors.thumbnail" />
+                <InputError :message="postForm.errors.cover_image_original" />
+                <InputError :message="postForm.errors.cover_image_thumbnail" />
+                <InputError :message="postForm.errors.cover_image_medium" />
+                <InputError :message="postForm.errors.cover_image_large" />
             </div>
             <!-- cover image - end -->
             <!-- tags - start -->

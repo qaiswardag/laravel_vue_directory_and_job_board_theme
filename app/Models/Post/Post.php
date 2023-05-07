@@ -24,7 +24,12 @@ class Post extends Model
         "slug",
         "content",
         "published",
-        "thumbnail",
+
+        "cover_image_original",
+        "cover_image_thumbnail",
+        "cover_image_medium",
+        "cover_image_large",
+
         "tags",
         "slug_id",
         "show_author",

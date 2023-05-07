@@ -303,22 +303,12 @@ onMounted(() => {
                                         class="flex items-center justify-start myPrimaryGap"
                                     >
                                         <div
-                                            v-if="post.thumbnail"
+                                            v-if="post.cover_image_medium"
                                             class="h-16 w-16 flex-shrink-0"
                                         >
                                             <img
                                                 class="h-16 w-16 rounded-full object-cover"
-                                                :src="`/storage/uploads/${post.thumbnail}`"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div
-                                            v-if="post.thumbnail === null"
-                                            class="h-16 w-16 flex-shrink-0"
-                                        >
-                                            <img
-                                                class="h-16 w-16 rounded-full object-cover"
-                                                src="https://emirateswoman.com/wp-content/uploads/2021/04/Sheikha-Sana-Al-Maktoum-.png"
+                                                :src="`/storage/uploads/${post.cover_image_medium}`"
                                                 alt=""
                                             />
                                         </div>
