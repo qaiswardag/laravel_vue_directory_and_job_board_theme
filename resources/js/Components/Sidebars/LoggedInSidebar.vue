@@ -16,7 +16,6 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                 class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
                 <span>Team:</span>
-                <p>er: {{ $page.props.currentUserTeam?.logo }}</p>
                 <Link
                     :href="
                         route(
