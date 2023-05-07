@@ -163,12 +163,13 @@ class MediaLibraryController extends Controller
                     storage_path("app/public/uploads/" . $path)
                 );
 
-                // Check if the image can be resized using Image Intervention
+                // Check if the original uploaded image can be resized using Image Intervention
                 if (
                     $imageType === 2 || // IMAGETYPE_JPEG
                     $imageType === 3 || // IMAGETYPE_PNG
                     $imageType === 6 || // IMAGETYPE_BMP
                     $imageType === 18 // IMAGETYPE_WEBP
+                    // $imageType === 19 // AVIF
                 ) {
                     // Create a new Image Intervention instance for the original image
                     $img = Image::make(
