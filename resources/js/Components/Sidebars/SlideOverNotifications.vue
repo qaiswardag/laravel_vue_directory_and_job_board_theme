@@ -130,13 +130,6 @@ const notificationsSlideOverButton = function () {
                                                     </button>
                                                 </div>
                                             </div>
-
-                                            <a
-                                                href="#"
-                                                class="block myPrimaryLink myPrimaryParagraph rounded"
-                                            >
-                                                View all notifications
-                                            </a>
                                         </div>
                                         <div
                                             class="relative mt-0 flex-1 px-4 sm:px-6"
@@ -156,14 +149,13 @@ const notificationsSlideOverButton = function () {
                                                         :key="notification.id"
                                                         class="border border-gray-200 bg-gray-50 py-4 px-4 rounded"
                                                     >
-                                                        <a
-                                                            href="#"
+                                                        <p
                                                             class="text-sm font-semibold text-myPrimaryDarkGrayColor mb-4 mt-2 block"
                                                         >
                                                             {{
                                                                 notification.title
                                                             }}
-                                                        </a>
+                                                        </p>
                                                         <div
                                                             v-if="
                                                                 notification.image ===
@@ -175,15 +167,13 @@ const notificationsSlideOverButton = function () {
                                                                 notification.image
                                                             "
                                                         >
-                                                            <a href="#">
-                                                                <img
-                                                                    alt="notification thumbnail"
-                                                                    class="object-cover h-40 w-full xl:h-56 xl:w-full rounded"
-                                                                    :src="
-                                                                        notification.image
-                                                                    "
-                                                                />
-                                                            </a>
+                                                            <img
+                                                                alt="notification thumbnail"
+                                                                class="object-cover h-40 w-full xl:h-56 xl:w-full rounded"
+                                                                :src="
+                                                                    notification.image
+                                                                "
+                                                            />
                                                         </div>
 
                                                         <p
@@ -204,19 +194,7 @@ const notificationsSlideOverButton = function () {
 
                                                         <div
                                                             class="flex items-center justify-left gap-2"
-                                                        >
-                                                            <PrimaryButton
-                                                                class="mt-4 mb-2 text-xs"
-                                                                :class="{
-                                                                    'opacity-25': false,
-                                                                }"
-                                                                :disabled="
-                                                                    false
-                                                                "
-                                                            >
-                                                                Read more
-                                                            </PrimaryButton>
-                                                        </div>
+                                                        ></div>
                                                     </div>
                                                 </div>
                                             </div>

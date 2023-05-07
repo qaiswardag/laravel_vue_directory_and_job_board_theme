@@ -221,9 +221,33 @@ const primaryMenuSlideOverButton = function () {
                         <div
                             class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
                         >
-                            <UserIcon
-                                class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
-                            />
+                            <div
+                                class="h-8 w-8 flex-shrink-0"
+                                v-if="
+                                    $page.props.user &&
+                                    $page.props.user.profile_photo_path !== null
+                                "
+                            >
+                                <img
+                                    class="object-cover w-8 h-8 rounded-full flex-shrink-0"
+                                    :src="`/storage/${$page.props.user.profile_photo_path}`"
+                                    :alt="
+                                        $page.props.user.first_name +
+                                        $page.props.user.last_name
+                                    "
+                                />
+                            </div>
+
+                            <template
+                                v-if="
+                                    $page.props.user &&
+                                    $page.props.user.profile_photo_path === null
+                                "
+                            >
+                                <UserIcon
+                                    class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
+                                />
+                            </template>
                         </div>
                         <div>Your Profile</div>
                     </div>
