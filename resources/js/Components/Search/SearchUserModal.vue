@@ -470,9 +470,7 @@ onMounted(() => {
                             class="px-2 hover:bg-white"
                         >
                             <div class="flex justify-between items-center">
-                                <div
-                                    class="flex items-center gap-2 my-4 overflow-y-scroll"
-                                >
+                                <div class="flex items-center gap-2 my-4">
                                     <!-- start photo -->
                                     <div
                                         class="flex-shrink-0"

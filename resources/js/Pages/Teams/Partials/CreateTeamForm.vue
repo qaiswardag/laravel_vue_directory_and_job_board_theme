@@ -103,6 +103,10 @@ const createTeam = () => {
 
         <template #main>
             <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Status</div>
+                    <p class="myPrimaryParagraph">Specify Team status.</p>
+                </div>
                 <div class="myInputGroup">
                     <InputLabel for="name" value="Team Name" />
                     <TextInput
@@ -196,6 +200,78 @@ const createTeam = () => {
                     </Switch>
                 </div>
                 <InputError :message="form.errors.public" />
+            </div>
+
+            <!--  -->
+            <!--  -->
+            <!--  -->
+            <!--  -->
+            <!--  -->
+            <!--  -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Team Owner
+                    </div>
+                    <p class="myPrimaryParagraph">
+                        Lorem ipsum dolor sit amet.
+                    </p>
+                </div>
+                <div
+                    class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                >
+                    <div class="hover:bg-white px-2">
+                        <div class="rounded">
+                            <!-- start photo -->
+                            <div class="flex items-center gap-2 my-4">
+                                <div
+                                    v-if="
+                                        $page.props.user &&
+                                        $page.props.user.profile_photo_path !==
+                                            null
+                                    "
+                                    class="flex-shrink-0"
+                                >
+                                    <img
+                                        class="object-cover w-12 h-12 rounded-full"
+                                        :src="`/storage/${$page.props.user.profile_photo_path}`"
+                                        alt="User Image
+                                            
+                                        "
+                                    />
+                                </div>
+
+                                <div
+                                    v-if="
+                                        $page.props.user &&
+                                        $page.props.user.profile_photo_path ===
+                                            null
+                                    "
+                                    class="w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                >
+                                    {{
+                                        $page.props.user.first_name
+                                            .charAt(0)
+                                            .toUpperCase()
+                                    }}
+                                    {{
+                                        $page.props.user.last_name
+                                            .charAt(0)
+                                            .toUpperCase()
+                                    }}
+                                </div>
+                                <span
+                                    class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                >
+                                    <span>
+                                        {{ $page.props.user.first_name }}
+                                        {{ $page.props.user.last_name }}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- post status - end -->
         </template>

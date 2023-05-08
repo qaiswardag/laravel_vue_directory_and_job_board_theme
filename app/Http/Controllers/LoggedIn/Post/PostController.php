@@ -254,34 +254,32 @@ class PostController extends Controller
             // Get the post ID
             $postId = $post->id;
 
-            // Loop through the authors array and update or create a record in the author_post table
+            // Retrieve the existing author IDs for the post
+            $existingAuthorIds = AuthorPost::where("post_id", $postId)
+                ->pluck("user_id")
+                ->toArray();
 
+            // Loop through the authors array and update or create a record in the author_post table
+            $updatedAuthorIds = [];
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
+                $updatedAuthorIds[] = $authorId;
 
-                // Find the record in the AuthorPost table by user_id and post_id
-                $authorPost = AuthorPost::where("user_id", $authorId)
-                    ->where("post_id", $postId)
-                    ->firstOrFail();
-
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                // Find the authors in the existing Post with the updated authors in the request,
-
-                // Compare the authors in the existing Post with the updated authors in the request,
-                // and delete any AuthorPost records that are not present in the updated request.
-                $authorPost->delete();
+                // Update or create the record in the AuthorPost table
+                AuthorPost::updateOrCreate(
+                    ["user_id" => $authorId, "post_id" => $postId],
+                    ["user_id" => $authorId, "post_id" => $postId]
+                );
             }
+
+            // Delete the AuthorPost records that are not present in the request
+            $authorsToDelete = array_diff(
+                $existingAuthorIds,
+                $updatedAuthorIds
+            );
+            AuthorPost::where("post_id", $postId)
+                ->whereIn("user_id", $authorsToDelete)
+                ->delete();
         }
 
         //

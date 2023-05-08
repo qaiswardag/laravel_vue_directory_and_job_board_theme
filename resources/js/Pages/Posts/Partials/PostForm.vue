@@ -326,10 +326,6 @@ onBeforeMount(() => {
         <template #description> Create a new Post. </template>
 
         <template #main>
-            <p class="my-12">
-                post author arroy er: <br />{{ postForm?.author }}
-            </p>
-            <p class="my-12">post er: {{ postForm }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -677,9 +673,7 @@ onBeforeMount(() => {
                                 <div
                                     class="flex justify-between items-center rounded"
                                 >
-                                    <div
-                                        class="flex items-center gap-2 my-4 overflow-y-scroll"
-                                    >
+                                    <div class="flex items-center gap-2 my-4">
                                         <!-- start photo -->
                                         <div
                                             class="flex-shrink-0"
