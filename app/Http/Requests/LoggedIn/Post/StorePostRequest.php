@@ -25,6 +25,7 @@ class StorePostRequest extends FormRequest
      */
     public function rules()
     {
+        // dd("authors in request:", $this->author);
         $rules = [
             "published" => ["boolean"],
             "show_author" => ["boolean"],
@@ -51,7 +52,6 @@ class StorePostRequest extends FormRequest
             // provides an additional layer of validation to ensure that the foreign key reference
             // is valid at the application level as well.
             "user_id" => ["required", "integer", "exists:users,id"],
-            "author_id" => ["nullable", "integer", "exists:users,id"],
 
             "team" => ["required"],
 
@@ -126,13 +126,13 @@ class StorePostRequest extends FormRequest
             if (
                 $this->author !== null &&
                 gettype($this->author) === "array" &&
-                count($this->author) >= 2
+                count($this->author) >= 6
             ) {
                 $validator
                     ->errors()
                     ->add(
                         "author",
-                        "This post is limited to a maximum of one author."
+                        "This post is limited to a maximum of 5 authors."
                     );
             }
         });

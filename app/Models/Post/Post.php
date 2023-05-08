@@ -11,12 +11,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    /**
-     * Not all attributes are s assignable.
-     *
-     * @var string<int, string>
-     */
-
+    // Define the fillable attributes
     protected $fillable = [
         "user_id",
         "team_id",
@@ -46,8 +41,8 @@ class Post extends Model
         return $this->belongsTo(User::class, "user_id");
     }
 
-    public function author()
+    public function authors()
     {
-        return $this->belongsTo(User::class, "author_id");
+        return $this->belongsToMany(User::class, "author_post");
     }
 }

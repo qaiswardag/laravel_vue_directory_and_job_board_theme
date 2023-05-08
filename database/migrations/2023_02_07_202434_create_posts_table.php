@@ -36,10 +36,6 @@ return new class extends Migration {
             //
             //
             $table->boolean("show_author");
-            $table
-                ->integer("author_id")
-                ->nullable()
-                ->index();
             $table->longText("title");
             $table->string("slug");
             $table->longText("content");

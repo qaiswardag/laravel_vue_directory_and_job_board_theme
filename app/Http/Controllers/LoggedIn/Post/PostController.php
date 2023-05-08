@@ -4,6 +4,7 @@ namespace App\Http\Controllers\LoggedIn\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Post\StorePostRequest;
+use App\Models\Post\AuthorPost;
 use App\Models\Post\Post;
 use App\Models\Team;
 use App\Models\User;
@@ -107,8 +108,23 @@ class PostController extends Controller
             }
         } while ($slugExists);
 
-        // Initialize the $authorId variable to null
-        $authorId = null;
+        // Create the post and store it in a variable
+        $post = Post::create([
+            "user_id" => $userId,
+            "team_id" => $team->id,
+            "title" => $title,
+            "slug" => $slug,
+            "slug_id" => $slugId,
+            "published" => $request->published,
+            "cover_image_original" => $request->cover_image_original,
+            "cover_image_thumbnail" => $request->cover_image_thumbnail,
+            "cover_image_medium" => $request->cover_image_medium,
+            "cover_image_large" => $request->cover_image_large,
+            "content" => $content,
+            "tags" => $request->tags,
+            "show_author" => $request->show_author,
+        ]);
+
         // Check if the "show_author" property of the $request object is true
         // and the "author" property of the $request object is not null
         if (
@@ -117,29 +133,20 @@ class PostController extends Controller
             gettype($request->author) === "array" &&
             count($request->author) !== 0
         ) {
-            // If both conditions are met, assign the ID of the first author
-            // in the "author" property of the request object to the $authorId variable
-            $authorId = $request->author[0]["id"];
+            // Get the post ID
+            $postId = $post->id;
+
+            // Loop through the authors array and attach each author to the post
+            foreach ($request->author as $author) {
+                $authorId = $author["id"];
+
+                // Create a new record in the author_post table
+                AuthorPost::create([
+                    "user_id" => $authorId,
+                    "post_id" => $postId,
+                ]);
+            }
         }
-
-        Post::create([
-            "user_id" => $userId,
-            "team_id" => $team->id,
-            "title" => $title,
-            "slug" => $slug,
-            "slug_id" => $slugId,
-            "published" => $request->published,
-
-            "cover_image_original" => $request->cover_image_original,
-            "cover_image_thumbnail" => $request->cover_image_thumbnail,
-            "cover_image_medium" => $request->cover_image_medium,
-            "cover_image_large" => $request->cover_image_large,
-
-            "content" => $content,
-            "tags" => $request->tags,
-            "show_author" => $request->show_author,
-            "author_id" => $authorId,
-        ]);
 
         // Return the current team that the user is on, rather than the team that the user is storing the post for.
         $currentTeam = Auth::user()->currentTeam;
@@ -169,18 +176,15 @@ class PostController extends Controller
         // Authorize the team that the user has selected to store the post for, rather than the team that the user is currently on.
         $this->authorize("can-create-and-update", $team);
 
-        $author = null;
+        $authors = null;
 
-        if ($post->show_author === 1 && $post->author_id !== null) {
-            $user = User::find($post->author_id);
-            // In case user have deleted thier profile
-            // set author to null
-            if ($user === null) {
-                $author = null;
-            }
-            // If user exist
-            if ($user !== null) {
-                $author = [
+        if ($post->show_author === 1 && $post->authors !== null) {
+            // Fetch related authors
+            $relatedAuthors = $post->authors;
+
+            // Loop through related authors and create an array of authors with the required information
+            foreach ($relatedAuthors as $user) {
+                $authors[] = [
                     "id" => $user->id,
                     "first_name" => $user->first_name,
                     "last_name" => $user->last_name,
@@ -194,7 +198,7 @@ class PostController extends Controller
 
         return Inertia::render("Posts/UpdatePost/UpdatePost", [
             "post" => $post,
-            "postAuthor" => $author,
+            "postAuthor" => $authors,
         ]);
     }
 
@@ -220,17 +224,10 @@ class PostController extends Controller
 
         // Initialize the $authorId variable to null
         $authorId = null;
-        // Check if the "show_author" property of the $post object is set to 1 and the "author" property of the $request object is not null
-        if (
-            $post->show_author === 1 &&
-            $request->author !== null &&
-            gettype($request->author) === "array" &&
-            count($request->author) !== 0
-        ) {
-            // If both conditions are met, assign the ID of the first author in the "author" property of the request object to the $authorId variable
-            $authorId = $request->author[0]["id"];
-        }
 
+        // dd("ok:", $request->author);
+
+        // Create the post and store it in a variable
         $post->update([
             "user_id" => $userId,
             "team_id" => $teamId,
@@ -246,9 +243,50 @@ class PostController extends Controller
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
-            "author_id" => $authorId,
         ]);
 
+        if (
+            $post->show_author === true &&
+            $request->author !== null &&
+            gettype($request->author) === "array" &&
+            count($request->author) !== 0
+        ) {
+            // Get the post ID
+            $postId = $post->id;
+
+            // Loop through the authors array and update or create a record in the author_post table
+
+            foreach ($request->author as $author) {
+                $authorId = $author["id"];
+
+                // Find the record in the AuthorPost table by user_id and post_id
+                $authorPost = AuthorPost::where("user_id", $authorId)
+                    ->where("post_id", $postId)
+                    ->firstOrFail();
+
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                // Find the authors in the existing Post with the updated authors in the request,
+
+                // Compare the authors in the existing Post with the updated authors in the request,
+                // and delete any AuthorPost records that are not present in the updated request.
+                $authorPost->delete();
+            }
+        }
+
+        //
+        //
+        //
         // Return the current team that the user is on, rather than the team that the user is storing the post for.
         $currentTeam = Auth::user()->currentTeam;
 

@@ -304,12 +304,11 @@ onBeforeMount(() => {
         postForm.cover_image_large = props.post.cover_image_large;
 
         postForm.tags = props.post.tags;
-        //
 
         // check if the post author is available and should be displayed
         if (props.post.show_author === 1 && props.postAuthor !== null) {
             // add the author to the postForm
-            postForm.author.push(props.postAuthor);
+            postForm.author = props.postAuthor;
         }
 
         // check if the post author is not available or should not be displayed
@@ -327,6 +326,10 @@ onBeforeMount(() => {
         <template #description> Create a new Post. </template>
 
         <template #main>
+            <p class="my-12">
+                post author arroy er: <br />{{ postForm?.author }}
+            </p>
+            <p class="my-12">post er: {{ postForm }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -687,7 +690,7 @@ onBeforeMount(() => {
                                         >
                                             <img
                                                 class="object-cover w-12 h-12 rounded-full"
-                                                :src="`/storage/uploads/${user.profile_photo_path}`"
+                                                :src="`/storage/${user.profile_photo_path}`"
                                                 :alt="
                                                     user.first_name +
                                                     user.last_name
@@ -757,10 +760,10 @@ onBeforeMount(() => {
                     </div>
                     <InputError :message="postForm.errors.author" />
                     <p
-                        v-if="postForm.author.length >= 2"
+                        v-if="postForm.author.length >= 6"
                         class="myPrimaryParagraphError"
                     >
-                        Maximum one author is allowed.
+                        Maximum 5 author is allowed.
                     </p>
                 </div>
             </div>

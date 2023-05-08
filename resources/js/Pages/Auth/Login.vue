@@ -38,8 +38,6 @@ const submit = () => {
         onFinish: () => {},
     });
 };
-
-console.log("route is:", route("login"));
 </script>
 
 <template>

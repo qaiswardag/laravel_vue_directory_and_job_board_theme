@@ -313,7 +313,7 @@ onMounted(() => {
                                                             null
                                                         "
                                                         class="object-cover w-12 h-12 rounded-full"
-                                                        :src="`/storage/uploads/${user.profile_photo_path}`"
+                                                        :src="`/storage/${user.profile_photo_path}`"
                                                         :alt="
                                                             user.first_name +
                                                             user.last_name
@@ -483,7 +483,7 @@ onMounted(() => {
                                     >
                                         <img
                                             class="object-cover w-12 h-12 rounded-full"
-                                            :src="`/storage/uploads/${user.profile_photo_path}`"
+                                            :src="`/storage/${user.profile_photo_path}`"
                                             :alt="
                                                 user.first_name + user.last_name
                                             "
