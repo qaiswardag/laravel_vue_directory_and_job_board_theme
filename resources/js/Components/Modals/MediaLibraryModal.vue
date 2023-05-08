@@ -164,7 +164,7 @@ const handleDeleteImage = function (imageId) {
     formDeleteImage.post(route("media.destroy", [props.team.id]), {
         preserveScroll: true,
         onSuccess: () => {
-            // dispatch
+            // commit
             store.commit("mediaLibrary/setCurrentImage", null);
             // dispatch
             store.dispatch("mediaLibrary/loadMedia", {

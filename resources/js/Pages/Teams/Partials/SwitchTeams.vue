@@ -3,6 +3,10 @@ import ActionSection from "@/Components/ActionSection.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import { useStore } from "vuex";
+
+// store
+const store = useStore();
 
 const switchTeamForm = useForm({});
 
@@ -49,6 +53,9 @@ const handleSwitchToTeam = (team, currentTeamId) => {
     };
     // handle click
     thirdModalButtonFunction.value = function () {
+        // commit
+        store.commit("mediaLibrary/setCurrentImage", null);
+        store.commit("attachedUsers/setRemoveAttachedUser", []);
         switchTeam(team);
     };
     // end modal
