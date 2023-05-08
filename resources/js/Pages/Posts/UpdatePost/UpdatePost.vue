@@ -31,9 +31,9 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout title="Create Post">
+    <LoggedInLayout title="Update Post">
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Create a New Post</h2>
+            <h2 class="myPrimaryMainPageHeader">Update Post</h2>
         </template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

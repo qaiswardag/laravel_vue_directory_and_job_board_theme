@@ -459,7 +459,7 @@ onMounted(() => {
 
                     <div
                         v-if="getCurrentAttachedUsers.length !== 0"
-                        class="flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 p-2"
+                        class="flex flex-col w-full divide-y divide-gray-200 p-2"
                     >
                         <p class="myPrimaryParagraph pb-2 italic text-xs">
                             Added {{ getCurrentAttachedUsers.length }} Users

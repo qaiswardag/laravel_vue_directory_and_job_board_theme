@@ -38,15 +38,14 @@ router.on("finish", () => {
         <Banner />
 
         <!-- Topbar - start -->
-
-        <div class="sticky top-0 z-10 bg-white border-b-2 border-red-300">
+        <div
+            class="h-16 sticky top-0 z-10 flex flex-shrink-0 justify-end items-center bg-white border-b-2 border-red-300"
+        >
             <GuestsNavbar></GuestsNavbar>
         </div>
 
         <slot name="header" />
-        <div
-            class="mx-auto max-w-7xl min-h-screen px-4 sm:px-6 md:px-8 pb-12 bg-gray-100 rounded"
-        >
+        <div class="mx-auto max-w-7xl min-h-screen px-4 sm:px-6 md:px-8 pb-12">
             <main>
                 <slot />
             </main>

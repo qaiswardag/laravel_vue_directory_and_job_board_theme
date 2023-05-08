@@ -444,7 +444,7 @@ const notificationsModalButton = function () {
                     </p>
                 </div>
                 <div
-                    class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                    class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                 >
                     <div class="hover:bg-white px-2">
                         <div class="rounded">

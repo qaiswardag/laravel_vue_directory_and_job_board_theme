@@ -205,7 +205,8 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                 "
                 :active="
                     route().current('overview.posts.index') ||
-                    route().current('overview.posts.create')
+                    route().current('overview.posts.create') ||
+                    route().current('overview.posts.post.edit')
                 "
             >
                 <svg

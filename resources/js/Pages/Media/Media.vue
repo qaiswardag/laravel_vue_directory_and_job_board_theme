@@ -146,7 +146,7 @@ const handleUploadImages = function () {
                     </div>
                 </div>
 
-                <div class="bg-red-50 py-8 px-4 my-6 rounded-md">
+                <div class="py-12 px-4 my-6 rounded-md">
                     <div>
                         <p class="myPrimaryParagraph">
                             Manage or upload new images to your collection to
@@ -179,7 +179,7 @@ const handleUploadImages = function () {
                             <li
                                 v-for="file in images"
                                 :key="file.id"
-                                class="relative border border-myPrimaryMediumGrayColor p-4 rounded"
+                                class="border border-myPrimaryLightGrayColor rounded px-4 p-4 cursor-pointer bg-gray-50"
                             >
                                 <div
                                     class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
@@ -192,7 +192,7 @@ const handleUploadImages = function () {
                                 </div>
 
                                 <dl
-                                    class="myPrimaryParagraph text-xs mt-2 border-b border-myPrimaryMediumGrayColor divide-y divide-myPrimaryMediumGrayColor"
+                                    class="myPrimaryParagraph text-xs mt-2 border-b border-myPrimaryLightGrayColor divide-y"
                                 >
                                     <div
                                         class="py-3 flex justify-between items-center"

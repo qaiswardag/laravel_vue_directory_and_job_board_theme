@@ -12,50 +12,213 @@ defineProps({
 <template>
     <GuestsLayout title="Home">
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Home</h2>
+            <h1 class="myPrimaryHeader text-center">
+                Turn Emails into Revenue
+            </h1>
+            <p class="myPrimaryParagraph text-center">
+                Win new customers with the #1 email marketing and automations
+                brand* that recommends ways to get more opens, clicks, and
+                sales.
+            </p>
         </template>
-        <div class="flex flex-col gap-8 items-center pt-8">
-            <p>SVG icons:</p>
-            <p class="mt-2">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-12 h-12"
+
+        <!-- people start -->
+        <div class="bg-white py-24 sm:py-32">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl lg:mx-0">
+                    <h2 class="myTertiaryHeader">Our team</h2>
+                    <p class="myPrimaryParagraph">
+                        We’re a dynamic group of individuals who are passionate
+                        about what we do and dedicated to delivering the best
+                        results for our clients.
+                    </p>
+                </div>
+                <ul
+                    role="list"
+                    class="mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                    />
-                </svg>
-            </p>
-            <p>
-                <AdjustmentsHorizontalIcon
-                    class="h-12 w-12 mt-12 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
-                />
-            </p>
-        </div>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 px-3">
-                <p class="myPrimaryParagraph">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Blanditiis omnis nisi laborum ipsa, a soluta atque modi ex,
-                    earum commodi facere dicta iusto dignissimos labore quae
-                    impedit similique. Repudiandae ex, laudantium illum cumque
-                    sunt aut consequuntur eius ad reiciendis delectus et
-                    maiores? Et delectus temporibus, debitis officiis dicta
-                    placeat fuga animi quidem pariatur praesentium dolores
-                    possimus illo quam id ducimus rerum, quibusdam consequuntur.
-                    Quam, vero maiores atque doloremque consectetur quisquam.
-                    Sunt fuga veniam quae hic? Sit animi inventore, aut
-                    perspiciatis laboriosam excepturi? Error, repellendus rerum
-                    natus adipisci fugiat, labore officiis id ullam repudiandae
-                    similique, pariatur molestiae obcaecati odio eveniet unde.
-                </p>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Michael Foster
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Co-Founder / CTO</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Dries Vincent
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            Business Relations
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Lindsay Walton
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            Front-end Developer
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Courtney Henry
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Designer</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Tom Cook
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            Director of Product
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Whitney Francis
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Copywriter</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Leonard Krasner
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Senior Designer</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Floyd Miles
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            Principal Designer
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Emily Selman
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            VP, User Experience
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Kristin Watson
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            VP, Human Resources
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1505840717430-882ce147ef2d?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Emma Dorsey
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Senior Developer</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1509783236416-c9ad59bae472?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Alicia Bell
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Junior Copywriter</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1507101105822-7472b28e22ac?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Jenny Wilson
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Studio Artist</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Anna Roberts
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Partner, Creative</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-semibold mt-2">
+                            Benjamin Russel
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            Director, Print Operations
+                        </p>
+                    </li>
+                </ul>
             </div>
         </div>
+        <!-- people end -->
     </GuestsLayout>
 </template>

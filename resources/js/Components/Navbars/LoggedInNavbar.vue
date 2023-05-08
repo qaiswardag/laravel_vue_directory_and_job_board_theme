@@ -57,7 +57,7 @@ const showNotificationsSlideOver = ref(false);
 const showPrimaryMenuSlideOver = ref(false);
 
 // modal
-const modalShowTeamMenu = ref(false);
+const modalShowAccountMenu = ref(false);
 const modalShowSearchAnything = ref(false);
 
 // modal menu content
@@ -81,18 +81,20 @@ const thirdModalButtonFunction = ref(null);
 
 const handleMenuUserItem = () => {
     // handle show modal for unique content
-    modalShowTeamMenu.value = true;
+    modalShowAccountMenu.value = true;
     // set modal standards
     titleMenuModal.value = "Menu";
     // handle click
     firstModalMenuButtonFunction.value = function () {
         // handle show modal for unique content
-        modalShowTeamMenu.value = false;
+        modalShowAccountMenu.value = false;
     };
     // end menu modal
 };
 
 const handleLogout = () => {
+    router.get(route("home"));
+    modalShowAccountMenu.value = false;
     router.post(route("logout"));
 };
 
@@ -108,7 +110,6 @@ const handleSearchAnything = function () {
 
 // handle primary slideoer menu
 const handlePrimaryMenuSlideOver = function () {
-    console.log("came here");
     showPrimaryMenuSlideOver.value = true;
 };
 // handle notifications window
@@ -141,7 +142,7 @@ const primaryMenuSlideOverButton = function () {
     >
     </SlideOverPrimaryMenu>
     <DynamicMenuModal
-        :show="modalShowTeamMenu"
+        :show="modalShowAccountMenu"
         :title="titleMenuModal"
         @firstModalMenuButtonFunction="firstModalMenuButtonFunction"
     >
@@ -298,7 +299,7 @@ const primaryMenuSlideOverButton = function () {
                     </div>
                     <input
                         id="search-field"
-                        class="text-sm cursor-pointer block w-full h-full pl-8 pr-3 border-transparent placeholder-gray-500 focus:outline-none border-0 focus:ring-0 font-medium text-myPrimaryDarkGrayColor rounded-md py-6 px-3"
+                        class="text-sm cursor-pointer block w-full h-full pl-8 pr-3 border-transparent placeholder-gray-500 focus:outline-none border-0 focus:ring-0 font-medium text-myPrimaryDarkGrayColor rounded-md py-4 px-3"
                         @click.prevent="handleSearchAnything"
                         placeholder="Search anything..."
                         readonly
@@ -370,7 +371,7 @@ const primaryMenuSlideOverButton = function () {
                 type="button"
                 class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
             >
-                <span class="sr-only">View notifications</span>
+                <span class="sr-only">View Menu</span>
                 <Bars3Icon class="h-6 w-6" aria-hidden="true" />
             </button>
         </nav>

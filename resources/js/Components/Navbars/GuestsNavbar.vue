@@ -1,326 +1,329 @@
 <script setup>
+import SlideOverNotifications from "@/Components/Sidebars/SlideOverNotifications.vue";
+import SlideOverPrimaryMenu from "@/Components/Sidebars/SlideOverPrimaryMenu.vue";
+import { ref } from "vue";
+import { Head, router } from "@inertiajs/vue3";
+import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
 import {
-    Popover,
-    PopoverButton,
-    PopoverGroup,
-    PopoverPanel,
+    Dialog,
+    DialogPanel,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems,
+    TransitionChild,
+    TransitionRoot,
 } from "@headlessui/vue";
 import {
-    MagnifyingGlassIcon,
-    ShoppingBagIcon,
+    AdjustmentsHorizontalIcon,
+    ArrowRightCircleIcon,
+    ArrowRightIcon,
+    Bars3BottomLeftIcon,
+    Bars3Icon,
+    BellIcon,
+    CalendarIcon,
+    ChartBarIcon,
+    FolderIcon,
+    HomeIcon,
+    InboxIcon,
+    UserIcon,
+    UsersIcon,
+    XMarkIcon,
 } from "@heroicons/vue/24/outline";
+import {
+    EllipsisHorizontalIcon,
+    MagnifyingGlassIcon,
+} from "@heroicons/vue/20/solid";
+import ApplicationMark from "@/Components/MarkComponents/ApplicationMark.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import DynamicMenuModal from "@/Components/Modals/DynamicMenuModal.vue";
 
-const navigation = {
-    categories: [
-        {
-            name: "Women",
-            clothing: [
-                [
-                    { name: "Tops", href: "#" },
-                    { name: "Dresses", href: "#" },
-                    { name: "Pants", href: "#" },
-                    { name: "Denim", href: "#" },
-                    { name: "Sweaters", href: "#" },
-                    { name: "T-Shirts", href: "#" },
-                ],
-                [
-                    { name: "Jackets", href: "#" },
-                    { name: "Activewear", href: "#" },
-                    { name: "Shorts", href: "#" },
-                    { name: "Swimwear", href: "#" },
-                    { name: "Browse All", href: "#" },
-                ],
-            ],
-            accessories: [
-                { name: "Shoes", href: "#" },
-                { name: "Jewelry", href: "#" },
-                { name: "Handbags", href: "#" },
-                { name: "Socks", href: "#" },
-                { name: "Hats", href: "#" },
-                { name: "Browse All", href: "#" },
-            ],
-            categories: [
-                { name: "New Arrivals", href: "#" },
-                { name: "Sale", href: "#" },
-                { name: "Basic Tees", href: "#" },
-                { name: "Artwork Tees", href: "#" },
-            ],
-        },
-    ],
-    other: [
-        { name: "Company", href: "#" },
-        { name: "Stores", href: "#" },
-    ],
+// updated menu
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import {
+    ChevronDownIcon,
+    PhoneIcon,
+    PlayCircleIcon,
+} from "@heroicons/vue/20/solid";
+import {
+    ArrowPathIcon,
+    ChartPieIcon,
+    CursorArrowRaysIcon,
+    FingerPrintIcon,
+    SquaresPlusIcon,
+    Bars2Icon,
+} from "@heroicons/vue/24/outline";
+
+const showPrimaryMenuSlideOver = ref(false);
+// modal
+const modalShowAccountMenu = ref(false);
+
+// modal menu content
+const titleMenuModal = ref("");
+const firstMenuButtonModal = ref("");
+// set menu modal handle functions
+const firstModalMenuButtonFunction = ref(null);
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
+const handleMenuUserItem = () => {
+    // handle show modal for unique content
+    modalShowAccountMenu.value = true;
+    // set modal standards
+    titleMenuModal.value = "Menu";
+    // handle click
+    firstModalMenuButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowAccountMenu.value = false;
+    };
+    // end menu modal
+};
+
+const handleLogout = () => {
+    router.get(route("home"));
+    modalShowAccountMenu.value = false;
+    router.post(route("logout"));
+};
+
+// handle primary slideoer menu
+const handlePrimaryMenuSlideOver = function () {
+    showPrimaryMenuSlideOver.value = true;
+};
+
+// close primary menu window
+const primaryMenuSlideOverButton = function () {
+    showPrimaryMenuSlideOver.value = false;
 };
 </script>
-
 <template>
-    <div class="bg-white">
-        <header class="relative bg-white">
-            <nav aria-label="Top" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div
-                    class="border-b border-gray-200 px-4 pb-14 sm:px-0 sm:pb-0"
+    <SlideOverPrimaryMenu
+        :open="showPrimaryMenuSlideOver"
+        @primaryMenuSlideOverButton="primaryMenuSlideOverButton"
+    >
+    </SlideOverPrimaryMenu>
+    <DynamicMenuModal
+        :show="modalShowAccountMenu"
+        :title="titleMenuModal"
+        @firstModalMenuButtonFunction="firstModalMenuButtonFunction"
+    >
+        <main>
+            <div class="myPrimaryParagraph flex flex-col gap-1">
+                <p
+                    class="myPrimaryParagraph italic text-xs py-2 px-2 rounded-lg bg-gray-50"
                 >
-                    <div class="flex h-16 items-center justify-between">
-                        <!-- Logo -->
-                        <div class="flex flex-1">
-                            <a href="#">
-                                <span class="sr-only">Your Company</span>
-                                <img
-                                    class="h-8 w-auto"
-                                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                    alt=""
-                                />
-                            </a>
-                        </div>
+                    Logged in as {{ $page.props.user.first_name }}
+                    {{ $page.props.user.last_name }}
+                </p>
+                <p
+                    class="myPrimaryParagraph italic text-xs py-2 px-2 rounded-lg mt-2"
+                >
+                    Manage Team
+                </p>
 
-                        <!-- Flyout menus -->
-                        <PopoverGroup
-                            class="absolute inset-x-0 bottom-0 sm:static sm:flex-1 sm:self-stretch"
+                <template
+                    v-if="
+                        $page.props.user.all_teams.length > 0 &&
+                        $page.props.user.current_team &&
+                        $page.props.jetstream.hasTeamFeatures
+                    "
+                >
+                    <Link
+                        :href="
+                            route('teams.show', $page.props.user.current_team)
+                        "
+                    >
+                        <div
+                            class="group relative flex gap-x-6 rounded-lg px-4 py-2 items-center bg-gray-50 hover:underline"
+                            :class="[
+                                route().current('teams.show') ||
+                                route().current('team.update.information') ||
+                                route().current('team.members') ||
+                                route().current('team.delete')
+                                    ? 'bg-myPrimaryBrandColor text-white'
+                                    : '',
+                            ]"
                         >
                             <div
-                                class="flex h-14 space-x-8 overflow-x-auto border-t px-4 pb-px sm:h-full sm:justify-center sm:overflow-visible sm:border-t-0 sm:pb-0"
+                                class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
                             >
-                                <Popover
-                                    v-for="(
-                                        category, categoryIdx
-                                    ) in navigation.categories"
-                                    :key="categoryIdx"
-                                    class="flex"
-                                    v-slot="{ open }"
-                                >
-                                    <div class="relative flex">
-                                        <PopoverButton
-                                            :class="[
-                                                open
-                                                    ? 'border-indigo-600 text-indigo-600'
-                                                    : 'border-transparent text-gray-700 hover:text-gray-800',
-                                                'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out',
-                                            ]"
-                                            >{{ category.name }}</PopoverButton
-                                        >
-                                    </div>
-
-                                    <transition
-                                        enter-active-class="transition ease-out duration-200"
-                                        enter-from-class="opacity-0"
-                                        enter-to-class="opacity-100"
-                                        leave-active-class="transition ease-in duration-150"
-                                        leave-from-class="opacity-100"
-                                        leave-to-class="opacity-0"
-                                    >
-                                        <PopoverPanel
-                                            class="absolute inset-x-0 top-full text-gray-500 sm:text-sm bg-red-300"
-                                        >
-                                            <!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
-                                            <div
-                                                class="absolute inset-0 top-1/2 bg-white shadow"
-                                                aria-hidden="true"
-                                            />
-
-                                            <div class="relative bg-white">
-                                                <div
-                                                    class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-                                                >
-                                                    <div
-                                                        class="grid grid-cols-1 items-start gap-x-6 gap-y-10 pb-12 pt-10 md:grid-cols-2 lg:gap-x-8"
-                                                    >
-                                                        <div
-                                                            class="grid grid-cols-1 gap-x-6 gap-y-10 lg:gap-x-8"
-                                                        >
-                                                            <div>
-                                                                <p
-                                                                    id="clothing-heading"
-                                                                    class="font-medium text-gray-900"
-                                                                >
-                                                                    Clothing
-                                                                </p>
-                                                                <div
-                                                                    class="mt-4 border-t border-gray-200 pt-6 sm:grid sm:grid-cols-2 sm:gap-x-6"
-                                                                >
-                                                                    <ul
-                                                                        role="list"
-                                                                        aria-labelledby="clothing-heading"
-                                                                        class="space-y-6 sm:space-y-4"
-                                                                    >
-                                                                        <li
-                                                                            v-for="item in category
-                                                                                .clothing[0]"
-                                                                            :key="
-                                                                                item.name
-                                                                            "
-                                                                            class="flex"
-                                                                        >
-                                                                            <a
-                                                                                :href="
-                                                                                    item.href
-                                                                                "
-                                                                                class="hover:text-gray-800"
-                                                                                >{{
-                                                                                    item.name
-                                                                                }}</a
-                                                                            >
-                                                                        </li>
-                                                                    </ul>
-                                                                    <ul
-                                                                        role="list"
-                                                                        aria-label="More clothing"
-                                                                        class="mt-6 space-y-6 sm:mt-0 sm:space-y-4"
-                                                                    >
-                                                                        <li
-                                                                            v-for="item in category
-                                                                                .clothing[1]"
-                                                                            :key="
-                                                                                item.name
-                                                                            "
-                                                                            class="flex"
-                                                                        >
-                                                                            <a
-                                                                                :href="
-                                                                                    item.href
-                                                                                "
-                                                                                class="hover:text-gray-800"
-                                                                                >{{
-                                                                                    item.name
-                                                                                }}</a
-                                                                            >
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:gap-x-8"
-                                                        >
-                                                            <div>
-                                                                <p
-                                                                    id="accessories-heading"
-                                                                    class="font-medium text-gray-900"
-                                                                >
-                                                                    Accessories
-                                                                </p>
-                                                                <ul
-                                                                    role="list"
-                                                                    aria-labelledby="accessories-heading"
-                                                                    class="mt-4 space-y-6 border-t border-gray-200 pt-6 sm:space-y-4"
-                                                                >
-                                                                    <li
-                                                                        v-for="item in category.accessories"
-                                                                        :key="
-                                                                            item.name
-                                                                        "
-                                                                        class="flex"
-                                                                    >
-                                                                        <a
-                                                                            :href="
-                                                                                item.href
-                                                                            "
-                                                                            class="hover:text-gray-800"
-                                                                            >{{
-                                                                                item.name
-                                                                            }}</a
-                                                                        >
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div>
-                                                                <p
-                                                                    id="categories-heading"
-                                                                    class="font-medium text-gray-900"
-                                                                >
-                                                                    Categories
-                                                                </p>
-                                                                <ul
-                                                                    role="list"
-                                                                    aria-labelledby="categories-heading"
-                                                                    class="mt-4 space-y-6 border-t border-gray-200 pt-6 sm:space-y-4"
-                                                                >
-                                                                    <li
-                                                                        v-for="item in category.categories"
-                                                                        :key="
-                                                                            item.name
-                                                                        "
-                                                                        class="flex"
-                                                                    >
-                                                                        <a
-                                                                            :href="
-                                                                                item.href
-                                                                            "
-                                                                            class="hover:text-gray-800"
-                                                                            >{{
-                                                                                item.name
-                                                                            }}</a
-                                                                        >
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </PopoverPanel>
-                                    </transition>
-                                </Popover>
-
-                                <a
-                                    v-for="item in navigation.other"
-                                    :key="item.name"
-                                    :href="item.href"
-                                    class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                                    >{{ item.name }}</a
-                                >
-                                <Link
-                                    class="flex gap-2 items-center rounded-full px-4 py-2"
-                                    :href="route('dashboard')"
-                                >
-                                    <div class="flex items-center">
-                                        <div
-                                            class="text-sm font-semibold text-myPrimaryDarkGrayColor cursor-pointer"
-                                        >
-                                            Dashboard
-                                        </div>
-                                    </div>
-                                </Link>
-                            </div>
-                        </PopoverGroup>
-
-                        <div class="flex flex-1 items-center justify-end">
-                            <!-- Search -->
-                            <a
-                                href="#"
-                                class="p-2 text-gray-400 hover:text-gray-500"
-                            >
-                                <span class="sr-only">Search</span>
-                                <MagnifyingGlassIcon
-                                    class="h-6 w-6"
-                                    aria-hidden="true"
+                                <AdjustmentsHorizontalIcon
+                                    class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
                                 />
-                            </a>
-
-                            <!-- Cart -->
-                            <div class="ml-4 flow-root lg:ml-8">
-                                <a
-                                    href="#"
-                                    class="group -m-2 flex items-center p-2"
-                                >
-                                    <ShoppingBagIcon
-                                        class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                                        aria-hidden="true"
-                                    />
-                                    <span
-                                        class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
-                                        >0</span
-                                    >
-                                    <span class="sr-only"
-                                        >items in cart, view bag</span
-                                    >
-                                </a>
                             </div>
+                            <div>Team Settings</div>
                         </div>
+                    </Link>
+                </template>
+
+                <p class="italic text-xs py-2 px-2 rounded-lg">
+                    Manage Account
+                </p>
+
+                <Link
+                    :href="route('profile.show')"
+                    :active="
+                        route().current('profile.show') ||
+                        route().current('user.profile.update') ||
+                        route().current('user.profile.password') ||
+                        route().current('user.profile.security')
+                    "
+                >
+                    <div
+                        class="group relative flex gap-x-6 rounded-lg px-4 py-2 items-center bg-gray-50 hover:underline"
+                        :class="[
+                            route().current('profile.show') ||
+                            route().current('user.profile.update') ||
+                            route().current('user.profile.password') ||
+                            route().current('user.profile.security')
+                                ? 'bg-myPrimaryBrandColor text-white'
+                                : '',
+                        ]"
+                    >
+                        <div
+                            class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
+                        >
+                            <div
+                                class="h-8 w-8 flex-shrink-0"
+                                v-if="
+                                    $page.props.user &&
+                                    $page.props.user.profile_photo_path !== null
+                                "
+                            >
+                                <img
+                                    class="object-cover w-8 h-8 rounded-full flex-shrink-0"
+                                    :src="`/storage/${$page.props.user.profile_photo_path}`"
+                                    :alt="
+                                        $page.props.user.first_name +
+                                        $page.props.user.last_name
+                                    "
+                                />
+                            </div>
+
+                            <template
+                                v-if="
+                                    $page.props.user &&
+                                    $page.props.user.profile_photo_path === null
+                                "
+                            >
+                                <UserIcon
+                                    class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
+                                />
+                            </template>
+                        </div>
+                        <div>Your Profile</div>
                     </div>
+                </Link>
+
+                <form @submit.prevent="handleLogout">
+                    <div
+                        @click="handleLogout"
+                        class="hover:bg-gray-50 group relative flex gap-x-6 rounded-lg px-4 py-2 cursor-pointer bg-gray-50 items-center hover:underline"
+                    >
+                        <div
+                            class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
+                        >
+                            <ArrowRightIcon
+                                class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
+                            />
+                        </div>
+                        <div>Log out</div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </DynamicMenuModal>
+
+    <header class="w-6/1 text-sm">
+        <nav
+            class="mx-auto flex gap-4 max-w-7xl items-center justify-end px-6 lg:px-8"
+            aria-label="Global"
+        >
+            <template v-if="$page.props.user !== null">
+                <Link
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                    :href="route('dashboard')"
+                >
+                    Dasboard
+                </Link>
+            </template>
+            <template v-if="$page.props.user === null">
+                <Link
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                    :href="route('home')"
+                >
+                    Home
+                </Link>
+            </template>
+            <template v-if="$page.props.user === null">
+                <Link
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                    :href="route('login')"
+                >
+                    Login
+                </Link>
+            </template>
+            <template v-if="$page.props.user === null">
+                <Link
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                    :href="route('register')"
+                >
+                    Register
+                </Link>
+            </template>
+            <template v-if="$page.props.user !== null">
+                <div
+                    @click="handleMenuUserItem"
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                >
+                    <div
+                        class="h-9 w-9 flex-shrink-0"
+                        v-if="
+                            $page.props.user &&
+                            $page.props.user.profile_photo_path !== null
+                        "
+                    >
+                        <img
+                            class="object-cover w-9 h-9 rounded-full flex-shrink-0"
+                            :src="`/storage/${$page.props.user.profile_photo_path}`"
+                            :alt="
+                                $page.props.user.first_name +
+                                $page.props.user.last_name
+                            "
+                        />
+                    </div>
+                    <button
+                        v-if="
+                            $page.props.user &&
+                            $page.props.user.profile_photo_path === null
+                        "
+                        @click="handleMenuUserItem"
+                        type="button"
+                        class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
+                    >
+                        <UserIcon class="h-6 w-6" aria-hidden="true" />
+                    </button>
                 </div>
-            </nav>
-        </header>
-    </div>
+            </template>
+
+            <button
+                @click="handlePrimaryMenuSlideOver"
+                type="button"
+                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
+            >
+                <span class="sr-only">View Menu</span>
+                <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+            </button>
+        </nav>
+    </header>
 </template>
