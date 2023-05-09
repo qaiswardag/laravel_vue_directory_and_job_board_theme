@@ -58,6 +58,12 @@
     .myPrimaryMainPageHeader {
         @apply mySecondaryHeader mt-0 text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor border-b-2 border-gray-50 bg-gray-50;
     }
+    .myPrimaryMainPageHeaderNotLoggedIn {
+        @apply text-2xl mt-1 mb-2 font-semibold text-black text-center;
+    }
+    .myPrimaryMainPageParagraphNotLoggedIn {
+        @apply myPrimaryParagraph text-center;
+    }
     .myPrimaryHeader {
         @apply text-3xl mt-1 mb-2 font-semibold text-black;
     }
@@ -343,4 +349,36 @@
 
 .tags-move {
     transition: all 0.1s ease;
+}
+
+/* Scrollbar Styles */
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: gray;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 6px;
+    height: 6px; /* Add height for horizontal scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 4px;
+    border: 2px solid gray;
+}
+
+/* Add overflow-x property to enable horizontal scrollbar */
+.scrollable {
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* Add any other desired styles for the scrollable element */
 }

@@ -1,5 +1,12 @@
 <script setup>
 import { computed, onMounted, onUnmounted, watch } from "vue";
+import {
+    Dialog,
+    DialogOverlay,
+    DialogTitle,
+    TransitionChild,
+    TransitionRoot,
+} from "@headlessui/vue";
 
 const props = defineProps({
     show: {
@@ -20,33 +27,9 @@ const props = defineProps({
 
 const emit = defineEmits(["close"]);
 
-watch(
-    () => props.show,
-    () => {
-        if (props.show) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = null;
-        }
-    }
-);
-
 const close = () => {
     emit("close");
 };
-
-const closeOnEscape = (e) => {
-    if (e.key === "Escape" && props.show) {
-        close();
-    }
-};
-
-onMounted(() => document.addEventListener("keydown", closeOnEscape));
-
-onUnmounted(() => {
-    document.removeEventListener("keydown", closeOnEscape);
-    document.body.style.overflow = null;
-});
 
 const maxWidthClass = computed(() => {
     return {
@@ -64,50 +47,56 @@ const maxWidthClass = computed(() => {
 
 <template>
     <teleport to="body">
-        <transition leave-active-class="duration-200">
-            <div
-                v-show="show"
-                class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
-                scroll-region
+        <TransitionRoot :show="show" as="template">
+            <Dialog
+                as="div"
+                class="fixed z-30 inset-0 overflow-y-auto sm:px-4 py-6"
+                @close="close"
             >
-                <transition
-                    enter-active-class="ease-out duration-300"
-                    enter-from-class="opacity-0"
-                    enter-to-class="opacity-100"
-                    leave-active-class="ease-in duration-200"
-                    leave-from-class="opacity-100"
-                    leave-to-class="opacity-0"
+                <div
+                    class="flex items-end justify-center pb-20 text-center sm:block sm:p-0 bg-red-300 bg-opacity-30"
                 >
-                    <div
-                        v-show="show"
-                        class="fixed inset-0 transform transition-all"
-                        @click="close"
+                    <TransitionChild
+                        as="template"
+                        enter="ease-out duration-300"
+                        enter-from="opacity-0"
+                        enter-to="opacity-100"
+                        leave="ease-in duration-200"
+                        leave-from="opacity-100"
+                        leave-to="opacity-0"
                     >
-                        <div class="absolute inset-0 bg-gray-500 opacity-75" />
-                    </div>
-                </transition>
-
-                <transition
-                    enter-active-class="ease-out duration-300"
-                    enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    enter-to-class="opacity-100 translate-y-0 sm:scale-100"
-                    leave-active-class="ease-in duration-200"
-                    leave-from-class="opacity-100 translate-y-0 sm:scale-100"
-                    leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                >
-                    <div
-                        v-show="show"
-                        class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
-                        :class="[
-                            maxWidthClass ? maxWidthClass : '',
-                            minHeight ? minHeight : '',
-                            maxHeight ? maxHeight : '',
-                        ]"
+                        <DialogOverlay
+                            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                        />
+                    </TransitionChild>
+                    <!-- This element is to trick the browser into centering the modal contents. -->
+                    <span
+                        aria-hidden="true"
+                        class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                        >&#8203;</span
                     >
-                        <slot v-if="show" />
-                    </div>
-                </transition>
-            </div>
-        </transition>
+                    <TransitionChild
+                        as="template"
+                        enter="ease-out duration-300"
+                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        enter-to="opacity-100 translate-y-0 sm:scale-100"
+                        leave="ease-in duration-200"
+                        leave-from="opacity-100 translate-y-0 sm:scale-100"
+                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    >
+                        <div
+                            class="relative w-full inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:p-6"
+                            :class="[
+                                maxWidthClass ? maxWidthClass : '',
+                                minHeight ? minHeight : '',
+                                maxHeight ? maxHeight : '',
+                            ]"
+                        >
+                            <slot v-if="show" />
+                        </div>
+                    </TransitionChild>
+                </div>
+            </Dialog>
+        </TransitionRoot>
     </teleport>
 </template>

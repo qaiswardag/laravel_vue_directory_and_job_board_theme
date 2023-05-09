@@ -130,7 +130,7 @@ onMounted(() => {
         maxHeight="max-h-[50rem]"
     >
         <div
-            class="w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle px-4 py-4"
+            class="w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
             <div
                 class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
@@ -159,7 +159,7 @@ onMounted(() => {
 
             <!-- content start -->
             <div
-                class="h-full flex md:flex-row flex-col myPrimaryGap overflow-hidden mt-2 py-4 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8 overflow-y-scroll"
+                class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 py-4 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8 overflow-y-scroll"
             >
                 <main class="overflow-y-auto relativ w-full">
                     <div>

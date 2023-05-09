@@ -37,7 +37,12 @@ const submit = () => {
 <template>
     <GuestsLayout>
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Register</h2>
+            <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Register</h1>
+            <p class="myPrimaryMainPageParagraphNotLoggedIn">
+                Win new customers with the #1 email marketing and automations
+                brand* that recommends ways to get more opens, clicks, and
+                sales.
+            </p>
         </template>
         <Head title="Register" />
 

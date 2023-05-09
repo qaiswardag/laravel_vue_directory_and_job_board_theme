@@ -8,7 +8,7 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import { ref, computed, onBeforeMount } from "vue";
+import { ref, computed, onBeforeMount, watch } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import Tags from "@/Components/Forms/Tags.vue";
@@ -17,6 +17,7 @@ import { useStore } from "vuex";
 import slugify from "slugify";
 import config from "@/utils/config";
 import SearchUserModal from "@/Components/Search/SearchUserModal.vue";
+import { router } from "@inertiajs/vue3";
 
 import {
     Listbox,
@@ -224,7 +225,7 @@ const globalOptions = {
 // end Quill Editor
 
 // slug logic
-const slugIsOpen = ref(false);
+const isSlugEditable = ref(false);
 
 const postForm = useForm({
     title: "",
@@ -244,22 +245,37 @@ const postForm = useForm({
     author: [],
 });
 
-const productSlugLock = ref("");
+const postFieldSlugLocked = ref("");
 
-postForm.slug = computed(() => {
-    if (slugIsOpen.value === false) {
-        return slugify(postForm.title, config.slugifyOptions);
-    }
-    if (slugIsOpen.value === true) {
-        return slugify(productSlugLock.value, config.slugifyOptions);
-    }
-});
+// postForm.slug = computed(() => {
+//     if (isSlugEditable.value === false) {
+//         return slugify(postForm.title, config.slugifyOptions);
+//     }
+//     if (isSlugEditable.value === true) {
+//         return slugify(postFieldSlugLocked.value, config.slugifyOptions);
+//     }
+// });
+
+watch(
+    isSlugEditable,
+    (newValue) => {
+        if (newValue === false) {
+            postForm.slug = postForm.title;
+            // postForm.slug = slugify(postForm.title, config.slugifyOptions);
+        }
+        if (newValue === true) {
+            postForm.slug = postFieldSlugLocked.value;
+            // postForm.slug = slugify(postFieldSlugLocked.value, config.slugifyOptions);
+        }
+    },
+    { immediate: true }
+);
 
 const handleCloseLock = function () {
-    slugIsOpen.value = false;
+    isSlugEditable.value = false;
 };
 const handleOpenLock = function () {
-    slugIsOpen.value = true;
+    isSlugEditable.value = true;
 };
 const firstTagsButton = function (tags) {
     postForm.tags = tags;
@@ -288,12 +304,102 @@ const createPost = () => {
     }
 };
 
+const clearForm = function () {
+    postForm.title = "";
+    postForm.slug = "";
+    postForm.content = "";
+    postForm.published = true;
+    postForm.team = props.currentUserTeam;
+    postForm.user_id = props.user.id;
+
+    postForm.cover_image_original = "";
+    postForm.cover_image_thumbnail = "";
+    postForm.cover_image_medium = "";
+    postForm.cover_image_large = "";
+
+    postForm.tags = "";
+    postForm.show_author = true;
+    postForm.author = [];
+
+    localStorage.removeItem("postForm");
+};
+// is form dirty? returns true or false
+const formIsDirty = computed(() => {
+    return postForm.isDirty;
+});
+
+// Form is dirty
+// router.visit = function (url, options) {
+router.on = () => {
+    // This feature enables the user to save form data to local storage when
+    // they attempt to leave a page with a dirty form.
+    // This allows the user to return to the form later and
+    // continue where they left off without losing any of their progress.
+    if (formIsDirty.value === true && formType.value === "create") {
+        // Convert the form data to a JSON string
+        postForm.isSlugEditable = isSlugEditable.value;
+        const formDataJson = JSON.stringify(postForm);
+        // Save the form data to local storage using the form ID as the key
+        localStorage.setItem("postForm", formDataJson);
+    }
+};
+
 // get unique post if needs to be updated
 onBeforeMount(() => {
+    // User is creating a new Resource from scratch, rather than editing an existing one.
+    // Check local storage
+    if (props.post === null) {
+        if (localStorage.getItem("postForm") !== null) {
+            // Get the saved form data from local storage using the form ID as the key
+            const formDataJson = localStorage.getItem("postForm");
+            let formLocalStorage = JSON.parse(formDataJson);
+            //
+            //
+            if (formLocalStorage.isSlugEditable === true) {
+                console.log(
+                    "formLocal storage slug er:",
+                    formLocalStorage.slug
+                );
+                // postForm.slug = formLocalStorage.slug;
+                postFieldSlugLocked.value = formLocalStorage.slug;
+                isSlugEditable.value = formLocalStorage.isSlugEditable;
+            }
+            if (formLocalStorage.isSlugEditable === false) {
+                postForm.slug = formLocalStorage.title;
+            }
+            postForm.title = formLocalStorage.title;
+            postForm.content = formLocalStorage.content;
+            postForm.published = formLocalStorage.published;
+            postForm.show_author = formLocalStorage.show_author;
+            postForm.cover_image_original =
+                formLocalStorage.cover_image_original;
+            postForm.cover_image_thumbnail =
+                formLocalStorage.cover_image_thumbnail;
+            postForm.cover_image_medium = formLocalStorage.cover_image_medium;
+            postForm.cover_image_large = formLocalStorage.cover_image_large;
+            postForm.tags = formLocalStorage.tags;
+
+            if (
+                formLocalStorage.author === undefined ||
+                formLocalStorage.author === null
+            ) {
+                postForm.author = [];
+            }
+            if (
+                formLocalStorage.author !== undefined ||
+                formLocalStorage.author !== null
+            ) {
+                postForm.author = formLocalStorage.author;
+            }
+        }
+    }
+
+    // User is editing an existing Resource, rather than creating a new one from scratch.
     if (props.post !== null) {
         formType.value = "update";
         postForm.title = props.post.title;
-        // postForm.slug = props.post.slug;
+        postForm.slug = props.post.slug;
+        //
         postForm.content = props.post.content;
         postForm.published = props.post.published === 1 ? true : false;
         postForm.show_author = props.post.show_author === 1 ? true : false;
@@ -324,8 +430,12 @@ onBeforeMount(() => {
     <FormSection @submitted="handleCreatePost">
         <template #title> Post details </template>
         <template #description> Create a new Post. </template>
-
         <template #main>
+            <p>title er: {{ postForm.title }}</p>
+            <br />
+
+            <p>postFieldSlugLocked er: {{ postFieldSlugLocked }}</p>
+            <p>slug er: {{ postForm.slug }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -351,7 +461,7 @@ onBeforeMount(() => {
                 </div>
                 <!-- post title end -->
                 <!-- post slug start -->
-                <div v-if="slugIsOpen === false" class="myInputGroup">
+                <div v-if="isSlugEditable === false" class="myInputGroup">
                     <InputLabel for="slug" value="Slug" />
                     <div class="relative flex items-center">
                         <TextInput
@@ -386,13 +496,13 @@ onBeforeMount(() => {
                     </div>
                     <InputError :message="postForm.errors.slug" />
                 </div>
-                <div v-if="slugIsOpen === true" class="myInputGroup">
+                <div v-if="isSlugEditable === true" class="myInputGroup">
                     <InputLabel for="slug" value="Slug" />
                     <div class="relative flex items-center">
                         <TextInput
                             placeholder="Post slug"
                             id="slug"
-                            v-model="productSlugLock"
+                            v-model="postFieldSlugLocked"
                             type="text"
                             class="block w-full mt-1"
                             autofocus
@@ -946,6 +1056,15 @@ onBeforeMount(() => {
         </template>
 
         <template #actions>
+            <template v-if="formType === 'create'">
+                <button
+                    type="button"
+                    @click="clearForm"
+                    class="myPrimaryButton"
+                >
+                    Clear Form
+                </button>
+            </template>
             <SubmitButton :disabled="postForm.processing" buttonText="Save">
             </SubmitButton>
             <div

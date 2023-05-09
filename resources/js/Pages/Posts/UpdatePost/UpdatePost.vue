@@ -26,7 +26,7 @@ const breadcrumbsLinks = [
             parameters: [props.currentUserTeam],
         },
     },
-    { label: "Add Post" },
+    { label: "Update Post" },
 ];
 </script>
 

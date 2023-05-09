@@ -30,9 +30,7 @@ const firstButton = function () {
 
 <template>
     <Modal :show="show" @close="firstButton" maxWidth="md">
-        <div
-            class="flex flex-row-reverse items-center justify-between py-4 px-4"
-        >
+        <div class="flex flex-row-reverse items-center justify-between pb-4">
             <button
                 @click="firstButton"
                 aria-label="Close menu"
@@ -63,7 +61,7 @@ const firstButton = function () {
         <slot name="content" />
 
         <div
-            class="relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full px-4 py-4"
+            class="relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full"
         >
             <slot></slot>
         </div>

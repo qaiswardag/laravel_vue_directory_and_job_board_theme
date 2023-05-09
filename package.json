@@ -30,6 +30,7 @@
         "slugify": "^1.6.5",
         "use-lightweight-fetch": "^1.4.0",
         "uuid": "^9.0.0",
+        "vue-router": "^4.1.6",
         "vuex": "^4.1.0"
     }
 }

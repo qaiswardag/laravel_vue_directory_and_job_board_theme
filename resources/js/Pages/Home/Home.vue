@@ -12,10 +12,10 @@ defineProps({
 <template>
     <GuestsLayout title="Home">
         <template #header>
-            <h1 class="myPrimaryHeader text-center">
+            <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
                 Turn Emails into Revenue
             </h1>
-            <p class="myPrimaryParagraph text-center">
+            <p class="myPrimaryMainPageParagraphNotLoggedIn">
                 Win new customers with the #1 email marketing and automations
                 brand* that recommends ways to get more opens, clicks, and
                 sales.

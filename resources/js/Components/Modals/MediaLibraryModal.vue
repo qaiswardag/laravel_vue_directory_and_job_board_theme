@@ -184,11 +184,11 @@ const handleDeleteImage = function (imageId) {
         <TransitionRoot :show="open" as="template">
             <Dialog
                 as="div"
-                class="fixed z-30 inset-0 overflow-y-auto"
+                class="fixed z-30 inset-0 overflow-y-auto sm:px-4 py-6"
                 @close="firstButton"
             >
                 <div
-                    class="flex items-end justify-center pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+                    class="flex items-end justify-center pb-20 text-center sm:block sm:p-0 bg-green-300 bg-opacity-30"
                 >
                     <TransitionChild
                         as="template"
@@ -220,7 +220,7 @@ const handleDeleteImage = function (imageId) {
                         leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     >
                         <div
-                            class="relative min-h-[60rem] max-h-[60rem] inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
+                            class="relative w-full min-h-[60rem] max-h-[60rem] inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
                         >
                             <div
                                 class="flex gap-2 justify-between items-center border-b border-gray-200 pb-2"

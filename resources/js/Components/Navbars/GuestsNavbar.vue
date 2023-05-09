@@ -316,6 +316,17 @@ const primaryMenuSlideOverButton = function () {
                 </div>
             </template>
 
+            <template v-if="$page.props.user !== null">
+                <button
+                    @click="handleNotificationsSlideOver"
+                    type="button"
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
+                >
+                    <span class="sr-only">View notifications</span>
+                    <BellIcon class="h-6 w-6" aria-hidden="true" />
+                </button>
+            </template>
+
             <button
                 @click="handlePrimaryMenuSlideOver"
                 type="button"
