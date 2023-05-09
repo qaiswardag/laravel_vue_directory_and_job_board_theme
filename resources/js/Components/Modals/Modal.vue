@@ -54,7 +54,7 @@ const maxWidthClass = computed(() => {
                 @close="close"
             >
                 <div
-                    class="flex items-end justify-center pb-20 text-center sm:block sm:p-0 bg-red-300 bg-opacity-30"
+                    class="flex items-end justify-center pb-20 text-center sm:block sm:p-0"
                 >
                     <TransitionChild
                         as="template"
