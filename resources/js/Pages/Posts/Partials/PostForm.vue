@@ -234,15 +234,9 @@ const globalOptions = {
 };
 // end Quill Editor
 
-// slug logic
 const isSlugEditable = ref(false);
-// const slugValueCustom = ref("");
-
 const slugValueTitle = ref("");
 const slugValueCustom = ref("");
-// const slugValueTitle = computed(() => {
-//     return slugify(postForm.title, config.slugifyOptions);
-// });
 
 const postForm = useForm({
     title: "",

@@ -30,7 +30,9 @@ const firstButton = function () {
 
 <template>
     <Modal :show="show" @close="firstButton" maxWidth="md">
-        <div class="flex flex-row-reverse items-center justify-between pb-4">
+        <div
+            class="px-4 mb-4 flex flex-row-reverse items-center justify-between"
+        >
             <button
                 @click="firstButton"
                 aria-label="Close menu"
@@ -55,53 +57,15 @@ const firstButton = function () {
                 </svg>
             </button>
             <h2 class="text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                Navigation
+                {{ title }}
             </h2>
         </div>
-        <slot name="content" />
-
         <div
-            class="relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full"
+            class="px-4 relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full"
         >
+            <slot name="content" />
+
             <slot></slot>
         </div>
     </Modal>
 </template>
-
-<style scope>
-/*
-  Enter and leave animations can use different
-  durations and timing functions.
-*/
-.slide-fade-enter-active {
-    transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-    transform: translateX(20px);
-    opacity: 0;
-}
-
-.bounce-enter-active {
-    animation: bounce-in 0.5s;
-}
-.bounce-leave-active {
-    animation: bounce-in 0.5s reverse;
-}
-@keyframes bounce-in {
-    0% {
-        transform: scale(0);
-    }
-    50% {
-        transform: scale(1.25);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-</style>

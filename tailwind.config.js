@@ -44,8 +44,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: [
-                    "Century Gothic",
-                    "Verdana",
+                    "Raleway",
                     "sans-serif",
                     ...defaultTheme.fontFamily.sans,
                 ],

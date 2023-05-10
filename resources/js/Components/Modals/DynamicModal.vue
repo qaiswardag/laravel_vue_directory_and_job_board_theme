@@ -80,7 +80,7 @@ const thirdButton = function () {
         <slot name="content" />
 
         <div
-            class="relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full"
+            class="px-4 relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full"
         >
             <div class="flex items-center border-b border-gray-200 pb-2 mb-2">
                 <div class="flex-1">

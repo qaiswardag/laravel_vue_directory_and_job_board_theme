@@ -120,7 +120,7 @@ const primaryMenuSlideOverButton = function () {
         <main>
             <div class="myPrimaryParagraph flex flex-col gap-1">
                 <p
-                    class="myPrimaryParagraph italic text-xs py-2 px-2 rounded-lg bg-gray-50"
+                    class="px-2 myPrimaryParagraph italic text-xs py-2 rounded-lg bg-gray-50"
                 >
                     Logged in as {{ $page.props.user.first_name }}
                     {{ $page.props.user.last_name }}
