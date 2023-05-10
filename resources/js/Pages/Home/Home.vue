@@ -26,11 +26,13 @@ defineProps({
         <div class="bg-white py-24 sm:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:mx-0">
-                    <h2 class="myTertiaryHeader">Our team</h2>
+                    <h2 class="myTertiaryHeader">Latest Users</h2>
                     <p class="myPrimaryParagraph">
-                        We’re a dynamic group of individuals who are passionate
-                        about what we do and dedicated to delivering the best
-                        results for our clients.
+                        As new users join, they bring innovative ideas, unique
+                        skills, and diverse experiences that enrich our
+                        platform. Connect with them, explore their work, and
+                        celebrate the fresh energy they contribute to our
+                        collaborative space.
                     </p>
                 </div>
                 <ul
