@@ -226,6 +226,10 @@ const globalOptions = {
 
 // slug logic
 const isSlugEditable = ref(false);
+const slugValueCustom = ref("");
+const slugValueTitle = computed(() => {
+    return slugify(postForm.title, config.slugifyOptions);
+});
 
 const postForm = useForm({
     title: "",
@@ -245,27 +249,18 @@ const postForm = useForm({
     author: [],
 });
 
-const postFieldSlugLocked = ref("");
-
-// postForm.slug = computed(() => {
-//     if (isSlugEditable.value === false) {
-//         return slugify(postForm.title, config.slugifyOptions);
-//     }
-//     if (isSlugEditable.value === true) {
-//         return slugify(postFieldSlugLocked.value, config.slugifyOptions);
-//     }
-// });
-
 watch(
     isSlugEditable,
     (newValue) => {
         if (newValue === false) {
-            postForm.slug = postForm.title;
-            // postForm.slug = slugify(postForm.title, config.slugifyOptions);
         }
         if (newValue === true) {
-            postForm.slug = postFieldSlugLocked.value;
-            // postForm.slug = slugify(postFieldSlugLocked.value, config.slugifyOptions);
+            // postForm.slug = slugValueCustom.value;
+
+            postForm.slug = slugify(
+                slugValueCustom.value,
+                config.slugifyOptions
+            );
         }
     },
     { immediate: true }
@@ -354,19 +349,16 @@ onBeforeMount(() => {
             const formDataJson = localStorage.getItem("postForm");
             let formLocalStorage = JSON.parse(formDataJson);
             //
+            isSlugEditable.value = formLocalStorage.isSlugEditable;
+            //
+            if (formLocalStorage.isSlugEditable === false) {
+                slugValueTitle.slug = formLocalStorage.slug;
+            }
             //
             if (formLocalStorage.isSlugEditable === true) {
-                console.log(
-                    "formLocal storage slug er:",
-                    formLocalStorage.slug
-                );
-                // postForm.slug = formLocalStorage.slug;
-                postFieldSlugLocked.value = formLocalStorage.slug;
-                isSlugEditable.value = formLocalStorage.isSlugEditable;
+                slugValueCustom.value = formLocalStorage.slug;
             }
-            if (formLocalStorage.isSlugEditable === false) {
-                postForm.slug = formLocalStorage.title;
-            }
+            //
             postForm.title = formLocalStorage.title;
             postForm.content = formLocalStorage.content;
             postForm.published = formLocalStorage.published;
@@ -431,11 +423,8 @@ onBeforeMount(() => {
         <template #title> Post details </template>
         <template #description> Create a new Post. </template>
         <template #main>
-            <p>title er: {{ postForm.title }}</p>
-            <br />
-
-            <p>postFieldSlugLocked er: {{ postFieldSlugLocked }}</p>
-            <p>slug er: {{ postForm.slug }}</p>
+            <p>form title er: {{ postForm.title }}</p>
+            <p>form slug er: {{ postForm.slug }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -467,7 +456,7 @@ onBeforeMount(() => {
                         <TextInput
                             placeholder="Post slug"
                             id="slug"
-                            v-model="postForm.slug"
+                            v-model="slugValueTitle"
                             type="text"
                             class="block w-full mt-1 myPrimaryInputReadonly"
                             autofocus
@@ -502,7 +491,7 @@ onBeforeMount(() => {
                         <TextInput
                             placeholder="Post slug"
                             id="slug"
-                            v-model="postFieldSlugLocked"
+                            v-model="slugValueCustom"
                             type="text"
                             class="block w-full mt-1"
                             autofocus
