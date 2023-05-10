@@ -53,6 +53,16 @@ const props = defineProps({
     },
 });
 
+// Check if the user has a role other than 'reader' for this team
+const userTeamsWithoutReaderRole = props.user.all_teams.filter((team) => {
+    if (team.membership !== undefined && team.membership.role === "reader") {
+        console.log("kooom here");
+        return team.membership.role !== "reader";
+    }
+
+    return team;
+});
+
 // store
 const store = useStore();
 
@@ -226,10 +236,13 @@ const globalOptions = {
 
 // slug logic
 const isSlugEditable = ref(false);
+// const slugValueCustom = ref("");
+
+const slugValueTitle = ref("");
 const slugValueCustom = ref("");
-const slugValueTitle = computed(() => {
-    return slugify(postForm.title, config.slugifyOptions);
-});
+// const slugValueTitle = computed(() => {
+//     return slugify(postForm.title, config.slugifyOptions);
+// });
 
 const postForm = useForm({
     title: "",
@@ -249,19 +262,41 @@ const postForm = useForm({
     author: [],
 });
 
-watch(
-    isSlugEditable,
-    (newValue) => {
-        if (newValue === false) {
-        }
-        if (newValue === true) {
-            // postForm.slug = slugValueCustom.value;
+// The above code uses the watch function from Vue 3 to watch for changes to the
+// slugValueCustom property and update the postForm.slug field with the new value
 
-            postForm.slug = slugify(
-                slugValueCustom.value,
-                config.slugifyOptions
-            );
-        }
+const watchSlugInputChanges = function () {
+    watch(
+        () => slugValueCustom.value,
+        (newValue) => {
+            if (isSlugEditable.value === true) {
+                postForm.slug = slugify(
+                    slugValueCustom.value,
+                    config.slugifyOptions
+                );
+            }
+        },
+        { immediate: true }
+    );
+    watch(
+        () => postForm.title,
+        (newValue) => {
+            if (isSlugEditable.value === false) {
+                postForm.slug = slugify(postForm.title, config.slugifyOptions);
+                slugValueTitle.value = slugify(
+                    postForm.title,
+                    config.slugifyOptions
+                );
+            }
+        },
+        { immediate: true }
+    );
+};
+
+watch(
+    () => isSlugEditable.value,
+    (newValue) => {
+        watchSlugInputChanges();
     },
     { immediate: true }
 );
@@ -300,6 +335,7 @@ const createPost = () => {
 };
 
 const clearForm = function () {
+    isSlugEditable.value = false;
     postForm.title = "";
     postForm.slug = "";
     postForm.content = "";
@@ -352,7 +388,7 @@ onBeforeMount(() => {
             isSlugEditable.value = formLocalStorage.isSlugEditable;
             //
             if (formLocalStorage.isSlugEditable === false) {
-                slugValueTitle.slug = formLocalStorage.slug;
+                slugValueTitle.slug = formLocalStorage.title;
             }
             //
             if (formLocalStorage.isSlugEditable === true) {
@@ -423,8 +459,6 @@ onBeforeMount(() => {
         <template #title> Post details </template>
         <template #description> Create a new Post. </template>
         <template #main>
-            <p>form title er: {{ postForm.title }}</p>
-            <p>form slug er: {{ postForm.slug }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -450,76 +484,79 @@ onBeforeMount(() => {
                 </div>
                 <!-- post title end -->
                 <!-- post slug start -->
-                <div v-if="isSlugEditable === false" class="myInputGroup">
-                    <InputLabel for="slug" value="Slug" />
-                    <div class="relative flex items-center">
-                        <TextInput
-                            placeholder="Post slug"
-                            id="slug"
-                            v-model="slugValueTitle"
-                            type="text"
-                            class="block w-full mt-1 myPrimaryInputReadonly"
-                            autofocus
-                            readonly
-                            autocomplete="off"
-                        />
-                        <div
-                            @click="handleOpenLock"
-                            class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5 text-myErrorColor"
+                <div class="myInputGroup">
+                    <div v-show="isSlugEditable === false">
+                        <InputLabel for="slug" value="Slug" />
+                        <div class="relative flex items-center">
+                            <TextInput
+                                placeholder="Post slug"
+                                id="slug"
+                                v-model="slugValueTitle"
+                                type="text"
+                                class="block w-full mt-1 myPrimaryInputReadonly"
+                                autofocus
+                                readonly
+                                autocomplete="off"
+                            />
+                            <div
+                                @click="handleOpenLock"
+                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
                             >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                                ></path>
-                            </svg>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-5 h-5 text-myErrorColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                                    ></path>
+                                </svg>
+                            </div>
                         </div>
                     </div>
-                    <InputError :message="postForm.errors.slug" />
-                </div>
-                <div v-if="isSlugEditable === true" class="myInputGroup">
-                    <InputLabel for="slug" value="Slug" />
-                    <div class="relative flex items-center">
-                        <TextInput
-                            placeholder="Post slug"
-                            id="slug"
-                            v-model="slugValueCustom"
-                            type="text"
-                            class="block w-full mt-1"
-                            autofocus
-                            autocomplete="off"
-                        />
-                        <div
-                            @click="handleCloseLock"
-                            class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5 text-green-600"
+                    <div v-show="isSlugEditable === true">
+                        <InputLabel for="slug" value="Slug" />
+                        <div class="relative flex items-center">
+                            <TextInput
+                                placeholder="Post slug"
+                                id="slug"
+                                v-model="slugValueCustom"
+                                type="text"
+                                class="block w-full mt-1"
+                                autofocus
+                                autocomplete="off"
+                            />
+                            <div
+                                @click="handleCloseLock"
+                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
                             >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                                />
-                            </svg>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="w-5 h-5 text-green-600"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                                    />
+                                </svg>
+                            </div>
                         </div>
+                        <p
+                            class="myPrimaryParagraph italic py-2 px-2 bg-gray-100 text-xs my-1 rounded-md"
+                        >
+                            Slug: {{ postForm.slug }}
+                        </p>
                     </div>
-                    <p class="myPrimaryParagraph italic">
-                        {{ postForm.slug }}
-                    </p>
                     <InputError :message="postForm.errors.slug" />
                 </div>
                 <!-- post slug end -->
@@ -989,7 +1026,7 @@ onBeforeMount(() => {
                                 >
                                     <ListboxOption
                                         as="template"
-                                        v-for="team in user.all_teams"
+                                        v-for="team in userTeamsWithoutReaderRole"
                                         :key="team.id"
                                         :value="team"
                                     >

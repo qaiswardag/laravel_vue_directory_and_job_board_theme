@@ -44,16 +44,7 @@ class HandleInertiaRequests extends Middleware
                 "success" => fn() => $request->session()->get("success"),
                 "error" => fn() => $request->session()->get("error"),
             ],
-            // "currentUserTeamRole" =>
-            //     Auth::user() &&
-            //     Auth::user()->currentTeam &&
-            //     Auth::user()->teamRole(Auth::user()->currentTeam)->name
-            //         ? Auth::user()->teamRole(Auth::user()->currentTeam)->name
-            //         : null,
-            //
-            //
-            //
-            //
+
             "currentUserTeamRole" =>
                 Auth::user() &&
                 Auth::user()->current_team_id !== 0 &&

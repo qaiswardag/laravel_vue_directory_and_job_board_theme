@@ -72,7 +72,6 @@ class PostController extends Controller
     public function create(Team $team)
     {
         $this->authorize("can-create-and-update", $team);
-
         return Inertia::render("Posts/CreatePost/CreatePost");
     }
 

@@ -7,9 +7,6 @@ const props = defineProps({
     currentUserTeamRole: {
         required: false,
     },
-    currentUserTeamRole: {
-        required: true,
-    },
     currentUserTeam: {
         required: true,
     },
@@ -35,6 +32,7 @@ const breadcrumbsLinks = [
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Create a New Post</h2>
         </template>
+
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
