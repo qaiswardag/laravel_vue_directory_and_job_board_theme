@@ -5,6 +5,8 @@ const {
     handleData: handleGetImage,
     fetchedData: fetchedImage,
     isError: isErrorImage,
+    error: errorImage,
+    errors: errorsImage,
     isLoading: isLoadingImage,
     isSuccess: isSuccessImage,
 } = vueFetch();
@@ -14,6 +16,8 @@ const {
     handleData: handleGetImages,
     fetchedData: fetchedMedia,
     isError: isErrorImages,
+    error: errorImages,
+    errors: errorsImages,
     isLoading: isLoadingImages,
     isSuccess: isSuccessImages,
 } = vueFetch();
@@ -82,6 +86,8 @@ export default {
             context.commit("setCurrentMedia", {
                 fetchedMedia: fetchedMedia,
                 isError: isErrorImages,
+                error: errorImages,
+                errors: errorsImages,
                 isLoading: isLoadingImages,
                 isSuccess: isSuccessImages,
             });
@@ -101,6 +107,8 @@ export default {
             context.commit("setCurrentImage", {
                 currentImage: fetchedImage,
                 isError: isErrorImage,
+                error: errorImage,
+                errors: errorsImage,
                 isLoading: isLoadingImage,
                 isSuccess: isSuccessImage,
             });

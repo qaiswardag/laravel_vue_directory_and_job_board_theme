@@ -16,6 +16,7 @@ import {
 } from "@headlessui/vue";
 import {
     AdjustmentsHorizontalIcon,
+    AdjustmentsVerticalIcon,
     ArrowRightCircleIcon,
     ArrowRightIcon,
     Bars3BottomLeftIcon,
@@ -251,10 +252,13 @@ const primaryMenuSlideOverButton = function () {
         >
             <template v-if="$page.props.user !== null">
                 <Link
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
                     :href="route('dashboard')"
                 >
-                    Dasboard
+                    <AdjustmentsVerticalIcon
+                        class="h-6 w-6"
+                        aria-hidden="true"
+                    />
                 </Link>
             </template>
             <template v-if="$page.props.user === null">

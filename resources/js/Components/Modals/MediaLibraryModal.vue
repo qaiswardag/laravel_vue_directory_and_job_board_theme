@@ -388,13 +388,16 @@ const handleDeleteImage = function (imageId) {
                                                 <div
                                                     v-if="
                                                         getCurrentImage &&
-                                                        getCurrentImage.isError
+                                                        getCurrentImage.isSuccess ===
+                                                            false &&
+                                                        getCurrentImage.isLoading ===
+                                                            false &&
+                                                        getCurrentImage.isError ===
+                                                            true
                                                     "
                                                     class="myPrimaryParagraphError"
                                                 >
-                                                    {{
-                                                        getCurrentImage.isError
-                                                    }}
+                                                    {{ getCurrentImage.error }}
                                                 </div>
 
                                                 <!--  -->
@@ -402,7 +405,9 @@ const handleDeleteImage = function (imageId) {
                                                     v-if="
                                                         getCurrentImage &&
                                                         getCurrentImage.isLoading ===
-                                                            true
+                                                            true &&
+                                                        getCurrentImage.isError ===
+                                                            false
                                                     "
                                                     class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
                                                 >
@@ -428,12 +433,12 @@ const handleDeleteImage = function (imageId) {
                                                         getCurrentImage
                                                             .currentImage
                                                             .mediaLibrary &&
+                                                        getCurrentImage.isSuccess ===
+                                                            true &&
                                                         getCurrentImage.isLoading ===
                                                             false &&
-                                                        (getCurrentImage.isError ===
-                                                            null ||
-                                                            getCurrentImage.isError ===
-                                                                false)
+                                                        getCurrentImage.isError ===
+                                                            false
                                                     "
                                                     class="pb-16 space-y-6"
                                                 >

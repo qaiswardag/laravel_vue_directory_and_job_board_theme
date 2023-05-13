@@ -65,17 +65,6 @@ onMounted(() => {
 </script>
 
 <template>
-    <div
-        v-if="
-            getCurrentMedia &&
-            getCurrentMedia.isLoading === false &&
-            getCurrentMedia.isError
-        "
-        class="myPrimaryParagraphError"
-    >
-        {{ getCurrentMedia.isError }}
-    </div>
-
     <form class="mb-4" @submit.prevent="handleSearch(1)">
         <div class="mysearchBarWithOptions">
             <div class="relative w-full">
@@ -117,31 +106,39 @@ onMounted(() => {
             </button>
         </div>
 
-        <div class="flex items-center min-h-[2.5rem]">
+        <div
+            v-if="
+                getCurrentMedia &&
+                getCurrentMedia.fetchedMedia &&
+                getCurrentMedia.fetchedMedia.media &&
+                getCurrentMedia.fetchedMedia.media.data &&
+                getCurrentMedia.isError === false
+            "
+            class="flex items-center min-h-[2.5rem]"
+        >
             <div
-                v-if="
-                    getCurrentMedia &&
-                    getCurrentMedia.fetchedMedia &&
-                    getCurrentMedia.fetchedMedia.media &&
-                    getCurrentMedia.fetchedMedia.media.data &&
-                    (getCurrentMedia.isError === null ||
-                        getCurrentMedia.isError === false)
-                "
+                class="flex justify-start items-center"
+                v-if="getCurrentMedia.fetchedMedia.total_results !== 0"
             >
-                <div
-                    class="flex justify-start items-center"
-                    v-if="getCurrentMedia.fetchedMedia.total_results !== 0"
+                <p
+                    class="myPrimaryParagraph text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor rounded my-1 px-2 py-2 text-xs"
                 >
-                    <p
-                        class="myPrimaryParagraph text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor rounded my-1 px-2 py-2 text-xs"
-                    >
-                        Results
-                        {{ getCurrentMedia.fetchedMedia.total_results }}
-                    </p>
-                </div>
+                    Results
+                    {{ getCurrentMedia.fetchedMedia.total_results }}
+                </p>
             </div>
         </div>
     </form>
+    <div
+        v-if="
+            getCurrentMedia &&
+            getCurrentMedia.isLoading === false &&
+            getCurrentMedia.isError === true
+        "
+        class="myPrimaryParagraphError"
+    >
+        {{ getCurrentMedia.error }}
+    </div>
 
     <div
         v-if="
@@ -165,7 +162,13 @@ onMounted(() => {
     <div
         class="overflow-y-scroll md:min-h-[35rem] md:max-h-[35rem] min-h-[15rem] max-h-[15rem] p-4 border border-myPrimaryLightGrayColor rounded"
     >
-        <div v-if="getCurrentMedia && getCurrentMedia.isLoading === true">
+        <div
+            v-if="
+                getCurrentMedia &&
+                getCurrentMedia.isLoading === true &&
+                getCurrentMedia.isError === false
+            "
+        >
             <div class="flex items-center justify-center">
                 <div
                     class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
@@ -185,8 +188,8 @@ onMounted(() => {
                 getCurrentMedia.fetchedMedia.media &&
                 getCurrentMedia.fetchedMedia.media.data &&
                 getCurrentMedia.isLoading === false &&
-                (getCurrentMedia.isError === null ||
-                    getCurrentMedia.isError === false)
+                getCurrentMedia.isError === false &&
+                getCurrentMedia.isSuccess === true
             "
         >
             <div v-if="getCurrentMedia.fetchedMedia.total_results === 0">

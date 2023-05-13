@@ -66,6 +66,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             </p>
         </template>
 
+        <!--  -->
         <template
             v-if="
                 $page.props.user.all_teams.length > 0 &&
@@ -76,7 +77,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             <p
                 class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
-                <span class="self-start block">Current Team:</span>
+                <span>Team:</span>
 
                 <Link
                     :href="
@@ -85,7 +86,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                             $page.props.user.current_team
                         )
                     "
-                    class="text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    class="flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.switch'),
                     }"
@@ -93,27 +94,37 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                     No Team Selected
                 </Link>
             </p>
+        </template>
+        <!--  -->
+        <template
+            v-if="
+                $page.props.user.all_teams.length === 0 &&
+                $page.props.user.current_team === null &&
+                $page.props.jetstream.hasTeamFeatures
+            "
+        >
             <p
                 class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
-                <span class="self-start block">Current Team Role:</span>
+                <span>Team:</span>
 
                 <Link
                     :href="
                         route(
-                            'user.teams.switch',
+                            'user.teams.create',
                             $page.props.user.current_team
                         )
                     "
-                    class="text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    class="flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
-                        myPrimaryLink: route().current('user.teams.switch'),
+                        myPrimaryLink: route().current('user.teams.create'),
                     }"
                 >
-                    None
+                    Create a Team
                 </Link>
             </p>
         </template>
+
         <SideBarLink
             :href="route('dashboard')"
             :active="route().current('dashboard')"
@@ -253,7 +264,12 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+                        d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
+                    />
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                 </svg>
                 Team Settings
@@ -323,14 +339,15 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                 <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
+                    d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 11-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 016.336-4.486l-3.276 3.276a3.004 3.004 0 002.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852z"
                 />
                 <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    d="M4.867 19.125h.008v.008h-.008v-.008z"
                 />
             </svg>
+
             Superadmin
         </SideBarLink>
 

@@ -30,16 +30,15 @@ const breadcrumbsLinks = [
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
 
-        <div
-            class="myPrimarySection text-center"
+        <template
             v-if="
                 $page.props.user.all_teams.length <= 0 &&
                 $page.props.jetstream.hasTeamFeatures
             "
         >
-            <!-- TODO: make a componenet for this kind of text -->
             <h1 class="myPrimaryHeaderMessage">You are not in any Team</h1>
-        </div>
+            <p class="myPrimaryParagraph">Looks like there are no Teams!</p>
+        </template>
 
         <template
             v-if="

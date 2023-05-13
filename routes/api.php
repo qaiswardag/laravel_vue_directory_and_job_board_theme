@@ -26,12 +26,20 @@ Route::middleware("auth:sanctum")->get("/user", function (Request $request) {
 // test - start
 // test - start
 Route::get("/docs-users", function () {
+    // sleep(1);
+    // return response()->json(10, 200);
+    // //
+    // //
+    // return response()->json("This is a single error string.", 401);
+    // // //
+    // // return response()->json(["This is an array of a single error."], 401);
+    // // //
     // return response()->json(
     //     [
     //         "fejl_en" => "We are unable to send you users at current moment.",
     //         "fejl_to" => "Please try again.",
     //         "fejl_tre" => "Or contact us.",
-    //         // "fejl_fem" => ["Check check check.", "La la la."],
+    //         "fejl_fem" => ["Check check check.", "La la la."],
     //     ],
     //     401
     // );

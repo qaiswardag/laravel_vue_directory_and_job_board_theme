@@ -5,6 +5,8 @@ const {
     handleData: handleGetUsers,
     fetchedData: fetchedUsers,
     isError: isErrorUsers,
+    error: errorUsers,
+    errors: errorsUsers,
     isLoading: isLoadingUsers,
     isSuccess: isSuccessUsers,
 } = vueFetch();
@@ -77,6 +79,8 @@ export default {
             context.commit("setCurrentUsers", {
                 fetchedData: fetchedUsers,
                 isError: isErrorUsers,
+                error: errorUsers,
+                errors: errorsUsers,
                 isLoading: isLoadingUsers,
                 isSuccess: isSuccessUsers,
             });

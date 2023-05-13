@@ -210,11 +210,11 @@ onMounted(() => {
                             v-if="
                                 getCurrentUsers &&
                                 getCurrentUsers.isLoading === false &&
-                                getCurrentUsers.isError
+                                getCurrentUsers.isError === true
                             "
                             class="myPrimaryParagraphError"
                         >
-                            {{ getCurrentUsers.isError }}
+                            {{ getCurrentUsers.error }}
                         </div>
 
                         <div
@@ -248,7 +248,8 @@ onMounted(() => {
                         <div
                             v-if="
                                 getCurrentUsers &&
-                                getCurrentUsers.isLoading === true
+                                getCurrentUsers.isLoading === true &&
+                                getCurrentUsers.isError === false
                             "
                         >
                             <div
@@ -270,6 +271,8 @@ onMounted(() => {
                             v-if="
                                 getCurrentUsers &&
                                 getCurrentUsers.isLoading === false &&
+                                getCurrentUsers.isError === false &&
+                                getCurrentUsers.isSuccess === true &&
                                 getCurrentUsers.fetchedData &&
                                 getCurrentUsers.fetchedData.users &&
                                 getCurrentUsers.fetchedData.users.data &&

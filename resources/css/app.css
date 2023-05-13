@@ -10,6 +10,9 @@
     .myPrimarySection {
         @apply lg:py-8 md:py-8 py-8;
     }
+    .myPrimarySectionGuests {
+        @apply lg:py-20 md:py-8 py-8;
+    }
     .myPrimaryHeaderMessage {
         @apply myPrimarySection myPrimaryHeader text-myPrimaryDarkGrayColor text-center;
     }
