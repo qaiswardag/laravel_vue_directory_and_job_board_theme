@@ -8,10 +8,7 @@ defineProps({
 </script>
 
 <template>
-    <div
-        :class="css"
-        class="myPrimarySectionGuests flex flex-col sm:justify-center items-center"
-    >
+    <div :class="css" class="flex flex-col sm:justify-center items-center">
         <div>
             <slot name="logo" />
         </div>

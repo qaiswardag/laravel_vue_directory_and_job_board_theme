@@ -25,53 +25,53 @@ defineProps({
         </template>
 
         <!-- chimp start -->
-        <div class="myPrimarySectionGuests w-screen bg-gray-100">
-            <h2 class="myTertiaryHeader">Latest Users</h2>
-            <p class="myPrimaryParagraph">
-                As new users join, they bring innovative ideas, unique skills,
-                and diverse experiences that enrich our platform. Connect with
-                them, explore their work, and celebrate the fresh energy they
-                contribute to our collaborative space.
-            </p>
-            <div
-                class="myPrimarySectionGuests flex md:flex-row flex-col w-screen justify-center"
-            >
-                <div>
-                    <img
-                        class="mx-auto h-96 w-full"
-                        src="https://eep.io/images/yzco4xsimv0y/33f3mgIWbzKjIpIRJi2f5v/6bd36bba38b7f6a94d587605ab9a7d75/Desktop_Feature_Cards_1_Automations.jpeg?w=630&fm=webp&q=70"
-                        alt=""
-                    />
-                </div>
-                <div>
-                    <img
-                        class="mx-auto h-96 w-full"
-                        src="https://eep.io/images/yzco4xsimv0y/33f3mgIWbzKjIpIRJi2f5v/6bd36bba38b7f6a94d587605ab9a7d75/Desktop_Feature_Cards_1_Automations.jpeg?w=630&fm=webp&q=70"
-                        alt=""
-                    />
-                </div>
-                <div>
-                    <img
-                        class="mx-auto h-96 w-full"
-                        src="https://eep.io/images/yzco4xsimv0y/33f3mgIWbzKjIpIRJi2f5v/6bd36bba38b7f6a94d587605ab9a7d75/Desktop_Feature_Cards_1_Automations.jpeg?w=630&fm=webp&q=70"
-                        alt=""
-                    />
-                </div>
-                <div>
-                    <img
-                        class="mx-auto h-96 w-full"
-                        src="https://eep.io/images/yzco4xsimv0y/33f3mgIWbzKjIpIRJi2f5v/6bd36bba38b7f6a94d587605ab9a7d75/Desktop_Feature_Cards_1_Automations.jpeg?w=630&fm=webp&q=70"
-                        alt=""
-                    />
+        <div class="myPrimaryModuleWidthScreen">
+            <div class="w-screen">
+                <h2 class="myTertiaryHeader">Latest Users</h2>
+                <p class="myPrimaryParagraph">
+                    As new users join, they bring innovative ideas, unique
+                    skills, and diverse experiences that enrich our platform.
+                    Connect with them, explore their work, and celebrate the
+                    fresh energy they contribute to our collaborative space.
+                </p>
+                <div
+                    class="myPrimarySection flex md:flex-row flex-col w-screen justify-center"
+                >
+                    <div>
+                        <img
+                            class="mx-auto h-96 w-full"
+                            src="https://eep.io/images/yzco4xsimv0y/33f3mgIWbzKjIpIRJi2f5v/6bd36bba38b7f6a94d587605ab9a7d75/Desktop_Feature_Cards_1_Automations.jpeg?w=630&fm=webp&q=70"
+                            alt=""
+                        />
+                    </div>
+                    <div>
+                        <img
+                            class="mx-auto h-96 w-full"
+                            src="https://eep.io/images/yzco4xsimv0y/33f3mgIWbzKjIpIRJi2f5v/6bd36bba38b7f6a94d587605ab9a7d75/Desktop_Feature_Cards_1_Automations.jpeg?w=630&fm=webp&q=70"
+                            alt=""
+                        />
+                    </div>
+                    <div>
+                        <img
+                            class="mx-auto h-96 w-full"
+                            src="https://eep.io/images/yzco4xsimv0y/33f3mgIWbzKjIpIRJi2f5v/6bd36bba38b7f6a94d587605ab9a7d75/Desktop_Feature_Cards_1_Automations.jpeg?w=630&fm=webp&q=70"
+                            alt=""
+                        />
+                    </div>
+                    <div>
+                        <img
+                            class="mx-auto h-96 w-full"
+                            src="https://eep.io/images/yzco4xsimv0y/33f3mgIWbzKjIpIRJi2f5v/6bd36bba38b7f6a94d587605ab9a7d75/Desktop_Feature_Cards_1_Automations.jpeg?w=630&fm=webp&q=70"
+                            alt=""
+                        />
+                    </div>
                 </div>
             </div>
         </div>
         <!-- chimp end -->
 
         <!-- people start -->
-        <div
-            class="myPrimarySectionGuests myPrimarySectionGuests w-screen bg-red-50"
-        >
+        <div class="myPrimaryModule bg-red-50">
             <h2 class="myTertiaryHeader">Latest Users</h2>
             <p class="myPrimaryParagraph">
                 As new users join, they bring innovative ideas, unique skills,
@@ -81,7 +81,7 @@ defineProps({
             </p>
             <ul
                 role="list"
-                class="myPrimarySectionGuests mx-auto grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
+                class="myPrimarySection mx-auto grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
             >
                 <li>
                     <img

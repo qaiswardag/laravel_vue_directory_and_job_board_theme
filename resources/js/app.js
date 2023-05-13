@@ -11,7 +11,7 @@ const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 createInertiaApp({
     title: (title) => `${appName} | ${title}`,
-    // Disable Inertia's default loading indicato
+    // Disable or enable Inertia's default loading indicato
     progress: true,
     //
     resolve: (name) =>

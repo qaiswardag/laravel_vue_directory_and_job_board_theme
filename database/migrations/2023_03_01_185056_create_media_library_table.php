@@ -28,6 +28,7 @@ return new class extends Migration {
             $table->string("size");
             $table->string("width");
             $table->string("height");
+            $table->string("extension");
             $table->timestamps();
         });
     }

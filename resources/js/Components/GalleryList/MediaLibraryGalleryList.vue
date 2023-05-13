@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { useForm } from "@inertiajs/vue3";
-import { vueFetch } from "use-lightweight-fetch";
 import { TailwindPagination } from "laravel-vue-pagination";
 import { useStore } from "vuex";
 

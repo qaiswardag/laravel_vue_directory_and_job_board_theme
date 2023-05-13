@@ -15,7 +15,7 @@ module.exports = {
         colors: {
             //
             // brand colors
-            myPrimaryBrandColor: "#059669",
+            myPrimaryBrandColor: "#ea580c",
             //
             //
             // error color

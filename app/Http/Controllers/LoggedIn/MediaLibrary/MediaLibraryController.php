@@ -256,6 +256,7 @@ class MediaLibraryController extends Controller
                 "size" => $fileSizeKb,
                 "width" => $width,
                 "height" => $height,
+                "extension" => $extension,
             ]);
         }
 

@@ -27,11 +27,12 @@ class MediaLibrary extends Model
         "team_id",
         "name",
         "size",
-        "width",
-        "height",
         "path",
         "thumbnail_path",
         "medium_path",
         "large_path",
+        "width",
+        "height",
+        "extension",
     ];
 }

@@ -518,6 +518,7 @@ const handleDeleteImage = function (imageId) {
                                                                                         )
                                                                                     "
                                                                                 />
+
                                                                                 <div
                                                                                     class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5"
                                                                                 >
@@ -599,6 +600,25 @@ const handleDeleteImage = function (imageId) {
                                                                                 .size
                                                                         }}
                                                                         KB
+                                                                    </dd>
+                                                                </div>
+                                                                <div
+                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                >
+                                                                    <dt
+                                                                        class="text-gray-500"
+                                                                    >
+                                                                        Extension
+                                                                    </dt>
+                                                                    <dd
+                                                                        class="text-gray-900"
+                                                                    >
+                                                                        {{
+                                                                            getCurrentImage
+                                                                                .currentImage
+                                                                                .mediaLibrary
+                                                                                .extension
+                                                                        }}
                                                                     </dd>
                                                                 </div>
                                                                 <div

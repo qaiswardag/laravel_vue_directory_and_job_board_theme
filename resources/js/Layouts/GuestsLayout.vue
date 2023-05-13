@@ -76,7 +76,7 @@ router.on("finish", () => {
         </div>
 
         <slot name="header" />
-        <div class="mx-auto max-w-7xl min-h-screen px-4 sm:px-6 md:px-8 pb-12">
+        <div class="mx-auto min-h-screen">
             <main>
                 <slot />
             </main>

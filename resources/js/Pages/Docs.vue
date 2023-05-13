@@ -37,6 +37,8 @@ const {
     handleData: handleDataUsers,
     fetchedData: fetchedDataUsers,
     isError: isErrorDataUsers,
+    error: error,
+    errors: errors,
     isLoading: isLoadingDataUsers,
     isSuccess: isSuccessDataUsers,
 } = vueFetch();
@@ -357,20 +359,18 @@ const TestSubmitButtonTwice = function () {
                     >
                         <div
                             v-if="
-                                isErrorBackendDataUsers &&
-                                !isLoadingBackendDataUsers
+                                isErrorBackendDataUsers === true &&
+                                isLoadingBackendDataUsers === false
                             "
                             class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
                             role="alert"
                         >
-                            <span class="block sm:inline">{{
-                                isErrorBackendDataUsers
-                            }}</span>
+                            <span class="block sm:inline">{{ error }}</span>
                         </div>
 
                         <div
                             v-if="
-                                !isErrorBackendDataUsers &&
+                                isErrorBackendDataUsers &&
                                 !isLoadingBackendDataUsers &&
                                 isSuccessBackendDataUsers
                             "
