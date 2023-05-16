@@ -353,13 +353,7 @@ const formIsDirty = computed(() => {
     return postForm.isDirty;
 });
 
-// Form is dirty
-// router.visit = function (url, options) {
-router.on = () => {
-    // This feature enables the user to save form data to local storage when
-    // they attempt to leave a page with a dirty form.
-    // This allows the user to return to the form later and
-    // continue where they left off without losing any of their progress.
+const storeDirtyFormInLocalStorage = function () {
     if (formIsDirty.value === true && formType.value === "create") {
         // Convert the form data to a JSON string
         postForm.isSlugEditable = isSlugEditable.value;
@@ -368,10 +362,18 @@ router.on = () => {
         localStorage.setItem("postForm", formDataJson);
     }
 };
+// Will be executed when the user switch current route
+router.on = () => {
+    storeDirtyFormInLocalStorage();
+};
+// This function will be executed when the user clicks refresh or closes the tab/window
+window.addEventListener("beforeunload", function () {
+    storeDirtyFormInLocalStorage();
+});
 
 // get unique post if needs to be updated
 onBeforeMount(() => {
-    // User is creating a new Resource from scratch, rather than editing an existing one.
+    // User is creating a new Resource from scratch, rather than editing an existing one
     // Check local storage
     if (props.post === null) {
         if (localStorage.getItem("postForm") !== null) {

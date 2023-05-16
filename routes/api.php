@@ -25,15 +25,46 @@ Route::middleware("auth:sanctum")->get("/user", function (Request $request) {
 // test - start
 // test - start
 // test - start
-Route::get("/docs-users", function () {
-    // sleep(1);
-    // return response()->json(10, 200);
-    // //
-    // //
-    // return response()->json("This is a single error string.", 401);
-    // // //
-    // // return response()->json(["This is an array of a single error."], 401);
-    // // //
+// Route::post("/docs-users", function () {
+Route::post("/docs-users", function () {
+    //
+    //
+    // return response()->json(
+    //     "My Success message from backend. Worked fine.",
+    //     200
+    // );
+    //
+    return response(
+        "My message from backend. Gave error earlier 1.",
+        200
+    )->header("Content-Type", "text/plain");
+    //
+    //
+    //
+    //
+    //
+    //
+    // Return errors and error text in JSON format
+    // Return errors and error text in JSON format
+    // Return errors and error text in JSON format
+    // Return errors and error text in JSON format
+    //
+    //
+    //
+    // return response()
+    //     // convert text to json
+    //     ->json("Hello world.", 500)
+    //     ->header("Content-Type", "application/json");
+    //
+    //
+    //
+    //
+    // return response()->json(["This is an array of a single error."], 401);
+    //
+    //
+    //
+    //
+    //
     // return response()->json(
     //     [
     //         "fejl_en" => "We are unable to send you users at current moment.",
@@ -42,9 +73,12 @@ Route::get("/docs-users", function () {
     //         "fejl_fem" => ["Check check check.", "La la la."],
     //     ],
     //     401
-    // );
+    // )
+    // ->header("Content-Type", "application/json");
     //
     //
+    //
+    // Return users
     return response(
         [
             "users" => User::latest()

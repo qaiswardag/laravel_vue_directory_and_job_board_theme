@@ -5,6 +5,7 @@ import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import DefaultElement from "@/Components/Layouts/DefaultElement.vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/vue/24/outline";
+import { Head } from "@inertiajs/vue3";
 
 const faqs = [
     {
@@ -28,7 +29,7 @@ const faqs = [
 
 <template>
     <GuestsLayout>
-        <Head title="Register" />
+        <Head title="Home" />
         <template #header>
             <div class="myPrimaryMainPageHeaderParagraph bg-purple-200">
                 <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
@@ -91,6 +92,29 @@ const faqs = [
         </FullWidthElement>
         <!-- Faq - end -->
 
+        <!-- Only Title and Content - start -->
+        <DefaultElement :descriptionArea="false">
+            <template #title>Only Title & Content</template>
+            <template #content>
+                <p class="myPrimaryParagraph">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Illum in facilis labore id. Illum animi deleniti sed fuga
+                    illo, commodi corporis est amet, ipsa doloremque quisquam
+                    molestiae nemo porro cum expedita, voluptatum reiciendis.
+                    Impedit vitae beatae laborum accusantium placeat ratione,
+                    mollitia libero ipsum quae. Aspernatur laborum voluptas
+                    voluptatibus maiores maxime nemo, mollitia nostrum enim,
+                    consectetur eligendi debitis totam. A quisquam, iste
+                    expedita voluptas molestiae quas debitis corporis quaerat
+                    ullam optio vel officia magnam. Facilis eius repellat
+                    perferendis placeat mollitia ratione odio illum. At quisquam
+                    dolorem tempora debitis ullam corrupti rerum repellat, ipsum
+                    laborum assumenda fugit placeat deserunt et voluptatibus
+                    iusto?
+                </p>
+            </template>
+        </DefaultElement>
+        <!-- Only Title and Content - end -->
         <!-- Only Title and Content - start -->
         <FullWidthElement :descriptionArea="false">
             <template #title>Only Title & Content</template>
@@ -314,7 +338,7 @@ const faqs = [
         <!-- People - end -->
 
         <!-- Number 3 - start -->
-        <FullWidthElement :descriptionArea="false">
+        <FullWidthElement :descriptionArea="true">
             <template #title>Number four</template>
             <template #description>
                 As new users join, they bring innovative ideas, unique skills,

@@ -34,7 +34,7 @@ const getCurrentPreviewImage = computed(() => {
 
 const search_query = ref("");
 
-const selected = ref("Upload");
+const selected = ref("Media library");
 
 const tabs = ref([
     {
@@ -448,7 +448,7 @@ const handleDeleteImage = function (imageId) {
                                                     >
                                                         <img
                                                             class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                                                            :src="`/storage/uploads/${getCurrentImage.currentImage.mediaLibrary.path}`"
+                                                            :src="`/storage/uploads/${getCurrentImage.currentImage.mediaLibrary.medium_path}`"
                                                             alt="image"
                                                         />
                                                     </a>

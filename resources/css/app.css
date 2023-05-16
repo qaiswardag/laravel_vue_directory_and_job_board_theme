@@ -16,10 +16,10 @@
     |--------------------------------------------------------------------------
     */
     .myModulePyMargin {
-        @apply md:mb-20 mb-8;
+        @apply md:mb-0 mb-0;
     }
     .myModulePadding {
-        @apply md:py-16 py-8;
+        @apply md:py-28 py-16;
     }
 
     .myPrimaryWidthScreenModule {
