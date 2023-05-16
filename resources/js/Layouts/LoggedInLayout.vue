@@ -242,7 +242,7 @@ const sidebarOpen = ref(false);
                 <slot name="breadcrumbs" />
             </header>
             <div
-                class="mx-auto max-w-7xl min-h-screen px-4 sm:px-6 md:px-8 pb-12"
+                class="mx-auto max-w-7xl min-h-screen px-4 sm:px-6 md:px-8 md:pb-16 pb-12"
             >
                 <main>
                     <slot />

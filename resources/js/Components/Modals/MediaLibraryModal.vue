@@ -380,7 +380,7 @@ const handleDeleteImage = function (imageId) {
                                                     class="pb-16 space-y-6 md:px-3 sm:px-2 pt-2"
                                                 >
                                                     <p
-                                                        class="myPrimaryParagraph"
+                                                        class="myPrimaryParagraph text-xs p-2"
                                                     >
                                                         No image selected
                                                     </p>
@@ -801,7 +801,9 @@ const handleDeleteImage = function (imageId) {
                                                 "
                                                 class="pb-16 space-y-6 md:px-3 sm:px-2 pt-2"
                                             >
-                                                <p class="myPrimaryParagraph">
+                                                <p
+                                                    class="myPrimaryParagraph text-xs p-2"
+                                                >
                                                     No image selected
                                                 </p>
                                             </div>

@@ -41,26 +41,41 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestsLayout title="Log in">
+    <GuestsLayout
+        style="
+            background-image: url('/images/app-images/background-images/register/register.jpg');
+        "
+    >
+        <Head title="Login" />
         <template #header>
-            <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Login</h1>
-            <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                Win new customers with the #1 email marketing and automations
-                brand* that recommends ways to get more opens, clicks, and
-                sales.
-            </p>
+            <div class="myPrimaryMainPageHeaderParagraph">
+                <h1
+                    class="myPrimaryMainPageHeaderNotLoggedIn text-white shadow"
+                >
+                    Login
+                </h1>
+                <p
+                    class="myPrimaryMainPageParagraphNotLoggedIn text-white shadow"
+                >
+                    Dolor sit amet consectetur adipisicing elit. Culpa illo ipsa
+                    fugit quo ad, et, placeat minima assumenda soluta asperiores
+                    quaerat perspiciatis.
+                </p>
+            </div>
         </template>
 
-        <AuthenticationCard :css="'opacity-100'">
-            <template #logo>
-                <AuthenticationCardLogo />
-            </template>
-
+        <AuthenticationCard :css="'opacity-95'">
             <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
                 {{ status }}
             </div>
 
             <form @submit.prevent="submit">
+                <div class="mt-4 mb-8">
+                    <h1 class="mySecondaryHeader text-center">Login</h1>
+                    <p class="myPrimaryParagraph text-center">
+                        Millions of designers and agencies.
+                    </p>
+                </div>
                 <div>
                     <InputLabel for="email" value="Email" />
                     <TextInput

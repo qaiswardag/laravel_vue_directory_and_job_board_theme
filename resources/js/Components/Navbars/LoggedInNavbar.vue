@@ -112,17 +112,17 @@ const handleSearchAnything = function () {
 const handlePrimaryMenuSlideOver = function () {
     showPrimaryMenuSlideOver.value = true;
 };
+// handle primary menu window
+const primaryMenuSlideOverButton = function () {
+    showPrimaryMenuSlideOver.value = false;
+};
 // handle notifications window
 const handleNotificationsSlideOver = function () {
     showNotificationsSlideOver.value = true;
 };
-// close notifications window
+// handle notifications window
 const notificationsSlideOverButton = function () {
     showNotificationsSlideOver.value = false;
-};
-// close primary menu window
-const primaryMenuSlideOverButton = function () {
-    showPrimaryMenuSlideOver.value = false;
 };
 </script>
 <template>

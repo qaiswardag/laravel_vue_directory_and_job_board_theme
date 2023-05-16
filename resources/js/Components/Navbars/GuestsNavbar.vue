@@ -55,7 +55,10 @@ import {
     Bars2Icon,
 } from "@heroicons/vue/24/outline";
 
+// slide over
+const showNotificationsSlideOver = ref(false);
 const showPrimaryMenuSlideOver = ref(false);
+
 // modal
 const modalShowAccountMenu = ref(false);
 
@@ -101,13 +104,26 @@ const handleLogout = () => {
 const handlePrimaryMenuSlideOver = function () {
     showPrimaryMenuSlideOver.value = true;
 };
-
-// close primary menu window
+// handle primary menu window
 const primaryMenuSlideOverButton = function () {
     showPrimaryMenuSlideOver.value = false;
 };
+// handle notifications window
+const handleNotificationsSlideOver = function () {
+    showNotificationsSlideOver.value = true;
+};
+// handle notifications window
+const notificationsSlideOverButton = function () {
+    showNotificationsSlideOver.value = false;
+};
 </script>
 <template>
+    <SlideOverNotifications
+        v-if="$page.props.user !== null"
+        :open="showNotificationsSlideOver"
+        @notificationsSlideOverButton="notificationsSlideOverButton"
+    >
+    </SlideOverNotifications>
     <SlideOverPrimaryMenu
         :open="showPrimaryMenuSlideOver"
         @primaryMenuSlideOverButton="primaryMenuSlideOverButton"

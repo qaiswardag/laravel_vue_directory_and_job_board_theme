@@ -44,6 +44,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: [
+                    "JosefinSans",
                     "Raleway",
                     "sans-serif",
                     ...defaultTheme.fontFamily.sans,

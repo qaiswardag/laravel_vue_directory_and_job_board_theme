@@ -35,23 +35,30 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestsLayout>
-        <template #header>
-            <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Register</h1>
-            <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                Win new customers with the #1 email marketing and automations
-                brand* that recommends ways to get more opens, clicks, and
-                sales.
-            </p>
-        </template>
+    <GuestsLayout
+        style="
+            background-image: url('/images/app-images/background-images/register/register.jpg');
+        "
+    >
         <Head title="Register" />
+        <template #header>
+            <div class="myPrimaryMainPageHeaderParagraph">
+                <h1
+                    class="myPrimaryMainPageHeaderNotLoggedIn text-white shadow"
+                >
+                    Register
+                </h1>
+                <p
+                    class="myPrimaryMainPageParagraphNotLoggedIn text-white shadow"
+                >
+                    Dolor sit amet consectetur adipisicing elit. Culpa illo ipsa
+                    fugit quo ad, et, placeat minima assumenda soluta asperiores
+                    quaerat perspiciatis.
+                </p>
+            </div>
+        </template>
 
-        <div
-            class="min-h-full bg-cover bg-top sm:bg-top"
-            style="
-                background-image: url('/images/app-images/background-images/register/register.jpg');
-            "
-        >
+        <div>
             <AuthenticationCard :css="'opacity-95'">
                 <form @submit.prevent="submit">
                     <div class="mt-4 mb-8">

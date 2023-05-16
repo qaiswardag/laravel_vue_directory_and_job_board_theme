@@ -4,15 +4,37 @@
 @layer components {
     /*
     |--------------------------------------------------------------------------
+    | Main Header
+    |--------------------------------------------------------------------------
+    */
+    .myPrimaryMainPageHeaderParagraph {
+        @apply md:py-24 py-12 md:px-8 px-4;
+    }
+    /*
+    |--------------------------------------------------------------------------
     | Modules
     |--------------------------------------------------------------------------
     */
+    .myModulePyMargin {
+        @apply md:mb-20 mb-8;
+    }
+    .myModulePadding {
+        @apply md:py-16 py-8;
+    }
+
+    .myPrimaryWidthScreenModule {
+        @apply myModulePyMargin myModulePadding bg-gray-200;
+    }
     .myPrimaryModule {
-        @apply max-w-7xl mx-auto md:py-12 py-8 md:px-8 px-4;
+        @apply max-w-7xl mx-auto myModulePyMargin myModulePadding bg-green-100;
     }
-    .myPrimaryModuleWidthScreen {
-        @apply w-screen bg-gray-100;
+    .myHeaderParagraphSection {
+        @apply max-w-7xl mx-auto md:pb-10 pb-8 md:px-8 px-4;
     }
+    .myPrimaryContentSection {
+        @apply max-w-7xl mx-auto  md:px-8 px-4;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Helpers
@@ -65,27 +87,27 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryMainPageHeader {
-        @apply mySecondaryHeader mt-0 text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor border-b-2 border-gray-50 bg-gray-50;
+        @apply mySecondaryHeader text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor border-b-2 border-gray-50 bg-gray-50;
     }
     .myPrimaryMainPageHeaderNotLoggedIn {
-        @apply text-2xl mt-1 mb-2 font-semibold text-black text-center;
+        @apply text-3xl mb-6 font-semibold text-center font-['Josefin_Sans'];
     }
     .myPrimaryMainPageParagraphNotLoggedIn {
-        @apply myPrimaryParagraph text-center;
+        @apply md:w-4/6 text-xl mx-auto text-center font-semibold font-['Josefin_Sans'];
     }
     .myPrimaryHeader {
-        @apply text-3xl mt-1 mb-2 font-semibold text-black;
+        @apply text-3xl mb-2 font-semibold text-black;
     }
 
     .mySecondaryHeader {
-        @apply text-2xl mt-1 mb-2 font-semibold text-black;
+        @apply text-2xl mb-2 font-semibold text-black;
     }
 
     .myTertiaryHeader {
-        @apply text-lg mt-1 mb-2 font-semibold text-black;
+        @apply text-lg mb-2 font-semibold text-black;
     }
     .myFourthHeader {
-        @apply text-base mt-1 mb-2 font-semibold text-black;
+        @apply text-base mb-2 font-semibold text-black;
     }
 
     /*
