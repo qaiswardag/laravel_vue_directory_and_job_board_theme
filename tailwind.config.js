@@ -20,7 +20,7 @@ module.exports = {
             //
             // error color
             myPrimaryErrorColor: "#d60000",
-            myPrimarySuccessColor: "##16a34a",
+            myPrimarySuccessColor: "#16a34a",
             // gray colors
             myPrimaryLightGrayColor: "#e2e8f0",
             myPrimaryMediumGrayColor: "#9ca3af",

@@ -122,7 +122,6 @@ class PostController extends Controller
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
-            "trash" => $request->trash,
         ]);
 
         // Check if the "show_author" property of the $request object is true
@@ -243,7 +242,6 @@ class PostController extends Controller
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
-            "trash" => $request->trash,
         ]);
 
         if (

@@ -106,10 +106,6 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        //
-        //
-        //
-        //
         postForm.cover_image_original =
             getCurrentImage.value.currentImage?.mediaLibrary?.path;
         postForm.cover_image_thumbnail =
@@ -329,9 +325,12 @@ const createPost = () => {
 };
 
 const clearForm = function () {
-    isSlugEditable.value = false;
     postForm.title = "";
+    // slug
     postForm.slug = "";
+    isSlugEditable.value = false;
+    slugValueTitle.value = "";
+    slugValueCustom.value = "";
     postForm.content = "";
     postForm.published = true;
     postForm.team = props.currentUserTeam;
@@ -421,9 +420,14 @@ onBeforeMount(() => {
     // User is editing an existing Resource, rather than creating a new one from scratch.
     if (props.post !== null) {
         formType.value = "update";
+
         postForm.title = props.post.title;
-        postForm.slug = props.post.slug;
-        //
+        // slug logic
+        // slug is editable when editing an existing post
+        isSlugEditable.value = true;
+        slugValueCustom.value = props.post.slug;
+        // postForm.slug = props.post.slug;
+
         postForm.content = props.post.content;
         postForm.published = props.post.published === 1 ? true : false;
         postForm.show_author = props.post.show_author === 1 ? true : false;
@@ -463,6 +467,7 @@ onBeforeMount(() => {
                     <p class="myPrimaryParagraph">
                         Specify title & description.
                     </p>
+                    <p class="mt-8">form: {{ postForm.slug }}</p>
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
@@ -591,7 +596,7 @@ onBeforeMount(() => {
                     <InputLabel
                         :value="postForm.published ? 'Published' : 'Private'"
                         :class="{
-                            'text-myPrimaryBrandColor': postForm.published,
+                            'text-myPrimarySuccessColor': postForm.published,
                             'text-myPrimaryErrorColor': !postForm.published,
                         }"
                     />
@@ -599,9 +604,9 @@ onBeforeMount(() => {
                         v-model="postForm.published"
                         :class="[
                             postForm.published
-                                ? 'bg-myPrimaryBrandColor'
+                                ? 'bg-myPrimarySuccessColor'
                                 : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2',
                         ]"
                     >
                         <span class="sr-only">Use setting</span>
@@ -646,7 +651,7 @@ onBeforeMount(() => {
                                 aria-hidden="true"
                             >
                                 <svg
-                                    class="h-3 w-3 text-myPrimaryBrandColor"
+                                    class="h-3 w-3 text-myPrimarySuccessColor"
                                     fill="currentColor"
                                     viewBox="0 0 12 12"
                                 >
@@ -681,7 +686,7 @@ onBeforeMount(() => {
                     <InputLabel
                         :value="postForm.show_author ? 'Show' : 'Hide'"
                         :class="{
-                            'text-myPrimaryBrandColor': postForm.show_author,
+                            'text-myPrimarySuccessColor': postForm.show_author,
                             'text-myPrimaryErrorColor': !postForm.show_author,
                         }"
                     />
@@ -689,9 +694,9 @@ onBeforeMount(() => {
                         v-model="postForm.show_author"
                         :class="[
                             postForm.show_author
-                                ? 'bg-myPrimaryBrandColor'
+                                ? 'bg-myPrimarySuccessColor'
                                 : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2',
                         ]"
                     >
                         <span class="sr-only">Use setting</span>
@@ -736,7 +741,7 @@ onBeforeMount(() => {
                                 aria-hidden="true"
                             >
                                 <svg
-                                    class="h-3 w-3 text-myPrimaryBrandColor"
+                                    class="h-3 w-3 text-myPrimarySuccessColor"
                                     fill="currentColor"
                                     viewBox="0 0 12 12"
                                 >

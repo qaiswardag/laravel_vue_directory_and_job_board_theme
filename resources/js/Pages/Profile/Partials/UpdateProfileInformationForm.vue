@@ -343,7 +343,7 @@ const clearPhotoFileInput = () => {
                     <InputLabel
                         :value="form.public ? 'Public' : 'Private'"
                         :class="{
-                            'text-myPrimaryBrandColor': form.public,
+                            'text-myPrimarySuccessColor': form.public,
                             'text-myPrimaryErrorColor': !form.public,
                         }"
                     />
@@ -351,9 +351,9 @@ const clearPhotoFileInput = () => {
                         v-model="form.public"
                         :class="[
                             form.public
-                                ? 'bg-myPrimaryBrandColor'
+                                ? 'bg-myPrimarySuccessColor'
                                 : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2',
                         ]"
                     >
                         <span class="sr-only">Use setting</span>
@@ -396,7 +396,7 @@ const clearPhotoFileInput = () => {
                                 aria-hidden="true"
                             >
                                 <svg
-                                    class="h-3 w-3 text-myPrimaryBrandColor"
+                                    class="h-3 w-3 text-myPrimarySuccessColor"
                                     fill="currentColor"
                                     viewBox="0 0 12 12"
                                 >
