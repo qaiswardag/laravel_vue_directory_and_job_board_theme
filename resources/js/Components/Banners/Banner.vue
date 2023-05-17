@@ -19,7 +19,7 @@ watch(message, async () => {
             v-if="show && message"
             :class="{
                 'bg-myPrimaryBrandColor': style == 'success',
-                'bg-myErrorColor': style == 'danger',
+                'bg-myPrimaryErrorColor': style == 'danger',
             }"
         >
             <div class="max-w-screen-xl mx-auto py-2 px-3 sm:px-6 lg:px-8">
@@ -29,7 +29,7 @@ watch(message, async () => {
                             class="flex p-2 rounded-lg"
                             :class="{
                                 'bg-myPrimaryBrandColor': style == 'success',
-                                'bg-myErrorColor': style == 'danger',
+                                'bg-myPrimaryErrorColor': style == 'danger',
                             }"
                         >
                             <svg
@@ -77,7 +77,7 @@ watch(message, async () => {
                             :class="{
                                 'hover:bg-myPrimaryBrandColor focus:bg-myPrimaryBrandColor':
                                     style == 'success',
-                                'hover:bg-myErrorColor focus:bg-myErrorColor':
+                                'hover:bg-myPrimaryErrorColor focus:bg-myPrimaryErrorColor':
                                     style == 'danger',
                             }"
                             aria-label="Dismiss"

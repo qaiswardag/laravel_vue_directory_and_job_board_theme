@@ -278,7 +278,7 @@ const handleDeleteImage = function (imageId) {
                                                         <select
                                                             v-model="selected"
                                                             id="tabs"
-                                                            class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
+                                                            class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-myPrimarySuccessColor focus:border-myPrimarySuccessColor sm:text-sm rounded-md"
                                                         >
                                                             <option>
                                                                 Upload
@@ -497,7 +497,7 @@ const handleDeleteImage = function (imageId) {
                                                                             class="flex gap-2 item-center"
                                                                         >
                                                                             <div
-                                                                                class="mt-1 relative flex items-center w-full"
+                                                                                class="mt-1 relative flex items-center w-full border myPrimaryInput py-0 pl-0"
                                                                             >
                                                                                 <input
                                                                                     placeholder="Image name.."
@@ -508,7 +508,7 @@ const handleDeleteImage = function (imageId) {
                                                                                     type="text"
                                                                                     autofocus
                                                                                     autocomplete="off"
-                                                                                    class="myPrimaryInput"
+                                                                                    class="myPrimaryInput w-52 ml-0 border-none"
                                                                                     @keydown.enter.tab.prevent="
                                                                                         handleImageUpdate(
                                                                                             getCurrentImage
@@ -670,7 +670,7 @@ const handleDeleteImage = function (imageId) {
                                                                     class="py-3 flex justify-between text-sm font-medium items-center"
                                                                 >
                                                                     <dt
-                                                                        class="text-myErrorColor"
+                                                                        class="text-myPrimaryErrorColor"
                                                                     >
                                                                         Delete
                                                                     </dt>

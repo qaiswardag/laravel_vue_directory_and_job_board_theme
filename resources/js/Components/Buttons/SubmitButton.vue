@@ -54,7 +54,7 @@ const firstButtonClick = function () {
                     myPrimaryDeleteButton: ButtonStyleDelete,
                     'py-1 px-1 bg-transparent  shadow-none border-0 hover:bg-transparent focus:outline-none focus:ring-0  focus:ring-offset-0':
                         TableStyle,
-                    'text-myErrorColor': TableStyle && ButtonStyleDelete,
+                    'text-myPrimaryErrorColor': TableStyle && ButtonStyleDelete,
                     'text-myPrimaryBrandColor':
                         TableStyle && !ButtonStyleDelete,
                 }"

@@ -338,7 +338,7 @@ onMounted(() => {
                                         :class="
                                             post.published
                                                 ? 'bg-green-100'
-                                                : 'bg-red-100 text-myErrorColor'
+                                                : 'bg-red-100 text-myPrimaryErrorColor'
                                         "
                                         class="inline-flex rounded-full px-2 font-semibold leading-5 text-green-800"
                                         >{{

@@ -286,17 +286,15 @@ onMounted(() => {
                             <div
                                 class="h-full md:max-h-[30rem] max-h-[13rem] overflow-y-scroll"
                             >
-                                <div
-                                    class="flex flex-col w-full gap-1 divide-gray-200"
-                                >
+                                <div class="flex flex-col w-full gap-1 px-2">
                                     <div
                                         v-for="user in getCurrentUsers
                                             .fetchedData.users.data"
                                         :key="user.id"
-                                        class="hover:bg-gray-50 px-2 border border-myPrimaryLightGrayColor divide-y rounded"
+                                        class="hover:bg-gray-50 px-2 border border-myPrimaryLightGrayColor divide-y group flex w-full items-center justify-between space-x-3 p-2 text-left focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor-500 focus:ring-offset-2 rounded-md"
                                     >
                                         <div
-                                            class="flex justify-between items-center"
+                                            class="flex justify-between items-center w-full"
                                         >
                                             <div
                                                 class="flex items-center gap-2 my-4"
@@ -364,82 +362,67 @@ onMounted(() => {
                                                     </span>
                                                 </span>
                                             </div>
-                                            <div>
-                                                <button
-                                                    @click="
-                                                        handleAttachUser(user)
-                                                    "
-                                                    class="myPrimaryButton text-xs flex gap-1"
-                                                    :class="[
-                                                        isUserAlreadyAdded(user)
-                                                            ? 'opacity-50 cursor-default'
-                                                            : '',
-                                                    ]"
+
+                                            <button
+                                                @click="handleAttachUser(user)"
+                                                v-if="
+                                                    isUserAlreadyAdded(user) ===
+                                                    false
+                                                "
+                                                class="myPrimaryButton text-xs flex gap-1 items-center"
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="2"
+                                                    stroke="currentColor"
+                                                    class="w-3 h-3"
                                                 >
-                                                    <div
-                                                        v-if="
-                                                            isUserAlreadyAdded(
-                                                                user
-                                                            ) === false
-                                                        "
-                                                    >
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            stroke-width="2"
-                                                            stroke="currentColor"
-                                                            class="w-3 h-3"
-                                                        >
-                                                            <path
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                                d="M12 4.5v15m7.5-7.5h-15"
-                                                            />
-                                                        </svg>
-                                                    </div>
-                                                    <div
-                                                        v-if="
-                                                            isUserAlreadyAdded(
-                                                                user
-                                                            ) === true
-                                                        "
-                                                    >
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            stroke-width="1.5"
-                                                            stroke="currentColor"
-                                                            class="w-3 h-3"
-                                                        >
-                                                            <path
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                                d="M4.5 12.75l6 6 9-13.5"
-                                                            />
-                                                        </svg>
-                                                    </div>
-                                                    <span>
-                                                        {{
-                                                            isUserAlreadyAdded(
-                                                                user
-                                                            )
-                                                                ? "Added"
-                                                                : "Add"
-                                                        }}
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div
-                                            v-if="
-                                                frontEndError &&
-                                                frontEndError.id === user.id
-                                            "
-                                            class="myPrimaryParagraphError py-2 text-xs italic"
-                                        >
-                                            {{ frontEndError.error }}
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M12 4.5v15m7.5-7.5h-15"
+                                                    />
+                                                </svg>
+                                                <p
+                                                    class="myPrmaryParagraph text-xs"
+                                                >
+                                                    Invite
+                                                </p>
+                                            </button>
+                                            <button
+                                                @click="
+                                                    handleRemoveAttachedUser(
+                                                        user.id
+                                                    )
+                                                "
+                                                v-if="
+                                                    isUserAlreadyAdded(user) ===
+                                                    true
+                                                "
+                                                class="myPrimaryDeleteButton text-xs flex gap-1 justify-center items-center"
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="2"
+                                                    stroke="currentColor"
+                                                    class="w-3 h-3"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M18 12H6"
+                                                    />
+                                                </svg>
+                                                <p
+                                                    class="myPrmaryParagraph text-xs"
+                                                >
+                                                    Remove
+                                                </p>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -535,7 +518,7 @@ onMounted(() => {
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="w-4 h-4 text-myErrorColor cursor-pointer"
+                                        class="w-4 h-4 text-myPrimaryErrorColor cursor-pointer"
                                     >
                                         <path
                                             stroke-linecap="round"

@@ -81,11 +81,13 @@ onMounted(() => {
     </div>
 
     <div class="flex mt-3">
-        <div class="mt-1 relative flex items-center w-full">
+        <div
+            class="mt-1 relative flex items-center w-full border myPrimaryInput py-0 pl-0"
+        >
             <input
                 v-model="vueTag"
                 type="text"
-                class="myPrimaryInput"
+                class="myPrimaryInput w-72 ml-0 border-none"
                 placeholder="Enter tags.."
                 @keydown.enter.tab.prevent="handleInput"
                 autocomplete="off"
@@ -99,5 +101,5 @@ onMounted(() => {
             </div>
         </div>
     </div>
-    <p class="myPrimaryParagraph text-myErrorColor mpy-2">{{ error }}</p>
+    <p class="myPrimaryParagraph text-myPrimaryErrorColor mpy-2">{{ error }}</p>
 </template>

@@ -65,7 +65,10 @@ const submit = () => {
         </template>
 
         <AuthenticationCard :css="'opacity-95'">
-            <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+            <div
+                v-if="status"
+                class="mb-4 font-medium text-sm text-myPrimarySuccessColor"
+            >
                 {{ status }}
             </div>
 

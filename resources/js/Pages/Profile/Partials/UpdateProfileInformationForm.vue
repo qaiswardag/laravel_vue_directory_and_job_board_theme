@@ -162,7 +162,7 @@ const clearPhotoFileInput = () => {
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class="w-5 h-5 text-myErrorColor"
+                                class="w-5 h-5 text-myPrimaryErrorColor"
                             >
                                 <path
                                     stroke-linecap="round"
@@ -231,7 +231,7 @@ const clearPhotoFileInput = () => {
 
                         <div
                             v-show="verificationLinkSent"
-                            class="mt-2 font-medium text-sm text-green-600"
+                            class="mt-2 font-medium text-sm text-myPrimarySuccessColor"
                         >
                             A new verification link has been sent to your email
                             address.
@@ -344,7 +344,7 @@ const clearPhotoFileInput = () => {
                         :value="form.public ? 'Public' : 'Private'"
                         :class="{
                             'text-myPrimaryBrandColor': form.public,
-                            'text-myErrorColor': !form.public,
+                            'text-myPrimaryErrorColor': !form.public,
                         }"
                     />
                     <Switch

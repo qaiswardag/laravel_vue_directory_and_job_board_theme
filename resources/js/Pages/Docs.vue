@@ -89,7 +89,9 @@ const TestSubmitButtonTwice = function () {
         </template>
 
         <div class="myPrimarySection">
-            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div
+                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
+            >
                 <p class="myPrimaryParagraph font-semibold mb-2">Link button</p>
                 <p class="myPrimaryParagraph">
                     Use Inertia Link as POST request and render the LINK as a
@@ -125,7 +127,9 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div
+                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
+            >
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Scroll Position
                     <br />
@@ -138,7 +142,9 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div
+                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
+            >
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Active Links
                 </p>
@@ -169,7 +175,9 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div
+                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
+            >
                 <p class="myPrimaryParagraph font-semibold mb-2">Shared Data</p>
                 <p class="myPrimaryParagraph my-2">
                     Use middleware app/HTTP/Middleware "HandleInertiaRequests"
@@ -187,7 +195,9 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div
+                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
+            >
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Global Component Registration
                 </p>
@@ -205,7 +215,9 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div
+                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
+            >
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Persistent Layouts
                 </p>
@@ -238,7 +250,9 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div
+                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
+            >
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     An Important SPA Security Concern
                 </p>
@@ -251,7 +265,9 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div
+                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
+            >
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     An Important SPA Security Concern
                 </p>
@@ -264,7 +280,9 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div
+                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
+            >
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Fetch data using custom npm package
                 </p>
@@ -272,7 +290,7 @@ const TestSubmitButtonTwice = function () {
                 <div class="bg-white">
                     <div class="bg-emerald-50">
                         <h1
-                            class="text-3xl font-semibold text-emerald-600 py-10 text-center"
+                            class="text-3xl font-semibold text-myPrimarySuccessColor py-10 text-center"
                         >
                             Users table
                         </h1>
@@ -296,7 +314,7 @@ const TestSubmitButtonTwice = function () {
                                 !isLoadingDataUsers &&
                                 isSuccessDataUsers
                             "
-                            class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                            class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-myPrimarySuccessColor"
                             role="alert"
                         >
                             <span class="sr-only">Info</span>
@@ -338,7 +356,9 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div class="mb-8 p-4 border-2 border-emerald-500 rounded-xl">
+            <div
+                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
+            >
                 <p class="myPrimaryParagraph font-semibold mb-2">
                     Fetch backend data using custom npm package
                 </p>
@@ -349,7 +369,7 @@ const TestSubmitButtonTwice = function () {
                 <div class="bg-white">
                     <div class="bg-red-50">
                         <h1
-                            class="text-3xl font-semibold text-emerald-600 py-10 text-center"
+                            class="text-3xl font-semibold text-myPrimarySuccessColor py-10 text-center"
                         >
                             Backend Users table
                         </h1>
@@ -374,7 +394,7 @@ const TestSubmitButtonTwice = function () {
                                 !isLoadingBackendDataUsers &&
                                 isSuccessBackendDataUsers
                             "
-                            class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                            class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-myPrimarySuccessColor"
                             role="alert"
                         >
                             <span class="sr-only">Info</span>

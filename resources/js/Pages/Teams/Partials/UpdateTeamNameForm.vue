@@ -226,7 +226,7 @@ const notificationsModalButton = function () {
                         :value="form.public ? 'Public' : 'Private'"
                         :class="{
                             'text-myPrimaryBrandColor': form.public,
-                            'text-myErrorColor': !form.public,
+                            'text-myPrimaryErrorColor': !form.public,
                         }"
                     />
                     <Switch
@@ -343,7 +343,7 @@ const notificationsModalButton = function () {
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="w-5 h-5 text-myErrorColor cursor-pointer"
+                            class="w-5 h-5 text-myPrimaryErrorColor cursor-pointer"
                         >
                             <path
                                 stroke-linecap="round"
@@ -417,7 +417,7 @@ const notificationsModalButton = function () {
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="w-5 h-5 text-myErrorColor cursor-pointer"
+                            class="w-5 h-5 text-myPrimaryErrorColor cursor-pointer"
                         >
                             <path
                                 stroke-linecap="round"
@@ -534,7 +534,7 @@ const notificationsModalButton = function () {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-4 h-4 text-myErrorColor"
+                        class="w-4 h-4 text-myPrimaryErrorColor"
                     >
                         <path
                             stroke-linecap="round"
@@ -548,7 +548,7 @@ const notificationsModalButton = function () {
                         />
                     </svg>
                     <p
-                        class="myPrimaryParagraph text-xs text-myErrorColor py-0 my-0"
+                        class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
                     >
                         Show
                         {{ Object.values(form.errors).length }}

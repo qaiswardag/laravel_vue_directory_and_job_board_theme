@@ -29,6 +29,7 @@ class Post extends Model
         "slug_id",
         "show_author",
         "author_id",
+        "trash",
     ];
 
     // Define the relationship with the Team model

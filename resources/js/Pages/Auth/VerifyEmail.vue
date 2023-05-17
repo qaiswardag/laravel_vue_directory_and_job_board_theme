@@ -36,7 +36,7 @@ const verificationLinkSent = computed(
 
         <div
             v-if="verificationLinkSent"
-            class="mb-4 font-medium text-sm text-green-600"
+            class="mb-4 font-medium text-sm text-myPrimarySuccessColor"
         >
             A new verification link has been sent to the email address you
             provided in your profile settings.

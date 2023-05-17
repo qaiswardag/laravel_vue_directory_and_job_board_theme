@@ -362,7 +362,7 @@ const displayAbleRole = (role) => {
                                                         addTeamMemberForm.role ==
                                                         role.key
                                                     "
-                                                    class="ml-2 h-5 w-5 text-green-400"
+                                                    class="ml-2 h-5 w-5 text-myPrimarySuccessColor"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
@@ -873,7 +873,7 @@ const displayAbleRole = (role) => {
 
                                     <svg
                                         v-if="updateRoleForm.role == role.key"
-                                        class="ml-2 h-5 w-5 text-green-400"
+                                        class="ml-2 h-5 w-5 text-myPrimarySuccessColor"
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
                                         viewBox="0 0 24 24"

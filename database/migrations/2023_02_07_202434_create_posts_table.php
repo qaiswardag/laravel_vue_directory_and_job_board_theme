@@ -17,15 +17,6 @@ return new class extends Migration {
 
             // user
             $table->integer("user_id")->unsigned();
-            // $table
-            //     ->foreignId("user_id")
-            //     ->references("id")
-            //     ->on("users")
-            //     ->onDelete("cascade")
-            //     ->constrained();
-
-            // team
-            // $table->foreignId("team_id");
             $table
                 ->foreignId("team_id")
                 ->references("id")
@@ -33,9 +24,8 @@ return new class extends Migration {
                 ->onDelete("cascade")
                 ->constrained();
             //
-            //
-            //
             $table->boolean("show_author");
+            $table->boolean("trash");
             $table->longText("title");
             $table->string("slug");
             $table->longText("content");

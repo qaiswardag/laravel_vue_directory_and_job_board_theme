@@ -135,7 +135,7 @@ const createTeam = () => {
                         :value="form.public ? 'Public' : 'Private'"
                         :class="{
                             'text-myPrimaryBrandColor': form.public,
-                            'text-myErrorColor': !form.public,
+                            'text-myPrimaryErrorColor': !form.public,
                         }"
                     />
                     <Switch

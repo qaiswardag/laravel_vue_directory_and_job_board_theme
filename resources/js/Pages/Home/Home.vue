@@ -6,6 +6,7 @@ import DefaultElement from "@/Components/Layouts/DefaultElement.vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/vue/24/outline";
 import { Head } from "@inertiajs/vue3";
+import SectionBorder from "@/Components/SectionBorder.vue";
 
 const faqs = [
     {
@@ -91,7 +92,7 @@ const faqs = [
             </template>
         </FullWidthElement>
         <!-- Faq - end -->
-
+        <SectionBorder></SectionBorder>
         <!-- Only Title and Content - start -->
         <DefaultElement :descriptionArea="false">
             <template #title>Only Title & Content</template>
@@ -115,6 +116,7 @@ const faqs = [
             </template>
         </DefaultElement>
         <!-- Only Title and Content - end -->
+        <SectionBorder></SectionBorder>
         <!-- Only Title and Content - start -->
         <FullWidthElement :descriptionArea="false">
             <template #title>Only Title & Content</template>
@@ -138,7 +140,7 @@ const faqs = [
             </template>
         </FullWidthElement>
         <!-- Only Title and Content - end -->
-
+        <SectionBorder></SectionBorder>
         <!-- People - start -->
         <DefaultElement :descriptionArea="true">
             <template #title>Latest Users</template>
@@ -336,9 +338,9 @@ const faqs = [
             </template>
         </DefaultElement>
         <!-- People - end -->
-
-        <!-- Number 3 - start -->
-        <FullWidthElement :descriptionArea="true">
+        <SectionBorder></SectionBorder>
+        <!-- Number 4 - start -->
+        <FullWidthElement :descriptionArea="true" class="bg-gray-100">
             <template #title>Number four</template>
             <template #description>
                 As new users join, they bring innovative ideas, unique skills,
@@ -368,6 +370,6 @@ const faqs = [
                 </p>
             </template>
         </FullWidthElement>
-        <!-- Number 3 - end -->
+        <!-- Number 4 - end -->
     </GuestsLayout>
 </template>

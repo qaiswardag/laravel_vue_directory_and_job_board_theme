@@ -93,7 +93,7 @@ const thirdButton = function () {
                         >
                             <CheckIcon
                                 aria-hidden="true"
-                                class="h-4 w-4 text-green-600"
+                                class="h-4 w-4 text-myPrimarySuccessColor"
                             />
                         </div>
 
@@ -262,7 +262,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-emerald-500 focus-visible:ring-emerald-500 focus:ring-emerald-500 hover:bg-emerald-600 text-sm w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor text-sm w-full"
                                 :class="{
                                     'opacity-25 cursor-default': disabled,
                                 }"
@@ -306,7 +306,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="myPrimaryButton bg-emerald-500 focus-visible:ring-emerald-500 focus:ring-emerald-500 hover:bg-emerald-600 text-sm w-full"
+                                class="myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor text-sm w-full"
                                 type="button"
                                 @click="thirdButton"
                             >
@@ -322,7 +322,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-emerald-500 focus-visible:ring-emerald-500 focus:ring-emerald-500 hover:bg-emerald-600 text-sm w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor text-sm w-full"
                                 :class="{
                                     'opacity-25 cursor-default': disabled,
                                 }"
@@ -366,7 +366,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="myPrimaryButton bg-emerald-500 focus-visible:ring-emerald-500 focus:ring-emerald-500 hover:bg-emerald-600 text-sm w-full"
+                                class="myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor text-sm w-full"
                                 type="button"
                                 @click="thirdButton"
                             >
@@ -383,7 +383,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-emerald-500 focus-visible:ring-emerald-500 focus:ring-emerald-500 hover:bg-emerald-600 text-sm w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor text-sm w-full"
                                 :class="{
                                     'opacity-25 cursor-default': disabled,
                                 }"
@@ -427,7 +427,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-myErrorColor hover:bg-red-600 text-white focus:ring-myErrorColor text-sm w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-myPrimaryErrorColor hover:bg-red-600 text-white focus:ring-myPrimaryErrorColor text-sm w-full"
                                 type="button"
                                 @click="thirdButton"
                             >
@@ -444,7 +444,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-myErrorColor hover:bg-red-600 text-white focus:ring-myErrorColor text-sm w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-myPrimaryErrorColor hover:bg-red-600 text-white focus:ring-myPrimaryErrorColor text-sm w-full"
                                 :class="{
                                     'opacity-25 cursor-default': disabled,
                                 }"
@@ -488,7 +488,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-myErrorColor hover:bg-red-600 text-white focus:ring-myErrorColor text-sm w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-myPrimaryErrorColor hover:bg-red-600 text-white focus:ring-myPrimaryErrorColor text-sm w-full"
                                 type="button"
                                 @click="thirdButton"
                             >

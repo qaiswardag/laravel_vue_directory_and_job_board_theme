@@ -29,6 +29,7 @@ class StorePostRequest extends FormRequest
         $rules = [
             "published" => ["boolean"],
             "show_author" => ["boolean"],
+            "trash" => ["boolean"],
             // If you do not include the string validation rule for a text input like title.
             // it may allow non-string values to be submitted and saved in the database.
             // This could potentially cause security issues or errors in your application,

@@ -504,7 +504,7 @@ onBeforeMount(() => {
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="w-5 h-5 text-myErrorColor"
+                                    class="w-5 h-5 text-myPrimaryErrorColor"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -537,7 +537,7 @@ onBeforeMount(() => {
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="w-5 h-5 text-green-600"
+                                    class="w-5 h-5 text-myPrimarySuccessColor"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -592,7 +592,7 @@ onBeforeMount(() => {
                         :value="postForm.published ? 'Published' : 'Private'"
                         :class="{
                             'text-myPrimaryBrandColor': postForm.published,
-                            'text-myErrorColor': !postForm.published,
+                            'text-myPrimaryErrorColor': !postForm.published,
                         }"
                     />
                     <Switch
@@ -682,7 +682,7 @@ onBeforeMount(() => {
                         :value="postForm.show_author ? 'Show' : 'Hide'"
                         :class="{
                             'text-myPrimaryBrandColor': postForm.show_author,
-                            'text-myErrorColor': !postForm.show_author,
+                            'text-myPrimaryErrorColor': !postForm.show_author,
                         }"
                     />
                     <Switch
@@ -868,7 +868,7 @@ onBeforeMount(() => {
                                             viewBox="0 0 24 24"
                                             stroke-width="1.5"
                                             stroke="currentColor"
-                                            class="w-4 h-4 text-myErrorColor cursor-pointer"
+                                            class="w-4 h-4 text-myPrimaryErrorColor cursor-pointer"
                                         >
                                             <path
                                                 stroke-linecap="round"
@@ -949,7 +949,7 @@ onBeforeMount(() => {
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="w-5 h-5 text-myErrorColor cursor-pointer"
+                            class="w-5 h-5 text-myPrimaryErrorColor cursor-pointer"
                         >
                             <path
                                 stroke-linecap="round"
@@ -1103,7 +1103,7 @@ onBeforeMount(() => {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-4 h-4 text-myErrorColor"
+                        class="w-4 h-4 text-myPrimaryErrorColor"
                     >
                         <path
                             stroke-linecap="round"
@@ -1117,7 +1117,7 @@ onBeforeMount(() => {
                         />
                     </svg>
                     <p
-                        class="myPrimaryParagraph text-xs text-myErrorColor py-0 my-0"
+                        class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
                     >
                         Show
                         {{ Object.values(postForm.errors).length }}

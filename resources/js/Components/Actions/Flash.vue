@@ -82,7 +82,7 @@ const flashModalButton = function () {
                     <div class="flex">
                         <div class="flex-shrink-0">
                             <CheckCircleIcon
-                                class="h-5 w-5 text-green-400"
+                                class="h-5 w-5 text-myPrimarySuccessColor"
                                 aria-hidden="true"
                             />
                         </div>
@@ -96,7 +96,7 @@ const flashModalButton = function () {
                                 <button
                                     @click="flashModalButton"
                                     type="button"
-                                    class="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
+                                    class="inline-flex rounded-md bg-green-50 p-1.5 text-myPrimarySuccessColor hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2 focus:ring-offset-green-50"
                                 >
                                     <XMarkIcon
                                         class="h-5 w-5"
