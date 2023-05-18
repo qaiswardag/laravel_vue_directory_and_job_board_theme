@@ -26,7 +26,7 @@ const primaryMenuSlideOverButton = function () {
 };
 
 const navigation = [
-    { name: "Dashboard", href: "#", current: true },
+    { name: "Blog", href: "#", current: true },
     {
         name: "Teams",
         current: false,

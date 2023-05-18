@@ -495,7 +495,6 @@ onBeforeMount(() => {
                                 v-model="slugValueTitle"
                                 type="text"
                                 class="block w-full mt-1 myPrimaryInputReadonly"
-                                autofocus
                                 readonly
                                 autocomplete="off"
                             />
@@ -529,7 +528,6 @@ onBeforeMount(() => {
                                 v-model="slugValueCustom"
                                 type="text"
                                 class="block w-full mt-1"
-                                autofocus
                                 autocomplete="off"
                             />
                             <div

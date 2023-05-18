@@ -15,6 +15,10 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class MediaLibraryController extends Controller
 {
+    // Define $imagePaths as a property current class
+    private $imagePaths;
+    const PUBLIC_UPLOAD_PATH = "app/public/uploads/";
+
     /**
      * Display a listing of the resource.
      */
@@ -45,8 +49,7 @@ class MediaLibraryController extends Controller
      * Store a newly created resource in storage.
      */
 
-    // ...
-
+    //
     public function store(StoreMediaLibraryRequest $request)
     {
         // use and find the Team from request as that is the Team user want to store a Post for
@@ -84,6 +87,119 @@ class MediaLibraryController extends Controller
             // extension
             $extension = $image->getClientOriginalExtension();
 
+            $path = $this->generateUniqueImagePath(
+                $teamReferenceId,
+                $currentYearYear,
+                $currentMonth,
+                $slugifyFilename,
+                $randomString,
+                $extension,
+                $timestamp
+            );
+
+            $image->storeAs("uploads", $path, ["disk" => "public"]);
+
+            $this->saveAdditionalImageSizes(
+                $path,
+                $teamReferenceId,
+                $currentYearYear,
+                $currentMonth,
+                $slugifyFilename,
+                $randomString,
+                $extension
+            );
+
+            // file size
+            $fileSizeKb = intval($image->getSize() / 1024);
+
+            $width = null;
+            $height = null;
+
+            list($width, $height) = $this->getImageDimensions($path);
+
+            $width = intval($width);
+            $height = intval($height);
+
+            // Image eloquent
+            MediaLibrary::create([
+                "user_id" => $request->user_id,
+                "team_id" => $team->id,
+                "name" => null,
+                "path" => $this->imagePaths["path"],
+                "thumbnail_path" => $this->imagePaths["thumbnail_path"],
+                "medium_path" => $this->imagePaths["medium_path"],
+                "large_path" => $this->imagePaths["large_path"],
+                "size" => $fileSizeKb,
+                "width" => $width,
+                "height" => $height,
+                "extension" => $extension,
+            ]);
+        }
+
+        return redirect()
+            ->back()
+            ->with("success", "Successfully uploaded images.");
+    }
+
+    /**
+     * Get image dimensions
+     */
+    private function getImageDimensions($path)
+    {
+        $width = null;
+        $height = null;
+
+        if (
+            File::exists(storage_path(self::PUBLIC_UPLOAD_PATH . $path)) ===
+            true
+        ) {
+            $imageType = exif_imagetype(
+                storage_path(self::PUBLIC_UPLOAD_PATH . $path)
+            );
+            if ($imageType !== false) {
+                list($width, $height) = getimagesize(
+                    storage_path(self::PUBLIC_UPLOAD_PATH . $path)
+                );
+            }
+        }
+        return [$width, $height];
+    }
+
+    /**
+     * Generate unique image path
+     */
+    private function generateUniqueImagePath(
+        $teamReferenceId,
+        $currentYearYear,
+        $currentMonth,
+        $slugifyFilename,
+        $randomString,
+        $extension,
+        $timestamp
+    ) {
+        $path =
+            $teamReferenceId .
+            "/" .
+            $currentYearYear .
+            "/" .
+            $currentMonth .
+            "/" .
+            $slugifyFilename .
+            "_" .
+            $randomString .
+            "." .
+            $extension;
+
+        // check if the path already exists in the media_libraries table
+        while (MediaLibrary::where("path", $path)->exists()) {
+            // if the path already exists, regenerate the path
+
+            // generate a unique ID for the image
+            $randomString = Str::random(rand(8, 14)) . strval($timestamp);
+            // convert the random string to lowercase using strtolower()
+            $randomString = strtolower($randomString);
+
+            // regenerate the path
             $path =
                 $teamReferenceId .
                 "/" .
@@ -96,173 +212,94 @@ class MediaLibraryController extends Controller
                 $randomString .
                 "." .
                 $extension;
-
-            // check if the path already exists in the media_libraries table
-            if (MediaLibrary::where("path", $path)->exists()) {
-                // if the path already exists, change the path
-
-                // generate a unique ID for the image
-                $randomString = Str::random(rand(8, 14)) . strval($timestamp);
-                // convert the random string to lowercase using strtolower()
-                $randomString = strtolower($randomString);
-
-                // path
-                $path =
-                    $teamReferenceId .
-                    "/" .
-                    $currentYearYear .
-                    "/" .
-                    $currentMonth .
-                    "/" .
-                    $slugifyFilename .
-                    "_" .
-                    $randomString .
-                    "." .
-                    $extension;
-            }
-
-            // dd("image is:", $image);
-
-            $image->storeAs("uploads", $path, ["disk" => "public"]);
-
-            // Save additional image sizes - start
-            // Save additional image sizes - start
-            // Save additional image sizes - start
-
-            // Create thumbnail, medium, and large image sizes
-            $sizes = [
-                "thumbnail" => [200, 200],
-                "medium" => [600, 600],
-                "large" => [1024, 1024],
-            ];
-
-            $imagePaths = [
-                "path" => $path,
-                "thumbnail_path" => null,
-                "medium_path" => null,
-                "large_path" => null,
-            ];
-
-            foreach ($sizes as $sizeName => [$width, $height]) {
-                $resizedImagePath =
-                    $teamReferenceId .
-                    "/" .
-                    $currentYearYear .
-                    "/" .
-                    $currentMonth .
-                    "/" .
-                    $slugifyFilename .
-                    "_" .
-                    $randomString .
-                    "_" .
-                    $sizeName .
-                    "." .
-                    $extension;
-
-                $imageType = exif_imagetype(
-                    storage_path("app/public/uploads/" . $path)
-                );
-
-                // Check if the original uploaded image can be resized using Image Intervention
-                if (
-                    $imageType === 2 || // IMAGETYPE_JPEG
-                    $imageType === 3 || // IMAGETYPE_PNG
-                    $imageType === 6 || // IMAGETYPE_BMP
-                    $imageType === 18 // IMAGETYPE_WEBP
-                    // $imageType === 19 // AVIF
-                ) {
-                    // Create a new Image Intervention instance for the original image
-                    $img = Image::make(
-                        storage_path("app/public/uploads/" . $path)
-                    );
-
-                    // Resize the image, maintaining aspect ratio and allowing upsizing
-                    $img->resize($width, $height, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    });
-
-                    // Save the resized image to storage
-                    $img->save(
-                        storage_path("app/public/uploads/" . $resizedImagePath)
-                    );
-
-                    // Add the path to the resized image to the array of image paths
-                    $imagePaths[$sizeName . "_path"] = $resizedImagePath;
-                } else {
-                    // If the image cannot be resized, use the original image for all image sizes
-                    $imagePaths = [
-                        "path" => $path,
-                        "thumbnail_path" => $path,
-                        "medium_path" => $path,
-                        "large_path" => $path,
-                    ];
-                }
-            }
-
-            // Save additional image sizes - end
-            // Save additional image sizes - end
-            // Save additional image sizes - end
-
-            // file size
-            $fileSizeKb = intval($image->getSize() / 1024);
-
-            $width = null;
-            $height = null;
-
-            // check if file exists
-            if (
-                File::exists(storage_path("app/public/uploads/" . $path)) ===
-                true
-            ) {
-                // The exif_imagetype function is a built-in PHP function that returns the image
-                // type of a file. In this case, the function is used to check if the file located
-                // at the path "uploads/" . $path is an image file. If the function returns a value
-                // that is not false, it means that the file is an image file, and the condition
-                // will evaluate to true.
-                $imageType = exif_imagetype(
-                    storage_path("app/public/uploads/" . $path)
-                );
-                if ($imageType !== false) {
-                    list($width, $height) = getimagesize(
-                        storage_path("app/public/uploads/" . $path)
-                    );
-                }
-            }
-
-            $width = intval($width);
-            $height = intval($height);
-
-            // dd($imagePaths);
-            // [
-            // "path" => "mpfqmmxwoido/2023/05/aeoa_op_epflooub1683441635.jpg"
-            // "thumbnail_path" => "mpfqmmxwoido/2023/05/aeoa_op_epflooub1683441635_thumbnail.jpg"
-            // "medium_path" => "mpfqmmxwoido/2023/05/aeoa_op_epflooub1683441635_medium.jpg"
-            // "large_path" => "mpfqmmxwoido/2023/05/aeoa_op_epflooub1683441635_large.jpg"
-            // ]
-
-            // dd($imagePaths["thumbnail_path"]);
-            // "mpfqmmxwoido/2023/05/aeoa_op_ldlcnnuarm1683441507_thumbnail.jpg"
-
-            // Image eloquent
-            MediaLibrary::create([
-                "user_id" => $request->user_id,
-                "team_id" => $team->id,
-                "name" => null,
-                "path" => $imagePaths["path"],
-                "thumbnail_path" => $imagePaths["thumbnail_path"],
-                "medium_path" => $imagePaths["medium_path"],
-                "large_path" => $imagePaths["large_path"],
-                "size" => $fileSizeKb,
-                "width" => $width,
-                "height" => $height,
-                "extension" => $extension,
-            ]);
         }
 
-        return redirect()
-            ->back()
-            ->with("success", "Successfully uploaded images.");
+        return $path;
+    }
+
+    /**
+     * Generating and saving additional sizes
+     * of an image.
+     */
+    private function saveAdditionalImageSizes(
+        $path,
+        $teamReferenceId,
+        $currentYearYear,
+        $currentMonth,
+        $slugifyFilename,
+        $randomString,
+        $extension
+    ) {
+        // Create thumbnail, medium, and large image sizes
+        $sizes = [
+            "thumbnail" => [200, 200],
+            "medium" => [600, 600],
+            "large" => [1024, 1024],
+        ];
+
+        $this->imagePaths = [
+            "path" => $path,
+            "thumbnail_path" => null,
+            "medium_path" => null,
+            "large_path" => null,
+        ];
+
+        foreach ($sizes as $sizeName => [$width, $height]) {
+            $resizedImagePath =
+                $teamReferenceId .
+                "/" .
+                $currentYearYear .
+                "/" .
+                $currentMonth .
+                "/" .
+                $slugifyFilename .
+                "_" .
+                $randomString .
+                "_" .
+                $sizeName .
+                "." .
+                $extension;
+
+            $imageType = exif_imagetype(
+                storage_path(self::PUBLIC_UPLOAD_PATH . $path)
+            );
+
+            // Check if the original uploaded image can be resized using Image Intervention
+            if (
+                $imageType === 2 || // IMAGETYPE_JPEG
+                $imageType === 3 || // IMAGETYPE_PNG
+                $imageType === 6 || // IMAGETYPE_BMP
+                $imageType === 18 // IMAGETYPE_WEBP
+                // $imageType === 19 // AVIF
+            ) {
+                // Create a new Image Intervention instance for the original image
+                $img = Image::make(
+                    storage_path(self::PUBLIC_UPLOAD_PATH . $path)
+                );
+
+                // Resize the image, maintaining aspect ratio and allowing upsizing
+                $img->resize($width, $height, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+
+                // Save the resized image to storage
+                $img->save(
+                    storage_path(self::PUBLIC_UPLOAD_PATH . $resizedImagePath)
+                );
+
+                // Add the path to the resized image to the array of image paths
+                $this->imagePaths[$sizeName . "_path"] = $resizedImagePath;
+            } else {
+                // If the image cannot be resized, use the original image for all image sizes
+                $this->imagePaths = [
+                    "path" => $path,
+                    "thumbnail_path" => $path,
+                    "medium_path" => $path,
+                    "large_path" => $path,
+                ];
+            }
+        }
     }
 
     /**
@@ -325,10 +362,10 @@ class MediaLibraryController extends Controller
         // Delete the files from the public directory
         foreach ($imagePaths as $path) {
             if (
-                File::exists(storage_path("app/public/uploads/" . $path)) ===
+                File::exists(storage_path(self::PUBLIC_UPLOAD_PATH . $path)) ===
                 true
             ) {
-                File::delete(storage_path("app/public/uploads/" . $path));
+                File::delete(storage_path(self::PUBLIC_UPLOAD_PATH . $path));
             }
         }
 

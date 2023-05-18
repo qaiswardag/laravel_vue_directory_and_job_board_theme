@@ -274,6 +274,7 @@ onMounted(() => {
                             <th scope="col" class="myPrimaryTableTh">
                                 Team name
                             </th>
+                            <th scope="col" class="myPrimaryTableTh">Trash</th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Update Date
                             </th>
@@ -367,6 +368,9 @@ onMounted(() => {
                                         $page.props.user &&
                                         $page.props.user.current_team.name
                                     }}
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    {{ post.trash }}
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
                                     update date here
