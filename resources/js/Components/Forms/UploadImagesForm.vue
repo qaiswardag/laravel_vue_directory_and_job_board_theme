@@ -218,15 +218,17 @@ onMounted(() => {
             <InputError :message="form.errors?.images" />
         </div>
 
-        <p
-            v-if="imagesPreview.length !== 0 && isLoading === false"
-            class="myPrimaryParagraph pb-2 italic text-xs"
-        >
-            Images {{ imagesPreview.length }}
-        </p>
+        <div class="flex justify-start items-center">
+            <p
+                v-if="imagesPreview.length !== 0 && isLoading === false"
+                class="myPrimaryTag"
+            >
+                Images {{ imagesPreview.length }}
+            </p>
+        </div>
 
         <div
-            class="overflow-y-scroll md:min-h-[30rem] md:max-h-[30rem] min-h-[15rem] max-h-[15rem]"
+            class="overflow-y-scroll md:min-h-[30rem] md:max-h-[30rem] min-h-[15rem] max-h-[15rem] p-2 border border-myPrimaryLightGrayColor rounded"
         >
             <div v-if="isLoading === true">
                 <div class="flex items-center justify-center">
@@ -282,7 +284,7 @@ onMounted(() => {
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="w-4 h-4 text-myPrimaryErrorColor"
+                                    class="w-4 h-4 text-myErrorColor"
                                 >
                                     <path
                                         stroke-linecap="round"

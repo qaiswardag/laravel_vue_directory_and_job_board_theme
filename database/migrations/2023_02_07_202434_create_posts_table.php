@@ -25,7 +25,7 @@ return new class extends Migration {
                 ->constrained();
             //
             $table->boolean("show_author");
-            $table->boolean("trash");
+            $table->boolean("trash")->nullable();
             $table->longText("title");
             $table->string("slug");
             $table->longText("content");

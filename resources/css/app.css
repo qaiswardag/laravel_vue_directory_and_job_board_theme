@@ -58,6 +58,15 @@
 
     /*
     |--------------------------------------------------------------------------
+    | Tags
+    |--------------------------------------------------------------------------
+    */
+    .myPrimaryTag {
+        @apply myPrimaryParagraph bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs font-semibold shadow-sm;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Thumbnail
     |--------------------------------------------------------------------------
     */
@@ -74,11 +83,11 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryParagraph {
-        @apply text-sm font-normal text-gray-700;
+        @apply font-normal text-gray-700 text-sm;
     }
 
     .myPrimaryParagraphError {
-        @apply mt-1 italic block text-sm font-medium text-myPrimaryErrorColor text-left tracking-wide;
+        @apply myPrimaryParagraph mt-1 italic text-myPrimaryErrorColor;
     }
 
     /*

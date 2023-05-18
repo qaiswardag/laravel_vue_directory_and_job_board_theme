@@ -224,8 +224,6 @@ class PostController extends Controller
         // Initialize the $authorId variable to null
         $authorId = null;
 
-        // dd("ok:", $request->author);
-
         // Create the post and store it in a variable
         $post->update([
             "user_id" => $userId,

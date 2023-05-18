@@ -163,7 +163,7 @@ onMounted(() => {
             >
                 <main class="overflow-y-auto relativ w-full">
                     <div>
-                        <form class="mb-4" @submit.prevent="handleSearch(1)">
+                        <form @submit.prevent="handleSearch(1)">
                             <div class="mysearchBarWithOptions">
                                 <div class="relative w-full">
                                     <div
@@ -205,7 +205,24 @@ onMounted(() => {
                             </div>
                         </form>
 
-                        <!-- loading - start -->
+                        <div
+                            v-if="
+                                getCurrentUsers &&
+                                getCurrentUsers.isError === false &&
+                                getCurrentUsers.fetchedData &&
+                                getCurrentUsers.fetchedData.users &&
+                                getCurrentUsers.fetchedData.users.data &&
+                                getCurrentUsers.fetchedData.total_results !== 0
+                            "
+                            class="flex justify-start items-center"
+                        >
+                            <p class="myPrimaryTag">
+                                Total
+                                {{ getCurrentUsers.fetchedData.count }}
+                                users
+                            </p>
+                        </div>
+
                         <div
                             v-if="
                                 getCurrentUsers &&
@@ -279,25 +296,23 @@ onMounted(() => {
                                 getCurrentUsers.fetchedData.total_results !== 0
                             "
                         >
-                            <p class="myPrimaryParagraph pb-2 italic text-xs">
-                                Total
-                                {{ getCurrentUsers.fetchedData.count }} users.
-                            </p>
                             <div
-                                class="h-full md:max-h-[30rem] max-h-[13rem] overflow-y-scroll"
+                                class="h-full md:max-h-[30rem] max-h-[13rem] overflow-y-scroll pr-1"
                             >
-                                <div class="flex flex-col w-full gap-1 px-2">
+                                <div
+                                    class="flex flex-col w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
+                                >
                                     <div
                                         v-for="user in getCurrentUsers
                                             .fetchedData.users.data"
                                         :key="user.id"
-                                        class="hover:bg-gray-50 px-2 border border-myPrimaryLightGrayColor divide-y group flex w-full items-center justify-between space-x-3 p-2 text-left focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor-500 focus:ring-offset-2 rounded-md"
+                                        class="shaddow-md hover:bg-gray-50 px-2 border border-myPrimaryLightGrayColor hover:border-myPrimaryBrandColor divide-y group flex w-full items-center justify-between space-x-3 p-0 text-left focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor-500 focus:ring-offset-2 rounded-full"
                                     >
                                         <div
                                             class="flex justify-between items-center w-full"
                                         >
                                             <div
-                                                class="flex items-center gap-2 my-4"
+                                                class="flex items-center gap-2 my-2"
                                             >
                                                 <!-- start photo -->
                                                 <div
@@ -350,15 +365,12 @@ onMounted(() => {
                                                 <span
                                                     class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                                 >
-                                                    <span>
+                                                    <span class="font-semibold">
                                                         {{ user.first_name }}
                                                         {{ user.last_name }}
                                                     </span>
-                                                    <span>
-                                                        {{ user.email }}
-                                                    </span>
-                                                    <span>
-                                                        Role: {{ user.role }}
+                                                    <span class="italic">
+                                                        {{ user.role }}
                                                     </span>
                                                 </span>
                                             </div>
@@ -369,7 +381,7 @@ onMounted(() => {
                                                     isUserAlreadyAdded(user) ===
                                                     false
                                                 "
-                                                class="myPrimaryButton text-xs flex gap-1 items-center"
+                                                class="myPrimaryButton text-xs flex items-center"
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -377,7 +389,7 @@ onMounted(() => {
                                                     viewBox="0 0 24 24"
                                                     stroke-width="2"
                                                     stroke="currentColor"
-                                                    class="w-3 h-3"
+                                                    class="w-4 h-4"
                                                 >
                                                     <path
                                                         stroke-linecap="round"
@@ -385,11 +397,6 @@ onMounted(() => {
                                                         d="M12 4.5v15m7.5-7.5h-15"
                                                     />
                                                 </svg>
-                                                <p
-                                                    class="myPrmaryParagraph text-xs"
-                                                >
-                                                    Invite
-                                                </p>
                                             </button>
                                             <button
                                                 @click="
@@ -401,7 +408,7 @@ onMounted(() => {
                                                     isUserAlreadyAdded(user) ===
                                                     true
                                                 "
-                                                class="myPrimaryDeleteButton text-xs flex gap-1 justify-center items-center"
+                                                class="myPrimaryDeleteButton text-xs flex justify-center items-center"
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -409,7 +416,7 @@ onMounted(() => {
                                                     viewBox="0 0 24 24"
                                                     stroke-width="2"
                                                     stroke="currentColor"
-                                                    class="w-3 h-3"
+                                                    class="w-4 h-4"
                                                 >
                                                     <path
                                                         stroke-linecap="round"
@@ -417,11 +424,6 @@ onMounted(() => {
                                                         d="M18 12H6"
                                                     />
                                                 </svg>
-                                                <p
-                                                    class="myPrmaryParagraph text-xs"
-                                                >
-                                                    Remove
-                                                </p>
                                             </button>
                                         </div>
                                     </div>
@@ -447,9 +449,11 @@ onMounted(() => {
                         v-if="getCurrentAttachedUsers.length !== 0"
                         class="flex flex-col w-full divide-y divide-gray-200 p-2"
                     >
-                        <p class="myPrimaryParagraph pb-2 italic text-xs">
-                            Added {{ getCurrentAttachedUsers.length }} Users
-                        </p>
+                        <div class="flex justify-start items-center">
+                            <p class="myPrimaryTag">
+                                Added {{ getCurrentAttachedUsers.length }} Users
+                            </p>
+                        </div>
                         <div
                             v-for="user in getCurrentAttachedUsers"
                             :key="user.id"
@@ -537,71 +541,29 @@ onMounted(() => {
         <!-- content end -->
 
         <div
-            class="flex flex-col px-6 py-4 bg-gray-100 text-right absolute bottom-0 left-0 right-0"
+            class="bg-gray-100 px-6 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
         >
             <div
-                class="sm:grid sm:gap-3 sm:grid-cols-2 grid gap-4 sm:grid-flow-row-dense md:w-full"
+                class="sm:items-end sm:justify-end flex sm:flex-row flex-col myPrimaryGap sm:w-3/6 w-full"
             >
                 <button
                     v-if="firstButtonText"
                     ref="firstButtonRef"
-                    class="shadow myPrimaryButton bg-myPrimaryMediumGrayColor text-sm w-full hover:bg-gray-500 text-white hover:text-white focus:ring-gray-500"
+                    class="mySecondaryButton w-full"
                     type="button"
                     @click="firstButton"
                 >
                     {{ firstButtonText }}
                 </button>
-
-                <div v-if="secondButtonText">
-                    <div>
-                        <button
-                            class="flex items-center gap-2 myPrimaryButton text-sm w-full"
-                            type="button"
-                            @click="secondButton"
-                        >
-                            {{ secondButtonText }}
-                        </button>
-                    </div>
-                </div>
+                <button
+                    v-if="secondButtonText"
+                    class="myPrimaryButton w-full"
+                    type="button"
+                    @click="secondButton"
+                >
+                    {{ secondButtonText }}
+                </button>
             </div>
         </div>
     </Modal>
 </template>
-
-<style scope>
-/*
-  Enter and leave animations can use different
-  durations and timing functions.
-*/
-.slide-fade-enter-active {
-    transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-    transform: translateX(20px);
-    opacity: 0;
-}
-
-.bounce-enter-active {
-    animation: bounce-in 0.5s;
-}
-.bounce-leave-active {
-    animation: bounce-in 0.5s reverse;
-}
-@keyframes bounce-in {
-    0% {
-        transform: scale(0);
-    }
-    50% {
-        transform: scale(1.25);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-</style>

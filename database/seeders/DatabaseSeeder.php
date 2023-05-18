@@ -231,23 +231,20 @@ class DatabaseSeeder extends Seeder
             "role" => "admin",
         ]);
 
-        // fake Users
-        // TODO: commented below for test - making issues in production. Therefor uncomment again.
-        // User::factory(100)->create();
+        User::factory(100)->create();
 
         // add users to Qais's Team
-        // TODO: commented below for test - making issues in production. Therefor uncomment again.
-        // foreach (range(8, 50) as $num) {
-        //     TeamUser::factory()->create([
-        //         "team_id" => Team::find(1)->id, // Qais Wardag's team
-        //         "user_id" => User::find($num)->id, // User as $num
-        //         "role" => "editor",
-        //     ]);
+        foreach (range(8, 50) as $num) {
+            TeamUser::factory()->create([
+                "team_id" => Team::find(1)->id, // Qais Wardag's team
+                "user_id" => User::find($num)->id, // User as $num
+                "role" => "editor",
+            ]);
 
-        //     if ($num == 50) {
-        //         break;
-        //     }
-        // }
+            if ($num == 50) {
+                break;
+            }
+        }
 
         // fake Posts
         Post::factory(100)->create();

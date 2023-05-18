@@ -309,7 +309,9 @@ const createPost = () => {
     if (formType.value === "create") {
         postForm.post(route("overview.posts.store"), {
             preserveScroll: true,
-            onSuccess: () => {},
+            onSuccess: () => {
+                clearForm();
+            },
             onError: () => {},
             onFinish: () => {},
         });

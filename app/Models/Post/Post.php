@@ -28,6 +28,7 @@ class Post extends Model
         "tags",
         "slug_id",
         "show_author",
+        "trash",
         "author_id",
     ];
 

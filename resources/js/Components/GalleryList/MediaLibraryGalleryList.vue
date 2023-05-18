@@ -111,18 +111,14 @@ onMounted(() => {
                 getCurrentMedia.fetchedMedia &&
                 getCurrentMedia.fetchedMedia.media &&
                 getCurrentMedia.fetchedMedia.media.data &&
-                getCurrentMedia.isError === false
+                getCurrentMedia.isError === false &&
+                getCurrentMedia.fetchedMedia.total_results !== 0
             "
             class="flex items-center min-h-[2.5rem]"
         >
-            <div
-                class="flex justify-start items-center"
-                v-if="getCurrentMedia.fetchedMedia.total_results !== 0"
-            >
-                <p
-                    class="myPrimaryParagraph text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor rounded my-1 px-2 py-2 text-xs"
-                >
-                    Results
+            <div class="flex justify-start items-center">
+                <p class="myPrimaryTag">
+                    Images
                     {{ getCurrentMedia.fetchedMedia.total_results }}
                 </p>
             </div>
@@ -159,7 +155,7 @@ onMounted(() => {
     </div>
 
     <div
-        class="overflow-y-scroll md:min-h-[35rem] md:max-h-[35rem] min-h-[15rem] max-h-[15rem] p-4 border border-myPrimaryLightGrayColor rounded"
+        class="overflow-y-scroll md:min-h-[35rem] md:max-h-[35rem] min-h-[15rem] max-h-[15rem] p-2 border border-myPrimaryLightGrayColor rounded"
     >
         <div
             v-if="
@@ -198,7 +194,7 @@ onMounted(() => {
             </div>
 
             <div
-                class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 myPrimaryGap"
+                class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 myPrimaryGap"
             >
                 <template
                     v-for="image in getCurrentMedia &&

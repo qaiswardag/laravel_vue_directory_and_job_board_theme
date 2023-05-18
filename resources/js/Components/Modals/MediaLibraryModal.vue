@@ -752,7 +752,7 @@ const handleDeleteImage = function (imageId) {
                                                 >
                                                     <button
                                                         ref="firstButtonRef"
-                                                        class="myPrimaryButton bg-gray-700 hover:bg-gray-800 text-white focus:ring-gray-700"
+                                                        class="mySecondaryButton"
                                                         type="button"
                                                         @click="firstButton"
                                                     >
