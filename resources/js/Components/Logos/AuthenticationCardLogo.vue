@@ -3,18 +3,13 @@ import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <Link :href="'/'">
-        <div class="shrink-0 flex items-center">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-20 h-20 my-logo"
-                viewBox="0 0 5.31 6.96"
-            >
-                <path
-                    d="m2.95.8c.32.03.64.12.93.28.3.16.56.37.79.65.48.56.69,1.2.63,1.92-.06.72-.37,1.32-.93,1.8-.43.36-.9.57-1.42.63v.87s-.47.01-.47.01v-.87c-.74-.05-1.35-.35-1.82-.92-.31-.37-.51-.79-.6-1.25-.09-.47-.05-.92.1-1.36s.42-.82.79-1.13c.45-.38.96-.6,1.54-.65V0s.46,0,.46,0v.8Zm-.47,4.78V1.3c-.47.04-.87.21-1.22.51-.28.24-.49.54-.62.91-.13.36-.16.73-.09,1.1.07.37.24.71.5,1.02.38.44.85.69,1.43.75Zm.47-4.27v4.26c.41-.05.77-.22,1.09-.49.3-.25.51-.56.64-.92.13-.36.16-.72.09-1.09-.07-.37-.24-.71-.5-1.02-.36-.42-.8-.67-1.33-.74Z"
-                    fill="#231f20"
-                />
-            </svg>
-        </div>
-    </Link>
+    <div class="flex flex-shrink-0 items-center px-4 justify-between">
+        <Link
+            :href="route('home')"
+            class="-m-1.5 p-1.5 myPrimaryParagraph text-3xl sm:text-md font-semibold"
+        >
+            <span class="sr-only">myself</span>
+            myself
+        </Link>
+    </div>
 </template>

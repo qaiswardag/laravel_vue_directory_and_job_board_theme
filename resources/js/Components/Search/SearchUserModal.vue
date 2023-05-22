@@ -306,7 +306,7 @@ onMounted(() => {
                                         v-for="user in getCurrentUsers
                                             .fetchedData.users.data"
                                         :key="user.id"
-                                        class="shaddow-md hover:bg-gray-50 px-2 border border-myPrimaryLightGrayColor hover:border-myPrimaryBrandColor divide-y group flex w-full items-center justify-between space-x-3 p-0 text-left focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor-500 focus:ring-offset-2 rounded-full"
+                                        class="myPrimaryBorderFullRoundedUsers"
                                     >
                                         <div
                                             class="flex justify-between items-center w-full"

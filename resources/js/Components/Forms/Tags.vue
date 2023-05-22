@@ -10,11 +10,12 @@ const props = defineProps({
 const error = ref(null);
 const vueTag = ref("");
 const tagsEntered = ref([]);
-const emit = defineEmits(["firstTagsButton"]);
+const emit = defineEmits(["handleTags"]);
 const regexSpecialCharacters = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
 // handle input
 const handleInput = function () {
+    console.log("handle input inside ran");
     // error
     error.value = null;
     // spaces are not allowed
@@ -36,7 +37,7 @@ const handleInput = function () {
     // add to tags entered & remove all whitespaces
     if (!tagsEntered.value.includes(vueTag.value)) {
         tagsEntered.value.push(vueTag.value.trim());
-        emit("firstTagsButton", tagsEntered.value.toString(","));
+        emit("handleTags", tagsEntered.value.toString(","));
     }
     // clear vue model for tag
     vueTag.value = "";
@@ -47,14 +48,14 @@ const deleteTag = function (e) {
     tagsEntered.value = tagsEntered.value.filter((tag) => {
         return tag !== e.target.getAttribute("data-tag");
     });
-    emit("firstTagsButton", tagsEntered.value.toString(","));
+    emit("handleTags", tagsEntered.value.toString(","));
 };
 
 onMounted(() => {
-    if (props.tagsOnLoad.length !== 0) {
+    if (typeof props.tagsOnLoad === "string" && props.tagsOnLoad.length !== 0) {
         tagsEntered.value = props.tagsOnLoad.split(",");
     }
-    if (props.tagsOnLoad.length === 0) {
+    if (typeof props.tagsOnLoad === "string" && props.tagsOnLoad.length === 0) {
         tagsEntered.value = [];
     }
 });
@@ -62,6 +63,7 @@ onMounted(() => {
 
 <template>
     <div>
+        <p>tags entered inden i: {{ tagsEntered }}</p>
         <div class="flex gap-2 items-center flex-wrap">
             <TransitionGroup name="tags">
                 <template v-for="tag in tagsEntered" :key="tag">
@@ -82,19 +84,21 @@ onMounted(() => {
 
     <div class="flex mt-3">
         <div
-            class="mt-1 relative flex items-center w-full border myPrimaryInput py-0 pl-0"
+            class="mt-1 relative flex items-center w-full border myPrimaryInput py-0 p-0"
         >
             <input
                 v-model="vueTag"
                 type="text"
-                class="myPrimaryInput w-72 ml-0 border-none"
+                class="myPrimaryInput border-none rounded-r-none ml-0 w-full"
                 placeholder="Enter tags.."
                 @keydown.enter.tab.prevent="handleInput"
                 autocomplete="off"
             />
-            <div class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
+            <div
+                class="border border-gray-200 border-none rounded flex items-center justify-center h-full w-8"
+            >
                 <kbd
-                    class="inline-flex items-center border border-gray-200 rounded px-2 text-xs font-sans font-medium text-gray-400"
+                    class="text-xs font-sans font-medium text-gray-400 border-none"
                 >
                     ⏎
                 </kbd>

@@ -32,20 +32,94 @@ const faqs = [
     <GuestsLayout>
         <Head title="Home" />
         <template #header>
-            <div class="myPrimaryMainPageHeaderParagraph bg-purple-200">
+            <div class="myPrimaryMainPageHeaderParagraph">
                 <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
-                    Turn Emails into Revenue
+                    Dashboard Empowered
+                    <br />
+                    with Advanced features
                 </h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Quisquam, laborum. Omnis voluptate vero sed culpa! Eius,
-                    hic? Aliquid deserunt blanditiis animi suscipit minima ea
-                    sed excepturi.
+                    Experience the epitome of elegance with our Exquisite Admin
+                    & Dashboard. Exquisite Admin & Dashboard Empowered with
+                    Advanced Team Management and Media Library
                 </p>
             </div>
         </template>
 
-        <!-- Faq - start -->
-        <FullWidthElement :descriptionArea="true">
+        <FullWidthElement
+            :descriptionArea="true"
+            class="bg-myPrimaryLightGrayColor"
+        >
+            <template #title>All-in-one platform</template>
+            <template #description>
+                Experience the epitome of elegance with our Exquisite Admin &
+                Dashboard. Empowered with advanced team management capabilities
+                and a state-of-the-art media library, it offers unrivaled
+                control and efficiency. Seamlessly manage and organize your
+                media assets.
+                <br />
+                Take your administrative prowess to new heights with this
+                powerful solution designed to streamline your operations and
+                enhance productivity. Discover a world of sophistication and
+                convenience with our Exquisite Admin & Dashboard.
+            </template>
+            <template #content>
+                <div
+                    class="grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-2 lg:items-start"
+                >
+                    <div class="lg:pt-4">
+                        <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg">
+                            <h2 class="myFourthHeader">Deploy faster</h2>
+                            <p class="mySecondaryHeader">A better workflow</p>
+                            <p class="mt-6 myPrimaryParagraph">
+                                Lorem ipsum, dolor sit amet consectetur
+                                adipisicing elit. Maiores impedit perferendis
+                                suscipit eaque, iste dolor cupiditate blanditiis
+                                ratione.
+                            </p>
+                            <dl
+                                class="mt-10 max-w-xl space-y-8 myPrimaryParagraph lg:max-w-none"
+                            >
+                                <!-- space -->
+                                <dd class="block mt-4">
+                                    Lorem ipsum, dolor sit amet consectetur
+                                    adipisicing elit. Maiores impedit
+                                    perferendis suscipit eaque, iste dolor
+                                    cupiditate blanditiis ratione.
+                                </dd>
+
+                                <!-- space -->
+                                <dd class="block mt-4">
+                                    Anim aute id magna aliqua ad ad non deserunt
+                                    sunt. Qui irure qui lorem cupidatat commodo.
+                                </dd>
+
+                                <!-- space -->
+                                <dd class="block mt-4">
+                                    Ac tincidunt sapien vehicula erat auctor
+                                    pellentesque rhoncus. Et magna sit morbi
+                                    lobortis.
+                                </dd>
+                            </dl>
+                        </div>
+                        <button
+                            @click="handleDesigner"
+                            class="myPrimaryButton mt-8"
+                        >
+                            Start Designer
+                        </button>
+                    </div>
+                    <div class="sm:px-6 lg:px-0">
+                        <img
+                            src="https://images.unsplash.com/photo-1604284195847-88dc4b5a9faa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80"
+                            alt=""
+                        />
+                    </div>
+                </div>
+            </template>
+        </FullWidthElement>
+
+        <DefaultElement :descriptionArea="true">
             <template #title>Frequently asked questions</template>
             <template #description>
                 As new users join, they bring innovative ideas, unique skills,
@@ -82,7 +156,7 @@ const faqs = [
                                 </span>
                             </DisclosureButton>
                         </dt>
-                        <DisclosurePanel as="dd" class="mt-2 pr-12">
+                        <DisclosurePanel as="dd" class="mt-2 pr-12 pb-16">
                             <p class="myPrimaryParagraph">
                                 {{ faq.answer }}
                             </p>
@@ -90,59 +164,9 @@ const faqs = [
                     </Disclosure>
                 </dl>
             </template>
-        </FullWidthElement>
-        <!-- Faq - end -->
-        <SectionBorder></SectionBorder>
-        <!-- Only Title and Content - start -->
-        <DefaultElement :descriptionArea="false">
-            <template #title>Only Title & Content</template>
-            <template #content>
-                <p class="myPrimaryParagraph">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Illum in facilis labore id. Illum animi deleniti sed fuga
-                    illo, commodi corporis est amet, ipsa doloremque quisquam
-                    molestiae nemo porro cum expedita, voluptatum reiciendis.
-                    Impedit vitae beatae laborum accusantium placeat ratione,
-                    mollitia libero ipsum quae. Aspernatur laborum voluptas
-                    voluptatibus maiores maxime nemo, mollitia nostrum enim,
-                    consectetur eligendi debitis totam. A quisquam, iste
-                    expedita voluptas molestiae quas debitis corporis quaerat
-                    ullam optio vel officia magnam. Facilis eius repellat
-                    perferendis placeat mollitia ratione odio illum. At quisquam
-                    dolorem tempora debitis ullam corrupti rerum repellat, ipsum
-                    laborum assumenda fugit placeat deserunt et voluptatibus
-                    iusto?
-                </p>
-            </template>
         </DefaultElement>
-        <!-- Only Title and Content - end -->
-        <SectionBorder></SectionBorder>
-        <!-- Only Title and Content - start -->
-        <FullWidthElement :descriptionArea="false">
-            <template #title>Only Title & Content</template>
-            <template #content>
-                <p class="myPrimaryParagraph">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Illum in facilis labore id. Illum animi deleniti sed fuga
-                    illo, commodi corporis est amet, ipsa doloremque quisquam
-                    molestiae nemo porro cum expedita, voluptatum reiciendis.
-                    Impedit vitae beatae laborum accusantium placeat ratione,
-                    mollitia libero ipsum quae. Aspernatur laborum voluptas
-                    voluptatibus maiores maxime nemo, mollitia nostrum enim,
-                    consectetur eligendi debitis totam. A quisquam, iste
-                    expedita voluptas molestiae quas debitis corporis quaerat
-                    ullam optio vel officia magnam. Facilis eius repellat
-                    perferendis placeat mollitia ratione odio illum. At quisquam
-                    dolorem tempora debitis ullam corrupti rerum repellat, ipsum
-                    laborum assumenda fugit placeat deserunt et voluptatibus
-                    iusto?
-                </p>
-            </template>
-        </FullWidthElement>
-        <!-- Only Title and Content - end -->
-        <SectionBorder></SectionBorder>
         <!-- People - start -->
-        <DefaultElement :descriptionArea="true">
+        <FullWidthElement :descriptionArea="true" class="bg-gray-200">
             <template #title>Latest Users</template>
             <template #description>
                 As new users join, they bring innovative ideas, unique skills,
@@ -336,40 +360,7 @@ const faqs = [
                     </li>
                 </ul>
             </template>
-        </DefaultElement>
-        <!-- People - end -->
-        <SectionBorder></SectionBorder>
-        <!-- Number 4 - start -->
-        <FullWidthElement :descriptionArea="true" class="bg-gray-100">
-            <template #title>Number four</template>
-            <template #description>
-                As new users join, they bring innovative ideas, unique skills,
-                and diverse experiences that enrich our platform. Connect with
-                them, explore their work, and celebrate the fresh energy they
-                contribute to our collaborative space.
-            </template>
-            <template #content>
-                <p class="myPrimaryParagraph">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Corrupti suscipit adipisci mollitia odit dolore voluptate
-                    voluptatibus eum libero explicabo, optio nostrum
-                    perspiciatis enim tenetur? Nobis inventore minus provident
-                    eveniet quidem natus quae possimus quam soluta, vitae,
-                    reprehenderit delectus eaque ab iste, voluptas enim debitis
-                    veritatis deserunt assumenda nisi.
-                </p>
-                <br />
-                <p class="myPrimaryParagraph">
-                    Qui, quidem, expedita itaque harum dolores enim autem
-                    recusandae atque cumque accusamus delectus obcaecati
-                    corporis in reiciendis cum. Perferendis cupiditate porro at
-                    libero asperiores officiis explicabo? Sit dicta id ipsum
-                    aliquam quasi. Dolor repudiandae minus laborum recusandae
-                    quaerat nam sed debitis harum accusantium necessitatibus
-                    neque omnis, ut impedit? Unde dolorum maxime asperiores.
-                </p>
-            </template>
         </FullWidthElement>
-        <!-- Number 4 - end -->
+        <!-- People - end -->
     </GuestsLayout>
 </template>

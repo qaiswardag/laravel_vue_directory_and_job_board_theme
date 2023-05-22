@@ -18,7 +18,7 @@ import slugify from "slugify";
 import config from "@/utils/config";
 import SearchUserModal from "@/Components/Search/SearchUserModal.vue";
 import { router } from "@inertiajs/vue3";
-
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import {
     Listbox,
     ListboxButton,
@@ -52,6 +52,21 @@ const props = defineProps({
         required: false,
     },
 });
+
+const modalShowClearForm = ref(false);
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
 
 // Check if the user has a role other than 'reader' for this team
 const userTeamsWithoutReaderRole = props.user.all_teams.filter((team) => {
@@ -297,7 +312,7 @@ const handleCloseLock = function () {
 const handleOpenLock = function () {
     isSlugEditable.value = true;
 };
-const firstTagsButton = function (tags) {
+const handleTags = function (tags) {
     postForm.tags = tags;
 };
 const handleCreatePost = function () {
@@ -326,6 +341,33 @@ const createPost = () => {
     }
 };
 
+const handleClearForm = function () {
+    // handle show modal for unique content
+    modalShowClearForm.value = true;
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = `Are you certain that you want to clear the form?`;
+    descriptionModal.value =
+        "Are you certain that you want to clear the form? The form will be cleared.";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Clear form";
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowClearForm.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowClearForm.value = false;
+        clearForm();
+    };
+};
+// end modal
+
+// clear form
 const clearForm = function () {
     postForm.title = "";
     // slug
@@ -343,12 +385,19 @@ const clearForm = function () {
     postForm.cover_image_medium = "";
     postForm.cover_image_large = "";
 
+    //
+    //
     postForm.tags = "";
+    handleTags(postForm.tags);
+    //
+    //
+    //
     postForm.show_author = true;
     postForm.author = [];
 
     localStorage.removeItem("postForm");
 };
+
 // is form dirty? returns true or false
 const formIsDirty = computed(() => {
     return postForm.isDirty;
@@ -974,6 +1023,9 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Tags</div>
+                    <p class="py-6 text-red-400">
+                        post form tags er: {{ postForm.tags }}
+                    </p>
                     <p class="myPrimaryParagraph">
                         Lorem ipsum dolor sit amet.
                     </p>
@@ -981,7 +1033,7 @@ onBeforeMount(() => {
                 <div class="myInputGroup">
                     <Tags
                         :tagsOnLoad="postForm.tags"
-                        @firstTagsButton="firstTagsButton"
+                        @handleTags="handleTags"
                     ></Tags>
                     <InputError :message="postForm.errors.tags" />
                 </div>
@@ -1083,17 +1135,19 @@ onBeforeMount(() => {
         </template>
 
         <template #actions>
-            <template v-if="formType === 'create'">
-                <button
-                    type="button"
-                    @click="clearForm"
-                    class="myPrimaryButton"
-                >
-                    Clear Form
-                </button>
-            </template>
-            <SubmitButton :disabled="postForm.processing" buttonText="Save">
-            </SubmitButton>
+            <div class="flex myPrimaryGap justify-end items-center">
+                <template v-if="formType === 'create'">
+                    <button
+                        type="button"
+                        @click="handleClearForm"
+                        class="myPrimaryDeleteButton"
+                    >
+                        Clear
+                    </button>
+                </template>
+                <SubmitButton :disabled="postForm.processing" buttonText="Save">
+                </SubmitButton>
+            </div>
             <div
                 class="flex justify-end mt-4"
                 v-if="Object.values(postForm.errors).length !== 0"
@@ -1130,6 +1184,22 @@ onBeforeMount(() => {
                     </p>
                 </div>
             </div>
+            <DynamicModal
+                :show="modalShowClearForm"
+                :type="typeModal"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
+                <main></main>
+            </DynamicModal>
             <MediaLibraryModal
                 :user="user"
                 :team="postForm.team"

@@ -155,7 +155,7 @@ onMounted(() => {
     </div>
 
     <div
-        class="overflow-y-scroll md:min-h-[35rem] md:max-h-[35rem] min-h-[15rem] max-h-[15rem] p-2 border border-myPrimaryLightGrayColor rounded"
+        class="overflow-y-scroll md:min-h-[35rem] md:max-h-[35rem] min-h-[15rem] max-h-[15rem] pr-1 rounded"
     >
         <div
             v-if="

@@ -23,10 +23,10 @@
     }
 
     .myPrimaryWidthScreenModule {
-        @apply myModulePyMargin myModulePadding bg-gray-200;
+        @apply myModulePyMargin myModulePadding;
     }
     .myPrimaryModule {
-        @apply max-w-7xl mx-auto myModulePyMargin myModulePadding bg-green-100;
+        @apply max-w-7xl mx-auto myModulePyMargin myModulePadding;
     }
     .myHeaderParagraphSection {
         @apply max-w-7xl mx-auto md:pb-10 pb-8 md:px-8 px-4;
@@ -64,6 +64,14 @@
     .myPrimaryTag {
         @apply myPrimaryParagraph bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs font-semibold shadow-sm;
     }
+    /*
+    |--------------------------------------------------------------------------
+    | Lists
+    |--------------------------------------------------------------------------
+    */
+    .myPrimaryBorderFullRoundedUsers {
+        @apply hover:bg-gray-50 px-2 border border-myPrimaryLightGrayColor hover:border-myPrimaryBrandColor divide-y  flex w-full items-center justify-between space-x-3 p-0 text-left focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 rounded-full;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -99,10 +107,10 @@
         @apply mySecondaryHeader text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor border-b-2 border-gray-50 bg-gray-50;
     }
     .myPrimaryMainPageHeaderNotLoggedIn {
-        @apply text-3xl mb-6 font-semibold text-center font-['Josefin_Sans'];
+        @apply text-6xl leading-normal mb-6 font-semibold text-center;
     }
     .myPrimaryMainPageParagraphNotLoggedIn {
-        @apply md:w-4/6 text-xl mx-auto text-center font-semibold font-['Josefin_Sans'];
+        @apply md:w-4/6 text-xl mx-auto text-center font-semibold;
     }
     .myPrimaryHeader {
         @apply text-3xl mb-2 font-semibold text-black;

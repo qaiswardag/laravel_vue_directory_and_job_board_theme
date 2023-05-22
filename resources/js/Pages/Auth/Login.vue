@@ -41,22 +41,12 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestsLayout
-        style="
-            background-image: url('/images/app-images/background-images/register/register.jpg');
-        "
-    >
+    <GuestsLayout>
         <Head title="Login" />
         <template #header>
             <div class="myPrimaryMainPageHeaderParagraph">
-                <h1
-                    class="myPrimaryMainPageHeaderNotLoggedIn text-white shadow"
-                >
-                    Login
-                </h1>
-                <p
-                    class="myPrimaryMainPageParagraphNotLoggedIn text-white shadow"
-                >
+                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Login</h1>
+                <p class="myPrimaryMainPageParagraphNotLoggedIn">
                     Dolor sit amet consectetur adipisicing elit. Culpa illo ipsa
                     fugit quo ad, et, placeat minima assumenda soluta asperiores
                     quaerat perspiciatis.
@@ -64,7 +54,10 @@ const submit = () => {
             </div>
         </template>
 
-        <AuthenticationCard :css="'opacity-95'">
+        <AuthenticationCard :css="'opacity-100'">
+            <template #logo>
+                <AuthenticationCardLogo />
+            </template>
             <div
                 v-if="status"
                 class="mb-4 font-medium text-sm text-myPrimarySuccessColor"

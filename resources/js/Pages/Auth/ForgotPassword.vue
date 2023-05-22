@@ -23,9 +23,19 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestsLayout title="Log in">
+    <GuestsLayout>
+        <Head title="Register" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Login</h2>
+            <div class="myPrimaryMainPageHeaderParagraph">
+                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
+                    Forgot password
+                </h1>
+                <p class="myPrimaryMainPageParagraphNotLoggedIn">
+                    Dolor sit amet consectetur adipisicing elit. Culpa illo ipsa
+                    fugit quo ad, et, placeat minima assumenda soluta asperiores
+                    quaerat perspiciatis.
+                </p>
+            </div>
         </template>
 
         <AuthenticationCard :css="'opacity-100'">

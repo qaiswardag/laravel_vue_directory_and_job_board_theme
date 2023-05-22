@@ -162,25 +162,6 @@ const handleUploadImages = function () {
                 </div>
 
                 <div class="py-12 px-4 my-6 rounded-md">
-                    <div>
-                        <p class="myPrimaryParagraph">
-                            Manage or upload new images to your collection to
-                            keep your visual assets up-to-date. You can easily
-                            organize and sort your images, and quickly find the
-                            ones you need with our search and filter tools.
-                        </p>
-                        <p class="myPrimaryParagraph mt-8 mb-4">
-                            With the ability to upload new images, you can
-                            ensure that your collection is always expanding with
-                            fresh, high-quality visual content that represents
-                            your brand and meets your business needs. Whether
-                            you need to update your website, social media
-                            profiles, or marketing materials, managing and
-                            uploading new images is a simple and effective way
-                            to stay ahead of the competition.
-                        </p>
-                    </div>
-
                     <div class="mt-6 mb-6">
                         <p class="myPrimaryParagraph mt-8 mb-4">
                             You are currently viewing the latest 16 images

@@ -92,7 +92,7 @@ const maxWidthClass = computed(() => {
                                 maxHeight ? maxHeight : '',
                             ]"
                         >
-                            <slot v-if="show" />
+                            <slot></slot>
                         </div>
                     </TransitionChild>
                 </div>

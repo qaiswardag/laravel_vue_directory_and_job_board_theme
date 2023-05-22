@@ -497,7 +497,7 @@ const handleDeleteImage = function (imageId) {
                                                                             class="flex gap-2 item-center"
                                                                         >
                                                                             <div
-                                                                                class="mt-1 relative flex items-center w-full border myPrimaryInput py-0 pl-0"
+                                                                                class="mt-1 relative flex items-center w-full border myPrimaryInput py-0 p-0"
                                                                             >
                                                                                 <input
                                                                                     placeholder="Image name.."
@@ -508,7 +508,7 @@ const handleDeleteImage = function (imageId) {
                                                                                     type="text"
                                                                                     autofocus
                                                                                     autocomplete="off"
-                                                                                    class="myPrimaryInput w-52 ml-0 border-none"
+                                                                                    class="myPrimaryInput border-none rounded-r-none ml-0 w-full"
                                                                                     @keydown.enter.tab.prevent="
                                                                                         handleImageUpdate(
                                                                                             getCurrentImage
@@ -518,12 +518,11 @@ const handleDeleteImage = function (imageId) {
                                                                                         )
                                                                                     "
                                                                                 />
-
                                                                                 <div
-                                                                                    class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5"
+                                                                                    class="border border-gray-200 border-none rounded flex items-center justify-center h-full w-8"
                                                                                 >
                                                                                     <kbd
-                                                                                        class="inline-flex items-center border border-gray-200 rounded px-2 text-xs font-sans font-medium text-gray-400"
+                                                                                        class="text-xs font-sans font-medium text-gray-400 border-none"
                                                                                     >
                                                                                         ⏎
                                                                                     </kbd>

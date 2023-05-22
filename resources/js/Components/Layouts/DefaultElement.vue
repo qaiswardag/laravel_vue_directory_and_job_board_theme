@@ -12,13 +12,10 @@ defineProps({
     <!-- chimp start -->
     <div class="myPrimaryModule">
         <div class="myHeaderParagraphSection">
-            <h2 class="myTertiaryHeader">
+            <h2 class="mySecondaryHeader">
                 <slot name="title" />
             </h2>
-            <p
-                v-if="descriptionArea === true"
-                class="myPrimaryParagraph italic text-red-600"
-            >
+            <p v-if="descriptionArea === true" class="myPrimaryParagraph">
                 <slot name="description" />
             </p>
         </div>
