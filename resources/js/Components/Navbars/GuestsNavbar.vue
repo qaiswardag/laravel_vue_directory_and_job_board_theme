@@ -59,12 +59,8 @@ import {
 const showNotificationsSlideOver = ref(false);
 const showPrimaryMenuSlideOver = ref(false);
 
-// modal
-const modalShowAccountMenu = ref(false);
-
 // modal menu content
-const titleMenuModal = ref("");
-const firstMenuButtonModal = ref("");
+const modalShowAccountMenu = ref(false);
 // set menu modal handle functions
 const firstModalMenuButtonFunction = ref(null);
 
@@ -81,23 +77,15 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-const handleMenuUserItem = () => {
+const handleMenuUserTeamModal = () => {
     // handle show modal for unique content
     modalShowAccountMenu.value = true;
-    // set modal standards
-    titleMenuModal.value = "Menu";
     // handle click
     firstModalMenuButtonFunction.value = function () {
         // handle show modal for unique content
         modalShowAccountMenu.value = false;
     };
     // end menu modal
-};
-
-const handleLogout = () => {
-    router.get(route("home"));
-    modalShowAccountMenu.value = false;
-    router.post(route("logout"));
 };
 
 // handle primary slideoer menu
@@ -130,135 +118,10 @@ const notificationsSlideOverButton = function () {
     >
     </SlideOverPrimaryMenu>
     <DynamicMenuModal
+        v-if="$page.props !== null && $page.props.user !== null"
         :show="modalShowAccountMenu"
-        :title="titleMenuModal"
         @firstModalMenuButtonFunction="firstModalMenuButtonFunction"
     >
-        <main>
-            <div class="myPrimaryParagraph flex flex-col gap-1">
-                <p
-                    class="px-2 myPrimaryParagraph italic text-xs py-2 rounded-lg bg-gray-50"
-                >
-                    Logged in as {{ $page.props.user.first_name }}
-                    {{ $page.props.user.last_name }}
-                </p>
-                <p
-                    class="myPrimaryParagraph italic text-xs py-2 px-2 rounded-lg mt-2"
-                >
-                    Manage Team
-                </p>
-
-                <template
-                    v-if="
-                        $page.props.user.all_teams.length > 0 &&
-                        $page.props.user.current_team &&
-                        $page.props.jetstream.hasTeamFeatures
-                    "
-                >
-                    <Link
-                        :href="
-                            route('teams.show', $page.props.user.current_team)
-                        "
-                    >
-                        <div
-                            class="group relative flex gap-x-6 rounded-lg px-4 py-2 items-center bg-gray-50 hover:underline"
-                            :class="[
-                                route().current('teams.show') ||
-                                route().current('team.update.information') ||
-                                route().current('team.members') ||
-                                route().current('team.delete')
-                                    ? 'bg-myPrimaryBrandColor text-white'
-                                    : '',
-                            ]"
-                        >
-                            <div
-                                class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
-                            >
-                                <AdjustmentsHorizontalIcon
-                                    class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
-                                />
-                            </div>
-                            <div>Team Settings</div>
-                        </div>
-                    </Link>
-                </template>
-
-                <p class="italic text-xs py-2 px-2 rounded-lg">
-                    Manage Account
-                </p>
-
-                <Link
-                    :href="route('profile.show')"
-                    :active="
-                        route().current('profile.show') ||
-                        route().current('user.profile.update') ||
-                        route().current('user.profile.password') ||
-                        route().current('user.profile.security')
-                    "
-                >
-                    <div
-                        class="group relative flex gap-x-6 rounded-lg px-4 py-2 items-center bg-gray-50 hover:underline"
-                        :class="[
-                            route().current('profile.show') ||
-                            route().current('user.profile.update') ||
-                            route().current('user.profile.password') ||
-                            route().current('user.profile.security')
-                                ? 'bg-myPrimaryBrandColor text-white'
-                                : '',
-                        ]"
-                    >
-                        <div
-                            class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
-                        >
-                            <div
-                                class="h-8 w-8 flex-shrink-0"
-                                v-if="
-                                    $page.props.user &&
-                                    $page.props.user.profile_photo_path !== null
-                                "
-                            >
-                                <img
-                                    class="object-cover w-8 h-8 rounded-full flex-shrink-0"
-                                    :src="`/storage/${$page.props.user.profile_photo_path}`"
-                                    :alt="
-                                        $page.props.user.first_name +
-                                        $page.props.user.last_name
-                                    "
-                                />
-                            </div>
-
-                            <template
-                                v-if="
-                                    $page.props.user &&
-                                    $page.props.user.profile_photo_path === null
-                                "
-                            >
-                                <UserIcon
-                                    class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
-                                />
-                            </template>
-                        </div>
-                        <div>Your Profile</div>
-                    </div>
-                </Link>
-
-                <form @submit.prevent="handleLogout">
-                    <div
-                        @click="handleLogout"
-                        class="hover:bg-gray-50 group relative flex gap-x-6 rounded-lg px-4 py-2 cursor-pointer bg-gray-50 items-center hover:underline"
-                    >
-                        <div
-                            class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
-                        >
-                            <ArrowRightIcon
-                                class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
-                            />
-                        </div>
-                        <div>Log out</div>
-                    </div>
-                </form>
-            </div>
-        </main>
     </DynamicMenuModal>
 
     <header class="w-6/1 text-sm">
@@ -303,7 +166,7 @@ const notificationsSlideOverButton = function () {
             </template>
             <template v-if="$page.props.user !== null">
                 <div
-                    @click="handleMenuUserItem"
+                    @click="handleMenuUserTeamModal"
                     class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
                 >
                     <div
@@ -327,7 +190,7 @@ const notificationsSlideOverButton = function () {
                             $page.props.user &&
                             $page.props.user.profile_photo_path === null
                         "
-                        @click="handleMenuUserItem"
+                        @click="handleMenuUserTeamModal"
                         type="button"
                         class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
                     >

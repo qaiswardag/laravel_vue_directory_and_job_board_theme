@@ -80,6 +80,9 @@ const submit = () => {
                         type="email"
                         autofocus
                     />
+                    <p class="myPrimaryParagraph text-xs italic pt-1">
+                        Email: jd@myself.ae
+                    </p>
                     <InputError :message="form.errors.email" />
                 </div>
 
@@ -91,6 +94,9 @@ const submit = () => {
                         type="password"
                         autocomplete="current-password"
                     />
+                    <p class="myPrimaryParagraph text-xs italic pt-1">
+                        Password: 123456
+                    </p>
                     <InputError :message="form.errors.password" />
                 </div>
 

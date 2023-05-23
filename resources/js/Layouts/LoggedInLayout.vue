@@ -10,6 +10,7 @@ import LoggedInSidebar from "@/Components/Sidebars/LoggedInSidebar.vue";
 import LoggedInNavbar from "@/Components/Navbars/LoggedInNavbar.vue";
 import Flash from "@/Components/Actions/Flash.vue";
 import FooterUniversal from "@/Components/Footer/FooterUniversal.vue";
+import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
 
 import {
     Dialog,
@@ -127,13 +128,7 @@ const sidebarOpen = ref(false);
                         <div
                             class="flex flex-shrink-0 items-center px-4 justify-between"
                         >
-                            <Link
-                                :href="route('home')"
-                                class="-m-1.5 p-1.5 myPrimaryParagraph text-3xl sm:text-md font-semibold"
-                            >
-                                <span class="sr-only">myself</span>
-                                myself
-                            </Link>
+                            <ApplicationLogo></ApplicationLogo>
                         </div>
                         <div class="mt-5 h-0 flex-1 overflow-y-auto">
                             <LoggedInSidebar></LoggedInSidebar>
@@ -159,13 +154,7 @@ const sidebarOpen = ref(false);
             <div
                 class="flex flex-shrink-0 items-center px-4 justify-between h-16 border-b-2 border-transparent"
             >
-                <Link
-                    :href="route('home')"
-                    class="-m-1.5 p-1.5 myPrimaryParagraph text-3xl sm:text-md font-semibold"
-                >
-                    <span class="sr-only">myself</span>
-                    myself
-                </Link>
+                <ApplicationLogo></ApplicationLogo>
             </div>
             <div class="mt-5 flex flex-grow flex-col">
                 <LoggedInSidebar></LoggedInSidebar>

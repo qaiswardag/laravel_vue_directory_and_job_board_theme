@@ -4,6 +4,7 @@ import Banner from "@/Components/Banners/Banner.vue";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import GuestsNavbar from "@/Components/Navbars/GuestsNavbar.vue";
 import FooterUniversal from "@/Components/Footer/FooterUniversal.vue";
+import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
 
 import { ref } from "vue";
 
@@ -43,13 +44,7 @@ router.on("finish", () => {
             class="h-16 sticky top-0 z-10 flex flex-shrink-0 justify-between items-center bg-white border-b-2 border-myPrimaryBrandColor"
         >
             <div class="flex flex-shrink-0 items-center px-4 justify-between">
-                <Link
-                    :href="route('home')"
-                    class="-m-1.5 p-1.5 myPrimaryParagraph text-3xl sm:text-md font-semibold"
-                >
-                    <span class="sr-only">myself</span>
-                    myself
-                </Link>
+                <ApplicationLogo></ApplicationLogo>
             </div>
             <GuestsNavbar></GuestsNavbar>
         </div>

@@ -3,50 +3,16 @@ import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Dashboard from "@/Components/Dashboard/Dashboard.vue";
 
 const props = defineProps({
+    user: {
+        required: true,
+    },
     currentUserTeamRole: {
         required: true,
     },
     currentUserTeam: {
         required: true,
     },
-    user: {
-        required: true,
-    },
 });
-
-const people = [
-    {
-        name: "Lindsay Walton",
-        title: "Front-end Developer",
-        email: "lindsay.walton@example.com",
-        role: "Member",
-    },
-    {
-        name: "Lindsay Walton",
-        title: "Front-end Developer",
-        email: "lindsay.walton@example.com",
-        role: "Member",
-    },
-    {
-        name: "Lindsay Walton",
-        title: "Front-end Developer",
-        email: "lindsay.walton@example.com",
-        role: "Member",
-    },
-    {
-        name: "Lindsay Walton",
-        title: "Front-end Developer",
-        email: "lindsay.walton@example.com",
-        role: "Member",
-    },
-    {
-        name: "Lindsay Walton",
-        title: "Front-end Developer",
-        email: "lindsay.walton@example.com",
-        role: "Member",
-    },
-    // More people...
-];
 </script>
 
 <template>
@@ -57,18 +23,25 @@ const people = [
         <Dashboard />
 
         <div class="myPrimarySection overflow-hidden">
-            <p class="my-4 pb-16 whitespace-pre-line">
-                currentUserTeamRole from shared Data is - test 1:
+            <p class="mb-8 mt-12 pb-4 whitespace-pre-line">
+                <span class="font-semibold pb-2 uppercase"> user: </span>
+                <br />
+                {{ user }}
+            </p>
+            <p class="my-8 pb-16 whitespace-pre-line">
+                <span class="font-semibold pb-2 uppercase">
+                    currentUserTeamRole from shared Data:
+                </span>
                 <br />
                 {{ currentUserTeamRole }}
             </p>
-            <p class="my-4 pb-16 whitespace-pre-line">
-                currentUserTeam from shared Data is:
+            <p class="my-8 pb-16 whitespace-pre-line">
+                <span class="font-semibold pb-2 uppercase">
+                    currentUserTeam from shared Data:
+                </span>
                 <br />
                 {{ currentUserTeam }}
             </p>
-            <p class="mb-4 mt-12 pb-4 whitespace-pre-line">user:</p>
-            <p class="my-4 whitespace-pre-line">{{ user }}</p>
         </div>
     </LoggedInLayout>
 </template>
