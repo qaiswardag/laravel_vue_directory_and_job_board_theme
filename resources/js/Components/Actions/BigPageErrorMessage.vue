@@ -12,7 +12,7 @@ const props = defineProps({
         <div class="rounded-md bg-red-50 p-4">
             <div class="flex">
                 <div class="ml-3">
-                    <h3 class="text-sm font-medium text-red-800">
+                    <h3 class="text-sm font-normal text-red-800">
                         <slot />
                     </h3>
                 </div>

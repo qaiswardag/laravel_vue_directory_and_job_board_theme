@@ -108,7 +108,7 @@ const handleUploadImages = function () {
             <div>
                 <div class="col-span-full">
                     <label
-                        class="block text-sm font-medium leading-6 text-gray-900"
+                        class="block text-sm font-normal leading-6 text-gray-900"
                         >Manage or upload new images
                     </label>
                     <div
@@ -175,13 +175,14 @@ const handleUploadImages = function () {
                             <li
                                 v-for="file in images"
                                 :key="file.id"
+                                @click="handleUploadImages"
                                 class="border border-myPrimaryLightGrayColor rounded px-4 p-4 cursor-pointer bg-gray-50"
                             >
                                 <div
                                     class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
                                 >
                                     <img
-                                        :src="`/storage/uploads/${file.path}`"
+                                        :src="`/storage/uploads/${file.medium_path}`"
                                         alt=""
                                         class="w-full pointer-events-none object-cover group-hover:opacity-75"
                                     />

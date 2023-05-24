@@ -48,7 +48,7 @@ const notificationsModalButton = function () {
                         <div class="flex items-start">
                             <div class="ml-3 w-0 flex-1">
                                 <p
-                                    class="myPrimaryParagraph mt-2 mb-2 font-semibold"
+                                    class="myPrimaryParagraph mt-2 mb-2 font-normal"
                                 >
                                     <slot></slot>
                                 </p>

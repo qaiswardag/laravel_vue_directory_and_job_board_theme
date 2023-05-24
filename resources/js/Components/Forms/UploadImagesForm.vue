@@ -170,7 +170,7 @@ onMounted(() => {
     <form @submit.prevent="submit" enctype="multipart/form-data">
         <div class="myInputGroup">
             <div class="col-span-3 mb-4">
-                <label class="block text-sm font-medium text-gray-700"
+                <label class="block text-sm font-normal text-gray-700"
                     >Upload images</label
                 >
 
@@ -194,7 +194,7 @@ onMounted(() => {
                         </svg>
                         <div class="flex text-sm text-gray-600">
                             <InputLabel
-                                class="text-myPrimaryBrandColor font-semibold cursor-pointer"
+                                class="text-myPrimaryBrandColor font-normal cursor-pointer"
                                 for="images"
                                 value="Upload images"
                             />
@@ -220,15 +220,27 @@ onMounted(() => {
 
         <div class="flex justify-start items-center">
             <p
-                v-if="imagesPreview.length !== 0 && isLoading === false"
+                v-if="
+                    Array.isArray(imagesPreview) && imagesPreview.length === 0
+                "
                 class="myPrimaryTag"
             >
-                Images {{ imagesPreview.length }}
+                <span> Images 0 </span>
+            </p>
+            <p
+                v-if="
+                    Array.isArray(imagesPreview) && imagesPreview.length !== 0
+                "
+                class="myPrimaryTag"
+            >
+                <span>
+                    Images {{ imagesPreview && imagesPreview.length }}
+                </span>
             </p>
         </div>
 
         <div
-            class="overflow-y-scroll md:min-h-[30rem] md:max-h-[30rem] min-h-[15rem] max-h-[15rem] p-2 border border-myPrimaryLightGrayColor rounded"
+            class="overflow-y-scroll md:min-h-[32rem] md:max-h-[32rem] min-h-[15rem] max-h-[15rem] p-2 border border-myPrimaryLightGrayColor rounded"
         >
             <div v-if="isLoading === true">
                 <div class="flex items-center justify-center">
@@ -284,7 +296,7 @@ onMounted(() => {
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="w-4 h-4 text-myErrorColor"
+                                    class="w-4 h-4 text-myPrimaryErrorColor"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -313,7 +325,7 @@ onMounted(() => {
 
         <div
             v-if="isLoading === false && imagesPreview.length !== 0"
-            class="py-2"
+            class="py-2 my-2"
         >
             <SubmitButton :disabled="form.processing" buttonText="Upload">
             </SubmitButton>

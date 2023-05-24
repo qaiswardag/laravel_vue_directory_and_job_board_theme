@@ -231,7 +231,7 @@ const clearPhotoFileInput = () => {
 
                         <div
                             v-show="verificationLinkSent"
-                            class="mt-2 font-medium text-sm text-myPrimarySuccessColor"
+                            class="mt-2 font-normal text-sm text-myPrimaryLinkColor"
                         >
                             A new verification link has been sent to your email
                             address.
@@ -288,7 +288,7 @@ const clearPhotoFileInput = () => {
                                 !photoPreview
                             "
                             @click.prevent="selectNewPhoto"
-                            class="cursor-pointer w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                            class="cursor-pointer w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                         >
                             {{ user.first_name.charAt(0).toUpperCase() }}
                             {{ user.last_name.charAt(0).toUpperCase() }}
@@ -343,7 +343,7 @@ const clearPhotoFileInput = () => {
                     <InputLabel
                         :value="form.public ? 'Public' : 'Private'"
                         :class="{
-                            'text-myPrimarySuccessColor': form.public,
+                            'text-myPrimaryLinkColor': form.public,
                             'text-myPrimaryErrorColor': !form.public,
                         }"
                     />
@@ -351,9 +351,9 @@ const clearPhotoFileInput = () => {
                         v-model="form.public"
                         :class="[
                             form.public
-                                ? 'bg-myPrimarySuccessColor'
+                                ? 'bg-myPrimaryLinkColor'
                                 : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
                         ]"
                     >
                         <span class="sr-only">Use setting</span>
@@ -396,7 +396,7 @@ const clearPhotoFileInput = () => {
                                 aria-hidden="true"
                             >
                                 <svg
-                                    class="h-3 w-3 text-myPrimarySuccessColor"
+                                    class="h-3 w-3 text-myPrimaryLinkColor"
                                     fill="currentColor"
                                     viewBox="0 0 12 12"
                                 >

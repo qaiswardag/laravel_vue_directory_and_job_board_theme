@@ -150,7 +150,7 @@ const notificationsSlideOverButton = function () {
                                                         class="border border-gray-200 bg-gray-50 py-4 px-4 rounded"
                                                     >
                                                         <p
-                                                            class="text-sm font-semibold text-myPrimaryDarkGrayColor mb-4 mt-2 block"
+                                                            class="text-sm font-normal text-myPrimaryDarkGrayColor mb-4 mt-2 block"
                                                         >
                                                             {{
                                                                 notification.title

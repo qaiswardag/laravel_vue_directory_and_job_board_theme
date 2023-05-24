@@ -134,7 +134,7 @@ const createTeam = () => {
                     <InputLabel
                         :value="form.public ? 'Public' : 'Private'"
                         :class="{
-                            'text-myPrimarySuccessColor': form.public,
+                            'text-myPrimaryLinkColor': form.public,
                             'text-myPrimaryErrorColor': !form.public,
                         }"
                     />
@@ -142,9 +142,9 @@ const createTeam = () => {
                         v-model="form.public"
                         :class="[
                             form.public
-                                ? 'bg-myPrimarySuccessColor'
+                                ? 'bg-myPrimaryLinkColor'
                                 : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
                         ]"
                     >
                         <span class="sr-only">Use setting</span>
@@ -187,7 +187,7 @@ const createTeam = () => {
                                 aria-hidden="true"
                             >
                                 <svg
-                                    class="h-3 w-3 text-myPrimarySuccessColor"
+                                    class="h-3 w-3 text-myPrimaryLinkColor"
                                     fill="currentColor"
                                     viewBox="0 0 12 12"
                                 >
@@ -247,7 +247,7 @@ const createTeam = () => {
                                         $page.props.user.profile_photo_path ===
                                             null
                                     "
-                                    class="w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                    class="w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                 >
                                     {{
                                         $page.props.user.first_name

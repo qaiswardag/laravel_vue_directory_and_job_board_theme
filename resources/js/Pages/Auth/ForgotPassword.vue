@@ -51,7 +51,7 @@ const submit = () => {
 
             <div
                 v-if="status"
-                class="mb-4 font-medium text-sm text-myPrimarySuccessColor"
+                class="mb-4 font-normal text-sm text-myPrimaryLinkColor"
             >
                 {{ status }}
             </div>

@@ -11018,7 +11018,7 @@
                                                                                                                                                                     t
                                                                                                                                                                 )
                                                                                                                                                                     .theme,
-                                                                                                                                                            class: "font-semibold",
+                                                                                                                                                            class: "font-normal",
                                                                                                                                                         },
                                                                                                                                                         null,
                                                                                                                                                         8,
@@ -12528,7 +12528,7 @@
                                                                                                                                                                             r.normalizeClass)(
                                                                                                                                                                                 [
                                                                                                                                                                                     o
-                                                                                                                                                                                        ? "font-semibold"
+                                                                                                                                                                                        ? "font-normal"
                                                                                                                                                                                         : "font-normal",
                                                                                                                                                                                     "block truncate",
                                                                                                                                                                                 ]
@@ -13152,7 +13152,7 @@
                     Sl = { class: "mx-3 md:mx-0 mb-1" },
                     Ol = { class: "sm:flex sm:flex-col-reverse" },
                     Nl = {
-                        class: "font-semibold text-brand-700 dark:text-brand-600 text-2xl flex items-center",
+                        class: "font-normal text-brand-700 dark:text-brand-600 text-2xl flex items-center",
                     },
                     Pl = (0, r.createElementVNode)(
                         "a",
@@ -14963,7 +14963,7 @@
                         -1
                     ),
                     Ns = {
-                        class: "sm:hidden border-transparent text-gray-500 dark:text-gray-400 border-t-2 pt-3 px-4 inline-flex items-center text-sm font-medium",
+                        class: "sm:hidden border-transparent text-gray-500 dark:text-gray-400 border-t-2 pt-3 px-4 inline-flex items-center text-sm font-normal",
                     },
                     Ps = { class: "pages" },
                     Ts = {
@@ -15175,9 +15175,9 @@
                 var Ms = n(246),
                     Fs = { class: "flex items-center" },
                     Ds = { class: "opacity-90 mr-1" },
-                    Us = { class: "font-semibold" },
+                    Us = { class: "font-normal" },
                     $s = { class: "opacity-90 mr-1" },
-                    Hs = { class: "font-semibold" },
+                    Hs = { class: "font-normal" },
                     zs = { key: 2, class: "opacity-90" },
                     qs = { key: 3, class: "opacity-90" },
                     Ws = { class: "py-2" },
@@ -16228,7 +16228,7 @@
                     vc = ["onClick"],
                     mc = { class: "sr-only" },
                     gc = {
-                        class: "text-myPrimarySuccessColor dark:text-myPrimarySuccessColor hidden md:inline",
+                        class: "text-myPrimaryLinkColor dark:text-myPrimaryLinkColor hidden md:inline",
                     };
                 const yc = {
                     __name: "LogCopyButton",
@@ -16307,7 +16307,7 @@
                                             (0, r.createVNode)(
                                                 (0, r.unref)(hc),
                                                 {
-                                                    class: "text-myPrimarySuccessColor dark:text-myPrimarySuccessColor md:hidden",
+                                                    class: "text-myPrimaryLinkColor dark:text-myPrimaryLinkColor md:hidden",
                                                 },
                                                 null,
                                                 512
@@ -16484,14 +16484,14 @@
                     eu = { class: "flex-1" },
                     tu = (0, r.createElementVNode)(
                         "span",
-                        { class: "font-semibold" },
+                        { class: "font-normal" },
                         "Time:",
                         -1
                     ),
                     nu = { class: "flex-1" },
                     ru = (0, r.createElementVNode)(
                         "span",
-                        { class: "font-semibold" },
+                        { class: "font-normal" },
                         "Env:",
                         -1
                     ),
@@ -16504,7 +16504,7 @@
                     },
                     cu = (0, r.createElementVNode)(
                         "div",
-                        { class: "text-center font-semibold" },
+                        { class: "text-center font-normal" },
                         "No results",
                         -1
                     ),
@@ -19667,7 +19667,7 @@
                                                                                                                                                                             wf
                                                                                                                                                                         ),
                                                                                                                                                                         {
-                                                                                                                                                                            class: "text-base font-semibold leading-6 text-gray-900",
+                                                                                                                                                                            class: "text-base font-normal leading-6 text-gray-900",
                                                                                                                                                                         },
                                                                                                                                                                         {
                                                                                                                                                                             default:
@@ -20473,7 +20473,7 @@
                         "Memory: ",
                         -1
                     ),
-                    cd = { class: "font-semibold" },
+                    cd = { class: "font-normal" },
                     ud = (0, r.createElementVNode)(
                         "span",
                         { class: "mx-1.5" },
@@ -20486,7 +20486,7 @@
                         "Duration: ",
                         -1
                     ),
-                    dd = { class: "font-semibold" },
+                    dd = { class: "font-normal" },
                     pd = (0, r.createElementVNode)(
                         "span",
                         { class: "mx-1.5" },
@@ -20499,7 +20499,7 @@
                         "Version: ",
                         -1
                     ),
-                    vd = { class: "font-semibold" },
+                    vd = { class: "font-normal" },
                     md = {
                         key: 0,
                         href: "https://www.buymeacoffee.com/arunas",

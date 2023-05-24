@@ -49,7 +49,7 @@ const handleBack = function () {
             class="absolute inset-0 -z-10 h-full w-full object-cover object-top"
         />
         <div class="mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8">
-            <p class="text-base font-semibold leading-8 text-white">
+            <p class="text-base font-normal leading-8 text-white">
                 {{ props.status }}
             </p>
             <h1

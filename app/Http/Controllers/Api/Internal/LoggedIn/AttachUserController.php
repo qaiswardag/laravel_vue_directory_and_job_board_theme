@@ -81,7 +81,7 @@ class AttachUserController extends Controller
                 "users.profile_photo_path",
                 "team_user.role"
             )
-            ->paginate(12);
+            ->paginate(3);
 
         //
         //

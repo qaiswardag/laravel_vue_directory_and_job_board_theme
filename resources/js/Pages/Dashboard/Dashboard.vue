@@ -24,19 +24,19 @@ const props = defineProps({
 
         <div class="myPrimarySection overflow-hidden">
             <p class="mb-8 mt-12 pb-4 whitespace-pre-line">
-                <span class="font-semibold pb-2 uppercase"> user: </span>
+                <span class="font-normal pb-2 uppercase"> user: </span>
                 <br />
                 {{ user }}
             </p>
             <p class="my-8 pb-16 whitespace-pre-line">
-                <span class="font-semibold pb-2 uppercase">
+                <span class="font-normal pb-2 uppercase">
                     currentUserTeamRole from shared Data:
                 </span>
                 <br />
                 {{ currentUserTeamRole }}
             </p>
             <p class="my-8 pb-16 whitespace-pre-line">
-                <span class="font-semibold pb-2 uppercase">
+                <span class="font-normal pb-2 uppercase">
                     currentUserTeam from shared Data:
                 </span>
                 <br />

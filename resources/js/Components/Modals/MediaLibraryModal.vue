@@ -220,10 +220,10 @@ const handleDeleteImage = function (imageId) {
                         leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     >
                         <div
-                            class="relative w-full min-h-[60rem] max-h-[60rem] inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
+                            class="relative w-full min-h-[61rem] max-h-[61rem] inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
                         >
                             <div
-                                class="flex gap-2 justify-between items-center border-b border-gray-200 pb-2"
+                                class="flex gap-2 justify-between items-center border-b border-gray-200 pb-2 mb-2"
                             >
                                 <DialogTitle
                                     as="h3"
@@ -263,9 +263,9 @@ const handleDeleteImage = function (imageId) {
                                     >
                                         <!-- Main content - start-->
                                         <main class="flex-1 relativ">
-                                            <div class="py-4 max-w-7xl mx-auto">
+                                            <div class="pb-4 max-w-7xl mx-auto">
                                                 <!-- Tabs -->
-                                                <div class="mt-2 sm:mt-2 mb-4">
+                                                <div class="mb-2">
                                                     <!-- Tabs Mobile -->
                                                     <div class="sm:hidden">
                                                         <label
@@ -278,7 +278,7 @@ const handleDeleteImage = function (imageId) {
                                                         <select
                                                             v-model="selected"
                                                             id="tabs"
-                                                            class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-myPrimarySuccessColor focus:border-myPrimarySuccessColor sm:text-sm rounded-md"
+                                                            class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-myPrimaryLinkColor focus:border-myPrimaryLinkColor sm:text-sm rounded-md"
                                                         >
                                                             <option>
                                                                 Upload
@@ -313,11 +313,11 @@ const handleDeleteImage = function (imageId) {
                                                                             ? 'page'
                                                                             : undefined
                                                                     "
-                                                                    class="py-2 px-3 my-1 text-xs rounded cursor-pointer"
+                                                                    class="py-2 px-3 my-1 text-xs cursor-pointer"
                                                                     :class="[
                                                                         tab.name ===
                                                                         selected
-                                                                            ? 'bg-myPrimaryBrandColor text-white'
+                                                                            ? 'myPrimaryButton'
                                                                             : 'text-gray-500 hover:text-gray-700 ',
                                                                         'whitespace-nowrap',
                                                                     ]"
@@ -367,7 +367,7 @@ const handleDeleteImage = function (imageId) {
                                             class="md:w-72 relative min-h-[55rem] max-h-[55rem]"
                                         >
                                             <div
-                                                class="md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
+                                                class="md:w-72 md:min-h-[50.6rem] md:max-h-[50.6rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
                                             >
                                                 <div
                                                     v-if="
@@ -377,7 +377,7 @@ const handleDeleteImage = function (imageId) {
                                                             ).length === 0) ||
                                                         getCurrentImage === null
                                                     "
-                                                    class="pb-16 space-y-6 md:px-3 sm:px-2 pt-2"
+                                                    class="pb-6 space-y-6 md:px-3 sm:px-2 pt-2"
                                                 >
                                                     <p
                                                         class="myPrimaryParagraph text-xs p-2"
@@ -440,7 +440,7 @@ const handleDeleteImage = function (imageId) {
                                                         getCurrentImage.isError ===
                                                             false
                                                     "
-                                                    class="pb-16 space-y-6"
+                                                    class="pb-6 space-y-6"
                                                 >
                                                     <a
                                                         :href="`/storage/uploads/${getCurrentImage.currentImage.mediaLibrary.path.toLowerCase()}`"
@@ -522,7 +522,7 @@ const handleDeleteImage = function (imageId) {
                                                                                     class="border border-gray-200 border-none rounded flex items-center justify-center h-full w-8"
                                                                                 >
                                                                                     <kbd
-                                                                                        class="text-xs font-sans font-medium text-gray-400 border-none"
+                                                                                        class="text-xs font-sans font-normal text-gray-400 border-none"
                                                                                     >
                                                                                         ⏎
                                                                                     </kbd>
@@ -547,7 +547,7 @@ const handleDeleteImage = function (imageId) {
                                                         </div>
                                                         <div>
                                                             <h3
-                                                                class="font-medium text-gray-900"
+                                                                class="font-normal text-gray-900"
                                                             >
                                                                 Information
                                                             </h3>
@@ -555,7 +555,7 @@ const handleDeleteImage = function (imageId) {
                                                                 class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
                                                             >
                                                                 <div
-                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                    class="py-3 flex justify-between text-sm font-normal items-center"
                                                                 >
                                                                     <dt
                                                                         class="text-gray-500"
@@ -582,7 +582,7 @@ const handleDeleteImage = function (imageId) {
                                                                 </div>
 
                                                                 <div
-                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                    class="py-3 flex justify-between text-sm font-normal items-center"
                                                                 >
                                                                     <dt
                                                                         class="text-gray-500"
@@ -602,7 +602,7 @@ const handleDeleteImage = function (imageId) {
                                                                     </dd>
                                                                 </div>
                                                                 <div
-                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                    class="py-3 flex justify-between text-sm font-normal items-center"
                                                                 >
                                                                     <dt
                                                                         class="text-gray-500"
@@ -621,7 +621,7 @@ const handleDeleteImage = function (imageId) {
                                                                     </dd>
                                                                 </div>
                                                                 <div
-                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                    class="py-3 flex justify-between text-sm font-normal items-center"
                                                                 >
                                                                     <dt
                                                                         class="text-gray-500"
@@ -640,7 +640,7 @@ const handleDeleteImage = function (imageId) {
                                                                     </dd>
                                                                 </div>
                                                                 <div
-                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                    class="py-3 flex justify-between text-sm font-normal items-center"
                                                                 >
                                                                     <dt
                                                                         class="text-gray-500"
@@ -666,7 +666,7 @@ const handleDeleteImage = function (imageId) {
                                                                     </dd>
                                                                 </div>
                                                                 <div
-                                                                    class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                    class="py-3 flex justify-between text-sm font-normal items-center"
                                                                 >
                                                                     <dt
                                                                         class="text-myPrimaryErrorColor"
@@ -791,14 +791,14 @@ const handleDeleteImage = function (imageId) {
                                         <aside
                                             v-if="selected === 'Upload'"
                                             aria-label="sidebar"
-                                            class="md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
+                                            class="md:w-72 md:min-h-[50.6rem] md:max-h-[50.6rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
                                         >
                                             <div
                                                 v-if="
                                                     getCurrentPreviewImage ===
                                                     null
                                                 "
-                                                class="pb-16 space-y-6 md:px-3 sm:px-2 pt-2"
+                                                class="pb-6 space-y-6 md:px-3 sm:px-2 pt-2"
                                             >
                                                 <p
                                                     class="myPrimaryParagraph text-xs p-2"
@@ -811,7 +811,7 @@ const handleDeleteImage = function (imageId) {
                                                     getCurrentPreviewImage !==
                                                     null
                                                 "
-                                                class="pb-16 space-y-6"
+                                                class="pb-6 space-y-6"
                                             >
                                                 <img
                                                     :src="
@@ -834,7 +834,7 @@ const handleDeleteImage = function (imageId) {
 
                                                     <div>
                                                         <h3
-                                                            class="font-medium text-gray-900"
+                                                            class="font-normal text-gray-900"
                                                         >
                                                             Information
                                                         </h3>
@@ -842,7 +842,7 @@ const handleDeleteImage = function (imageId) {
                                                             class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
                                                         >
                                                             <div
-                                                                class="py-3 flex justify-between text-sm font-medium items-center"
+                                                                class="py-3 flex justify-between text-sm font-normal items-center"
                                                             >
                                                                 <dt
                                                                     class="text-gray-500"

@@ -18,7 +18,7 @@
             v-if="
                 $page.props.user && $page.props.user.profile_photo_path === null
             "
-            class="w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+            class="w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
         >
             {{ $page.props.user.first_name.charAt(0).toUpperCase() }}
             {{ $page.props.user.last_name.charAt(0).toUpperCase() }}

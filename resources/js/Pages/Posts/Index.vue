@@ -324,10 +324,10 @@ onMounted(() => {
                                                 post.slug,
                                             ])
                                         "
-                                        class="myPrimaryLink font-semibold mt-4"
+                                        class="myPrimaryLink font-normal mt-4"
                                     >
                                         <span
-                                            class="text-myPrimaryBrandColor font-semibold"
+                                            class="text-myPrimaryBrandColor font-normal"
                                         >
                                             {{ post.title }}
                                         </span>
@@ -338,10 +338,10 @@ onMounted(() => {
                                     <span
                                         :class="
                                             post.published
-                                                ? 'bg-green-50 text-myPrimarySuccessColor'
+                                                ? 'bg-green-50 text-myPrimaryLinkColor'
                                                 : 'bg-red-100 text-myPrimaryErrorColor'
                                         "
-                                        class="inline-flex rounded-full px-2 font-semibold leading-5 text-green-800 text-xs"
+                                        class="inline-flex rounded-full px-2 font-normal leading-5 text-green-800 text-xs"
                                         >{{
                                             post.published
                                                 ? "Published"

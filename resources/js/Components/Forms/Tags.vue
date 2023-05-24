@@ -98,7 +98,7 @@ onMounted(() => {
                 class="border border-gray-200 border-none rounded flex items-center justify-center h-full w-8"
             >
                 <kbd
-                    class="text-xs font-sans font-medium text-gray-400 border-none"
+                    class="text-xs font-sans font-normal text-gray-400 border-none"
                 >
                     ⏎
                 </kbd>

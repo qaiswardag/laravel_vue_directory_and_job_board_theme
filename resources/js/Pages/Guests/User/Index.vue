@@ -25,7 +25,7 @@ defineProps({
                 <div class="my-12 mx-24 border-2 border-red-400 p-4">
                     <p class="my-4 mb-8">user: {{ user }}</p>
                     <Link
-                        class="myPrimaryLink text-2xl font-semibold mt-4"
+                        class="myPrimaryLink text-2xl font-normal mt-4"
                         :href="
                             route(
                                 'users.show',

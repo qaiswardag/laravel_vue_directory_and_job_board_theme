@@ -18,7 +18,7 @@ defineProps({
     >
         <Transition v-show="on" name="slide-fade">
             <div
-                class="rounded-3xl py-4 px-6 mx-2 bg-myPrimarySuccessColor text-white"
+                class="rounded-3xl py-4 px-6 mx-2 bg-myPrimaryLinkColor text-white"
             >
                 <div
                     class="flex gap-2 items-center justify-end myPrimaryParagraph text-white"

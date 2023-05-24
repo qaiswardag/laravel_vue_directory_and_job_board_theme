@@ -49,7 +49,7 @@ const flashModalButton = function () {
                             />
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-red-800 pr-4">
+                            <p class="text-sm font-normal text-red-800 pr-4">
                                 {{ flashObject.error }}
                             </p>
                         </div>
@@ -82,12 +82,12 @@ const flashModalButton = function () {
                     <div class="flex">
                         <div class="flex-shrink-0">
                             <CheckCircleIcon
-                                class="h-5 w-5 text-myPrimarySuccessColor"
+                                class="h-5 w-5 text-myPrimaryLinkColor"
                                 aria-hidden="true"
                             />
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-green-800 pr-4">
+                            <p class="text-sm font-normal text-green-800 pr-4">
                                 {{ flashObject.success }}
                             </p>
                         </div>
@@ -96,7 +96,7 @@ const flashModalButton = function () {
                                 <button
                                     @click="flashModalButton"
                                     type="button"
-                                    class="inline-flex rounded-md bg-green-50 p-1.5 text-myPrimarySuccessColor hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2 focus:ring-offset-green-50"
+                                    class="inline-flex rounded-md bg-green-50 p-1.5 text-myPrimaryLinkColor hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2 focus:ring-offset-green-50"
                                 >
                                     <XMarkIcon
                                         class="h-5 w-5"

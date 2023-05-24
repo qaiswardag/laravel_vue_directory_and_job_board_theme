@@ -362,7 +362,7 @@ const displayAbleRole = (role) => {
                                                         addTeamMemberForm.role ==
                                                         role.key
                                                     "
-                                                    class="ml-2 h-5 w-5 text-myPrimarySuccessColor"
+                                                    class="ml-2 h-5 w-5 text-myPrimaryLinkColor"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
@@ -577,7 +577,7 @@ const displayAbleRole = (role) => {
                                 <table class="myPrimaryTable">
                                     <caption class="myPrimaryTableCaption">
                                         Team
-                                        <span class="font-semibold">
+                                        <span class="font-normal">
                                             {{
                                                 $page.props.user.current_team
                                                     .name
@@ -647,7 +647,7 @@ const displayAbleRole = (role) => {
                                                                 user.profile_photo_path ===
                                                                     null
                                                             "
-                                                            class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                                            class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                                         >
                                                             {{
                                                                 user.first_name
@@ -734,7 +734,7 @@ const displayAbleRole = (role) => {
                                                             Leave Team
                                                         </DangerButton>
                                                         <p
-                                                            class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryLightGrayColor text-black rounded-full py-2 px-4 font-semibold"
+                                                            class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryLightGrayColor text-black rounded-full py-2 px-4 font-normal"
                                                             v-if="
                                                                 $page.props.user
                                                                     .id ===
@@ -873,7 +873,7 @@ const displayAbleRole = (role) => {
 
                                     <svg
                                         v-if="updateRoleForm.role == role.key"
-                                        class="ml-2 h-5 w-5 text-myPrimarySuccessColor"
+                                        class="ml-2 h-5 w-5 text-myPrimaryLinkColor"
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
                                         viewBox="0 0 24 24"

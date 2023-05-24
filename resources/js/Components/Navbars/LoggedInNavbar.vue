@@ -164,7 +164,7 @@ const notificationsSlideOverButton = function () {
                     </div>
                     <input
                         id="search-field"
-                        class="text-sm cursor-pointer block w-full h-full pl-8 pr-3 border-transparent placeholder-gray-500 focus:outline-none border-0 focus:ring-0 font-medium text-myPrimaryDarkGrayColor rounded-md py-4 px-3"
+                        class="text-sm cursor-pointer block w-full h-full pl-8 pr-3 border-transparent placeholder-gray-500 focus:outline-none border-0 focus:ring-0 font-normal text-myPrimaryDarkGrayColor rounded-md py-4 px-3"
                         @click.prevent="handleSearchAnything"
                         placeholder="Search anything..."
                         readonly

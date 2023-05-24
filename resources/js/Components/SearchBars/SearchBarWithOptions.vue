@@ -133,7 +133,7 @@ const selectedUpdated = function (chosen) {
                                     <span
                                         :class="[
                                             selected
-                                                ? 'font-semibold'
+                                                ? 'font-normal'
                                                 : 'font-normal',
                                             'block truncate',
                                         ]"

@@ -10,8 +10,8 @@ const props = defineProps({
 
 const classes = computed(() => {
     return props.active
-        ? "bg-red-400 block pl-3 pr-4 py-2 border-l-4 border-myPrimaryBrandColor text-base font-medium text-myPrimaryBrandColor bg-myPrimaryBrandColor focus:outline-none focus:text-myPrimaryBrandColor focus:bg-myPrimaryBrandColor focus:border-myPrimaryBrandColor transition"
-        : "block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-myPrimaryDarkGrayColor focus:bg-gray-50 focus:border-gray-300 transition";
+        ? "bg-red-400 block pl-3 pr-4 py-2 border-l-4 border-myPrimaryBrandColor text-base font-normal text-myPrimaryBrandColor bg-myPrimaryBrandColor focus:outline-none focus:text-myPrimaryBrandColor focus:bg-myPrimaryBrandColor focus:border-myPrimaryBrandColor transition"
+        : "block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-normal text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-myPrimaryDarkGrayColor focus:bg-gray-50 focus:border-gray-300 transition";
 });
 </script>
 

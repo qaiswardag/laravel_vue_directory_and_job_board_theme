@@ -64,7 +64,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <form class="mb-4" @submit.prevent="handleSearch(1)">
+    <form class="mb-2" @submit.prevent="handleSearch(1)">
         <div class="mysearchBarWithOptions">
             <div class="relative w-full">
                 <div
@@ -142,15 +142,32 @@ onMounted(() => {
             getCurrentMedia.fetchedMedia.media &&
             getCurrentMedia.fetchedMedia.total_results !== 0
         "
-        class="scale-90 text-center bottom-0 w-full my-2 border-b border-gray-200 py-2"
+        class="flex items-center justify-center border-t border-gray-200 bg-white py-3 mt-4 gap-2"
     >
         <TailwindPagination
-            :active-classes="['bg-black', 'text-white', 'border-black']"
+            :active-classes="[
+                'bg-myPrimaryLinkColor',
+                'text-white',
+                'rounded-full',
+            ]"
             :limit="2"
-            :class="['flex', 'justify-center', 'items-center', 'rounded-full']"
+            :keepLength="true"
+            :class="['space-x-1', 'shadow-none', 'tailwind-pagination-package']"
+            :item-classes="[
+                'border-none',
+                'bg-gray-100',
+                'text-myPrimaryDarkGrayColor',
+                'rounded-full',
+            ]"
             :data="getCurrentMedia.fetchedMedia.media"
             @pagination-change-page="getResultsForPage"
         >
+            <template #prev-nav>
+                <span> Prev </span>
+            </template>
+            <template #next-nav>
+                <span>Next</span>
+            </template>
         </TailwindPagination>
     </div>
 
@@ -241,7 +258,7 @@ onMounted(() => {
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="w-4 h-4 text-myPrimarySuccessColor"
+                                        class="w-4 h-4 text-myPrimaryLinkColor"
                                     >
                                         <path
                                             stroke-linecap="round"

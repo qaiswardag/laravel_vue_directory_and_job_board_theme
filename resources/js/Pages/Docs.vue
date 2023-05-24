@@ -89,10 +89,8 @@ const TestSubmitButtonTwice = function () {
         </template>
 
         <div class="myPrimarySection">
-            <div
-                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
-            >
-                <p class="myPrimaryParagraph font-semibold mb-2">Link button</p>
+            <div class="mb-8 p-4 border-2 border-myPrimaryLinkColor rounded-xl">
+                <p class="myPrimaryParagraph font-normal mb-2">Link button</p>
                 <p class="myPrimaryParagraph">
                     Use Inertia Link as POST request and render the LINK as a
                     button, send data in request and add CSRF token.
@@ -127,10 +125,8 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div
-                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
-            >
-                <p class="myPrimaryParagraph font-semibold mb-2">
+            <div class="mb-8 p-4 border-2 border-myPrimaryLinkColor rounded-xl">
+                <p class="myPrimaryParagraph font-normal mb-2">
                     Scroll Position
                     <br />
                     For example when clicking on a like button.
@@ -142,12 +138,8 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div
-                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
-            >
-                <p class="myPrimaryParagraph font-semibold mb-2">
-                    Active Links
-                </p>
+            <div class="mb-8 p-4 border-2 border-myPrimaryLinkColor rounded-xl">
+                <p class="myPrimaryParagraph font-normal mb-2">Active Links</p>
                 <p class="myPrimaryParagraph">
                     But what if the link have query string?
                 </p>
@@ -156,7 +148,7 @@ const TestSubmitButtonTwice = function () {
                         href="/test"
                         as="button"
                         :class="{
-                            'font-semibold underline': route().current('test'),
+                            'font-normal underline': route().current('test'),
                         }"
                     >
                         Test
@@ -165,7 +157,7 @@ const TestSubmitButtonTwice = function () {
                         href="/dashboard"
                         as="button"
                         :class="{
-                            'font-semibold underline': route().current('home'),
+                            'font-normal underline': route().current('home'),
                         }"
                     >
                         Dashboard
@@ -175,10 +167,8 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div
-                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
-            >
-                <p class="myPrimaryParagraph font-semibold mb-2">Shared Data</p>
+            <div class="mb-8 p-4 border-2 border-myPrimaryLinkColor rounded-xl">
+                <p class="myPrimaryParagraph font-normal mb-2">Shared Data</p>
                 <p class="myPrimaryParagraph my-2">
                     Use middleware app/HTTP/Middleware "HandleInertiaRequests"
                     for shared data accross all routes.
@@ -195,10 +185,8 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div
-                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
-            >
-                <p class="myPrimaryParagraph font-semibold mb-2">
+            <div class="mb-8 p-4 border-2 border-myPrimaryLinkColor rounded-xl">
+                <p class="myPrimaryParagraph font-normal mb-2">
                     Global Component Registration
                 </p>
                 <p class="myPrimaryParagraph my-2">Go to app.js</p>
@@ -215,10 +203,8 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div
-                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
-            >
-                <p class="myPrimaryParagraph font-semibold mb-2">
+            <div class="mb-8 p-4 border-2 border-myPrimaryLinkColor rounded-xl">
+                <p class="myPrimaryParagraph font-normal mb-2">
                     Persistent Layouts
                 </p>
                 <p class="myPrimaryParagraph my-2">
@@ -250,10 +236,8 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div
-                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
-            >
-                <p class="myPrimaryParagraph font-semibold mb-2">
+            <div class="mb-8 p-4 border-2 border-myPrimaryLinkColor rounded-xl">
+                <p class="myPrimaryParagraph font-normal mb-2">
                     An Important SPA Security Concern
                 </p>
                 <p class="myPrimaryParagraph my-2">
@@ -265,10 +249,8 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div
-                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
-            >
-                <p class="myPrimaryParagraph font-semibold mb-2">
+            <div class="mb-8 p-4 border-2 border-myPrimaryLinkColor rounded-xl">
+                <p class="myPrimaryParagraph font-normal mb-2">
                     An Important SPA Security Concern
                 </p>
                 <p class="myPrimaryParagraph my-2">
@@ -280,17 +262,15 @@ const TestSubmitButtonTwice = function () {
             </div>
             <!-- Test end-->
             <!-- Test start-->
-            <div
-                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
-            >
-                <p class="myPrimaryParagraph font-semibold mb-2">
+            <div class="mb-8 p-4 border-2 border-myPrimaryLinkColor rounded-xl">
+                <p class="myPrimaryParagraph font-normal mb-2">
                     Fetch data using custom npm package
                 </p>
 
                 <div class="bg-white">
                     <div class="bg-emerald-50">
                         <h1
-                            class="text-3xl font-semibold text-myPrimarySuccessColor py-10 text-center"
+                            class="text-3xl font-normal text-myPrimaryLinkColor py-10 text-center"
                         >
                             Users table
                         </h1>
@@ -314,12 +294,12 @@ const TestSubmitButtonTwice = function () {
                                 !isLoadingDataUsers &&
                                 isSuccessDataUsers
                             "
-                            class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-myPrimarySuccessColor"
+                            class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-myPrimaryLinkColor"
                             role="alert"
                         >
                             <span class="sr-only">Info</span>
                             <div>
-                                <span class="font-semibold">Success!</span>
+                                <span class="font-normal">Success!</span>
                                 Successfully fetched users.
                             </div>
                         </div>
@@ -337,7 +317,7 @@ const TestSubmitButtonTwice = function () {
                                             aria-hidden="true"
                                         ></span>
                                         <p
-                                            class="text-sm font-medium text-myPrimaryDarkGrayColor"
+                                            class="text-sm font-normal text-myPrimaryDarkGrayColor"
                                         >
                                             {{ user.name }}
                                         </p>
@@ -356,20 +336,18 @@ const TestSubmitButtonTwice = function () {
             <!-- Test end-->
 
             <!-- Test start-->
-            <div
-                class="mb-8 p-4 border-2 border-myPrimarySuccessColor rounded-xl"
-            >
-                <p class="myPrimaryParagraph font-semibold mb-2">
+            <div class="mb-8 p-4 border-2 border-myPrimaryLinkColor rounded-xl">
+                <p class="myPrimaryParagraph font-normal mb-2">
                     Fetch backend data using custom npm package
                 </p>
-                <p class="myPrimaryParagraph font-semibold my-12">
+                <p class="myPrimaryParagraph font-normal my-12">
                     Validation Properties: {{ validationProperties }}
                 </p>
 
                 <div class="bg-white">
                     <div class="bg-red-50">
                         <h1
-                            class="text-3xl font-semibold text-myPrimarySuccessColor py-10 text-center"
+                            class="text-3xl font-normal text-myPrimaryLinkColor py-10 text-center"
                         >
                             Backend Users table
                         </h1>
@@ -394,12 +372,12 @@ const TestSubmitButtonTwice = function () {
                                 !isLoadingBackendDataUsers &&
                                 isSuccessBackendDataUsers
                             "
-                            class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-myPrimarySuccessColor"
+                            class="flex p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-myPrimaryLinkColor"
                             role="alert"
                         >
                             <span class="sr-only">Info</span>
                             <div>
-                                <span class="font-semibold">Success!</span>
+                                <span class="font-normal">Success!</span>
                                 Successfully fetched users.
                             </div>
                         </div>
@@ -418,7 +396,7 @@ const TestSubmitButtonTwice = function () {
                                             aria-hidden="true"
                                         ></span>
                                         <p
-                                            class="text-sm font-medium text-myPrimaryDarkGrayColor"
+                                            class="text-sm font-normal text-myPrimaryDarkGrayColor"
                                         >
                                             {{ user.first_name }}
                                             {{ user.last_name }}

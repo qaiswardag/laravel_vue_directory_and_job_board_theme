@@ -93,7 +93,7 @@ const thirdButton = function () {
                         >
                             <CheckIcon
                                 aria-hidden="true"
-                                class="h-4 w-4 text-myPrimarySuccessColor"
+                                class="h-4 w-4 text-myPrimaryLinkColor"
                             />
                         </div>
 
@@ -173,9 +173,7 @@ const thirdButton = function () {
             </div>
         </div>
 
-        <div
-            class="bg-gray-100 px-6 py-4 bottom-0 left-0 right-0 flex sm:justify-end justify-center"
-        >
+        <div class="bg-gray-100 px-6 py-4 flex sm:justify-end justify-center">
             <slot name="footer" />
             <div
                 :class="{
@@ -264,7 +262,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor w-full"
                                 :class="{
                                     'opacity-25 cursor-default': disabled,
                                 }"
@@ -308,7 +306,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor w-full"
+                                class="myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor w-full"
                                 type="button"
                                 @click="thirdButton"
                             >
@@ -324,7 +322,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor w-full"
                                 :class="{
                                     'opacity-25 cursor-default': disabled,
                                 }"
@@ -368,7 +366,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor w-full"
+                                class="myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor w-full"
                                 type="button"
                                 @click="thirdButton"
                             >
@@ -385,7 +383,7 @@ const thirdButton = function () {
                             "
                         >
                             <button
-                                class="flex items-center gap-2 myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor w-full"
+                                class="flex items-center gap-2 myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor w-full"
                                 :class="{
                                     'opacity-25 cursor-default': disabled,
                                 }"

@@ -241,24 +241,36 @@ onMounted(() => {
                                 getCurrentUsers.fetchedData.users &&
                                 getCurrentUsers.fetchedData.total_results !== 0
                             "
-                            class="scale-90 text-center bottom-0 w-full my-2 border-b border-gray-200 py-2"
+                            class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4 gap-2"
                         >
                             <TailwindPagination
                                 :active-classes="[
-                                    'bg-black',
+                                    'bg-myPrimaryLinkColor',
                                     'text-white',
-                                    'border-black',
+                                    'rounded-full',
                                 ]"
                                 :limit="2"
+                                :keepLength="true"
                                 :class="[
-                                    'flex',
-                                    'justify-center',
-                                    'items-center',
+                                    'space-x-1',
+                                    'shadow-none',
+                                    'tailwind-pagination-package',
+                                ]"
+                                :item-classes="[
+                                    'border-none',
+                                    'bg-gray-100',
+                                    'text-myPrimaryDarkGrayColor',
                                     'rounded-full',
                                 ]"
                                 :data="getCurrentUsers.fetchedData.users"
                                 @pagination-change-page="getResultsForPage"
                             >
+                                <template #prev-nav>
+                                    <span> Prev </span>
+                                </template>
+                                <template #next-nav>
+                                    <span>Next</span>
+                                </template>
                             </TailwindPagination>
                         </div>
 
@@ -343,7 +355,7 @@ onMounted(() => {
                                                         user.profile_photo_path ===
                                                             null
                                                     "
-                                                    class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                                    class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                                 >
                                                     <span>
                                                         {{
@@ -365,7 +377,7 @@ onMounted(() => {
                                                 <span
                                                     class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                                 >
-                                                    <span class="font-semibold">
+                                                    <span class="font-normal">
                                                         {{ user.first_name }}
                                                         {{ user.last_name }}
                                                     </span>
@@ -438,7 +450,7 @@ onMounted(() => {
                 >
                     <div
                         v-if="getCurrentAttachedUsers.length === 0"
-                        class="pb-16 space-y-6"
+                        class="pb-6 space-y-6"
                     >
                         <p class="myPrimaryParagraph text-xs p-2">
                             No users added
@@ -483,7 +495,7 @@ onMounted(() => {
                                             user &&
                                             user.profile_photo_path === null
                                         "
-                                        class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                        class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                     >
                                         <span>
                                             {{

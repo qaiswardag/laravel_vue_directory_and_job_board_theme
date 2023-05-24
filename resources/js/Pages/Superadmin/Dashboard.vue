@@ -82,7 +82,7 @@ const actions = [
                         </span>
                     </div>
                     <div class="mt-8">
-                        <h3 class="text-lg font-medium">
+                        <h3 class="text-lg font-normal">
                             <Link
                                 :href="route(action.href)"
                                 class="focus:outline-none"

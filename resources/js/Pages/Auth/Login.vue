@@ -60,7 +60,7 @@ const submit = () => {
             </template>
             <div
                 v-if="status"
-                class="mb-4 font-medium text-sm text-myPrimarySuccessColor"
+                class="mb-4 font-normal text-sm text-myPrimaryLinkColor"
             >
                 {{ status }}
             </div>
@@ -80,7 +80,9 @@ const submit = () => {
                         type="email"
                         autofocus
                     />
-                    <p class="myPrimaryParagraph text-xs italic pt-1">
+                    <p
+                        class="myPrimaryParagraph text-xs italic pt-2 text-gray-600"
+                    >
                         Email: jd@myself.ae
                     </p>
                     <InputError :message="form.errors.email" />
@@ -94,7 +96,9 @@ const submit = () => {
                         type="password"
                         autocomplete="current-password"
                     />
-                    <p class="myPrimaryParagraph text-xs italic pt-1">
+                    <p
+                        class="myPrimaryParagraph text-xs italic pt-2 text-gray-600"
+                    >
                         Password: 123456
                     </p>
                     <InputError :message="form.errors.password" />

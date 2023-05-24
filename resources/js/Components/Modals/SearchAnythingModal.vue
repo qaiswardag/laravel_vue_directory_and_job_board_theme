@@ -159,7 +159,7 @@ function onSelect(item) {
                             >
                                 <li v-if="filteredProjects.length > 0">
                                     <h2
-                                        class="text-xs font-semibold text-myPrimaryDarkGrayColor"
+                                        class="text-xs font-normal text-myPrimaryDarkGrayColor"
                                     >
                                         Projects
                                     </h2>
@@ -199,7 +199,7 @@ function onSelect(item) {
                                 </li>
                                 <li v-if="filteredUsers.length > 0">
                                     <h2
-                                        class="text-xs font-semibold text-myPrimaryDarkGrayColor"
+                                        class="text-xs font-normal text-myPrimaryDarkGrayColor"
                                     >
                                         Users
                                     </h2>
@@ -244,7 +244,7 @@ function onSelect(item) {
                                     aria-hidden="true"
                                 />
                                 <p
-                                    class="mt-4 font-semibold text-myPrimaryDarkGrayColor"
+                                    class="mt-4 font-normal text-myPrimaryDarkGrayColor"
                                 >
                                     Help with searching
                                 </p>
@@ -271,7 +271,7 @@ function onSelect(item) {
                                     aria-hidden="true"
                                 />
                                 <p
-                                    class="mt-4 font-semibold text-myPrimaryDarkGrayColor"
+                                    class="mt-4 font-normal text-myPrimaryDarkGrayColor"
                                 >
                                     No results found
                                 </p>
@@ -287,7 +287,7 @@ function onSelect(item) {
                                 Type
                                 <kbd
                                     :class="[
-                                        'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
+                                        'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-normal sm:mx-2',
                                         rawQuery.startsWith('#')
                                             ? 'border-myPrimaryBrandColor text-myPrimaryBrandColor'
                                             : 'border-gray-400 text-myPrimaryDarkGrayColor',
@@ -300,7 +300,7 @@ function onSelect(item) {
                                 >
                                 <kbd
                                     :class="[
-                                        'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
+                                        'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-normal sm:mx-2',
                                         rawQuery.startsWith('>')
                                             ? 'border-myPrimaryBrandColor text-myPrimaryBrandColor'
                                             : 'border-gray-400 text-myPrimaryDarkGrayColor',
@@ -310,7 +310,7 @@ function onSelect(item) {
                                 for users, and
                                 <kbd
                                     :class="[
-                                        'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-semibold sm:mx-2',
+                                        'mx-1 flex h-5 w-5 items-center justify-center rounded border bg-white font-normal sm:mx-2',
                                         rawQuery === '?'
                                             ? 'border-myPrimaryBrandColor text-myPrimaryBrandColor'
                                             : 'border-gray-400 text-myPrimaryDarkGrayColor',

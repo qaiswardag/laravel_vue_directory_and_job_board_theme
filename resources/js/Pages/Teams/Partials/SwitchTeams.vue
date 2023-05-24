@@ -277,7 +277,7 @@ const switchTeam = function (team) {
                                                             ? 'bg-green-100'
                                                             : 'bg-red-100 text-myPrimaryErrorColor'
                                                     "
-                                                    class="inline-flex rounded-full px-2 font-semibold leading-5 text-green-800"
+                                                    class="inline-flex rounded-full px-2 font-normal leading-5 text-green-800"
                                                     >{{
                                                         team.public
                                                             ? "Public"

@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         Team::factory()->create([
             "id" => 1,
             "user_id" => User::find(1)->id,
-            "name" => "adidas",
+            "name" => "Lacoste",
             "public" => true,
             "personal_team" => false,
         ]);
@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
         Team::factory()->create([
             "id" => 2,
             "user_id" => User::find(2)->id,
-            "name" => "Owened by Shaun",
+            "name" => "adidas",
             "public" => true,
             "personal_team" => false,
         ]);
@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
         Team::factory()->create([
             "id" => 3,
             "user_id" => User::find(3)->id,
-            "name" => "Owened by Mie",
+            "name" => "Nike",
             "public" => true,
             "personal_team" => false,
         ]);
@@ -251,7 +251,7 @@ class DatabaseSeeder extends Seeder
         foreach (range(102, 162) as $num) {
             $user = User::find($num);
 
-            if ($user === true) {
+            if ($user !== null) {
                 // User exists, proceed with creating team-user relationship
                 TeamUser::factory()->create([
                     "team_id" => Team::find(1)->id, // John Does team

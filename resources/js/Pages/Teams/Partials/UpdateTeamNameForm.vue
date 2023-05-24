@@ -225,7 +225,7 @@ const notificationsModalButton = function () {
                     <InputLabel
                         :value="form.public ? 'Public' : 'Private'"
                         :class="{
-                            'text-myPrimarySuccessColor': form.public,
+                            'text-myPrimaryLinkColor': form.public,
                             'text-myPrimaryErrorColor': !form.public,
                         }"
                     />
@@ -233,9 +233,9 @@ const notificationsModalButton = function () {
                         v-model="form.public"
                         :class="[
                             form.public
-                                ? 'bg-myPrimarySuccessColor'
+                                ? 'bg-myPrimaryLinkColor'
                                 : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
                         ]"
                     >
                         <span class="sr-only">Use setting</span>
@@ -278,7 +278,7 @@ const notificationsModalButton = function () {
                                 aria-hidden="true"
                             >
                                 <svg
-                                    class="h-3 w-3 text-myPrimarySuccessColor"
+                                    class="h-3 w-3 text-myPrimaryLinkColor"
                                     fill="currentColor"
                                     viewBox="0 0 12 12"
                                 >
@@ -474,7 +474,7 @@ const notificationsModalButton = function () {
                                         $page.props.team.owner
                                             .profile_photo_path === null
                                     "
-                                    class="w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                    class="w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                 >
                                     {{
                                         $page.props.team.owner.first_name

@@ -58,7 +58,7 @@ const breadcrumbsLinks = [
                         </span>
                     </div>
                     <div class="mt-8">
-                        <h3 class="text-lg font-medium">
+                        <h3 class="text-lg font-normal">
                             <Link
                                 :href="route('user.profile.update')"
                                 class="focus:outline-none"
@@ -117,7 +117,7 @@ const breadcrumbsLinks = [
                         </span>
                     </div>
                     <div class="mt-8">
-                        <h3 class="text-lg font-medium">
+                        <h3 class="text-lg font-normal">
                             <Link
                                 :href="route('user.profile.security')"
                                 class="focus:outline-none"
@@ -174,7 +174,7 @@ const breadcrumbsLinks = [
                         </span>
                     </div>
                     <div class="mt-8">
-                        <h3 class="text-lg font-medium">
+                        <h3 class="text-lg font-normal">
                             <Link
                                 :href="route('user.profile.password')"
                                 class="focus:outline-none"

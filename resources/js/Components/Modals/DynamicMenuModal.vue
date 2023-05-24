@@ -69,7 +69,7 @@ const handleLogout = () => {
                     ></path>
                 </svg>
             </button>
-            <h2 class="text-sm font-medium text-zinc-600 dark:text-zinc-400">
+            <h2 class="text-sm font-normal text-zinc-600 dark:text-zinc-400">
                 Menu
             </h2>
         </div>

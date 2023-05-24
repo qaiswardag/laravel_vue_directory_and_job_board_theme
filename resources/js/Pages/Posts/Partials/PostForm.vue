@@ -409,7 +409,14 @@ const storeDirtyFormInLocalStorage = function () {
         postForm.isSlugEditable = isSlugEditable.value;
         const formDataJson = JSON.stringify(postForm);
         // Save the form data to local storage using the form ID as the key
-        localStorage.setItem("postForm", formDataJson);
+        localStorage.setItem(
+            `post-form-${
+                props &&
+                props.currentUserTeam &&
+                props.currentUserTeam.reference_id
+            }`,
+            formDataJson
+        );
     }
 };
 // Will be executed when the user switch current route
@@ -426,9 +433,23 @@ onBeforeMount(() => {
     // User is creating a new Resource from scratch, rather than editing an existing one
     // Check local storage
     if (props.post === null) {
-        if (localStorage.getItem("postForm") !== null) {
+        if (
+            localStorage.getItem(
+                `post-form-${
+                    props &&
+                    props.currentUserTeam &&
+                    props.currentUserTeam.reference_id
+                }`
+            ) !== null
+        ) {
             // Get the saved form data from local storage using the form ID as the key
-            const formDataJson = localStorage.getItem("postForm");
+            const formDataJson = localStorage.getItem(
+                `post-form-${
+                    props &&
+                    props.currentUserTeam &&
+                    props.currentUserTeam.reference_id
+                }`
+            );
             let formLocalStorage = JSON.parse(formDataJson);
             //
             isSlugEditable.value = formLocalStorage.isSlugEditable;
@@ -591,7 +612,7 @@ onBeforeMount(() => {
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="w-5 h-5 text-myPrimarySuccessColor"
+                                    class="w-5 h-5 text-myPrimaryLinkColor"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -645,7 +666,7 @@ onBeforeMount(() => {
                     <InputLabel
                         :value="postForm.published ? 'Published' : 'Private'"
                         :class="{
-                            'text-myPrimarySuccessColor': postForm.published,
+                            'text-myPrimaryLinkColor': postForm.published,
                             'text-myPrimaryErrorColor': !postForm.published,
                         }"
                     />
@@ -653,9 +674,9 @@ onBeforeMount(() => {
                         v-model="postForm.published"
                         :class="[
                             postForm.published
-                                ? 'bg-myPrimarySuccessColor'
+                                ? 'bg-myPrimaryLinkColor'
                                 : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
                         ]"
                     >
                         <span class="sr-only">Use setting</span>
@@ -700,7 +721,7 @@ onBeforeMount(() => {
                                 aria-hidden="true"
                             >
                                 <svg
-                                    class="h-3 w-3 text-myPrimarySuccessColor"
+                                    class="h-3 w-3 text-myPrimaryLinkColor"
                                     fill="currentColor"
                                     viewBox="0 0 12 12"
                                 >
@@ -735,7 +756,7 @@ onBeforeMount(() => {
                     <InputLabel
                         :value="postForm.show_author ? 'Show' : 'Hide'"
                         :class="{
-                            'text-myPrimarySuccessColor': postForm.show_author,
+                            'text-myPrimaryLinkColor': postForm.show_author,
                             'text-myPrimaryErrorColor': !postForm.show_author,
                         }"
                     />
@@ -743,9 +764,9 @@ onBeforeMount(() => {
                         v-model="postForm.show_author"
                         :class="[
                             postForm.show_author
-                                ? 'bg-myPrimarySuccessColor'
+                                ? 'bg-myPrimaryLinkColor'
                                 : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
                         ]"
                     >
                         <span class="sr-only">Use setting</span>
@@ -790,7 +811,7 @@ onBeforeMount(() => {
                                 aria-hidden="true"
                             >
                                 <svg
-                                    class="h-3 w-3 text-myPrimarySuccessColor"
+                                    class="h-3 w-3 text-myPrimaryLinkColor"
                                     fill="currentColor"
                                     viewBox="0 0 12 12"
                                 >
@@ -883,7 +904,7 @@ onBeforeMount(() => {
                                                 user &&
                                                 user.profile_photo_path === null
                                             "
-                                            class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-semibold text-white"
+                                            class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                         >
                                             <span>
                                                 {{
