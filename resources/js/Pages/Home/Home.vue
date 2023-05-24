@@ -111,7 +111,7 @@ const faqs = [
                     </div>
                     <div class="sm:px-6 lg:px-0">
                         <img
-                            src="https://images.unsplash.com/photo-1604284195847-88dc4b5a9faa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80"
+                            src="https://images.unsplash.com/photo-1678818104764-a04c93b55a09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=927&q=80"
                             alt=""
                         />
                     </div>
