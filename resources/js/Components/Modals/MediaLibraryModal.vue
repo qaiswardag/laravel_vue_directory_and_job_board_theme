@@ -367,7 +367,7 @@ const handleDeleteImage = function (imageId) {
                                             class="md:w-72 relative min-h-[55rem] max-h-[55rem]"
                                         >
                                             <div
-                                                class="md:w-72 md:min-h-[50.6rem] md:max-h-[50.6rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
+                                                class="md:w-72 md:min-h-[50.8rem] md:max-h-[50.8rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
                                             >
                                                 <div
                                                     v-if="
@@ -764,7 +764,7 @@ const handleDeleteImage = function (imageId) {
                                                     class="w-full"
                                                 >
                                                     <button
-                                                        class="myPrimaryButton w-full"
+                                                        class="myPrimaryButton"
                                                         type="button"
                                                         @click="secondButton"
                                                     >
@@ -777,7 +777,7 @@ const handleDeleteImage = function (imageId) {
                                                     class="w-full"
                                                 >
                                                     <button
-                                                        class="myPrimaryDeleteButton w-full"
+                                                        class="myPrimaryDeleteButton"
                                                         type="button"
                                                         @click="thirdButton"
                                                     >

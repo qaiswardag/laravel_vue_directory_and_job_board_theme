@@ -22,15 +22,16 @@ class MediaLibraryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Team $team)
+    public function index(Team $team, Request $request)
     {
         $this->authorize("can-read", $team);
 
         $images = $team
             ->media()
             ->latest()
-            ->take(16)
-            ->get();
+            ->paginate(10);
+
+        $images->appends($request->all());
 
         return Inertia::render("Media/Media", [
             "images" => $images,

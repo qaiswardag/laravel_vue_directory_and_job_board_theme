@@ -244,11 +244,6 @@ onMounted(() => {
                             class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4 gap-2"
                         >
                             <TailwindPagination
-                                :active-classes="[
-                                    'bg-myPrimaryLinkColor',
-                                    'text-white',
-                                    'rounded-full',
-                                ]"
                                 :limit="2"
                                 :keepLength="true"
                                 :class="[
@@ -256,9 +251,15 @@ onMounted(() => {
                                     'shadow-none',
                                     'tailwind-pagination-package',
                                 ]"
+                                :active-classes="[
+                                    'bg-myPrimaryLinkColor',
+                                    'text-white',
+                                    'rounded-full',
+                                ]"
                                 :item-classes="[
                                     'border-none',
                                     'bg-gray-100',
+                                    'hover:bg-gray-200',
                                     'text-myPrimaryDarkGrayColor',
                                     'rounded-full',
                                 ]"
@@ -309,7 +310,7 @@ onMounted(() => {
                             "
                         >
                             <div
-                                class="h-full md:max-h-[30rem] max-h-[13rem] overflow-y-scroll pr-1"
+                                class="h-full md:max-h-[26.3rem] max-h-[13rem] overflow-y-scroll pr-1"
                             >
                                 <div
                                     class="flex flex-col w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
@@ -446,7 +447,7 @@ onMounted(() => {
                 </main>
                 <aside
                     aria-label="sidebar"
-                    class="h-full md:max-h-[38rem] max-h-[12rem] md:w-3/5 w-full bg-gray-50 pl-2 border border-gray-200 overflow-y-scroll rounded"
+                    class="h-full md:max-h-[38.5rem] max-h-[12rem] md:w-3/5 w-full bg-gray-50 pl-2 border border-gray-200 overflow-y-scroll rounded"
                 >
                     <div
                         v-if="getCurrentAttachedUsers.length === 0"
@@ -561,7 +562,7 @@ onMounted(() => {
                 <button
                     v-if="firstButtonText"
                     ref="firstButtonRef"
-                    class="mySecondaryButton w-full"
+                    class="mySecondaryButton"
                     type="button"
                     @click="firstButton"
                 >
@@ -569,7 +570,7 @@ onMounted(() => {
                 </button>
                 <button
                     v-if="secondButtonText"
-                    class="myPrimaryButton w-full"
+                    class="myPrimaryButton"
                     type="button"
                     @click="secondButton"
                 >

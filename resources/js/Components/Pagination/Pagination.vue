@@ -10,19 +10,21 @@ defineProps({
 <template>
     <div class="myPrimarySection" v-if="links && links.length > 3">
         <div
-            class="flex flex-wrap items-center justify-center -mb-1 py-2 px-2 rounded"
+            class="flex space-x-1 flex-wrap items-center justify-center -mb-1 py-2 px-2 rounded"
         >
             <template v-for="(link, k) in links" :key="k">
                 <div
                     v-if="link.url === null"
-                    class="mr-1 mb-1 px-4 py-3 text-sm leading-4 text-myPrimaryDarkGrayColor border border-myPrimaryLightGrayColor rounded"
+                    class="relative inline-flex items-center border px-4 py-2 text-sm font-medium focus:z-20 border-none bg-gray-100 text-myPrimaryDarkGrayColor rounded-full"
                     v-html="link.label"
                 />
                 <Link
                     v-else
-                    class="flex items-center mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:text-myPrimaryDarkGrayColor hover:bg-myPrimaryLightGrayColor focus:border-myPrimaryBrandColor focus:text-myPrimaryDarkGrayColor"
+                    class="relative inline-flex items-center border px-4 py-2 text-sm font-medium focus:z-20 border-none bg-gray-100 text-myPrimaryDarkGrayColor rounded-full"
                     :class="{
-                        'bg-myPrimaryBrandColor text-white': link.active,
+                        'bg-myPrimaryLinkColor hover:bg-myPrimaryLinkColor text-white':
+                            link.active,
+                        'hover:bg-gray-300': link.active === false,
                     }"
                     :href="link.url"
                     v-html="link.label"

@@ -1,5 +1,5 @@
 <script setup>
-import { CheckCircleIcon, XMarkIcon } from "@heroicons/vue/20/solid";
+import { CheckCircleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { computed, ref, watch } from "@vue/runtime-core";
 
 const props = defineProps({

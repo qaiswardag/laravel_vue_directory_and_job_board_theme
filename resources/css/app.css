@@ -62,7 +62,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryTag {
-        @apply myPrimaryParagraph bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs font-normal shadow-sm;
+        @apply myPrimaryParagraph bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs font-medium shadow-sm;
     }
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +91,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryParagraph {
-        @apply font-normal text-gray-700 text-sm;
+        @apply font-medium text-gray-700 text-sm;
     }
 
     .myPrimaryParagraphError {
@@ -156,13 +156,13 @@
     }
 
     .myPrimaryButton {
-        @apply whitespace-nowrap break-keep font-normal inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
+        @apply whitespace-nowrap break-keep font-medium inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2
         focus-visible:ring-2 focus-visible:ring-myPrimaryLinkColor;
     }
 
     .mySecondaryButton {
-        @apply myPrimaryButton bg-gray-700 hover:bg-gray-800 focus:ring-gray-700;
+        @apply myPrimaryButton bg-gray-600 hover:bg-gray-700 focus:ring-gray-700;
     }
 
     .myPrimaryDeleteButton {
@@ -182,15 +182,6 @@
         @apply myPrimaryParagraph font-normal  text-myPrimaryBrandColor 
         focus:outline-none cursor-pointer;
     }
-
-    .mySecondaryButtonNoBackground {
-        @apply font-normal  text-myPrimaryDarkGrayColor;
-    }
-
-    .myPrimaryDeleteButtonNoBackground {
-        @apply myPrimaryButtonNoBackground text-myPrimaryErrorColor;
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Icons
@@ -399,8 +390,7 @@
     transition: all 0.1s ease;
 }
 
-/* Scrollbar Styles */
-
+/* Scrollbar Styles  - start */
 /* Firefox */
 * {
     scrollbar-width: thin;
@@ -430,6 +420,7 @@
     overflow-y: hidden;
     /* Add any other desired styles for the scrollable element */
 }
+/* Scrollbar Styles  - end */
 
 .tailwind-pagination-package {
     box-shadow: none !important;

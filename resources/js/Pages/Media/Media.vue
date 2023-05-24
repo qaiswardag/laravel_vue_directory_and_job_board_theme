@@ -5,6 +5,11 @@ import { router } from "@inertiajs/vue3";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
+import Pagination from "@/Components/Pagination/Pagination.vue";
+import { useStore } from "vuex";
+
+// store
+const store = useStore();
 
 import {
     Dialog,
@@ -55,7 +60,14 @@ const firstMediaButtonFunction = ref(null);
 const secondMediaButtonFunction = ref(null);
 const thirdMediaButtonFunction = ref(null);
 
-const handleUploadImages = function () {
+const handleMediaLibrary = function (imageID) {
+    if (imageID && typeof imageID === "number") {
+        // dispatch
+        store.dispatch("mediaLibrary/loadImage", {
+            mediaLibraryId: imageID,
+            teamId: props.currentUserTeam.id,
+        });
+    }
     // handle show media library modal
     showMediaLibraryModal.value = true;
 
@@ -134,7 +146,7 @@ const handleUploadImages = function () {
                                 class="mt-4 flex text-sm leading-6 text-gray-600"
                             >
                                 <PrimaryButton
-                                    @click="handleUploadImages"
+                                    @click="handleMediaLibrary"
                                     class="mb-4 myPrimaryButton gap-2 items-center"
                                 >
                                     <svg
@@ -173,9 +185,9 @@ const handleUploadImages = function () {
                             class="grid grid-cols-2 myPrimaryGap sm:grid-cols-3 lg:grid-cols-4"
                         >
                             <li
-                                v-for="file in images"
+                                v-for="file in images && images.data"
                                 :key="file.id"
-                                @click="handleUploadImages"
+                                @click="handleMediaLibrary(file.id)"
                                 class="border border-myPrimaryLightGrayColor rounded px-4 p-4 cursor-pointer bg-gray-50"
                             >
                                 <div
@@ -212,5 +224,6 @@ const handleUploadImages = function () {
                 </div>
             </div>
         </div>
+        <Pagination :links="images?.links ? images.links : []"></Pagination>
     </LoggedInLayout>
 </template>

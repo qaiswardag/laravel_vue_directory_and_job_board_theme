@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from "vue";
-import { MagnifyingGlassIcon } from "@heroicons/vue/20/solid";
+import { MagnifyingGlassIcon } from "@heroicons/vue/24/outline";
 import {
     ExclamationTriangleIcon,
     FolderIcon,

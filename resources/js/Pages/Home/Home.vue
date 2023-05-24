@@ -139,7 +139,7 @@ const faqs = [
                             <DisclosureButton
                                 class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
                             >
-                                <span class="myPrimaryParagraph font-normal"
+                                <span class="myPrimaryParagraph font-medium"
                                     >{{ faq.question }}
                                 </span>
                                 <span class="ml-6 flex h-7 items-center">

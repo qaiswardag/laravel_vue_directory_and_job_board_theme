@@ -8,7 +8,7 @@ import {
     TransitionRoot,
 } from "@headlessui/vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
-import { ChevronRightIcon } from "@heroicons/vue/20/solid";
+import { ChevronRightIcon } from "@heroicons/vue/24/outline";
 
 // props
 const props = defineProps({
@@ -26,29 +26,22 @@ const primaryMenuSlideOverButton = function () {
 };
 
 const navigation = [
-    { name: "Blog", href: "#", current: true },
     {
-        name: "Teams",
+        name: "Platform",
         current: false,
-        children: [
-            { name: "Engineering", href: "#" },
-            { name: "Human Resources", href: "#" },
-            { name: "Customer Success", href: "#" },
-        ],
+        children: [{ name: "About us", href: "#" }],
     },
     {
-        name: "Projects",
+        name: "Resources",
         current: false,
         children: [
-            { name: "GraphQL API", href: "#" },
-            { name: "iOS App", href: "#" },
-            { name: "Android App", href: "#" },
-            { name: "New Customer Portal", href: "#" },
+            { name: "Blog", href: "#" },
+            { name: "Help Center", href: "#" },
+            { name: "Users", href: "#" },
         ],
     },
-    { name: "Calendar", href: "#", current: false },
-    { name: "Documents", href: "#", current: false },
-    { name: "Reports", href: "#", current: false },
+    { name: "Blog", href: "#", current: false },
+    { name: "Help Center", href: "#", current: false },
 ];
 </script>
 
@@ -87,7 +80,7 @@ const navigation = [
                                                 class="flex items-center justify-between mb-4"
                                             >
                                                 <DialogTitle
-                                                    class="myPrimaryParagraph rounded w-full py-2 italic"
+                                                    class="myPrimaryParagraph text-base rounded w-full py-2 italic"
                                                 >
                                                     Menu
                                                 </DialogTitle>
@@ -96,7 +89,7 @@ const navigation = [
                                                 >
                                                     <button
                                                         type="button"
-                                                        class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                                                        class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
                                                         @click="
                                                             $emit(
                                                                 'primaryMenuSlideOverButton'
@@ -154,7 +147,7 @@ const navigation = [
                                                                         item.current
                                                                             ? 'bg-gray-50'
                                                                             : 'hover:bg-gray-50',
-                                                                        'block py-2 pr-2 pl-10 text-sm leading-6 font-normal text-gray-700 border-2 border-gray-400',
+                                                                        'block p-2 myPrimaryParagraph text-base font-medium',
                                                                     ]"
                                                                     >{{
                                                                         item.name
@@ -172,9 +165,12 @@ const navigation = [
                                                                             item.current
                                                                                 ? 'bg-gray-50'
                                                                                 : 'hover:bg-gray-50',
-                                                                            'flex items-center w-full text-left p-2 gap-x-3 text-sm leading-6 font-normal text-gray-700 border-2 border-gray-400',
+                                                                            'flex items-center justify-between w-full text-left p-2 gap-x-3  myPrimaryParagraph text-base font-medium',
                                                                         ]"
                                                                     >
+                                                                        {{
+                                                                            item.name
+                                                                        }}
                                                                         <ChevronRightIcon
                                                                             :class="[
                                                                                 open
@@ -184,10 +180,8 @@ const navigation = [
                                                                             ]"
                                                                             aria-hidden="true"
                                                                         />
-                                                                        {{
-                                                                            item.name
-                                                                        }}
                                                                     </DisclosureButton>
+
                                                                     <DisclosurePanel
                                                                         as="ul"
                                                                         class="mt-1 mb-1 px-2 space-y-1"
@@ -207,7 +201,7 @@ const navigation = [
                                                                                     subItem.current
                                                                                         ? 'bg-gray-50'
                                                                                         : 'hover:bg-gray-50',
-                                                                                    'block py-2 pr-2 pl-9 text-sm leading-6 text-gray-700 border-2 border-gray-400 bg-purple-50',
+                                                                                    'block py-2 pr-2 pl-9 text-sm myPrimaryParagraph text-base font-normal',
                                                                                 ]"
                                                                                 >{{
                                                                                     subItem.name

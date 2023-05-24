@@ -102,7 +102,7 @@ const notificationsSlideOverButton = function () {
                                                 >
                                                     <button
                                                         type="button"
-                                                        class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                                                        class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
                                                         @click="
                                                             $emit(
                                                                 'notificationsSlideOverButton'

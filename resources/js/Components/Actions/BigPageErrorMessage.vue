@@ -1,5 +1,5 @@
 <script setup>
-import { XCircleIcon } from "@heroicons/vue/20/solid";
+import { XCircleIcon } from "@heroicons/vue/24/outline";
 const props = defineProps({
     type: {
         required: true,

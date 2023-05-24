@@ -8,7 +8,7 @@ import {
     EllipsisVerticalIcon,
     FlagIcon,
     StarIcon,
-} from "@heroicons/vue/20/solid";
+} from "@heroicons/vue/24/outline";
 
 defineProps({
     routesArray: {

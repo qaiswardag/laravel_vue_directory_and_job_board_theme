@@ -55,7 +55,9 @@ const handleSwitchToTeam = (team, currentTeamId) => {
     thirdModalButtonFunction.value = function () {
         // commit
         store.commit("mediaLibrary/setCurrentImage", null);
+        store.commit("mediaLibrary/setCurrentPreviewImage", null);
         store.commit("attachedUsers/setRemoveAttachedUser", []);
+
         switchTeam(team);
     };
     // end modal

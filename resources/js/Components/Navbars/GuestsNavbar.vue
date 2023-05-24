@@ -34,7 +34,7 @@ import {
 import {
     EllipsisHorizontalIcon,
     MagnifyingGlassIcon,
-} from "@heroicons/vue/20/solid";
+} from "@heroicons/vue/24/outline";
 import ApplicationMark from "@/Components/MarkComponents/ApplicationMark.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import DynamicMenuModal from "@/Components/Modals/DynamicMenuModal.vue";
@@ -45,7 +45,7 @@ import {
     ChevronDownIcon,
     PhoneIcon,
     PlayCircleIcon,
-} from "@heroicons/vue/20/solid";
+} from "@heroicons/vue/24/outline";
 import {
     ArrowPathIcon,
     ChartPieIcon,
@@ -131,7 +131,7 @@ const notificationsSlideOverButton = function () {
         >
             <template v-if="$page.props.user !== null">
                 <Link
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
                     :href="route('dashboard')"
                 >
                     <AdjustmentsVerticalIcon
@@ -142,7 +142,7 @@ const notificationsSlideOverButton = function () {
             </template>
             <template v-if="$page.props.user === null">
                 <Link
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
                     :href="route('home')"
                 >
                     Home
@@ -150,7 +150,7 @@ const notificationsSlideOverButton = function () {
             </template>
             <template v-if="$page.props.user === null">
                 <Link
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
                     :href="route('login')"
                 >
                     Login
@@ -158,7 +158,7 @@ const notificationsSlideOverButton = function () {
             </template>
             <template v-if="$page.props.user === null">
                 <Link
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
                     :href="route('register')"
                 >
                     Register
@@ -192,7 +192,7 @@ const notificationsSlideOverButton = function () {
                         "
                         @click="handleMenuUserTeamModal"
                         type="button"
-                        class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
+                        class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
                     >
                         <UserIcon class="h-6 w-6" aria-hidden="true" />
                     </button>
@@ -203,7 +203,7 @@ const notificationsSlideOverButton = function () {
                 <button
                     @click="handleNotificationsSlideOver"
                     type="button"
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
+                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
                 >
                     <span class="sr-only">View notifications</span>
                     <BellIcon class="h-6 w-6" aria-hidden="true" />
@@ -213,7 +213,7 @@ const notificationsSlideOverButton = function () {
             <button
                 @click="handlePrimaryMenuSlideOver"
                 type="button"
-                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200"
+                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
             >
                 <span class="sr-only">View Menu</span>
                 <Bars3Icon class="h-6 w-6" aria-hidden="true" />
