@@ -46,10 +46,7 @@ const faqs = [
             </div>
         </template>
 
-        <FullWidthElement
-            :descriptionArea="true"
-            class="bg-myPrimaryLightGrayColor"
-        >
+        <FullWidthElement :descriptionArea="true" class="bg-gray-50">
             <template #title>All-in-one platform</template>
             <template #description>
                 Experience the epitome of elegance with our Exquisite Admin &
@@ -65,43 +62,45 @@ const faqs = [
             </template>
             <template #content>
                 <div
-                    class="grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-2 lg:items-start"
+                    class="grid grid-cols-1 lg:gap-x-28 gap-x-8 lg:gap-y-20 gap-y-16 lg:grid-cols-12"
                 >
-                    <div class="lg:pt-4">
-                        <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg">
-                            <h2 class="myFourthHeader">Deploy faster</h2>
-                            <p class="mySecondaryHeader">A better workflow</p>
-                            <p class="mt-6 myPrimaryParagraph">
+                    <img
+                        class="w-full object-cover col-span-8"
+                        src="https://media-www.sqspcdn.com/images/pages/homepage/jun-2022/how-to/create-a-website-1500w.jpg"
+                        alt=""
+                    />
+                    <div class="lg:pt-4 col-span-4">
+                        <h2 class="myFourthHeader">Deploy faster</h2>
+                        <p class="mySecondaryHeader">A better workflow</p>
+                        <p class="mt-6 myPrimaryParagraph">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing
+                            elit. Maiores impedit perferendis suscipit eaque,
+                            iste dolor cupiditate blanditiis ratione.
+                        </p>
+                        <dl
+                            class="mt-10 max-w-xl space-y-8 myPrimaryParagraph lg:max-w-none"
+                        >
+                            <!-- space -->
+                            <dd class="block mt-4">
                                 Lorem ipsum, dolor sit amet consectetur
                                 adipisicing elit. Maiores impedit perferendis
                                 suscipit eaque, iste dolor cupiditate blanditiis
                                 ratione.
-                            </p>
-                            <dl
-                                class="mt-10 max-w-xl space-y-8 myPrimaryParagraph lg:max-w-none"
-                            >
-                                <!-- space -->
-                                <dd class="block mt-4">
-                                    Lorem ipsum, dolor sit amet consectetur
-                                    adipisicing elit. Maiores impedit
-                                    perferendis suscipit eaque, iste dolor
-                                    cupiditate blanditiis ratione.
-                                </dd>
+                            </dd>
 
-                                <!-- space -->
-                                <dd class="block mt-4">
-                                    Anim aute id magna aliqua ad ad non deserunt
-                                    sunt. Qui irure qui lorem cupidatat commodo.
-                                </dd>
+                            <!-- space -->
+                            <dd class="block mt-4">
+                                Anim aute id magna aliqua ad ad non deserunt
+                                sunt. Qui irure qui lorem cupidatat commodo.
+                            </dd>
 
-                                <!-- space -->
-                                <dd class="block mt-4">
-                                    Ac tincidunt sapien vehicula erat auctor
-                                    pellentesque rhoncus. Et magna sit morbi
-                                    lobortis.
-                                </dd>
-                            </dl>
-                        </div>
+                            <!-- space -->
+                            <dd class="block mt-4">
+                                Ac tincidunt sapien vehicula erat auctor
+                                pellentesque rhoncus. Et magna sit morbi
+                                lobortis.
+                            </dd>
+                        </dl>
                         <button
                             @click="handleDesigner"
                             class="myPrimaryButton mt-8"
@@ -109,64 +108,12 @@ const faqs = [
                             Start Designer
                         </button>
                     </div>
-                    <div class="sm:px-6 lg:px-0">
-                        <img
-                            src="https://images.unsplash.com/photo-1678818104764-a04c93b55a09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=927&q=80"
-                            alt=""
-                        />
-                    </div>
                 </div>
             </template>
         </FullWidthElement>
 
-        <DefaultElement :descriptionArea="true">
-            <template #title>Frequently asked questions</template>
-            <template #description>
-                As new users join, they bring innovative ideas, unique skills,
-                and diverse experiences that enrich our platform. Connect with
-                them, explore their work, and celebrate the fresh energy they
-                contribute to our collaborative space.
-            </template>
-            <template #content>
-                <dl class="divide-y divide-myPrimaryMediumGrayColor">
-                    <Disclosure
-                        as="div"
-                        v-for="faq in faqs"
-                        :key="faq.question"
-                        v-slot="{ open }"
-                    >
-                        <dt>
-                            <DisclosureButton
-                                class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
-                            >
-                                <span class="myPrimaryParagraph font-medium"
-                                    >{{ faq.question }}
-                                </span>
-                                <span class="ml-6 flex h-7 items-center">
-                                    <PlusSmallIcon
-                                        v-if="!open"
-                                        class="h-6 w-6"
-                                        aria-hidden="true"
-                                    />
-                                    <MinusSmallIcon
-                                        v-else
-                                        class="h-6 w-6"
-                                        aria-hidden="true"
-                                    />
-                                </span>
-                            </DisclosureButton>
-                        </dt>
-                        <DisclosurePanel as="dd" class="mt-2 pr-12 pb-16">
-                            <p class="myPrimaryParagraph">
-                                {{ faq.answer }}
-                            </p>
-                        </DisclosurePanel>
-                    </Disclosure>
-                </dl>
-            </template>
-        </DefaultElement>
         <!-- People - start -->
-        <FullWidthElement :descriptionArea="true" class="bg-gray-200">
+        <DefaultElement :descriptionArea="true">
             <template #title>Latest Users</template>
             <template #description>
                 As new users join, they bring innovative ideas, unique skills,
@@ -360,7 +307,65 @@ const faqs = [
                     </li>
                 </ul>
             </template>
-        </FullWidthElement>
+        </DefaultElement>
         <!-- People - end -->
+
+        <FullWidthElement :descriptionArea="true" class="bg-gray-50">
+            <template #title>Frequently asked questions</template>
+            <template #description>
+                As new users join, they bring innovative ideas, unique skills,
+                and diverse experiences that enrich our platform. Connect with
+                them, explore their work, and celebrate the fresh energy they
+                contribute to our collaborative space.
+            </template>
+            <template #content>
+                <div
+                    class="grid grid-cols-1 lg:gap-x-28 gap-x-8 lg:gap-y-20 gap-y-16 lg:grid-cols-12"
+                >
+                    <dl
+                        class="divide-y divide-myPrimaryMediumGrayColor lg:col-span-4"
+                    >
+                        <Disclosure
+                            as="div"
+                            v-for="faq in faqs"
+                            :key="faq.question"
+                            v-slot="{ open }"
+                        >
+                            <dt>
+                                <DisclosureButton
+                                    class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
+                                >
+                                    <span class="myPrimaryParagraph font-medium"
+                                        >{{ faq.question }}
+                                    </span>
+                                    <span class="ml-6 flex h-7 items-center">
+                                        <PlusSmallIcon
+                                            v-if="!open"
+                                            class="h-5 w-5"
+                                            aria-hidden="true"
+                                        />
+                                        <MinusSmallIcon
+                                            v-else
+                                            class="h-5 w-5"
+                                            aria-hidden="true"
+                                        />
+                                    </span>
+                                </DisclosureButton>
+                            </dt>
+                            <DisclosurePanel as="dd" class="mt-2 pr-12 pb-16">
+                                <p class="myPrimaryParagraph">
+                                    {{ faq.answer }}
+                                </p>
+                            </DisclosurePanel>
+                        </Disclosure>
+                    </dl>
+                    <img
+                        class="w-full object-cover lg:col-span-8"
+                        src="https://media-www.sqspcdn.com/images/pages/homepage/jun-2022/showcase/meiwen-see-1500w.webp"
+                        alt="image"
+                    />
+                </div>
+            </template>
+        </FullWidthElement>
     </GuestsLayout>
 </template>
