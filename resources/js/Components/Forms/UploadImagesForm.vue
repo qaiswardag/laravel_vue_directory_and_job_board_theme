@@ -264,7 +264,7 @@ onMounted(() => {
                     class="md:py-4 py-2 md:px-4 px-2 border-b border-gray-200 hover:bg-gray-50"
                 >
                     <div
-                        class="rounded flex-wrap flex item-center justify-between"
+                        class="rounded flex-wrap flex items-center justify-between"
                     >
                         <div class="flex items-center gap-2">
                             <img

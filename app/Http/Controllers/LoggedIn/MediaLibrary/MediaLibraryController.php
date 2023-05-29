@@ -29,7 +29,7 @@ class MediaLibraryController extends Controller
         $images = $team
             ->media()
             ->latest()
-            ->paginate(10);
+            ->paginate(16);
 
         $images->appends($request->all());
 

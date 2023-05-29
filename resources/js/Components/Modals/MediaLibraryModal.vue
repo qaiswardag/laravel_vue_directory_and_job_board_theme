@@ -491,10 +491,10 @@ const handleDeleteImage = function (imageId) {
                                                                         value="Image name"
                                                                     />
                                                                     <div
-                                                                        class="flex gap-2 item-center flex-col"
+                                                                        class="flex gap-2 justify-center flex-col"
                                                                     >
                                                                         <div
-                                                                            class="flex gap-2 item-center"
+                                                                            class="flex gap-2 items-center"
                                                                         >
                                                                             <div
                                                                                 class="mt-1 relative flex items-center w-full border myPrimaryInput py-0 p-0"

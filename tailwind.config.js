@@ -13,20 +13,15 @@ module.exports = {
 
     theme: {
         colors: {
-            //
-            // brand colors
-            myPrimaryBrandColor: "purple",
-            //
-            //
-            // error color
-            myPrimaryErrorColor: "#d60000",
-            myPrimaryLinkColor: "#6a5acd",
+            // custom colors
+            myPrimaryBrandColor: "#9F2B68",
+            myPrimaryLinkColor: "#9F2B68",
             // gray colors
             myPrimaryLightGrayColor: "#e2e8f0",
             myPrimaryMediumGrayColor: "#9ca3af",
             myPrimaryDarkGrayColor: "#111827",
 
-            //
+            myPrimaryErrorColor: "#d60000",
 
             transparent: "transparent",
             current: "currentColor",

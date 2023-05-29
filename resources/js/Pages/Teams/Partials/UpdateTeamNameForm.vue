@@ -526,7 +526,7 @@ const notificationsModalButton = function () {
             >
                 <div
                     @click="showErrorNotifications = true"
-                    class="w-fit py-1 flex item-center gap-2 rounded-md px-2 cursor-pointer italic"
+                    class="w-fit py-1 flex items-center gap-2 rounded-md px-2 cursor-pointer italic"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

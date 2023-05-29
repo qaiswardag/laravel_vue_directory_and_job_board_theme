@@ -173,13 +173,20 @@ const handleMediaLibrary = function (imageID) {
                     </div>
                 </div>
 
-                <div class="py-12 px-4 my-6 rounded-md">
+                <div class="py-12">
                     <div class="mt-6 mb-6">
-                        <p class="myPrimaryParagraph mt-8 mb-4">
-                            You are currently viewing the latest 16 images
-                            uploaded by your team. These images are sorted by
-                            date, with the most recent ones displayed first.
-                        </p>
+                        <div class="myHeaderParagraphSection pl-0">
+                            <h2 class="myTertiaryHeader">
+                                Manage or upload new images
+                            </h2>
+                            <p class="myPrimaryParagraph font-medium">
+                                You are currently viewing the latest images
+                                uploaded by your team. These images are sorted
+                                by date, with the most recent ones displayed
+                                first.
+                            </p>
+                        </div>
+
                         <ul
                             role="list"
                             class="grid grid-cols-2 myPrimaryGap sm:grid-cols-3 lg:grid-cols-4"

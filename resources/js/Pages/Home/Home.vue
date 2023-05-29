@@ -101,12 +101,34 @@ const faqs = [
                                 lobortis.
                             </dd>
                         </dl>
-                        <button
-                            @click="handleDesigner"
-                            class="myPrimaryButton mt-8"
+                        <div
+                            v-if="$page.props.user === null"
+                            class="mt-8 flex gap-2 items-center"
                         >
-                            Start Designer
-                        </button>
+                            <Link
+                                :href="route('login')"
+                                class="myPrimaryButton"
+                            >
+                                Login
+                            </Link>
+                            <Link
+                                :href="route('register')"
+                                class="myPrimaryButton"
+                            >
+                                Sign up
+                            </Link>
+                        </div>
+                        <div
+                            v-if="$page.props.user !== null"
+                            class="mt-8 flex gap-2 items-center"
+                        >
+                            <Link
+                                :href="route('dashboard')"
+                                class="myPrimaryButton"
+                            >
+                                Dashboard
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </template>
