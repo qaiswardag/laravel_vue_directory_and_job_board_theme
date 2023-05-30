@@ -12,7 +12,7 @@ const search_query = ref("");
 const handleSearch = function (page) {
     // dispatch
     store.dispatch("mediaLibrary/loadMedia", {
-        teamId: props.team.id,
+        team: props.team,
         page: page,
         search_query: search_query.value,
     });
@@ -37,7 +37,7 @@ const getCurrentImage = computed(() => {
 const getMedia = function (page) {
     // dispatch
     store.dispatch("mediaLibrary/loadMedia", {
-        teamId: props.team.id,
+        team: props.team,
         page: page,
         search_query: search_query.value,
     });

@@ -14,8 +14,14 @@ class MediaLibraryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, Team $team)
+    public function index(Request $request, $referenceId)
     {
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return response()->json("Not able to find the team", 404);
+        }
+
         $this->authorize("can-read", $team);
         $searchQuery = "";
         $currentClickedPage = "";

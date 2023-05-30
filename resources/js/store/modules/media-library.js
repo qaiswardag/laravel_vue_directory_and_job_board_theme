@@ -76,7 +76,7 @@ export default {
 
             handleGetImages(
                 route("overview.media.index", {
-                    team: data.teamId,
+                    referenceId: data.team.reference_id,
                     search_query: data.search_query,
                     page: data.page,
                 })

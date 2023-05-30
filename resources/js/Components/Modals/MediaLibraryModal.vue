@@ -142,7 +142,7 @@ const handleImageUpdate = function (imageId) {
             //
             // dispatch
             store.dispatch("mediaLibrary/loadMedia", {
-                teamId: props.team.id,
+                team: props.team,
                 page: currentClickedPage,
                 search_query: search_query.value,
             });
@@ -168,7 +168,7 @@ const handleDeleteImage = function (imageId) {
             store.commit("mediaLibrary/setCurrentImage", null);
             // dispatch
             store.dispatch("mediaLibrary/loadMedia", {
-                teamId: props.team.id,
+                team: props.team,
                 page: currentClickedPage,
                 search_query: search_query.value,
             });

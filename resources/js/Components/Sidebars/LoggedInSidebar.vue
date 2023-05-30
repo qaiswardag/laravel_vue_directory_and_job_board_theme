@@ -18,12 +18,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                 <span>Team:</span>
 
                 <Link
-                    :href="
-                        route(
-                            'user.teams.switch',
-                            $page.props.user.current_team
-                        )
-                    "
+                    :href="route('user.teams.switch')"
                     class="flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.switch'),
@@ -50,12 +45,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             >
                 <span>Role:</span>
                 <Link
-                    :href="
-                        route(
-                            'user.teams.switch',
-                            $page.props.user.current_team
-                        )
-                    "
+                    :href="route('user.teams.switch')"
                     class="text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.switch'),
@@ -80,12 +70,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                 <span>Team:</span>
 
                 <Link
-                    :href="
-                        route(
-                            'user.teams.switch',
-                            $page.props.user.current_team
-                        )
-                    "
+                    :href="route('user.teams.switch')"
                     class="flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.switch'),
@@ -109,12 +94,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                 <span>Team:</span>
 
                 <Link
-                    :href="
-                        route(
-                            'user.teams.create',
-                            $page.props.user.current_team
-                        )
-                    "
+                    :href="route('user.teams.create')"
                     class="flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.create'),
@@ -179,7 +159,12 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             "
         >
             <SideBarLink
-                :href="route('media.index', $page.props.user.current_team.id)"
+                :href="
+                    route(
+                        'media.index',
+                        $page.props.user.current_team.reference_id
+                    )
+                "
                 :active="route().current('media.index')"
             >
                 <svg

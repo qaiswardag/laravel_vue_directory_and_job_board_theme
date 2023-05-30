@@ -22,8 +22,17 @@ class MediaLibraryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Team $team, Request $request)
+    public function index($referenceId, Request $request)
     {
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => "Please try another route.", // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
         $this->authorize("can-read", $team);
 
         $images = $team
