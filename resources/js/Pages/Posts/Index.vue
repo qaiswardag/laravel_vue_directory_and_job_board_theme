@@ -28,7 +28,7 @@ const breadcrumbsLinks = [
         label: "All Posts",
         route: {
             name: "overview.posts.index",
-            parameters: [props.currentUserTeam],
+            parameters: [props.currentUserTeam.reference_id],
         },
     },
 ];
@@ -38,14 +38,14 @@ const routesArray = [
         label: "All Posts",
         route: {
             name: "overview.posts.index",
-            parameters: [props.currentUserTeam],
+            parameters: [props.currentUserTeam.reference_id],
         },
     },
     {
         label: "Create Post",
         route: {
             name: "overview.posts.create",
-            parameters: [props.currentUserTeam.id],
+            parameters: [props.currentUserTeam.reference_id],
         },
     },
 ];
@@ -187,7 +187,12 @@ onMounted(() => {
                 <Link
                     class="myPrimaryButton"
                     type="button"
-                    :href="route('overview.posts.create', currentUserTeam.id)"
+                    :href="
+                        route(
+                            'overview.posts.create',
+                            currentUserTeam.reference_id
+                        )
+                    "
                 >
                     Create Post
                 </Link>

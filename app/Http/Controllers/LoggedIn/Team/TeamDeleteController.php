@@ -65,8 +65,17 @@ class TeamDeleteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Team $team)
+    public function edit($referenceId)
     {
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => "Please try another route.", // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
         Gate::authorize("view", $team);
 
         return Inertia::render("Teams/TeamDelete/TeamDelete", [

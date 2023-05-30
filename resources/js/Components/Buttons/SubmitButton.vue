@@ -23,7 +23,6 @@ defineProps({
 });
 
 const emit = defineEmits(["firstButtonClick"]);
-// search anything modal button
 const firstButtonClick = function () {
     emit("firstButtonClick");
 };

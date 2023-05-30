@@ -79,7 +79,7 @@ Route::middleware([
             UserSessionsController::class,
             "show",
         ])->name("user.profile.security");
-        Route::get("/overview/posts/{team}", [
+        Route::get("/overview/posts/{referenceId}", [
             PostController::class,
             "index",
         ])->name("overview.posts.index");
@@ -111,12 +111,12 @@ Route::middleware([
     // "ensure.can.create.and.update", // editor, owner, administrator
 ])->group(function () {
     // posts
-    Route::get("/overview/posts/create/{team}", [
+    Route::get("/overview/posts/create/{referenceId}", [
         PostController::class,
         "create",
     ])->name("overview.posts.create");
 
-    Route::get("/overview/posts/store/{post}/{team}", [
+    Route::get("/overview/posts/store/{post}/{referenceId}", [
         PostController::class,
         "edit",
     ])->name("overview.posts.post.edit");

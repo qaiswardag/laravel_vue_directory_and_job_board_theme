@@ -59,7 +59,12 @@ const breadcrumbsLinks = [
                     <div class="mt-8">
                         <h3 class="text-lg font-normal">
                             <Link
-                                :href="route('team.update.information', team)"
+                                :href="
+                                    route(
+                                        'team.update.information',
+                                        team.reference_id
+                                    )
+                                "
                                 class="focus:outline-none"
                             >
                                 <span
@@ -118,7 +123,7 @@ const breadcrumbsLinks = [
                     <div class="mt-8">
                         <h3 class="text-lg font-normal">
                             <Link
-                                :href="route('team.members', team)"
+                                :href="route('team.members', team.reference_id)"
                                 class="focus:outline-none"
                             >
                                 <span
@@ -175,7 +180,7 @@ const breadcrumbsLinks = [
                     <div class="mt-8">
                         <h3 class="text-lg font-normal">
                             <Link
-                                :href="route('team.delete', team)"
+                                :href="route('team.delete', team.reference_id)"
                                 class="focus:outline-none"
                             >
                                 <span

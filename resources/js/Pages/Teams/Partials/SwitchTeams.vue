@@ -363,7 +363,7 @@ const switchTeam = function (team) {
                                                     :href="
                                                         route(
                                                             'team.update.information',
-                                                            team
+                                                            team.reference_id
                                                         )
                                                     "
                                                     class="myPrimaryButtonNoBackground"

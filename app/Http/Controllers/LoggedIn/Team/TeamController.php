@@ -49,21 +49,47 @@ class TeamController extends Controller
 
         $team = $creator->create($request->user(), $request->all());
 
-        // return $this->redirectPath($creator);
-
-        return redirect()->route("team.update.information", [
-            "team" => $team->load("owner"),
-        ]);
+        return redirect()
+            ->route("team.update.information", [
+                "referenceId" => $team->load("owner")->reference_id,
+            ])
+            ->with("success", "Team have been successfully created.");
     }
     /**
-     * Display the specified resource.
+     * Show the team management screen.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $teamId
+     * @return \Inertia\Response
      */
-    public function show()
+    public function show(Request $request, $referenceId)
     {
-        //
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => "Please try another route.", // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
+        Gate::authorize("view", $team);
+
+        return Jetstream::inertia()->render($request, "Teams/Show", [
+            "team" => $team->load("owner", "users", "teamInvitations"),
+            "availableRoles" => array_values(Jetstream::$roles),
+            "availablePermissions" => Jetstream::$permissions,
+            "defaultPermissions" => Jetstream::$defaultPermissions,
+            "permissions" => [
+                "canAddTeamMembers" => Gate::check("addTeamMember", $team),
+                "canDeleteTeam" => Gate::check("delete", $team),
+                "canRemoveTeamMembers" => Gate::check(
+                    "removeTeamMember",
+                    $team
+                ),
+                "canUpdateTeam" => Gate::check("update", $team),
+            ],
+        ]);
     }
 
     /**
@@ -72,14 +98,22 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Team $team)
+    public function edit($referenceId)
     {
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => "Please try another route.", // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
         Gate::authorize("view", $team);
 
         return Inertia::render(
             "Teams/UpdateTeamInformation/UpdateTeamInformation",
             [
-                // "team" => $team->load("owner", "users", "teamInvitations"),
                 "team" => $team->load("owner"),
             ]
         );

@@ -27,8 +27,17 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Team $team)
+    public function index(Request $request, $referenceId)
     {
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => "Please try another route.", // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
         $searchQuery = $request->input("search_query");
 
         // Check $searchQuery is an array
@@ -69,8 +78,17 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Team $team)
+    public function create($referenceId)
     {
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => "Please try another route.", // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
         $this->authorize("can-create-and-update", $team);
         return Inertia::render("Posts/CreatePost/CreatePost");
     }
@@ -148,7 +166,7 @@ class PostController extends Controller
         }
 
         // Return the current team that the user is on, rather than the team that the user is storing the post for.
-        $currentTeam = Auth::user()->currentTeam;
+        $currentTeam = Auth::user()->currentTeam->reference_id;
 
         return redirect()->route("overview.posts.index", $currentTeam);
     }
@@ -170,8 +188,17 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post, Team $team)
+    public function edit(Post $post, $referenceId)
     {
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => "Please try another route.", // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
         // Authorize the team that the user has selected to store the post for, rather than the team that the user is currently on.
         $this->authorize("can-create-and-update", $team);
 

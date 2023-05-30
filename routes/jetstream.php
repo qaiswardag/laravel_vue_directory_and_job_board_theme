@@ -103,8 +103,8 @@ Route::group(
                             TeamTeamController::class,
                             "store",
                         ])->name("teams.store");
-                        Route::get("/teams/{team}", [
-                            TeamController::class,
+                        Route::get("/teams/{referenceId}", [
+                            TeamTeamController::class,
                             "show",
                         ])->name("teams.show");
                         Route::put("/teams/{team}", [
@@ -161,12 +161,12 @@ Route::group(
                             );
                         })->name("user.teams.create");
 
-                        Route::get("/team/update/{team}", [
+                        Route::get("/team/update/{referenceId}", [
                             TeamTeamController::class,
                             "edit",
                         ])->name("team.update.information");
 
-                        Route::get("/team/members{team}", [
+                        Route::get("/team/members/{referenceId}", [
                             TeamTeamMemberController::class,
                             "index",
                         ])->name("team.members");

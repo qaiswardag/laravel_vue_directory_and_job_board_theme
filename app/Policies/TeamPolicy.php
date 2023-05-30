@@ -15,8 +15,6 @@ class TeamPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
-        // original
         return true;
     }
 
@@ -25,8 +23,6 @@ class TeamPolicy
      */
     public function view(User $user, Team $team): bool
     {
-        //
-        // original
         return $user->belongsToTeam($team);
     }
 
@@ -35,8 +31,6 @@ class TeamPolicy
      */
     public function create(User $user): bool
     {
-        //
-        // original
         return true;
     }
 
@@ -48,9 +42,6 @@ class TeamPolicy
         return $user->teamRole($team)->name == "Owner" ||
             $user->teamRole($team)->name == "Administrator" ||
             $user->teamRole($team)->name == "Editor";
-        //
-        // original
-        // return $user->ownsTeam($team);
     }
 
     /**
@@ -72,9 +63,6 @@ class TeamPolicy
     {
         return $user->teamRole($team)->name == "Owner" ||
             $user->teamRole($team)->name == "Administrator";
-        //
-        // original
-        // return $user->ownsTeam($team);
     }
 
     /**
@@ -84,9 +72,6 @@ class TeamPolicy
     {
         return $user->teamRole($team)->name == "Owner" ||
             $user->teamRole($team)->name == "Administrator";
-        //
-        // original
-        // return $user->ownsTeam($team);
     }
 
     /**
@@ -95,19 +80,7 @@ class TeamPolicy
     public function delete(User $user, Team $team): bool
     {
         return $user->teamRole($team)->name == "Owner";
-        //
-        // original
-        // return $user->ownsTeam($team);
     }
-
-    /**
-     * General actions
-     *
-     *
-     *
-     *
-     *
-     */
 
     /**
      * Determine whether the user can remove resource.

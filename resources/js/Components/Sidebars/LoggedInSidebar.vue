@@ -211,7 +211,7 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
                 :href="
                     route(
                         'overview.posts.index',
-                        $page.props.user.current_team.id
+                        $page.props.user.current_team.reference_id
                     )
                 "
                 :active="
@@ -245,7 +245,12 @@ import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
             "
         >
             <SideBarLink
-                :href="route('teams.show', $page.props.user.current_team)"
+                :href="
+                    route(
+                        'teams.show',
+                        $page.props.user.current_team.reference_id
+                    )
+                "
                 :active="
                     route().current('teams.show') ||
                     route().current('team.update.information') ||
