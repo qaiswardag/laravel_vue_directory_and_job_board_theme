@@ -86,7 +86,7 @@ Route::middleware([
 
         // media
         // media index api
-        Route::get("/overview/media/index/{referenceId}", [
+        Route::get("/overview/media/index/{team}", [
             LoggedInMediaLibraryController::class,
             "index",
         ])->name("overview.media.index");

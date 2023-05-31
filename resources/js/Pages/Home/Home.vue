@@ -6,7 +6,7 @@ import DefaultElement from "@/Components/Layouts/DefaultElement.vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/vue/24/outline";
 import { Head } from "@inertiajs/vue3";
-import SectionBorder from "@/Components/SectionBorder.vue";
+import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 
 const faqs = [
     {

@@ -1,6 +1,6 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
-import SectionBorder from "@/Components/SectionBorder.vue";
+import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import TeamMemberManager from "@/Pages/Teams/Partials/TeamMemberManager.vue";
 import { router } from "@inertiajs/vue3";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";

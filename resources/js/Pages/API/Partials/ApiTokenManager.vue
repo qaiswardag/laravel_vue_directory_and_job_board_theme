@@ -10,7 +10,7 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
-import SectionBorder from "@/Components/SectionBorder.vue";
+import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 
 const props = defineProps({

@@ -11,7 +11,7 @@ import TextInput from "@/Components/Forms/TextInput.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { Switch } from "@headlessui/vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import SectionBorder from "@/Components/SectionBorder.vue";
+import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 
 const props = defineProps({
     user: Object,
