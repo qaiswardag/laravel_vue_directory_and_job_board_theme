@@ -244,7 +244,7 @@ onMounted(() => {
                                             </div>
                                         </div>
                                         <span
-                                            class="flex flex-col items-left gap-1 myPrimaryParagraph"
+                                            class="flex flex-col items-left gap-1 myPrimaryParagraph font-medium"
                                         >
                                             <span>
                                                 {{ user.first_name }}

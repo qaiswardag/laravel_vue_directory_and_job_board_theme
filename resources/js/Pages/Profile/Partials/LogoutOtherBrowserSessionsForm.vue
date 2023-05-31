@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/Actions/ActionMessage.vue";
-import ActionSection from "@/Components/ActionSection.vue";
+import ActionSection from "@/Components/Actions/ActionSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";

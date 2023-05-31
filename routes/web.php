@@ -179,8 +179,8 @@ Route::middleware([])
             "users.show"
         );
         // posts
-        Route::get("/posts", [PostPostController::class, "index"])->name(
-            "posts"
+        Route::get("/blog", [PostPostController::class, "index"])->name(
+            "blog.index"
         );
         // unique post
         Route::get("/posts/{slug_id}/{slug}", [

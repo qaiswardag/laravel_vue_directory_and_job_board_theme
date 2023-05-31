@@ -1,5 +1,5 @@
 <script setup>
-import SectionTitle from "@/Components/SectionTitle.vue";
+import SectionTitle from "@/Components/Sections/SectionTitle.vue";
 
 defineProps({
     sidebarArea: {

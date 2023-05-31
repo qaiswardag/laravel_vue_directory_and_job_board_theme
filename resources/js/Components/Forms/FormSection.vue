@@ -1,6 +1,6 @@
 <script setup>
 import { computed, useSlots } from "vue";
-import SectionTitle from "../Sections/SectionTitle.vue";
+import SectionTitle from "@/Components/Sections/SectionTitle.vue";
 
 defineProps({
     sidebarArea: {

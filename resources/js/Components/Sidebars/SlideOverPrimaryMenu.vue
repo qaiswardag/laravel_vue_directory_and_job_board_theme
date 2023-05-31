@@ -13,11 +13,10 @@ import { ChevronRightIcon } from "@heroicons/vue/24/outline";
 // props
 const props = defineProps({
     open: {
-        required: true,
+        required: false,
     },
 });
 
-// emit
 const emit = defineEmits(["primaryMenuSlideOverButton"]);
 
 // button
@@ -27,21 +26,77 @@ const primaryMenuSlideOverButton = function () {
 
 const navigation = [
     {
-        name: "Platform",
-        current: false,
-        children: [{ name: "About us", href: "#" }],
+        label: "Dashboard",
+        route: {
+            name: "dashboard",
+            parameters: [],
+        },
     },
     {
-        name: "Resources",
-        current: false,
+        label: "Home",
+        route: {
+            name: "home",
+            parameters: [],
+        },
+    },
+    {
+        label: "Resources",
+        route: {
+            name: null,
+            parameters: [],
+        },
         children: [
-            { name: "Blog", href: "#" },
-            { name: "Help Center", href: "#" },
-            { name: "Users", href: "#" },
+            {
+                label: "Users",
+                route: {
+                    name: "users",
+                    parameters: [],
+                },
+            },
+            {
+                label: "Blog",
+                route: {
+                    name: "blog.index",
+                    parameters: [],
+                },
+            },
+            {
+                label: "Terms of Service",
+                route: {
+                    name: "terms.show",
+                    parameters: [],
+                },
+            },
+            {
+                label: "Privacy Policy",
+                route: {
+                    name: "policy.show",
+                    parameters: [],
+                },
+            },
         ],
     },
-    { name: "Blog", href: "#", current: false },
-    { name: "Help Center", href: "#", current: false },
+    {
+        label: "Blog",
+        route: {
+            name: "blog.index",
+            parameters: [],
+        },
+    },
+    {
+        label: "Login",
+        route: {
+            name: "login",
+            parameters: [],
+        },
+    },
+    {
+        label: "Register",
+        route: {
+            name: "register",
+            parameters: [],
+        },
+    },
 ];
 </script>
 
@@ -80,7 +135,7 @@ const navigation = [
                                                 class="flex items-center justify-between mb-4"
                                             >
                                                 <DialogTitle
-                                                    class="myPrimaryParagraph text-base rounded w-full py-2 italic"
+                                                    class="myPrimaryParagraph text-base rounded w-full py-4 font-medium"
                                                 >
                                                     Menu
                                                 </DialogTitle>
@@ -130,47 +185,68 @@ const navigation = [
                                                     <li>
                                                         <ul
                                                             role="list"
-                                                            class="-mx-2 space-y-1"
+                                                            class="-mx-2 space-y-2"
                                                         >
                                                             <li
                                                                 v-for="item in navigation"
-                                                                :key="item.name"
+                                                                :key="
+                                                                    item.label
+                                                                "
                                                             >
-                                                                <a
+                                                                <Link
+                                                                    class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md"
+                                                                    :class="[
+                                                                        route().current(
+                                                                            item
+                                                                                .route
+                                                                                ?.name
+                                                                        )
+                                                                            ? 'bg-myPrimaryLightGrayColor rounded-md'
+                                                                            : '',
+                                                                    ]"
                                                                     v-if="
                                                                         !item.children
                                                                     "
                                                                     :href="
-                                                                        item.href
+                                                                        route(
+                                                                            item
+                                                                                .route
+                                                                                .name,
+                                                                            item
+                                                                                .route
+                                                                                .parameters
+                                                                        )
                                                                     "
-                                                                    :class="[
-                                                                        item.current
-                                                                            ? 'bg-gray-50'
-                                                                            : 'hover:bg-gray-50',
-                                                                        'block p-2 myPrimaryParagraph text-base font-medium',
-                                                                    ]"
                                                                     >{{
-                                                                        item.name
-                                                                    }}</a
-                                                                >
+                                                                        item.label
+                                                                    }}
+                                                                </Link>
+
                                                                 <Disclosure
                                                                     as="div"
-                                                                    v-else
+                                                                    v-if="
+                                                                        item.children
+                                                                    "
                                                                     v-slot="{
                                                                         open,
                                                                     }"
                                                                 >
                                                                     <DisclosureButton
                                                                         :class="[
-                                                                            item.current
-                                                                                ? 'bg-gray-50'
-                                                                                : 'hover:bg-gray-50',
-                                                                            'flex items-center justify-between w-full text-left p-2 gap-x-3  myPrimaryParagraph text-base font-medium',
+                                                                            route().current(
+                                                                                item
+                                                                                    .route
+                                                                                    ?.name
+                                                                            )
+                                                                                ? 'hover:bg-myPrimaryLightGrayColor'
+                                                                                : '',
+                                                                            'flex items-center justify-between w-full text-left gap-x-3 py-3 pl-3 pr-1 rounded-md',
                                                                         ]"
                                                                     >
                                                                         {{
-                                                                            item.name
+                                                                            item.label
                                                                         }}
+
                                                                         <ChevronRightIcon
                                                                             :class="[
                                                                                 open
@@ -189,24 +265,42 @@ const navigation = [
                                                                         <li
                                                                             v-for="subItem in item.children"
                                                                             :key="
-                                                                                subItem.name
+                                                                                subItem
+                                                                                    .route
+                                                                                    .name
                                                                             "
                                                                         >
                                                                             <DisclosureButton
-                                                                                as="a"
-                                                                                :href="
-                                                                                    subItem.href
-                                                                                "
+                                                                                class="block w-full hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                                                 :class="[
-                                                                                    subItem.current
-                                                                                        ? 'bg-gray-50'
-                                                                                        : 'hover:bg-gray-50',
-                                                                                    'block py-2 pr-2 pl-9 text-sm myPrimaryParagraph text-base font-normal',
+                                                                                    route().current(
+                                                                                        subItem
+                                                                                            .route
+                                                                                            ?.name
+                                                                                    )
+                                                                                        ? 'bg-myPrimaryLightGrayColor rounded-md'
+                                                                                        : '',
                                                                                 ]"
-                                                                                >{{
-                                                                                    subItem.name
-                                                                                }}</DisclosureButton
                                                                             >
+                                                                                <Link
+                                                                                    class="block py-3 pl-3 pr-1"
+                                                                                    :href="
+                                                                                        route(
+                                                                                            subItem
+                                                                                                .route
+                                                                                                .name,
+
+                                                                                            subItem
+                                                                                                .route
+                                                                                                .parameters
+                                                                                        )
+                                                                                    "
+                                                                                >
+                                                                                    {{
+                                                                                        subItem.label
+                                                                                    }}
+                                                                                </Link>
+                                                                            </DisclosureButton>
                                                                         </li>
                                                                     </DisclosurePanel>
                                                                 </Disclosure>

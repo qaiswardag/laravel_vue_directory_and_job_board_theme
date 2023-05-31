@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import ActionSection from "@/Components/ActionSection.vue";
+import ActionSection from "@/Components/Actions/ActionSection.vue";
 import DangerButton from "@/Components/Buttons/DangerButton.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";

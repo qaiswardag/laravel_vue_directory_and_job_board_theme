@@ -8,59 +8,226 @@ import FormSection from "@/Components/Forms/FormSection.vue";
 import SearchBarWithOptions from "@/Components/SearchBars/SearchBarWithOptions.vue";
 import { onMounted, ref } from "vue";
 
+import { AdjustmentsHorizontalIcon } from "@heroicons/vue/24/outline";
+import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
+import DefaultElement from "@/Components/Layouts/DefaultElement.vue";
+import { Head } from "@inertiajs/vue3";
+import SectionBorder from "@/Components/Sections/SectionBorder.vue";
+
 defineProps({
     posts: {
-        required: true,
+        required: false,
     },
 });
 </script>
 <template>
-    <GuestsLayout title="Posts">
+    <GuestsLayout>
+        <Head title="Blog" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Posts</h2>
-        </template>
-        <div class="myPrimarySection">
-            <h1 class="my-8 text-4xl text-center">Posts</h1>
-
-            <div class="grid grid-cols-4 myPrimaryGap">
-                <div
-                    class="p-4 bg-white rounded min-h-[20rem]"
-                    v-for="post in posts.data"
-                    :key="post.id"
-                >
-                    <Link
-                        :href="route('posts.show', [post.slug_id, post.slug])"
-                        class="myTertiaryHeader"
-                    >
-                        {{ post.title }}
-                    </Link>
-
-                    <!-- team details - start -->
-                    <div v-if="post.team.length !== 0">
-                        <div v-if="post.team.name">
-                            <p class="myPrimaryParagraph">Team:</p>
-                            <p class="myPrimaryParagraph">
-                                {{ post.team.name }}
-                            </p>
-                        </div>
-                        <div v-if="post.team.logo">
-                            <img
-                                class="inset-0 -z-10 w-16 h-16 object-cover rounded-md"
-                                alt="cover image"
-                                :src="`/storage/uploads/${post.team.logo}`"
-                            />
-                        </div>
-                    </div>
-
-                    <p class="my-12">show author: {{ post.show_author }}</p>
-                    <p class="my-2">author: {{ post.author }}</p>
-                    <p class="my-12 break-all whitespace-pre-line">
-                        post: {{ post }}
-                    </p>
-                    <!-- team details - end -->
-                </div>
+            <div class="myPrimaryMainPageHeaderParagraph">
+                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Blog</h1>
+                <p class="myPrimaryMainPageParagraphNotLoggedIn">
+                    Experience the epitome of elegance with our Exquisite Admin
+                    & Dashboard. Exquisite Admin & Dashboard Empowered with
+                    Advanced Team Management and Media Library
+                </p>
             </div>
-        </div>
-        <Pagination :links="posts.links"></Pagination>
+        </template>
+
+        <DefaultElement :descriptionArea="true" class="bg-gray-50">
+            <template #title>Latest Users</template>
+            <template #description>
+                As new users join, they bring innovative ideas, unique skills,
+                and diverse experiences that enrich our platform. Connect with
+                them, explore their work, and celebrate the fresh energy they
+                contribute to our collaborative space.
+            </template>
+            <template #content>
+                <ul
+                    role="list"
+                    class="myPrimarySection mx-auto grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
+                >
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Michael Foster
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Co-Founder / CTO</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Dries Vincent
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            Business Relations
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Lindsay Walton
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            Front-end Developer
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Courtney Henry
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Designer</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Tom Cook
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            Director of Product
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Whitney Francis
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Copywriter</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Leonard Krasner
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Senior Designer</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Floyd Miles
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            Principal Designer
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Emily Selman
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            VP, User Experience
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Kristin Watson
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            VP, Human Resources
+                        </p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1505840717430-882ce147ef2d?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Emma Dorsey
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Senior Developer</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1509783236416-c9ad59bae472?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Alicia Bell
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Junior Copywriter</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1507101105822-7472b28e22ac?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Jenny Wilson
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Studio Artist</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Anna Roberts
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">Partner, Creative</p>
+                    </li>
+                    <li>
+                        <img
+                            class="mx-auto h-24 w-24 rounded-full"
+                            src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
+                            alt=""
+                        />
+                        <h3 class="myPrimaryParagraph font-normal mt-2">
+                            Benjamin Russel
+                        </h3>
+                        <p class="myPrimaryParagraph mt-2">
+                            Director, Print Operations
+                        </p>
+                    </li>
+                </ul>
+            </template>
+        </DefaultElement>
     </GuestsLayout>
 </template>

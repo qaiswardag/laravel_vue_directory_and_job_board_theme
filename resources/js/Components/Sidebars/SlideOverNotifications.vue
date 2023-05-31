@@ -93,9 +93,9 @@ const notificationsSlideOverButton = function () {
                                                 class="flex items-center justify-between"
                                             >
                                                 <DialogTitle
-                                                    class="mySecondaryHeader"
+                                                    class="myPrimaryParagraph text-base rounded w-full py-4 font-medium"
                                                 >
-                                                    Latest 15 notifications
+                                                    Latest notifications
                                                 </DialogTitle>
                                                 <div
                                                     class="ml-3 flex h-7 items-center"

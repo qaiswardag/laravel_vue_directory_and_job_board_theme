@@ -17,34 +17,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::latest()
-            ->when($request->query("search_query"), function ($query, $term) {
-                $query
-                    ->where("title", "LIKE", "%" . $term . "%")
-                    ->orWhere("content", "LIKE", "%" . $term . "%");
-            })
-            ->when(
-                Auth::user() && Auth::user()->superadmin === 1,
-                function ($query) {
-                    // if the logged-in user is a superadmin, include all users
-                    return $query;
-                },
-                function ($query) {
-                    // if the logged-in user is not a superadmin, exclude users with public = 0
-                    return $query->where(function ($query) {
-                        $query
-                            ->where("public", "!=", 0)
-                            ->orWhere("id", "=", Auth::id()); // include the current user
-                    });
-                }
-            )
-            ->select("first_name", "last_name", "username", "public")
-            ->paginate(10);
-
-        $users->appends($request->all());
-
         return Inertia::render("Guests/User/Index", [
-            "users" => $users,
+            "users" => null,
         ]);
     }
 

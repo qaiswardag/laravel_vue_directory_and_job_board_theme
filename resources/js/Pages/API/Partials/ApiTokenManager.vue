@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/Actions/ActionMessage.vue";
-import ActionSection from "@/Components/ActionSection.vue";
+import ActionSection from "@/Components/Actions/ActionSection.vue";
 import Checkbox from "@/Components/Forms/Checkbox.vue";
 import DangerButton from "@/Components/Buttons/DangerButton.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";

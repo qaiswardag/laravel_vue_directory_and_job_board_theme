@@ -1,5 +1,5 @@
 <script setup>
-import ActionSection from "@/Components/ActionSection.vue";
+import ActionSection from "@/Components/Actions/ActionSection.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";

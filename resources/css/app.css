@@ -179,7 +179,7 @@
     */
 
     .myPrimaryButtonNoBackground {
-        @apply myPrimaryParagraph font-normal  text-myPrimaryBrandColor 
+        @apply myPrimaryParagraph font-medium  text-myPrimaryBrandColor 
         focus:outline-none cursor-pointer;
     }
     /*

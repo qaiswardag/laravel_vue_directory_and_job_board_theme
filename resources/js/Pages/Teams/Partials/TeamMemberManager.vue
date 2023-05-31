@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/Actions/ActionMessage.vue";
-import ActionSection from "@/Components/ActionSection.vue";
+import ActionSection from "@/Components/Actions/ActionSection.vue";
 import DangerButton from "@/Components/Buttons/DangerButton.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
@@ -663,7 +663,9 @@ const displayAbleRole = (role) => {
                                                         <span
                                                             class="flex flex-col items-left gap-1 myPrimaryParagraph"
                                                         >
-                                                            <span>
+                                                            <span
+                                                                class="font-medium"
+                                                            >
                                                                 {{
                                                                     user.first_name
                                                                 }}
