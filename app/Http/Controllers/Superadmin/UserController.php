@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize("superadmin");
+        $this->authorize("superadmin-can-read");
 
         $searchQuery = $request->input("search_query");
 
@@ -142,13 +142,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $this->authorize("superadmin");
-
-        sleep(1);
+        $this->authorize("superadmin-can-destroy");
 
         $user->delete();
 
-        //
         return redirect()
             ->route("admin.users")
             ->with("success", "Successfully deleted User with id: {$user->id}");

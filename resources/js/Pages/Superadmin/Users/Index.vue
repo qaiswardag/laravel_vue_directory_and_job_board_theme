@@ -211,23 +211,14 @@ onMounted(() => {
                                             <div
                                                 class="h-12 w-12 flex-shrink-0"
                                             >
-                                                <Link
-                                                    :href="
-                                                        route(
-                                                            'users.show',
-                                                            user.id
-                                                        )
+                                                <img
+                                                    class="object-cover w-12 h-12 rounded-full"
+                                                    :src="`/storage/${user.profile_photo_path}`"
+                                                    :alt="
+                                                        user.first_name +
+                                                        user.last_name
                                                     "
-                                                >
-                                                    <img
-                                                        class="object-cover w-12 h-12 rounded-full"
-                                                        :src="`/storage/${user.profile_photo_path}`"
-                                                        :alt="
-                                                            user.first_name +
-                                                            user.last_name
-                                                        "
-                                                    />
-                                                </Link>
+                                                />
                                             </div>
                                         </div>
 
@@ -237,41 +228,28 @@ onMounted(() => {
                                                 user.profile_photo_path === null
                                             "
                                         >
-                                            <Link
-                                                :href="
-                                                    route('users.show', user.id)
-                                                "
+                                            <div
+                                                class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                             >
-                                                <div
-                                                    class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                                >
-                                                    {{
-                                                        user.first_name
-                                                            .charAt(0)
-                                                            .toUpperCase()
-                                                    }}
-                                                    {{
-                                                        user.last_name
-                                                            .charAt(0)
-                                                            .toUpperCase()
-                                                    }}
-                                                </div>
-                                            </Link>
+                                                {{
+                                                    user.first_name
+                                                        .charAt(0)
+                                                        .toUpperCase()
+                                                }}
+                                                {{
+                                                    user.last_name
+                                                        .charAt(0)
+                                                        .toUpperCase()
+                                                }}
+                                            </div>
                                         </div>
                                         <span
                                             class="flex flex-col items-left gap-1 myPrimaryParagraph"
                                         >
-                                            <Link
-                                                class="myPrimaryLink"
-                                                :href="
-                                                    route('users.show', user.id)
-                                                "
-                                            >
-                                                <span>
-                                                    {{ user.first_name }}
-                                                    {{ user.last_name }}
-                                                </span>
-                                            </Link>
+                                            <span>
+                                                {{ user.first_name }}
+                                                {{ user.last_name }}
+                                            </span>
                                         </span>
                                     </div>
                                 </td>

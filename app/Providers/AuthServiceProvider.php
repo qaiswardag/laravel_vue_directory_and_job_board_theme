@@ -96,9 +96,30 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
-        // superadmin gate for CRUD
-        Gate::define("superadmin", function (User $user) {
-            return $user->superadmin === 1 ? true : null;
+        // superadmin gates for CRUD
+        // reader
+        // editor
+        // admin
+
+        Gate::define("superadmin-can-read", function (User $user) {
+            // Authorization logic for 'superadmin-can-read' permission
+            return $user->superadmin !== null &&
+                ($user->superadmin->role === "admin" ||
+                    $user->superadmin->role === "editor" ||
+                    $user->superadmin->role === "reader");
+        });
+
+        Gate::define("superadmin-can-create-and-update", function (User $user) {
+            // Authorization logic for 'superadmin-can-create-and-update' permission
+            return $user->superadmin !== null &&
+                ($user->superadmin->role === "admin" ||
+                    $user->superadmin->role === "editor");
+        });
+
+        Gate::define("superadmin-can-destroy", function (User $user) {
+            // Authorization logic for 'superadmin-can-destroy' permission
+            return $user->superadmin !== null &&
+                $user->superadmin->role === "admin";
         });
     }
 }

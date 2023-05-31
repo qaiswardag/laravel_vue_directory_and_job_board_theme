@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Post\Post;
+use App\Models\Superadmin\Superadmin;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -63,6 +64,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $appends = ["profile_photo_url"];
+
+    protected $with = ["superadmin"];
+
+    public function superadmin()
+    {
+        return $this->belongsTo(Superadmin::class, "id");
+    }
 
     /**
      * Generate a unique username for the model.

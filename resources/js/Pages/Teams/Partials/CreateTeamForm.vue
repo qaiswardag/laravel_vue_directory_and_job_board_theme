@@ -201,13 +201,6 @@ const createTeam = () => {
                 </div>
                 <InputError :message="form.errors.public" />
             </div>
-
-            <!--  -->
-            <!--  -->
-            <!--  -->
-            <!--  -->
-            <!--  -->
-            <!--  -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">

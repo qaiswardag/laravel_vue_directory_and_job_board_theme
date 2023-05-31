@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\Post;
+use App\Models\Superadmin\Superadmin;
 use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Models\TeamUser;
@@ -30,7 +31,6 @@ class DatabaseSeeder extends Seeder
             "email" => "jd@myself.ae",
             "public" => true,
             "current_team_id" => 1,
-            "superadmin" => false,
             "password" => Hash::make("123456"),
         ]);
 
@@ -89,7 +89,6 @@ class DatabaseSeeder extends Seeder
             "email" => "qw@myself.ae",
             "public" => true,
             "current_team_id" => 1,
-            "superadmin" => true,
             "password" => Hash::make("123456"),
         ]);
         // Marilyn Monroe
@@ -246,6 +245,10 @@ class DatabaseSeeder extends Seeder
 
         // Create 100 users from id 101 to 201 as user with id 101 is already created
         User::factory(100)->create();
+        Superadmin::factory()->create([
+            "user_id" => 1, // John Doe
+            "role" => "reader", // reader, editor or admin
+        ]);
 
         // add users to John's Team
         foreach (range(102, 162) as $num) {
