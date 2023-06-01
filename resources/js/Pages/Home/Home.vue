@@ -59,9 +59,7 @@ const faqs = [
                 operations and enhance productivity.
             </template>
             <template #content>
-                <div
-                    class="grid grid-cols-1 lg:gap-x-28 gap-x-8 lg:gap-y-20 gap-y-16 lg:grid-cols-12"
-                >
+                <div class="grid grid-cols-1 lg:gap-16 lg:grid-cols-12">
                     <img
                         class="w-full object-cover col-span-8"
                         src="https://media-www.sqspcdn.com/images/pages/homepage/jun-2022/how-to/create-a-website-1500w.jpg"
@@ -117,9 +115,7 @@ const faqs = [
                 contribute to our collaborative space.
             </template>
             <template #content>
-                <div
-                    class="grid grid-cols-1 lg:gap-x-28 gap-x-8 lg:gap-y-20 gap-y-16 lg:grid-cols-12"
-                >
+                <div class="grid grid-cols-1 lg:gap-16 lg:grid-cols-12">
                     <dl
                         class="divide-y divide-myPrimaryMediumGrayColor lg:col-span-4"
                     >
