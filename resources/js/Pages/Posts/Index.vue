@@ -275,9 +275,7 @@ onMounted(() => {
                                 Post Id
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
-                            <th scope="col" class="myPrimaryTableTh">
-                                User Id
-                            </th>
+
                             <th scope="col" class="myPrimaryTableTh">
                                 Created by
                             </th>
@@ -293,14 +291,8 @@ onMounted(() => {
                             <th scope="col" class="myPrimaryTableTh">
                                 Created Date
                             </th>
-                            <th scope="col" class="myPrimaryTableTh">
-                                Edit
-                                <span>Edit</span>
-                            </th>
-                            <th scope="col" class="myPrimaryTableTh">
-                                Delete
-                                <span>Delete</span>
-                            </th>
+                            <th scope="col" class="myPrimaryTableTh">Edit</th>
+                            <th scope="col" class="myPrimaryTableTh">Delete</th>
                         </tr>
                     </thead>
                     <tbody class="myPrimaryTableTBody">
@@ -371,14 +363,21 @@ onMounted(() => {
                                 <td class="myPrimaryTableTBodyTd">
                                     {{ post.id }}
                                 </td>
-                                <td class="myPrimaryTableTBodyTd">
-                                    {{ post.tags }}
+                                <td
+                                    class="myPrimaryTableTBodyTd flex flex-wrap justify-start items-center gap-2"
+                                >
+                                    <p
+                                        v-for="tag in post.tags &&
+                                        post.tags.split(',')"
+                                        :key="tag"
+                                        class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                    >
+                                        {{ tag }}
+                                    </p>
                                 </td>
+
                                 <td class="myPrimaryTableTBodyTd">
-                                    {{ post.user_id }}
-                                </td>
-                                <td class="myPrimaryTableTBodyTd">
-                                    Author here
+                                    Created by
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
@@ -391,10 +390,10 @@ onMounted(() => {
                                     {{ post.trash }}
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
-                                    update date here
+                                    Update date
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
-                                    created date here
+                                    Created date
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
