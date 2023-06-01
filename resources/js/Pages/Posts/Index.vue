@@ -118,7 +118,10 @@ const deletePost = (postId) => {
 // handle action
 const handleEdit = function (postId) {
     router.get(
-        route("overview.posts.post.edit", [postId, props.currentUserTeam.id])
+        route("overview.posts.post.edit", [
+            postId,
+            props.currentUserTeam.reference_id,
+        ])
     );
 };
 
@@ -128,12 +131,15 @@ const searchForm = useForm({
 });
 
 const handleSearch = function () {
-    searchForm.get(route("overview.posts.index", [props.currentUserTeam.id]), {
-        preserveScroll: true,
-        onSuccess: () => {},
-        onError: (err) => {},
-        onFinish: () => {},
-    });
+    searchForm.get(
+        route("overview.posts.index", [props.currentUserTeam.reference_id]),
+        {
+            preserveScroll: true,
+            onSuccess: () => {},
+            onError: (err) => {},
+            onFinish: () => {},
+        }
+    );
 };
 
 onMounted(() => {
