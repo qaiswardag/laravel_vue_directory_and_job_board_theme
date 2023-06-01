@@ -98,10 +98,10 @@ const faqs = [
                     multiple security layers and advanced features like team
                     Management and Media Library.
                 </p>
-                <div>
+                <div class="flex justify-center">
                     <div
                         v-if="$page.props.user === null"
-                        class="mt-8 flex gap-2 items-center justify-center"
+                        class="mt-8 flex gap-2 items-center"
                     >
                         <Link :href="route('login')" class="myPrimaryButton">
                             Login
