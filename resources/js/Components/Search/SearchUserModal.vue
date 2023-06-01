@@ -378,7 +378,7 @@ onMounted(() => {
                                                 <span
                                                     class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                                 >
-                                                    <span class="font-normal">
+                                                    <span class="font-medium">
                                                         {{ user.first_name }}
                                                         {{ user.last_name }}
                                                     </span>
@@ -518,7 +518,7 @@ onMounted(() => {
                                     <span
                                         class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                     >
-                                        <span>
+                                        <span class="font-medium">
                                             {{ user.first_name }}
                                             {{ user.last_name }}
                                         </span>

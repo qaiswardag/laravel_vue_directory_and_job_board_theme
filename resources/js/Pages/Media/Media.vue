@@ -28,7 +28,7 @@ const breadcrumbsLinks = [
         label: "Media",
         route: {
             name: "media.index",
-            parameters: props.currentUserTeam.id,
+            parameters: props.currentUserTeam.reference_id,
         },
     },
 ];

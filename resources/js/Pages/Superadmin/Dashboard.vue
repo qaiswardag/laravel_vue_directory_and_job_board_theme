@@ -30,13 +30,6 @@ const actions = [
         iconForeground: "text-myPrimaryBrandColor",
         iconBackground: "bg-gray-50",
     },
-    {
-        title: "Teams",
-        href: "admin.users",
-        icon: CheckBadgeIcon,
-        iconForeground: "text-myPrimaryBrandColor",
-        iconBackground: "bg-gray-50",
-    },
 ];
 </script>
 

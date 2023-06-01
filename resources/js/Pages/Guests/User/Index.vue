@@ -34,7 +34,7 @@ defineProps({
             </div>
         </template>
 
-        <DefaultElement :descriptionArea="true" class="bg-gray-50">
+        <FullWidthElement :descriptionArea="true" class="bg-gray-50">
             <template #title>Latest Users</template>
             <template #description>
                 As new users join, they bring innovative ideas, unique skills,
@@ -228,6 +228,6 @@ defineProps({
                     </li>
                 </ul>
             </template>
-        </DefaultElement>
+        </FullWidthElement>
     </GuestsLayout>
 </template>

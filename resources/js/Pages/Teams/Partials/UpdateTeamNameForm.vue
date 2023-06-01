@@ -490,7 +490,7 @@ const notificationsModalButton = function () {
                                 <span
                                     class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                 >
-                                    <span>
+                                    <span class="font-medium">
                                         {{ $page.props.team.owner.first_name }}
                                         {{ $page.props.team.owner.last_name }}
                                     </span>

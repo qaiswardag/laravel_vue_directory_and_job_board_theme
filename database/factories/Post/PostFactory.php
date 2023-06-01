@@ -27,15 +27,15 @@ class PostFactory extends Factory
             ->first();
 
         return [
-            "team_id" => $randomUserFromTeam->id, // Qais Wardag, Shaun Pelling, Mie Mortensens Team etc.
-            "user_id" => $randomUserFromTeam->user_id, // Qais Wardag, Shaun Pelling or Mie Mortensen,
+            "team_id" => $randomUserFromTeam->id,
+            "user_id" => $randomUserFromTeam->user_id,
             "show_author" => rand(0, 1),
             "trash" => rand(0, 1),
             "title" => $title,
             "slug" => $slug,
             "content" => $this->faker->sentence(rand(20, 60), false),
             "published" => rand(0, 1),
-            "tags" => "Summer,Dubai,Event,FashionShow",
+            "tags" => "Summer,Event,Art,Design",
             "slug_id" => rand(100000, 1000000),
         ];
     }
