@@ -312,7 +312,9 @@ class PostController extends Controller
         // Return the current team that the user is on, rather than the team that the user is storing the post for.
         $currentTeam = Auth::user()->currentTeam;
 
-        return redirect()->route("overview.posts.index", $currentTeam);
+        return redirect()->route("overview.posts.index", [
+            "referenceId" => $team->reference_id,
+        ]);
     }
 
     /**

@@ -75,7 +75,7 @@ const handleDelete = function (postId, post) {
     titleModal.value = `Delete ${post.title}?`;
     descriptionModal.value = `Are you sure you want to delete post with title ${post.title}?`;
     firstButtonModal.value = "Close";
-    secondButtonModal.value = "Do something";
+    secondButtonModal.value = null;
     thirdButtonModal.value = "Delete Post";
 
     // handle click
@@ -84,10 +84,10 @@ const handleDelete = function (postId, post) {
         modalShowDeletePost.value = false;
     };
     // handle click
-    secondModalButtonFunction.value = function () {
-        // handle show modal for unique content
-        modalShowDeletePost.value = false;
-    };
+    // secondModalButtonFunction.value = function () {
+    //     // handle show modal for unique content
+    //     modalShowDeletePost.value = false;
+    // };
     // handle click
     thirdModalButtonFunction.value = function () {
         deletePost(postId);
@@ -329,6 +329,7 @@ onMounted(() => {
 
                                 <td class="myPrimaryTableTBodyTd">
                                     <Link
+                                        v-if="false"
                                         :href="
                                             route('posts.show', [
                                                 post.slug_id,
@@ -343,6 +344,12 @@ onMounted(() => {
                                             {{ post.title }}
                                         </span>
                                     </Link>
+
+                                    <span
+                                        class="text-myPrimaryLinkColor font-medium"
+                                    >
+                                        {{ post.title }}
+                                    </span>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
