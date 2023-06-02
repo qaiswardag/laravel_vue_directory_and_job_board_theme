@@ -17,8 +17,9 @@ return new class extends Migration {
                 ->references("id")
                 ->on("users")
                 ->onDelete("cascade")
-                ->constrained();
-            $table->string("role");
+                ->constrained()
+                ->uniqid();
+            $table->enum("role", ["admin", "editor", "reader"]);
             $table->timestamps();
         });
     }

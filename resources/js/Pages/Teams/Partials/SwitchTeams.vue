@@ -4,6 +4,7 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { useStore } from "vuex";
+import { CheckIcon, PencilIcon } from "@heroicons/vue/24/outline";
 
 // store
 const store = useStore();
@@ -252,20 +253,9 @@ const switchTeam = function (team) {
                                                                         .current_team_id
                                                                 "
                                                             >
-                                                                <svg
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    fill="none"
-                                                                    viewBox="0 0 24 24"
-                                                                    stroke-width="1.5"
-                                                                    stroke="currentColor"
-                                                                    class="w-5 h-5 text-myPrimaryBrandColor"
-                                                                >
-                                                                    <path
-                                                                        stroke-linecap="round"
-                                                                        stroke-linejoin="round"
-                                                                        d="M4.5 12.75l6 6 9-13.5"
-                                                                    />
-                                                                </svg>
+                                                                <CheckIcon
+                                                                    class="h-5 w-5"
+                                                                ></CheckIcon>
                                                             </div>
                                                         </button>
                                                     </div>
@@ -279,7 +269,7 @@ const switchTeam = function (team) {
                                                             ? 'bg-green-100'
                                                             : 'bg-red-100 text-myPrimaryErrorColor'
                                                     "
-                                                    class="inline-flex rounded-full px-2 font-normal leading-5 text-green-800"
+                                                    class="inline-flex rounded-full px-2 myPrimaryParagraph font-medium text-green-800"
                                                     >{{
                                                         team.public
                                                             ? "Public"
@@ -318,11 +308,29 @@ const switchTeam = function (team) {
                                                                 .length > 0
                                                         "
                                                     >
+                                                        <span
+                                                            class="myPrimaryParagraph text-xs"
+                                                            v-if="
+                                                                team.id ===
+                                                                $page.props.user
+                                                                    .current_team_id
+                                                            "
+                                                            >Current Team
+                                                        </span>
+                                                        <span
+                                                            class="myPrimaryParagraph text-xs"
+                                                            v-if="
+                                                                team.id !==
+                                                                $page.props.user
+                                                                    .current_team_id
+                                                            "
+                                                            >Switch to
+                                                        </span>
                                                         <button
-                                                            class="myPrimaryButton flex items-center myPrimaryGap py-2 cursor-default"
+                                                            class="myPrimaryButton"
                                                             :class="{
-                                                                'bg-gray-600 hover:bg-gray-700 focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus-visible:ring-2 focus-visible:ring-gray-600 cursor-pointer':
-                                                                    team.id !==
+                                                                'mySecondaryButton flex items-center myPrimaryGap py-2 cursor-no-drop focus:ring-0':
+                                                                    team.id ===
                                                                     $page.props
                                                                         .user
                                                                         .current_team_id,
@@ -339,27 +347,54 @@ const switchTeam = function (team) {
                                                                         .current_team_id
                                                                 "
                                                             >
-                                                                <svg
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    fill="none"
-                                                                    viewBox="0 0 24 24"
-                                                                    stroke-width="1.5"
-                                                                    stroke="currentColor"
-                                                                    class="w-5 h-5 text-white"
-                                                                >
-                                                                    <path
-                                                                        stroke-linecap="round"
-                                                                        stroke-linejoin="round"
-                                                                        d="M4.5 12.75l6 6 9-13.5"
-                                                                    />
-                                                                </svg>
+                                                                <CheckIcon
+                                                                    class="w-5 h-5"
+                                                                ></CheckIcon>
                                                             </div>
                                                         </button>
                                                     </div>
                                                 </form>
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
+                                                <form
+                                                    v-if="
+                                                        $page.props.user
+                                                            .all_teams.length >
+                                                            0 &&
+                                                        team.id !==
+                                                            $page.props.user
+                                                                .current_team_id
+                                                    "
+                                                    @submit.prevent="
+                                                        handleSwitchToTeam(
+                                                            team,
+                                                            $page.props.user
+                                                                .current_team_id
+                                                        )
+                                                    "
+                                                >
+                                                    <div
+                                                        class="flex items-center myPrimaryGap justify-start"
+                                                    >
+                                                        <button
+                                                            class="myPrimaryButtonNoBackground text-myPrimaryDarkGrayColor flex items-center gap-2"
+                                                        >
+                                                            <div>
+                                                                Switch to Team
+                                                                for Edit
+                                                            </div>
+                                                        </button>
+                                                    </div>
+                                                </form>
                                                 <Link
+                                                    v-if="
+                                                        $page.props.user
+                                                            .all_teams.length >
+                                                            0 &&
+                                                        team.id ===
+                                                            $page.props.user
+                                                                .current_team_id
+                                                    "
                                                     :href="
                                                         route(
                                                             'team.update.information',
@@ -368,20 +403,9 @@ const switchTeam = function (team) {
                                                     "
                                                     class="myPrimaryButtonNoBackground"
                                                 >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                        stroke-width="1.5"
-                                                        stroke="currentColor"
+                                                    <PencilIcon
                                                         class="w-5 h-5"
-                                                    >
-                                                        <path
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                                                        ></path>
-                                                    </svg>
+                                                    ></PencilIcon>
                                                 </Link>
                                             </td>
                                         </tr>

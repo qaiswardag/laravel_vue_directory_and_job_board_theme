@@ -12,6 +12,7 @@ use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Guests\User\UserController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
+use App\Http\Controllers\Superadmin\SuperadminManageRoles;
 use App\Http\Middleware\isSuperAdmin;
 use App\Models\Post\Post;
 use App\Models\Team;
@@ -214,6 +215,19 @@ Route::middleware([
         SuperadminUserController::class,
         "destroy",
     ])->name("admin.users.user.destroy");
+
+    Route::post("/admin/users/user/create-superadmin/{user}", [
+        SuperadminManageRoles::class,
+        "create",
+    ])->name("admin.users.user.create.superadmin");
+    Route::put("/admin/users/user/update-superadmin/{user}", [
+        SuperadminManageRoles::class,
+        "update",
+    ])->name("admin.users.user.update.superadmin");
+    Route::delete("/admin/users/user/update-superadmin/{user}", [
+        SuperadminManageRoles::class,
+        "destroy",
+    ])->name("admin.users.user.remove.superadmin");
 });
 
 // Pages for test

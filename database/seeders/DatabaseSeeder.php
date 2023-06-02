@@ -249,6 +249,10 @@ class DatabaseSeeder extends Seeder
             "user_id" => 1, // John Doe
             "role" => "reader", // reader, editor or admin
         ]);
+        Superadmin::factory()->create([
+            "user_id" => 101, // Qais Wardag
+            "role" => "editor", // reader, editor or admin
+        ]);
 
         // add users to John's Team
         foreach (range(102, 162) as $num) {

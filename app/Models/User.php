@@ -69,7 +69,7 @@ class User extends Authenticatable
 
     public function superadmin()
     {
-        return $this->belongsTo(Superadmin::class, "id");
+        return $this->hasOne(Superadmin::class, "user_id");
     }
 
     /**

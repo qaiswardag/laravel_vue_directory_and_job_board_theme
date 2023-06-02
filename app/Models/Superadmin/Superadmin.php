@@ -9,4 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Superadmin extends Model
 {
     use HasFactory;
+
+    // Define the fillable attributes
+    protected $fillable = ["role", "user_id"];
 }

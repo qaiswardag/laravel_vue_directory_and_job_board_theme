@@ -6,8 +6,40 @@ import { router, useForm, usePage } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import SearchBarWithOptions from "@/Components/SearchBars/SearchBarWithOptions.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
+import InputError from "@/Components/Forms/InputError.vue";
+
+import {
+    RadioGroup,
+    RadioGroupDescription,
+    RadioGroupLabel,
+    RadioGroupOption,
+} from "@headlessui/vue";
+import {
+    ArrowsRightLeftIcon,
+    MinusIcon,
+    PlusIcon,
+} from "@heroicons/vue/24/outline";
+
+const superadminRoles = ref([
+    {
+        name: "reader",
+        description: "Reader users have the ability only to read.",
+    },
+    {
+        name: "editor",
+        description:
+            "Editor users have the ability to read, create, and update. However, Editor can not create or update Superadmin.",
+    },
+    {
+        name: "admin",
+        description: "Administrator users can perform any action.",
+    },
+]);
+
+const selectedRole = ref(superadminRoles[0]);
+
 const breadcrumbsLinks = [
     {
         label: "Admin Dashboard",
@@ -20,6 +52,9 @@ const breadcrumbsLinks = [
 ];
 
 const props = defineProps({
+    user: {
+        required: true,
+    },
     users: {
         required: true,
     },
@@ -36,6 +71,8 @@ const props = defineProps({
     },
 });
 
+const modalShowRemoveSuperadmin = ref(false);
+const modalShowCreateUpdateSuperadmin = ref(false);
 const modalShowDeleteUser = ref(false);
 
 // modal content
@@ -51,6 +88,169 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
+const handleRemoveSuperadmin = (
+    userIdForNewSuperadmin,
+    userFirstName,
+    userLastName
+) => {
+    modalShowRemoveSuperadmin.value = true;
+
+    // set modal standards
+    typeModal.value = "delete";
+    gridColumnModal.value = 2;
+    titleModal.value = "Remove Superadmin?";
+    descriptionModal.value = `Remove ${userFirstName} ${userLastName} as Superadmin.`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Remove";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowRemoveSuperadmin.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowRemoveSuperadmin.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        superadminUserform.user_id = userIdForNewSuperadmin;
+        removeSuperadminRole(userIdForNewSuperadmin);
+    };
+    // end modal
+};
+const handleUpdateSuperadmin = (
+    userIdForNewSuperadmin,
+    userFirstName,
+    userLastName
+) => {
+    modalShowCreateUpdateSuperadmin.value = true;
+
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = "Update Superadmin?";
+    descriptionModal.value = `Update ${userFirstName} ${userLastName} as Superadmin to ${selectedRole}.`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Save";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowCreateUpdateSuperadmin.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowCreateUpdateSuperadmin.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        superadminUserform.user_id = userIdForNewSuperadmin;
+        updateSuperadminRole(userIdForNewSuperadmin);
+    };
+    // end modal
+};
+const handleCreateSuperadmin = (userIdForNewSuperadmin) => {
+    modalShowCreateUpdateSuperadmin.value = true;
+
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = "Create Superadmin?";
+    descriptionModal.value = `Create ${userFirstName} ${userLastName} as Superadmin with ${selectedRole}`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Save";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowCreateUpdateSuperadmin.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowCreateUpdateSuperadmin.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        superadminUserform.user_id = userIdForNewSuperadmin;
+        createSuperadminRole(userIdForNewSuperadmin);
+    };
+    // end modal
+};
+
+const superadminUserform = useForm({
+    user_id: null,
+    role: "",
+});
+
+watch(selectedRole, (newValue) => {
+    superadminUserform.role = newValue.name;
+});
+
+const updateSuperadminRole = (userIdForNewSuperadmin) => {
+    superadminUserform.put(
+        route("admin.users.user.update.superadmin", [userIdForNewSuperadmin]),
+        {
+            errorBag: "createSuperadmin",
+            preserveScroll: true,
+            onSuccess: () => {
+                modalShowCreateUpdateSuperadmin.value = false;
+                console.log("log success:");
+            },
+            onError: (err) => {
+                console.log("log error:", err);
+            },
+            onFinish: () => {
+                //
+            },
+        }
+    );
+};
+const removeSuperadminRole = (userIdForNewSuperadmin) => {
+    superadminUserform.delete(
+        route("admin.users.user.remove.superadmin", [userIdForNewSuperadmin]),
+        {
+            errorBag: "createSuperadmin",
+            preserveScroll: true,
+            onSuccess: () => {
+                modalShowRemoveSuperadmin.value = false;
+                console.log("log success:");
+            },
+            onError: (err) => {
+                console.log("log error:", err);
+            },
+            onFinish: () => {
+                //
+            },
+        }
+    );
+};
+
+const createSuperadminRole = (userIdForNewSuperadmin) => {
+    superadminUserform.post(
+        route("admin.users.user.create.superadmin", [userIdForNewSuperadmin]),
+        {
+            errorBag: "createSuperadmin",
+            preserveScroll: true,
+            onSuccess: () => {
+                modalShowCreateUpdateSuperadmin.value = false;
+                console.log("log success:");
+            },
+            onError: (err) => {
+                console.log("log error:", err);
+            },
+            onFinish: () => {
+                //
+            },
+        }
+    );
+};
 // handle action
 const handleDelete = function (id, user) {
     modalShowDeleteUser.value = true;
@@ -76,7 +276,7 @@ const handleDelete = function (id, user) {
     };
     // handle click
     thirdModalButtonFunction.value = function () {
-        deletePost(id);
+        deleteUser(id);
     };
     // end modal
 };
@@ -84,7 +284,7 @@ const handleDelete = function (id, user) {
 const deleteUserForm = useForm({});
 
 // form action
-const deletePost = (userId) => {
+const deleteUser = (userId) => {
     deleteUserForm.delete(route("admin.users.user.destroy", userId), {
         preserveScroll: true,
         onSuccess: () => (modalShowDeleteUser.value = false),
@@ -136,6 +336,206 @@ onMounted(() => {
 
 <template>
     <LoggedInLayout title="Manage Users">
+        <DynamicModal
+            :show="modalShowCreateUpdateSuperadmin"
+            :type="typeModal"
+            :disabled="superadminUserform.processing"
+            disabledWhichButton="thirdButton"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
+        >
+            <header></header>
+            <main>
+                <RadioGroup v-model="selectedRole">
+                    <RadioGroupLabel class="sr-only"
+                        >Privacy setting</RadioGroupLabel
+                    >
+                    <div class="-space-y-px rounded-md bg-white">
+                        <RadioGroupOption
+                            as="template"
+                            v-for="(setting, settingIdx) in superadminRoles"
+                            :key="setting.name"
+                            :value="setting"
+                            v-slot="{ checked, active }"
+                        >
+                            <div
+                                :class="[
+                                    settingIdx === 0
+                                        ? 'rounded-tl-md rounded-tr-md'
+                                        : '',
+                                    settingIdx === superadminRoles.length - 1
+                                        ? 'rounded-bl-md rounded-br-md'
+                                        : '',
+                                    checked
+                                        ? 'z-10 border-myPrimaryLinkColor bg-myPrimaryLightGrayColor'
+                                        : 'border-gray-200',
+                                    'relative flex cursor-pointer border p-4 focus:outline-none',
+                                ]"
+                            >
+                                <span
+                                    :class="[
+                                        checked
+                                            ? 'bg-myPrimaryLinkColor border-transparent'
+                                            : 'bg-white border-gray-300',
+                                        active
+                                            ? 'ring-2 ring-offset-2 ring-myPrimaryLinkColor'
+                                            : '',
+                                        'mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded-full border flex items-center justify-center',
+                                    ]"
+                                    aria-hidden="true"
+                                >
+                                    <span
+                                        class="rounded-full bg-white w-1.5 h-1.5"
+                                    />
+                                </span>
+                                <span class="ml-3 flex flex-col">
+                                    <RadioGroupLabel
+                                        as="span"
+                                        :class="[
+                                            checked
+                                                ? 'text-myPrimaryDarkGrayColor'
+                                                : 'text-myPrimaryDarkGrayColor',
+                                            'myPrimaryParagraph',
+                                        ]"
+                                        >{{ setting.name }}</RadioGroupLabel
+                                    >
+                                    <RadioGroupDescription
+                                        as="span"
+                                        :class="[
+                                            checked
+                                                ? 'text-myPrimaryLinkColor'
+                                                : 'text-myPrimaryMediumGrayColor',
+                                            'block text-sm',
+                                        ]"
+                                        >{{
+                                            setting.description
+                                        }}</RadioGroupDescription
+                                    >
+                                </span>
+                            </div>
+                        </RadioGroupOption>
+                    </div>
+                </RadioGroup>
+                <InputError :message="superadminUserform.errors.role" />
+                <InputError :message="superadminUserform.errors.user_id" />
+            </main>
+        </DynamicModal>
+        <DynamicModal
+            :show="modalShowCreateUpdateSuperadmin"
+            :type="typeModal"
+            :disabled="superadminUserform.processing"
+            disabledWhichButton="thirdButton"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
+        >
+            <header></header>
+            <main>
+                <RadioGroup v-model="selectedRole">
+                    <RadioGroupLabel class="sr-only"
+                        >Privacy setting</RadioGroupLabel
+                    >
+                    <div class="-space-y-px rounded-md bg-white">
+                        <RadioGroupOption
+                            as="template"
+                            v-for="(setting, settingIdx) in superadminRoles"
+                            :key="setting.name"
+                            :value="setting"
+                            v-slot="{ checked, active }"
+                        >
+                            <div
+                                :class="[
+                                    settingIdx === 0
+                                        ? 'rounded-tl-md rounded-tr-md'
+                                        : '',
+                                    settingIdx === superadminRoles.length - 1
+                                        ? 'rounded-bl-md rounded-br-md'
+                                        : '',
+                                    checked
+                                        ? 'z-10 border-myPrimaryLinkColor bg-myPrimaryLightGrayColor'
+                                        : 'border-gray-200',
+                                    'relative flex cursor-pointer border p-4 focus:outline-none',
+                                ]"
+                            >
+                                <span
+                                    :class="[
+                                        checked
+                                            ? 'bg-myPrimaryLinkColor border-transparent'
+                                            : 'bg-white border-gray-300',
+                                        active
+                                            ? 'ring-2 ring-offset-2 ring-myPrimaryLinkColor'
+                                            : '',
+                                        'mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded-full border flex items-center justify-center',
+                                    ]"
+                                    aria-hidden="true"
+                                >
+                                    <span
+                                        class="rounded-full bg-white w-1.5 h-1.5"
+                                    />
+                                </span>
+                                <span class="ml-3 flex flex-col">
+                                    <RadioGroupLabel
+                                        as="span"
+                                        :class="[
+                                            checked
+                                                ? 'text-myPrimaryDarkGrayColor'
+                                                : 'text-myPrimaryDarkGrayColor',
+                                            'myPrimaryParagraph',
+                                        ]"
+                                        >{{ setting.name }}</RadioGroupLabel
+                                    >
+                                    <RadioGroupDescription
+                                        as="span"
+                                        :class="[
+                                            checked
+                                                ? 'text-myPrimaryLinkColor'
+                                                : 'text-myPrimaryMediumGrayColor',
+                                            'block text-sm',
+                                        ]"
+                                        >{{
+                                            setting.description
+                                        }}</RadioGroupDescription
+                                    >
+                                </span>
+                            </div>
+                        </RadioGroupOption>
+                    </div>
+                </RadioGroup>
+                <InputError :message="superadminUserform.errors.role" />
+                <InputError :message="superadminUserform.errors.user_id" />
+            </main>
+        </DynamicModal>
+        <DynamicModal
+            :show="modalShowRemoveSuperadmin"
+            :type="typeModal"
+            :disabled="superadminUserform.processing"
+            disabledWhichButton="thirdButton"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
+        >
+            <header></header>
+            <main></main>
+        </DynamicModal>
         <DynamicModal
             :show="modalShowDeleteUser"
             :type="typeModal"
@@ -189,6 +589,9 @@ onMounted(() => {
                             <th scope="col" class="myPrimaryTableTh">Status</th>
                             <th scope="col" class="myPrimaryTableTh">
                                 User id
+                            </th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Superadmin role
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Edit</th>
                             <th scope="col" class="myPrimaryTableTh">Delete</th>
@@ -266,7 +669,7 @@ onMounted(() => {
                                                 ? 'bg-green-100'
                                                 : 'bg-red-100 text-myPrimaryErrorColor'
                                         "
-                                        class="inline-flex rounded-full px-2 font-normal leading-5 text-green-800"
+                                        class="inline-flex rounded-full px-2 myPrimaryParagraph font-medium text-green-800"
                                         >{{
                                             user.public ? "Public" : "Privat"
                                         }}</span
@@ -276,9 +679,73 @@ onMounted(() => {
                                 <td class="myPrimaryTableTBodyTd">
                                     {{ user.id }}
                                 </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    <template v-if="user.superadmin !== null">
+                                        <div class="flex gap-2">
+                                            <button
+                                                @click="
+                                                    handleUpdateSuperadmin(
+                                                        user.id
+                                                    )
+                                                "
+                                                class="myPrimaryButton flex items-center gap-1 text-xs"
+                                            >
+                                                <ArrowsRightLeftIcon
+                                                    class="w-4 h-4"
+                                                ></ArrowsRightLeftIcon>
+                                                <p>
+                                                    Update
+                                                    {{ user.superadmin.role }}
+                                                </p>
+                                            </button>
+                                            <button
+                                                @click="
+                                                    handleRemoveSuperadmin(
+                                                        user.id,
+                                                        user.first_name,
+                                                        user.last_name
+                                                    )
+                                                "
+                                                class="myPrimaryDeleteButton flex items-center gap-1 text-xs"
+                                            >
+                                                <MinusIcon
+                                                    class="w-4 h-4"
+                                                ></MinusIcon>
+                                                <p>
+                                                    Remove
+                                                    {{ user.superadmin.role }}
+                                                </p>
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-if="user.superadmin === null">
+                                        <button
+                                            @click="
+                                                handleCreateSuperadmin(
+                                                    user.id,
+                                                    user.first_name,
+                                                    user.last_name
+                                                )
+                                            "
+                                            class="mySecondaryButton flex items-center gap-1 text-xs"
+                                        >
+                                            <PlusIcon
+                                                class="w-4 h-4"
+                                            ></PlusIcon>
+                                            <p>Add Superadmin</p>
+                                        </button>
+                                    </template>
+                                </td>
                                 <td class="myPrimaryTableTBodyTd">
                                     <button
-                                        @click="handleEdit(user.id)"
+                                        @click="
+                                            handleEdit(
+                                                user.id,
+                                                user.first_name,
+                                                user.last_name
+                                            )
+                                        "
                                         type="button"
                                         class="myPrimaryButtonNoBackground"
                                     >
@@ -298,6 +765,7 @@ onMounted(() => {
                                         </svg>
                                     </button>
                                 </td>
+
                                 <td class="myPrimaryTableTBodyTd">
                                     <SubmitButton
                                         :ButtonStyleDelete="true"
