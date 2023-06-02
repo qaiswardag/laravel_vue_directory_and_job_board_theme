@@ -17,6 +17,7 @@ import {
     RadioGroupOption,
 } from "@headlessui/vue";
 import {
+    ArrowPathRoundedSquareIcon,
     ArrowsRightLeftIcon,
     MinusIcon,
     PlusIcon,
@@ -500,7 +501,12 @@ onMounted(() => {
                                                 : 'text-myPrimaryDarkGrayColor',
                                             'myPrimaryParagraph',
                                         ]"
-                                        >{{ setting.name }}</RadioGroupLabel
+                                        >{{
+                                            setting.name
+                                                .charAt(0)
+                                                .toUpperCase() +
+                                            setting.name.slice(1)
+                                        }}</RadioGroupLabel
                                     >
                                     <RadioGroupDescription
                                         as="span"
@@ -698,9 +704,18 @@ onMounted(() => {
                                                 "
                                                 class="myPrimaryButton flex items-center gap-1 text-xs"
                                             >
-                                                Current Role:
+                                                <ArrowPathRoundedSquareIcon
+                                                    class="h-4 w-4"
+                                                ></ArrowPathRoundedSquareIcon>
                                                 <p>
-                                                    {{ user.superadmin.role }}
+                                                    {{
+                                                        user.superadmin.role
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                        user.superadmin.role.slice(
+                                                            1
+                                                        )
+                                                    }}
                                                 </p>
                                             </button>
                                             <button
