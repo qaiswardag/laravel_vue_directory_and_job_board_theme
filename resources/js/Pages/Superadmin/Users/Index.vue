@@ -126,13 +126,14 @@ const handleUpdateSuperadmin = (
     userFirstName,
     userLastName
 ) => {
+    console.log("er:", userFirstName);
     modalShowCreateUpdateSuperadmin.value = true;
 
     // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = "Update Superadmin?";
-    descriptionModal.value = `Update ${userFirstName} ${userLastName} as Superadmin to ${selectedRole}.`;
+    descriptionModal.value = `Update ${userFirstName} ${userLastName} as Superadmin.`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Save";
@@ -154,14 +155,18 @@ const handleUpdateSuperadmin = (
     };
     // end modal
 };
-const handleCreateSuperadmin = (userIdForNewSuperadmin) => {
+const handleCreateSuperadmin = (
+    userIdForNewSuperadmin,
+    userFirstName,
+    userLastName
+) => {
     modalShowCreateUpdateSuperadmin.value = true;
 
     // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = "Create Superadmin?";
-    descriptionModal.value = `Create ${userFirstName} ${userLastName} as Superadmin with ${selectedRole}`;
+    descriptionModal.value = `Create ${userFirstName} ${userLastName} as Superadmin`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Save";
@@ -686,16 +691,15 @@ onMounted(() => {
                                             <button
                                                 @click="
                                                     handleUpdateSuperadmin(
-                                                        user.id
+                                                        user.id,
+                                                        user.first_name,
+                                                        user.last_name
                                                     )
                                                 "
                                                 class="myPrimaryButton flex items-center gap-1 text-xs"
                                             >
-                                                <ArrowsRightLeftIcon
-                                                    class="w-4 h-4"
-                                                ></ArrowsRightLeftIcon>
+                                                Current Role:
                                                 <p>
-                                                    Update
                                                     {{ user.superadmin.role }}
                                                 </p>
                                             </button>
@@ -712,10 +716,7 @@ onMounted(() => {
                                                 <MinusIcon
                                                     class="w-4 h-4"
                                                 ></MinusIcon>
-                                                <p>
-                                                    Remove
-                                                    {{ user.superadmin.role }}
-                                                </p>
+                                                Remove
                                             </button>
                                         </div>
                                     </template>
