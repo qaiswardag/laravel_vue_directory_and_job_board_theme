@@ -3,6 +3,7 @@
 use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
+use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
 use App\Http\Controllers\LoggedIn\Post\PostController;
 use App\Http\Controllers\Superadmin\DashboardController;
@@ -65,9 +66,15 @@ Route::middleware([
 ])
     // group of pages
     ->group(function () {
-        Route::get("/dashboard", function () {
-            return Inertia::render("Dashboard/Dashboard");
-        })->name("dashboard");
+        Route::get("overview/dashboard/index/{team}", [
+            DashboardDashboardController::class,
+            "index",
+        ])->name("dashboard.index");
+        Route::get("/dashboard", [
+            DashboardDashboardController::class,
+            "show",
+        ])->name("dashboard");
+
         Route::get("/user/profile/update", function () {
             return Inertia::render("Profile/ProfileUpdate/ProfileUpdate");
         })->name("user.profile.update");
