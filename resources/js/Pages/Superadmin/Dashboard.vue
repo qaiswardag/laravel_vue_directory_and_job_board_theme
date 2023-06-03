@@ -80,7 +80,7 @@ const actions = [
                                         $page.props.user.profile_photo_path ===
                                             null
                                     "
-                                    class="w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                    class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                 >
                                     {{
                                         $page.props.user.first_name

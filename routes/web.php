@@ -2,6 +2,7 @@
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
+use App\Http\Controllers\Api\Internal\LoggedIn\DashboardStatsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
 use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
@@ -67,10 +68,10 @@ Route::middleware([
 ])
     // group of pages
     ->group(function () {
-        Route::get("overview/dashboard/index/{team}", [
-            DashboardDashboardController::class,
-            "index",
-        ])->name("dashboard.index");
+        Route::get("/dashboard/stats/{teamId}", [
+            DashboardStatsController::class,
+            "show",
+        ])->name("user.dashboard.stats");
         Route::get("/dashboard", [
             DashboardDashboardController::class,
             "show",

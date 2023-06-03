@@ -404,7 +404,7 @@
 }
 
 *::-webkit-scrollbar-track {
-    background: white;
+    background: transparent;
     border-radius: 4px;
 }
 

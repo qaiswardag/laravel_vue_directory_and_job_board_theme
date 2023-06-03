@@ -2,14 +2,14 @@ import { createStore } from "vuex";
 import user from "./modules/user";
 import attachedUsers from "./modules/attached-users";
 import mediaLibrary from "./modules/media-library";
-import userTeamDashboard from "./modules/user-team-dashboard";
+import userDashboard from "./modules/user-dashboard";
 
 const store = createStore({
     modules: {
         user: user,
         attachedUsers: attachedUsers,
         mediaLibrary: mediaLibrary,
-        userTeamDashboard: userTeamDashboard,
+        userDashboard: userDashboard,
     },
 });
 

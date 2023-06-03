@@ -15,10 +15,7 @@ class DashboardController extends Controller
      */
     public function index(Team $team)
     {
-        MediaLibrary::where("team_id", $team->id)
-            ->latest()
-            ->take(12)
-            ->get();
+        //
     }
 
     /**

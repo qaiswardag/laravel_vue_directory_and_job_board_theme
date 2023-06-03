@@ -409,7 +409,7 @@ const handleDeleteImage = function (imageId) {
                                                         getCurrentImage.isError ===
                                                             false
                                                     "
-                                                    class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                    class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer"
                                                 >
                                                     <div
                                                         class="flex items-center justify-center pt-12"
@@ -447,7 +447,7 @@ const handleDeleteImage = function (imageId) {
                                                         target="_blank"
                                                     >
                                                         <img
-                                                            class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                                                            class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer"
                                                             :src="`/storage/uploads/${getCurrentImage.currentImage.mediaLibrary.medium_path}`"
                                                             alt="image"
                                                         />

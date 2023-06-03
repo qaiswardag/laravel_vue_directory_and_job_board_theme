@@ -67,7 +67,7 @@ const breadcrumbsLinks = [
                                             $page.props.team.owner
                                                 .profile_photo_path === null
                                         "
-                                        class="w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                        class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                     >
                                         {{
                                             $page.props.team.owner.first_name
