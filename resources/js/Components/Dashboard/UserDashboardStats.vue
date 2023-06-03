@@ -195,7 +195,7 @@ onMounted(() => {
                                 v-for="file in getDashboardStats.fetchedData
                                     .latestMedia"
                                 :key="file.id"
-                                class="border border-myPrimaryLightGrayColor rounded bg-gray-100"
+                                class="rounded"
                             >
                                 <div
                                     class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
@@ -205,20 +205,6 @@ onMounted(() => {
                                         alt="Image"
                                         class="w-full pointer-events-none object-cover group-hover:opacity-75"
                                     />
-                                    <dl
-                                        class="myPrimaryParagraph text-xs mt-2 border-b border-myPrimaryLightGrayColor divide-y"
-                                    >
-                                        <div class="p-2">
-                                            <div
-                                                class="py-3 flex justify-between items-center"
-                                            >
-                                                <dt class="">Size</dt>
-                                                <dd class="">
-                                                    {{ file.size }} KB
-                                                </dd>
-                                            </div>
-                                        </div>
-                                    </dl>
                                 </div>
                             </li>
                         </ul>
