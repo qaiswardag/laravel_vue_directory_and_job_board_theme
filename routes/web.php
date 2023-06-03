@@ -68,7 +68,7 @@ Route::middleware([
 ])
     // group of pages
     ->group(function () {
-        Route::get("/dashboard/stats/{teamId}", [
+        Route::get("/dashboard/stats/{teamId?}", [
             DashboardStatsController::class,
             "show",
         ])->name("user.dashboard.stats");
