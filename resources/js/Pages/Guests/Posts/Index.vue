@@ -11,7 +11,6 @@ import { onMounted, ref } from "vue";
 import { AdjustmentsHorizontalIcon } from "@heroicons/vue/24/outline";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import DefaultElement from "@/Components/Layouts/DefaultElement.vue";
-import { Head } from "@inertiajs/vue3";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 
 defineProps({

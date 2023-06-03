@@ -93,7 +93,8 @@ const handleMediaLibrary = function (imageID) {
 </script>
 
 <template>
-    <LoggedInLayout title="Media">
+    <LoggedInLayout>
+        <Head title="Media" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Media</h2>
         </template>

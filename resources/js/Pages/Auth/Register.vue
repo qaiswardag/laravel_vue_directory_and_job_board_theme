@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import AuthenticationCard from "@/Components/Cards/AuthenticationCard.vue";
 import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vue";
 import Checkbox from "@/Components/Forms/Checkbox.vue";

@@ -1,7 +1,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { Head, router } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
 import {
     CodeBracketIcon,

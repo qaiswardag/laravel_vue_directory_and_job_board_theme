@@ -124,7 +124,7 @@ Route::middleware([
         "create",
     ])->name("overview.posts.create");
 
-    Route::get("/overview/posts/store/{post}/{referenceId}", [
+    Route::get("/overview/posts/post/{post}/{referenceId}", [
         PostController::class,
         "edit",
     ])->name("overview.posts.post.edit");

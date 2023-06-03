@@ -24,7 +24,8 @@ const currentUserDetails = ref(false);
 </script>
 
 <template>
-    <LoggedInLayout title="Dashboard">
+    <LoggedInLayout>
+        <Head title="Dashboard" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Dashboard</h2>
         </template>

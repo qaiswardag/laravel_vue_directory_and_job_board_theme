@@ -1,6 +1,6 @@
 <script setup>
 import { nextTick, ref } from "vue";
-import { Head, useForm } from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import AuthenticationCard from "@/Components/Cards/AuthenticationCard.vue";
 import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vue";
 import InputError from "@/Components/Forms/InputError.vue";

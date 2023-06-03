@@ -2,7 +2,6 @@
 import { Link } from "@inertiajs/vue3";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
-import { Head } from "@inertiajs/vue3";
 
 const props = defineProps({
     status: {

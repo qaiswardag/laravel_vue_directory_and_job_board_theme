@@ -31,7 +31,8 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout title="Update Post">
+    <LoggedInLayout>
+        <Head title="Update Post" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Update Post</h2>
         </template>

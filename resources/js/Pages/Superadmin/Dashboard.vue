@@ -34,7 +34,8 @@ const actions = [
 </script>
 
 <template>
-    <LoggedInLayout title="Manage teæms">
+    <LoggedInLayout>
+        <Head title="Dashboard" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Super Admininistrator</h2>
         </template>

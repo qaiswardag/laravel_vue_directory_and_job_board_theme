@@ -26,7 +26,8 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout title="Profile Update">
+    <LoggedInLayout>
+        <Head title="Profile Update" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Profile Update</h2>
         </template>

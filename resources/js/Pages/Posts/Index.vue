@@ -150,7 +150,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <LoggedInLayout title="overview Posts">
+    <LoggedInLayout>
+        <Head title="Posts" />
         <DynamicModal
             :show="modalShowDeletePost"
             :type="typeModal"

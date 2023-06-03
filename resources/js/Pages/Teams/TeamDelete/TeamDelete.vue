@@ -25,9 +25,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout title="Team Delete">
+    <LoggedInLayout>
+        <Head title="Delete Team" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Team Delete</h2>
+            <h2 class="myPrimaryMainPageHeader">Delete Team</h2>
         </template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

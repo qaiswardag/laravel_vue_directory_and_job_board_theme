@@ -71,7 +71,6 @@ const thirdModalButtonFunction = ref(null);
 // Check if the user has a role other than 'reader' for this team
 const userTeamsWithoutReaderRole = props.user.all_teams.filter((team) => {
     if (team.membership !== undefined && team.membership.role === "reader") {
-        console.log("kooom here");
         return team.membership.role !== "reader";
     }
 

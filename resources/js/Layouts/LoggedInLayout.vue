@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { Head, router } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
 import Banner from "@/Components/Banners/Banner.vue";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
@@ -38,7 +38,7 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 defineProps({
     title: {
-        required: true,
+        required: false,
     },
 });
 
@@ -56,11 +56,11 @@ const sidebarOpen = ref(false);
 </script>
 
 <template>
-    <Head>
+    <!-- head-key makes sure to only add one meta key -->
+    <!-- <Head>
         <title>{{ title }}</title>
-        <!-- head-key makes sure to only add one meta key -->
         <meta type="description" content="myself" head-key="description" />
-    </Head>
+    </Head> -->
     <Banner />
     <Flash :flash="$page.props.flash"></Flash>
 

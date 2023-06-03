@@ -18,7 +18,8 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout title="Create Team">
+    <LoggedInLayout>
+        <Head title="Create Team" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Create Team</h2>
         </template>

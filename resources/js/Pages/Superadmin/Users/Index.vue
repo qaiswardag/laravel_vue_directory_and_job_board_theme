@@ -23,24 +23,6 @@ import {
     PlusIcon,
 } from "@heroicons/vue/24/outline";
 
-const superadminRoles = ref([
-    {
-        name: "reader",
-        description: "Reader users have the ability only to read.",
-    },
-    {
-        name: "editor",
-        description:
-            "Editor users have the ability to read, create, and update. However, Editor can not create or update Superadmin.",
-    },
-    {
-        name: "admin",
-        description: "Administrator users can perform any action.",
-    },
-]);
-
-const selectedRole = ref(superadminRoles[0]);
-
 const breadcrumbsLinks = [
     {
         label: "Admin Dashboard",
@@ -72,6 +54,28 @@ const props = defineProps({
     },
 });
 
+const superadminRoles = ref([
+    {
+        name: "reader",
+        description: "Reader users have the ability only to read.",
+    },
+    {
+        name: "editor",
+        description:
+            "Editor users have the ability to read, create, and update. However, Editor can not create or update Superadmin.",
+    },
+    {
+        name: "admin",
+        description: "Administrator users can perform any action.",
+    },
+]);
+
+const selectedRole = ref(superadminRoles[0]);
+
+watch(selectedRole, (newValue) => {
+    superadminUserform.role = newValue.name;
+});
+
 const modalShowRemoveSuperadmin = ref(false);
 const modalShowCreateUpdateSuperadmin = ref(false);
 const modalShowDeleteUser = ref(false);
@@ -88,6 +92,11 @@ const thirdButtonModal = ref(null);
 const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
+
+const superadminUserform = useForm({
+    user_id: null,
+    role: "",
+});
 
 const handleRemoveSuperadmin = (
     userIdForNewSuperadmin,
@@ -127,7 +136,6 @@ const handleUpdateSuperadmin = (
     userFirstName,
     userLastName
 ) => {
-    console.log("er:", userFirstName);
     modalShowCreateUpdateSuperadmin.value = true;
 
     // set modal standards
@@ -190,14 +198,22 @@ const handleCreateSuperadmin = (
     // end modal
 };
 
-const superadminUserform = useForm({
-    user_id: null,
-    role: "",
-});
-
-watch(selectedRole, (newValue) => {
-    superadminUserform.role = newValue.name;
-});
+const createSuperadminRole = (userIdForNewSuperadmin) => {
+    superadminUserform.post(
+        route("admin.users.user.create.superadmin", [userIdForNewSuperadmin]),
+        {
+            errorBag: "createSuperadmin",
+            preserveScroll: true,
+            onSuccess: () => {
+                modalShowCreateUpdateSuperadmin.value = false;
+            },
+            onError: (err) => {},
+            onFinish: () => {
+                //
+            },
+        }
+    );
+};
 
 const updateSuperadminRole = (userIdForNewSuperadmin) => {
     superadminUserform.put(
@@ -207,11 +223,8 @@ const updateSuperadminRole = (userIdForNewSuperadmin) => {
             preserveScroll: true,
             onSuccess: () => {
                 modalShowCreateUpdateSuperadmin.value = false;
-                console.log("log success:");
             },
-            onError: (err) => {
-                console.log("log error:", err);
-            },
+            onError: (err) => {},
             onFinish: () => {
                 //
             },
@@ -226,11 +239,8 @@ const removeSuperadminRole = (userIdForNewSuperadmin) => {
             preserveScroll: true,
             onSuccess: () => {
                 modalShowRemoveSuperadmin.value = false;
-                console.log("log success:");
             },
-            onError: (err) => {
-                console.log("log error:", err);
-            },
+            onError: (err) => {},
             onFinish: () => {
                 //
             },
@@ -238,25 +248,6 @@ const removeSuperadminRole = (userIdForNewSuperadmin) => {
     );
 };
 
-const createSuperadminRole = (userIdForNewSuperadmin) => {
-    superadminUserform.post(
-        route("admin.users.user.create.superadmin", [userIdForNewSuperadmin]),
-        {
-            errorBag: "createSuperadmin",
-            preserveScroll: true,
-            onSuccess: () => {
-                modalShowCreateUpdateSuperadmin.value = false;
-                console.log("log success:");
-            },
-            onError: (err) => {
-                console.log("log error:", err);
-            },
-            onFinish: () => {
-                //
-            },
-        }
-    );
-};
 // handle action
 const handleDelete = function (id, user) {
     modalShowDeleteUser.value = true;
@@ -301,9 +292,7 @@ const deleteUser = (userId) => {
     });
 };
 
-const handleEdit = function (userId) {
-    console.log("edit user. user id:", userId);
-};
+const handleEdit = function (userId) {};
 
 // handle search
 const handleSearch = function () {
@@ -341,7 +330,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <LoggedInLayout title="Manage Users">
+    <LoggedInLayout>
+        <Head title="Manage Users" />
         <DynamicModal
             :show="modalShowCreateUpdateSuperadmin"
             :type="typeModal"
@@ -433,102 +423,7 @@ onMounted(() => {
                 <InputError :message="superadminUserform.errors.user_id" />
             </main>
         </DynamicModal>
-        <DynamicModal
-            :show="modalShowCreateUpdateSuperadmin"
-            :type="typeModal"
-            :disabled="superadminUserform.processing"
-            disabledWhichButton="thirdButton"
-            :gridColumnAmount="gridColumnModal"
-            :title="titleModal"
-            :description="descriptionModal"
-            :firstButtonText="firstButtonModal"
-            :secondButtonText="secondButtonModal"
-            :thirdButtonText="thirdButtonModal"
-            @firstModalButtonFunction="firstModalButtonFunction"
-            @secondModalButtonFunction="secondModalButtonFunction"
-            @thirdModalButtonFunction="thirdModalButtonFunction"
-        >
-            <header></header>
-            <main>
-                <RadioGroup v-model="selectedRole">
-                    <RadioGroupLabel class="sr-only"
-                        >Privacy setting</RadioGroupLabel
-                    >
-                    <div class="-space-y-px rounded-md bg-white">
-                        <RadioGroupOption
-                            as="template"
-                            v-for="(setting, settingIdx) in superadminRoles"
-                            :key="setting.name"
-                            :value="setting"
-                            v-slot="{ checked, active }"
-                        >
-                            <div
-                                :class="[
-                                    settingIdx === 0
-                                        ? 'rounded-tl-md rounded-tr-md'
-                                        : '',
-                                    settingIdx === superadminRoles.length - 1
-                                        ? 'rounded-bl-md rounded-br-md'
-                                        : '',
-                                    checked
-                                        ? 'z-10 border-myPrimaryLinkColor bg-myPrimaryLightGrayColor'
-                                        : 'border-gray-200',
-                                    'relative flex cursor-pointer border p-4 focus:outline-none',
-                                ]"
-                            >
-                                <span
-                                    :class="[
-                                        checked
-                                            ? 'bg-myPrimaryLinkColor border-transparent'
-                                            : 'bg-white border-gray-300',
-                                        active
-                                            ? 'ring-2 ring-offset-2 ring-myPrimaryLinkColor'
-                                            : '',
-                                        'mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded-full border flex items-center justify-center',
-                                    ]"
-                                    aria-hidden="true"
-                                >
-                                    <span
-                                        class="rounded-full bg-white w-1.5 h-1.5"
-                                    />
-                                </span>
-                                <span class="ml-3 flex flex-col">
-                                    <RadioGroupLabel
-                                        as="span"
-                                        :class="[
-                                            checked
-                                                ? 'text-myPrimaryDarkGrayColor'
-                                                : 'text-myPrimaryDarkGrayColor',
-                                            'myPrimaryParagraph',
-                                        ]"
-                                        >{{
-                                            setting.name
-                                                .charAt(0)
-                                                .toUpperCase() +
-                                            setting.name.slice(1)
-                                        }}</RadioGroupLabel
-                                    >
-                                    <RadioGroupDescription
-                                        as="span"
-                                        :class="[
-                                            checked
-                                                ? 'text-myPrimaryLinkColor'
-                                                : 'text-myPrimaryMediumGrayColor',
-                                            'block text-sm',
-                                        ]"
-                                        >{{
-                                            setting.description
-                                        }}</RadioGroupDescription
-                                    >
-                                </span>
-                            </div>
-                        </RadioGroupOption>
-                    </div>
-                </RadioGroup>
-                <InputError :message="superadminUserform.errors.role" />
-                <InputError :message="superadminUserform.errors.user_id" />
-            </main>
-        </DynamicModal>
+
         <DynamicModal
             :show="modalShowRemoveSuperadmin"
             :type="typeModal"

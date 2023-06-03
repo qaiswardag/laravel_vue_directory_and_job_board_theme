@@ -2,7 +2,7 @@
 import SlideOverNotifications from "@/Components/Sidebars/SlideOverNotifications.vue";
 import SlideOverPrimaryMenu from "@/Components/Sidebars/SlideOverPrimaryMenu.vue";
 import { ref } from "vue";
-import { Head, router } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 import SearchAnythingModal from "@/Components/Modals/SearchAnythingModal.vue";
 import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
 import {

@@ -1,5 +1,5 @@
 <script setup>
-import { Head, router } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 import Banner from "@/Components/Banners/Banner.vue";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import GuestsNavbar from "@/Components/Navbars/GuestsNavbar.vue";
@@ -9,7 +9,9 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
 import { ref } from "vue";
 
 defineProps({
-    title: String,
+    title: {
+        required: false,
+    },
 });
 
 // is loaded
@@ -28,15 +30,12 @@ router.on("finish", () => {
         <FullScreenSpinner></FullScreenSpinner>
     </div> -->
     <div>
-        <Head>
+        <!-- head-key makes sure to only add on meta key -->
+        <!-- <Head>
             <title>{{ title }}</title>
-            <!-- head-key makes sure to only add on meta key -->
-            <meta
-                type="description"
-                content="myself.ae Fashion and Jobs"
-                head-key="description"
-            />
-        </Head>
+            <meta type="description" content="myself" head-key="description" />
+        </Head> -->
+
         <Banner />
 
         <!-- Topbar - start -->
