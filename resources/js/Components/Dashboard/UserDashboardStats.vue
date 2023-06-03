@@ -111,14 +111,14 @@ onMounted(() => {
                 class="grid grid-cols-1 lg:gap-8 gap-12 lg:grid-cols-12"
             >
                 <!-- column start -->
-                <div class="lg:col-span-6 w-full">
+                <div
+                    class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
+                >
                     <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
                         Latest Team Members
                     </h2>
 
-                    <div
-                        class="min-h-[36rem] max-h-[36rem] rounded overflow-y-scroll py-10 px-4 bg-white"
-                    >
+                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <ul role="list" class="grid grid-cols-1 myPrimaryGap">
                             <li
                                 v-for="member in getDashboardStats.fetchedData
@@ -179,14 +179,14 @@ onMounted(() => {
                 <!-- column end -->
 
                 <!-- column start -->
-                <div class="lg:col-span-6 w-full">
+                <div
+                    class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
+                >
                     <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
                         Latest Team Images
                     </h2>
 
-                    <div
-                        class="min-h-[36rem] max-h-[36rem] rounded overflow-y-scroll py-10 px-4 bg-white"
-                    >
+                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <ul
                             role="list"
                             class="grid grid-cols-2 myPrimaryGap lg:grid-cols-2 xl:grid-cols-4"
@@ -226,14 +226,14 @@ onMounted(() => {
                 </div>
                 <!-- column end -->
                 <!-- column start -->
-                <div class="lg:col-span-6 w-full">
+                <div
+                    class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
+                >
                     <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
                         Latest Team Posts
                     </h2>
 
-                    <div
-                        class="min-h-[36rem] max-h-[36rem] rounded overflow-y-scroll py-10 px-4 bg-white"
-                    >
+                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <ul role="list" class="grid grid-cols-1 myPrimaryGap">
                             <li
                                 v-for="post in getDashboardStats.fetchedData
@@ -292,12 +292,14 @@ onMounted(() => {
                 </div>
                 <!-- column end -->
                 <!-- column start -->
-                <div class="lg:col-span-6 w-full">
+                <div
+                    class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
+                >
                     <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
                         Latest Team Stats
                     </h2>
 
-                    <div class="py-10 px-4 bg-white">
+                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div class="mx-auto max-w-2xl lg:mr-0 lg:max-w-lg">
                             <h3 class="myTertiaryHeader">
                                 Trusted by thousands of creators&nbsp;worldwide
@@ -334,7 +336,7 @@ onMounted(() => {
         </template>
     </FullWidthElement>
 
-    <FullWidthElement :descriptionArea="true" class="bg-white">
+    <FullWidthElement :descriptionArea="true" class="bg-red-100">
         <template #title
             >Details about the logged-in user and team insights</template
         >
