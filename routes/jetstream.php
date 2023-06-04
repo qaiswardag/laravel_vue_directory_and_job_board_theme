@@ -103,7 +103,7 @@ Route::group(
                             TeamTeamController::class,
                             "store",
                         ])->name("teams.store");
-                        Route::get("/teams/{referenceId}", [
+                        Route::get("/team/{referenceId}", [
                             TeamTeamController::class,
                             "show",
                         ])->name("teams.show");
@@ -171,7 +171,7 @@ Route::group(
                             "index",
                         ])->name("team.members");
 
-                        Route::get("/team/delete{team}", [
+                        Route::get("/team/delete/{team}", [
                             TeamDeleteController::class,
                             "edit",
                         ])->name("team.delete");

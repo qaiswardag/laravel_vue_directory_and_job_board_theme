@@ -50,25 +50,17 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $slugId The slug id.
      * @param  string  $slug The slug of the post.
      * @return \Inertia\Response A rendered view with post data or an error view if needed.
      */
-    public function show($slugId, $slug)
+    public function show(Post $post, $slug)
     {
+        // controller not in use
         // The view that will be rendered
         $postRenderView = "Guests/Posts/Show";
 
         // Decoding the slug parameter
         $slug = urldecode($slug);
-
-        // Find the post with the given slugId and slug, including related teams and users
-        $post = Post::where([["slug", "=", $slug], ["slug_id", "=", $slugId]])
-            ->with([
-                "team:id,name,thumbnail,logo,public", // Include team data in the post object.
-                "user:id,first_name,last_name", // Include user data in the post object.
-            ])
-            ->firstOrFail();
 
         $author = null;
 

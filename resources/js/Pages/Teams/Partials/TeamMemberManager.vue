@@ -647,7 +647,7 @@ const displayAbleRole = (role) => {
                                                                 user.profile_photo_path ===
                                                                     null
                                                             "
-                                                            class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                                            class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                                         >
                                                             {{
                                                                 user.first_name

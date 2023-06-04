@@ -26,7 +26,6 @@ class Post extends Model
         "cover_image_large",
 
         "tags",
-        "slug_id",
         "show_author",
         "trash",
         "author_id",

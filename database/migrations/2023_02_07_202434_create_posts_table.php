@@ -37,7 +37,6 @@ return new class extends Migration {
             $table->string("cover_image_large")->nullable();
 
             $table->mediumText("tags")->nullable();
-            $table->integer("slug_id")->unsigned();
             $table->timestamps();
         });
     }

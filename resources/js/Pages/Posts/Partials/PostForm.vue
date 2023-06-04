@@ -538,7 +538,6 @@ onBeforeMount(() => {
                     <p class="myPrimaryParagraph">
                         Specify title & description.
                     </p>
-                    <p class="mt-8">form: {{ postForm.slug }}</p>
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">

@@ -61,12 +61,24 @@ class PostController extends Controller
 
         $posts->appends($request->all());
 
-        // post created by
-        // $createdBy = User::findOrFail($post->user_id);
+        // Post created by
+        // Retrieve user information for each post
+        foreach ($posts as $post) {
+            $user = User::find($post->user_id);
+            if ($user !== null) {
+                $post->updatedBy = [
+                    "first_name" => $user->first_name,
+                    "last_name" => $user->last_name,
+                    "profile_photo_path" => $user->profile_photo_path,
+                ];
+            }
+            if ($user === null) {
+                $post->updatedBy = null;
+            }
+        }
 
         return Inertia::render("Posts/Index", [
             "posts" => $posts,
-            "createdBy" => $posts,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
             ],
@@ -112,26 +124,12 @@ class PostController extends Controller
         // slug
         $slug = Str::lower(Str::slug($request->slug, "_"));
 
-        $slugId = 1000000; // the starting value of the slug_id
-
-        do {
-            $slugExists = Post::where([
-                ["slug", "=", $slug],
-                ["slug_id", "=", $slugId],
-            ])->exists();
-
-            if ($slugExists) {
-                $slugId++; // increment the slug_id if the slug already exists
-            }
-        } while ($slugExists);
-
         // Create the post and store it in a variable
         $post = Post::create([
             "user_id" => $userId,
             "team_id" => $team->id,
             "title" => $title,
             "slug" => $slug,
-            "slug_id" => $slugId,
             "published" => $request->published,
             "cover_image_original" => $request->cover_image_original,
             "cover_image_thumbnail" => $request->cover_image_thumbnail,
@@ -177,9 +175,45 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post, Team $team)
+    public function show($referenceId, Post $post, $slug)
     {
-        // $this->authorize("can-read", $team);
+        $postRenderView = "Teams/Posts/Show/ShowTeamPost";
+        $authors = null;
+
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => "Please try another route.", // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
+        $this->authorize("can-read", $team);
+
+        // Decode the slug parameter
+        $slug = urldecode($slug);
+
+        // Retrieve the user associated with the post
+        $user = User::find($post->user_id);
+
+        // Update the $post array with updatedBy information
+        if ($user !== null) {
+            $post->updatedBy = [
+                "first_name" => $user->first_name,
+                "last_name" => $user->last_name,
+                "profile_photo_path" => $user->profile_photo_path,
+            ];
+        }
+        if ($user === null) {
+            $post->updatedBy = null;
+        }
+
+        // Render the post
+        return Inertia::render($postRenderView, [
+            "post" => $post,
+            "authors" => $authors,
+        ]);
     }
 
     /**
@@ -188,7 +222,7 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post, $referenceId)
+    public function edit($referenceId, Post $post)
     {
         $team = Team::where("reference_id", $referenceId)->first();
 

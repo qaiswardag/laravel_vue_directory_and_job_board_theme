@@ -92,6 +92,11 @@ Route::middleware([
             PostController::class,
             "index",
         ])->name("overview.posts.index");
+        // unique post
+        Route::get("/overview/posts/{referenceId}/post/{post}/{slug}", [
+            PostController::class,
+            "show",
+        ])->name("overview.posts.post.show");
 
         // media
         // media index api
@@ -125,7 +130,7 @@ Route::middleware([
         "create",
     ])->name("overview.posts.create");
 
-    Route::get("/overview/posts/post/{post}/{referenceId}", [
+    Route::get("/overview/posts/{referenceId}/post/{post}", [
         PostController::class,
         "edit",
     ])->name("overview.posts.post.edit");
@@ -191,11 +196,6 @@ Route::middleware([])
         Route::get("/blog", [PostPostController::class, "index"])->name(
             "blog.index"
         );
-        // unique post
-        Route::get("/posts/{slug_id}/{slug}", [
-            PostPostController::class,
-            "show",
-        ])->name("posts.show");
     });
 
 // Pages that are accessible only to superadmins
