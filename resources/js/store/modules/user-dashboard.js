@@ -46,7 +46,7 @@ export default {
                 }),
                 {},
                 {
-                    additionalCallTime: 500,
+                    additionalCallTime: 0,
                     abortTimeoutTime: 8000,
                 }
             );
