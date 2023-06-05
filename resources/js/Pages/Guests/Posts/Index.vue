@@ -314,7 +314,7 @@ const posts = [
                     >
                         <img
                             v-if="post.cover_image !== null"
-                            :src="`/storage/app-images/blog/${post.cover_image}`"
+                            :src="`/app-images/blog/${post.cover_image}`"
                             :alt="post.title"
                             class="pointer-events-none object-cover group-hover:opacity-75 cursor-pointer"
                         />
