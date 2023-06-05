@@ -166,7 +166,7 @@ class PostController extends Controller
         // Return the current team that the user is on, rather than the team that the user is storing the post for.
         $currentTeam = Auth::user()->currentTeam->reference_id;
 
-        return redirect()->route("overview.posts.index", $currentTeam);
+        return redirect()->route("team.posts.index", $currentTeam);
     }
 
     /**
@@ -339,7 +339,7 @@ class PostController extends Controller
                 ->whereIn("user_id", $authorsToDelete)
                 ->delete();
         }
-        return redirect()->route("overview.posts.index", [
+        return redirect()->route("team.posts.index", [
             "referenceId" => $team->reference_id,
         ]);
     }

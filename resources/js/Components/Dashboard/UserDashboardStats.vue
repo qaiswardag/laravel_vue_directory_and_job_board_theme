@@ -98,6 +98,11 @@ onMounted(() => {
                 </div>
             </div>
             <!-- Loading - end -->
+            <div v-if="$page.props && $page.props.currentUserTeam === null">
+                <p class="myPrimaryParagraph">
+                    Looks like no Team is Selected!
+                </p>
+            </div>
             <div
                 v-if="
                     $page.props &&

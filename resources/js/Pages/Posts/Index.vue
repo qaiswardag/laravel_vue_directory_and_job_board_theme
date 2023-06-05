@@ -29,7 +29,7 @@ const breadcrumbsLinks = [
     {
         label: "All Posts",
         route: {
-            name: "overview.posts.index",
+            name: "team.posts.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
@@ -39,14 +39,14 @@ const routesArray = [
     {
         label: "All Posts",
         route: {
-            name: "overview.posts.index",
+            name: "team.posts.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
     {
         label: "Create Post",
         route: {
-            name: "overview.posts.create",
+            name: "team.posts.create",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
@@ -102,10 +102,7 @@ const deletePostForm = useForm({});
 // form action
 const deletePost = (postId) => {
     deletePostForm.delete(
-        route("overview.posts.post.destroy", [
-            postId,
-            props.currentUserTeam.id,
-        ]),
+        route("team.posts.post.destroy", [postId, props.currentUserTeam.id]),
         {
             preserveScroll: true,
             onSuccess: () => (modalShowDeletePost.value = false),
@@ -120,7 +117,7 @@ const deletePost = (postId) => {
 // handle action
 const handleEdit = function (postId) {
     router.get(
-        route("overview.posts.post.edit", [
+        route("team.posts.post.edit", [
             props.currentUserTeam.reference_id,
             postId,
         ])
@@ -134,7 +131,7 @@ const searchForm = useForm({
 
 const handleSearch = function () {
     searchForm.get(
-        route("overview.posts.index", [props.currentUserTeam.reference_id]),
+        route("team.posts.index", [props.currentUserTeam.reference_id]),
         {
             preserveScroll: true,
             onSuccess: () => {},
@@ -197,10 +194,7 @@ onMounted(() => {
                     class="myPrimaryButton"
                     type="button"
                     :href="
-                        route(
-                            'overview.posts.create',
-                            currentUserTeam.reference_id
-                        )
+                        route('team.posts.create', currentUserTeam.reference_id)
                     "
                 >
                     Create Post
@@ -311,16 +305,13 @@ onMounted(() => {
                                     >
                                         <Link
                                             :href="
-                                                route(
-                                                    'overview.posts.post.show',
-                                                    [
-                                                        $page.props.user
-                                                            .current_team
-                                                            .reference_id,
-                                                        post.id,
-                                                        post.slug,
-                                                    ]
-                                                )
+                                                route('team.posts.post.show', [
+                                                    $page.props.user
+                                                        .current_team
+                                                        .reference_id,
+                                                    post.id,
+                                                    post.slug,
+                                                ])
                                             "
                                         >
                                             <div
@@ -340,7 +331,7 @@ onMounted(() => {
                                 <td class="myPrimaryTableTBodyTd">
                                     <Link
                                         :href="
-                                            route('overview.posts.post.show', [
+                                            route('team.posts.post.show', [
                                                 $page.props.user.current_team
                                                     .reference_id,
                                                 post.id,

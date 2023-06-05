@@ -464,7 +464,8 @@ onMounted(() => {
                     >
                         <div class="flex justify-start items-center">
                             <p class="myPrimaryTag">
-                                Added {{ getCurrentAttachedUsers.length }} Users
+                                Added
+                                {{ getCurrentAttachedUsers.length }} User(s)
                             </p>
                         </div>
                         <div

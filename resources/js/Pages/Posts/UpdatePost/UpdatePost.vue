@@ -22,7 +22,7 @@ const breadcrumbsLinks = [
     {
         label: "All Posts",
         route: {
-            name: "overview.posts.index",
+            name: "team.posts.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },

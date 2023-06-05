@@ -321,7 +321,7 @@ const handleCreatePost = function () {
 
 const createPost = () => {
     if (formType.value === "create") {
-        postForm.post(route("overview.posts.store"), {
+        postForm.post(route("team.posts.store"), {
             preserveScroll: true,
             onSuccess: () => {
                 clearForm();
@@ -331,7 +331,7 @@ const createPost = () => {
         });
     }
     if (formType.value === "update") {
-        postForm.post(route("overview.posts.update", props.post.id), {
+        postForm.post(route("team.posts.update", props.post.id), {
             preserveScroll: true,
             onSuccess: () => {},
             onError: () => {},
@@ -955,7 +955,7 @@ onBeforeMount(() => {
                         </div>
                     </div>
                     <div v-if="postForm.author.length === 0" class="space-y-6">
-                        <p class="myPrimaryParagraph">No author selected</p>
+                        <p class="myPrimaryParagraph">No author selected.</p>
                     </div>
                     <InputError :message="postForm.errors.author" />
                     <p
@@ -971,10 +971,10 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Cover Image
+                        Cover image
                     </div>
                     <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet.
+                        Uplaod or select a post cover image.
                     </p>
                 </div>
 
@@ -1011,7 +1011,7 @@ onBeforeMount(() => {
                             />
                         </svg>
 
-                        Cover Image
+                        Cover image
                     </button>
 
                     <div v-if="postForm && postForm.cover_image_medium">
@@ -1045,9 +1045,7 @@ onBeforeMount(() => {
                     <p class="py-6 text-red-400">
                         post form tags er: {{ postForm.tags }}
                     </p>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet.
-                    </p>
+                    <p class="myPrimaryParagraph">Enter tags for the post.</p>
                 </div>
                 <div class="myInputGroup">
                     <Tags
@@ -1062,10 +1060,10 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Lorem, ipsum dolor.
+                        Post belongs to Team
                     </div>
                     <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet.
+                        Update a Team which this post belongs to.
                     </p>
                 </div>
                 <div class="myInputGroup">
