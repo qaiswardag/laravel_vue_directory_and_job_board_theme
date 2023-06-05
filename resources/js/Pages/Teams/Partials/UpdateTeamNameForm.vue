@@ -298,7 +298,7 @@ const notificationsModalButton = function () {
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Logo</div>
                     <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet.
+                        Uplaod or select a Team logo.
                     </p>
                 </div>
                 <img
@@ -363,10 +363,10 @@ const notificationsModalButton = function () {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Cover Image
+                        Cover image
                     </div>
                     <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet.
+                        Upload or select a Team Cover image.
                     </p>
                 </div>
                 <img
@@ -402,7 +402,7 @@ const notificationsModalButton = function () {
                             />
                         </svg>
 
-                        Cover Image
+                        Cover image
                     </button>
                     <div
                         v-if="
@@ -439,9 +439,6 @@ const notificationsModalButton = function () {
                     <div class="myPrimaryFormOrganizationHeader">
                         Team Owner
                     </div>
-                    <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet.
-                    </p>
                 </div>
                 <div
                     class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"

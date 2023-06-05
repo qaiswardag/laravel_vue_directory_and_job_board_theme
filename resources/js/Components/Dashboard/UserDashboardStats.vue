@@ -98,6 +98,11 @@ onMounted(() => {
                 </div>
             </div>
             <!-- Loading - end -->
+            <div v-if="$page.props && $page.props.currentUserTeam === null">
+                <p class="myPrimaryParagraph">
+                    Looks like no Team is Selected!
+                </p>
+            </div>
             <div
                 v-if="
                     $page.props &&
@@ -114,7 +119,7 @@ onMounted(() => {
                 <div
                     class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
                 >
-                    <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
+                    <h2 class="my-2 mb-4 myFourthHeader">
                         Latest Team Members
                     </h2>
 
@@ -182,9 +187,7 @@ onMounted(() => {
                 <div
                     class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
                 >
-                    <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
-                        Latest Team Images
-                    </h2>
+                    <h2 class="my-2 mb-4 myFourthHeader">Latest Team Images</h2>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <ul
@@ -215,9 +218,7 @@ onMounted(() => {
                 <div
                     class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
                 >
-                    <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
-                        Latest Team Posts
-                    </h2>
+                    <h2 class="my-2 mb-4 myFourthHeader">Latest Team Posts</h2>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <ul role="list" class="grid grid-cols-1 myPrimaryGap">
@@ -281,13 +282,11 @@ onMounted(() => {
                 <div
                     class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
                 >
-                    <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
-                        Latest Team Stats
-                    </h2>
+                    <h2 class="my-2 mb-4 myFourthHeader">Latest Team Stats</h2>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div class="mx-auto max-w-2xl lg:mr-0 lg:max-w-lg">
-                            <h3 class="myTertiaryHeader">
+                            <h3 class="myFourthHeader">
                                 Trusted by thousands of creators&nbsp;worldwide
                             </h3>
                             <p class="myPrimaryParagrph">

@@ -8,6 +8,8 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
+import { parseISO, format } from "date-fns";
+import { TrashIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     posts: {
@@ -27,7 +29,7 @@ const breadcrumbsLinks = [
     {
         label: "All Posts",
         route: {
-            name: "overview.posts.index",
+            name: "team.posts.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
@@ -37,14 +39,14 @@ const routesArray = [
     {
         label: "All Posts",
         route: {
-            name: "overview.posts.index",
+            name: "team.posts.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
     {
         label: "Create Post",
         route: {
-            name: "overview.posts.create",
+            name: "team.posts.create",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
@@ -100,10 +102,7 @@ const deletePostForm = useForm({});
 // form action
 const deletePost = (postId) => {
     deletePostForm.delete(
-        route("overview.posts.post.destroy", [
-            postId,
-            props.currentUserTeam.id,
-        ]),
+        route("team.posts.post.destroy", [postId, props.currentUserTeam.id]),
         {
             preserveScroll: true,
             onSuccess: () => (modalShowDeletePost.value = false),
@@ -118,9 +117,9 @@ const deletePost = (postId) => {
 // handle action
 const handleEdit = function (postId) {
     router.get(
-        route("overview.posts.post.edit", [
-            postId,
+        route("team.posts.post.edit", [
             props.currentUserTeam.reference_id,
+            postId,
         ])
     );
 };
@@ -132,7 +131,7 @@ const searchForm = useForm({
 
 const handleSearch = function () {
     searchForm.get(
-        route("overview.posts.index", [props.currentUserTeam.reference_id]),
+        route("team.posts.index", [props.currentUserTeam.reference_id]),
         {
             preserveScroll: true,
             onSuccess: () => {},
@@ -195,10 +194,7 @@ onMounted(() => {
                     class="myPrimaryButton"
                     type="button"
                     :href="
-                        route(
-                            'overview.posts.create',
-                            currentUserTeam.reference_id
-                        )
+                        route('team.posts.create', currentUserTeam.reference_id)
                     "
                 >
                     Create Post
@@ -278,7 +274,7 @@ onMounted(() => {
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
 
                             <th scope="col" class="myPrimaryTableTh">
-                                Created by
+                                Updated by
                             </th>
 
                             <th scope="col" class="myPrimaryTableTh">
@@ -307,29 +303,41 @@ onMounted(() => {
                                     <div
                                         class="flex items-center justify-start myPrimaryGap"
                                     >
-                                        <div
-                                            v-if="post.cover_image_medium"
-                                            class="h-16 w-16 flex-shrink-0"
+                                        <Link
+                                            :href="
+                                                route('team.posts.post.show', [
+                                                    $page.props.user
+                                                        .current_team
+                                                        .reference_id,
+                                                    post.id,
+                                                    post.slug,
+                                                ])
+                                            "
                                         >
-                                            <img
-                                                class="h-16 w-16 rounded-full object-cover"
-                                                :src="`/storage/uploads/${post.cover_image_medium}`"
-                                                alt=""
-                                            />
-                                        </div>
+                                            <div
+                                                v-if="post.cover_image_medium"
+                                                class="h-16 w-16 flex-shrink-0"
+                                            >
+                                                <img
+                                                    class="h-16 w-16 rounded-full object-cover"
+                                                    :src="`/storage/uploads/${post.cover_image_medium}`"
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </Link>
                                     </div>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
                                     <Link
-                                        v-if="false"
                                         :href="
-                                            route('posts.show', [
-                                                post.slug_id,
+                                            route('team.posts.post.show', [
+                                                $page.props.user.current_team
+                                                    .reference_id,
+                                                post.id,
                                                 post.slug,
                                             ])
                                         "
-                                        class="myPrimaryLink font-normal mt-4"
                                     >
                                         <span
                                             class="text-myPrimaryLinkColor font-medium"
@@ -337,12 +345,6 @@ onMounted(() => {
                                             {{ post.title }}
                                         </span>
                                     </Link>
-
-                                    <span
-                                        class="text-myPrimaryLinkColor font-medium"
-                                    >
-                                        {{ post.title }}
-                                    </span>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
@@ -378,7 +380,58 @@ onMounted(() => {
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
-                                    Created by
+                                    <div
+                                        v-if="post.updatedBy !== null"
+                                        class="flex items-center gap-2 mt-2"
+                                    >
+                                        <!-- user photo - start -->
+
+                                        <div
+                                            v-if="
+                                                post.updatedBy
+                                                    .profile_photo_path !== null
+                                            "
+                                        >
+                                            <div class="h-8 w-8 flex-shrink-0">
+                                                <img
+                                                    class="object-cover w-8 h-8 rounded-full"
+                                                    :src="`/storage/${post.updatedBy.profile_photo_path}`"
+                                                    alt="avatar"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            v-if="
+                                                post.updatedBy
+                                                    .profile_photo_path === null
+                                            "
+                                            class="flex-shrink-0 h-8 w-8 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
+                                        >
+                                            {{
+                                                post.updatedBy.first_name
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                            }}
+                                            {{
+                                                post.updatedBy.last_name
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                            }}
+                                        </div>
+                                        <span
+                                            class="flex flex-col items-left gap-1 myPrimaryParagraph"
+                                        >
+                                            <span>
+                                                {{ post.updatedBy.first_name }}
+                                                {{ post.updatedBy.last_name }}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <!-- user photo - end -->
+                                    <span v-if="post.updatedBy === null">
+                                        Unknown
+                                    </span>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
@@ -388,13 +441,32 @@ onMounted(() => {
                                     }}
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
-                                    {{ post.trash }}
+                                    <span
+                                        :class="
+                                            post.trash
+                                                ? 'bg-red-100 text-myPrimaryErrorColor'
+                                                : 'bg-green-50 text-myPrimaryLinkColor'
+                                        "
+                                        class="inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
+                                        >{{ post.trash ? "Deleted" : "" }}
+                                    </span>
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    {{
+                                        format(
+                                            parseISO(post.updated_at),
+                                            "dd/MM/yyyy - HH:mm"
+                                        )
+                                    }}
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
-                                    Update date
-                                </td>
-                                <td class="myPrimaryTableTBodyTd">
-                                    Created date
+                                    {{
+                                        format(
+                                            parseISO(post.created_at),
+                                            "dd/MM/yyyy - HH:mm"
+                                        )
+                                    }}
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

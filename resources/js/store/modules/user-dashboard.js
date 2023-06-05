@@ -40,7 +40,6 @@ export default {
     actions: {
         // get
         loadDashboardStats(context, data) {
-            console.log("køre denne? og data er:", data);
             handleGetDashboardStats(
                 route("user.dashboard.stats", {
                     teamId: data.teamId,

@@ -88,25 +88,30 @@ Route::middleware([
             UserSessionsController::class,
             "show",
         ])->name("user.profile.security");
-        Route::get("/overview/posts/{referenceId}", [
+        Route::get("/team/posts/{referenceId}", [
             PostController::class,
             "index",
-        ])->name("overview.posts.index");
+        ])->name("team.posts.index");
+        // unique post
+        Route::get("/team/posts/{referenceId}/post/{post}/{slug}", [
+            PostController::class,
+            "show",
+        ])->name("team.posts.post.show");
 
         // media
         // media index api
-        Route::get("/overview/media/index/{team}", [
+        Route::get("/team/media/index/{team}", [
             LoggedInMediaLibraryController::class,
             "index",
-        ])->name("overview.media.index");
+        ])->name("team.media.index");
         // media
-        Route::get("/overview/media/{referenceId}", [
+        Route::get("/team/media/{referenceId}", [
             MediaLibraryController::class,
             "index",
         ])->name("media.index");
 
         // attach user to resource
-        Route::get("/overview/attach/users/index/{team}", [
+        Route::get("/team/attach/users/index/{team}", [
             AttachUserController::class,
             "index",
         ])->name("attach.user.index");
@@ -120,34 +125,33 @@ Route::middleware([
     // "ensure.can.create.and.update", // editor, owner, administrator
 ])->group(function () {
     // posts
-    Route::get("/overview/posts/create/{referenceId}", [
+    Route::get("/team/posts/create/{referenceId}", [
         PostController::class,
         "create",
-    ])->name("overview.posts.create");
+    ])->name("team.posts.create");
 
-    Route::get("/overview/posts/post/{post}/{referenceId}", [
+    Route::get("/team/posts/{referenceId}/post/{post}", [
         PostController::class,
         "edit",
-    ])->name("overview.posts.post.edit");
+    ])->name("team.posts.post.edit");
 
-    Route::post("/overview/posts/post/store/{post}", [
+    Route::post("/team/posts/post/store/{post}", [
         PostController::class,
         "update",
-    ])->name("overview.posts.update");
-    Route::post("/overview/posts/store", [
-        PostController::class,
-        "store",
-    ])->name("overview.posts.store");
+    ])->name("team.posts.update");
+    Route::post("/team/posts/store", [PostController::class, "store"])->name(
+        "team.posts.store"
+    );
     //media
-    Route::get("/overview/media/edit/{mediaLibrary}/{team}", [
+    Route::get("/team/media/edit/{mediaLibrary}/{team}", [
         LoggedInMediaLibraryController::class,
         "edit",
     ])->name("media.edit");
-    Route::post("/overview/media/image/update/{team}", [
+    Route::post("/team/media/image/update/{team}", [
         MediaLibraryController::class,
         "update",
     ])->name("media.update");
-    Route::post("/overview/media/store", [
+    Route::post("/team/media/store", [
         MediaLibraryController::class,
         "store",
     ])->name("media.store");
@@ -163,12 +167,12 @@ Route::middleware([
     // group of pages
     ->group(function () {
         // posts
-        Route::delete("/overview/posts/post/{post}/{team}", [
+        Route::delete("/team/posts/post/{post}/{team}", [
             PostController::class,
             "destroy",
-        ])->name("overview.posts.post.destroy");
+        ])->name("team.posts.post.destroy");
         // media
-        Route::post("/overview/media/image/destroy/{team}", [
+        Route::post("/team/media/image/destroy/{team}", [
             MediaLibraryController::class,
             "destroy",
         ])->name("media.destroy");
@@ -191,11 +195,6 @@ Route::middleware([])
         Route::get("/blog", [PostPostController::class, "index"])->name(
             "blog.index"
         );
-        // unique post
-        Route::get("/posts/{slug_id}/{slug}", [
-            PostPostController::class,
-            "show",
-        ])->name("posts.show");
     });
 
 // Pages that are accessible only to superadmins
