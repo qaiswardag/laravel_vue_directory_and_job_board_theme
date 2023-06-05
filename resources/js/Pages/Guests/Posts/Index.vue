@@ -98,7 +98,15 @@ const posts = [
         id: 10,
         description:
             "A arcu cursus vitae congue mauris. Praesent semper feugiat nibh sed. Feugiat in ante metus dictum. Eu consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
-        categories: ["Design", "Arts"],
+        categories: [
+            "Design",
+            "Arts",
+            "Event",
+            "Summer",
+            "News",
+            "Design",
+            "Travel",
+        ],
         cover_image: "10.jpg",
     },
     {
@@ -320,11 +328,13 @@ const posts = [
                         />
 
                         <div class="px-2 pb-2">
-                            <ul class="flex flex-wrap gap-y-12 gap-x-2">
+                            <ul
+                                class="flex flex-wrap gap-y-0 gap-x-2 items-center"
+                            >
                                 <li
                                     v-for="category in post.categories"
                                     :key="category"
-                                    class="myPrimaryParagraph font-medium mt-2 mb-2 cursor-pointer flex-none"
+                                    class="myPrimaryParagraph font-medium cursor-pointer flex-none"
                                 >
                                     <span class="text-[10px] uppercase">
                                         {{ category }}

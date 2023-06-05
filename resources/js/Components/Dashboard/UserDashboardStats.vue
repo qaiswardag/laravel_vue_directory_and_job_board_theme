@@ -5,6 +5,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import EmptySectionBorder from "@/Components/Sections/EmptySectionBorder.vue";
 import { useStore } from "vuex";
 import { onMounted, computed } from "vue";
+import { parseISO, format } from "date-fns";
 
 // store
 const store = useStore();
@@ -192,23 +193,19 @@ onMounted(() => {
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <ul
                             role="list"
-                            class="grid grid-cols-2 myPrimaryGap lg:grid-cols-2 xl:grid-cols-4"
+                            class="grid grid-cols-[repeat(auto-fit,minmax(6rem,1fr))] gap-y-6 gap-x-6"
                         >
                             <li
                                 v-for="file in getDashboardStats.fetchedData
                                     .latestMedia"
                                 :key="file.id"
-                                class="rounded"
+                                class="whitespace-pre-line flex-1 h-auto rounded pb-12"
                             >
-                                <div
-                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
-                                >
-                                    <img
-                                        :src="`/storage/uploads/${file.medium_path}`"
-                                        alt="Image"
-                                        class="w-full pointer-events-none object-cover group-hover:opacity-75"
-                                    />
-                                </div>
+                                <img
+                                    :src="`/storage/uploads/${file.medium_path}`"
+                                    alt="Image"
+                                    class="pointer-events-none object-cover group-hover:opacity-75 cursor-pointer rounded"
+                                />
                             </li>
                         </ul>
                     </div>
@@ -221,58 +218,65 @@ onMounted(() => {
                     <h2 class="my-2 mb-4 myFourthHeader">Latest Team Posts</h2>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
-                        <ul role="list" class="grid grid-cols-1 myPrimaryGap">
+                        <ul
+                            role="list"
+                            class="grid grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-y-6 gap-x-6"
+                        >
                             <li
                                 v-for="post in getDashboardStats.fetchedData
                                     .latestPosts"
                                 :key="post.id"
-                                class="p-2 rounded-md min-h-[2rem] max-h-[6rem] flex flex-col w-full border border-myPrimaryLightGrayColor bg-white hover:border-myPrimaryMediumGrayColor"
+                                class="whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
                             >
                                 <!-- start photo -->
-                                <div class="flex items-center gap-2 my-2">
-                                    <div
-                                        v-if="
-                                            post &&
-                                            post.cover_image_medium !== null
-                                        "
-                                        class="flex-shrink-0"
-                                    >
-                                        <img
-                                            class="object-cover w-10 h-10 rounded-full"
-                                            :src="`/storage/uploads/${post.cover_image_medium}`"
-                                            alt="Image"
-                                        />
-                                    </div>
-                                    <div
-                                        v-if="
-                                            post &&
-                                            post.cover_image_medium === null
-                                        "
-                                    ></div>
 
-                                    <span
-                                        class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                <template
+                                    v-if="
+                                        post && post.cover_image_medium !== null
+                                    "
+                                >
+                                    <img
+                                        class="pointer-events-none object-cover group-hover:opacity-75 cursor-pointer"
+                                        :src="`/storage/uploads/${post.cover_image_medium}`"
+                                        alt="Image"
+                                    />
+                                </template>
+
+                                <div class="px-2 pb-2">
+                                    <ul class="flex flex-wrap gap-y-0 gap-x-2">
+                                        <li
+                                            v-for="tag in post.tags &&
+                                            post.tags.split(',')"
+                                            :key="tag"
+                                            class="myPrimaryParagraph font-medium cursor-pointer flex-none"
+                                        >
+                                            <span class="text-[10px] uppercase">
+                                                {{ tag }}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <p
+                                        class="myPrimaryParagraph text-sm font-medium mt-2 mb-2"
                                     >
-                                        <p class="font-medium">
-                                            {{ post.title }}
-                                        </p>
-                                    </span>
-                                </div>
-                                <p class="text-xs">
-                                    <span
-                                        :class="
-                                            post.published
-                                                ? 'bg-green-50 text-myPrimaryLinkColor'
-                                                : 'bg-red-100 text-myPrimaryErrorColor'
+                                        {{ post.title.slice(0, 12) }}..
+                                    </p>
+                                    <p
+                                        v-html="
+                                            `${post.content.slice(0, 24)}..`
                                         "
-                                        class="inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
-                                        >{{
-                                            post.published
-                                                ? "Published"
-                                                : "Privat"
-                                        }}</span
+                                        class="myPrimaryParagraph text-xs"
+                                    ></p>
+                                    <p
+                                        class="myPrimaryParagraph font-medium mt-2 mb-2 text-[10px] text-myPrimaryMediumGrayColor"
                                     >
-                                </p>
+                                        {{
+                                            format(
+                                                parseISO(post.updated_at),
+                                                "dd/MM/yyyy"
+                                            )
+                                        }}
+                                    </p>
+                                </div>
                             </li>
                         </ul>
                     </div>

@@ -364,7 +364,7 @@ const handleClearForm = function () {
 };
 // end modal
 
-const clearTags = ref(null);
+const clearTags = ref(0);
 // clear form
 const clearForm = function () {
     postForm.title = "";
@@ -386,7 +386,7 @@ const clearForm = function () {
     //
     //
     postForm.tags = "";
-    clearTags.value = "";
+    clearTags.value++;
     //
     //
     //
@@ -505,7 +505,7 @@ onBeforeMount(() => {
 
 <template>
     <FormSection @submitted="handleCreatePost">
-        <template #title> Post details </template>
+        <template #title> Post details</template>
         <template #description> Create a new Post. </template>
         <template #main>
             <div class="myInputsOrganization">
