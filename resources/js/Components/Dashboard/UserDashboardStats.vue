@@ -201,7 +201,7 @@ onMounted(() => {
                                 class="rounded"
                             >
                                 <div
-                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100"
+                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded"
                                 >
                                     <img
                                         :src="`/storage/uploads/${file.medium_path}`"

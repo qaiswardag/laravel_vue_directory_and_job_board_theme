@@ -7,6 +7,7 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import SearchBarWithOptions from "@/Components/SearchBars/SearchBarWithOptions.vue";
 import { onMounted, ref } from "vue";
+import { parseISO, format } from "date-fns";
 
 import { AdjustmentsHorizontalIcon } from "@heroicons/vue/24/outline";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
@@ -18,6 +19,266 @@ defineProps({
         required: false,
     },
 });
+
+const posts = [
+    {
+        title: "Tortor condimentum lacinia quis vel",
+        id: 1,
+        description:
+            "At tempor commodo ullamcorper a lacus vestibulum. Nam libero justo laoreet sit amet cursus. Pharetra vel turpis nunc eget lorem dolor sed viverra ipsum. Risus feugiat in ante metus dictum at. Eleifend donec pretium vulputate sapien. Quisque id diam vel quam elementum pulvinar. Arcu felis bibendum ut tristique et egestas quis ipsum suspendisse. Libero volutpat sed cras ornare arcu dui vivamus arcu felis. Etiam erat velit scelerisque in dictum non consectetur a erat. Ut aliquam purus sit amet luctus venenatis. Tempor orci dapibus ultrices in iaculis nunc.",
+        categories: ["Design", "Arts"],
+        cover_image: "1.jpg",
+    },
+    {
+        title: "Blandit aliquam etiam erat velit",
+        id: 2,
+        description:
+            "Lacus vestibulum. Nam libero justo laoreet sit amet cursus. Pharetra vel turpis nunc eget lorem dolor sed viverra ipsum. Risus feugiat in ante metus dictum at. Eleifend donec pretium vulputate sapien. Quisque id diam vel quam elementum pulvinar. Arcu felis bibendum ut tristique et egestas quis ipsum suspendisse. Libero volutpat sed cras ornare arcu dui vivamus arcu felis. Etiam erat velit scelerisque in dictum non consectetur a erat. Ut aliquam purus sit amet luctus venenatis. Tempor orci dapibus ultrices in iaculis nunc.",
+        categories: ["Design", "Arts"],
+        cover_image: "2.jpg",
+    },
+    {
+        title: "Ut tristique et egestas quis ipsum",
+        id: 3,
+        description:
+            "Sommodo ullamcorper a lacus vestibulum. Nam libero justo laoreet sit amet cursus. Pharetra vel turpis nunc eget lorem dolor sed viverra ipsum. Risus feugiat in ante metus dictum at. Eleifend donec pretium vulputate sapien. Quisque id diam vel quam elementum pulvinar. Arcu felis bibendum ut tristique et egestas quis ipsum suspendisse. Libero volutpat sed cras ornare arcu dui vivamus arcu felis. Etiam erat velit scelerisque in dictum non consectetur a erat. Ut aliquam purus sit amet luctus venenatis. Tempor orci dapibus ultrices in iaculis nunc.",
+        categories: ["Design", "Arts"],
+        cover_image: "3.jpg",
+    },
+    {
+        title: "Magna sit amet purus gravida",
+        id: 4,
+        description:
+            "Scelerisque viverra mauris in aliquam. Gravida quis blandit turpis cursus in hac habitasse platea. Sed nisi lacus sed viverra tellus in hac. Vel eros donec ac odio tempor orci dapibus ultrices. At risus viverra adipiscing at in tellus integer feugiat scelerisque. Augue interdum velit euismod in. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien eget mi proin sed libero enim sed. At quis risus sed vulputate odio ut enim. In fermentum et sollicitudin ac orci. Interdum consectetur libero id faucibus nisl tincidunt. Sed arcu non odio euismod. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Pharetra massa massa ultricies mi quis hendrerit. Id eu nisl nunc mi ipsum faucibus vitae. Mollis nunc sed id semper risus in hendrerit gravida rutrum. Nunc non blandit massa enim.",
+        categories: ["Design", "Arts"],
+        cover_image: "4.jpg",
+    },
+    {
+        title: "Diam ut venenatis tellus in",
+        id: 5,
+        description:
+            "Vandit turpis cursus in hac habitasse platea. Sed nisi lacus sed viverra tellus in hac. Vel eros donec ac odio tempor orci dapibus ultrices. At risus viverra adipiscing at in tellus integer feugiat scelerisque. Augue interdum velit euismod in. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien eget mi proin sed libero enim sed. At quis risus sed vulputate odio ut enim. In fermentum et sollicitudin ac orci. Interdum consectetur libero id faucibus nisl tincidunt. Sed arcu non odio euismod. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Pharetra massa massa ultricies mi quis hendrerit. Id eu nisl nunc mi ipsum faucibus vitae. Mollis nunc sed id semper risus in hendrerit gravida rutrum. Nunc non blandit massa enim.",
+        categories: ["Design", "Arts"],
+        cover_image: "5.jpg",
+    },
+    {
+        title: "Est ullamcorper eget nulla",
+        id: 6,
+        description:
+            "Surpis cursus in hac habitasse platea. Sed nisi lacus sed viverra tellus in hac. Vel eros donec ac odio tempor orci dapibus ultrices. At risus viverra adipiscing at in tellus integer feugiat scelerisque. Augue interdum velit euismod in. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien eget mi proin sed libero enim sed. At quis risus sed vulputate odio ut enim. In fermentum et sollicitudin ac orci. Interdum consectetur libero id faucibus nisl tincidunt. Sed arcu non odio euismod. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Pharetra massa massa ultricies mi quis hendrerit. Id eu nisl nunc mi ipsum faucibus vitae. Mollis nunc sed id semper risus in hendrerit gravida rutrum. Nunc non blandit massa enim.",
+        categories: ["Design", "Arts"],
+        cover_image: "6.jpg",
+    },
+    {
+        title: "Ultricies mi eget mauris pharetra et",
+        id: 7,
+        description:
+            "Platea sed nisi lacus sed viverra tellus in hac. Vel eros donec ac odio tempor orci dapibus ultrices. At risus viverra adipiscing at in tellus integer feugiat scelerisque. Augue interdum velit euismod in. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien eget mi proin sed libero enim sed. At quis risus sed vulputate odio ut enim. In fermentum et sollicitudin ac orci. Interdum consectetur libero id faucibus nisl tincidunt. Sed arcu non odio euismod. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Pharetra massa massa ultricies mi quis hendrerit. Id eu nisl nunc mi ipsum faucibus vitae. Mollis nunc sed id semper risus in hendrerit gravida rutrum. Nunc non blandit massa enim.",
+        categories: ["Design", "Arts"],
+        cover_image: "7.jpg",
+    },
+    {
+        title: "Odio tempor orci",
+        id: 8,
+        description:
+            "Vel eros donec ac odio tempor orci dapibus ultrices. At risus viverra adipiscing at in tellus integer feugiat scelerisque. Augue interdum velit euismod in. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien eget mi proin sed libero enim sed. At quis risus sed vulputate odio ut enim. In fermentum et sollicitudin ac orci. Interdum consectetur libero id faucibus nisl tincidunt. Sed arcu non odio euismod. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Pharetra massa massa ultricies mi quis hendrerit. Id eu nisl nunc mi ipsum faucibus vitae. Mollis nunc sed id semper risus in hendrerit gravida rutrum. Nunc non blandit massa enim.",
+        categories: ["Design", "Arts"],
+        cover_image: null,
+    },
+    {
+        title: "Tellus orci ac auctor augue mauris augue neque",
+        id: 9,
+        description:
+            "Cursus in hac habitasse platea. Sed nisi lacus sed viverra tellus in hac. Vel eros donec ac odio tempor orci dapibus ultrices. At risus viverra adipiscing at in tellus integer feugiat scelerisque. Augue interdum velit euismod in. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien eget mi proin sed libero enim sed. At quis risus sed vulputate odio ut enim. In fermentum et sollicitudin ac orci. Interdum consectetur libero id faucibus nisl tincidunt. Sed arcu non odio euismod. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Pharetra massa massa ultricies mi quis hendrerit. Id eu nisl nunc mi ipsum faucibus vitae. Mollis nunc sed id semper risus in hendrerit gravida rutrum. Nunc non blandit massa enim.",
+        categories: ["Design", "Arts"],
+        cover_image: "9.jpg",
+    },
+    {
+        title: "Placerat orci nulla pellentesque dignissim enim sit amet",
+        id: 10,
+        description:
+            "A arcu cursus vitae congue mauris. Praesent semper feugiat nibh sed. Feugiat in ante metus dictum. Eu consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "10.jpg",
+    },
+    {
+        title: "Purus viverra accumsan in nisl",
+        id: 11,
+        description:
+            "Praesent semper feugiat nibh sed. Feugiat in ante metus dictum. Eu consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "11.jpg",
+    },
+    {
+        title: "Risus ultricies tristique nulla aliquet enim tortor",
+        id: 12,
+        description:
+            "Feugiat in ante metus dictum. Eu consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: null,
+    },
+    {
+        title: "Non pulvinar neque laoreet suspendisse",
+        id: 13,
+        description:
+            "Consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "13.jpg",
+    },
+    {
+        title: "Senectus et netus et malesuada fames",
+        id: 14,
+        description:
+            "Felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "14.jpg",
+    },
+    {
+        title: "Commodo elit at imperdiet dui accumsan",
+        id: 15,
+        description:
+            "Pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "15.jpg",
+    },
+    {
+        title: "Eu lobortis elementum",
+        id: 16,
+        description:
+            "Amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "16.jpg",
+    },
+    {
+        title: "Nibh tellus molestie",
+        id: 17,
+        description:
+            "Justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "17.jpg",
+    },
+    {
+        title: "Dui vivamus arcu felis",
+        id: 18,
+        description:
+            "Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "18.jpg",
+    },
+    {
+        title: "Pellentesque dignissim enim sit",
+        id: 19,
+        description:
+            "Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "19.jpg",
+    },
+    {
+        title: "Risus viverra adipiscing ",
+        id: 20,
+        description:
+            "Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "20.jpg",
+    },
+    {
+        title: "Senectus et netus et malesuada fames",
+        id: 21,
+        description:
+            "Felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "21.jpg",
+    },
+    {
+        title: "Commodo elit at imperdiet dui accumsan",
+        id: 22,
+        description:
+            "Pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: null,
+    },
+    {
+        title: "Diam ut venenatis tellus in",
+        id: 23,
+        description:
+            "Vandit turpis cursus in hac habitasse platea. Sed nisi lacus sed viverra tellus in hac. Vel eros donec ac odio tempor orci dapibus ultrices. At risus viverra adipiscing at in tellus integer feugiat scelerisque. Augue interdum velit euismod in. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien eget mi proin sed libero enim sed. At quis risus sed vulputate odio ut enim. In fermentum et sollicitudin ac orci. Interdum consectetur libero id faucibus nisl tincidunt. Sed arcu non odio euismod. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Pharetra massa massa ultricies mi quis hendrerit. Id eu nisl nunc mi ipsum faucibus vitae. Mollis nunc sed id semper risus in hendrerit gravida rutrum. Nunc non blandit massa enim.",
+        categories: ["Design", "Arts"],
+        cover_image: null,
+    },
+    {
+        title: "Est ullamcorper eget nulla",
+        id: 24,
+        description:
+            "Surpis cursus in hac habitasse platea. Sed nisi lacus sed viverra tellus in hac. Vel eros donec ac odio tempor orci dapibus ultrices. At risus viverra adipiscing at in tellus integer feugiat scelerisque. Augue interdum velit euismod in. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien eget mi proin sed libero enim sed. At quis risus sed vulputate odio ut enim. In fermentum et sollicitudin ac orci. Interdum consectetur libero id faucibus nisl tincidunt. Sed arcu non odio euismod. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Pharetra massa massa ultricies mi quis hendrerit. Id eu nisl nunc mi ipsum faucibus vitae. Mollis nunc sed id semper risus in hendrerit gravida rutrum. Nunc non blandit massa enim.",
+        categories: ["Design", "Arts"],
+        cover_image: "24.jpg",
+    },
+    {
+        title: "Ultricies mi eget mauris pharetra et",
+        id: 25,
+        description:
+            "Platea sed nisi lacus sed viverra tellus in hac. Vel eros donec ac odio tempor orci dapibus ultrices. At risus viverra adipiscing at in tellus integer feugiat scelerisque. Augue interdum velit euismod in. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien eget mi proin sed libero enim sed. At quis risus sed vulputate odio ut enim. In fermentum et sollicitudin ac orci. Interdum consectetur libero id faucibus nisl tincidunt. Sed arcu non odio euismod. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Pharetra massa massa ultricies mi quis hendrerit. Id eu nisl nunc mi ipsum faucibus vitae. Mollis nunc sed id semper risus in hendrerit gravida rutrum. Nunc non blandit massa enim.",
+        categories: ["Design", "Arts"],
+        cover_image: "25.jpg",
+    },
+    {
+        title: "Tellus orci ac auctor augue mauris augue neque",
+        id: 26,
+        description:
+            "Cursus in hac habitasse platea. Sed nisi lacus sed viverra tellus in hac. Vel eros donec ac odio tempor orci dapibus ultrices. At risus viverra adipiscing at in tellus integer feugiat scelerisque. Augue interdum velit euismod in. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien eget mi proin sed libero enim sed. At quis risus sed vulputate odio ut enim. In fermentum et sollicitudin ac orci. Interdum consectetur libero id faucibus nisl tincidunt. Sed arcu non odio euismod. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Pharetra massa massa ultricies mi quis hendrerit. Id eu nisl nunc mi ipsum faucibus vitae. Mollis nunc sed id semper risus in hendrerit gravida rutrum. Nunc non blandit massa enim.",
+        categories: ["Design", "Arts"],
+        cover_image: "26.jpg",
+    },
+    {
+        title: "Placerat orci nulla pellentesque dignissim enim sit amet",
+        id: 27,
+        description:
+            "A arcu cursus vitae congue mauris. Praesent semper feugiat nibh sed. Feugiat in ante metus dictum. Eu consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "27.jpg",
+    },
+    {
+        title: "Purus viverra accumsan in nisl",
+        id: 28,
+        description:
+            "Praesent semper feugiat nibh sed. Feugiat in ante metus dictum. Eu consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: null,
+    },
+    {
+        title: "Risus ultricies tristique nulla aliquet enim tortor",
+        id: 29,
+        description:
+            "Feugiat in ante metus dictum. Eu consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "29.jpg",
+    },
+    {
+        title: "Non pulvinar neque laoreet suspendisse",
+        id: 30,
+        description:
+            "Consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: "30.jpg",
+    },
+    {
+        title: "Dictum varius neque laoreet suspendisse",
+        id: 32,
+        description:
+            "Consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: null,
+    },
+    {
+        title: "Non pulvinar neque laoreet suspendisse",
+        id: 33,
+        description:
+            "Consequat ac felis donec et odio pellentesque diam. Sit amet dictum sit amet justo donec enim diam vulputate. Dictum varius duis at consectetur. Bibendum est ultricies integer quis auctor elit sed. Bibendum at varius vel pharetra vel turpis nunc. Faucibus interdum posuere lorem ipsum dolor. Iaculis eu non diam phasellus vestibulum lorem sed. Quam nulla porttitor massa id neque. Eu consequat ac felis donec et odio. Nec ullamcorper sit amet risus nullam eget felis. Tempus egestas sed sed risus pretium quam vulputate dignissim. Massa sapien faucibus et molestie ac. Orci sagittis eu volutpat odio. Montes nascetur ridiculus mus mauris. Non enim praesent elementum facilisis. Rhoncus dolor purus non enim praesent elementum facilisis.",
+        categories: ["Design", "Arts"],
+        cover_image: null,
+    },
+];
+//
 </script>
 <template>
     <GuestsLayout>
@@ -44,186 +305,49 @@ defineProps({
             <template #content>
                 <ul
                     role="list"
-                    class="myPrimarySection mx-auto grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
+                    class="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-y-12 gap-x-4"
                 >
-                    <li>
+                    <li
+                        v-for="post in posts"
+                        :key="post.id"
+                        class="whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-12"
+                    >
                         <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
+                            v-if="post.cover_image !== null"
+                            :src="`/storage/app-images/blog/${post.cover_image}`"
+                            :alt="post.title"
+                            class="pointer-events-none object-cover group-hover:opacity-75 cursor-pointer"
                         />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Michael Foster
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">Co-Founder / CTO</p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Dries Vincent
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">
-                            Business Relations
-                        </p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Lindsay Walton
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">
-                            Front-end Developer
-                        </p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Courtney Henry
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">Designer</p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Tom Cook
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">
-                            Director of Product
-                        </p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Whitney Francis
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">Copywriter</p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Leonard Krasner
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">Senior Designer</p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Floyd Miles
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">
-                            Principal Designer
-                        </p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Emily Selman
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">
-                            VP, User Experience
-                        </p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Kristin Watson
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">
-                            VP, Human Resources
-                        </p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1505840717430-882ce147ef2d?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Emma Dorsey
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">Senior Developer</p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1509783236416-c9ad59bae472?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Alicia Bell
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">Junior Copywriter</p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1507101105822-7472b28e22ac?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Jenny Wilson
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">Studio Artist</p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Anna Roberts
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">Partner, Creative</p>
-                    </li>
-                    <li>
-                        <img
-                            class="mx-auto h-24 w-24 rounded-full"
-                            src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=1024&amp;h=1024&amp;q=80"
-                            alt=""
-                        />
-                        <h3 class="myPrimaryParagraph font-normal mt-2">
-                            Benjamin Russel
-                        </h3>
-                        <p class="myPrimaryParagraph mt-2">
-                            Director, Print Operations
-                        </p>
+
+                        <div class="px-2 pb-2">
+                            <ul class="flex flex-wrap gap-y-12 gap-x-2">
+                                <li
+                                    v-for="category in post.categories"
+                                    :key="category"
+                                    class="myPrimaryParagraph font-medium mt-2 mb-2 cursor-pointer flex-none"
+                                >
+                                    <span class="text-[10px] uppercase">
+                                        {{ category }}
+                                    </span>
+                                </li>
+                            </ul>
+                            <p class="myPrimaryParagraph font-medium mt-2 mb-2">
+                                {{ post.title }}
+                            </p>
+                            <p class="myPrimaryParagraph text-xs">
+                                {{ post.description.slice(0, 55) }}..
+                            </p>
+                            <p
+                                class="myPrimaryParagraph font-medium mt-2 mb-2 text-[10px] text-myPrimaryMediumGrayColor"
+                            >
+                                {{
+                                    format(
+                                        parseISO("2023-06-03 21:10:29"),
+                                        "dd/MM/yyyy"
+                                    )
+                                }}
+                            </p>
+                        </div>
                     </li>
                 </ul>
             </template>

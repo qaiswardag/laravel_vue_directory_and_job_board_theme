@@ -140,7 +140,7 @@ const faqs = [
                 <div class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-3">
                     <div>
                         <h2 class="myTertiaryHeader">Everything you need</h2>
-                        <p class="mt-2 myPrimaryParagraph font-medium">
+                        <p class="mt-2 myPrimaryParagraph">
                             Lorem ipsum, dolor sit amet consectetur adipisicing
                             elit. Maiores impedit perferendis suscipit eaque,
                             iste dolor cupiditate blanditiis ratione.
@@ -156,7 +156,7 @@ const faqs = [
                         >
                             <dt class="myFourthHeader">
                                 <CheckIcon
-                                    class="absolute left-0 top-1 h-5 w-5 text-indigo-500"
+                                    class="absolute left-0 top-1 h-5 w-5 text-myPrimaryLinkColor"
                                     aria-hidden="true"
                                 />
                                 {{ feature.name }}
