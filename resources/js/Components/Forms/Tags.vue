@@ -1,10 +1,21 @@
 <script setup>
-import { onMounted, onUpdated, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 const props = defineProps({
     tagsOnLoad: {
         type: String,
     },
+    clearTags: {
+        required: true,
+    },
+});
+
+const clearTagsStatus = computed(() => {
+    return props.clearTags;
+});
+
+watch(clearTagsStatus, () => {
+    tagsEntered.value = [];
 });
 
 const error = ref(null);
@@ -63,7 +74,6 @@ onMounted(() => {
 
 <template>
     <div>
-        <p>tags entered inden i: {{ tagsEntered }}</p>
         <div class="flex gap-2 items-center flex-wrap">
             <TransitionGroup name="tags">
                 <template v-for="tag in tagsEntered" :key="tag">

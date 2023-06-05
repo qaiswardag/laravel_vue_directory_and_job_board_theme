@@ -88,6 +88,9 @@ const getCurrentAttachedUsers = computed(() => {
 });
 
 const formType = ref("create");
+const pathLocalStorage = `post-form-${
+    props.currentUserTeam ? props.currentUserTeam.reference_id : null
+}`;
 
 // use media library
 const showMediaLibraryModal = ref(false);
@@ -131,7 +134,6 @@ const handleUploadCoverImage = function () {
 
         // handle show media library modal
         showMediaLibraryModal.value = false;
-        return;
     };
     // end modal
 };
@@ -237,10 +239,6 @@ const globalOptions = {
 
         ["clean"], // remove formatting button
     ],
-
-    theme: "snow",
-    placeholder: "Description",
-    readOnly: false,
 };
 // end Quill Editor
 
@@ -366,6 +364,7 @@ const handleClearForm = function () {
 };
 // end modal
 
+const clearTags = ref(null);
 // clear form
 const clearForm = function () {
     postForm.title = "";
@@ -387,14 +386,15 @@ const clearForm = function () {
     //
     //
     postForm.tags = "";
-    handleTags(postForm.tags);
+    clearTags.value = "";
     //
     //
     //
     postForm.show_author = true;
     postForm.author = [];
 
-    localStorage.removeItem("postForm");
+    localStorage.removeItem(pathLocalStorage);
+    console.log(localStorage.getItem(pathLocalStorage));
 };
 
 // is form dirty? returns true or false
@@ -408,14 +408,7 @@ const storeDirtyFormInLocalStorage = function () {
         postForm.isSlugEditable = isSlugEditable.value;
         const formDataJson = JSON.stringify(postForm);
         // Save the form data to local storage using the form ID as the key
-        localStorage.setItem(
-            `post-form-${
-                props &&
-                props.currentUserTeam &&
-                props.currentUserTeam.reference_id
-            }`,
-            formDataJson
-        );
+        localStorage.setItem(pathLocalStorage, formDataJson);
     }
 };
 // Will be executed when the user switch current route
@@ -432,23 +425,9 @@ onBeforeMount(() => {
     // User is creating a new Resource from scratch, rather than editing an existing one
     // Check local storage
     if (props.post === null) {
-        if (
-            localStorage.getItem(
-                `post-form-${
-                    props &&
-                    props.currentUserTeam &&
-                    props.currentUserTeam.reference_id
-                }`
-            ) !== null
-        ) {
+        if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
-            const formDataJson = localStorage.getItem(
-                `post-form-${
-                    props &&
-                    props.currentUserTeam &&
-                    props.currentUserTeam.reference_id
-                }`
-            );
+            const formDataJson = localStorage.getItem(pathLocalStorage);
             let formLocalStorage = JSON.parse(formDataJson);
             //
             isSlugEditable.value = formLocalStorage.isSlugEditable;
@@ -497,7 +476,6 @@ onBeforeMount(() => {
         // slug is editable when editing an existing post
         isSlugEditable.value = true;
         slugValueCustom.value = props.post.slug;
-        // postForm.slug = props.post.slug;
 
         postForm.content = props.post.content;
         postForm.published = props.post.published === 1 ? true : false;
@@ -1042,13 +1020,11 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Tags</div>
-                    <p class="py-6 text-red-400">
-                        post form tags er: {{ postForm.tags }}
-                    </p>
                     <p class="myPrimaryParagraph">Enter tags for the post.</p>
                 </div>
                 <div class="myInputGroup">
                     <Tags
+                        :clearTags="clearTags"
                         :tagsOnLoad="postForm.tags"
                         @handleTags="handleTags"
                     ></Tags>

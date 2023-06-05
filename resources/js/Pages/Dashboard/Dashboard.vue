@@ -42,7 +42,6 @@ const currentUserDetails = ref(false);
         </template>
 
         <div class="myPrimarySection">
-            <h2 class="myTertiaryHeader">You</h2>
             <div
                 class="mb-6 py-6 px-6 relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
             >
