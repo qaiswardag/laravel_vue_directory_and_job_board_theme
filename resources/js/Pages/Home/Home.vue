@@ -14,17 +14,17 @@ const features = [
   {
     name: 'Technologies and Frameworks',
     description:
-      'Cutting-Edge Technologies and Frameworks: Develop with the Latest Stack, Laravel, Inertia, and Tailwind CSS.',
+      'Cutting-Edge Technologies and Frameworks. Developed with the Latest Stack, Laravel, Inertia, and Tailwind CSS.',
   },
   {
     name: 'Invite Team Members',
     description:
-      'Seamless Collaboration for Enhanced Efficiency. Invite and engage Team Members with ease.',
+      'Unleash the power of Teamwork. Invite and engage Team Members with ease.',
   },
   {
     name: 'Teamwork & Collaboration',
     description:
-      'Unleash the power of collaboration. Strengthen Teamwork and achieve collective success through collaboration.',
+      'Unleash the power of Teamwork. Strengthen Teamwork and achieve collective success through collaboration.',
   },
   {
     name: 'Media Library',
@@ -44,7 +44,7 @@ const features = [
   {
     name: 'Multiple Post Authors',
     description:
-      'Multiple Post Authors empowers Users within a Team to Contribute. Enriching Each Post with a Variety of Viewpoints.',
+      'Multiple Post Authors empowers Users within a Team to Contribute and enrich each Post with a variety of viewpoints.',
   },
   {
     name: 'Authorization',
@@ -61,7 +61,7 @@ const features = [
       'Set Brand and Link Colors once and apply them across the entire Platform with ease.',
   },
   {
-    name: 'Mobile-First approach',
+    name: 'Mobile-First Approach',
     description: 'Developed with Mobile-First approach.',
   },
 ];
@@ -112,7 +112,7 @@ const faqs = [
         </h1>
         <p class="myPrimaryMainPageParagraphNotLoggedIn">
           Discover the ultimate minimalist administration panel with robust and
-          multiple security layers and advanced features like team Management,
+          multiple security layers and advanced features like Team Management,
           Blog and Media Library.
         </p>
         <div class="flex justify-center">
@@ -185,7 +185,7 @@ const faqs = [
       <template #title>Frequently asked questions</template>
       <template #description>
         As new users join, they bring innovative ideas, unique skills, and
-        diverse experiences that enrich our platform. Connect with them, explore
+        diverse experiences that enrich the platform. Connect with them, explore
         their work, and celebrate the fresh energy they contribute to our
         collaborative space.
       </template>
@@ -224,7 +224,7 @@ const faqs = [
           </dl>
           <img
             class="w-full object-cover lg:col-span-8"
-            src="https://static.wixstatic.com/media/0d6674_6dce4e3171b64bf99f67c2b9cc001da1~mv2.png/v1/fill/w_1072,h_630,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0d6674_6dce4e3171b64bf99f67c2b9cc001da1~mv2.png"
+            src="/app-images/blog/4.jpg"
             alt="image"
           />
         </div>
