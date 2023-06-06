@@ -15,14 +15,4 @@ class TrustHosts extends Middleware
     {
         return [$this->allSubdomainsOfApplicationUrl()];
     }
-
-    /**
-     * Get all of the application URL's subdomains.
-     *
-     * @return array<int, string|null>
-     */
-    protected function allSubdomainsOfApplicationUrl()
-    {
-        return ["https://myself.myissue.io", "https://www.myself.myissue.io"];
-    }
 }
