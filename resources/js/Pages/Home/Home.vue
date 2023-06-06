@@ -12,9 +12,14 @@ import { CheckIcon } from '@heroicons/vue/20/solid';
 
 const features = [
   {
-    name: 'Invite team members',
+    name: 'Technologies and Frameworks',
     description:
-      'Effortlessly collaborate. Seamlessly invite and engage Team Members with ease.',
+      'Cutting-Edge Technologies and Frameworks: Develop with the Latest Stack, Laravel, Inertia, and Tailwind CSS.',
+  },
+  {
+    name: 'Invite Team Members',
+    description:
+      'Seamless Collaboration for Enhanced Efficiency. Invite and engage Team Members with ease.',
   },
   {
     name: 'Teamwork & Collaboration',
@@ -29,22 +34,21 @@ const features = [
   {
     name: 'Single Page Application',
     description:
-      'Streamline web interactions and ideal for mobile devices. Unlock efficiency and fluidity.',
+      'Fast, as most resources are only loaded once. Only data is transmitted back and forth.',
   },
   {
     name: 'Superadmin Management',
     description:
-      'Superadmin Management to effectively Update, Delete, and Manage Teams and Users with distinct Roles and Privileges.',
+      'Superadmin Management to effectively Create, Update and Delete. Manage Teams and Users with Custom Superadmin Roles and Privileges.',
   },
   {
     name: 'Multiple Post Authors',
     description:
-      'Enable multiple post authors. Attach multiple authors to each post for rich and diverse perspectives..',
+      'Multiple Post Authors empowers Users within a Team to Contribute. Enriching Each Post with a Variety of Viewpoints.',
   },
   {
     name: 'Authorization',
-    description:
-      'Authorization policies for Superadmin and Teams. Let resources automatically leverage existing application policies to determine a user’s abilities.',
+    description: 'Authorization Policies for Superadmins, Teams and Users.',
   },
   {
     name: 'Minimal and Intuitive Design',
@@ -55,6 +59,10 @@ const features = [
     name: 'Set Brand and Link Colors one place',
     description:
       'Set Brand and Link Colors once and apply them across the entire Platform with ease.',
+  },
+  {
+    name: 'Mobile-First approach',
+    description: 'Developed with Mobile-First approach.',
   },
 ];
 const faqs = [
@@ -133,8 +141,8 @@ const faqs = [
       <template #title>All-in-one platform</template>
       <template #description>
         <span class="block">
-          Minimalist app empowered with advanced team management capabilities
-          and a beautiful media library, it offers unrivaled control and
+          Minimalist app empowered with advanced Team Management capabilities
+          and a beautiful Media Library. Offers unrivaled control and
           efficiency. Take your administrative abilities to new heights with
           this minimal admin panel designed to streamline your operations and
           enhance productivity.
