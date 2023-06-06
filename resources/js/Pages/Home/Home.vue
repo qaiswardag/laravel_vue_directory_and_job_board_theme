@@ -14,59 +14,69 @@ const features = [
   {
     name: 'Invite team members',
     description:
-      'Effortlessly Collaborate: Seamlessly Invite and Engage Team Members with Ease.',
+      'Effortlessly collaborate. Seamlessly invite and engage Team Members with ease.',
   },
   {
     name: 'Teamwork & Collaboration',
     description:
-      'Unleash the Power of Collaboration. Strengthen Teamwork and Achieve Collective Success through Collaboration.',
+      'Unleash the power of collaboration. Strengthen Teamwork and achieve collective success through collaboration.',
   },
   {
     name: 'Media Library',
     description:
-      'Seamlessly Share Images within Your Team via the Media Library: Enhancing Collaboration and Efficiency.',
+      'Seamlessly share images within Your Team via the Media Library. Enhancing collaboration and efficiency.',
   },
   {
-    name: 'Calendars',
+    name: 'Single Page Application',
     description:
-      'Sed rerum sunt dignissimos ullam. Iusto iure occaecati voluptate eligendi fugiat sequi.',
+      'Streamline web interactions and ideal for mobile devices. Unlock efficiency and fluidity.',
   },
   {
     name: 'Superadmin Management',
     description:
-      'Superadmin Management to Effectively Update, Delete, and Manage Teams and Users with Distinct Roles and Privileges.',
+      'Superadmin Management to effectively Update, Delete, and Manage Teams and Users with distinct Roles and Privileges.',
   },
   {
     name: 'Multiple Post Authors',
     description:
-      'Enable Multiple Post Authors to Craft Compelling Narratives Together',
+      'Enable multiple post authors. Attach multiple authors to each post for rich and diverse perspectives..',
   },
   {
     name: 'Authorization',
     description:
       'Authorization policies for Superadmin and Teams. Let resources automatically leverage existing application policies to determine a user’s abilities.',
   },
+  {
+    name: 'Minimal and Intuitive Design',
+    description:
+      'Beautiful, elegant and intuitive design. Enhance user engagement with amazing visual experience.',
+  },
+  {
+    name: 'Set Brand and Link Colors one place',
+    description:
+      'Set Brand and Link Colors once and apply them across the entire Platform with ease.',
+  },
 ];
 const faqs = [
   {
     question: 'How does the team collaboration feature work?',
     answer:
-      'Our dashboard allows team members to communicate, share files, and assign tasks, enhancing collaboration and streamlining project management.',
+      'The app allows team members to share Images, add multiple Post Authors, manage Team Members and determine Users abilities.',
   },
   {
     question: 'What is the purpose of the media library?',
     answer:
-      'The media library simplifies storing, organizing, and managing various media assets, such as images and videos, making it easy to use them across the platform.',
+      'The media library simplifies storing, organizing, and managing various media assets, making it easy to share images within Your Team to use them across the platform to enhancing collaboration.',
   },
   {
-    question: 'Can I manage my blog using the dashboard?',
+    question: 'Can I manage the blog easily?',
     answer:
-      'Absolutely! Our dashboard includes a comprehensive blog management system, enabling you to create, edit, and publish blog posts with ease, enhancing your content management capabilities.',
+      'Absolutely! The dashboard includes a comprehensive blog management system, enabling you to create, edit, and publish blog posts with ease, enhancing your content management capabilities.',
   },
   {
     question: 'Is it possible to customize the dashboard to match my branding?',
     answer:
-      'Yes, our Laravel dashboard with Vue.js offers extensive customization options, allowing you to personalize the user interface, colors, and branding elements to reflect your unique style and identity.',
+      'Yes, our Laravel dashboard with Vue offers extensive customization options, allowing you to personalize the user interface, colors, and branding elements to reflect your unique style and identity.',
   },
   {
     question: 'How secure is the app?',
@@ -135,9 +145,8 @@ const faqs = [
           <div>
             <h2 class="myTertiaryHeader">Everything you need</h2>
             <p class="mt-2 myPrimaryParagraph">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
-              impedit perferendis suscipit eaque, iste dolor cupiditate
-              blanditiis ratione.
+              Complete Solution for Seamless Management and Control. Everything
+              You Need to Get Started Right Out of the Box.
             </p>
           </div>
           <dl
