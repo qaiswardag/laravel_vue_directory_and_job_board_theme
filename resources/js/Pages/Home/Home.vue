@@ -1,229 +1,217 @@
 <script setup>
-import GuestsLayout from "@/Layouts/GuestsLayout.vue";
-import { AdjustmentsHorizontalIcon } from "@heroicons/vue/24/outline";
-import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
-import DefaultElement from "@/Components/Layouts/DefaultElement.vue";
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
-import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/vue/24/outline";
-import SectionBorder from "@/Components/Sections/SectionBorder.vue";
-import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
-import EmptySectionBorder from "../../Components/Sections/EmptySectionBorder.vue";
-import { CheckIcon } from "@heroicons/vue/20/solid";
+import GuestsLayout from '@/Layouts/GuestsLayout.vue';
+import { AdjustmentsHorizontalIcon } from '@heroicons/vue/24/outline';
+import FullWidthElement from '@/Components/Layouts/FullWidthElement.vue';
+import DefaultElement from '@/Components/Layouts/DefaultElement.vue';
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
+import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/vue/24/outline';
+import SectionBorder from '@/Components/Sections/SectionBorder.vue';
+import FooterSectionBorder from '@/Components/Sections/FooterSectionBorder.vue';
+import EmptySectionBorder from '../../Components/Sections/EmptySectionBorder.vue';
+import { CheckIcon } from '@heroicons/vue/20/solid';
 
 const features = [
-    {
-        name: "Invite team members",
-        description:
-            "Rerum repellat labore necessitatibus reprehenderit molestiae praesentium.",
-    },
-    {
-        name: "Teamwork & collaboration",
-        description:
-            "Corporis asperiores ea nulla temporibus asperiores non tempore assumenda aut.",
-    },
-    {
-        name: "Keyboard shortcuts",
-        description:
-            "In sit qui aliquid deleniti et. Ad nobis sunt omnis. Quo sapiente dicta laboriosam.",
-    },
-    {
-        name: "Calendars",
-        description:
-            "Sed rerum sunt dignissimos ullam. Iusto iure occaecati voluptate eligendi fugiat sequi.",
-    },
-    {
-        name: "Notifications",
-        description:
-            "Quos inventore harum enim nesciunt. Aut repellat rerum omnis adipisci.",
-    },
-    {
-        name: "Boards",
-        description:
-            "Quae sit sunt excepturi fugit veniam voluptatem ipsum commodi.",
-    },
-    {
-        name: "Reporting",
-        description:
-            "Eos laudantium repellat sed architecto earum unde incidunt. Illum sit dolores voluptatem.",
-    },
-    {
-        name: "Mobile app",
-        description:
-            "Nulla est saepe accusamus nostrum est est. Fugit voluptatum omnis quidem voluptatem.",
-    },
+  {
+    name: 'Invite team members',
+    description:
+      'Effortlessly Collaborate: Seamlessly Invite and Engage Team Members with Ease.',
+  },
+  {
+    name: 'Teamwork & Collaboration',
+    description:
+      'Unleash the Power of Collaboration. Strengthen Teamwork and Achieve Collective Success through Collaboration.',
+  },
+  {
+    name: 'Media Library',
+    description:
+      'Seamlessly Share Images within Your Team via the Media Library: Enhancing Collaboration and Efficiency.',
+  },
+  {
+    name: 'Calendars',
+    description:
+      'Sed rerum sunt dignissimos ullam. Iusto iure occaecati voluptate eligendi fugiat sequi.',
+  },
+  {
+    name: 'Superadmin Management',
+    description:
+      'Superadmin Management to Effectively Update, Delete, and Manage Teams and Users with Distinct Roles and Privileges.',
+  },
+  {
+    name: 'Multiple Post Authors',
+    description:
+      'Enable Multiple Post Authors to Craft Compelling Narratives Together',
+  },
+  {
+    name: 'Authorization',
+    description:
+      'Authorization policies for Superadmin and Teams. Let resources automatically leverage existing application policies to determine a user’s abilities.',
+  },
 ];
 const faqs = [
-    {
-        question: "How does the team collaboration feature work?",
-        answer: "Our dashboard allows team members to communicate, share files, and assign tasks, enhancing collaboration and streamlining project management.",
-    },
-    {
-        question: "What is the purpose of the media library?",
-        answer: "The media library simplifies storing, organizing, and managing various media assets, such as images and videos, making it easy to use them across the platform.",
-    },
-    {
-        question: "Can I manage my blog using the dashboard?",
-        answer: "Absolutely! Our dashboard includes a comprehensive blog management system, enabling you to create, edit, and publish blog posts with ease, enhancing your content management capabilities.",
-    },
-    {
-        question:
-            "Is it possible to customize the dashboard to match my branding?",
-        answer: "Yes, our Laravel dashboard with Vue.js offers extensive customization options, allowing you to personalize the user interface, colors, and branding elements to reflect your unique style and identity.",
-    },
-    {
-        question: "How secure is the app?",
-        answer: "We prioritize data security and employ industry-standard measures to safeguard your information. The dashboard comes with robust and multiple security layers, secure authentication, and strict access controls.",
-    },
-    {
-        question:
-            "Can I integrate third-party tools or services with the dashboard?",
-        answer: "Absolutely! Our App is build using Laravel and Vue. Both frameworks provides seamless integration capabilities, allowing you to connect and utilize various third-party tools and services to enhance functionality and streamline your workflow.",
-    },
+  {
+    question: 'How does the team collaboration feature work?',
+    answer:
+      'Our dashboard allows team members to communicate, share files, and assign tasks, enhancing collaboration and streamlining project management.',
+  },
+  {
+    question: 'What is the purpose of the media library?',
+    answer:
+      'The media library simplifies storing, organizing, and managing various media assets, such as images and videos, making it easy to use them across the platform.',
+  },
+  {
+    question: 'Can I manage my blog using the dashboard?',
+    answer:
+      'Absolutely! Our dashboard includes a comprehensive blog management system, enabling you to create, edit, and publish blog posts with ease, enhancing your content management capabilities.',
+  },
+  {
+    question: 'Is it possible to customize the dashboard to match my branding?',
+    answer:
+      'Yes, our Laravel dashboard with Vue.js offers extensive customization options, allowing you to personalize the user interface, colors, and branding elements to reflect your unique style and identity.',
+  },
+  {
+    question: 'How secure is the app?',
+    answer:
+      'We prioritize data security and employ industry-standard measures to safeguard your information. The dashboard comes with robust and multiple security layers, secure authentication, and strict access controls.',
+  },
+  {
+    question:
+      'Can I integrate third-party tools or services with the dashboard?',
+    answer:
+      'Absolutely! Our App is build using Laravel and Vue. Both frameworks provides seamless integration capabilities, allowing you to connect and utilize various third-party tools and services to enhance functionality and streamline your workflow.',
+  },
 ];
 </script>
 
 <template>
-    <GuestsLayout>
-        <Head title="Home" />
-        <template #header>
-            <div class="myPrimaryMainPageHeaderParagraph">
-                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
-                    Laravel app empowered
-                    <br />
-                    with advanced features
-                </h1>
-                <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Discover the ultimate minimalist app with robust and
-                    multiple security layers and advanced features like team
-                    Management and Media Library.
-                </p>
-                <div class="flex justify-center">
-                    <div
-                        v-if="$page.props.user === null"
-                        class="mt-8 flex gap-2 items-center"
-                    >
-                        <Link :href="route('login')" class="myPrimaryButton">
-                            Login
-                        </Link>
-                        <Link :href="route('register')" class="myPrimaryButton">
-                            Sign up
-                        </Link>
-                    </div>
-                    <div
-                        v-if="$page.props.user !== null"
-                        class="mt-8 flex gap-2 items-center"
-                    >
-                        <Link
-                            :href="route('dashboard')"
-                            class="myPrimaryButton"
-                        >
-                            Go to dashboard
-                        </Link>
-                    </div>
-                </div>
+  <GuestsLayout>
+    <Head title="Home" />
+    <template #header>
+      <div class="myPrimaryMainPageHeaderParagraph">
+        <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
+          Laravel & Vue app empowered
+          <br />
+          with advanced features
+        </h1>
+        <p class="myPrimaryMainPageParagraphNotLoggedIn">
+          Discover the ultimate minimalist administration panel with robust and
+          multiple security layers and advanced features like team Management,
+          Blog and Media Library.
+        </p>
+        <div class="flex justify-center">
+          <div
+            v-if="$page.props.user === null"
+            class="mt-8 flex gap-2 items-center"
+          >
+            <Link :href="route('login')" class="myPrimaryButton"> Login </Link>
+            <Link :href="route('register')" class="myPrimaryButton">
+              Sign up
+            </Link>
+          </div>
+          <div
+            v-if="$page.props.user !== null"
+            class="mt-8 flex gap-2 items-center"
+          >
+            <Link :href="route('dashboard')" class="myPrimaryButton">
+              Go to dashboard
+            </Link>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <FullWidthElement :descriptionArea="true" class="bg-gray-50">
+      <template #title>All-in-one platform</template>
+      <template #description>
+        <span class="block">
+          Minimalist app empowered with advanced team management capabilities
+          and a beautiful media library, it offers unrivaled control and
+          efficiency. Take your administrative abilities to new heights with
+          this minimal admin panel designed to streamline your operations and
+          enhance productivity.
+        </span>
+      </template>
+      <template #content>
+        <div class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-3">
+          <div>
+            <h2 class="myTertiaryHeader">Everything you need</h2>
+            <p class="mt-2 myPrimaryParagraph">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
+              impedit perferendis suscipit eaque, iste dolor cupiditate
+              blanditiis ratione.
+            </p>
+          </div>
+          <dl
+            class="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:gap-y-16"
+          >
+            <div
+              v-for="feature in features"
+              :key="feature.name"
+              class="relative pl-9"
+            >
+              <dt class="myFourthHeader">
+                <CheckIcon
+                  class="absolute left-0 top-1 h-5 w-5 text-myPrimaryLinkColor"
+                  aria-hidden="true"
+                />
+                {{ feature.name }}
+              </dt>
+              <dd class="mt-2 myPrimaryParagraph">
+                {{ feature.description }}
+              </dd>
             </div>
-        </template>
+          </dl>
+        </div>
+      </template>
+    </FullWidthElement>
 
-        <FullWidthElement :descriptionArea="true" class="bg-gray-50">
-            <template #title>All-in-one platform</template>
-            <template #description>
-                <span class="block">
-                    Minimalist app empowered with advanced team management
-                    capabilities and a state-of-the-art media library, it offers
-                    unrivaled control and efficiency. Seamlessly manage and
-                    organize your media assets. Take your administrative prowess
-                    to new heights with this powerful solution designed to
-                    streamline your operations and enhance productivity.
-                </span>
-            </template>
-            <template #content>
-                <div class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-3">
-                    <div>
-                        <h2 class="myTertiaryHeader">Everything you need</h2>
-                        <p class="mt-2 myPrimaryParagraph">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing
-                            elit. Maiores impedit perferendis suscipit eaque,
-                            iste dolor cupiditate blanditiis ratione.
-                        </p>
-                    </div>
-                    <dl
-                        class="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:gap-y-16"
-                    >
-                        <div
-                            v-for="feature in features"
-                            :key="feature.name"
-                            class="relative pl-9"
-                        >
-                            <dt class="myFourthHeader">
-                                <CheckIcon
-                                    class="absolute left-0 top-1 h-5 w-5 text-myPrimaryLinkColor"
-                                    aria-hidden="true"
-                                />
-                                {{ feature.name }}
-                            </dt>
-                            <dd class="mt-2 myPrimaryParagraph">
-                                {{ feature.description }}
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </template>
-        </FullWidthElement>
-
-        <FullWidthElement :descriptionArea="true" class="bg-red-50">
-            <template #title>Frequently asked questions</template>
-            <template #description>
-                As new users join, they bring innovative ideas, unique skills,
-                and diverse experiences that enrich our platform. Connect with
-                them, explore their work, and celebrate the fresh energy they
-                contribute to our collaborative space.
-            </template>
-            <template #content>
-                <div class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-12">
-                    <dl
-                        class="divide-y divide-myPrimaryMediumGrayColor lg:col-span-4"
-                    >
-                        <Disclosure
-                            as="div"
-                            v-for="faq in faqs"
-                            :key="faq.question"
-                            v-slot="{ open }"
-                        >
-                            <dt>
-                                <DisclosureButton
-                                    class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
-                                >
-                                    <span class="myPrimaryParagraph font-medium"
-                                        >{{ faq.question }}
-                                    </span>
-                                    <span class="ml-6 flex h-7 items-center">
-                                        <PlusSmallIcon
-                                            v-if="!open"
-                                            class="h-5 w-5"
-                                            aria-hidden="true"
-                                        />
-                                        <MinusSmallIcon
-                                            v-else
-                                            class="h-5 w-5"
-                                            aria-hidden="true"
-                                        />
-                                    </span>
-                                </DisclosureButton>
-                            </dt>
-                            <DisclosurePanel as="dd" class="mt-2 pr-12 pb-16">
-                                <p class="myPrimaryParagraph">
-                                    {{ faq.answer }}
-                                </p>
-                            </DisclosurePanel>
-                        </Disclosure>
-                    </dl>
-                    <img
-                        class="w-full object-cover lg:col-span-8"
-                        src="https://static.wixstatic.com/media/0d6674_6dce4e3171b64bf99f67c2b9cc001da1~mv2.png/v1/fill/w_1072,h_630,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0d6674_6dce4e3171b64bf99f67c2b9cc001da1~mv2.png"
-                        alt="image"
+    <FullWidthElement :descriptionArea="true" class="bg-red-50">
+      <template #title>Frequently asked questions</template>
+      <template #description>
+        As new users join, they bring innovative ideas, unique skills, and
+        diverse experiences that enrich our platform. Connect with them, explore
+        their work, and celebrate the fresh energy they contribute to our
+        collaborative space.
+      </template>
+      <template #content>
+        <div class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-12">
+          <dl class="divide-y divide-myPrimaryMediumGrayColor lg:col-span-4">
+            <Disclosure
+              as="div"
+              v-for="faq in faqs"
+              :key="faq.question"
+              v-slot="{ open }"
+            >
+              <dt>
+                <DisclosureButton
+                  class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
+                >
+                  <span class="myPrimaryParagraph font-medium"
+                    >{{ faq.question }}
+                  </span>
+                  <span class="ml-6 flex h-7 items-center">
+                    <PlusSmallIcon
+                      v-if="!open"
+                      class="h-5 w-5"
+                      aria-hidden="true"
                     />
-                </div>
-            </template>
-        </FullWidthElement>
-    </GuestsLayout>
+                    <MinusSmallIcon v-else class="h-5 w-5" aria-hidden="true" />
+                  </span>
+                </DisclosureButton>
+              </dt>
+              <DisclosurePanel as="dd" class="mt-2 pr-12 pb-16">
+                <p class="myPrimaryParagraph">
+                  {{ faq.answer }}
+                </p>
+              </DisclosurePanel>
+            </Disclosure>
+          </dl>
+          <img
+            class="w-full object-cover lg:col-span-8"
+            src="https://static.wixstatic.com/media/0d6674_6dce4e3171b64bf99f67c2b9cc001da1~mv2.png/v1/fill/w_1072,h_630,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0d6674_6dce4e3171b64bf99f67c2b9cc001da1~mv2.png"
+            alt="image"
+          />
+        </div>
+      </template>
+    </FullWidthElement>
+  </GuestsLayout>
 </template>
