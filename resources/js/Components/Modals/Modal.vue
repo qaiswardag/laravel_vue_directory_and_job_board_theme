@@ -50,7 +50,7 @@ const maxWidthClass = computed(() => {
         <TransitionRoot :show="show" as="template">
             <Dialog
                 as="div"
-                class="fixed z-30 inset-0 overflow-y-auto sm:px-4 py-6"
+                class="fixed z-30 inset-0 overflow-y-auto sm:px-4 py-6 p-4"
                 @close="close"
             >
                 <div

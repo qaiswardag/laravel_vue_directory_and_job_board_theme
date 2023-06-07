@@ -97,15 +97,15 @@ const createTeam = () => {
 
         <template #description>
             Create a new team to collaborate with others on projects.
-            <br />
-            You will become Owner of this Team.
         </template>
 
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Status</div>
-                    <p class="myPrimaryParagraph">Specify Team status.</p>
+                    <div class="myPrimaryFormOrganizationHeader">Team Name</div>
+                    <p class="myPrimaryParagraph">
+                        Please specify a name for the team.
+                    </p>
                 </div>
                 <div class="myInputGroup">
                     <InputLabel for="name" value="Team Name" />
@@ -207,7 +207,7 @@ const createTeam = () => {
                         Team Owner
                     </div>
                     <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet.
+                        You will become Owner of this Team.
                     </p>
                 </div>
                 <div

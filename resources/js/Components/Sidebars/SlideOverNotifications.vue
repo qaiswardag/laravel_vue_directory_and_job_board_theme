@@ -41,7 +41,7 @@ const notifications = [
             "Unique design and customer loyalty schemes. Unique design and customer loyalty schemes",
     },
     {
-        title: "Chanel remains a privately held company owned",
+        title: "Lorem remains a privately held company owned",
         image: "https://images.unsplash.com/photo-1561794047-cc8f58725bdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
         description:
             "Privately held company owned by Alain and Gerard Wertheimer, grandsons of Pierre Wertheimer, an early business partner of Coco Chanel.",
@@ -150,7 +150,7 @@ const notificationsSlideOverButton = function () {
                                                         class="border border-gray-200 bg-gray-50 py-4 px-4 rounded"
                                                     >
                                                         <p
-                                                            class="text-sm font-normal text-myPrimaryDarkGrayColor mb-4 mt-2 block"
+                                                            class="text-sm font-medium text-myPrimaryDarkGrayColor mb-4 mt-2 block"
                                                         >
                                                             {{
                                                                 notification.title
@@ -179,7 +179,7 @@ const notificationsSlideOverButton = function () {
                                                         <p
                                                             class="text-xs text-myPrimaryDarkGrayColor my-2"
                                                         >
-                                                            Updated: 01.01.2023
+                                                            Updated: 01/01/2023
                                                         </p>
                                                         <p
                                                             class="text-sm text-myPrimaryDarkGrayColor mt-4"

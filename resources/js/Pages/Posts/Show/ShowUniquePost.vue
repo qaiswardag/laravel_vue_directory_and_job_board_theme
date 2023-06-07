@@ -160,7 +160,7 @@ defineProps({
                     <div v-if="post.published !== 0" class="myPrimaryWidget">
                         <h1 class="myTertiaryHeader">Published</h1>
                         <p
-                            class="bg-green-100 inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
+                            class="myPrimaryParagraph bg-green-100 inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
                         >
                             Published
                         </p>
@@ -178,7 +178,7 @@ defineProps({
                     <div v-if="post.show_author !== 0" class="myPrimaryWidget">
                         <h1 class="myTertiaryHeader">Show Authors</h1>
                         <p
-                            class="bg-green-100 inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
+                            class="myPrimaryParagraph bg-green-100 inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
                         >
                             Visible
                         </p>

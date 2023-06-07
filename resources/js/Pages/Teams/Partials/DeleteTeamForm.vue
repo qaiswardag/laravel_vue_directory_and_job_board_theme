@@ -93,8 +93,25 @@ const deleteTeam = function () {
                         Delete Team {{ team.name }}
                     </div>
                     <p class="myPrimaryParagraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Blanditiis, accusamus.
+                        Deleting a team is a permanent action and cannot be
+                        undone. Before proceeding with the deletion, please
+                        ensure that you have carefully considered the
+                        consequences. Here are a few points to keep in mind:
+
+                        <br />
+                        <br />
+                        Data Loss: Deleting a team will result in the permanent
+                        removal of all associated data, including team members,
+                        images, files, and any other team-specific information.
+                        Make sure you have backed up any important data.
+                        <br />
+                        <br />
+                        Collaboration Impact: Once a team is deleted, all
+                        collaboration and communication within the team will
+                        cease. Any ongoing projects, discussions, or shared
+                        resources will no longer be accessible. It is crucial to
+                        inform team members in advance and make alternative
+                        arrangements for their work and collaboration needs.
                     </p>
                 </div>
             </div>

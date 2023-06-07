@@ -127,6 +127,10 @@ onMounted(() => {
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div
                             v-if="
+                                Array.isArray(
+                                    getDashboardStats.fetchedData
+                                        .latestTeamMembers
+                                ) &&
                                 getDashboardStats.fetchedData.latestTeamMembers
                                     .length === 0
                             "
@@ -203,6 +207,9 @@ onMounted(() => {
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div
                             v-if="
+                                Array.isArray(
+                                    getDashboardStats.fetchedData.latestMedia
+                                ) &&
                                 getDashboardStats.fetchedData.latestMedia
                                     .length === 0
                             "
@@ -240,6 +247,9 @@ onMounted(() => {
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div
                             v-if="
+                                Array.isArray(
+                                    getDashboardStats.fetchedData.latestPosts
+                                ) &&
                                 getDashboardStats.fetchedData.latestPosts
                                     .length === 0
                             "

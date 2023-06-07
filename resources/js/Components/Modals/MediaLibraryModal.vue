@@ -188,7 +188,7 @@ const handleDeleteImage = function (imageId) {
                 @close="firstButton"
             >
                 <div
-                    class="flex items-end justify-center pb-20 text-center sm:block sm:p-0"
+                    class="flex items-end justify-center pb-20 text-center sm:block sm:p-0 p-4"
                 >
                     <TransitionChild
                         as="template"
