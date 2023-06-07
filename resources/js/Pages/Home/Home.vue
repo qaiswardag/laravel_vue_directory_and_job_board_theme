@@ -154,7 +154,7 @@ const faqs = [
                         target="_b
                     "
                         >Check out the code on GitHub and please star the GitHub
-                        repository</a
+                        repository.</a
                     >
                 </span>
             </template>

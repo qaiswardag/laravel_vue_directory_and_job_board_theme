@@ -34,7 +34,7 @@ defineProps({
                         <img
                             :src="`/storage/uploads/${post.cover_image_large}`"
                             alt=""
-                            class="inset-0 -z-10 min-h-[25rem] max-h-[35rem] w-full object-cover"
+                            class="inset-0 -z-10 w-full object-cover"
                         />
                     </div>
 

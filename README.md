@@ -97,7 +97,7 @@ Thank you for considering contributing to this project!
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send me an e-mail.
+If you discover a security vulnerability, please send me an e-mail.
 
 ## License
 
