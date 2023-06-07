@@ -273,7 +273,7 @@ const switchTeam = function (team) {
                                                     >{{
                                                         team.public
                                                             ? "Public"
-                                                            : "Privat"
+                                                            : "Private"
                                                     }}</span
                                                 >
                                             </td>

@@ -634,7 +634,7 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
-                    <p class="myPrimaryParagraph">Specify Post status.</p>
+                    <p class="myPrimaryParagraph">Specify post status.</p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
@@ -716,11 +716,11 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Show author
+                        Show Authors
                     </div>
                     <p
                         v-if="formType === 'update'"
-                        class="myPrimaryParagraph italic mt-4"
+                        class="myPrimaryParagraph mt-4"
                     >
                         The author of this post will be updated to the user who
                         last edited the post.

@@ -577,7 +577,7 @@ onMounted(() => {
                                         "
                                         class="inline-flex rounded-full px-2 myPrimaryParagraph font-medium text-green-800"
                                         >{{
-                                            user.public ? "Public" : "Privat"
+                                            user.public ? "Public" : "Private"
                                         }}</span
                                     >
                                 </td>

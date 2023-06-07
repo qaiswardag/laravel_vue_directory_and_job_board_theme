@@ -267,22 +267,25 @@ onMounted(() => {
                                 Thumbnail
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Title</th>
+                            <th scope="col" class="myPrimaryTableTh">Trash</th>
                             <th scope="col" class="myPrimaryTableTh">Status</th>
                             <th scope="col" class="myPrimaryTableTh">
-                                Post Id
+                                Show Authors
+                            </th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Post ID
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
 
                             <th scope="col" class="myPrimaryTableTh">
-                                Updated by
+                                Updated By
                             </th>
 
                             <th scope="col" class="myPrimaryTableTh">
-                                Team name
+                                Team Name
                             </th>
-                            <th scope="col" class="myPrimaryTableTh">Trash</th>
                             <th scope="col" class="myPrimaryTableTh">
-                                Update Date
+                                Updated Date
                             </th>
 
                             <th scope="col" class="myPrimaryTableTh">
@@ -350,6 +353,17 @@ onMounted(() => {
                                 <td class="myPrimaryTableTBodyTd">
                                     <span
                                         :class="
+                                            post.trash
+                                                ? 'bg-red-100 text-myPrimaryErrorColor'
+                                                : 'bg-green-50 text-myPrimaryLinkColor'
+                                        "
+                                        class="inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
+                                        >{{ post.trash ? "Deleted" : "" }}
+                                    </span>
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    <span
+                                        :class="
                                             post.published
                                                 ? 'bg-green-50 text-myPrimaryLinkColor'
                                                 : 'bg-red-100 text-myPrimaryErrorColor'
@@ -358,7 +372,20 @@ onMounted(() => {
                                         >{{
                                             post.published
                                                 ? "Published"
-                                                : "Privat"
+                                                : "Private"
+                                        }}</span
+                                    >
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    <span
+                                        :class="
+                                            post.show_author
+                                                ? 'bg-green-50 text-myPrimaryLinkColor'
+                                                : 'bg-red-100 text-myPrimaryErrorColor'
+                                        "
+                                        class="inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
+                                        >{{
+                                            post.show_author ? "Show" : "Hide"
                                         }}</span
                                     >
                                 </td>
@@ -439,17 +466,6 @@ onMounted(() => {
                                         $page.props.user &&
                                         $page.props.user.current_team.name
                                     }}
-                                </td>
-                                <td class="myPrimaryTableTBodyTd">
-                                    <span
-                                        :class="
-                                            post.trash
-                                                ? 'bg-red-100 text-myPrimaryErrorColor'
-                                                : 'bg-green-50 text-myPrimaryLinkColor'
-                                        "
-                                        class="inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
-                                        >{{ post.trash ? "Deleted" : "" }}
-                                    </span>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

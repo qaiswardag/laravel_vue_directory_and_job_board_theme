@@ -125,6 +125,16 @@ onMounted(() => {
                     </h2>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
+                        <div
+                            v-if="
+                                getDashboardStats.fetchedData.latestTeamMembers
+                                    .length === 0
+                            "
+                        >
+                            <p class="myPrimaryParagraph">
+                                Looks like there are no Team Members.
+                            </p>
+                        </div>
                         <ul role="list" class="grid grid-cols-1 myPrimaryGap">
                             <li
                                 v-for="member in getDashboardStats.fetchedData
@@ -191,6 +201,16 @@ onMounted(() => {
                     <h2 class="my-2 mb-4 myFourthHeader">Latest Team Images</h2>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
+                        <div
+                            v-if="
+                                getDashboardStats.fetchedData.latestMedia
+                                    .length === 0
+                            "
+                        >
+                            <p class="myPrimaryParagraph">
+                                Looks like there are no Images.
+                            </p>
+                        </div>
                         <ul
                             role="list"
                             class="grid grid-cols-[repeat(auto-fit,minmax(6rem,1fr))] gap-y-6 gap-x-6"
@@ -218,6 +238,16 @@ onMounted(() => {
                     <h2 class="my-2 mb-4 myFourthHeader">Latest Team Posts</h2>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
+                        <div
+                            v-if="
+                                getDashboardStats.fetchedData.latestPosts
+                                    .length === 0
+                            "
+                        >
+                            <p class="myPrimaryParagraph">
+                                Looks like there are no Posts.
+                            </p>
+                        </div>
                         <ul
                             role="list"
                             class="grid grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-y-6 gap-x-6"
@@ -243,12 +273,14 @@ onMounted(() => {
                                 </template>
 
                                 <div class="px-2 pb-2">
-                                    <ul class="flex flex-wrap gap-y-0 gap-x-2">
+                                    <ul
+                                        class="flex flex-wrap gap-y-0 gap-x-2 mt-2"
+                                    >
                                         <li
                                             v-for="tag in post.tags &&
                                             post.tags.split(',')"
                                             :key="tag"
-                                            class="myPrimaryParagraph font-medium cursor-pointer flex-none"
+                                            class="myPrimaryParagraph leading-4 font-medium cursor-pointer flex-none"
                                         >
                                             <span class="text-[10px] uppercase">
                                                 {{ tag }}
@@ -269,6 +301,7 @@ onMounted(() => {
                                     <p
                                         class="myPrimaryParagraph font-medium mt-2 mb-2 text-[10px] text-myPrimaryMediumGrayColor"
                                     >
+                                        Updated:
                                         {{
                                             format(
                                                 parseISO(post.updated_at),

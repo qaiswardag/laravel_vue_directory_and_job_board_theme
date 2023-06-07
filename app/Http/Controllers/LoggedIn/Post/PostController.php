@@ -178,7 +178,6 @@ class PostController extends Controller
     public function show($referenceId, Post $post, $slug)
     {
         $postRenderView = "Teams/Posts/Show/ShowTeamPost";
-        $authors = null;
 
         $team = Team::where("reference_id", $referenceId)->first();
 
@@ -207,6 +206,25 @@ class PostController extends Controller
         }
         if ($user === null) {
             $post->updatedBy = null;
+        }
+
+        // Retrieve the authors associated with the post
+
+        $authors = AuthorPost::where("post_id", $post->id)->get();
+
+        // Update the $post array with updatedBy information
+        if ($authors !== null) {
+            $post->authors = $authors->map(function ($author) {
+                return [
+                    "first_name" => $author->user->first_name,
+                    "last_name" => $author->user->last_name,
+                    "profile_photo_path" => $author->user->profile_photo_path,
+                ];
+            });
+        }
+
+        if ($authors === null) {
+            $post->authors = null;
         }
 
         // Render the post

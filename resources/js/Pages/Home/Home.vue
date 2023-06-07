@@ -106,9 +106,9 @@ const faqs = [
                     with advanced features
                 </h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Discover the ultimate minimalist administration panel with
-                    robust and multiple security layers and advanced features
-                    like Team Management, Blog and Media Library.
+                    Discover the ultimate open-source minimalist administration
+                    panel with robust and multiple security layers and advanced
+                    features like Team Management, Blog and Media Library.
                 </p>
                 <div class="flex justify-center">
                     <div
@@ -141,11 +141,21 @@ const faqs = [
             <template #title>All-in-one platform</template>
             <template #description>
                 <span class="block">
-                    Minimalist app empowered with advanced Team Management
-                    capabilities and a beautiful Media Library. Offers unrivaled
-                    control and efficiency. Take your administrative abilities
-                    to new heights with this minimal admin panel designed to
-                    streamline your operations and enhance productivity.
+                    Minimalist administration panel empowered with advanced Team
+                    Management capabilities and a beautiful Media Library.
+                    Offers control and efficiency. Take your administrative
+                    abilities to new heights with this minimal admin panel
+                    designed to streamline your operations and enhance
+                    productivity.
+                    <br />
+                    <a
+                        class="text-myPrimaryLinkColor"
+                        href="https://github.com/qaiswardag/myself"
+                        target="_b
+                    "
+                        >Check out the code on GitHub and please star the GitHub
+                        repository</a
+                    >
                 </span>
             </template>
             <template #content>

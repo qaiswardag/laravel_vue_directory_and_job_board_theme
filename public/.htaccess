@@ -18,4 +18,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+
+    RewriteCond %{HTTP_HOST} ^myself.myissue.io [NC]
+    RewriteRule ^(.*)$ http://www.myself.myissue.io/$1 [L,R=301,NC]
 </IfModule>

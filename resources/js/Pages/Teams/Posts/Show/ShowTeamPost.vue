@@ -29,33 +29,12 @@ const breadcrumbsLinks = [
     <LoggedInLayout>
         <Head title="Post" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Post</h2>
+            <h2 class="myPrimaryMainPageHeader">Team Post</h2>
         </template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-        <div class="myPrimarySection">
-            <div>
-                <p class="my-12 myPrimaryParagraph">
-                    updatedBy:
-                    <br />
-                    <br />
-                    {{ post.updatedBy }}
-                </p>
-                <p class="my-12 myPrimaryParagraph">
-                    authors:
-                    <br />
-                    <br />
-                    {{ authors }}
-                </p>
-                <p class="my-12 myPrimaryParagraph">
-                    post:
-                    <br />
-                    <br />
-                    {{ post }}
-                </p>
-            </div>
-        </div>
+        <div class="myPrimarySection"></div>
 
         <!-- sShow Unique Post - start -->
         <ShowUniquePost :post="post" :authors="authors"></ShowUniquePost>

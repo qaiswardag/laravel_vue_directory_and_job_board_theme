@@ -48,9 +48,9 @@ const currentUserDetails = ref(false);
                 <div
                     class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                 >
+                    <!-- start photo -->
                     <div class="hover:bg-white px-2">
                         <div class="rounded">
-                            <!-- start photo -->
                             <div class="flex items-center gap-2 my-4">
                                 <div
                                     v-if="
