@@ -106,9 +106,9 @@ const faqs = [
                     with advanced features
                 </h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Discover the ultimate open-source minimalist administration
-                    panel with robust and multiple security layers and advanced
-                    features like Team Management, Blog and Media Library.
+                    Discover the ultimate minimalist administration panel with
+                    robust and multiple security layers and advanced features
+                    like Team Management, Blog and Media Library.
                 </p>
                 <div class="flex justify-center">
                     <div
@@ -148,13 +148,19 @@ const faqs = [
                     designed to streamline your operations and enhance
                     productivity.
                     <br />
+                    Contact me to request access to the code. You can reach me
+                    through
                     <a
                         class="text-myPrimaryLinkColor"
-                        href="https://github.com/qaiswardag/myself"
-                        target="_b
-                    "
-                        >Check out the code on GitHub and please star the GitHub
-                        repository.</a
+                        href="mailto:qais.wardag@outlook.com"
+                        >Email</a
+                    >
+                    or
+                    <a
+                        class="text-myPrimaryLinkColor"
+                        href="https://www.linkedin.com/in/qaiswardag/"
+                        target="_blank"
+                        >LinkedIn.</a
                     >
                 </span>
             </template>
