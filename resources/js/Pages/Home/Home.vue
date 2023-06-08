@@ -14,7 +14,7 @@ const features = [
     {
         name: "Technologies and Frameworks",
         description:
-            "Cutting-Edge Technologies and Frameworks. Developed with the Latest Stack, Laravel, Vue 3, Inertia, and Tailwind CSS.",
+            "Cutting-Edge Technologies and Frameworks. Developed with the Latest Stack, Laravel, Vue 3, Vuex, Composition API, Inertia, and Tailwind CSS.",
     },
     {
         name: "Invite Team Members",
@@ -101,16 +101,29 @@ const faqs = [
         <template #header>
             <div class="myPrimaryMainPageHeaderParagraph">
                 <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
-                    Laravel & Vue app empowered
+                    Laravel & Vue Admin Panel
                     <br />
-                    with advanced features
                 </h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
                     Experience the elegance with our Admin Panel.
                     <br />
-                    Beautiful Admin Panel empowered with robust and multiple
-                    Security Layers, advanced Team Management, Blog and Media
-                    Library.
+                    Multiple Security Layers, advanced Team Management, Blog and
+                    Media Library.
+                    <br />
+                    Contact me to request access to the code. You can reach me
+                    through
+                    <a
+                        class="text-myPrimaryLinkColor"
+                        href="mailto:qais.wardag@outlook.com"
+                        >Email</a
+                    >
+                    or
+                    <a
+                        class="text-myPrimaryLinkColor"
+                        href="https://www.linkedin.com/in/qaiswardag"
+                        target="_blank"
+                        >LinkedIn.</a
+                    >
                 </p>
                 <div class="flex justify-center">
                     <div
