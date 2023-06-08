@@ -213,11 +213,11 @@ const handleDeleteImage = function (imageId) {
                     <TransitionChild
                         as="template"
                         enter="ease-out duration-300"
-                        enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        enter-to="opacity-100 translate-y-0 sm:scale-100"
+                        enter-from="opacity-0 scale-95"
+                        enter-to="opacity-100 scale-100"
                         leave="ease-in duration-200"
-                        leave-from="opacity-100 translate-y-0 sm:scale-100"
-                        leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        leave-from="opacity-100 scale-100"
+                        leave-to="opacity-0 scale-95"
                     >
                         <div
                             class="relative w-full min-h-[61rem] max-h-[61rem] inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
@@ -259,7 +259,7 @@ const handleDeleteImage = function (imageId) {
                                 <div class="flex-1">
                                     <!--content media library - start-->
                                     <div
-                                        class="flex-1 flex md:flex-row myPrimaryGap flex-col items-stretch overflow-hidden mt-2"
+                                        class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 p-2 overflow-y-scroll"
                                     >
                                         <!-- Main content - start-->
                                         <main class="flex-1 relativ">
@@ -364,7 +364,7 @@ const handleDeleteImage = function (imageId) {
                                         <aside
                                             v-if="selected === 'Media library'"
                                             aria-label="sidebar"
-                                            class="md:w-72 relative min-h-[55rem] max-h-[55rem]"
+                                            class="md:w-72 relative md:min-h-[55rem] md:max-h-[55rem] min-h-[22rem] max-h-[22rem]"
                                         >
                                             <div
                                                 class="md:w-72 md:min-h-[50.8rem] md:max-h-[50.8rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
@@ -377,7 +377,7 @@ const handleDeleteImage = function (imageId) {
                                                             ).length === 0) ||
                                                         getCurrentImage === null
                                                     "
-                                                    class="pb-6 space-y-6 md:px-3 sm:px-2 pt-2"
+                                                    class="pb-6 space-y-6 md:px-3 px-2 pt-2"
                                                 >
                                                     <p
                                                         class="myPrimaryParagraph text-xs p-2"
@@ -447,15 +447,13 @@ const handleDeleteImage = function (imageId) {
                                                         target="_blank"
                                                     >
                                                         <img
-                                                            class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer"
+                                                            class="mx-auto block w-full rounded-t-sm object-cover object-center cursor-pointer"
                                                             :src="`/storage/uploads/${getCurrentImage.currentImage.mediaLibrary.medium_path}`"
                                                             alt="image"
                                                         />
                                                     </a>
 
-                                                    <div
-                                                        class="md:px-3 sm:px-2"
-                                                    >
+                                                    <div class="md:px-3 px-2">
                                                         <div>
                                                             <h2
                                                                 class="mySecondaryHeader py-2 break-words"
@@ -743,12 +741,9 @@ const handleDeleteImage = function (imageId) {
                                                         getCurrentImage.isError ===
                                                             false)
                                                 "
-                                                class="absolute bottom-0 right-0 left-0 px-2 my-2 sm:flex justify-center sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
+                                                class="absolute bottom-0 right-0 left-0 px-2 my-2 flex gap-2 justify-end"
                                             >
-                                                <div
-                                                    v-if="firstButtonText"
-                                                    class="w-full"
-                                                >
+                                                <div v-if="firstButtonText">
                                                     <button
                                                         ref="firstButtonRef"
                                                         class="mySecondaryButton"
@@ -759,10 +754,7 @@ const handleDeleteImage = function (imageId) {
                                                     </button>
                                                 </div>
 
-                                                <div
-                                                    v-if="secondButtonText"
-                                                    class="w-full"
-                                                >
+                                                <div v-if="secondButtonText">
                                                     <button
                                                         class="myPrimaryButton"
                                                         type="button"
@@ -798,7 +790,7 @@ const handleDeleteImage = function (imageId) {
                                                     getCurrentPreviewImage ===
                                                     null
                                                 "
-                                                class="pb-6 space-y-6 md:px-3 sm:px-2 pt-2"
+                                                class="pb-6 space-y-6 md:px-3 px-2 pt-2"
                                             >
                                                 <p
                                                     class="myPrimaryParagraph text-xs p-2"
@@ -821,7 +813,7 @@ const handleDeleteImage = function (imageId) {
                                                     alt="image"
                                                 />
 
-                                                <div class="md:px-3 sm:px-2">
+                                                <div class="md:px-3 px-2">
                                                     <div>
                                                         <h2
                                                             class="mySecondaryHeader py-2 break-words"

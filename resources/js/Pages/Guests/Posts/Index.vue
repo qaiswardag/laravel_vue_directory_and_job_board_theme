@@ -287,9 +287,11 @@ const posts = [
             <div class="myPrimaryMainPageHeaderParagraph">
                 <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Blog</h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Experience the epitome of elegance with our Exquisite Admin
-                    & Dashboard. Exquisite Admin & Dashboard Empowered with
-                    Advanced Team Management and Media Library
+                    Experience the elegance with our Admin Panel.
+                    <br />
+                    Beautiful Admin Panel empowered with robust and multiple
+                    Security Layers, advanced Team Management, Blog and Media
+                    Library.
                 </p>
             </div>
         </template>

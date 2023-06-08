@@ -202,7 +202,6 @@ Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
     "verified",
-    // "ensure.is.super.admin", // TODO: uncomment this middleware!
 ])->group(function () {
     Route::get("/admin/dashboard", [DashboardController::class, "index"])->name(
         "admin.dashboard"
@@ -232,6 +231,5 @@ Route::middleware([
 
 // Pages for test
 Route::get("/test-me", function () {
-    $team = Team::findOrFail(5);
-    return $team;
+    return Team::findOrFail(5);
 });

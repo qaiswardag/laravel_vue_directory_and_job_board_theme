@@ -1,7 +1,20 @@
 <template>
     <div
-        class="mx-auto px-6 py-4 md:flex md:items-center md:justify-between lg:px-8 bg-myPrimaryLightGrayColor"
+        class="space-y-6 mx-auto px-6 py-4 md:flex md:items-center md:justify-between lg:px-8 bg-myPrimaryLightGrayColor"
     >
+        <div
+            class="flex justify-center space-x-6 md:order-2 text-gray-600 hover:text-gray-700"
+        >
+            <p class="myPrimaryParagraph text-gray-600">
+                ©
+                <a
+                    href="https://github.com/qaiswardag"
+                    target="_blank"
+                    class="myPrimaryLink text-gray-600"
+                    >Qais Wardag / GitHub
+                </a>
+            </p>
+        </div>
         <div
             class="flex justify-center space-x-6 md:order-2 text-gray-600 hover:text-gray-700"
         >
@@ -20,17 +33,6 @@
                     ></path>
                 </svg>
             </a>
-        </div>
-        <div class="mt-8 md:order-1 md:mt-0">
-            <p class="myPrimaryParagraph text-gray-600">
-                ©
-                <a
-                    href="https://github.com/qaiswardag"
-                    target="_blank"
-                    class="myPrimaryLink text-gray-600"
-                    >Qais Wardag / GitHub
-                </a>
-            </p>
         </div>
     </div>
 </template>

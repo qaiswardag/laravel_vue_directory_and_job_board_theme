@@ -159,7 +159,7 @@ onMounted(() => {
 
             <!-- content start -->
             <div
-                class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 py-4 max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8 overflow-y-scroll"
+                class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 p-2 overflow-y-scroll"
             >
                 <main class="overflow-y-auto relativ w-full">
                     <div>
@@ -241,7 +241,7 @@ onMounted(() => {
                                 getCurrentUsers.fetchedData.users &&
                                 getCurrentUsers.fetchedData.total_results !== 0
                             "
-                            class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4 gap-2"
+                            class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4 gap-2 flex-wrap-reverse"
                         >
                             <TailwindPagination
                                 :limit="2"
@@ -257,9 +257,11 @@ onMounted(() => {
                                     'rounded-full',
                                 ]"
                                 :item-classes="[
+                                    'p-0',
+                                    'm-0',
                                     'border-none',
-                                    'bg-gray-100',
-                                    'hover:bg-gray-200',
+                                    'bg-gray-200',
+                                    'hover:bg-gray-300',
                                     'text-myPrimaryDarkGrayColor',
                                     'rounded-full',
                                 ]"
@@ -557,9 +559,7 @@ onMounted(() => {
         <div
             class="bg-gray-100 px-6 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
         >
-            <div
-                class="sm:items-end sm:justify-end flex sm:flex-row flex-col myPrimaryGap sm:w-3/6 w-full"
-            >
+            <div class="sm:w-3/6 w-full px-2 my-2 flex gap-2 justify-end">
                 <button
                     v-if="firstButtonText"
                     ref="firstButtonRef"

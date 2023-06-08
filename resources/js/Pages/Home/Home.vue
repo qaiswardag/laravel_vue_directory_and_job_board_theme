@@ -106,9 +106,11 @@ const faqs = [
                     with advanced features
                 </h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Discover the ultimate minimalist administration panel with
-                    robust and multiple security layers and advanced features
-                    like Team Management, Blog and Media Library.
+                    Experience the elegance with our Admin Panel.
+                    <br />
+                    Beautiful Admin Panel empowered with robust and multiple
+                    Security Layers, advanced Team Management, Blog and Media
+                    Library.
                 </p>
                 <div class="flex justify-center">
                     <div
@@ -141,12 +143,11 @@ const faqs = [
             <template #title>All-in-one platform</template>
             <template #description>
                 <span class="block">
-                    Minimalist administration panel empowered with advanced Team
-                    Management capabilities and a beautiful Media Library.
-                    Offers control and efficiency. Take your administrative
-                    abilities to new heights with this minimal admin panel
-                    designed to streamline your operations and enhance
-                    productivity.
+                    Minimalist Admin Panel empowered with advanced Team
+                    Management capabilities, Blog, and a beautiful Media
+                    Library. Offers control and efficiency. Let users and teams
+                    elevate their administrative abilities to new heights.
+                    Designed to streamline operations and enhance productivity.
                     <br />
                     Contact me to request access to the code. You can reach me
                     through

@@ -154,9 +154,11 @@ onMounted(() => {
                 'rounded-full',
             ]"
             :item-classes="[
+                'p-0',
+                'm-0',
                 'border-none',
-                'bg-gray-100',
-                'hover:bg-gray-200',
+                'bg-gray-200',
+                'hover:bg-gray-300',
                 'text-myPrimaryDarkGrayColor',
                 'rounded-full',
             ]"
@@ -222,10 +224,10 @@ onMounted(() => {
                 >
                     <div
                         @click="handleImageClick(image.id)"
-                        class="border border-myPrimaryLightGrayColor rounded px-2 p-2 cursor-pointer bg-gray-50"
+                        class="border border-myPrimaryLightGrayColor px-0 pb-2 cursor-pointer bg-gray-50 rounded-sm"
                     >
                         <img
-                            class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer"
+                            class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
                             :class="{
                                 '':
                                     image.id ===
@@ -236,12 +238,8 @@ onMounted(() => {
                             alt="image"
                         />
 
-                        <p
-                            class="myPrimaryParagraph text-xs italic pl-1 break-words"
-                        ></p>
-
                         <dl
-                            class="myPrimaryParagraph text-xs mt-2 border-gray-200 divide-y divide-gray-200"
+                            class="myPrimaryParagraph text-xs mt-2 px-1 border-gray-200 divide-y divide-gray-200"
                         >
                             <div class="py-3 flex justify-between items-center">
                                 <dt class="">Selected</dt>

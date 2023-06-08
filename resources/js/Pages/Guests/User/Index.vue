@@ -26,9 +26,9 @@ defineProps({
             <div class="myPrimaryMainPageHeaderParagraph">
                 <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Users</h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Experience the epitome of elegance with our Exquisite Admin
-                    & Dashboard. Exquisite Admin & Dashboard Empowered with
-                    Advanced Team Management and Media Library
+                    Experience the elegance with our Admin Panel & Dashboard.
+                    Beautiful Admin Panel empowered with advanced Team
+                    Management, Blog and Media Library.
                 </p>
             </div>
         </template>

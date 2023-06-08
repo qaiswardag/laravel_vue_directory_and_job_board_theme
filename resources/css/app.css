@@ -434,6 +434,11 @@
 
 .tailwind-pagination-package {
     box-shadow: none !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px 0px;
+    justify-content: center;
 }
 .tailwind-pagination-package > :first-child,
 .tailwind-pagination-package > :last-child {
