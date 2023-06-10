@@ -1011,9 +1011,6 @@ onBeforeMount(() => {
                     </div>
                 </div>
                 <InputError :message="postForm.errors.cover_image_original" />
-                <InputError :message="postForm.errors.cover_image_thumbnail" />
-                <InputError :message="postForm.errors.cover_image_medium" />
-                <InputError :message="postForm.errors.cover_image_large" />
             </div>
             <!-- cover image - end -->
             <!-- tags - start -->

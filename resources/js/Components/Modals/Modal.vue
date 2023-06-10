@@ -85,7 +85,7 @@ const maxWidthClass = computed(() => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="relative w-full inline-block align-bottom bg-white rounded-lg pt-5 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle"
+                            class="relative w-full inline-block align-bottom bg-white rounded-lg pt-5 text-left overflow-hidden shadow-xl transform transition-all sm:align-top"
                             :class="[
                                 maxWidthClass ? maxWidthClass : '',
                                 minHeight ? minHeight : '',

@@ -354,9 +354,6 @@ const notificationsModalButton = function () {
                     </div>
                 </div>
                 <InputError :message="form.errors.logo_original" />
-                <InputError :message="form.errors.logo_thumbnail" />
-                <InputError :message="form.errors.logo_medium" />
-                <InputError :message="form.errors.logo_large" />
             </div>
             <!-- logo - end -->
             <!-- cover image - start -->
@@ -428,9 +425,6 @@ const notificationsModalButton = function () {
                     </div>
                 </div>
                 <InputError :message="form.errors.cover_image_original" />
-                <InputError :message="form.errors.cover_image_thumbnail" />
-                <InputError :message="form.errors.cover_image_medium" />
-                <InputError :message="form.errors.cover_image_large" />
             </div>
             <!-- cover image - end -->
 

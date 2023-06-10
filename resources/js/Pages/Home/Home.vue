@@ -105,8 +105,7 @@ const faqs = [
                     <br />
                 </h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Experience the elegance with our Admin Panel.
-                    <br />
+                    Experience elegance with a minimalistic Admin Panel. <br />
                     Multiple Security Layers, advanced Team Management, Blog and
                     Media Library.
                     <br />
@@ -215,10 +214,11 @@ const faqs = [
         <FullWidthElement :descriptionArea="true" class="bg-red-50">
             <template #title>Frequently asked questions</template>
             <template #description>
-                As new users join, they bring innovative ideas, unique skills,
-                and diverse experiences that enrich the platform. Connect with
-                them, explore their work, and celebrate the fresh energy they
-                contribute to our collaborative space.
+                Minimalist Admin Panel empowered with advanced Team Management
+                capabilities, Blog, and a beautiful Media Library. Offers
+                control and efficiency. Let users and teams elevate their
+                administrative abilities to new heights. Designed to streamline
+                operations and enhance productivity.
             </template>
             <template #content>
                 <div class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-12">

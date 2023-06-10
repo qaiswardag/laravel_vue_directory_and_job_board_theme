@@ -26,9 +26,24 @@ defineProps({
             <div class="myPrimaryMainPageHeaderParagraph">
                 <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Users</h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Experience the elegance with our Admin Panel & Dashboard.
-                    Beautiful Admin Panel empowered with advanced Team
-                    Management, Blog and Media Library.
+                    Experience elegance with a minimalistic Admin Panel. <br />
+                    Multiple Security Layers, advanced Team Management, Blog and
+                    Media Library.
+                    <br />
+                    Contact me to request access to the code. You can reach me
+                    through
+                    <a
+                        class="text-myPrimaryLinkColor"
+                        href="mailto:qais.wardag@outlook.com"
+                        >Email</a
+                    >
+                    or
+                    <a
+                        class="text-myPrimaryLinkColor"
+                        href="https://www.linkedin.com/in/qaiswardag"
+                        target="_blank"
+                        >LinkedIn.</a
+                    >
                 </p>
             </div>
         </template>
@@ -36,10 +51,11 @@ defineProps({
         <FullWidthElement :descriptionArea="true" class="bg-gray-50">
             <template #title>Latest Users</template>
             <template #description>
-                As new users join, they bring innovative ideas, unique skills,
-                and diverse experiences that enrich our platform. Connect with
-                them, explore their work, and celebrate the fresh energy they
-                contribute to our collaborative space.
+                Minimalist Admin Panel empowered with advanced Team Management
+                capabilities, Blog, and a beautiful Media Library. Offers
+                control and efficiency. Let users and teams elevate their
+                administrative abilities to new heights. Designed to streamline
+                operations and enhance productivity.
             </template>
             <template #content>
                 <ul
