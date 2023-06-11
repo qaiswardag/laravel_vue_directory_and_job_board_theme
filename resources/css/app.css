@@ -90,9 +90,12 @@
     */
 
     .myPrimarythumbnailLogo {
-        @apply aspect-square mx-auto block mt-2 mb-6 w-32 h-32  transition-all rounded-md object-cover object-center cursor-pointer;
+        @apply mx-auto block mt-2 mb-6 w-40  transition-all rounded-md object-cover cursor-pointer;
     }
     .myPrimarythumbnailInsertPreview {
+        @apply mx-auto block mt-2 mb-6 w-full hover:shadow-sm transition-all rounded-md  object-cover cursor-pointer;
+    }
+    .myPrimarythumbnailInsertPreview2 {
         @apply aspect-square mx-auto block mt-2 mb-6 w-full hover:shadow-sm transition-all rounded-md object-cover object-center cursor-pointer;
     }
     /*

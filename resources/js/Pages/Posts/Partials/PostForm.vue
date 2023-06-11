@@ -966,6 +966,7 @@ onBeforeMount(() => {
                     alt="cover image"
                     :src="`/storage/uploads/${postForm.cover_image_medium}`"
                 />
+
                 <div
                     class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
                 >
