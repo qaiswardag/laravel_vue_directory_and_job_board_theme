@@ -171,14 +171,14 @@ const notificationsSlideOverButton = function () {
                     class="hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
                 >
                     <div
-                        class="h-9 w-9 flex-shrink-0"
+                        class="h-10 w-10 flex-shrink-0"
                         v-if="
                             $page.props.user &&
                             $page.props.user.profile_photo_path !== null
                         "
                     >
                         <img
-                            class="object-cover w-9 h-9 rounded-full flex-shrink-0"
+                            class="object-cover w-10 h-10 rounded-full flex-shrink-0"
                             :src="`/storage/${$page.props.user.profile_photo_path}`"
                             :alt="
                                 $page.props.user.first_name +
