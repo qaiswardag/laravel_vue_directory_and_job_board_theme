@@ -8,7 +8,7 @@ import {
     TransitionRoot,
 } from "@headlessui/vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
-import { ChevronRightIcon } from "@heroicons/vue/24/outline";
+import { ChevronRightIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
 // props
 const props = defineProps({
@@ -144,31 +144,16 @@ const navigation = [
                                                 >
                                                     <button
                                                         type="button"
-                                                        class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
+                                                        class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
                                                         @click="
                                                             $emit(
                                                                 'primaryMenuSlideOverButton'
                                                             )
                                                         "
                                                     >
-                                                        <span class="sr-only"
-                                                            >Close panel</span
-                                                        >
-
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            stroke-width="1.5"
-                                                            stroke="currentColor"
-                                                            class="w-6 h-6"
-                                                        >
-                                                            <path
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                                d="M6 18L18 6M6 6l12 12"
-                                                            />
-                                                        </svg>
+                                                        <XMarkIcon
+                                                            class="shrink-0 w-6 h-6"
+                                                        ></XMarkIcon>
                                                     </button>
                                                 </div>
                                             </div>

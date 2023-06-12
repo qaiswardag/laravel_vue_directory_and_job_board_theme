@@ -120,9 +120,20 @@ onMounted(() => {
                 <div
                     class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
                 >
-                    <h2 class="my-2 mb-4 myFourthHeader">
-                        Latest Team Members
-                    </h2>
+                    <Link
+                        :href="
+                            route(
+                                'team.members',
+                                $page.props.user.current_team.reference_id
+                            )
+                        "
+                    >
+                        <h2
+                            class="my-2 mb-4 myFourthHeader text-myPrimaryLinkColor hover:underline"
+                        >
+                            Latest Team Members
+                        </h2>
+                    </Link>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div
@@ -202,7 +213,20 @@ onMounted(() => {
                 <div
                     class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
                 >
-                    <h2 class="my-2 mb-4 myFourthHeader">Latest Team Images</h2>
+                    <Link
+                        :href="
+                            route(
+                                'media.index',
+                                $page.props.user.current_team.reference_id
+                            )
+                        "
+                    >
+                        <h2
+                            class="my-2 mb-4 myFourthHeader text-myPrimaryLinkColor hover:underline"
+                        >
+                            Latest Team Images
+                        </h2>
+                    </Link>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div
@@ -242,7 +266,20 @@ onMounted(() => {
                 <div
                     class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
                 >
-                    <h2 class="my-2 mb-4 myFourthHeader">Latest Team Posts</h2>
+                    <Link
+                        :href="
+                            route(
+                                'team.posts.index',
+                                $page.props.user.current_team.reference_id
+                            )
+                        "
+                    >
+                        <h2
+                            class="my-2 mb-4 myFourthHeader text-myPrimaryLinkColor hover:underline"
+                        >
+                            Latest Team Posts
+                        </h2>
+                    </Link>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div
@@ -329,7 +366,11 @@ onMounted(() => {
                 <div
                     class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
                 >
-                    <h2 class="my-2 mb-4 myFourthHeader">Latest Team Stats</h2>
+                    <h2
+                        class="my-2 mb-4 myFourthHeader text-myPrimaryLinkColor"
+                    >
+                        Latest Team Stats
+                    </h2>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div class="mx-auto">

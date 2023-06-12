@@ -130,14 +130,15 @@ const notificationsSlideOverButton = function () {
             aria-label="Global"
         >
             <template v-if="$page.props.user !== null">
-                <Link
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
-                    :href="route('dashboard')"
-                >
-                    <AdjustmentsVerticalIcon
-                        class="h-6 w-6"
-                        aria-hidden="true"
-                    />
+                <Link :href="route('dashboard')">
+                    <div
+                        class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                    >
+                        <AdjustmentsVerticalIcon
+                            class="shrink-0 w-6 h-6"
+                            aria-hidden="true"
+                        />
+                    </div>
                 </Link>
             </template>
             <template v-if="$page.props.user === null">
@@ -167,7 +168,7 @@ const notificationsSlideOverButton = function () {
             <template v-if="$page.props.user !== null">
                 <div
                     @click="handleMenuUserTeamModal"
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                    class="hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
                 >
                     <div
                         class="h-9 w-9 flex-shrink-0"
@@ -192,9 +193,9 @@ const notificationsSlideOverButton = function () {
                         "
                         @click="handleMenuUserTeamModal"
                         type="button"
-                        class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
+                        class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
                     >
-                        <UserIcon class="h-6 w-6" aria-hidden="true" />
+                        <UserIcon class="shrink-0 w-6 h-6" aria-hidden="true" />
                     </button>
                 </div>
             </template>
@@ -203,20 +204,20 @@ const notificationsSlideOverButton = function () {
                 <button
                     @click="handleNotificationsSlideOver"
                     type="button"
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
+                    class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
                 >
                     <span class="sr-only">View notifications</span>
-                    <BellIcon class="h-6 w-6" aria-hidden="true" />
+                    <BellIcon class="shrink-0 w-6 h-6" aria-hidden="true" />
                 </button>
             </template>
 
             <button
                 @click="handlePrimaryMenuSlideOver"
                 type="button"
-                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
+                class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
             >
                 <span class="sr-only">View Menu</span>
-                <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+                <Bars3Icon class="shrink-0 w-6 h-6" aria-hidden="true" />
             </button>
         </nav>
     </header>

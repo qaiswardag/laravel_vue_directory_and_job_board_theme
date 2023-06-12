@@ -182,16 +182,17 @@ const notificationsSlideOverButton = function () {
             class="mx-auto flex gap-4 max-w-7xl items-center justify-end px-6 lg:px-8"
             aria-label="Global"
         >
-            <Link
-                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
-                :href="route('home')"
-            >
-                <HomeIcon class="h-6 w-6" aria-hidden="true" />
+            <Link :href="route('home')">
+                <div
+                    class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                >
+                    <HomeIcon class="shrink-0 h-6 w-6" aria-hidden="true" />
+                </div>
             </Link>
 
             <div
                 @click="handleMenuUserTeamModal"
-                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50"
+                class="hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
             >
                 <div
                     class="h-9 w-9 flex-shrink-0"
@@ -216,28 +217,28 @@ const notificationsSlideOverButton = function () {
                     "
                     @click="handleMenuUserItem"
                     type="button"
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
+                    class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
                 >
-                    <UserIcon class="h-6 w-6" aria-hidden="true" />
+                    <UserIcon class="shrink-0 h-6 w-6" aria-hidden="true" />
                 </button>
             </div>
 
             <button
                 @click="handleNotificationsSlideOver"
                 type="button"
-                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
+                class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
             >
                 <span class="sr-only">View notifications</span>
-                <BellIcon class="h-6 w-6" aria-hidden="true" />
+                <BellIcon class="shrink-0 h-6 w-6" aria-hidden="true" />
             </button>
 
             <button
                 @click="handlePrimaryMenuSlideOver"
                 type="button"
-                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium ring-1 ring-gray-200"
+                class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
             >
                 <span class="sr-only">View Menu</span>
-                <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+                <Bars3Icon class="shrink-0 h-6 w-6" aria-hidden="true" />
             </button>
         </nav>
     </header>
