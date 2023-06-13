@@ -164,42 +164,155 @@ const notificationsModalButton = function () {
         </template>
 
         <template #description>
+            <!-- Team owner box - start -->
+            <p class="myPrimaryParagraph py-2">Team Owner</p>
             <div
-                v-if="
-                    $page.props.team.owner &&
-                    $page.props.team.owner.id === $page.props.user.id
-                "
+                class="mb-6 py-6 px-6 relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
             >
-                <p class="group flex items-center pr-2 py-2 myPrimaryParagraph">
-                    Your current Role is
+                <div
+                    class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                >
+                    <div class="hover:bg-white px-2">
+                        <div class="rounded">
+                            <div class="rounded">
+                                <!-- start photo -->
+                                <div class="flex items-center gap-2 my-4">
+                                    <div
+                                        v-if="
+                                            $page.props.team.owner &&
+                                            $page.props.team.owner
+                                                .profile_photo_path !== null
+                                        "
+                                        class="flex-shrink-0"
+                                    >
+                                        <img
+                                            class="object-cover w-12 h-12 rounded-full"
+                                            :src="`/storage/${$page.props.team.owner.profile_photo_path}`"
+                                            :alt="
+                                                $page.props.team.owner
+                                                    .first_name +
+                                                $page.props.team.owner.last_name
+                                            "
+                                        />
+                                    </div>
 
-                    {{ $page.props.currentUserTeamRole?.name }}
-                </p>
+                                    <div
+                                        v-if="
+                                            $page.props.team.owner &&
+                                            $page.props.team.owner
+                                                .profile_photo_path === null
+                                        "
+                                        class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                    >
+                                        {{
+                                            $page.props.team.owner.first_name
+                                                .charAt(0)
+                                                .toUpperCase()
+                                        }}
+                                        {{
+                                            $page.props.team.owner.last_name
+                                                .charAt(0)
+                                                .toUpperCase()
+                                        }}
+                                    </div>
+                                    <span
+                                        class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                    >
+                                        <p class="font-medium">
+                                            {{
+                                                $page.props.team.owner
+                                                    .first_name
+                                            }}
+                                            {{
+                                                $page.props.team.owner.last_name
+                                            }}
+                                        </p>
+                                        <p>Team Role: Owner</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- Team owner box - end -->
+
+            <hr />
+
+            <!-- Your Role in Team - start -->
+            <p class="myPrimaryParagraph py-2">You</p>
             <div
-                v-if="
-                    $page.props.team.owner &&
-                    $page.props.team.owner.id !== $page.props.user.id
-                "
+                class="mb-6 py-6 px-6 relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
             >
-                <p class="myPrimaryParagraph">
-                    Team owner is
-                    <span>
-                        {{
-                            $page.props.team.owner &&
-                            $page.props.team.owner.first_name
-                        }}
-                        {{
-                            $page.props.team.owner &&
-                            $page.props.team.owner.last_name
-                        }}
-                    </span>
-                </p>
-                <p class="group flex items-center pr-2 myPrimaryParagraph">
-                    Your current Role is
-                    {{ $page.props.currentUserTeamRole?.name }}
-                </p>
+                <div
+                    class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                >
+                    <div class="hover:bg-white px-2">
+                        <div class="rounded">
+                            <!-- start photo -->
+                            <div class="flex items-center gap-2 my-4">
+                                <div
+                                    v-if="
+                                        $page.props.user &&
+                                        $page.props.user.profile_photo_path !==
+                                            null
+                                    "
+                                    class="flex-shrink-0"
+                                >
+                                    <img
+                                        class="object-cover w-12 h-12 rounded-full"
+                                        :src="`/storage/${$page.props.user.profile_photo_path}`"
+                                        alt="User Image
+                                            
+                                        "
+                                    />
+                                </div>
+
+                                <div
+                                    v-if="
+                                        $page.props.user &&
+                                        $page.props.user.profile_photo_path ===
+                                            null
+                                    "
+                                    class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                >
+                                    {{
+                                        $page.props.user.first_name
+                                            .charAt(0)
+                                            .toUpperCase()
+                                    }}
+                                    {{
+                                        $page.props.user.last_name
+                                            .charAt(0)
+                                            .toUpperCase()
+                                    }}
+                                </div>
+                                <span
+                                    class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                >
+                                    <p class="font-medium">
+                                        {{ $page.props.user.first_name }}
+                                        {{ $page.props.user.last_name }}
+                                    </p>
+                                    <p
+                                        v-if="
+                                            $page.props.currentUserTeamRole
+                                                ?.name
+                                        "
+                                    >
+                                        Team Role:
+                                        {{
+                                            $page.props.currentUserTeamRole
+                                                ?.name
+                                        }}
+                                    </p>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- Your Role in Team - end -->
         </template>
 
         <template #main>
@@ -427,70 +540,6 @@ const notificationsModalButton = function () {
                 <InputError :message="form.errors.cover_image_original" />
             </div>
             <!-- cover image - end -->
-
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Team Owner
-                    </div>
-                </div>
-                <div
-                    class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
-                >
-                    <div class="hover:bg-white px-2">
-                        <div class="rounded">
-                            <!-- start photo -->
-                            <div class="flex items-center gap-2 my-4">
-                                <div
-                                    v-if="
-                                        $page.props.team.owner &&
-                                        $page.props.team.owner
-                                            .profile_photo_path !== null
-                                    "
-                                    class="flex-shrink-0"
-                                >
-                                    <img
-                                        class="object-cover w-12 h-12 rounded-full"
-                                        :src="`/storage/${$page.props.team.owner.profile_photo_path}`"
-                                        :alt="
-                                            $page.props.team.owner.first_name +
-                                            $page.props.team.owner.last_name
-                                        "
-                                    />
-                                </div>
-
-                                <div
-                                    v-if="
-                                        $page.props.team.owner &&
-                                        $page.props.team.owner
-                                            .profile_photo_path === null
-                                    "
-                                    class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                >
-                                    {{
-                                        $page.props.team.owner.first_name
-                                            .charAt(0)
-                                            .toUpperCase()
-                                    }}
-                                    {{
-                                        $page.props.team.owner.last_name
-                                            .charAt(0)
-                                            .toUpperCase()
-                                    }}
-                                </div>
-                                <span
-                                    class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                >
-                                    <span class="font-medium">
-                                        {{ $page.props.team.owner.first_name }}
-                                        {{ $page.props.team.owner.last_name }}
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <MediaLibraryModal
                 :user="$page.props.user"

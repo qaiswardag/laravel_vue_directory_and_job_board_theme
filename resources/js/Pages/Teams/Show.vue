@@ -39,68 +39,64 @@ const breadcrumbsLinks = [
                 >
                     <div class="hover:bg-white px-2">
                         <div class="rounded">
-                            <div class="rounded">
-                                <!-- start photo -->
-                                <div class="flex items-center gap-2 my-4">
-                                    <div
-                                        v-if="
-                                            $page.props.team.owner &&
-                                            $page.props.team.owner
-                                                .profile_photo_path !== null
+                            <!-- start photo -->
+                            <div class="flex items-center gap-2 my-4">
+                                <div
+                                    v-if="
+                                        $page.props.user &&
+                                        $page.props.user.profile_photo_path !==
+                                            null
+                                    "
+                                    class="flex-shrink-0"
+                                >
+                                    <img
+                                        class="object-cover w-12 h-12 rounded-full"
+                                        :src="`/storage/${$page.props.user.profile_photo_path}`"
+                                        alt="User Image
+                                            
                                         "
-                                        class="flex-shrink-0"
-                                    >
-                                        <img
-                                            class="object-cover w-12 h-12 rounded-full"
-                                            :src="`/storage/${$page.props.team.owner.profile_photo_path}`"
-                                            :alt="
-                                                $page.props.team.owner
-                                                    .first_name +
-                                                $page.props.team.owner.last_name
-                                            "
-                                        />
-                                    </div>
-
-                                    <div
-                                        v-if="
-                                            $page.props.team.owner &&
-                                            $page.props.team.owner
-                                                .profile_photo_path === null
-                                        "
-                                        class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                    >
-                                        {{
-                                            $page.props.team.owner.first_name
-                                                .charAt(0)
-                                                .toUpperCase()
-                                        }}
-                                        {{
-                                            $page.props.team.owner.last_name
-                                                .charAt(0)
-                                                .toUpperCase()
-                                        }}
-                                    </div>
-                                    <span
-                                        class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                    >
-                                        <p class="font-medium">
-                                            {{
-                                                $page.props.team.owner
-                                                    .first_name
-                                            }}
-                                            {{
-                                                $page.props.team.owner.last_name
-                                            }}
-                                        </p>
-                                        <p>
-                                            Team Role:
-                                            {{
-                                                $page.props.currentUserTeamRole
-                                                    ?.name
-                                            }}
-                                        </p>
-                                    </span>
+                                    />
                                 </div>
+
+                                <div
+                                    v-if="
+                                        $page.props.user &&
+                                        $page.props.user.profile_photo_path ===
+                                            null
+                                    "
+                                    class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                >
+                                    {{
+                                        $page.props.user.first_name
+                                            .charAt(0)
+                                            .toUpperCase()
+                                    }}
+                                    {{
+                                        $page.props.user.last_name
+                                            .charAt(0)
+                                            .toUpperCase()
+                                    }}
+                                </div>
+                                <span
+                                    class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                >
+                                    <p class="font-medium">
+                                        {{ $page.props.user.first_name }}
+                                        {{ $page.props.user.last_name }}
+                                    </p>
+                                    <p
+                                        v-if="
+                                            $page.props.currentUserTeamRole
+                                                ?.name
+                                        "
+                                    >
+                                        Team Role:
+                                        {{
+                                            $page.props.currentUserTeamRole
+                                                ?.name
+                                        }}
+                                    </p>
+                                </span>
                             </div>
                         </div>
                     </div>
