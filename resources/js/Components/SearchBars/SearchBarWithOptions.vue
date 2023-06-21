@@ -116,8 +116,8 @@ const selectedUpdated = function (chosen) {
                         >
                             <ListboxOption
                                 as="template"
-                                @click="selectedUpdated(category)"
                                 v-for="category in categories"
+                                @click="selectedUpdated(category)"
                                 :key="category"
                                 :value="category"
                                 v-slot="{ active, selected }"

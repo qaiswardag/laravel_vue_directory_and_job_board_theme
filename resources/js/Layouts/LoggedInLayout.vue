@@ -59,7 +59,7 @@ const sidebarOpen = ref(false);
     <!-- head-key makes sure to only add one meta key -->
     <!-- <Head>
         <title>{{ title }}</title>
-        <meta type="description" content="myself" head-key="description" />
+        <meta type="description" content="MYISSUE" head-key="description" />
     </Head> -->
     <Banner />
     <Flash :flash="$page.props.flash"></Flash>

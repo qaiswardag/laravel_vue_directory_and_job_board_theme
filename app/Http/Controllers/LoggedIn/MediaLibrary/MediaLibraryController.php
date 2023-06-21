@@ -17,7 +17,6 @@ class MediaLibraryController extends Controller
 {
     // Define $imagePaths as a property current class
     private $imagePaths;
-    const PUBLIC_UPLOAD_PATH = "app/public/uploads/";
 
     /**
      * Display a listing of the resource.

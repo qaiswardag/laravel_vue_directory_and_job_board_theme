@@ -1,3 +1,3 @@
 <template>
-    <div class="text-2xl">myself.ae</div>
+    <div class="text-2xl">myissue.io</div>
 </template>

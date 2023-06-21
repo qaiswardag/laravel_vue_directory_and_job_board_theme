@@ -16,7 +16,7 @@ defineProps({
 });
 
 const form = useForm({
-    email: "jd@myself.ae",
+    email: "jd@myissue.io",
     password: "123456",
     remember: true,
 });
@@ -82,7 +82,7 @@ const submit = () => {
                         <p
                             class="myPrimaryParagraph text-xs italic pt-2 text-gray-600"
                         >
-                            Email: jd@myself.ae
+                            Email: jd@myissue.io
                         </p>
                         <InputError :message="form.errors.email" />
                     </div>

@@ -19,7 +19,7 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
     
-    # Rdirect the request to www from non-www
-    RewriteCond %{HTTP_HOST} ^myself\.myissue\.io [NC]
-    RewriteRule ^(.*)$ https://www.myself.myissue.io/$1 [L,R=301]
+    # Redirect the request to www from non-www
+    RewriteCond %{HTTP_HOST} ^admin\.myissue\.io [NC]
+    RewriteRule ^(.*)$ https://www.admin.myissue.io/$1 [L,R=301]
 </IfModule>

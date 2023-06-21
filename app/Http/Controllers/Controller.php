@@ -10,4 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    const PUBLIC_UPLOAD_PATH = "app/public/uploads/";
+
 }

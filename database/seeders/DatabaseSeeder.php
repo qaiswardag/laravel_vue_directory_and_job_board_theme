@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             "id" => 1,
             "first_name" => "John",
             "last_name" => "Doe",
-            "email" => "jd@myself.ae",
+            "email" => "jd@myissue.io",
             "public" => true,
             "current_team_id" => 1,
             "password" => Hash::make("123456"),
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
             "id" => 2,
             "first_name" => "Shaun",
             "last_name" => "Pelling",
-            "email" => "sp@myself.ae",
+            "email" => "sp@myissue.io",
 
             "public" => false,
             "current_team_id" => 2,
@@ -67,7 +67,7 @@ class DatabaseSeeder extends Seeder
             "id" => 3,
             "first_name" => "Mie",
             "last_name" => "Mortensen",
-            "email" => "mm@myself.ae",
+            "email" => "mm@myissue.io",
 
             "public" => true,
             "current_team_id" => 3,
@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
             "id" => 101,
             "first_name" => "Qais",
             "last_name" => "Wardag",
-            "email" => "qw@myself.ae",
+            "email" => "qw@myissue.io",
             "public" => true,
             "current_team_id" => 1,
             "password" => Hash::make("123456"),
@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
             "id" => 4,
             "first_name" => "Marilyn",
             "last_name" => "Monroe",
-            "email" => "mjm@myself.ae",
+            "email" => "mjm@myissue.io",
             "current_team_id" => 4,
             "password" => Hash::make("123456"),
         ]);
@@ -113,7 +113,7 @@ class DatabaseSeeder extends Seeder
             "id" => 5,
             "first_name" => "Oprah",
             "last_name" => "Winfrey",
-            "email" => "ow@myself.ae",
+            "email" => "ow@myissue.io",
             "current_team_id" => 5,
             "password" => Hash::make("123456"),
         ]);
@@ -130,7 +130,7 @@ class DatabaseSeeder extends Seeder
             "id" => 6,
             "first_name" => "Ingrid",
             "last_name" => "Bergman",
-            "email" => "ib@myself.ae",
+            "email" => "ib@myissue.io",
             "current_team_id" => 6,
             "password" => Hash::make("123456"),
         ]);
@@ -148,7 +148,7 @@ class DatabaseSeeder extends Seeder
             "id" => 7,
             "first_name" => "Karl",
             "last_name" => "Lagerfeld",
-            "email" => "kl@myself.ae",
+            "email" => "kl@myissue.io",
             "current_team_id" => 1,
             "password" => Hash::make("123456"),
         ]);

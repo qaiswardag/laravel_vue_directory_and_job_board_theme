@@ -1,6 +1,6 @@
-<a href="https://www.myself.myissue.io" target="_blank">
+<a href="https://www.admin.myissue.io" target="_blank">
     <h1 align="center" style="font-size: 78px; font-family: 'Jost', sans-serif; text-align: center;">
-        myself
+        MYISSUE
     </h1>
 </a>
 
@@ -12,7 +12,7 @@ To star the repository, simply click on the **Star** button located at the top-r
 
 I have several years of experience in design and development and have worked on various projects in the past. This app was born out of my desire to make a minimalst admin panel with a elegant and intuitive design.
 
-[Demo](https://www.myself.myissue.io)
+[Demo](https://www.admin.myissue.io)
 
 ### Get in Touch
 

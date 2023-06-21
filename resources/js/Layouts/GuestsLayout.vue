@@ -33,7 +33,7 @@ router.on("finish", () => {
         <!-- head-key makes sure to only add on meta key -->
         <!-- <Head>
             <title>{{ title }}</title>
-            <meta type="description" content="myself" head-key="description" />
+            <meta type="description" content="MYISSUE" head-key="description" />
         </Head> -->
 
         <Banner />
