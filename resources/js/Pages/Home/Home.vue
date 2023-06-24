@@ -207,6 +207,16 @@ const faqs = [
                             Control. Everything You Need to Get Started Right
                             Out of the Box.
                         </p>
+                        <br />
+                        Build stunning pages with Vue 3 using an intuitive
+                        open-source
+                        <a
+                            class="text-myPrimaryLinkColor font-medium"
+                            href="https://www.designer.myissue.io"
+                            target="_blank"
+                        >
+                            drag-and-drop page builder.</a
+                        >
                     </div>
                     <dl
                         class="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:gap-y-16"
