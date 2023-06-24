@@ -16,9 +16,11 @@ class UpdateUserPassword implements UpdatesUserPasswords
      *
      * @param  array<string, string>  $input
      */
-    public function update(User $user, array $input): void
+    public function update(User $user, array $input)
     {
-        sleep(1);
+        return response()->json("You are not able to reset the password in the demo mdoe.", 403);
+
+        //
         Validator::make(
             $input,
             [

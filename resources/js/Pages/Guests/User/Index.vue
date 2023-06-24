@@ -30,6 +30,16 @@ defineProps({
                     Multiple Security Layers, advanced Team Management, Blog and
                     Media Library.
                     <br />
+                    Feel free to visit my
+                    <a
+                        class="text-myPrimaryLinkColor"
+                        href="https://github.com/qaiswardag"
+                        target="_blank"
+                        >GitHub</a
+                    >
+                    profile for more information.
+                    <br />
+
                     Contact me to request access to the code. You can reach me
                     through
                     <a
@@ -40,10 +50,10 @@ defineProps({
                     or
                     <a
                         class="text-myPrimaryLinkColor"
-                        href="https://www.linkedin.com/in/qaiswardag"
+                        href="https://www.linkedin.com/in/qaiswardag/"
                         target="_blank"
-                        >LinkedIn.</a
-                    >
+                        >LinkedIn</a
+                    >.
                 </p>
             </div>
         </template>

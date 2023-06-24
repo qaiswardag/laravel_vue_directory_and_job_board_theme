@@ -109,6 +109,17 @@ const faqs = [
                     Multiple Security Layers, advanced Team Management, Blog and
                     Media Library.
                     <br />
+                    <br />
+                    Feel free to visit my
+                    <a
+                        class="text-myPrimaryLinkColor"
+                        href="https://github.com/qaiswardag"
+                        target="_blank"
+                        >GitHub</a
+                    >
+                    profile for more information.
+                    <br />
+
                     Contact me to request access to the code. You can reach me
                     through
                     <a
@@ -119,10 +130,10 @@ const faqs = [
                     or
                     <a
                         class="text-myPrimaryLinkColor"
-                        href="https://www.linkedin.com/in/qaiswardag"
+                        href="https://www.linkedin.com/in/qaiswardag/"
                         target="_blank"
-                        >LinkedIn.</a
-                    >
+                        >LinkedIn</a
+                    >.
                 </p>
                 <div class="flex justify-center">
                     <div
@@ -161,6 +172,16 @@ const faqs = [
                     elevate their administrative abilities to new heights.
                     Designed to streamline operations and enhance productivity.
                     <br />
+                    Feel free to visit my
+                    <a
+                        class="text-myPrimaryLinkColor"
+                        href="https://github.com/qaiswardag"
+                        target="_blank"
+                        >GitHub</a
+                    >
+                    profile for more information.
+                    <br />
+
                     Contact me to request access to the code. You can reach me
                     through
                     <a
@@ -173,8 +194,8 @@ const faqs = [
                         class="text-myPrimaryLinkColor"
                         href="https://www.linkedin.com/in/qaiswardag/"
                         target="_blank"
-                        >LinkedIn.</a
-                    >
+                        >LinkedIn</a
+                    >.
                 </span>
             </template>
             <template #content>
