@@ -7,6 +7,7 @@
 .env
 .env.backup
 .env.production
+.todo
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -23,4 +24,3 @@ yarn-error.log
 /storage/uploads
 /storage/app/public
 
-.todo

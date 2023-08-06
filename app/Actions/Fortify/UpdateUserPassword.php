@@ -18,8 +18,6 @@ class UpdateUserPassword implements UpdatesUserPasswords
      */
     public function update(User $user, array $input)
     {
-        return response()->json("You are not able to reset the password in the demo mdoe.", 403);
-
         //
         Validator::make(
             $input,
@@ -36,7 +34,10 @@ class UpdateUserPassword implements UpdatesUserPasswords
                     "The provided password does not match your current password."
                 ),
             ]
-        )->validateWithBag("updatePassword");
+        )->after(function ($validator) {
+            // TODO: Remove when not in Demo mode
+            $validator->errors()->add('current_password', 'You are not able to reset the password in the demo mode.');
+        })->validateWithBag("updatePassword");
 
         $user
             ->forceFill([
