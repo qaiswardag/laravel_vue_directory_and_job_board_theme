@@ -6,7 +6,7 @@
 
 ### Star this Project ⭐
 
-If you find this Laravel & Vue admin panel useful or interesting, I would greatly appreciate if you could star ⭐ the [GitHub repository](https://github.com/qaiswardag/myself). It helps to boost the project's visibility and encourages me to continue adding new features.
+If you find this Laravel & Vue admin panel useful or interesting, I would greatly appreciate if you could star ⭐ the [GitHub repository](https://github.com/qaiswardag/myissue-admin). It helps to boost the project's visibility and encourages me to continue adding new features.
 
 To star the repository, simply click on the **Star** button located at the top-right corner of the GitHub page. Thank you in advance for your support! 🙌
 
@@ -30,7 +30,7 @@ Cutting-Edge Technologies and Frameworks. Developed with the Latest Stack, Larav
 1. Clone the repository locally:
 
 ```
-git clone https://github.com/qaiswardag/myself.git
+git clone https://github.com/qaiswardag/myissue-admin.git
 ```
 
 2. Install PHP dependencies using Composer:

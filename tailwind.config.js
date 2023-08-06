@@ -22,6 +22,7 @@ module.exports = {
             myPrimaryDarkGrayColor: "#111827",
 
             myPrimaryErrorColor: "#d60000",
+            myPrimarySuccesColor: "#16a34a",
 
             transparent: "transparent",
             current: "currentColor",
