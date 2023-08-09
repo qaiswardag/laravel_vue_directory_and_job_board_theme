@@ -212,7 +212,7 @@ const faqs = [
                         open-source
                         <a
                             class="text-myPrimaryLinkColor font-medium"
-                            href="https://www.designer.myissue.io"
+                            href="https://www.builder.myissue.io"
                             target="_blank"
                         >
                             drag-and-drop page builder.</a
