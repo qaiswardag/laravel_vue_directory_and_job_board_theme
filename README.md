@@ -1,10 +1,10 @@
+<div style="text-align:center;margin:40px 0 40px 0">
 <a href="https://www.admin.myissue.io" target="_blank">
-    <h1 align="center" style="font-size: 78px; font-family: 'Jost', sans-serif; text-align: center;">
-        MYISSUE
-    </h1>
+<img width="200" src="public/logo/logo-myissue.svg" alt="Logo">
 </a>
+</div>
 
-### Star this Project ⭐
+# Intro
 
 If you find this Laravel & Vue admin panel useful or interesting, I would greatly appreciate if you could star ⭐ the [GitHub repository](https://github.com/qaiswardag/myissue-admin). It helps to boost the project's visibility and encourages me to continue adding new features.
 
@@ -12,18 +12,15 @@ To star the repository, simply click on the **Star** button located at the top-r
 
 I have several years of experience in design and development and have worked on various projects in the past. This app was born out of my desire to make a minimalst admin panel with a elegant and intuitive design.
 
-[Demo](https://www.admin.myissue.io)
+## About and demo
 
-### Get in Touch
+This app was born out of my desire to make a minimalst Admin Panel with a elegant and intuitive design.
 
-I would love to hear your feedback, suggestions, or any issues you encounter while using this app. Feel free to reach out to me if you have any questions or just want to say hello. You can connect with me through:
-
--   [Email](mailto:qais.wardag@outlook.com)
--   [LinkedIn](https://www.linkedin.com/in/qaiswardag)
+[Play around with the demo app](https://www.admin.myissue.io)
 
 ### Technologies and Frameworks
 
-Cutting-Edge Technologies and Frameworks. Developed with the Latest Stack, Laravel, Vue 3, Inertia, and Tailwind CSS.
+Cutting-Edge Technologies and Frameworks. Developed with Laravel, Vue 3, Vite, Vuex, Inertia and Tailwind CSS.
 
 ### Installation
 
@@ -89,16 +86,46 @@ php artisan db:seed
  npm run dev
 ```
 
+# Documentation
+
+## Customizing
+
+Customizing Your Laravel Admin Panel with Inertia.js
+If you're looking to customize your Laravel Admin Panel and enhance its functionality, you're in the right place! We recommend exploring the following resources to help you get started on your customization journey:
+
+Inertia.js Documentation: Inertia.js is a powerful JavaScript framework that allows you to build modern, single-page applications using server-side routing and Laravel. By integrating Inertia.js into your Laravel project, you can create a seamless user experience while customizing your admin panel. Dive into the Inertia.js documentation to learn about its features, installation process, and how to integrate it with your Laravel application.
+
+[Inertia.js Documentation](https://inertiajs.com/)
+
+Laravel Documentation: Laravel is a popular PHP web application framework known for its elegant syntax and developer-friendly features. The Laravel documentation provides comprehensive guidance on building and customizing web applications, including admin panels. Explore the documentation to understand Laravel's core concepts, routing, database interactions, and more. Learning Laravel will empower you to make meaningful customizations to your admin panel.
+
+[Laravel Documentation](https://laravel.com/docs/10.x)
+
+Laravel Jetstream Documentation: Laravel Jetstream is a beautifully designed application scaffolding for Laravel. It provides pre-built authentication, user management, and more. By leveraging Laravel Jetstream, you can accelerate the development of your admin panel and focus on customizing the features that matter most. The documentation will walk you through the setup and customization of Jetstream, helping you build a robust admin panel efficiently.
+
+[Laravel Jetstream Documentation](https://jetstream.laravel.com/introduction.html)
+
+## Note
+
 Please note that these instructions assume you have PHP, Composer, and Node.js installed
 
-## Contributing
+# Contributing
 
 Thank you for considering contributing to this project!
 
-## Security Vulnerabilities
+# Security Vulnerabilities
 
 If you discover a security vulnerability, please send me an e-mail.
 
-## License
+# Get in Touch
+
+If you have any questions, feel free to connect with me on LinkedIn and send me a message.
+
+I would love to hear your feedback, suggestions, or any issues you encounter while using this app. Feel free to reach out to me if you have any questions or just want to say hello. You can connect with me through:
+
+-   [Email](mailto:qais.wardag@outlook.com)
+-   [LinkedIn](https://www.linkedin.com/in/qaiswardag)
+
+# License
 
 This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
