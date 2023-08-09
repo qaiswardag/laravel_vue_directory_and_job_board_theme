@@ -1,7 +1,5 @@
 <p align="center" dir="auto">
-<a href="https://www.admin.myissue.io" target="_blank">
 <img width="200" style="max-width: 100%;" src="public/logo/logo-myissue.svg" alt="Logo">
-</a>
 </p>
 
 # Intro
