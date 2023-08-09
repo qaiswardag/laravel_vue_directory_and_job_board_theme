@@ -291,30 +291,13 @@ const posts = [
                     Multiple Security Layers, advanced Team Management, Blog and
                     Media Library.
                     <br />
-                    Feel free to visit my
                     <a
                         class="text-myPrimaryLinkColor"
-                        href="https://github.com/qaiswardag"
+                        href="https://github.com/qaiswardag/myissue-admin"
                         target="_blank"
-                        >GitHub</a
                     >
-                    profile for more information.
-                    <br />
-
-                    Contact me to request access to the code. You can reach me
-                    through
-                    <a
-                        class="text-myPrimaryLinkColor"
-                        href="mailto:qais.wardag@outlook.com"
-                        >Email</a
-                    >
-                    or
-                    <a
-                        class="text-myPrimaryLinkColor"
-                        href="https://www.linkedin.com/in/qaiswardag/"
-                        target="_blank"
-                        >LinkedIn</a
-                    >.
+                        Visit the project's GitHub repository.
+                    </a>
                 </p>
             </div>
         </template>

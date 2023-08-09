@@ -105,35 +105,18 @@ const faqs = [
                     <br />
                 </h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Experience elegance with a minimalistic Admin Panel. <br />
+                    Experience elegance with a minimalistic open-source Admin
+                    Panel. <br />
                     Multiple Security Layers, advanced Team Management, Blog and
                     Media Library.
                     <br />
-                    <br />
-                    Feel free to visit my
                     <a
                         class="text-myPrimaryLinkColor"
-                        href="https://github.com/qaiswardag"
+                        href="https://github.com/qaiswardag/myissue-admin"
                         target="_blank"
-                        >GitHub</a
                     >
-                    profile for more information.
-                    <br />
-
-                    Contact me to request access to the code. You can reach me
-                    through
-                    <a
-                        class="text-myPrimaryLinkColor"
-                        href="mailto:qais.wardag@outlook.com"
-                        >Email</a
-                    >
-                    or
-                    <a
-                        class="text-myPrimaryLinkColor"
-                        href="https://www.linkedin.com/in/qaiswardag/"
-                        target="_blank"
-                        >LinkedIn</a
-                    >.
+                        Visit the project's GitHub repository.
+                    </a>
                 </p>
                 <div class="flex justify-center">
                     <div
@@ -168,22 +151,22 @@ const faqs = [
                 <span class="block">
                     Minimalist Admin Panel empowered with advanced Team
                     Management capabilities, Blog, and a beautiful Media
-                    Library. Offers control and efficiency. Let users and teams
-                    elevate their administrative abilities to new heights.
-                    Designed to streamline operations and enhance productivity.
+                    Library.
                     <br />
-                    Feel free to visit my
+                    <br />
+                    Offers control and efficiency. Let users and teams elevate
+                    their administrative abilities to new heights. Designed to
+                    streamline operations and enhance productivity.
+                    <br />
                     <a
                         class="text-myPrimaryLinkColor"
-                        href="https://github.com/qaiswardag"
+                        href="https://github.com/qaiswardag/myissue-admin"
                         target="_blank"
-                        >GitHub</a
                     >
-                    profile for more information.
+                        Visit the project's GitHub repository</a
+                    >.
                     <br />
-
-                    Contact me to request access to the code. You can reach me
-                    through
+                    Contact me with any questions. You can reach me through
                     <a
                         class="text-myPrimaryLinkColor"
                         href="mailto:qais.wardag@outlook.com"
@@ -208,6 +191,9 @@ const faqs = [
                             Out of the Box.
                         </p>
                         <br />
+                        <h2 class="myTertiaryHeader">
+                            Open-source Page Builder
+                        </h2>
                         Build stunning pages with Vue 3 using an intuitive
                         open-source
                         <a
