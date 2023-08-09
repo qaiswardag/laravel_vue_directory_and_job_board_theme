@@ -1,8 +1,8 @@
-<div style="text-align:center;margin:40px 0 40px 0">
+<p align="center" dir="auto">
 <a href="https://www.admin.myissue.io" target="_blank">
-<img width="200" src="public/logo/logo-myissue.svg" alt="Logo">
+<img width="200" style="max-width: 100%;" src="public/logo/logo-myissue.svg" alt="Logo">
 </a>
-</div>
+</p>
 
 # Intro
 
@@ -18,11 +18,11 @@ This app was born out of my desire to make a minimalst Admin Panel with a elegan
 
 [Play around with the demo app](https://www.admin.myissue.io)
 
-### Technologies and Frameworks
+## Technologies and Frameworks
 
 Cutting-Edge Technologies and Frameworks. Developed with Laravel, Vue 3, Vite, Vuex, Inertia and Tailwind CSS.
 
-### Installation
+## Installation
 
 1. Clone the repository locally:
 
