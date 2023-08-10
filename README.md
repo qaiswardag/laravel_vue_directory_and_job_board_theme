@@ -88,7 +88,7 @@ php artisan db:seed
 
 Please note that these instructions assume you have PHP, Composer, and Node.js installed
 
-# Features:
+# Features
 
 -   Technologies and Frameworks: Laravel, Vue 3, Vuex, Composition API, Inertia, and Tailwind CSS.
 
