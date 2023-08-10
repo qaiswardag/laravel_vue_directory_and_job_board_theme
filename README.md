@@ -22,6 +22,8 @@ Cutting-Edge Technologies and Frameworks. Developed with Laravel, Vue 3, Vite, V
 
 # Installation
 
+## Getting started
+
 1. Clone the repository locally:
 
 ```
