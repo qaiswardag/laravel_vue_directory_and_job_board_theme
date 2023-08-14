@@ -121,12 +121,43 @@ const faqs = [
                 <div class="flex justify-center">
                     <div
                         v-if="$page.props.user === null"
-                        class="mt-8 flex gap-2 items-center"
+                        class="mt-8 flex gap-6 items-center"
                     >
-                        <Link :href="route('login')" class="myPrimaryButton">
-                            Login
-                        </Link>
-                        <Link :href="route('register')" class="myPrimaryButton">
+                        <div>
+                            <Link
+                                :href="route('login')"
+                                class="myPrimaryButton"
+                            >
+                                Login
+                            </Link>
+                            <div
+                                type="button"
+                                class="mt-2 group flex w-full items-left justify-start focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            >
+                                <Link :href="route('login')">
+                                    <p
+                                        class="myPrimaryParagraph text-xs italic hover:text-myPrimaryLinkColor"
+                                    >
+                                        <span class="font-semibold"
+                                            >#Sign in as:</span
+                                        >
+                                        <br />
+                                        <span class="font-medium"> User: </span>
+                                        jd@myissue.io
+                                        <br />
+                                        <span class="font-medium">
+                                            Password:
+                                        </span>
+                                        123456
+                                    </p>
+                                </Link>
+                            </div>
+                        </div>
+
+                        <Link
+                            :href="route('register')"
+                            class="myPrimaryButton self-start"
+                        >
                             Sign up
                         </Link>
                     </div>
