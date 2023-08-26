@@ -120,10 +120,10 @@
         @apply mySecondaryHeader text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor border-b-2 border-gray-50 bg-gray-50;
     }
     .myPrimaryMainPageHeaderNotLoggedIn {
-        @apply text-6xl leading-normal mb-6 font-medium text-center;
+        @apply text-6xl leading-tight mb-6 font-medium text-center;
     }
     .myPrimaryMainPageParagraphNotLoggedIn {
-        @apply md:w-4/6 text-xl mx-auto text-center font-medium;
+        @apply text-xl mx-auto text-center font-medium;
     }
     .myPrimaryHeader {
         @apply text-3xl mb-2 font-medium text-black;

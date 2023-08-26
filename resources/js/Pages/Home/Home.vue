@@ -99,165 +99,28 @@ const faqs = [
     <GuestsLayout>
         <Head title="Home" />
         <template #header>
-            <div class="myPrimaryMainPageHeaderParagraph">
-                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
-                    Laravel & Vue Admin Panel
-                    <br />
-                </h1>
-                <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Experience elegance with a minimalistic open-source Admin
-                    Panel. <br />
-                    Multiple Security Layers, advanced Team Management, Blog and
-                    Media Library.
-                    <br />
-                    <a
-                        class="text-myPrimaryLinkColor"
-                        href="https://github.com/qaiswardag/myissue-admin"
-                        target="_blank"
-                    >
-                        Visit the project's GitHub repository.
-                    </a>
-                </p>
-                <div class="flex justify-center">
-                    <div
-                        v-if="$page.props.user === null"
-                        class="mt-8 flex gap-6 items-center"
-                    >
-                        <div>
-                            <Link
-                                :href="route('login')"
-                                class="myPrimaryButton"
-                            >
-                                Login
-                            </Link>
-                            <div
-                                type="button"
-                                class="mt-2 group flex w-full items-left justify-start focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                <Link :href="route('login')">
-                                    <p
-                                        class="myPrimaryParagraph text-xs italic hover:text-myPrimaryLinkColor"
-                                    >
-                                        <span class="font-semibold"
-                                            >#Sign in as:</span
-                                        >
-                                        <br />
-                                        <span class="font-medium"> User: </span>
-                                        jd@myissue.io
-                                        <br />
-                                        <span class="font-medium">
-                                            Password:
-                                        </span>
-                                        123456
-                                    </p>
-                                </Link>
-                            </div>
-                        </div>
-
-                        <Link
-                            :href="route('register')"
-                            class="myPrimaryButton self-start"
-                        >
-                            Sign up
-                        </Link>
-                    </div>
-                    <div
-                        v-if="$page.props.user !== null"
-                        class="mt-8 flex gap-2 items-center"
-                    >
-                        <Link
-                            :href="route('dashboard')"
-                            class="myPrimaryButton"
-                        >
-                            Go to dashboard
-                        </Link>
-                    </div>
+            <div class="w-full relative h-[32rem]">
+                <img
+                    class="top-0 left-0 w-full object-cover h-[32rem]"
+                    src="/brand-images/pink-lady-high-resolution.jpg"
+                    alt="/"
+                />
+                <div
+                    class="bg-black/10 absolute top-0 left-0 w-full h-[32rem]"
+                ></div>
+                <div
+                    class="absolute text-2xl text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                >
+                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
+                        myself fashion & jobs
+                        <br />
+                    </h1>
+                    <p class="myPrimaryMainPageParagraphNotLoggedIn">
+                        Discover Fashion in the United Arab Emirates.
+                    </p>
                 </div>
             </div>
         </template>
-
-        <FullWidthElement :descriptionArea="true" class="bg-gray-50">
-            <template #title>All-in-one platform</template>
-            <template #description>
-                <span class="block">
-                    Minimalist Admin Panel empowered with advanced Team
-                    Management capabilities, Blog, and a beautiful Media
-                    Library.
-                    <br />
-                    <br />
-                    Offers control and efficiency. Let users and teams elevate
-                    their administrative abilities to new heights. Designed to
-                    streamline operations and enhance productivity.
-                    <br />
-                    <a
-                        class="text-myPrimaryLinkColor"
-                        href="https://github.com/qaiswardag/myissue-admin"
-                        target="_blank"
-                    >
-                        Visit the project's GitHub repository</a
-                    >.
-                    <br />
-                    Contact me with any questions. You can reach me through
-                    <a
-                        class="text-myPrimaryLinkColor"
-                        href="mailto:qais.wardag@outlook.com"
-                        >Email</a
-                    >
-                    or
-                    <a
-                        class="text-myPrimaryLinkColor"
-                        href="https://www.linkedin.com/in/qaiswardag/"
-                        target="_blank"
-                        >LinkedIn</a
-                    >.
-                </span>
-            </template>
-            <template #content>
-                <div class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-3">
-                    <div>
-                        <h2 class="myTertiaryHeader">Everything you need</h2>
-                        <p class="mt-2 myPrimaryParagraph">
-                            Complete Solution for Seamless Management and
-                            Control. Everything You Need to Get Started Right
-                            Out of the Box.
-                        </p>
-                        <br />
-                        <h2 class="myTertiaryHeader">
-                            Open-source Page Builder
-                        </h2>
-                        Build stunning pages with Vue 3 using an intuitive
-                        open-source
-                        <a
-                            class="text-myPrimaryLinkColor font-medium"
-                            href="https://www.builder.myissue.io"
-                            target="_blank"
-                        >
-                            drag-and-drop page builder.</a
-                        >
-                    </div>
-                    <dl
-                        class="col-span-2 grid grid-cols-1 gap-x-8 gap-y-10 text-base leading-7 text-gray-600 sm:grid-cols-2 lg:gap-y-16"
-                    >
-                        <div
-                            v-for="feature in features"
-                            :key="feature.name"
-                            class="relative pl-9"
-                        >
-                            <dt class="myFourthHeader">
-                                <CheckIcon
-                                    class="absolute left-0 top-1 h-5 w-5 text-myPrimaryLinkColor"
-                                    aria-hidden="true"
-                                />
-                                {{ feature.name }}
-                            </dt>
-                            <dd class="mt-2 myPrimaryParagraph">
-                                {{ feature.description }}
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </template>
-        </FullWidthElement>
 
         <FullWidthElement :descriptionArea="true" class="bg-red-50">
             <template #title>Frequently asked questions</template>

@@ -24,29 +24,6 @@ const notifications = [
         description:
             "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
     },
-    {
-        title: "Officia deserunt mollit anim id est",
-        image: "https://images.unsplash.com/photo-1599950532365-9a9b768229c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-        description:
-            "Commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
-    },
-    {
-        title: "Duis aute irure",
-        description:
-            "Publishing industries for previewing layouts and visual mockups.",
-    },
-    {
-        title: "Unique design and customer loyalty schemes",
-        image: "https://images.unsplash.com/photo-1468930830753-6699377de411?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-        description:
-            "Unique design and customer loyalty schemes. Unique design and customer loyalty schemes",
-    },
-    {
-        title: "Lorem remains a privately held company owned",
-        image: "https://images.unsplash.com/photo-1561794047-cc8f58725bdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
-        description:
-            "Privately held company owned by Alain and Gerard Wertheimer, grandsons of Pierre Wertheimer, an early business partner of Coco Chanel.",
-    },
 ];
 // emit
 const emit = defineEmits(["notificationsSlideOverButton"]);
