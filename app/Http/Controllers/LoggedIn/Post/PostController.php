@@ -51,13 +51,15 @@ class PostController extends Controller
 
         $posts = $team
             ->posts()
+            ->whereNull("deleted_at") // Include only posts where deleted_at is NULL
+
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(5);
 
         $posts->appends($request->all());
 
@@ -209,7 +211,6 @@ class PostController extends Controller
         }
 
         // Retrieve the authors associated with the post
-
         $authors = AuthorPost::where("post_id", $post->id)->get();
 
         // Update the $post array with updatedBy information

@@ -172,7 +172,7 @@ onMounted(() => {
         </DynamicModal>
         <template #header>
             <h2 class="myPrimaryMainPageHeader">
-                Posts for
+                Store for
                 {{ $page.props.user && $page.props.currentUserTeam.name }}
             </h2>
         </template>
@@ -182,7 +182,7 @@ onMounted(() => {
 
         <CardHeadings :routesArray="routesArray">
             <template #title
-                >Posts for
+                >Store for
                 {{ $page.props.user && $page.props.user.current_team.name }}
             </template>
             <template #subTitle

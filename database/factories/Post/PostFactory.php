@@ -27,13 +27,13 @@ class PostFactory extends Factory
             ->where("id", rand(1, 2))
             ->first();
 
-        $deletedAt = rand(0, 1) ? Carbon::now() : null; // Set "trash" to the current timestamp 50% of the time
+        $deletedAt = rand(0, 1) ? Carbon::now() : null;
 
         return [
             "team_id" => $randomUserFromTeam->id,
             "user_id" => $randomUserFromTeam->user_id,
             "show_author" => rand(0, 1),
-            "deleted_at" => $deletedAt,
+            "deleted_at" => null,
             "title" => $title,
             "slug" => $slug,
             "content" => $this->faker->sentence(rand(20, 60), false),

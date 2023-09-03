@@ -506,7 +506,7 @@ onBeforeMount(() => {
 
 <template>
     <FormSection @submitted="handleCreatePost">
-        <template #title> Post details</template>
+        <template #title> Job details</template>
         <template #description> Create a new Post. </template>
         <template #main>
             <div class="myInputsOrganization">
