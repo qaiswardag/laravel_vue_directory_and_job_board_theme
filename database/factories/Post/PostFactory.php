@@ -6,6 +6,7 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post\Post>
@@ -26,11 +27,13 @@ class PostFactory extends Factory
             ->where("id", rand(1, 2))
             ->first();
 
+        $deletedAt = rand(0, 1) ? Carbon::now() : null; // Set "trash" to the current timestamp 50% of the time
+
         return [
             "team_id" => $randomUserFromTeam->id,
             "user_id" => $randomUserFromTeam->user_id,
             "show_author" => rand(0, 1),
-            "trash" => rand(0, 1),
+            "deleted_at" => $deletedAt,
             "title" => $title,
             "slug" => $slug,
             "content" => $this->faker->sentence(rand(20, 60), false),
