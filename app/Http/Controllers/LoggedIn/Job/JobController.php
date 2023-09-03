@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\LoggedIn\Post;
+namespace App\Http\Controllers\LoggedIn\Job;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoggedIn\Post\StorePostRequest;
-use App\Models\Post\AuthorPost;
-use App\Models\Post\Post;
+use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
+use App\Models\Job\AuthorJob;
+use App\Models\Job\Job;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -20,7 +20,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class PostController extends Controller
+class JobController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,11 +46,11 @@ class PostController extends Controller
             $searchQuery = implode(",", $searchQuery);
         }
 
-        // Authorize the team that the user has selected to store the post for, rather than the team that the user is currently on.
+        // Authorize the team that the user has selected to store the job for, rather than the team that the user is currently on.
         $this->authorize("can-read", $team);
 
-        $posts = $team
-            ->posts()
+        $jobs = $team
+            ->jobs()
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
@@ -59,26 +59,26 @@ class PostController extends Controller
             ->latest()
             ->paginate(5);
 
-        $posts->appends($request->all());
+        $jobs->appends($request->all());
 
-        // Post created by
-        // Retrieve user information for each post
-        foreach ($posts as $post) {
-            $user = User::find($post->user_id);
+        // Job created by
+        // Retrieve user information for each job
+        foreach ($jobs as $job) {
+            $user = User::find($job->user_id);
             if ($user !== null) {
-                $post->updatedBy = [
+                $job->updatedBy = [
                     "first_name" => $user->first_name,
                     "last_name" => $user->last_name,
                     "profile_photo_path" => $user->profile_photo_path,
                 ];
             }
             if ($user === null) {
-                $post->updatedBy = null;
+                $job->updatedBy = null;
             }
         }
 
-        return Inertia::render("Posts/Index", [
-            "posts" => $posts,
+        return Inertia::render("Jobs/Index", [
+            "posts" => $jobs,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
             ],
@@ -102,7 +102,7 @@ class PostController extends Controller
         }
 
         $this->authorize("can-create-and-update", $team);
-        return Inertia::render("Posts/CreatePost/CreatePost");
+        return Inertia::render("Jobs/CreatePost/CreatePost");
     }
 
     /**
@@ -111,9 +111,9 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(StoreJobRequest $request)
     {
-        // Find the current team that the user is on, rather than the team that the user is storing the post for.
+        // Find the current team that the user is on, rather than the team that the user is storing the job for.
         $team = Team::findOrFail($request->team["id"]);
         $this->authorize("can-create-and-update", $team);
 
@@ -124,8 +124,8 @@ class PostController extends Controller
         // slug
         $slug = Str::lower(Str::slug($request->slug, "_"));
 
-        // Create the post and store it in a variable
-        $post = Post::create([
+        // Create the job and store it in a variable
+        $job = Job::create([
             "user_id" => $userId,
             "team_id" => $team->id,
             "title" => $title,
@@ -148,36 +148,36 @@ class PostController extends Controller
             gettype($request->author) === "array" &&
             count($request->author) !== 0
         ) {
-            // Get the post ID
-            $postId = $post->id;
+            // Get the job ID
+            $jobId = $job->id;
 
-            // Loop through the authors array and attach each author to the post
+            // Loop through the authors array and attach each author to the job
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
 
-                // Create a new record in the author_post table
-                AuthorPost::create([
+                // Create a new record in the author_job table
+                AuthorJob::create([
                     "user_id" => $authorId,
-                    "post_id" => $postId,
+                    "job_id" => $jobId,
                 ]);
             }
         }
 
-        // Return the current team that the user is on, rather than the team that the user is storing the post for.
+        // Return the current team that the user is on, rather than the team that the user is storing the job for.
         $currentTeam = Auth::user()->currentTeam->reference_id;
 
-        return redirect()->route("team.posts.index", $currentTeam);
+        return redirect()->route("team.jobs.index", $currentTeam);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post\Post  $post
+     * @param  \App\Models\Job\Job $job
      * @return \Illuminate\Http\Response
      */
-    public function show($referenceId, Post $post, $slug)
+    public function show($referenceId, Job $job, $slug)
     {
-        $postRenderView = "Teams/Posts/Show/ShowTeamPost";
+        $jobRenderView = "Teams/Jobs/Show/ShowTeamJob";
 
         $team = Team::where("reference_id", $referenceId)->first();
 
@@ -193,27 +193,27 @@ class PostController extends Controller
         // Decode the slug parameter
         $slug = urldecode($slug);
 
-        // Retrieve the user associated with the post
-        $user = User::find($post->user_id);
+        // Retrieve the user associated with the job
+        $user = User::find($job->user_id);
 
-        // Update the $post array with updatedBy information
+        // Update the $job array with updatedBy information
         if ($user !== null) {
-            $post->updatedBy = [
+            $job->updatedBy = [
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
             ];
         }
         if ($user === null) {
-            $post->updatedBy = null;
+            $job->updatedBy = null;
         }
 
-        // Retrieve the authors associated with the post
-        $authors = AuthorPost::where("post_id", $post->id)->get();
+        // Retrieve the authors associated with the job
+        $authors = AuthorJob::where("job_id", $job->id)->get();
 
-        // Update the $post array with updatedBy information
+        // Update the $job array with updatedBy information
         if ($authors !== null) {
-            $post->authors = $authors->map(function ($author) {
+            $job->authors = $authors->map(function ($author) {
                 return [
                     "first_name" => $author->user->first_name,
                     "last_name" => $author->user->last_name,
@@ -223,12 +223,12 @@ class PostController extends Controller
         }
 
         if ($authors === null) {
-            $post->authors = null;
+            $job->authors = null;
         }
 
-        // Render the post
-        return Inertia::render($postRenderView, [
-            "post" => $post,
+        // Render the job
+        return Inertia::render($jobRenderView, [
+            "post" => $job,
             "authors" => $authors,
         ]);
     }
@@ -236,10 +236,10 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post\Post  $post
+     * @param  \App\Models\Job\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function edit($referenceId, Post $post)
+    public function edit($referenceId, Job $job)
     {
         $team = Team::where("reference_id", $referenceId)->first();
 
@@ -250,14 +250,14 @@ class PostController extends Controller
             ]);
         }
 
-        // Authorize the team that the user has selected to store the post for, rather than the team that the user is currently on.
+        // Authorize the team that the user has selected to store the job for, rather than the team that the user is currently on.
         $this->authorize("can-create-and-update", $team);
 
         $authors = null;
 
-        if ($post->show_author === 1 && $post->authors !== null) {
+        if ($job->show_author === 1 && $job->authors !== null) {
             // Fetch related authors
-            $relatedAuthors = $post->authors;
+            $relatedAuthors = $job->authors;
 
             // Loop through related authors and create an array of authors with the required information
             foreach ($relatedAuthors as $user) {
@@ -273,8 +273,8 @@ class PostController extends Controller
             }
         }
 
-        return Inertia::render("Posts/UpdatePost/UpdatePost", [
-            "post" => $post,
+        return Inertia::render("Jobs/UpdatePost/UpdatePost", [
+            "post" => $job,
             "postAuthor" => $authors,
         ]);
     }
@@ -283,12 +283,12 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post\Post  $post
+     * @param  \App\Models\Job\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(StorePostRequest $request, Post $post)
+    public function update(StoreJobRequest $request, Job $job)
     {
-        // Find the current team that the user is on, rather than the team that the user is storing the post for.
+        // Find the current team that the user is on, rather than the team that the user is storing the job for.
         $team = Team::findOrFail($request->team["id"]);
         $this->authorize("can-create-and-update", $team);
 
@@ -302,8 +302,8 @@ class PostController extends Controller
         // Initialize the $authorId variable to null
         $authorId = null;
 
-        // Create the post and store it in a variable
-        $post->update([
+        // Create the job and store it in a variable
+        $job->update([
             "user_id" => $userId,
             "team_id" => $teamId,
             "title" => $title,
@@ -321,42 +321,42 @@ class PostController extends Controller
         ]);
 
         if (
-            $post->show_author === true &&
+            $job->show_author === true &&
             $request->author !== null &&
             gettype($request->author) === "array" &&
             count($request->author) !== 0
         ) {
-            // Get the post ID
-            $postId = $post->id;
+            // Get the job ID
+            $jobId = $job->id;
 
-            // Retrieve the existing author IDs for the post
-            $existingAuthorIds = AuthorPost::where("post_id", $postId)
+            // Retrieve the existing author IDs for the job
+            $existingAuthorIds = AuthorJob::where("job_id", $jobId)
                 ->pluck("user_id")
                 ->toArray();
 
-            // Loop through the authors array and update or create a record in the author_post table
+            // Loop through the authors array and update or create a record in the author_jobs table
             $updatedAuthorIds = [];
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
                 $updatedAuthorIds[] = $authorId;
 
-                // Update or create the record in the AuthorPost table
-                AuthorPost::updateOrCreate(
-                    ["user_id" => $authorId, "post_id" => $postId],
-                    ["user_id" => $authorId, "post_id" => $postId]
+                // Update or create the record in the AuthorJob table
+                AuthorJob::updateOrCreate(
+                    ["user_id" => $authorId, "job_id" => $jobId],
+                    ["user_id" => $authorId, "job_id" => $jobId]
                 );
             }
 
-            // Delete the AuthorPost records that are not present in the request
+            // Delete the AuthorJob records that are not present in the request
             $authorsToDelete = array_diff(
                 $existingAuthorIds,
                 $updatedAuthorIds
             );
-            AuthorPost::where("post_id", $postId)
+            AuthorJob::where("job_id", $jobId)
                 ->whereIn("user_id", $authorsToDelete)
                 ->delete();
         }
-        return redirect()->route("team.posts.index", [
+        return redirect()->route("team.jobs.index", [
             "referenceId" => $team->reference_id,
         ]);
     }
@@ -364,20 +364,20 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post\Post  $post
+     * @param  \App\Models\Job\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post, Team $team)
+    public function destroy(Job $job, Team $team)
     {
         $this->authorize("can-destroy", $team);
 
-        $post->delete();
+        $job->delete();
 
         return redirect()
             ->back()
             ->with(
                 "success",
-                "Successfully deleted the Post with id: {$post->id}."
+                "Successfully deleted the Job with id: {$job->id}."
             );
     }
 }

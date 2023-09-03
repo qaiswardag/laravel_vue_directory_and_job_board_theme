@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Job\Job;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\Post;
+use App\Models\Store\Store;
 use App\Models\Superadmin\Superadmin;
 use App\Models\Team;
 use App\Models\TeamInvitation;
@@ -276,6 +278,8 @@ class DatabaseSeeder extends Seeder
         }
 
         // fake Posts
-        Post::factory(100)->create();
+        Post::factory(20)->create();
+        Job::factory(20)->create();
+        Store::factory(20)->create();
     }
 }

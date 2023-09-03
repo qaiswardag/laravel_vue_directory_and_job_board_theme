@@ -285,7 +285,7 @@ const posts = [
         <Head title="Blog" />
         <template #header>
             <div class="myPrimaryMainPageHeaderParagraph">
-                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Jobs</h1>
+                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Blog</h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
                     Experience elegance with a minimalistic Admin Panel. <br />
                     Multiple Security Layers, advanced Team Management, Blog and

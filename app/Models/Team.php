@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Job\Job;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\Post;
+use App\Models\Store\Store;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -60,6 +62,14 @@ class Team extends JetstreamTeam
     public function posts()
     {
         return $this->hasMany(Post::class, "team_id", "id");
+    }
+    public function jobs()
+    {
+        return $this->hasMany(Job::class, "team_id", "id");
+    }
+    public function stores()
+    {
+        return $this->hasMany(Store::class, "team_id", "id");
     }
     public function media()
     {

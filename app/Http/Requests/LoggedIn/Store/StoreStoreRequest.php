@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Http\Requests\LoggedIn\Post;
+namespace App\Http\Requests\LoggedIn\Store;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Validator;
 
-class StorePostRequest extends FormRequest
+class StoreStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }

@@ -4,14 +4,18 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
 use App\Http\Controllers\Api\Internal\LoggedIn\DashboardStatsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
+use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
+use App\Http\Controllers\Guests\Store\StoreController as StoreStoreController;
 use App\Http\Controllers\LoggedIn\Post\PostController;
 use App\Http\Controllers\Superadmin\DashboardController;
 use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Guests\User\UserController;
+use App\Http\Controllers\LoggedIn\Job\JobController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
+use App\Http\Controllers\LoggedIn\Store\StoreController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
 use App\Http\Controllers\Superadmin\SuperadminManageRoles;
 use App\Http\Middleware\isSuperAdmin;
@@ -36,21 +40,6 @@ use Laravel\Jetstream\Jetstream;
 */
 
 Route::get("/", function () {
-    // dd(config()->all());
-    // dd(env("APP_URL"), env("ASSET_URL"), env("APP_NAME"));
-
-    //
-    //
-    // dd([
-    //     "FILESYSTEM_DRIVER" => env("FILESYSTEM_DRIVER"),
-    //     "SPACES_KEY" => env("SPACES_KEY"),
-    //     "SPACES_SECRET" => env("SPACES_SECRET"),
-    //     "SPACES_REGION" => env("SPACES_REGION"),
-    //     "SPACES_BUCKET" => env("SPACES_BUCKET"),
-    //     "SPACES_ENDPOINT" => env("SPACES_ENDPOINT"),
-    // ]);
-    //
-    //
     return Inertia::render("Home/Home", [
         "canLogin" => Route::has("login"),
         "canRegister" => Route::has("register"),
@@ -68,6 +57,10 @@ Route::middleware([
 ])
     // group of pages
     ->group(function () {
+        // USER & DASHBOARD #START
+        // USER & DASHBOARD #START
+        // USER & DASHBOARD #START
+        // USER & DASHBOARD #START
         Route::get("/dashboard/stats/{teamId?}", [
             DashboardStatsController::class,
             "show",
@@ -88,6 +81,15 @@ Route::middleware([
             UserSessionsController::class,
             "show",
         ])->name("user.profile.security");
+        // USER & DASHBOARD #END
+        // USER & DASHBOARD #END
+        // USER & DASHBOARD #END
+        // USER & DASHBOARD #END
+
+        // POSTS #START
+        // POSTS #START
+        // POSTS #START
+        // POSTS #START
         Route::get("/team/posts/{referenceId}", [
             PostController::class,
             "index",
@@ -97,9 +99,51 @@ Route::middleware([
             PostController::class,
             "show",
         ])->name("team.posts.post.show");
+        // POSTS #END
+        // POSTS #END
+        // POSTS #END
+        // POSTS #END
 
-        // media
-        // media index api
+        // JOBS #START
+        // JOBS #START
+        // JOBS #START
+        // JOBS #START
+        Route::get("/team/jobs/{referenceId}", [
+            JobController::class,
+            "index",
+        ])->name("team.jobs.index");
+        // unique post
+        Route::get("/team/jobs/{referenceId}/job/{job}/{slug}", [
+            JobController::class,
+            "show",
+        ])->name("team.jobs.job.show");
+        // JOBS #END
+        // JOBS #END
+        // JOBS #END
+        // JOBS #END
+
+        // STORE #START
+        // STORE #START
+        // STORE #START
+        // STORE #START
+        Route::get("/team/stores/{referenceId}", [
+            StoreController::class,
+            "index",
+        ])->name("team.stores.index");
+        // unique post
+        Route::get("/team/stores/{referenceId}/store/{store}/{slug}", [
+            StoreController::class,
+            "show",
+        ])->name("team.stores.store.show");
+        // STORE #END
+        // STORE #END
+        // STORE #END
+        // STORE #END
+
+        // MEDIA #START
+        // MEDIA #START
+        // MEDIA #START
+        // MEDIA #START
         Route::get("/team/media/index/{team}", [
             LoggedInMediaLibraryController::class,
             "index",
@@ -109,12 +153,23 @@ Route::middleware([
             MediaLibraryController::class,
             "index",
         ])->name("media.index");
+        // MEDIA #END
+        // MEDIA #END
+        // MEDIA #END
+        // MEDIA #END
 
-        // attach user to resource
+        // ATTACH USER #START
+        // ATTACH USER #START
+        // ATTACH USER #START
+        // ATTACH USER #START
         Route::get("/team/attach/users/index/{team}", [
             AttachUserController::class,
             "index",
         ])->name("attach.user.index");
+        // ATTACH USER #END
+        // ATTACH USER #END
+        // ATTACH USER #END
+        // ATTACH USER #END
     });
 
 // Pages that require can store, create and update authentication
@@ -124,7 +179,11 @@ Route::middleware([
     "verified",
     // "ensure.can.create.and.update", // editor, owner, administrator
 ])->group(function () {
-    // posts
+    //
+    // POSTS #START
+    // POSTS #START
+    // POSTS #START
+    // POSTS #START
     Route::get("/team/posts/create/{referenceId}", [
         PostController::class,
         "create",
@@ -142,7 +201,67 @@ Route::middleware([
     Route::post("/team/posts/store", [PostController::class, "store"])->name(
         "team.posts.store"
     );
-    //media
+    // POSTS #END
+    // POSTS #END
+    // POSTS #END
+    // POSTS #END
+
+    // JOBS #START
+    // JOBS #START
+    // JOBS #START
+    // JOBS #START
+    Route::get("/team/jobs/create/{referenceId}", [
+        JobController::class,
+        "create",
+    ])->name("team.jobs.create");
+
+    Route::get("/team/jobs/{referenceId}/job/{job}", [
+        JobController::class,
+        "edit",
+    ])->name("team.jobs.job.edit");
+
+    Route::post("/team/jobs/job/store/{job}", [
+        JobController::class,
+        "update",
+    ])->name("team.jobs.update");
+    Route::post("/team/jobs/store", [JobController::class, "store"])->name(
+        "team.jobs.store"
+    );
+    // JOBS #END
+    // JOBS #END
+    // JOBS #END
+    // JOBS #END
+
+    // STORES #START
+    // STORES #START
+    // STORES #START
+    // STORES #START
+    Route::get("/team/stores/create/{referenceId}", [
+        StoreController::class,
+        "create",
+    ])->name("team.stores.create");
+
+    Route::get("/team/stores/{referenceId}/store/{store}", [
+        StoreController::class,
+        "edit",
+    ])->name("team.stores.store.edit");
+
+    Route::post("/team/stores/store/store/{store}", [
+        StoreController::class,
+        "update",
+    ])->name("team.stores.update");
+    Route::post("/team/stores/store", [StoreController::class, "store"])->name(
+        "team.stores.store"
+    );
+    // STORES #END
+    // STORES #END
+    // STORES #END
+    // STORES #END
+
+    // MEDIA #START
+    // MEDIA #START
+    // MEDIA #START
+    // MEDIA #START
     Route::get("/team/media/edit/{mediaLibrary}/{team}", [
         LoggedInMediaLibraryController::class,
         "edit",
@@ -155,6 +274,10 @@ Route::middleware([
         MediaLibraryController::class,
         "store",
     ])->name("media.store");
+    // MEDIA #END
+    // MEDIA #END
+    // MEDIA #END
+    // MEDIA #END
 });
 
 // Pages that require can destroy authentication
@@ -166,35 +289,112 @@ Route::middleware([
 ])
     // group of pages
     ->group(function () {
-        // posts
+        // POSTS #START
+        // POSTS #START
+        // POSTS #START
+        // POSTS #START
         Route::delete("/team/posts/post/{post}/{team}", [
             PostController::class,
             "destroy",
         ])->name("team.posts.post.destroy");
-        // media
+        // POSTS #END
+        // POSTS #END
+        // POSTS #END
+        // POSTS #END
+
+        // JOBS #START
+        // JOBS #START
+        // JOBS #START
+        // JOBS #START
+        Route::delete("/team/jobs/job/{job}/{team}", [
+            JobController::class,
+            "destroy",
+        ])->name("team.jobs.job.destroy");
+        // JOBS #END
+        // JOBS #END
+        // JOBS #END
+        // JOBS #END
+
+        // STORES #START
+        // STORES #START
+        // STORES #START
+        // STORES #START
+        Route::delete("/team/stores/store/{store}/{team}", [
+            StoreController::class,
+            "destroy",
+        ])->name("team.stores.store.destroy");
+        // STORES #END
+        // STORES #END
+        // STORES #END
+        // STORES #END
+
+        // MEDIA #START
+        // MEDIA #START
+        // MEDIA #START
+        // MEDIA #START
         Route::post("/team/media/image/destroy/{team}", [
             MediaLibraryController::class,
             "destroy",
         ])->name("media.destroy");
+        // MEDIA #END
+        // MEDIA #END
+        // MEDIA #END
+        // MEDIA #END
     });
 
 // Pages for quests that are accessible to everyone
 Route::middleware([])
     // group of pages
     ->group(function () {
-        Route::get("/docs", function () {
-            return Inertia::render("Docs");
-        })->name("docs");
-        // users
+        // USERS #START
+        // USERS #START
+        // USERS #START
+        // USERS #START
         Route::get("/users", [UserController::class, "index"])->name("users");
         // unique user
         Route::get("/users/{user}", [UserController::class, "show"])->name(
             "users.show"
         );
-        // posts
+        // USERS #END
+        // USERS #END
+        // USERS #END
+        // USERS #END
+
+        // POSTS #START
+        // POSTS #START
+        // POSTS #START
+        // POSTS #START
         Route::get("/blog", [PostPostController::class, "index"])->name(
             "blog.index"
         );
+        // POSTS #END
+        // POSTS #END
+        // POSTS #END
+        // POSTS #END
+
+        // JOBS #START
+        // JOBS #START
+        // JOBS #START
+        // JOBS #START
+        Route::get("/jobs", [JobJobController::class, "index"])->name(
+            "jobs.index"
+        );
+        // JOBS #END
+        // JOBS #END
+        // JOBS #END
+        // JOBS #END
+
+        // STORES #START
+        // STORES #START
+        // STORES #START
+        // STORES #START
+        Route::get("/store", [StoreStoreController::class, "index"])->name(
+            "stores.index"
+        );
+        // STORES #END
+        // STORES #END
+        // STORES #END
+        // STORES #END
     });
 
 // Pages that are accessible only to superadmins
@@ -227,9 +427,4 @@ Route::middleware([
         SuperadminManageRoles::class,
         "destroy",
     ])->name("admin.users.user.remove.superadmin");
-});
-
-// Pages for test
-Route::get("/test-me", function () {
-    return Team::findOrFail(5);
 });

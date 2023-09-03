@@ -230,14 +230,14 @@ import {
             <SideBarLink
                 :href="
                     route(
-                        'team.posts.index',
+                        'team.jobs.index',
                         $page.props.user.current_team.reference_id
                     )
                 "
                 :active="
-                    route().current('team.posts.index') ||
-                    route().current('team.posts.create') ||
-                    route().current('team.posts.post.edit')
+                    route().current('team.jobs.index') ||
+                    route().current('team.jobs.create') ||
+                    route().current('team.jobs.post.edit')
                 "
             >
                 <TagIcon
@@ -257,14 +257,14 @@ import {
             <SideBarLink
                 :href="
                     route(
-                        'team.posts.index',
+                        'team.stores.index',
                         $page.props.user.current_team.reference_id
                     )
                 "
                 :active="
-                    route().current('team.posts.index') ||
-                    route().current('team.posts.create') ||
-                    route().current('team.posts.post.edit')
+                    route().current('team.stores.index') ||
+                    route().current('team.stores.create') ||
+                    route().current('team.stores.post.edit')
                 "
             >
                 <ShoppingBagIcon

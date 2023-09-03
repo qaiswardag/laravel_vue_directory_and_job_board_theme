@@ -89,7 +89,7 @@ const getCurrentAttachedUsers = computed(() => {
 });
 
 const formType = ref("create");
-const pathLocalStorage = `post-form-${
+const pathLocalStorage = `job-form-${
     props.currentUserTeam ? props.currentUserTeam.reference_id : null
 }`;
 
@@ -161,7 +161,7 @@ const handleAddAuthor = function () {
     modalShowAddAuthor.value = true;
     // set modal standards
     titleModalSearchAuthor.value = "Add author";
-    descriptionModalSearchAuthor.value = "Add Post author";
+    descriptionModalSearchAuthor.value = "Add Job author";
     firstButtonModalSearchAuthor.value = "Close";
     secondButtonModalSearchAuthor.value = "Save";
     // handle click
@@ -320,7 +320,7 @@ const handleCreatePost = function () {
 
 const createPost = () => {
     if (formType.value === "create") {
-        postForm.post(route("team.posts.store"), {
+        postForm.post(route("team.jobs.store"), {
             preserveScroll: true,
             onSuccess: () => {
                 clearForm();
@@ -330,7 +330,7 @@ const createPost = () => {
         });
     }
     if (formType.value === "update") {
-        postForm.post(route("team.posts.update", props.post.id), {
+        postForm.post(route("team.jobs.update", props.post.id), {
             preserveScroll: true,
             onSuccess: () => {},
             onError: () => {},
@@ -506,8 +506,8 @@ onBeforeMount(() => {
 
 <template>
     <FormSection @submitted="handleCreatePost">
-        <template #title> Job details</template>
-        <template #description> Create a new Post. </template>
+        <template #title>Job details</template>
+        <template #description> Create a new Job. </template>
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">

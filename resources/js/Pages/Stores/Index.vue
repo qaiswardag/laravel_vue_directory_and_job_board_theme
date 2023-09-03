@@ -27,9 +27,9 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All Stores",
         route: {
-            name: "team.posts.index",
+            name: "team.stores.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
@@ -37,16 +37,16 @@ const breadcrumbsLinks = [
 
 const routesArray = [
     {
-        label: "All Posts",
+        label: "All Stores",
         route: {
-            name: "team.posts.index",
+            name: "team.stores.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
     {
-        label: "Create Post",
+        label: "Create Store",
         route: {
-            name: "team.posts.create",
+            name: "team.stores.create",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
@@ -75,7 +75,7 @@ const handleDelete = function (postId, post) {
     typeModal.value = "delete";
     gridColumnModal.value = 3;
     titleModal.value = `Delete ${post.title}?`;
-    descriptionModal.value = `Are you sure you want to delete post with title ${post.title}?`;
+    descriptionModal.value = `Are you sure you want to delete store with title ${post.title}?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Delete Post";
@@ -102,7 +102,7 @@ const deletePostForm = useForm({});
 // form action
 const deletePost = (postId) => {
     deletePostForm.delete(
-        route("team.posts.post.destroy", [postId, props.currentUserTeam.id]),
+        route("team.stores.store.destroy", [postId, props.currentUserTeam.id]),
         {
             preserveScroll: true,
             onSuccess: () => (modalShowDeletePost.value = false),
@@ -117,7 +117,7 @@ const deletePost = (postId) => {
 // handle action
 const handleEdit = function (postId) {
     router.get(
-        route("team.posts.post.edit", [
+        route("team.stores.store.edit", [
             props.currentUserTeam.reference_id,
             postId,
         ])
@@ -131,7 +131,7 @@ const searchForm = useForm({
 
 const handleSearch = function () {
     searchForm.get(
-        route("team.posts.index", [props.currentUserTeam.reference_id]),
+        route("team.stores.index", [props.currentUserTeam.reference_id]),
         {
             preserveScroll: true,
             onSuccess: () => {},
@@ -150,7 +150,7 @@ onMounted(() => {
 
 <template>
     <LoggedInLayout>
-        <Head title="Posts" />
+        <Head title="Stores" />
         <DynamicModal
             :show="modalShowDeletePost"
             :type="typeModal"
@@ -172,7 +172,7 @@ onMounted(() => {
         </DynamicModal>
         <template #header>
             <h2 class="myPrimaryMainPageHeader">
-                Store for
+                Stores for
                 {{ $page.props.user && $page.props.currentUserTeam.name }}
             </h2>
         </template>
@@ -182,7 +182,7 @@ onMounted(() => {
 
         <CardHeadings :routesArray="routesArray">
             <template #title
-                >Store for
+                >Stores for
                 {{ $page.props.user && $page.props.user.current_team.name }}
             </template>
             <template #subTitle
@@ -194,10 +194,13 @@ onMounted(() => {
                     class="myPrimaryButton"
                     type="button"
                     :href="
-                        route('team.posts.create', currentUserTeam.reference_id)
+                        route(
+                            'team.stores.create',
+                            currentUserTeam.reference_id
+                        )
                     "
                 >
-                    Create Post
+                    Create Store
                 </Link>
             </template>
         </CardHeadings>
@@ -247,8 +250,8 @@ onMounted(() => {
         </form>
 
         <template v-if="posts && posts.data.length <= 0">
-            <h1 class="myPrimaryHeaderMessage">No Posts</h1>
-            <p class="myPrimaryParagraph">Looks like there are no posts!</p>
+            <h1 class="myPrimaryHeaderMessage">No Stores</h1>
+            <p class="myPrimaryParagraph">Looks like there are no stores!</p>
         </template>
 
         <!-- table start -->
@@ -272,7 +275,7 @@ onMounted(() => {
                                 Show Authors
                             </th>
                             <th scope="col" class="myPrimaryTableTh">
-                                Post ID
+                                Store ID
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
 
@@ -397,7 +400,7 @@ onMounted(() => {
                                 <td class="myPrimaryTableTBodyTd">
                                     <div
                                         v-if="post.updatedBy !== null"
-                                        class="flex items-center gap-2 mt-2"
+                                        class="flex items-center gap-2"
                                     >
                                         <!-- user photo - start -->
 

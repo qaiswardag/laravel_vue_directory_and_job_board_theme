@@ -1,7 +1,7 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
-import PostForm from "@/Pages/Posts/Partials/PostForm.vue";
+import PostForm from "@/Pages/Stores/Partials/PostForm.vue";
 
 const props = defineProps({
     currentUserTeam: {
@@ -20,21 +20,21 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All Stores",
         route: {
-            name: "team.posts.index",
+            name: "team.stores.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
-    { label: "Update Post" },
+    { label: "Update Store" },
 ];
 </script>
 
 <template>
     <LoggedInLayout>
-        <Head title="Update Post" />
+        <Head title="Update Store" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Update Post</h2>
+            <h2 class="myPrimaryMainPageHeader">Update Store</h2>
         </template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

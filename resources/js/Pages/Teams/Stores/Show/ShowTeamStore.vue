@@ -1,49 +1,43 @@
 <script setup>
-import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
-import PostForm from "@/Pages/Jobs/Partials/PostForm.vue";
+import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
+import ShowUniquePost from "../../../Posts/Show/ShowUniquePost.vue";
 
 const props = defineProps({
-    currentUserTeam: {
-        required: true,
-    },
-    user: {
-        required: true,
-    },
     post: {
         required: true,
     },
-    postAuthor: {
+    authors: {
+        required: true,
+    },
+    currentUserTeam: {
         required: true,
     },
 });
 
 const breadcrumbsLinks = [
     {
-        label: "All Jobs",
+        label: "All Posts",
         route: {
-            name: "team.jobs.index",
+            name: "team.posts.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
-    { label: "Update Job" },
 ];
 </script>
-
 <template>
     <LoggedInLayout>
-        <Head title="Update Job" />
+        <Head title="Post" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Update Job</h2>
+            <h2 class="myPrimaryMainPageHeader">Team Post</h2>
         </template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-        <PostForm
-            :currentUserTeam="currentUserTeam"
-            :user="user"
-            :post="post"
-            :postAuthor="postAuthor"
-        ></PostForm>
+        <div class="myPrimarySection"></div>
+
+        <!-- sShow Unique Post - start -->
+        <ShowUniquePost :post="post" :authors="authors"></ShowUniquePost>
+        <!-- sShow Unique Post - end -->
     </LoggedInLayout>
 </template>

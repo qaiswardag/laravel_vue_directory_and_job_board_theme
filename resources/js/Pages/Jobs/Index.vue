@@ -27,9 +27,9 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All Jobs",
         route: {
-            name: "team.posts.index",
+            name: "team.jobs.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
@@ -37,16 +37,16 @@ const breadcrumbsLinks = [
 
 const routesArray = [
     {
-        label: "All Posts",
+        label: "All Jobs",
         route: {
-            name: "team.posts.index",
+            name: "team.jobs.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
     {
-        label: "Create Post",
+        label: "Create Job",
         route: {
-            name: "team.posts.create",
+            name: "team.jobs.create",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
@@ -75,10 +75,10 @@ const handleDelete = function (postId, post) {
     typeModal.value = "delete";
     gridColumnModal.value = 3;
     titleModal.value = `Delete ${post.title}?`;
-    descriptionModal.value = `Are you sure you want to delete post with title ${post.title}?`;
+    descriptionModal.value = `Are you sure you want to delete job with title ${post.title}?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
-    thirdButtonModal.value = "Delete Post";
+    thirdButtonModal.value = "Delete Job";
 
     // handle click
     firstModalButtonFunction.value = function () {
@@ -102,7 +102,7 @@ const deletePostForm = useForm({});
 // form action
 const deletePost = (postId) => {
     deletePostForm.delete(
-        route("team.posts.post.destroy", [postId, props.currentUserTeam.id]),
+        route("team.jobs.job.destroy", [postId, props.currentUserTeam.id]),
         {
             preserveScroll: true,
             onSuccess: () => (modalShowDeletePost.value = false),
@@ -117,7 +117,7 @@ const deletePost = (postId) => {
 // handle action
 const handleEdit = function (postId) {
     router.get(
-        route("team.posts.post.edit", [
+        route("team.jobs.job.edit", [
             props.currentUserTeam.reference_id,
             postId,
         ])
@@ -131,7 +131,7 @@ const searchForm = useForm({
 
 const handleSearch = function () {
     searchForm.get(
-        route("team.posts.index", [props.currentUserTeam.reference_id]),
+        route("team.jobs.index", [props.currentUserTeam.reference_id]),
         {
             preserveScroll: true,
             onSuccess: () => {},
@@ -150,7 +150,7 @@ onMounted(() => {
 
 <template>
     <LoggedInLayout>
-        <Head title="Posts" />
+        <Head title="Jobs" />
         <DynamicModal
             :show="modalShowDeletePost"
             :type="typeModal"
@@ -194,10 +194,10 @@ onMounted(() => {
                     class="myPrimaryButton"
                     type="button"
                     :href="
-                        route('team.posts.create', currentUserTeam.reference_id)
+                        route('team.jobs.create', currentUserTeam.reference_id)
                     "
                 >
-                    Create Post
+                    Create Job
                 </Link>
             </template>
         </CardHeadings>
@@ -247,8 +247,8 @@ onMounted(() => {
         </form>
 
         <template v-if="posts && posts.data.length <= 0">
-            <h1 class="myPrimaryHeaderMessage">No Posts</h1>
-            <p class="myPrimaryParagraph">Looks like there are no posts!</p>
+            <h1 class="myPrimaryHeaderMessage">No Jobs</h1>
+            <p class="myPrimaryParagraph">Looks like there are no jobs!</p>
         </template>
 
         <!-- table start -->
@@ -271,9 +271,7 @@ onMounted(() => {
                             <th scope="col" class="myPrimaryTableTh">
                                 Show Authors
                             </th>
-                            <th scope="col" class="myPrimaryTableTh">
-                                Post ID
-                            </th>
+                            <th scope="col" class="myPrimaryTableTh">Job ID</th>
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
 
                             <th scope="col" class="myPrimaryTableTh">
@@ -397,7 +395,7 @@ onMounted(() => {
                                 <td class="myPrimaryTableTBodyTd">
                                     <div
                                         v-if="post.updatedBy !== null"
-                                        class="flex items-center gap-2 mt-2"
+                                        class="flex items-center gap-2"
                                     >
                                         <!-- user photo - start -->
 
