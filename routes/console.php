@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use App\Models\Superadmin\PageBuilder\PageBuilderComponentCategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Artisan::command('inspire', function () {
+Artisan::command("inspire", function () {
     $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+})->purpose("Display an inspiring quote");
+
+Artisan::command("app:seed-page-builder-components", function () {
+    //
+})->describe("Seed component categories");
+
+Artisan::command("app:seed-page-builder-component-categories", function () {
+    //
+})->describe("Seed component categories");

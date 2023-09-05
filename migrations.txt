@@ -1,0 +1,11 @@
+Following migrations have to be run in order to create Production Content
+
+How to create a command:
+1. php artisan make:command TestSomthing
+
+2. Go to /routes/console.php and add below:
+Artisan::command("app:seed-test-somthing", function () {
+})->describe("Seed component categories");
+
+3. The command which have to be run looks like below:
+php artisan app:test-somthing
