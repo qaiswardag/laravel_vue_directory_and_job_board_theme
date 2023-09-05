@@ -23,7 +23,7 @@ return new class extends Migration {
             //
             $table->boolean("show_author");
             $table->timestamp("deleted_at")->nullable();
-            $table->longText("title");
+            $table->string("title");
             $table->string("slug");
             $table->longText("content");
             $table->boolean("published");

@@ -17,6 +17,7 @@ use App\Http\Controllers\LoggedIn\Job\JobController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
+use App\Http\Controllers\Superadmin\PageBuilder\PageBuilderController;
 use App\Http\Controllers\Superadmin\SuperadminManageRoles;
 use App\Http\Middleware\isSuperAdmin;
 use App\Models\Post\Post;
@@ -397,7 +398,10 @@ Route::middleware([])
         // STORES #END
     });
 
-// Pages that are accessible only to superadmins
+// ADMIN ONLY #START
+// ADMIN ONLY #START
+// ADMIN ONLY #START
+// ADMIN ONLY #START
 Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
@@ -427,4 +431,22 @@ Route::middleware([
         SuperadminManageRoles::class,
         "destroy",
     ])->name("admin.users.user.remove.superadmin");
+
+    // ADMIN ONLY #PAGE BUILDER #START
+    // ADMIN ONLY #PAGE BUILDER #START
+    // ADMIN ONLY #PAGE BUILDER #START
+    // ADMIN ONLY #PAGE BUILDER #START
+    Route::get("/admin/components", [
+        PageBuilderController::class,
+        "index",
+    ])->name("admin.components");
+    // ADMIN ONLY #PAGE BUILDER #END
+    // ADMIN ONLY #PAGE BUILDER #END
+    // ADMIN ONLY #PAGE BUILDER #END
+    // ADMIN ONLY #PAGE BUILDER #END
+
+    // ADMIN ONLY #END
+    // ADMIN ONLY #END
+    // ADMIN ONLY #END
+    // ADMIN ONLY #END
 });

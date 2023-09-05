@@ -821,7 +821,7 @@ class Designer {
             }
         }
     }
-    // øøø
+    //
     updateBasePrimaryImage() {
         if (
             this.getCurrentImage.value.currentImage?.mediaLibrary?.path !==

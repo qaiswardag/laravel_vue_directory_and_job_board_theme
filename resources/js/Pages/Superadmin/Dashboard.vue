@@ -8,6 +8,7 @@ import {
     ReceiptRefundIcon,
     UsersIcon,
     BeakerIcon,
+    Square3Stack3DIcon,
 } from "@heroicons/vue/24/outline";
 
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
@@ -27,6 +28,13 @@ const actions = [
         title: "Users",
         href: "admin.users",
         icon: UsersIcon,
+        iconForeground: "text-myPrimaryBrandColor",
+        iconBackground: "bg-gray-50",
+    },
+    {
+        title: "Components",
+        href: "admin.components",
+        icon: Square3Stack3DIcon,
         iconForeground: "text-myPrimaryBrandColor",
         iconBackground: "bg-gray-50",
     },

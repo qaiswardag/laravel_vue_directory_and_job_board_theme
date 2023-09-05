@@ -60,7 +60,6 @@ const updateImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        console.log("clicked on a image save");
         designer.updateBasePrimaryImage();
         // close media library modal
         showMediaModal.value = false;
