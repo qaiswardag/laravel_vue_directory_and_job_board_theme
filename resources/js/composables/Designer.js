@@ -33,8 +33,8 @@ class Designer {
             () => this.store.getters["designer/getTextAreaVueModel"]
         );
 
-        this.getHighlightedImage = computed(
-            () => this.store.getters["designer/getHighlightedImage"]
+        this.getCurrentImage = computed(
+            () => this.store.getters["mediaLibrary/getCurrentImage"]
         );
         this.getHyberlinkEnable = computed(
             () => this.store.getters["designer/getHyberlinkEnable"]
@@ -824,13 +824,14 @@ class Designer {
     // øøø
     updateBasePrimaryImage() {
         if (
-            this.getHighlightedImage.value &&
-            this.getHighlightedImage.value.file !== null
+            this.getCurrentImage.value.currentImage?.mediaLibrary?.path !==
+                undefined ||
+            this.getCurrentImage.value.currentImage?.mediaLibrary?.path !== null
         ) {
             this.handleDesignerMethods();
             this.store.commit(
                 "designer/setBasePrimaryImage",
-                this.getHighlightedImage.value.file
+                `/storage/uploads/${this.getCurrentImage.value.currentImage.mediaLibrary.path}`
             );
         }
     }

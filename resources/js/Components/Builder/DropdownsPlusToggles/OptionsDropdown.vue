@@ -12,6 +12,8 @@ import Designer from "@/composables/Designer";
 import { ref, computed } from "vue";
 import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
 import Preview from "@/Pages/Designer/Preview.vue";
+import SlideOverRight from "@/Components/Builder/Slidebars/SlideOverRight.vue";
+import DesignerSettings from "@/Components/Builder/Settings/DesignerSettings.vue";
 
 import { useStore } from "vuex";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
@@ -35,6 +37,8 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
+const showSettingsSlideOverRight = ref(false);
+const titleSettingsSlideOverRight = ref(null);
 const openDesignerPreviewModal = ref(false);
 const firstDesignerPreviewModalButtonFunction = ref(null);
 const handleDesignerPreview = function () {
@@ -73,9 +77,26 @@ const deleteAllComponents = function () {
     };
     // end modal
 };
+
+// handle slideover window
+const handleSettingsSlideOver = function () {
+    titleSettingsSlideOverRight.value = "Settings";
+    showSettingsSlideOverRight.value = true;
+};
+// handle slideover window
+const settingsSlideOverButton = function () {
+    showSettingsSlideOverRight.value = false;
+};
 </script>
 
 <template>
+    <SlideOverRight
+        :open="showSettingsSlideOverRight"
+        :title="titleSettingsSlideOverRight"
+        @slideOverButton="settingsSlideOverButton"
+    >
+        <DesignerSettings> </DesignerSettings>
+    </SlideOverRight>
     <DynamicModal
         :show="showModalDeleteAllComponents"
         :type="typeModal"
@@ -115,30 +136,9 @@ const deleteAllComponents = function () {
                 class="z-50 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
             >
                 <div class="py-1">
-                    <MenuItem
-                        v-slot="{ active }"
-                        @click="handleDesignerPreview"
-                    >
-                        <div
-                            :class="[
-                                active
-                                    ? 'bg-gray-100 text-gray-900'
-                                    : 'text-gray-700',
-                                'block px-4 py-2',
-                            ]"
-                        >
-                            <div
-                                class="flex items-center justify-left gap-2 cursor-pointer"
-                            >
-                                <EyeIcon class="w-3 h-3 stroke-2"></EyeIcon>
-                                Preview page
-                            </div>
-                        </div>
-                    </MenuItem>
-
                     <MenuItem v-slot="{ active }">
                         <div
-                            @click="deleteAllComponents"
+                            @click="handleDesignerPreview"
                             class="cursor-pointer"
                             :class="[
                                 active
@@ -148,8 +148,63 @@ const deleteAllComponents = function () {
                             ]"
                         >
                             <div class="flex items-center justify-left gap-2">
-                                <TrashIcon class="w-3 h-3 stroke-2"></TrashIcon>
-                                Delete all Components
+                                <div
+                                    class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                >
+                                    <EyeIcon
+                                        class="stroke-2 w-3 h-3 m-1.5"
+                                    ></EyeIcon>
+                                </div>
+                                Preview page
+                            </div>
+                        </div>
+                    </MenuItem>
+
+                    <MenuItem v-slot="{ active }">
+                        <div
+                            @click="handleSettingsSlideOver"
+                            class="cursor-pointer"
+                            :class="[
+                                active
+                                    ? 'bg-gray-100 text-gray-900'
+                                    : 'text-gray-700',
+                                'block px-4 py-2',
+                            ]"
+                        >
+                            <div class="flex items-center justify-left gap-2">
+                                <div
+                                    class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                >
+                                    <AdjustmentsVerticalIcon
+                                        class="stroke-2 w-3 h-3 m-1.5"
+                                    ></AdjustmentsVerticalIcon>
+                                </div>
+                                Settings
+                            </div>
+                        </div>
+                    </MenuItem>
+                    <MenuItem v-slot="{ active }">
+                        <div
+                            @click="deleteAllComponents"
+                            class="cursor-pointer hover:bg-myPrimaryErrorColor group"
+                            :class="[
+                                active
+                                    ? 'bg-gray-100 text-gray-900'
+                                    : 'text-gray-700',
+                                'block px-4 py-2',
+                            ]"
+                        >
+                            <div class="flex items-center justify-left gap-2">
+                                <div
+                                    class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square"
+                                >
+                                    <TrashIcon
+                                        class="stroke-2 w-3 h-3 m-1.5 group-hover:text-myPrimaryDarkGrayColor"
+                                    ></TrashIcon>
+                                </div>
+                                <span class="group-hover:text-white">
+                                    Delete all Components
+                                </span>
                             </div>
                         </div>
                     </MenuItem>

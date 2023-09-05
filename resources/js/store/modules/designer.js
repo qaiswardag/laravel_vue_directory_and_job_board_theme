@@ -72,7 +72,6 @@ export default {
         component: null,
         components: [],
         basePrimaryImage: null,
-        highlightedImage: null,
         fetchedComponents: [],
     },
 
@@ -221,10 +220,6 @@ export default {
         getComponents(state) {
             return state.components;
         },
-        getHighlightedImage(state) {
-            return state.highlightedImage;
-        },
-
         //
         getBasePrimaryImage(state) {
             return state.basePrimaryImage;
@@ -386,10 +381,6 @@ export default {
         setComponents(state, payload) {
             state.components = {};
             state.components = payload;
-        },
-
-        setHighlightedImage(state, payload) {
-            state.highlightedImage = payload;
         },
 
         setBasePrimaryImage(state, payload) {

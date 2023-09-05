@@ -2,7 +2,6 @@
 import Draggable from "vuedraggable";
 import { onMounted, computed, onBeforeMount, ref, watch } from "vue";
 import Designer from "@/composables/Designer";
-import DesignerSettings from "@/Components/Builder/Settings/DesignerSettings.vue";
 import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
 import Preview from "@/Pages/Designer/Preview.vue";
 import {
@@ -22,7 +21,6 @@ import OptionsDropdown from "@/Components/Builder/DropdownsPlusToggles/OptionsDr
 import RightSidebarEditor from "@/Components/Builder/EditorMenu/RightSidebarEditor.vue";
 import Spinner from "@/Components/Builder/Loaders/Spinner.vue";
 import ComponentTopMenu from "@/Components/Builder/EditorMenu/Editables/ComponentTopMenu.vue";
-import SlideOverRight from "@/Components/Builder/Slidebars/SlideOverRight.vue";
 
 const emit = defineEmits(["previewCurrentDesign"]);
 
@@ -38,8 +36,6 @@ const props = defineProps({
 const store = useStore();
 const designer = new Designer(store);
 
-const showSettingsSlideOverRight = ref(false);
-const titleSettingsSlideOverRight = ref(null);
 const getMenuLeft = computed(() => {
     return store.getters["designer/getMenuLeft"];
 });
@@ -49,16 +45,6 @@ const getMenuRight = computed(() => {
 const getMenuPreview = computed(() => {
     return store.getters["designer/getMenuPreview"];
 });
-
-// handle slideover window
-const handleSettingsSlideOver = function () {
-    titleSettingsSlideOverRight.value = "Settings";
-    showSettingsSlideOverRight.value = true;
-};
-// handle slideover window
-const settingsSlideOverButton = function () {
-    showSettingsSlideOverRight.value = false;
-};
 
 const categories = ref(null);
 categories.value = [
@@ -157,13 +143,6 @@ onMounted(async () => {
         <Preview></Preview>
     </DesignerPreviewModal>
 
-    <SlideOverRight
-        :open="showSettingsSlideOverRight"
-        :title="titleSettingsSlideOverRight"
-        @slideOverButton="settingsSlideOverButton"
-    >
-        <DesignerSettings> </DesignerSettings>
-    </SlideOverRight>
     <div
         class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
     >
@@ -331,14 +310,6 @@ onMounted(async () => {
                             <BoltSlashIcon
                                 class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"
                             ></BoltSlashIcon>
-                        </div>
-                        <div
-                            @click="handleSettingsSlideOver"
-                            class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                        >
-                            <AdjustmentsVerticalIcon
-                                class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"
-                            ></AdjustmentsVerticalIcon>
                         </div>
                         <div
                             v-if="getMenuRight === false"
