@@ -353,6 +353,10 @@
     .myPrimarySelect {
         @apply relative w-full rounded-md border border-myPrimaryMediumGrayColor hover:border-transparent hover:ring-2 hover:ring-myPrimaryBrandColor cursor-pointer bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-myPrimaryBrandColor focus:outline-none focus:ring-1 focus:ring-myPrimaryBrandColor;
     }
+
+    .myPrimaryColorPreview {
+        @apply aspect-square  border border-gray-200 cursor-pointer  min-h-[1.5rem] rounded-sm;
+    }
 }
 
 /* CSS styles for VueQuill - start */

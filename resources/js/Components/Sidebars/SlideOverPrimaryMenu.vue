@@ -26,13 +26,6 @@ const primaryMenuSlideOverButton = function () {
 
 const navigation = [
     {
-        label: "Dashboard",
-        route: {
-            name: "dashboard",
-            parameters: [],
-        },
-    },
-    {
         label: "Home",
         route: {
             name: "home",
@@ -46,20 +39,6 @@ const navigation = [
             parameters: [],
         },
         children: [
-            {
-                label: "Users",
-                route: {
-                    name: "users",
-                    parameters: [],
-                },
-            },
-            {
-                label: "Blog",
-                route: {
-                    name: "blog.index",
-                    parameters: [],
-                },
-            },
             {
                 label: "Terms of Service",
                 route: {
@@ -84,16 +63,9 @@ const navigation = [
         },
     },
     {
-        label: "Login",
+        label: "Users",
         route: {
-            name: "login",
-            parameters: [],
-        },
-    },
-    {
-        label: "Register",
-        route: {
-            name: "register",
+            name: "users",
             parameters: [],
         },
     },

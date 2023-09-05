@@ -3,6 +3,7 @@ import user from "./modules/user";
 import attachedUsers from "./modules/attached-users";
 import mediaLibrary from "./modules/media-library";
 import userDashboard from "./modules/user-dashboard";
+import designer from "./modules/designer";
 
 const store = createStore({
     modules: {
@@ -10,6 +11,7 @@ const store = createStore({
         attachedUsers: attachedUsers,
         mediaLibrary: mediaLibrary,
         userDashboard: userDashboard,
+        designer: designer,
     },
 });
 

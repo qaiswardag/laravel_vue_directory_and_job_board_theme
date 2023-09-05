@@ -527,7 +527,6 @@ onBeforeMount(() => {
                         v-model="postForm.title"
                         type="text"
                         class="block w-full mt-1"
-                        autofocus
                         autocomplete="off"
                     />
                     <InputError :message="postForm.errors.title" />
@@ -920,10 +919,10 @@ onBeforeMount(() => {
                     </div>
                     <InputError :message="postForm.errors.author" />
                     <p
-                        v-if="postForm.author.length >= 6"
+                        v-if="postForm.author.length >= 21"
                         class="myPrimaryParagraphError"
                     >
-                        Maximum 5 author is allowed.
+                        Maximum 20 people is allowed.
                     </p>
                 </div>
             </div>

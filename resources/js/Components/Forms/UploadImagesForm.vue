@@ -21,24 +21,6 @@ const uploadOnSuccess = function () {
     emit("uploadOnSuccess");
 };
 
-const selected = ref("Upload");
-
-const tabs = [
-    {
-        name: "Upload",
-        current: true,
-    },
-    {
-        name: "Media library",
-        current: false,
-    },
-    {
-        name: "Unsplash",
-        href: "#",
-        current: false,
-    },
-];
-
 const props = defineProps({
     team: {
         required: true,
