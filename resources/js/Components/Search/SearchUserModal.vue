@@ -219,7 +219,6 @@ onMounted(() => {
                             <p class="myPrimaryTag">
                                 Total
                                 {{ getCurrentUsers.fetchedData.count }}
-                                users
                             </p>
                         </div>
 
@@ -467,7 +466,7 @@ onMounted(() => {
                         <div class="flex justify-start items-center">
                             <p class="myPrimaryTag">
                                 Added
-                                {{ getCurrentAttachedUsers.length }} User(s)
+                                {{ getCurrentAttachedUsers.length }}
                             </p>
                         </div>
                         <div

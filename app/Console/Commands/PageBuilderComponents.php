@@ -26,22 +26,62 @@ class PageBuilderComponents extends Command
      */
     public function handle()
     {
+        $imagePath = null;
+
         $components = [
             [
-                "title" => "title 1",
-                "html_code" => "<div>Component 1 HTML</div>",
-                "cover_image_original" => "/app-images/blog/1.jpg",
-                "cover_image_thumbnail" => "/app-images/blog/1-thumb.jpg",
-                "cover_image_medium" => "/app-images/blog/1-medium.jpg",
-                "cover_image_large" => "/app-images/blog/1-large.jpg",
+                "title" => "Hello & Bonjour",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
             ],
             [
-                "title" => "title 2",
-                "html_code" => "<div>Component 2 HTML</div>",
-                "cover_image_original" => "/app-images/blog/2.jpg",
-                "cover_image_thumbnail" => "/app-images/blog/2-thumb.jpg",
-                "cover_image_medium" => "/app-images/blog/2-medium.jpg",
-                "cover_image_large" => "/app-images/blog/2-large.jpg",
+                "title" => "Hello & Bonjour 2",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
+            ],
+            [
+                "title" => "Hello & Bonjour 3",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
+            ],
+            [
+                "title" => "Hello & Bonjour 4",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
+            ],
+            [
+                "title" => "Hello & Bonjour 5",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
+            ],
+            [
+                "title" => "Hello & Bonjour 6",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
             ],
             // Add data for other components here
         ];
@@ -50,6 +90,6 @@ class PageBuilderComponents extends Command
             PageBuilderComponent::factory()->create($component);
         }
 
-        $this->info("Components seeded successfully.");
+        $this->info("Seeded successfully, new Components for production.");
     }
 }

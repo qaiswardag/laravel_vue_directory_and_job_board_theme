@@ -28,30 +28,30 @@ class DatabaseSeeder extends Seeder
     {
         // Random users
         // John Doe
-        User::factory()->create([
-            "id" => 1,
-            "first_name" => "John",
-            "last_name" => "Doe",
-            "email" => "jd@myissue.io",
-            "public" => true,
-            "current_team_id" => 1,
-            "password" => Hash::make("123456"),
-        ]);
+        // User::factory()->create([
+        //     "id" => 1,
+        //     "first_name" => "John",
+        //     "last_name" => "Doe",
+        //     "email" => "jd@myself.ae",
+        //     "public" => true,
+        //     "current_team_id" => 1,
+        //     "password" => Hash::make("123456"),
+        // ]);
 
-        Team::factory()->create([
-            "id" => 1,
-            "user_id" => User::find(1)->id,
-            "name" => "Lacoste",
-            "public" => true,
-            "personal_team" => false,
-        ]);
+        // Team::factory()->create([
+        //     "id" => 1,
+        //     "user_id" => User::find(1)->id,
+        //     "name" => "Lacoste",
+        //     "public" => true,
+        //     "personal_team" => false,
+        // ]);
 
         // Shaun Pelling
         User::factory()->create([
             "id" => 2,
             "first_name" => "Shaun",
             "last_name" => "Pelling",
-            "email" => "sp@myissue.io",
+            "email" => "sp@myself.ae",
 
             "public" => false,
             "current_team_id" => 2,
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
             "id" => 3,
             "first_name" => "Mie",
             "last_name" => "Mortensen",
-            "email" => "mm@myissue.io",
+            "email" => "mm@myself.ae",
 
             "public" => true,
             "current_team_id" => 3,
@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
             "id" => 101,
             "first_name" => "Qais",
             "last_name" => "Wardag",
-            "email" => "qw@myissue.io",
+            "email" => "qw@myself.ae",
             "public" => true,
             "current_team_id" => 1,
             "password" => Hash::make("123456"),
@@ -100,7 +100,7 @@ class DatabaseSeeder extends Seeder
             "id" => 4,
             "first_name" => "Marilyn",
             "last_name" => "Monroe",
-            "email" => "mjm@myissue.io",
+            "email" => "mjm@myself.ae",
             "current_team_id" => 4,
             "password" => Hash::make("123456"),
         ]);
@@ -117,7 +117,7 @@ class DatabaseSeeder extends Seeder
             "id" => 5,
             "first_name" => "Oprah",
             "last_name" => "Winfrey",
-            "email" => "ow@myissue.io",
+            "email" => "ow@myself.ae",
             "current_team_id" => 5,
             "password" => Hash::make("123456"),
         ]);
@@ -134,7 +134,7 @@ class DatabaseSeeder extends Seeder
             "id" => 6,
             "first_name" => "Ingrid",
             "last_name" => "Bergman",
-            "email" => "ib@myissue.io",
+            "email" => "ib@myself.ae",
             "current_team_id" => 6,
             "password" => Hash::make("123456"),
         ]);
@@ -152,7 +152,7 @@ class DatabaseSeeder extends Seeder
             "id" => 7,
             "first_name" => "Karl",
             "last_name" => "Lagerfeld",
-            "email" => "kl@myissue.io",
+            "email" => "kl@myself.ae",
             "current_team_id" => 1,
             "password" => Hash::make("123456"),
         ]);

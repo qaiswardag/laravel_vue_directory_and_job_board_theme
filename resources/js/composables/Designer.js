@@ -627,7 +627,10 @@ class Designer {
         const parser = new DOMParser();
 
         // Parse the HTML content of the clonedComponent using the DOMParser
-        const doc = parser.parseFromString(clonedComponent.html, "text/html");
+        const doc = parser.parseFromString(
+            clonedComponent.html_code,
+            "text/html"
+        );
 
         // Select all elements within the parsed HTML
         const elements = doc.querySelectorAll("*");
@@ -637,13 +640,13 @@ class Designer {
         if (section) {
             // Generate a unique ID using uuidv4() and assign it to the section
             section.dataset.componentid = uuidv4();
+
+            // Update the clonedComponent id with the newly generated unique ID
+            clonedComponent.id = section.dataset.componentid;
         }
 
-        // Update the clonedComponent id with the newly generated unique ID
-        clonedComponent.id = section.dataset.componentid;
-
         // Update the HTML content of the clonedComponent with the modified HTML
-        clonedComponent.html = doc.querySelector("section").outerHTML;
+        clonedComponent.html_code = doc.querySelector("section").outerHTML;
 
         // return to the cloned element to be dropped
         return clonedComponent;

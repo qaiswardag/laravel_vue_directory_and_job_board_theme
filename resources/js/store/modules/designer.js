@@ -398,13 +398,15 @@ export default {
     // actions
     actions: {
         // load components
-        loadComponents(context, payload) {
+        loadComponents(context, team) {
             handlegetElements(
-                "/json/components.json",
+                route("admin.components.index", {
+                    team: team.id,
+                }),
 
                 {},
                 {
-                    additionalCallTime: 200,
+                    additionalCallTime: 500,
                 }
             );
 

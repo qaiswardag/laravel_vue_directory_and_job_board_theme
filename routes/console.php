@@ -21,8 +21,13 @@ Artisan::command("inspire", function () {
 
 Artisan::command("app:seed-page-builder-components", function () {
     //
-})->describe("Seed component categories");
+})->describe("Seed components");
 
 Artisan::command("app:seed-page-builder-component-categories", function () {
     //
 })->describe("Seed component categories");
+
+// Create Teams and Users
+Artisan::command("app:seed-teams-users", function () {
+    //
+})->describe("Seed new Teams and Users for production");

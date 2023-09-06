@@ -47,15 +47,8 @@ const getMenuPreview = computed(() => {
 });
 
 const categories = ref(null);
-categories.value = [
-    "forms",
-    "teams",
-    "posts",
-    "features",
-    "headers",
-    "testimonials",
-];
-const activeLibrary = ref("forms");
+
+const activeLibrary = ref("Forms");
 
 const previewCurrentDesign = function () {
     designer.previewCurrentDesign();
@@ -75,17 +68,6 @@ const handleDesignerPreview = function () {
     };
     // end modal
 };
-
-const getFetchedComponents = computed(() => {
-    return store.getters["designer/getFetchedComponents"];
-});
-
-// Fetched components filtered after category
-const componentsMenu = computed(() => {
-    return getFetchedComponents.value?.fetchedData?.filter((component) => {
-        return component.category === activeLibrary.value;
-    });
-});
 
 // clone
 const cloneComponent = function (cloneComponent) {
@@ -117,13 +99,60 @@ const deselectCurrentComponent = function () {
     designer.removeHoveredAndSelected();
 };
 
+const draggingItem = ref(false);
+
+const onDragStart = function (evt) {
+    draggingItem.value = true;
+};
+const onDragEnd = function () {
+    draggingItem.value = false;
+};
+
+const getFetchedComponentsFilter = computed(() => {
+    if (
+        getFetchedComponents.value.fetchedData !== undefined &&
+        getFetchedComponents.value.fetchedData !== null
+    ) {
+        categories.value =
+            getFetchedComponents.value.fetchedData.component_categories;
+    }
+
+    if (
+        getFetchedComponents.value.fetchedData !== undefined &&
+        getFetchedComponents.value.fetchedData !== null
+    ) {
+        // Extract the name property from the activeLibrary.value object
+        const activeLibraryName = activeLibrary.value.name;
+
+        // Filter components based on the active category
+        const activeCategoryComponents =
+            getFetchedComponents.value.fetchedData.components.filter(
+                (component) => {
+                    // Check if the activeLibraryName matches any category name
+                    return component.categories.some(
+                        (category) => category.name === activeLibraryName
+                    );
+                }
+            );
+
+        return activeCategoryComponents;
+    }
+});
+
+//
 onBeforeMount(() => {
     designer.areComponentsStoredInLocalStorage();
 });
 
+const getFetchedComponents = computed(() => {
+    return store.getters["designer/getFetchedComponents"];
+});
+//
+//
+
 onMounted(async () => {
-    // Load all HTML components
-    await store.dispatch("designer/loadComponents");
+    // fetch components
+    await store.dispatch("designer/loadComponents", props.team);
 
     store.commit("designer/setComponent", null);
     store.commit("designer/setElement", null);
@@ -197,7 +226,7 @@ onMounted(async () => {
                                 :key="category"
                                 :class="{
                                     'bg-gray-100 text-gray-900':
-                                        activeLibrary === category &&
+                                        activeLibrary.name === category.name &&
                                         getMenuPreview === true,
                                 }"
                                 class="w-full myPrimaryParagrap font-medium py-4 pl-2 pr-0 capitalize cursor-pointer rounded-l-lg"
@@ -209,7 +238,7 @@ onMounted(async () => {
                                     );
                                 "
                             >
-                                {{ category }}
+                                {{ category.name }}
                             </li>
                         </ul>
                     </nav>
@@ -222,9 +251,6 @@ onMounted(async () => {
                     class="absolute z-10 w-[20rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-gray-50"
                 >
                     <div class="flex flex-col gap-4 p-4 h-full font-normal">
-                        <p class="myPrimaryParagraph capitalize">
-                            {{ activeLibrary }}
-                        </p>
                         <draggable
                             :clone="cloneComponent"
                             :group="{
@@ -232,18 +258,37 @@ onMounted(async () => {
                                 pull: 'clone',
                                 put: false,
                             }"
-                            :list="componentsMenu"
+                            :list="getFetchedComponentsFilter"
                             :sort="false"
                             class="flex flex-col gap-4 pr-4 overflow-y-auto"
                             item-key="id"
+                            @start="onDragStart"
+                            @end="onDragEnd"
                         >
                             <template #item="{ element }">
                                 <div v-if="element">
-                                    <img
-                                        :alt="element.name"
-                                        :src="element.imageSrc"
-                                        class="border-2 border-myPrimaryLightGrayColor hover:border-myPrimaryBrandColor rounded-md cursor-grab duration-200"
-                                    />
+                                    <p
+                                        v-if="draggingItem === false"
+                                        class="myPrimaryParagraph text-xs text-myPrimaryDarkGrayColor italic"
+                                    >
+                                        {{ element.title }} / ID:
+                                        {{ element.id }}
+                                    </p>
+                                    <div v-if="element.cover_image_medium">
+                                        <img
+                                            class="border-2 w-full border-myPrimaryLightGrayColor rounded-md cursor-grab duration-200"
+                                            :src="`/storage/uploads/${element.cover_image_medium}`"
+                                            :alt="component.title"
+                                        />
+                                    </div>
+
+                                    <div v-if="!element.cover_image_medium">
+                                        <img
+                                            class="border-2 w-full border-myPrimaryLightGrayColor rounded-md cursor-grab duration-200"
+                                            src="/app-images/builder/components/default_component_image.jpg"
+                                            alt="Component"
+                                        />
+                                    </div>
                                 </div>
                             </template>
                         </draggable>
@@ -344,7 +389,7 @@ onMounted(async () => {
                         >
                             <ComponentTopMenu></ComponentTopMenu>
                             <section
-                                v-html="element.html"
+                                v-html="element.html_code"
                                 class="m-0.5"
                             ></section>
                         </div>

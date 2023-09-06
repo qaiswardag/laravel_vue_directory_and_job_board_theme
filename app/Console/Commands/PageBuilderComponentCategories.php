@@ -27,6 +27,9 @@ class PageBuilderComponentCategories extends Command
     public function handle()
     {
         $categories = [
+            "Forms",
+            "Teams",
+            "Features",
             "Articles",
             "Contact Sections",
             "Feature Sections",
@@ -39,6 +42,8 @@ class PageBuilderComponentCategories extends Command
             ]);
         }
 
-        $this->info("Components Categories seeded successfully.");
+        $this->info(
+            "Seeded successfully, new Components Categories for production."
+        );
     }
 }

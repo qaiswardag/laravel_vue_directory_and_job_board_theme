@@ -4,6 +4,7 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
 use App\Http\Controllers\Api\Internal\LoggedIn\DashboardStatsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
+use App\Http\Controllers\Api\Internal\LoggedIn\PageBuilderComponentsController;
 use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
@@ -171,6 +172,19 @@ Route::middleware([
         // ATTACH USER #END
         // ATTACH USER #END
         // ATTACH USER #END
+
+        // PAGE BUILDER #START
+        // PAGE BUILDER #START
+        // PAGE BUILDER #START
+        // PAGE BUILDER #START
+        Route::get("/team/components/index/{team}", [
+            PageBuilderComponentsController::class,
+            "index",
+        ])->name("admin.components.index");
+        // PAGE BUILDER #END
+        // PAGE BUILDER #END
+        // PAGE BUILDER #END
+        // PAGE BUILDER #END
     });
 
 // Pages that require can store, create and update authentication
@@ -440,6 +454,11 @@ Route::middleware([
         PageBuilderController::class,
         "index",
     ])->name("admin.components");
+
+    Route::get("/admin/components/component/create/{team}", [
+        PageBuilderController::class,
+        "show",
+    ])->name("admin.components.component.create");
     // ADMIN ONLY #PAGE BUILDER #END
     // ADMIN ONLY #PAGE BUILDER #END
     // ADMIN ONLY #PAGE BUILDER #END
