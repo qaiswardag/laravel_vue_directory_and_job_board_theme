@@ -237,7 +237,7 @@ import {
                 :active="
                     route().current('team.jobs.index') ||
                     route().current('team.jobs.create') ||
-                    route().current('team.jobs.post.edit')
+                    route().current('team.jobs.job.edit')
                 "
             >
                 <TagIcon
@@ -264,7 +264,7 @@ import {
                 :active="
                     route().current('team.stores.index') ||
                     route().current('team.stores.create') ||
-                    route().current('team.stores.post.edit')
+                    route().current('team.stores.store.edit')
                 "
             >
                 <ShoppingBagIcon

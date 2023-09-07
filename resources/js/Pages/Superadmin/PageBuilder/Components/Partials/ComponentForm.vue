@@ -42,7 +42,7 @@ const props = defineProps({
     currentUserTeam: {
         required: true,
     },
-    component: {
+    post: {
         required: false,
     },
 });
@@ -74,9 +74,9 @@ const thirdModalButtonFunction = ref(null);
 
 const formType = ref("create");
 
-// const pathLocalStorage = `job-form-${
-//     props.currentUserTeam ? props.currentUserTeam.reference_id : null
-// }`;
+const pathLocalStorage = `page-builder-form-${
+    props.currentUserTeam ? props.currentUserTeam.reference_id : null
+}`;
 
 // use media library
 const showMediaLibraryModal = ref(false);
@@ -214,60 +214,9 @@ const postForm = useForm({
     cover_image_thumbnail: "",
     cover_image_medium: "",
     cover_image_large: "",
-
-    tags: "",
-    show_author: true,
-    author: [],
+    categories: [],
 });
 
-// // The above code uses the watch function from Vue 3 to watch for changes to the
-// // slugValueCustom property and update the postForm.slug field with the new value
-
-// const watchSlugInputChanges = function () {
-//     watch(
-//         () => slugValueCustom.value,
-//         (newValue) => {
-//             if (isSlugEditable.value === true) {
-//                 postForm.slug = slugify(
-//                     slugValueCustom.value,
-//                     config.slugifyOptions
-//                 );
-//             }
-//         },
-//         { immediate: true }
-//     );
-//     watch(
-//         () => postForm.title,
-//         (newValue) => {
-//             if (isSlugEditable.value === false) {
-//                 postForm.slug = slugify(postForm.title, config.slugifyOptions);
-//                 slugValueTitle.value = slugify(
-//                     postForm.title,
-//                     config.slugifyOptions
-//                 );
-//             }
-//         },
-//         { immediate: true }
-//     );
-// };
-
-// watch(
-//     () => isSlugEditable.value,
-//     (newValue) => {
-//         watchSlugInputChanges();
-//     },
-//     { immediate: true }
-// );
-
-// const handleCloseLock = function () {
-//     isSlugEditable.value = false;
-// };
-// const handleOpenLock = function () {
-//     isSlugEditable.value = true;
-// };
-// const handleTags = function (tags) {
-//     postForm.tags = tags;
-// };
 const handleCreatePost = function () {
     // try to store post
     createPost();
@@ -335,134 +284,89 @@ const clearForm = function () {
     postForm.cover_image_medium = "";
     postForm.cover_image_large = "";
 
-    //
-    //
-    postForm.tags = "";
-    clearTags.value++;
-    //
-    //
-    //
-    postForm.show_author = true;
-    postForm.author = [];
-
     localStorage.removeItem(pathLocalStorage);
-    console.log(localStorage.getItem(pathLocalStorage));
 };
 
-// // is form dirty? returns true or false
-// const formIsDirty = computed(() => {
-//     return postForm.isDirty;
-// });
+// is form dirty? returns true or false
+const formIsDirty = computed(() => {
+    return postForm.isDirty;
+});
 
-// const storeDirtyFormInLocalStorage = function () {
-//     if (formIsDirty.value === true && formType.value === "create") {
-//         // Convert the form data to a JSON string
-//         postForm.isSlugEditable = isSlugEditable.value;
-//         const formDataJson = JSON.stringify(postForm);
-//         // Save the form data to local storage using the form ID as the key
-//         localStorage.setItem(pathLocalStorage, formDataJson);
-//     }
-// };
-// // Will be executed when the user switch current route
-// router.on = () => {
-//     storeDirtyFormInLocalStorage();
-// };
-// // This function will be executed when the user clicks refresh or closes the tab/window
-// window.addEventListener("beforeunload", function () {
-//     storeDirtyFormInLocalStorage();
-// });
+const storeDirtyFormInLocalStorage = function () {
+    if (formIsDirty.value === true && formType.value === "create") {
+        // Convert the form data to a JSON string
+        const formDataJson = JSON.stringify(postForm);
+        // Save the form data to local storage using the form ID as the key
+        localStorage.setItem(pathLocalStorage, formDataJson);
+    }
+};
+//
+//
+//
+// Will be executed when the user switch current route
+router.on = () => {
+    storeDirtyFormInLocalStorage();
+};
+// This function will be executed when the user clicks refresh or closes the tab/window
+window.addEventListener("beforeunload", function () {
+    storeDirtyFormInLocalStorage();
+});
 
 // // get unique post if needs to be updated
 onBeforeMount(() => {
-    //     // User is creating a new Resource from scratch, rather than editing an existing one
-    //     // Check local storage
-    //     if (props.post === null) {
-    //         if (localStorage.getItem(pathLocalStorage) !== null) {
-    //             // Get the saved form data from local storage using the form ID as the key
-    //             const formDataJson = localStorage.getItem(pathLocalStorage);
-    //             let formLocalStorage = JSON.parse(formDataJson);
-    //             //
-    //             isSlugEditable.value = formLocalStorage.isSlugEditable;
-    //             //
-    //             if (formLocalStorage.isSlugEditable === false) {
-    //                 slugValueTitle.slug = formLocalStorage.title;
-    //             }
-    //             //
-    //             if (formLocalStorage.isSlugEditable === true) {
-    //                 slugValueCustom.value = formLocalStorage.slug;
-    //             }
-    //             //
-    //             postForm.title = formLocalStorage.title;
-    //             postForm.html_code = formLocalStorage.content;
-    //             postForm.published = formLocalStorage.published;
-    //             postForm.show_author = formLocalStorage.show_author;
-    //             postForm.cover_image_original =
-    //                 formLocalStorage.cover_image_original;
-    //             postForm.cover_image_thumbnail =
-    //                 formLocalStorage.cover_image_thumbnail;
-    //             postForm.cover_image_medium = formLocalStorage.cover_image_medium;
-    //             postForm.cover_image_large = formLocalStorage.cover_image_large;
-    //             postForm.tags = formLocalStorage.tags;
-    //             if (
-    //                 formLocalStorage.author === undefined ||
-    //                 formLocalStorage.author === null
-    //             ) {
-    //                 postForm.author = [];
-    //             }
-    //             if (
-    //                 formLocalStorage.author !== undefined ||
-    //                 formLocalStorage.author !== null
-    //             ) {
-    //                 postForm.author = formLocalStorage.author;
-    //             }
-    //         }
-    //     }
+    // User is creating a new Resource from scratch, rather than editing an existing one
+    // Check local storage
+    if (props.post === null) {
+        if (localStorage.getItem(pathLocalStorage) !== null) {
+            // Get the saved form data from local storage using the form ID as the key
+            const formDataJson = localStorage.getItem(pathLocalStorage);
+            let formLocalStorage = JSON.parse(formDataJson);
+
+            postForm.title = formLocalStorage.title;
+            postForm.html_code = formLocalStorage.html_code;
+            postForm.published = formLocalStorage.published;
+
+            postForm.cover_image_original =
+                formLocalStorage.cover_image_original;
+            postForm.cover_image_thumbnail =
+                formLocalStorage.cover_image_thumbnail;
+            postForm.cover_image_medium = formLocalStorage.cover_image_medium;
+            postForm.cover_image_large = formLocalStorage.cover_image_large;
+        }
+    }
     // User is editing an existing Resource, rather than creating a new one from scratch.
-    if (props.component !== null) {
-        //         formType.value = "update";
-        postForm.title = props.component.title;
-        //         // slug logic
-        //         // slug is editable when editing an existing post
-        //         isSlugEditable.value = true;
-        //         slugValueCustom.value = props.post.slug;
-        //         postForm.html_code = props.post.content;
-        //         postForm.published = props.post.published === 1 ? true : false;
-        //         postForm.show_author = props.post.show_author === 1 ? true : false;
-        //         postForm.cover_image_original = props.post.cover_image_original;
-        //         postForm.cover_image_thumbnail = props.post.cover_image_thumbnail;
-        //         postForm.cover_image_medium = props.post.cover_image_medium;
-        //         postForm.cover_image_large = props.post.cover_image_large;
-        //         postForm.tags = props.post.tags;
-        //         // check if the post author is available and should be displayed
-        //         if (props.post.show_author === 1 && props.postAuthor !== null) {
-        //             // add the author to the postForm
-        //             postForm.author = props.postAuthor;
-        //         }
+    if (props.post !== null) {
+        formType.value = "update";
+        postForm.title = props.post.title;
+        postForm.html_code = props.post.html_code;
+        postForm.published = props.post.published === 1 ? true : false;
+        postForm.cover_image_original = props.post.cover_image_original;
+        postForm.cover_image_thumbnail = props.post.cover_image_thumbnail;
+        postForm.cover_image_medium = props.post.cover_image_medium;
+        postForm.cover_image_large = props.post.cover_image_large;
     }
 });
 </script>
 
 <template>
     <p class="my-6">currentUserTeam is: {{ currentUserTeam }}</p>
-    <p class="my-6">component when edit is: {{ component }}</p>
+    <p class="my-6">component when edit is: {{ post }}</p>
     <FormSection @submitted="handleCreatePost">
         <template #title>Component details</template>
-        <template #description> Create a new Job. </template>
+        <template #description> Create a new Component. </template>
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Title & description
+                        Title & HTML
                     </div>
-                    <p class="myPrimaryParagraph">
-                        Specify title & description.
-                    </p>
+                    <p class="myPrimaryParagraph">Specify title & HTML.</p>
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
                     <InputLabel for="title" value="Component title" />
                     <TextInput
-                        placeholder="Enter your title.."
+                        placeholder="Enter title.."
                         id="title"
                         v-model="postForm.title"
                         type="text"
@@ -474,19 +378,107 @@ onBeforeMount(() => {
                 <!-- post title end -->
 
                 <!-- post content start -->
+                <InputLabel for="title" value="Component HTML" />
                 <TextArea
+                    rows="40"
+                    cols="50"
                     placeholder="HTML for component"
                     id="html_code"
                     v-model="postForm.html_code"
                     autocomplete="off"
                 ></TextArea>
+                <InputError :message="postForm.errors.html_code" />
                 <!-- post content end -->
             </div>
         </template>
 
-        <template v-if="false" #sidebar>
-            <!-- cover image - start -->
+        <template #sidebar>
+            <!-- post status - start -->
             <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Status</div>
+                    <p class="myPrimaryParagraph">Specify status.</p>
+                </div>
+                <div
+                    class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
+                >
+                    <InputLabel
+                        :value="
+                            postForm.published ? 'Published' : 'Unpublished'
+                        "
+                        :class="{
+                            'text-myPrimaryLinkColor': postForm.published,
+                            'text-myPrimaryErrorColor': !postForm.published,
+                        }"
+                    />
+                    <Switch
+                        v-model="postForm.published"
+                        :class="[
+                            postForm.published
+                                ? 'bg-myPrimaryLinkColor'
+                                : 'bg-gray-200',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
+                        ]"
+                    >
+                        <span class="sr-only">Use setting</span>
+                        <span
+                            :class="[
+                                postForm.published
+                                    ? 'translate-x-5'
+                                    : 'translate-x-0',
+                                'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                            ]"
+                        >
+                            <span
+                                :class="[
+                                    postForm.published
+                                        ? 'opacity-0 ease-out duration-100'
+                                        : 'opacity-100 ease-in duration-200',
+                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                ]"
+                                aria-hidden="true"
+                            >
+                                <svg
+                                    class="h-3 w-3 text-gray-400"
+                                    fill="none"
+                                    viewBox="0 0 12 12"
+                                >
+                                    <path
+                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </span>
+                            <span
+                                :class="[
+                                    postForm.published
+                                        ? 'opacity-100 ease-in duration-200'
+                                        : 'opacity-0 ease-out duration-100',
+                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                ]"
+                                aria-hidden="true"
+                            >
+                                <svg
+                                    class="h-3 w-3 text-myPrimaryLinkColor"
+                                    fill="currentColor"
+                                    viewBox="0 0 12 12"
+                                >
+                                    <path
+                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
+                                    />
+                                </svg>
+                            </span>
+                        </span>
+                    </Switch>
+                </div>
+                <InputError :message="postForm.errors.published" />
+            </div>
+            <!-- post status - end -->
+            <!-- cover image - start -->
+            <div v-if="false" class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image

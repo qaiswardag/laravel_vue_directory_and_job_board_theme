@@ -18,7 +18,17 @@ class PageBuilderComponentsController extends Controller
         $this->authorize("can-read", $team);
 
         $componentsCategories = PageBuilderComponentCategory::all();
-        $components = PageBuilderComponent::with("categories")->get();
+
+        if (auth()->user()->superadmin === null) {
+            // User is not a superadmin, so only fetch components with published as true
+            $components = PageBuilderComponent::with("categories")
+                ->where("published", true)
+                ->get();
+        }
+
+        if (auth()->user()->superadmin !== null) {
+            $components = PageBuilderComponent::with("categories")->get();
+        }
 
         return [
             "component_categories" => $componentsCategories,

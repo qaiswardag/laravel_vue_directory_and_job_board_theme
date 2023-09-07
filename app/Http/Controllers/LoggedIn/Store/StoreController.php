@@ -103,7 +103,7 @@ class StoreController extends Controller
         }
 
         $this->authorize("can-create-and-update", $team);
-        return Inertia::render("Stores/CreatePost/CreatePost");
+        return Inertia::render("Stores/CreateStore/CreateStore");
     }
 
     /**
@@ -274,7 +274,7 @@ class StoreController extends Controller
             }
         }
 
-        return Inertia::render("Stores/UpdatePost/UpdatePost", [
+        return Inertia::render("Stores/UpdateStore/UpdateStore", [
             "post" => $store,
             "postAuthor" => $authors,
         ]);

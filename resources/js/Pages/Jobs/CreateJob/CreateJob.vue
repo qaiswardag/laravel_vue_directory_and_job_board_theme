@@ -1,49 +1,46 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
-import PostForm from "@/Pages/Stores/Partials/PostForm.vue";
+import JobForm from "@/Pages/Jobs/Partials/JobForm.vue";
 
 const props = defineProps({
+    currentUserTeamRole: {
+        required: false,
+    },
     currentUserTeam: {
         required: true,
     },
     user: {
         required: true,
     },
-    post: {
-        required: true,
-    },
-    postAuthor: {
-        required: true,
-    },
 });
 
 const breadcrumbsLinks = [
     {
-        label: "All Stores",
+        label: "All Jobs",
         route: {
-            name: "team.stores.index",
+            name: "team.jobs.index",
             parameters: [props.currentUserTeam.reference_id],
         },
     },
-    { label: "Update Store" },
+    { label: "Add Job" },
 ];
 </script>
 
 <template>
     <LoggedInLayout>
-        <Head title="Update Store" />
+        <Head title="Create Job" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Update Store</h2>
+            <h2 class="myPrimaryMainPageHeader">Create a New Job</h2>
         </template>
+
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-        <PostForm
+        <JobForm
             :currentUserTeam="currentUserTeam"
+            :currentUserTeamRole="currentUserTeamRole"
             :user="user"
-            :post="post"
-            :postAuthor="postAuthor"
-        ></PostForm>
+        ></JobForm>
     </LoggedInLayout>
 </template>

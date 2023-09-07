@@ -10,7 +10,7 @@ const props = defineProps({
     currentUserTeam: {
         required: true,
     },
-    component: {
+    post: {
         required: true,
     },
 });
@@ -19,7 +19,7 @@ const breadcrumbsLinks = [
     {
         label: "All Components",
         route: {
-            name: "admin.components.index",
+            name: "admin.components",
             parameters: null,
         },
     },
@@ -40,7 +40,7 @@ const breadcrumbsLinks = [
         <ComponentForm
             :user="user"
             :currentUserTeam="currentUserTeam"
-            :component="component"
+            :post="post"
         ></ComponentForm>
     </LoggedInLayout>
 </template>

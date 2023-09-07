@@ -155,7 +155,7 @@ class PageBuilderController extends Controller
         return Inertia::render(
             "Superadmin/PageBuilder/Components/UpdateComponent/UpdateComponent",
             [
-                "component" => $component,
+                "post" => $component,
                 "categories" => $categories,
             ]
         );

@@ -102,7 +102,7 @@ class JobController extends Controller
         }
 
         $this->authorize("can-create-and-update", $team);
-        return Inertia::render("Jobs/CreatePost/CreatePost");
+        return Inertia::render("Jobs/CreateJob/CreateJob");
     }
 
     /**
@@ -273,7 +273,7 @@ class JobController extends Controller
             }
         }
 
-        return Inertia::render("Jobs/UpdatePost/UpdatePost", [
+        return Inertia::render("Jobs/UpdateJob/UpdateJob", [
             "post" => $job,
             "postAuthor" => $authors,
         ]);

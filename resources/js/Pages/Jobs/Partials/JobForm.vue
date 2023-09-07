@@ -6,6 +6,8 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { ref, computed, onBeforeMount, watch } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
@@ -17,9 +19,6 @@ import config from "@/utils/config";
 import SearchUserModal from "@/Components/Search/SearchUserModal.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import DesignerModal from "@/Components/Modals/DesignerModal.vue";
-import Designer from "@/Pages/Designer/Designer.vue";
-
 import {
     Listbox,
     ListboxButton,
@@ -90,7 +89,7 @@ const getCurrentAttachedUsers = computed(() => {
 });
 
 const formType = ref("create");
-const pathLocalStorage = `store-form-${
+const pathLocalStorage = `job-form-${
     props.currentUserTeam ? props.currentUserTeam.reference_id : null
 }`;
 
@@ -162,7 +161,7 @@ const handleAddAuthor = function () {
     modalShowAddAuthor.value = true;
     // set modal standards
     titleModalSearchAuthor.value = "Add author";
-    descriptionModalSearchAuthor.value = "Add store author";
+    descriptionModalSearchAuthor.value = "Add Job author";
     firstButtonModalSearchAuthor.value = "Close";
     secondButtonModalSearchAuthor.value = "Save";
     // handle click
@@ -217,6 +216,32 @@ const showErrorNotifications = ref(false);
 const notificationsModalButton = function () {
     showErrorNotifications.value = false;
 };
+
+// start Quill Editor
+// define options
+const globalOptions = {
+    // debug: "info",
+    modules: {
+        toolbar: ["bold", "italic", "underline"],
+    },
+    placeholder: "Compose an epic...",
+    readOnly: false,
+    theme: "snow",
+
+    //
+    //
+    toolbar: [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ["bold", "italic", "underline"], // toggled buttons
+
+        [{ list: "ordered" }, { list: "bullet" }],
+
+        [{ align: [] }],
+
+        ["clean"], // remove formatting button
+    ],
+};
+// end Quill Editor
 
 const isSlugEditable = ref(false);
 const slugValueTitle = ref("");
@@ -295,7 +320,7 @@ const handleCreatePost = function () {
 
 const createPost = () => {
     if (formType.value === "create") {
-        postForm.post(route("team.stores.store"), {
+        postForm.post(route("team.jobs.store"), {
             preserveScroll: true,
             onSuccess: () => {
                 clearForm();
@@ -305,7 +330,7 @@ const createPost = () => {
         });
     }
     if (formType.value === "update") {
-        postForm.post(route("team.stores.update", props.post.id), {
+        postForm.post(route("team.jobs.update", props.post.id), {
             preserveScroll: true,
             onSuccess: () => {},
             onError: () => {},
@@ -370,7 +395,7 @@ const clearForm = function () {
     postForm.author = [];
 
     localStorage.removeItem(pathLocalStorage);
-    console.log(localStorage.getItem(pathLocalStorage));
+    $;
 };
 
 // is form dirty? returns true or false
@@ -477,38 +502,12 @@ onBeforeMount(() => {
         }
     }
 });
-
-// Builder # Start
-const openDesignerModal = ref(false);
-// use designer model
-const firstDesignerModalButtonFunction = ref(null);
-//
-//
-const handleDesigner = function () {
-    // set modal standards
-    openDesignerModal.value = true;
-
-    // handle click
-    firstDesignerModalButtonFunction.value = function () {
-        // set open modal
-        openDesignerModal.value = false;
-    };
-    // end modal
-};
-// Builder # End
 </script>
 
 <template>
-    <DesignerModal
-        :show="openDesignerModal"
-        @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
-    >
-        <Designer :user="user" :team="postForm.team"></Designer>
-    </DesignerModal>
-
     <FormSection @submitted="handleCreatePost">
-        <template #title> Store details</template>
-        <template #description> Create a new Store. </template>
+        <template #title>Job details</template>
+        <template #description> Create a new Job. </template>
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -608,46 +607,26 @@ const handleDesigner = function () {
                     <InputError :message="postForm.errors.slug" />
                 </div>
                 <!-- post slug end -->
-            </div>
 
-            <!-- Builder #start -->
-            <div class="myInputsOrganization">
-                <div
-                    class="myPrimaryFormOrganizationHeader text-center border-b border-myPrimaryLightGrayColor mb-6"
-                >
-                    Manage Content
-                </div>
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div
-                        class="flex xl:gap-16 lg:gap-12 gap-4 items-center justify-center"
+                <!-- post content start -->
+                <div class="myInputGroup">
+                    <InputLabel
+                        for="content"
+                        value="Post description"
+                        class="mb-1"
+                    />
+                    <QuillEditor
+                        id="content"
+                        v-model:content="postForm.content"
+                        contentType="html"
+                        :options="globalOptions"
+                        class="rounded-b-md bg-white"
                     >
-                        <div class="myInputGroup self-center">
-                            <div></div>
-                            <div class="mt-4">
-                                <button
-                                    @click="handleDesigner"
-                                    type="button"
-                                    class="myPrimaryButton"
-                                >
-                                    Open Page Builder
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <img
-                                @click="handleDesigner"
-                                class="w-auto object-cover cursor-pointer"
-                                src="/app-images/builder/drag-and-drop-to-build-content-example-one.webp"
-                                alt="Drag-and-drop-to-build-content-example-one"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="flex justify-center">
+                    </QuillEditor>
                     <InputError :message="postForm.errors.content" />
                 </div>
+                <!-- post content end -->
             </div>
-            <!-- Builder #end -->
         </template>
 
         <template #sidebar>
@@ -945,7 +924,7 @@ const handleDesigner = function () {
                         v-if="postForm.author.length >= 21"
                         class="myPrimaryParagraphError"
                     >
-                        Maximum 20 author is allowed.
+                        Maximum 20 people is allowed.
                     </p>
                 </div>
             </div>

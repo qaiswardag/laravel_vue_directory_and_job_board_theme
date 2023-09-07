@@ -1,7 +1,7 @@
 <script setup>
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
-import PostForm from "@/Pages/Jobs/Partials/PostForm.vue";
+import JobForm from "@/Pages/Jobs/Partials/JobForm.vue";
 
 const props = defineProps({
     currentUserTeam: {
@@ -39,11 +39,11 @@ const breadcrumbsLinks = [
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-        <PostForm
+        <JobForm
             :currentUserTeam="currentUserTeam"
             :user="user"
             :post="post"
             :postAuthor="postAuthor"
-        ></PostForm>
+        ></JobForm>
     </LoggedInLayout>
 </template>

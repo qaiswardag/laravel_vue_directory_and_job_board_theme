@@ -395,7 +395,6 @@ const clearForm = function () {
     postForm.author = [];
 
     localStorage.removeItem(pathLocalStorage);
-    console.log(localStorage.getItem(pathLocalStorage));
 };
 
 // is form dirty? returns true or false

@@ -16,7 +16,7 @@ const breadcrumbsLinks = [
     {
         label: "All Components",
         route: {
-            name: "admin.components.index",
+            name: "admin.components",
             parameters: null,
         },
     },
