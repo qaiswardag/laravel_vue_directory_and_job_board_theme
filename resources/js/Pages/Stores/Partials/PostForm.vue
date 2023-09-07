@@ -661,7 +661,9 @@ const handleDesigner = function () {
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
                 >
                     <InputLabel
-                        :value="postForm.published ? 'Published' : 'Private'"
+                        :value="
+                            postForm.published ? 'Published' : 'Unpublished'
+                        "
                         :class="{
                             'text-myPrimaryLinkColor': postForm.published,
                             'text-myPrimaryErrorColor': !postForm.published,

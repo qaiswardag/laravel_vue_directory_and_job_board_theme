@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Superadmin\PageBuilder;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoggedIn\Superadmin\StorePageBuilderComponentRequest;
 use App\Models\Superadmin\PageBuilder\PageBuilderComponent;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
@@ -68,9 +70,21 @@ class PageBuilderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($referenceId)
     {
-        dd("came here");
+        $this->authorize("superadmin-can-create-and-update");
+
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" =>
+                    // Error message for the user.
+                    "Only team members who belong to Team with ID 1 can create or update components.",
+                "status" => 403, // HTTP status code for the response.
+            ]);
+        }
+
         return Inertia::render(
             "Superadmin/PageBuilder/Components/CreateComponent/CreateComponent",
             []
@@ -80,8 +94,28 @@ class PageBuilderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(
+        StorePageBuilderComponentRequest $request,
+        $referenceId
+    ) {
+        dd("this is store method");
+
+        $this->authorize("superadmin-can-create-and-update");
+
+        //
+        //
+        //
+
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" =>
+                    // Error message for the user.
+                    "Only team members who belong to Team with ID 1 can create or update components.",
+                "status" => 403, // HTTP status code for the response.
+            ]);
+        }
         //
     }
 
@@ -96,24 +130,79 @@ class PageBuilderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($referenceId, PageBuilderComponent $component)
     {
+        $this->authorize("superadmin-can-create-and-update");
         //
+
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" =>
+                    // Error message for the user.
+                    "Only team members who belong to Team with ID 1 can create or update components.",
+                "status" => 403, // HTTP status code for the response.
+            ]);
+        }
+
+        //
+        // Retrieve the categories associated with the component
+        $categories = $component->categories; // Assuming you have a relationship set up
+
+        //
+        //
+        return Inertia::render(
+            "Superadmin/PageBuilder/Components/UpdateComponent/UpdateComponent",
+            [
+                "component" => $component,
+                "categories" => $categories,
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
+    public function update(
+        StorePageBuilderComponentRequest $request,
+        PageBuilderComponent $pageBuilderComponent,
+        $referenceId
+    ) {
+        $this->authorize("superadmin-can-create-and-update");
         //
+
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" =>
+                    // Error message for the user.
+                    "Only team members who belong to Team with ID 1 can create or update components.",
+                "status" => 403, // HTTP status code for the response.
+            ]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
+    public function destroy(
+        PageBuilderComponent $pageBuilderComponent,
+        $referenceId
+    ) {
+        $this->authorize("superadmin-can-destroy");
         //
+        //
+        $team = Team::where("reference_id", $referenceId)->first();
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" =>
+                    // Error message for the user.
+                    "Only team members who belong to Team with ID 1 can create or update components.",
+                "status" => 403, // HTTP status code for the response.
+            ]);
+        }
     }
 }

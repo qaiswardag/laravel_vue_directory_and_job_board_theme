@@ -13,6 +13,7 @@ class PageBuilderComponent extends Model
     protected $fillable = [
         "title",
         "html_code",
+        "published",
         "cover_image_original",
         "cover_image_thumbnail",
         "cover_image_medium",

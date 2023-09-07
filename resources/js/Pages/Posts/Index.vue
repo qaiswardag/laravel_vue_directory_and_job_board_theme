@@ -360,7 +360,7 @@ onMounted(() => {
                                         >{{
                                             post.published
                                                 ? "Published"
-                                                : "Private"
+                                                : "Unpublished"
                                         }}</span
                                     >
                                 </td>

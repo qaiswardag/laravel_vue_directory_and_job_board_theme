@@ -10,6 +10,9 @@ const props = defineProps({
     currentUserTeam: {
         required: true,
     },
+    component: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
@@ -20,15 +23,15 @@ const breadcrumbsLinks = [
             parameters: null,
         },
     },
-    { label: "Add Component" },
+    { label: "Update Component" },
 ];
 </script>
 
 <template>
     <LoggedInLayout>
-        <Head title="Create Compoent" />
+        <Head title="Update Compoent" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Create a New Component</h2>
+            <h2 class="myPrimaryMainPageHeader">Update Component</h2>
         </template>
 
         <template #breadcrumbs>
@@ -37,6 +40,7 @@ const breadcrumbsLinks = [
         <ComponentForm
             :user="user"
             :currentUserTeam="currentUserTeam"
+            :component="component"
         ></ComponentForm>
     </LoggedInLayout>
 </template>

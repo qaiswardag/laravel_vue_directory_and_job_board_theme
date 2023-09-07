@@ -346,7 +346,9 @@ import {
             :href="route('admin.dashboard')"
             :active="
                 route().current('admin.dashboard') ||
-                route().current('admin.users')
+                route().current('admin.users') ||
+                route().current('admin.components') ||
+                route().current('admin.components.component.create')
             "
         >
             <svg

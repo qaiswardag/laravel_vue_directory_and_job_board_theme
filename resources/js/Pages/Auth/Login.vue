@@ -16,7 +16,7 @@ defineProps({
 });
 
 const form = useForm({
-    email: "jd@myissue.io",
+    email: "qw@myself.ae",
     password: "123456",
     remember: true,
 });
@@ -79,11 +79,7 @@ const submit = () => {
                             type="email"
                             autofocus
                         />
-                        <p
-                            class="myPrimaryParagraph text-xs italic pt-2 text-gray-600"
-                        >
-                            Email: jd@myissue.io
-                        </p>
+
                         <InputError :message="form.errors.email" />
                     </div>
 
@@ -95,11 +91,7 @@ const submit = () => {
                             type="password"
                             autocomplete="current-password"
                         />
-                        <p
-                            class="myPrimaryParagraph text-xs italic pt-2 text-gray-600"
-                        >
-                            Password: 123456
-                        </p>
+
                         <InputError :message="form.errors.password" />
                     </div>
 

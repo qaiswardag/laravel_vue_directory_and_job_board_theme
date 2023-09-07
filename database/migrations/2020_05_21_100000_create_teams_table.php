@@ -13,7 +13,6 @@ return new class extends Migration {
         Schema::create("teams", function (Blueprint $table) {
             $table->id();
             // $table->foreignId("user_id")->index(); // original row structure
-            //
             $table
                 ->string("reference_id")
                 ->unique()
@@ -28,7 +27,7 @@ return new class extends Migration {
                 ->constrained();
             //
             $table->string("name");
-
+            $table->longText("content")->nullable();
             $table->string("cover_image_original")->nullable();
             $table->string("cover_image_thumbnail")->nullable();
             $table->string("cover_image_medium")->nullable();

@@ -13,7 +13,7 @@ class PageBuilderComponentsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, Team $team)
+    public function index(Team $team)
     {
         $this->authorize("can-read", $team);
 

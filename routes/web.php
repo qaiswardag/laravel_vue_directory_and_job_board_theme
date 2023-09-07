@@ -180,7 +180,7 @@ Route::middleware([
         Route::get("/team/components/index/{team}", [
             PageBuilderComponentsController::class,
             "index",
-        ])->name("admin.components.index");
+        ])->name("components.index");
         // PAGE BUILDER #END
         // PAGE BUILDER #END
         // PAGE BUILDER #END
@@ -199,47 +199,50 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
+    Route::get("/team/posts/post/{referenceId}/{post}", [
+        PostController::class,
+        "edit",
+    ])->name("team.posts.post.edit");
+
+    Route::post("/team/posts/post/update/{post}", [
+        PostController::class,
+        "update",
+    ])->name("team.posts.update");
+
     Route::get("/team/posts/create/{referenceId}", [
         PostController::class,
         "create",
     ])->name("team.posts.create");
 
-    Route::get("/team/posts/{referenceId}/post/{post}", [
+    Route::post("/team/posts/post/store", [
         PostController::class,
+        "store",
+    ])->name("team.posts.store");
+    // POSTS #END
+    // POSTS #END
+    // POSTS #END
+    // POSTS #END
+
+    // JOBS #START
+    // JOBS #START
+    // JOBS #START
+    // JOBS #START
+    Route::get("/team/jobs/job/{referenceId}/{job}", [
+        JobController::class,
         "edit",
-    ])->name("team.posts.post.edit");
+    ])->name("team.jobs.job.edit");
 
-    Route::post("/team/posts/post/store/{post}", [
-        PostController::class,
+    Route::post("/team/jobs/job/update/{job}", [
+        JobController::class,
         "update",
-    ])->name("team.posts.update");
-    Route::post("/team/posts/store", [PostController::class, "store"])->name(
-        "team.posts.store"
-    );
-    // POSTS #END
-    // POSTS #END
-    // POSTS #END
-    // POSTS #END
+    ])->name("team.jobs.update");
 
-    // JOBS #START
-    // JOBS #START
-    // JOBS #START
-    // JOBS #START
     Route::get("/team/jobs/create/{referenceId}", [
         JobController::class,
         "create",
     ])->name("team.jobs.create");
 
-    Route::get("/team/jobs/{referenceId}/job/{job}", [
-        JobController::class,
-        "edit",
-    ])->name("team.jobs.job.edit");
-
-    Route::post("/team/jobs/job/store/{job}", [
-        JobController::class,
-        "update",
-    ])->name("team.jobs.update");
-    Route::post("/team/jobs/store", [JobController::class, "store"])->name(
+    Route::post("/team/jobs/job/store", [JobController::class, "store"])->name(
         "team.jobs.store"
     );
     // JOBS #END
@@ -251,23 +254,26 @@ Route::middleware([
     // STORES #START
     // STORES #START
     // STORES #START
+
+    Route::get("/team/stores/store/{referenceId}/{store}", [
+        StoreController::class,
+        "edit",
+    ])->name("team.stores.store.edit");
+
+    Route::post("/team/stores/store/update/{store}", [
+        StoreController::class,
+        "update",
+    ])->name("team.stores.update");
+
     Route::get("/team/stores/create/{referenceId}", [
         StoreController::class,
         "create",
     ])->name("team.stores.create");
 
-    Route::get("/team/stores/{referenceId}/store/{store}", [
+    Route::post("/team/stores/store/store", [
         StoreController::class,
-        "edit",
-    ])->name("team.stores.store.edit");
-
-    Route::post("/team/stores/store/store/{store}", [
-        StoreController::class,
-        "update",
-    ])->name("team.stores.update");
-    Route::post("/team/stores/store", [StoreController::class, "store"])->name(
-        "team.stores.store"
-    );
+        "store",
+    ])->name("team.stores.store");
     // STORES #END
     // STORES #END
     // STORES #END
@@ -455,10 +461,15 @@ Route::middleware([
         "index",
     ])->name("admin.components");
 
-    Route::get("/admin/components/component/create/{team}", [
+    Route::get("/admin/components/create/{referenceId}", [
         PageBuilderController::class,
-        "show",
+        "create",
     ])->name("admin.components.component.create");
+
+    Route::get("/admin/components/component/edit/{referenceId}/{component}", [
+        PageBuilderController::class,
+        "edit",
+    ])->name("admin.components.component.edit");
     // ADMIN ONLY #PAGE BUILDER #END
     // ADMIN ONLY #PAGE BUILDER #END
     // ADMIN ONLY #PAGE BUILDER #END

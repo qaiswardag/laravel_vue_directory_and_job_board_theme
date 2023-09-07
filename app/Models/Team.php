@@ -120,18 +120,22 @@ class Team extends JetstreamTeam
         parent::boot();
 
         static::creating(function ($team) {
-            do {
-                // generate a random string
+            // Check if a team with ID 1 already exists
+            $teamCount = static::count();
 
-                $randomSlugString = Str::lower(
-                    Str::slug(Str::random(rand(8, 14)), "_")
+            if ($teamCount >= 1) {
+                do {
+                    // generate a random string
+                    $randomSlugString = Str::lower(
+                        Str::slug(Str::random(rand(8, 14)), "_")
+                    );
+
+                    // convert the random string to lowercase using strtolower
+                    $team->reference_id = strtolower($randomSlugString);
+                } while (
+                    static::where("reference_id", $team->reference_id)->exists()
                 );
-
-                // convert the random string to lowercase using strtolower
-                $team->reference_id = strtolower($randomSlugString);
-            } while (
-                static::where("reference_id", $team->reference_id)->exists()
-            );
+            }
         });
     }
 }

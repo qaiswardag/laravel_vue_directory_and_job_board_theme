@@ -56,11 +56,29 @@ const props = defineProps({
     },
 });
 
-const handleEdit = function () {
-    console.log("handle edit");
+const handleEdit = function (componentID) {
+    router.get(
+        route("admin.components.component.edit", [
+            props.currentUserTeam.reference_id,
+            componentID,
+        ])
+    );
 };
-const handleDelete = function () {
-    console.log("handle edit");
+const handleDelete = function (componentID) {
+    console.log("handle delete:", componentID);
+
+    //
+    // deletePostForm.delete(
+    //     route("team.posts.post.destroy", [postId, props.currentUserTeam.id]),
+    //     {
+    //         preserveScroll: true,
+    //         onSuccess: () => (modalShowDeletePost.value = false),
+    //         onError: (err) => {},
+    //         onFinish: (log) => {
+    //             modalShowDeletePost.value = false;
+    //         },
+    //     }
+    // );
 };
 
 // handle search
@@ -108,7 +126,7 @@ const routesArray = [
         label: "Create Compoenent",
         route: {
             name: "admin.components.component.create",
-            parameters: [props.currentUserTeam.reference_id],
+            parameters: props.currentUserTeam?.reference_id,
         },
     },
 ];
@@ -126,14 +144,12 @@ const routesArray = [
 
         <template #description></template>
         <CardHeadings :routesArray="routesArray">
-            <template #title
-                >Components
-                {{ $page.props.user && $page.props.user.current_team.name }}
-            </template>
+            <template #title>Components </template>
             <template #subTitle
                 >Lorem ipsum dolor sit amet consectetur adipisicing elit quam
                 corrupti consectetur.
             </template>
+
             <template #buttons>
                 <Link
                     class="myPrimaryButton"
@@ -141,11 +157,15 @@ const routesArray = [
                     :href="
                         route(
                             'admin.components.component.create',
-                            $page.props.user.current_team_id
+                            props.currentUserTeam &&
+                                props.currentUserTeam.reference_id !== null &&
+                                props.currentUserTeam.reference_id !== undefined
+                                ? props.currentUserTeam.reference_id
+                                : 0
                         )
                     "
                 >
-                    Create Store
+                    Create Component
                 </Link>
             </template>
         </CardHeadings>
@@ -174,6 +194,9 @@ const routesArray = [
                             <th scope="col" class="myPrimaryTableTh">Image</th>
                             <th scope="col" class="myPrimaryTableTh">ID</th>
                             <th scope="col" class="myPrimaryTableTh">Title</th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Published
+                            </th>
                             <th scope="col" class="myPrimaryTableTh">Edit</th>
                             <th scope="col" class="myPrimaryTableTh">Delete</th>
                         </tr>
@@ -215,6 +238,22 @@ const routesArray = [
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
                                     {{ component.title }}
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    <span
+                                        :class="
+                                            component.published
+                                                ? 'bg-green-50 text-myPrimaryLinkColor'
+                                                : 'bg-red-100 text-myPrimaryErrorColor'
+                                        "
+                                        class="inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
+                                        >{{
+                                            component.published
+                                                ? "Published"
+                                                : "Unpublished"
+                                        }}</span
+                                    >
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

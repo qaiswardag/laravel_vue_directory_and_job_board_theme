@@ -400,7 +400,7 @@ export default {
         // load components
         loadComponents(context, team) {
             handlegetElements(
-                route("admin.components.index", {
+                route("components.index", {
                     team: team.id,
                 }),
 

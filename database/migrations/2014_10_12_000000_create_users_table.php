@@ -20,6 +20,7 @@ return new class extends Migration {
                 ->unique()
                 ->index();
 
+            $table->longText("content")->nullable();
             $table->boolean("public")->nullable();
             $table->timestamp("email_verified_at")->nullable();
             $table->string("password");

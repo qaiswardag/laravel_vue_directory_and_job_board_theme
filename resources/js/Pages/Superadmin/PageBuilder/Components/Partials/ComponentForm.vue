@@ -26,6 +26,7 @@ import {
     ListboxOption,
     ListboxOptions,
 } from "@headlessui/vue";
+import TextArea from "@/Components/Forms/TextArea.vue";
 
 import {
     CheckIcon,
@@ -35,21 +36,13 @@ import {
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
-    currentUserTeamRole: {
-        required: false,
+    user: {
+        required: true,
     },
     currentUserTeam: {
         required: true,
     },
-    user: {
-        required: true,
-    },
-    post: {
-        default: null,
-        required: false,
-    },
-    postAuthor: {
-        default: null,
+    component: {
         required: false,
     },
 });
@@ -69,32 +62,25 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-// Check if the user has a role other than 'reader' for this team
-const userTeamsWithoutReaderRole = props.user.all_teams.filter((team) => {
-    if (team.membership !== undefined && team.membership.role === "reader") {
-        return team.membership.role !== "reader";
-    }
+// // store
+// const store = useStore();
 
-    return team;
-});
-
-// store
-const store = useStore();
-
-const getCurrentImage = computed(() => {
-    return store.getters["mediaLibrary/getCurrentImage"];
-});
-const getCurrentAttachedUsers = computed(() => {
-    return store.getters["attachedUsers/getCurrentAttachedUsers"];
-});
+// const getCurrentImage = computed(() => {
+//     return store.getters["mediaLibrary/getCurrentImage"];
+// });
+// const getCurrentAttachedUsers = computed(() => {
+//     return store.getters["attachedUsers/getCurrentAttachedUsers"];
+// });
 
 const formType = ref("create");
-const pathLocalStorage = `job-form-${
-    props.currentUserTeam ? props.currentUserTeam.reference_id : null
-}`;
+
+// const pathLocalStorage = `job-form-${
+//     props.currentUserTeam ? props.currentUserTeam.reference_id : null
+// }`;
 
 // use media library
 const showMediaLibraryModal = ref(false);
+
 // modal content
 const titleMedia = ref("");
 const descriptionMedia = ref("");
@@ -106,110 +92,110 @@ const firstMediaButtonFunction = ref(null);
 const secondMediaButtonFunction = ref(null);
 const thirdMediaButtonFunction = ref(null);
 
-const handleUploadCoverImage = function () {
-    // handle show media library modal
-    showMediaLibraryModal.value = true;
+// const handleUploadCoverImage = function () {
+//     // handle show media library modal
+//     showMediaLibraryModal.value = true;
 
-    // set media library modal standards
-    titleMedia.value = "Media Library";
-    descriptionMedia.value = null;
-    firstButtonMedia.value = "Close";
-    secondButtonMedia.value = "Select image";
-    thirdButtonMedia.value = null;
-    // handle click
-    firstMediaButtonFunction.value = function () {
-        // handle show media library modal
-        showMediaLibraryModal.value = false;
-    };
-    //
-    // handle click
-    secondMediaButtonFunction.value = function () {
-        postForm.cover_image_original =
-            getCurrentImage.value.currentImage?.mediaLibrary?.path;
-        postForm.cover_image_thumbnail =
-            getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
-        postForm.cover_image_medium =
-            getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
-        postForm.cover_image_large =
-            getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
+//     // set media library modal standards
+//     titleMedia.value = "Media Library";
+//     descriptionMedia.value = null;
+//     firstButtonMedia.value = "Close";
+//     secondButtonMedia.value = "Select image";
+//     thirdButtonMedia.value = null;
+//     // handle click
+//     firstMediaButtonFunction.value = function () {
+//         // handle show media library modal
+//         showMediaLibraryModal.value = false;
+//     };
+//     //
+//     // handle click
+//     secondMediaButtonFunction.value = function () {
+//         postForm.cover_image_original =
+//             getCurrentImage.value.currentImage?.mediaLibrary?.path;
+//         postForm.cover_image_thumbnail =
+//             getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
+//         postForm.cover_image_medium =
+//             getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
+//         postForm.cover_image_large =
+//             getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
 
-        // handle show media library modal
-        showMediaLibraryModal.value = false;
-    };
-    // end modal
-};
-const handleRemoveCoverImage = function () {
-    postForm.cover_image_original = null;
-    postForm.cover_image_thumbnail = null;
-    postForm.cover_image_medium = null;
-    postForm.cover_image_large = null;
-};
+//         // handle show media library modal
+//         showMediaLibraryModal.value = false;
+//     };
+//     // end modal
+// };
+// const handleRemoveCoverImage = function () {
+//     postForm.cover_image_original = null;
+//     postForm.cover_image_thumbnail = null;
+//     postForm.cover_image_medium = null;
+//     postForm.cover_image_large = null;
+// };
 
-const modalShowAddAuthor = ref(false);
+// const modalShowAddAuthor = ref(false);
 
-// modal content
-const titleModalSearchAuthor = ref("");
-const descriptionModalSearchAuthor = ref("");
-const firstButtonModalSearchAuthor = ref("");
-const secondButtonModalSearchAuthor = ref(null);
-// set dynamic modal handle functions
-const firstModalButtonSearchAuthorFunction = ref(null);
-const secondModalButtonSearchAuthorFunction = ref(null);
+// // modal content
+// const titleModalSearchAuthor = ref("");
+// const descriptionModalSearchAuthor = ref("");
+// const firstButtonModalSearchAuthor = ref("");
+// const secondButtonModalSearchAuthor = ref(null);
+// // set dynamic modal handle functions
+// const firstModalButtonSearchAuthorFunction = ref(null);
+// const secondModalButtonSearchAuthorFunction = ref(null);
 
-const handleAddAuthor = function () {
-    // handle show modal for unique content
-    modalShowAddAuthor.value = true;
-    // set modal standards
-    titleModalSearchAuthor.value = "Add author";
-    descriptionModalSearchAuthor.value = "Add Job author";
-    firstButtonModalSearchAuthor.value = "Close";
-    secondButtonModalSearchAuthor.value = "Save";
-    // handle click
-    firstModalButtonSearchAuthorFunction.value = function () {
-        // handle show modal for unique content
-        modalShowAddAuthor.value = false;
-    };
-    // handle click
-    secondModalButtonSearchAuthorFunction.value = function () {
-        // reasons why using the spread operator to create a non-reactive copy of an
-        // array is generally considered better than using JSON.stringify
-        // and JSON.parse to achieve the same result:
+// const handleAddAuthor = function () {
+//     // handle show modal for unique content
+//     modalShowAddAuthor.value = true;
+//     // set modal standards
+//     titleModalSearchAuthor.value = "Add author";
+//     descriptionModalSearchAuthor.value = "Add Job author";
+//     firstButtonModalSearchAuthor.value = "Close";
+//     secondButtonModalSearchAuthor.value = "Save";
+//     // handle click
+//     firstModalButtonSearchAuthorFunction.value = function () {
+//         // handle show modal for unique content
+//         modalShowAddAuthor.value = false;
+//     };
+//     // handle click
+//     secondModalButtonSearchAuthorFunction.value = function () {
+//         // reasons why using the spread operator to create a non-reactive copy of an
+//         // array is generally considered better than using JSON.stringify
+//         // and JSON.parse to achieve the same result:
 
-        // 1. Performance:
-        // The spread operator is generally faster than using JSON.stringify and JSON.parse
-        // to create a non-reactive copy of an array.
-        // This is because the spread operator is a built-in JavaScript feature,
-        // whereas JSON.stringify and JSON.parse require parsing and serializing data,
-        // which can be computationally expensive for large arrays.
+//         // 1. Performance:
+//         // The spread operator is generally faster than using JSON.stringify and JSON.parse
+//         // to create a non-reactive copy of an array.
+//         // This is because the spread operator is a built-in JavaScript feature,
+//         // whereas JSON.stringify and JSON.parse require parsing and serializing data,
+//         // which can be computationally expensive for large arrays.
 
-        // 2. Maintainability:
-        // Using the spread operator to create a non-reactive copy of an array is more
-        // maintainable than using JSON.stringify and JSON.parse because it is more
-        // concise and easier to read. The spread operator clearly indicates that a new array
-        // is being created, whereas the JSON.stringify and JSON.parse approach requires
-        // multiple function calls and string manipulations,
-        // which can be harder to read and understand.
+//         // 2. Maintainability:
+//         // Using the spread operator to create a non-reactive copy of an array is more
+//         // maintainable than using JSON.stringify and JSON.parse because it is more
+//         // concise and easier to read. The spread operator clearly indicates that a new array
+//         // is being created, whereas the JSON.stringify and JSON.parse approach requires
+//         // multiple function calls and string manipulations,
+//         // which can be harder to read and understand.
 
-        // 3. Compatibility: The spread operator is a standard JavaScript feature that is
-        // supported by all modern browsers and Node.js, whereas JSON.stringify and JSON.parse
-        // may not be available in older browsers or
-        // environments that do not support ECMAScript 5.
-        const currentAttachedUsers = [...getCurrentAttachedUsers.value];
-        // Set post form author to the non-reactive copy
-        postForm.author = currentAttachedUsers;
+//         // 3. Compatibility: The spread operator is a standard JavaScript feature that is
+//         // supported by all modern browsers and Node.js, whereas JSON.stringify and JSON.parse
+//         // may not be available in older browsers or
+//         // environments that do not support ECMAScript 5.
+//         const currentAttachedUsers = [...getCurrentAttachedUsers.value];
+//         // Set post form author to the non-reactive copy
+//         postForm.author = currentAttachedUsers;
 
-        // handle show modal for unique content
-        modalShowAddAuthor.value = false;
-    };
+//         // handle show modal for unique content
+//         modalShowAddAuthor.value = false;
+//     };
 
-    // end modal
-};
+//     // end modal
+// };
 
-const filteredUsers = ref([]);
-const handleRemoveAttachedUser = function (userId) {
-    // filter the array to exclude user with matching ID
-    postForm.author = postForm.author.filter((user) => user.id !== userId);
-};
+// const filteredUsers = ref([]);
+// const handleRemoveAttachedUser = function (userId) {
+//     // filter the array to exclude user with matching ID
+//     postForm.author = postForm.author.filter((user) => user.id !== userId);
+// };
 
 const showErrorNotifications = ref(false);
 
@@ -217,43 +203,12 @@ const notificationsModalButton = function () {
     showErrorNotifications.value = false;
 };
 
-// start Quill Editor
-// define options
-const globalOptions = {
-    // debug: "info",
-    modules: {
-        toolbar: ["bold", "italic", "underline"],
-    },
-    placeholder: "Compose an epic...",
-    readOnly: false,
-    theme: "snow",
-
-    //
-    //
-    toolbar: [
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-        ["bold", "italic", "underline"], // toggled buttons
-
-        [{ list: "ordered" }, { list: "bullet" }],
-
-        [{ align: [] }],
-
-        ["clean"], // remove formatting button
-    ],
-};
-// end Quill Editor
-
-const isSlugEditable = ref(false);
-const slugValueTitle = ref("");
-const slugValueCustom = ref("");
-
 const postForm = useForm({
     title: "",
     slug: "",
     content: "",
     published: true,
     team: props.currentUserTeam,
-    user_id: props.user.id,
 
     cover_image_original: "",
     cover_image_thumbnail: "",
@@ -265,54 +220,54 @@ const postForm = useForm({
     author: [],
 });
 
-// The above code uses the watch function from Vue 3 to watch for changes to the
-// slugValueCustom property and update the postForm.slug field with the new value
+// // The above code uses the watch function from Vue 3 to watch for changes to the
+// // slugValueCustom property and update the postForm.slug field with the new value
 
-const watchSlugInputChanges = function () {
-    watch(
-        () => slugValueCustom.value,
-        (newValue) => {
-            if (isSlugEditable.value === true) {
-                postForm.slug = slugify(
-                    slugValueCustom.value,
-                    config.slugifyOptions
-                );
-            }
-        },
-        { immediate: true }
-    );
-    watch(
-        () => postForm.title,
-        (newValue) => {
-            if (isSlugEditable.value === false) {
-                postForm.slug = slugify(postForm.title, config.slugifyOptions);
-                slugValueTitle.value = slugify(
-                    postForm.title,
-                    config.slugifyOptions
-                );
-            }
-        },
-        { immediate: true }
-    );
-};
+// const watchSlugInputChanges = function () {
+//     watch(
+//         () => slugValueCustom.value,
+//         (newValue) => {
+//             if (isSlugEditable.value === true) {
+//                 postForm.slug = slugify(
+//                     slugValueCustom.value,
+//                     config.slugifyOptions
+//                 );
+//             }
+//         },
+//         { immediate: true }
+//     );
+//     watch(
+//         () => postForm.title,
+//         (newValue) => {
+//             if (isSlugEditable.value === false) {
+//                 postForm.slug = slugify(postForm.title, config.slugifyOptions);
+//                 slugValueTitle.value = slugify(
+//                     postForm.title,
+//                     config.slugifyOptions
+//                 );
+//             }
+//         },
+//         { immediate: true }
+//     );
+// };
 
-watch(
-    () => isSlugEditable.value,
-    (newValue) => {
-        watchSlugInputChanges();
-    },
-    { immediate: true }
-);
+// watch(
+//     () => isSlugEditable.value,
+//     (newValue) => {
+//         watchSlugInputChanges();
+//     },
+//     { immediate: true }
+// );
 
-const handleCloseLock = function () {
-    isSlugEditable.value = false;
-};
-const handleOpenLock = function () {
-    isSlugEditable.value = true;
-};
-const handleTags = function (tags) {
-    postForm.tags = tags;
-};
+// const handleCloseLock = function () {
+//     isSlugEditable.value = false;
+// };
+// const handleOpenLock = function () {
+//     isSlugEditable.value = true;
+// };
+// const handleTags = function (tags) {
+//     postForm.tags = tags;
+// };
 const handleCreatePost = function () {
     // try to store post
     createPost();
@@ -342,6 +297,7 @@ const createPost = () => {
 const handleClearForm = function () {
     // handle show modal for unique content
     modalShowClearForm.value = true;
+
     // set modal standards
     typeModal.value = "warning";
     gridColumnModal.value = 2;
@@ -363,21 +319,16 @@ const handleClearForm = function () {
         clearForm();
     };
 };
-// end modal
 
-const clearTags = ref(0);
+// const clearTags = ref(0);
+
 // clear form
 const clearForm = function () {
     postForm.title = "";
     // slug
-    postForm.slug = "";
-    isSlugEditable.value = false;
-    slugValueTitle.value = "";
-    slugValueCustom.value = "";
-    postForm.content = "";
+    postForm.html_code = "";
     postForm.published = true;
     postForm.team = props.currentUserTeam;
-    postForm.user_id = props.user.id;
 
     postForm.cover_image_original = "";
     postForm.cover_image_thumbnail = "";
@@ -398,115 +349,104 @@ const clearForm = function () {
     console.log(localStorage.getItem(pathLocalStorage));
 };
 
-// is form dirty? returns true or false
-const formIsDirty = computed(() => {
-    return postForm.isDirty;
-});
+// // is form dirty? returns true or false
+// const formIsDirty = computed(() => {
+//     return postForm.isDirty;
+// });
 
-const storeDirtyFormInLocalStorage = function () {
-    if (formIsDirty.value === true && formType.value === "create") {
-        // Convert the form data to a JSON string
-        postForm.isSlugEditable = isSlugEditable.value;
-        const formDataJson = JSON.stringify(postForm);
-        // Save the form data to local storage using the form ID as the key
-        localStorage.setItem(pathLocalStorage, formDataJson);
-    }
-};
-// Will be executed when the user switch current route
-router.on = () => {
-    storeDirtyFormInLocalStorage();
-};
-// This function will be executed when the user clicks refresh or closes the tab/window
-window.addEventListener("beforeunload", function () {
-    storeDirtyFormInLocalStorage();
-});
+// const storeDirtyFormInLocalStorage = function () {
+//     if (formIsDirty.value === true && formType.value === "create") {
+//         // Convert the form data to a JSON string
+//         postForm.isSlugEditable = isSlugEditable.value;
+//         const formDataJson = JSON.stringify(postForm);
+//         // Save the form data to local storage using the form ID as the key
+//         localStorage.setItem(pathLocalStorage, formDataJson);
+//     }
+// };
+// // Will be executed when the user switch current route
+// router.on = () => {
+//     storeDirtyFormInLocalStorage();
+// };
+// // This function will be executed when the user clicks refresh or closes the tab/window
+// window.addEventListener("beforeunload", function () {
+//     storeDirtyFormInLocalStorage();
+// });
 
-// get unique post if needs to be updated
+// // get unique post if needs to be updated
 onBeforeMount(() => {
-    // User is creating a new Resource from scratch, rather than editing an existing one
-    // Check local storage
-    if (props.post === null) {
-        if (localStorage.getItem(pathLocalStorage) !== null) {
-            // Get the saved form data from local storage using the form ID as the key
-            const formDataJson = localStorage.getItem(pathLocalStorage);
-            let formLocalStorage = JSON.parse(formDataJson);
-            //
-            isSlugEditable.value = formLocalStorage.isSlugEditable;
-            //
-            if (formLocalStorage.isSlugEditable === false) {
-                slugValueTitle.slug = formLocalStorage.title;
-            }
-            //
-            if (formLocalStorage.isSlugEditable === true) {
-                slugValueCustom.value = formLocalStorage.slug;
-            }
-            //
-            postForm.title = formLocalStorage.title;
-            postForm.content = formLocalStorage.content;
-            postForm.published = formLocalStorage.published;
-            postForm.show_author = formLocalStorage.show_author;
-            postForm.cover_image_original =
-                formLocalStorage.cover_image_original;
-            postForm.cover_image_thumbnail =
-                formLocalStorage.cover_image_thumbnail;
-            postForm.cover_image_medium = formLocalStorage.cover_image_medium;
-            postForm.cover_image_large = formLocalStorage.cover_image_large;
-            postForm.tags = formLocalStorage.tags;
-
-            if (
-                formLocalStorage.author === undefined ||
-                formLocalStorage.author === null
-            ) {
-                postForm.author = [];
-            }
-            if (
-                formLocalStorage.author !== undefined ||
-                formLocalStorage.author !== null
-            ) {
-                postForm.author = formLocalStorage.author;
-            }
-        }
-    }
-
+    //     // User is creating a new Resource from scratch, rather than editing an existing one
+    //     // Check local storage
+    //     if (props.post === null) {
+    //         if (localStorage.getItem(pathLocalStorage) !== null) {
+    //             // Get the saved form data from local storage using the form ID as the key
+    //             const formDataJson = localStorage.getItem(pathLocalStorage);
+    //             let formLocalStorage = JSON.parse(formDataJson);
+    //             //
+    //             isSlugEditable.value = formLocalStorage.isSlugEditable;
+    //             //
+    //             if (formLocalStorage.isSlugEditable === false) {
+    //                 slugValueTitle.slug = formLocalStorage.title;
+    //             }
+    //             //
+    //             if (formLocalStorage.isSlugEditable === true) {
+    //                 slugValueCustom.value = formLocalStorage.slug;
+    //             }
+    //             //
+    //             postForm.title = formLocalStorage.title;
+    //             postForm.html_code = formLocalStorage.content;
+    //             postForm.published = formLocalStorage.published;
+    //             postForm.show_author = formLocalStorage.show_author;
+    //             postForm.cover_image_original =
+    //                 formLocalStorage.cover_image_original;
+    //             postForm.cover_image_thumbnail =
+    //                 formLocalStorage.cover_image_thumbnail;
+    //             postForm.cover_image_medium = formLocalStorage.cover_image_medium;
+    //             postForm.cover_image_large = formLocalStorage.cover_image_large;
+    //             postForm.tags = formLocalStorage.tags;
+    //             if (
+    //                 formLocalStorage.author === undefined ||
+    //                 formLocalStorage.author === null
+    //             ) {
+    //                 postForm.author = [];
+    //             }
+    //             if (
+    //                 formLocalStorage.author !== undefined ||
+    //                 formLocalStorage.author !== null
+    //             ) {
+    //                 postForm.author = formLocalStorage.author;
+    //             }
+    //         }
+    //     }
     // User is editing an existing Resource, rather than creating a new one from scratch.
-    if (props.post !== null) {
-        formType.value = "update";
-
-        postForm.title = props.post.title;
-        // slug logic
-        // slug is editable when editing an existing post
-        isSlugEditable.value = true;
-        slugValueCustom.value = props.post.slug;
-
-        postForm.content = props.post.content;
-        postForm.published = props.post.published === 1 ? true : false;
-        postForm.show_author = props.post.show_author === 1 ? true : false;
-
-        postForm.cover_image_original = props.post.cover_image_original;
-        postForm.cover_image_thumbnail = props.post.cover_image_thumbnail;
-        postForm.cover_image_medium = props.post.cover_image_medium;
-        postForm.cover_image_large = props.post.cover_image_large;
-
-        postForm.tags = props.post.tags;
-
-        // check if the post author is available and should be displayed
-        if (props.post.show_author === 1 && props.postAuthor !== null) {
-            // add the author to the postForm
-            postForm.author = props.postAuthor;
-        }
-
-        // check if the post author is not available or should not be displayed
-        if (props.post.show_author === 1 && props.postAuthor === null) {
-            // clear the postForm author field
-            postForm.author = [];
-        }
+    if (props.component !== null) {
+        //         formType.value = "update";
+        postForm.title = props.component.title;
+        //         // slug logic
+        //         // slug is editable when editing an existing post
+        //         isSlugEditable.value = true;
+        //         slugValueCustom.value = props.post.slug;
+        //         postForm.html_code = props.post.content;
+        //         postForm.published = props.post.published === 1 ? true : false;
+        //         postForm.show_author = props.post.show_author === 1 ? true : false;
+        //         postForm.cover_image_original = props.post.cover_image_original;
+        //         postForm.cover_image_thumbnail = props.post.cover_image_thumbnail;
+        //         postForm.cover_image_medium = props.post.cover_image_medium;
+        //         postForm.cover_image_large = props.post.cover_image_large;
+        //         postForm.tags = props.post.tags;
+        //         // check if the post author is available and should be displayed
+        //         if (props.post.show_author === 1 && props.postAuthor !== null) {
+        //             // add the author to the postForm
+        //             postForm.author = props.postAuthor;
+        //         }
     }
 });
 </script>
 
 <template>
+    <p class="my-6">currentUserTeam is: {{ currentUserTeam }}</p>
+    <p class="my-6">component when edit is: {{ component }}</p>
     <FormSection @submitted="handleCreatePost">
-        <template #title>Job details</template>
+        <template #title>Component details</template>
         <template #description> Create a new Job. </template>
         <template #main>
             <div class="myInputsOrganization">
@@ -520,7 +460,7 @@ onBeforeMount(() => {
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <InputLabel for="title" value="Your Post title" />
+                    <InputLabel for="title" value="Component title" />
                     <TextInput
                         placeholder="Enter your title.."
                         id="title"
@@ -532,401 +472,19 @@ onBeforeMount(() => {
                     <InputError :message="postForm.errors.title" />
                 </div>
                 <!-- post title end -->
-                <!-- post slug start -->
-                <div class="myInputGroup">
-                    <div v-show="isSlugEditable === false">
-                        <InputLabel for="slug" value="Slug" />
-                        <div class="relative flex items-center">
-                            <TextInput
-                                placeholder="Post slug"
-                                id="slug"
-                                v-model="slugValueTitle"
-                                type="text"
-                                class="block w-full mt-1 myPrimaryInputReadonly"
-                                readonly
-                                autocomplete="off"
-                            />
-                            <div
-                                @click="handleOpenLock"
-                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="w-5 h-5 text-myPrimaryErrorColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                                    ></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-show="isSlugEditable === true">
-                        <InputLabel for="slug" value="Slug" />
-                        <div class="relative flex items-center">
-                            <TextInput
-                                placeholder="Post slug"
-                                id="slug"
-                                v-model="slugValueCustom"
-                                type="text"
-                                class="block w-full mt-1"
-                                autocomplete="off"
-                            />
-                            <div
-                                @click="handleCloseLock"
-                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="w-5 h-5 text-myPrimaryLinkColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                                    />
-                                </svg>
-                            </div>
-                        </div>
-                        <p
-                            class="myPrimaryParagraph italic py-2 px-2 bg-gray-100 text-xs my-1 rounded-md"
-                        >
-                            Slug: {{ postForm.slug }}
-                        </p>
-                    </div>
-                    <InputError :message="postForm.errors.slug" />
-                </div>
-                <!-- post slug end -->
 
                 <!-- post content start -->
-                <div class="myInputGroup">
-                    <InputLabel
-                        for="content"
-                        value="Post description"
-                        class="mb-1"
-                    />
-                    <QuillEditor
-                        id="content"
-                        v-model:content="postForm.content"
-                        contentType="html"
-                        :options="globalOptions"
-                        class="rounded-b-md bg-white"
-                    >
-                    </QuillEditor>
-                    <InputError :message="postForm.errors.content" />
-                </div>
+                <TextArea
+                    placeholder="HTML for component"
+                    id="html_code"
+                    v-model="postForm.html_code"
+                    autocomplete="off"
+                ></TextArea>
                 <!-- post content end -->
             </div>
         </template>
 
-        <template #sidebar>
-            <!-- post status - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Status</div>
-                    <p class="myPrimaryParagraph">Specify post status.</p>
-                </div>
-                <div
-                    class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
-                >
-                    <InputLabel
-                        :value="postForm.published ? 'Published' : 'Private'"
-                        :class="{
-                            'text-myPrimaryLinkColor': postForm.published,
-                            'text-myPrimaryErrorColor': !postForm.published,
-                        }"
-                    />
-                    <Switch
-                        v-model="postForm.published"
-                        :class="[
-                            postForm.published
-                                ? 'bg-myPrimaryLinkColor'
-                                : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
-                        ]"
-                    >
-                        <span class="sr-only">Use setting</span>
-                        <span
-                            :class="[
-                                postForm.published
-                                    ? 'translate-x-5'
-                                    : 'translate-x-0',
-                                'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-                            ]"
-                        >
-                            <span
-                                :class="[
-                                    postForm.published
-                                        ? 'opacity-0 ease-out duration-100'
-                                        : 'opacity-100 ease-in duration-200',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-gray-400"
-                                    fill="none"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
-                                        stroke="currentColor"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </span>
-                            <span
-                                :class="[
-                                    postForm.published
-                                        ? 'opacity-100 ease-in duration-200'
-                                        : 'opacity-0 ease-out duration-100',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-myPrimaryLinkColor"
-                                    fill="currentColor"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
-                                    />
-                                </svg>
-                            </span>
-                        </span>
-                    </Switch>
-                </div>
-                <InputError :message="postForm.errors.published" />
-            </div>
-            <!-- post status - end -->
-            <!-- post show author - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Show Authors
-                    </div>
-                </div>
-                <div
-                    class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
-                >
-                    <InputLabel
-                        :value="postForm.show_author ? 'Show' : 'Hide'"
-                        :class="{
-                            'text-myPrimaryLinkColor': postForm.show_author,
-                            'text-myPrimaryErrorColor': !postForm.show_author,
-                        }"
-                    />
-                    <Switch
-                        v-model="postForm.show_author"
-                        :class="[
-                            postForm.show_author
-                                ? 'bg-myPrimaryLinkColor'
-                                : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
-                        ]"
-                    >
-                        <span class="sr-only">Use setting</span>
-                        <span
-                            :class="[
-                                postForm.show_author
-                                    ? 'translate-x-5'
-                                    : 'translate-x-0',
-                                'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-                            ]"
-                        >
-                            <span
-                                :class="[
-                                    postForm.show_author
-                                        ? 'opacity-0 ease-out duration-100'
-                                        : 'opacity-100 ease-in duration-200',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-gray-400"
-                                    fill="none"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
-                                        stroke="currentColor"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </span>
-                            <span
-                                :class="[
-                                    postForm.show_author
-                                        ? 'opacity-100 ease-in duration-200'
-                                        : 'opacity-0 ease-out duration-100',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-myPrimaryLinkColor"
-                                    fill="currentColor"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
-                                    />
-                                </svg>
-                            </span>
-                        </span>
-                    </Switch>
-                </div>
-                <InputError :message="postForm.errors.show_author" />
-
-                <div v-if="postForm.show_author === true">
-                    <div
-                        class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
-                    >
-                        <button
-                            @click="handleAddAuthor"
-                            type="button"
-                            class="myPrimaryButton gap-2 items-center"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-4 h-4"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                                />
-                            </svg>
-
-                            Add Author
-                        </button>
-                    </div>
-
-                    <div
-                        class="p-2 mt-4"
-                        :class="
-                            postForm.author.length === 0
-                                ? 'bg-white'
-                                : 'bg-gray-50'
-                        "
-                    >
-                        <p
-                            v-if="postForm.author.length !== 0"
-                            class="myPrimaryParagraph italic text-xs py-4"
-                        >
-                            Added {{ postForm.author.length }} author(s)
-                        </p>
-
-                        <div
-                            v-if="postForm.author.length !== 0"
-                            class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
-                        >
-                            <div
-                                v-for="user in postForm.author"
-                                :key="user.id"
-                                class="hover:bg-white px-2"
-                            >
-                                <div
-                                    class="flex justify-between items-center rounded"
-                                >
-                                    <div class="flex items-center gap-2 my-4">
-                                        <!-- start photo -->
-                                        <div
-                                            class="flex-shrink-0"
-                                            v-if="
-                                                user &&
-                                                user.profile_photo_path !== null
-                                            "
-                                        >
-                                            <img
-                                                class="object-cover w-12 h-12 rounded-full"
-                                                :src="`/storage/${user.profile_photo_path}`"
-                                                :alt="
-                                                    user.first_name +
-                                                    user.last_name
-                                                "
-                                            />
-                                        </div>
-
-                                        <div
-                                            v-if="
-                                                user &&
-                                                user.profile_photo_path === null
-                                            "
-                                            class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                        >
-                                            <span>
-                                                {{
-                                                    user.first_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-                                                }}
-                                            </span>
-                                            <span>
-                                                {{
-                                                    user.last_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-                                                }}
-                                            </span>
-                                        </div>
-
-                                        <!-- end photo -->
-                                        <span
-                                            class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                        >
-                                            <span class="font-medium">
-                                                {{ user.first_name }}
-                                                {{ user.last_name }}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div
-                                        @click="
-                                            handleRemoveAttachedUser(user.id)
-                                        "
-                                    >
-                                        <TrashIcon
-                                            class="w-4 h-4 text-myPrimaryErrorColor stroke-2 cursor-pointer"
-                                        ></TrashIcon>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-if="postForm.author.length === 0" class="space-y-6">
-                        <p class="myPrimaryParagraph">No author selected.</p>
-                    </div>
-                    <InputError :message="postForm.errors.author" />
-                    <p
-                        v-if="postForm.author.length >= 21"
-                        class="myPrimaryParagraphError"
-                    >
-                        Maximum 20 people is allowed.
-                    </p>
-                </div>
-            </div>
-            <!-- post show author - end -->
+        <template v-if="false" #sidebar>
             <!-- cover image - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -996,115 +554,6 @@ onBeforeMount(() => {
                 <InputError :message="postForm.errors.cover_image_original" />
             </div>
             <!-- cover image - end -->
-            <!-- tags - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Tags</div>
-                    <p class="myPrimaryParagraph">Enter tags for the post.</p>
-                </div>
-                <div class="myInputGroup">
-                    <Tags
-                        :clearTags="clearTags"
-                        :tagsOnLoad="postForm.tags"
-                        @handleTags="handleTags"
-                    ></Tags>
-                    <InputError :message="postForm.errors.tags" />
-                </div>
-            </div>
-            <!-- tags - end -->
-
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Post belongs to Team
-                    </div>
-                    <p class="myPrimaryParagraph">
-                        Update a Team which this post belongs to.
-                    </p>
-                </div>
-                <div class="myInputGroup">
-                    <Listbox as="div" v-model="postForm.team">
-                        <ListboxLabel class="myPrimaryInputLabel"
-                            >Post belongs to Team</ListboxLabel
-                        >
-                        <div class="relative mt-1">
-                            <ListboxButton class="myPrimarySelect">
-                                <span class="block truncate">
-                                    {{ postForm.team.name }}
-                                </span>
-                                <span
-                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
-                                >
-                                    <ChevronUpDownIcon
-                                        class="h-5 w-5 text-gray-400"
-                                        aria-hidden="true"
-                                    />
-                                </span>
-                            </ListboxButton>
-
-                            <transition
-                                leave-active-class="transition ease-in duration-100"
-                                leave-from-class="opacity-100"
-                                leave-to-class="opacity-0"
-                            >
-                                <ListboxOptions
-                                    class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                                >
-                                    <ListboxOption
-                                        as="template"
-                                        v-for="team in userTeamsWithoutReaderRole"
-                                        :key="team.id"
-                                        :value="team"
-                                    >
-                                        <li
-                                            class="hover:text-white hover:bg-myPrimaryDarkGrayColor"
-                                            :class="[
-                                                team.id === postForm.team.id
-                                                    ? ''
-                                                    : '',
-                                                'relative cursor-default select-none py-2 pl-3 pr-9',
-                                            ]"
-                                        >
-                                            <span
-                                                :class="[
-                                                    team.id === postForm.team.id
-                                                        ? 'font-normal'
-                                                        : 'font-normal',
-                                                    'block truncate',
-                                                ]"
-                                                >{{ team.name }}</span
-                                            >
-                                            <span
-                                                v-if="
-                                                    team.id === postForm.team.id
-                                                "
-                                                :class="[
-                                                    team.id === postForm.team.id
-                                                        ? ''
-                                                        : '',
-                                                    'absolute inset-y-0 right-0 flex items-center pr-4',
-                                                ]"
-                                            >
-                                                <CheckIcon
-                                                    :class="[
-                                                        team.id ===
-                                                        postForm.team.id
-                                                            ? ''
-                                                            : 'text-white',
-                                                    ]"
-                                                    class="h-5 w-5"
-                                                    aria-hidden="true"
-                                                />
-                                            </span>
-                                        </li>
-                                    </ListboxOption>
-                                </ListboxOptions>
-                            </transition>
-                        </div>
-                    </Listbox>
-                    <InputError :message="postForm.errors.team" />
-                </div>
-            </div>
         </template>
 
         <template #actions>
@@ -1187,22 +636,7 @@ onBeforeMount(() => {
                 @thirdMediaButtonFunction="thirdMediaButtonFunction"
             >
             </MediaLibraryModal>
-            <SearchUserModal
-                :user="user"
-                :team="postForm.team"
-                :show="modalShowAddAuthor"
-                :title="titleModalSearchAuthor"
-                :description="descriptionModalSearchAuthor"
-                :firstButtonText="firstButtonModalSearchAuthor"
-                :secondButtonText="secondButtonModalSearchAuthor"
-                @firstModalButtonSearchAuthorFunction="
-                    firstModalButtonSearchAuthorFunction
-                "
-                @secondModalButtonSearchAuthorFunction="
-                    secondModalButtonSearchAuthorFunction
-                "
-            >
-            </SearchUserModal>
+
             <NotificationsFixedBottom
                 :listOfMessages="Object.values(postForm.errors)"
                 :show="showErrorNotifications"

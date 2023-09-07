@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Superadmin\Superadmin;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -30,20 +31,26 @@ class TeamsUsers extends Command
     {
         User::factory()->create([
             "id" => 1,
-            "first_name" => "John",
-            "last_name" => "Doe",
+            "first_name" => "Qais",
+            "last_name" => "Wardag",
             "email" => "qw@myself.ae",
             "public" => true,
             "current_team_id" => 1,
             "password" => Hash::make("123456"),
         ]);
 
+        Superadmin::factory()->create([
+            "user_id" => 1, // Qais Wardag
+            "role" => "admin", // reader, editor or admin
+        ]);
+
         Team::factory()->create([
             "id" => 1,
             "user_id" => User::find(1)->id,
-            "name" => "Lacoste",
+            "name" => "myself.ae",
             "public" => true,
             "personal_team" => false,
+            "reference_id" => "myself",
         ]);
 
         $this->info("Seeded successfully, new Teams and Users for production");

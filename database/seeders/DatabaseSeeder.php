@@ -27,24 +27,30 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Random users
-        // John Doe
-        // User::factory()->create([
-        //     "id" => 1,
-        //     "first_name" => "John",
-        //     "last_name" => "Doe",
-        //     "email" => "jd@myself.ae",
-        //     "public" => true,
-        //     "current_team_id" => 1,
-        //     "password" => Hash::make("123456"),
-        // ]);
 
-        // Team::factory()->create([
-        //     "id" => 1,
-        //     "user_id" => User::find(1)->id,
-        //     "name" => "Lacoste",
-        //     "public" => true,
-        //     "personal_team" => false,
-        // ]);
+        User::factory()->create([
+            "id" => 1,
+            "first_name" => "Qais",
+            "last_name" => "Wardag",
+            "email" => "qw@myself.ae",
+            "public" => true,
+            "current_team_id" => 1,
+            "password" => Hash::make("123456"),
+        ]);
+
+        Superadmin::factory()->create([
+            "user_id" => 1, // Qais Wardag
+            "role" => "admin", // reader, editor or admin
+        ]);
+
+        Team::factory()->create([
+            "id" => 1,
+            "user_id" => User::find(1)->id,
+            "name" => "myself.ae",
+            "public" => true,
+            "personal_team" => false,
+            "reference_id" => "myself",
+        ]);
 
         // Shaun Pelling
         User::factory()->create([
@@ -58,10 +64,15 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make("123456"),
         ]);
 
+        Superadmin::factory()->create([
+            "user_id" => 2, // Shaun Pelling
+            "role" => "editor", // reader, editor or admin
+        ]);
+
         Team::factory()->create([
             "id" => 2,
             "user_id" => User::find(2)->id,
-            "name" => "adidas",
+            "name" => "Lacoste",
             "public" => true,
             "personal_team" => false,
         ]);
@@ -84,16 +95,6 @@ class DatabaseSeeder extends Seeder
             "name" => "adidas",
             "public" => true,
             "personal_team" => false,
-        ]);
-        // Qais Wardag
-        User::factory()->create([
-            "id" => 101,
-            "first_name" => "Qais",
-            "last_name" => "Wardag",
-            "email" => "qw@myself.ae",
-            "public" => true,
-            "current_team_id" => 1,
-            "password" => Hash::make("123456"),
         ]);
         // Marilyn Monroe
         User::factory()->create([
@@ -158,76 +159,73 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Users Joining Teams
-        // John Doe joined Mie Mortensens team
+
+        // Qais Wardag joining Teams
         TeamUser::factory()->create([
-            "team_id" => Team::find(3)->id, // Mie Mortensens
-            "user_id" => User::find(1)->id, // John Doe
+            "team_id" => Team::find(2)->id, // Shaun Pelling Team
+            "user_id" => User::find(1)->id, // Qais Wardag
             "role" => "admin", // editor
+        ]);
+
+        TeamUser::factory()->create([
+            "team_id" => Team::find(3)->id, // Mie Mortensens Team
+            "user_id" => User::find(1)->id, // Qais Wardag
+            "role" => "editor", // editor
         ]);
 
         // Shaun Pelling joined Mie Mortensens team
         TeamUser::factory()->create([
-            "team_id" => Team::find(3)->id, // Mie Mortensens team
-            "user_id" => User::find(2)->id, // Shaun Pellings
-            "role" => "admin", // editor
-        ]);
-
-        // Users joined John Does team
-        TeamUser::factory()->create([
-            "team_id" => Team::find(1)->id, // John Doe
+            "team_id" => Team::find(3)->id, // Mie Mortensens
             "user_id" => User::find(2)->id, // Shaun Pelling
             "role" => "admin", // editor
         ]);
-        // Mie Mortensen joined John Does team
+
+        // Users joined Shaun Pelling team
         TeamUser::factory()->create([
-            "team_id" => Team::find(1)->id, // John Doe
+            "team_id" => Team::find(2)->id, // Shaun Pelling
+            "user_id" => User::find(2)->id, // Shaun Pelling
+            "role" => "admin", // editor
+        ]);
+        // Mie Mortensen joined Shaun Pelling team
+        TeamUser::factory()->create([
+            "team_id" => Team::find(2)->id, // Shaun Pelling
             "user_id" => User::find(3)->id, // Mie Mortensen
             "role" => "reader", // editor
         ]);
         TeamUser::factory()->create([
-            "team_id" => Team::find(1)->id, // John Doe
+            "team_id" => Team::find(2)->id, // Shaun Pelling
             "user_id" => User::find(7)->id, // Karl Lagerfeld
             "role" => "admin", // editor
         ]);
-        // Marilyn, Oprah and Ingrid joined John Does team
+        // Marilyn, Oprah and Ingrid joined Shaun Pelling team
         TeamUser::factory()->create([
-            "team_id" => Team::find(1)->id, // John Does team
+            "team_id" => Team::find(2)->id, // Shaun Pelling team
             "user_id" => User::find(4)->id, // Marilyn
             "role" => "admin",
         ]);
         TeamUser::factory()->create([
-            "team_id" => Team::find(1)->id, // John Does team
+            "team_id" => Team::find(2)->id, // Shaun Pelling team
             "user_id" => User::find(5)->id, // Oprah
             "role" => "editor",
         ]);
         TeamUser::factory()->create([
-            "team_id" => Team::find(1)->id, // John Does team
+            "team_id" => Team::find(2)->id, // Shaun Pelling team
             "user_id" => User::find(6)->id, // Ingrid
-            "role" => "editor",
-        ]);
-        TeamUser::factory()->create([
-            "team_id" => Team::find(1)->id, // John Does team
-            "user_id" => User::find(101)->id, // Qais
             "role" => "editor",
         ]);
 
         //
         // Pending invitations
-        // Users Pending Team Invitations for John Does team
+        // Users Pending Team Invitations for Shaun Pelling team
         TeamInvitation::factory()->create([
-            "team_id" => 1, // John Doe
+            "team_id" => 2, // Shaun Pelling
             "email" => "join_Johns_team_1@outlook.com",
             "role" => "admin",
         ]);
         TeamInvitation::factory()->create([
-            "team_id" => 1, // John Doe
-            "email" => "join_Johns_team_2@outlook.com",
+            "team_id" => 2, // Shaun Pelling
+            "email" => "join_shaun_pellings_2@outlook.com",
             "role" => "editor",
-        ]);
-        TeamInvitation::factory()->create([
-            "team_id" => 1, // John Doe
-            "email" => "join_Johns_team_3@outlook.com",
-            "role" => "admin",
         ]);
 
         // Users Pending Team Invitations for Mie Mortensens team
@@ -249,23 +247,15 @@ class DatabaseSeeder extends Seeder
 
         // Create 100 users from id 101 to 201 as user with id 101 is already created
         User::factory(100)->create();
-        Superadmin::factory()->create([
-            "user_id" => 1, // John Doe
-            "role" => "reader", // reader, editor or admin
-        ]);
-        Superadmin::factory()->create([
-            "user_id" => 101, // Qais Wardag
-            "role" => "editor", // reader, editor or admin
-        ]);
 
-        // add users to John's Team
-        foreach (range(102, 162) as $num) {
+        // add users to Shaun Pellings Team
+        foreach (range(20, 100) as $num) {
             $user = User::find($num);
 
             if ($user !== null) {
                 // User exists, proceed with creating team-user relationship
                 TeamUser::factory()->create([
-                    "team_id" => Team::find(1)->id, // John Does team
+                    "team_id" => Team::find(2)->id, // Shaun Pellings team
                     "user_id" => $user->id,
                     "role" => "editor",
                 ]);
