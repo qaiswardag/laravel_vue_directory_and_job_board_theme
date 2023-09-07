@@ -568,7 +568,7 @@ onBeforeMount(() => {
                     </div>
                     <div v-show="isSlugEditable === true">
                         <InputLabel for="slug" value="Slug" />
-                        <div class="relative flex items-center">
+                        <div class="relative flex items-center cursor-pointer">
                             <TextInput
                                 placeholder="Post slug"
                                 id="slug"

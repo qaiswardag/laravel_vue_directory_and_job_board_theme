@@ -43,6 +43,11 @@ const props = defineProps({
         required: true,
     },
     post: {
+        default: null,
+        required: false,
+    },
+    categories: {
+        default: null,
         required: false,
     },
 });
@@ -63,14 +68,11 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 // // store
-// const store = useStore();
+const store = useStore();
 
-// const getCurrentImage = computed(() => {
-//     return store.getters["mediaLibrary/getCurrentImage"];
-// });
-// const getCurrentAttachedUsers = computed(() => {
-//     return store.getters["attachedUsers/getCurrentAttachedUsers"];
-// });
+const getCurrentImage = computed(() => {
+    return store.getters["mediaLibrary/getCurrentImage"];
+});
 
 const formType = ref("create");
 
@@ -92,44 +94,44 @@ const firstMediaButtonFunction = ref(null);
 const secondMediaButtonFunction = ref(null);
 const thirdMediaButtonFunction = ref(null);
 
-// const handleUploadCoverImage = function () {
-//     // handle show media library modal
-//     showMediaLibraryModal.value = true;
+const handleUploadCoverImage = function () {
+    // handle show media library modal
+    showMediaLibraryModal.value = true;
 
-//     // set media library modal standards
-//     titleMedia.value = "Media Library";
-//     descriptionMedia.value = null;
-//     firstButtonMedia.value = "Close";
-//     secondButtonMedia.value = "Select image";
-//     thirdButtonMedia.value = null;
-//     // handle click
-//     firstMediaButtonFunction.value = function () {
-//         // handle show media library modal
-//         showMediaLibraryModal.value = false;
-//     };
-//     //
-//     // handle click
-//     secondMediaButtonFunction.value = function () {
-//         postForm.cover_image_original =
-//             getCurrentImage.value.currentImage?.mediaLibrary?.path;
-//         postForm.cover_image_thumbnail =
-//             getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
-//         postForm.cover_image_medium =
-//             getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
-//         postForm.cover_image_large =
-//             getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
+    // set media library modal standards
+    titleMedia.value = "Media Library";
+    descriptionMedia.value = null;
+    firstButtonMedia.value = "Close";
+    secondButtonMedia.value = "Select image";
+    thirdButtonMedia.value = null;
+    // handle click
+    firstMediaButtonFunction.value = function () {
+        // handle show media library modal
+        showMediaLibraryModal.value = false;
+    };
+    //
+    // handle click
+    secondMediaButtonFunction.value = function () {
+        postForm.cover_image_original =
+            getCurrentImage.value.currentImage?.mediaLibrary?.path;
+        postForm.cover_image_thumbnail =
+            getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
+        postForm.cover_image_medium =
+            getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
+        postForm.cover_image_large =
+            getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
 
-//         // handle show media library modal
-//         showMediaLibraryModal.value = false;
-//     };
-//     // end modal
-// };
-// const handleRemoveCoverImage = function () {
-//     postForm.cover_image_original = null;
-//     postForm.cover_image_thumbnail = null;
-//     postForm.cover_image_medium = null;
-//     postForm.cover_image_large = null;
-// };
+        // handle show media library modal
+        showMediaLibraryModal.value = false;
+    };
+    // end modal
+};
+const handleRemoveCoverImage = function () {
+    postForm.cover_image_original = null;
+    postForm.cover_image_thumbnail = null;
+    postForm.cover_image_medium = null;
+    postForm.cover_image_large = null;
+};
 
 // const modalShowAddAuthor = ref(false);
 
@@ -142,60 +144,64 @@ const thirdMediaButtonFunction = ref(null);
 // const firstModalButtonSearchAuthorFunction = ref(null);
 // const secondModalButtonSearchAuthorFunction = ref(null);
 
-// const handleAddAuthor = function () {
-//     // handle show modal for unique content
-//     modalShowAddAuthor.value = true;
-//     // set modal standards
-//     titleModalSearchAuthor.value = "Add author";
-//     descriptionModalSearchAuthor.value = "Add Job author";
-//     firstButtonModalSearchAuthor.value = "Close";
-//     secondButtonModalSearchAuthor.value = "Save";
-//     // handle click
-//     firstModalButtonSearchAuthorFunction.value = function () {
-//         // handle show modal for unique content
-//         modalShowAddAuthor.value = false;
-//     };
-//     // handle click
-//     secondModalButtonSearchAuthorFunction.value = function () {
-//         // reasons why using the spread operator to create a non-reactive copy of an
-//         // array is generally considered better than using JSON.stringify
-//         // and JSON.parse to achieve the same result:
+const handleAddAuthor = function () {
+    return;
+    // handle show modal for unique content
+    modalShowAddAuthor.value = true;
+    // set modal standards
+    titleModalSearchAuthor.value = "Add author";
+    descriptionModalSearchAuthor.value = "Add Job author";
+    firstButtonModalSearchAuthor.value = "Close";
+    secondButtonModalSearchAuthor.value = "Save";
+    // handle click
+    firstModalButtonSearchAuthorFunction.value = function () {
+        // handle show modal for unique content
+        modalShowAddAuthor.value = false;
+    };
+    // handle click
+    secondModalButtonSearchAuthorFunction.value = function () {
+        // reasons why using the spread operator to create a non-reactive copy of an
+        // array is generally considered better than using JSON.stringify
+        // and JSON.parse to achieve the same result:
 
-//         // 1. Performance:
-//         // The spread operator is generally faster than using JSON.stringify and JSON.parse
-//         // to create a non-reactive copy of an array.
-//         // This is because the spread operator is a built-in JavaScript feature,
-//         // whereas JSON.stringify and JSON.parse require parsing and serializing data,
-//         // which can be computationally expensive for large arrays.
+        // 1. Performance:
+        // The spread operator is generally faster than using JSON.stringify and JSON.parse
+        // to create a non-reactive copy of an array.
+        // This is because the spread operator is a built-in JavaScript feature,
+        // whereas JSON.stringify and JSON.parse require parsing and serializing data,
+        // which can be computationally expensive for large arrays.
 
-//         // 2. Maintainability:
-//         // Using the spread operator to create a non-reactive copy of an array is more
-//         // maintainable than using JSON.stringify and JSON.parse because it is more
-//         // concise and easier to read. The spread operator clearly indicates that a new array
-//         // is being created, whereas the JSON.stringify and JSON.parse approach requires
-//         // multiple function calls and string manipulations,
-//         // which can be harder to read and understand.
+        // 2. Maintainability:
+        // Using the spread operator to create a non-reactive copy of an array is more
+        // maintainable than using JSON.stringify and JSON.parse because it is more
+        // concise and easier to read. The spread operator clearly indicates that a new array
+        // is being created, whereas the JSON.stringify and JSON.parse approach requires
+        // multiple function calls and string manipulations,
+        // which can be harder to read and understand.
 
-//         // 3. Compatibility: The spread operator is a standard JavaScript feature that is
-//         // supported by all modern browsers and Node.js, whereas JSON.stringify and JSON.parse
-//         // may not be available in older browsers or
-//         // environments that do not support ECMAScript 5.
-//         const currentAttachedUsers = [...getCurrentAttachedUsers.value];
-//         // Set post form author to the non-reactive copy
-//         postForm.author = currentAttachedUsers;
+        // 3. Compatibility: The spread operator is a standard JavaScript feature that is
+        // supported by all modern browsers and Node.js, whereas JSON.stringify and JSON.parse
+        // may not be available in older browsers or
+        // environments that do not support ECMAScript 5.
+        const currentAttachedUsers = [...getCurrentAttachedUsers.value];
+        // Set post form author to the non-reactive copy
+        postForm.author = currentAttachedUsers;
 
-//         // handle show modal for unique content
-//         modalShowAddAuthor.value = false;
-//     };
+        // handle show modal for unique content
+        modalShowAddAuthor.value = false;
+    };
 
-//     // end modal
-// };
+    // end modal
+};
 
-// const filteredUsers = ref([]);
-// const handleRemoveAttachedUser = function (userId) {
-//     // filter the array to exclude user with matching ID
-//     postForm.author = postForm.author.filter((user) => user.id !== userId);
-// };
+const filteredUsers = ref([]);
+
+const handleRemoveAttachedCategory = function (categoryId) {
+    // filter the array to exclude user with matching ID
+    postForm.category = postForm.category.filter(
+        (user) => category.id !== categoryId
+    );
+};
 
 const showErrorNotifications = ref(false);
 
@@ -284,6 +290,8 @@ const clearForm = function () {
     postForm.cover_image_medium = "";
     postForm.cover_image_large = "";
 
+    postForm.categories = [];
+
     localStorage.removeItem(pathLocalStorage);
 };
 
@@ -344,6 +352,10 @@ onBeforeMount(() => {
         postForm.cover_image_thumbnail = props.post.cover_image_thumbnail;
         postForm.cover_image_medium = props.post.cover_image_medium;
         postForm.cover_image_large = props.post.cover_image_large;
+
+        if (props.categories !== null) {
+            postForm.categories = props.categories;
+        }
     }
 });
 </script>
@@ -380,8 +392,8 @@ onBeforeMount(() => {
                 <!-- post content start -->
                 <InputLabel for="title" value="Component HTML" />
                 <TextArea
-                    rows="40"
-                    cols="50"
+                    class="myPrimaryTextArea"
+                    rows="20"
                     placeholder="HTML for component"
                     id="html_code"
                     v-model="postForm.html_code"
@@ -477,14 +489,115 @@ onBeforeMount(() => {
                 <InputError :message="postForm.errors.published" />
             </div>
             <!-- post status - end -->
+
+            <!-- post categories - start -->
+            <div class="myInputsOrganization">
+                <div
+                    class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
+                >
+                    <button
+                        @click="handleAddAuthor"
+                        type="button"
+                        class="myPrimaryButton gap-2 items-center"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-4 h-4"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                            />
+                        </svg>
+
+                        Add Category
+                    </button>
+                </div>
+
+                <div
+                    class="p-2 mt-4"
+                    :class="
+                        postForm.categories && postForm.categories.length === 0
+                            ? 'bg-white'
+                            : 'bg-gray-50'
+                    "
+                >
+                    <p
+                        v-if="
+                            postForm.categories &&
+                            postForm.categories.length !== 0
+                        "
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{ postForm.categories && postForm.categories.length }}
+                        category(s)
+                    </p>
+
+                    <div
+                        v-if="
+                            postForm.categories &&
+                            postForm.categories.length !== 0
+                        "
+                        class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                    >
+                        <div
+                            v-for="category in postForm.categories"
+                            :key="category.id"
+                            class="hover:bg-gray-50 px-2 bg-white"
+                        >
+                            <div
+                                class="flex justify-between items-center rounded my-4"
+                            >
+                                {{ category.name }}
+                                <div
+                                    @click="
+                                        handleRemoveAttachedCategory(
+                                            category.id
+                                        )
+                                    "
+                                >
+                                    <TrashIcon
+                                        class="w-4 h-4 text-myPrimaryErrorColor stroke-2 cursor-pointer"
+                                    ></TrashIcon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    v-if="
+                        postForm.categories && postForm.categories.length === 0
+                    "
+                    class="space-y-6"
+                >
+                    <p class="myPrimaryParagraph">No category selected.</p>
+                </div>
+                <InputError :message="postForm.errors.author" />
+                <p
+                    v-if="
+                        postForm.categories && postForm.categories.length >= 21
+                    "
+                    class="myPrimaryParagraphError"
+                >
+                    Maximum 20 author is allowed.
+                </p>
+            </div>
+            <!-- post categories - end -->
+
             <!-- cover image - start -->
-            <div v-if="false" class="myInputsOrganization">
+            <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
                     </div>
                     <p class="myPrimaryParagraph">
-                        Uplaod or select a post cover image.
+                        Uplaod or select a Component cover image.
                     </p>
                 </div>
 

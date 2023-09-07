@@ -13,6 +13,10 @@ const props = defineProps({
     post: {
         required: true,
     },
+    categories: {
+        default: null,
+        required: false,
+    },
 });
 
 const breadcrumbsLinks = [
@@ -41,6 +45,7 @@ const breadcrumbsLinks = [
             :user="user"
             :currentUserTeam="currentUserTeam"
             :post="post"
+            :categories="categories"
         ></ComponentForm>
     </LoggedInLayout>
 </template>
