@@ -324,8 +324,6 @@ class MediaLibraryController extends Controller
         //         "status" => 404,
         //     ]);
         // }
-
-        // dd();
     }
 
     /**
