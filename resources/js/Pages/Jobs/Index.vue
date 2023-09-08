@@ -267,20 +267,23 @@ onMounted(() => {
                                 Thumbnail
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Title</th>
+                            <th scope="col" class="myPrimaryTableTh">Job ID</th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Team Name
+                            </th>
                             <th scope="col" class="myPrimaryTableTh">Status</th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Show Authors
                             </th>
-                            <th scope="col" class="myPrimaryTableTh">Job ID</th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Categories
+                            </th>
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
 
                             <th scope="col" class="myPrimaryTableTh">
                                 Updated By
                             </th>
 
-                            <th scope="col" class="myPrimaryTableTh">
-                                Team Name
-                            </th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Updated Date
                             </th>
@@ -348,6 +351,17 @@ onMounted(() => {
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
+                                    {{ post.id }}
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    {{
+                                        $page.props.user &&
+                                        $page.props.user.current_team.name
+                                    }}
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
                                     <span
                                         :class="
                                             post.published
@@ -377,19 +391,33 @@ onMounted(() => {
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
-                                    {{ post.id }}
-                                </td>
-                                <td
-                                    class="myPrimaryTableTBodyTd flex flex-wrap justify-start items-center gap-2"
-                                >
-                                    <p
-                                        v-for="tag in post.tags &&
-                                        post.tags.split(',')"
-                                        :key="tag"
-                                        class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
                                     >
-                                        {{ tag }}
-                                    </p>
+                                        <p
+                                            v-for="category in post.categories &&
+                                            post.categories"
+                                            :key="category"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                        >
+                                            {{ category.name }}
+                                        </p>
+                                    </div>
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
+                                    >
+                                        <p
+                                            v-for="tag in post.tags &&
+                                            post.tags.split(',')"
+                                            :key="tag"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                        >
+                                            {{ tag }}
+                                        </p>
+                                    </div>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
@@ -445,13 +473,6 @@ onMounted(() => {
                                     <span v-if="post.updatedBy === null">
                                         Unknown
                                     </span>
-                                </td>
-
-                                <td class="myPrimaryTableTBodyTd">
-                                    {{
-                                        $page.props.user &&
-                                        $page.props.user.current_team.name
-                                    }}
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

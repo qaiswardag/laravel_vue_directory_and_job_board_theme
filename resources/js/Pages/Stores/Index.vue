@@ -270,12 +270,15 @@ onMounted(() => {
                                 Thumbnail
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Title</th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Store ID
+                            </th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Team Name
+                            </th>
                             <th scope="col" class="myPrimaryTableTh">Status</th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Show Authors
-                            </th>
-                            <th scope="col" class="myPrimaryTableTh">
-                                Store ID
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
 
@@ -283,9 +286,6 @@ onMounted(() => {
                                 Updated By
                             </th>
 
-                            <th scope="col" class="myPrimaryTableTh">
-                                Team Name
-                            </th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Updated Date
                             </th>
@@ -353,6 +353,16 @@ onMounted(() => {
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
+                                    {{ post.id }}
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    {{
+                                        $page.props.user &&
+                                        $page.props.user.current_team.name
+                                    }}
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
                                     <span
                                         :class="
                                             post.published
@@ -381,9 +391,6 @@ onMounted(() => {
                                     >
                                 </td>
 
-                                <td class="myPrimaryTableTBodyTd">
-                                    {{ post.id }}
-                                </td>
                                 <td
                                     class="myPrimaryTableTBodyTd flex flex-wrap justify-start items-center gap-2"
                                 >
@@ -450,13 +457,6 @@ onMounted(() => {
                                     <span v-if="post.updatedBy === null">
                                         Unknown
                                     </span>
-                                </td>
-
-                                <td class="myPrimaryTableTBodyTd">
-                                    {{
-                                        $page.props.user &&
-                                        $page.props.user.current_team.name
-                                    }}
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

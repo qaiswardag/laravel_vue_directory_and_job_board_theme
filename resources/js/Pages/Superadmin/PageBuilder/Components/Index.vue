@@ -252,8 +252,17 @@ const routesArray = [
                             <th scope="col" class="myPrimaryTableTh">
                                 Published
                             </th>
+
                             <th scope="col" class="myPrimaryTableTh">
                                 Categories
+                            </th>
+
+                            <th scope="col" class="myPrimaryTableTh">
+                                Updated Date
+                            </th>
+
+                            <th scope="col" class="myPrimaryTableTh">
+                                Created Date
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Edit</th>
                             <th scope="col" class="myPrimaryTableTh">Delete</th>
@@ -314,26 +323,25 @@ const routesArray = [
                                     >
                                 </td>
 
-                                <td
-                                    class="myPrimaryTableTBodyTd flex flex-wrap justify-start items-center gap-2"
-                                >
-                                    <p
-                                        v-for="category in component.categories"
-                                        :key="category"
-                                        class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
                                     >
-                                        {{ category.name }}
-                                    </p>
+                                        <p
+                                            v-for="category in component.categories &&
+                                            component.categories"
+                                            :key="category"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                        >
+                                            {{ category.name }}
+                                        </p>
+                                    </div>
                                 </td>
-
-                                <td
-                                    class="myPrimaryTableTBodyTd flex flex-wrap justify-start items-center gap-2"
-                                ></td>
 
                                 <td class="myPrimaryTableTBodyTd">
                                     {{
                                         format(
-                                            parseISO(component.created_at),
+                                            parseISO(component.updated_at),
                                             "dd/MM/yyyy"
                                         )
                                     }}
@@ -342,7 +350,7 @@ const routesArray = [
                                 <td class="myPrimaryTableTBodyTd">
                                     {{
                                         format(
-                                            parseISO(component.updated_at),
+                                            parseISO(component.created_at),
                                             "dd/MM/yyyy"
                                         )
                                     }}

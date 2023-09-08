@@ -47,4 +47,14 @@ class Job extends Model
     {
         return $this->belongsToMany(User::class, "author_job");
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(
+            JobCategory::class,
+            "job_category_relations",
+            "job_id",
+            "category_id"
+        );
+    }
 }

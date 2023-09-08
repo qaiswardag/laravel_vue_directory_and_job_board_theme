@@ -29,29 +29,35 @@ class TeamsUsers extends Command
      */
     public function handle()
     {
-        User::factory()->create([
-            "id" => 1,
-            "first_name" => "Qais",
-            "last_name" => "Wardag",
-            "email" => "qw@myself.ae",
-            "public" => true,
-            "current_team_id" => 1,
-            "password" => Hash::make("123456"),
-        ]);
+        // Check if the user with ID 1 exists
+        if (!User::where("id", 1)->exists()) {
+            User::factory()->create([
+                "id" => 1,
+                "first_name" => "Qais",
+                "last_name" => "Wardag",
+                "email" => "qw@myself.ae",
+                "public" => true,
+                "current_team_id" => 1,
+                "password" => Hash::make("123456"),
+            ]);
 
-        Superadmin::factory()->create([
-            "user_id" => 1, // Qais Wardag
-            "role" => "admin", // reader, editor or admin
-        ]);
+            Superadmin::factory()->create([
+                "user_id" => 1, // Qais Wardag
+                "role" => "admin", // reader, editor, or admin
+            ]);
+        }
 
-        Team::factory()->create([
-            "id" => 1,
-            "user_id" => User::find(1)->id,
-            "name" => "myself",
-            "public" => true,
-            "personal_team" => false,
-            "reference_id" => "myself",
-        ]);
+        // Check if the team with ID 1 exists
+        if (!Team::where("id", 1)->exists()) {
+            Team::factory()->create([
+                "id" => 1,
+                "user_id" => User::find(1)->id,
+                "name" => "myself",
+                "public" => true,
+                "personal_team" => false,
+                "reference_id" => "myself",
+            ]);
+        }
 
         $this->info("Seeded successfully, new Teams and Users for production");
     }

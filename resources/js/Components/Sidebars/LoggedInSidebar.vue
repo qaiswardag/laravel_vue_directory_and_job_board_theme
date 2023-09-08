@@ -217,7 +217,7 @@ import {
                     class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                 ></DocumentTextIcon>
 
-                Team Blog
+                Blog Team
             </SideBarLink>
         </template>
         <template
@@ -244,7 +244,7 @@ import {
                     class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                 ></TagIcon>
 
-                Team Jobs
+                Jobs Team
             </SideBarLink>
         </template>
         <template
@@ -270,7 +270,7 @@ import {
                 <ShoppingBagIcon
                     class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                 ></ShoppingBagIcon>
-                Team Stores
+                Stores Team
             </SideBarLink>
         </template>
         <template
@@ -313,7 +313,7 @@ import {
                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                 </svg>
-                Team Settings
+                Settings Team
             </SideBarLink>
         </template>
 

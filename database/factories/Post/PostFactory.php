@@ -30,8 +30,8 @@ class PostFactory extends Factory
         $deletedAt = rand(0, 1) ? Carbon::now() : null;
 
         return [
-            "team_id" => $randomUserFromTeam->id,
-            "user_id" => $randomUserFromTeam->user_id,
+            "team_id" => 1,
+            "user_id" => 1,
             "show_author" => rand(0, 1),
             "deleted_at" => null,
             "title" => $title,

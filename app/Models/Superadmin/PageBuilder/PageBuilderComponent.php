@@ -20,16 +20,6 @@ class PageBuilderComponent extends Model
         "cover_image_large",
     ];
 
-    // public function categories()
-    // {
-    //     return $this->belongsToMany(
-    //         PageBuilderComponentCategory::class,
-    //         "page_builder_component_category_relations",
-    //         "component_id",
-    //         "category_id"
-    //     );
-    // }
-
     public function categories()
     {
         return $this->belongsToMany(

@@ -51,6 +51,7 @@ class JobController extends Controller
 
         $jobs = $team
             ->jobs()
+            ->with("categories")
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")

@@ -492,13 +492,19 @@ onMounted(() => {
                     <thead class="myPrimaryTableTHead">
                         <tr class="myPrimaryTableTr">
                             <th scope="col" class="myPrimaryTableTh">User</th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                User ID
+                            </th>
                             <th scope="col" class="myPrimaryTableTh">Name</th>
                             <th scope="col" class="myPrimaryTableTh">Status</th>
                             <th scope="col" class="myPrimaryTableTh">
-                                User id
+                                Superadmin role
                             </th>
                             <th scope="col" class="myPrimaryTableTh">
-                                Superadmin role
+                                Updated Date
+                            </th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Created at
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Edit</th>
                             <th scope="col" class="myPrimaryTableTh">Delete</th>
@@ -565,6 +571,10 @@ onMounted(() => {
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
+                                    {{ user.id }}
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
                                     {{ user.first_name }}
                                     {{ user.last_name }}
                                 </td>
@@ -581,10 +591,6 @@ onMounted(() => {
                                             user.public ? "Public" : "Private"
                                         }}</span
                                     >
-                                </td>
-
-                                <td class="myPrimaryTableTBodyTd">
-                                    {{ user.id }}
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
@@ -652,16 +658,15 @@ onMounted(() => {
                                 <td class="myPrimaryTableTBodyTd">
                                     {{
                                         format(
-                                            parseISO(user.created_at),
+                                            parseISO(user.updated_at),
                                             "dd/MM/yyyy"
                                         )
                                     }}
                                 </td>
-
                                 <td class="myPrimaryTableTBodyTd">
                                     {{
                                         format(
-                                            parseISO(user.updated_at),
+                                            parseISO(user.created_at),
                                             "dd/MM/yyyy"
                                         )
                                     }}

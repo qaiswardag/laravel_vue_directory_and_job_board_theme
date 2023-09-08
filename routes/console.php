@@ -31,3 +31,19 @@ Artisan::command("app:seed-page-builder-component-categories", function () {
 Artisan::command("app:seed-teams-users", function () {
     //
 })->describe("Seed new Teams and Users for production");
+
+// Create Job, Job Categories & Job Categories Relations - start
+// Create Job, Job Categories & Job Categories Relations - start
+Artisan::command("app:seed-job", function () {
+    //
+})->describe("Seed new Jobs");
+
+Artisan::command("app:seed-job-categorys", function () {
+    //
+})->describe("Seed new Job Categories");
+
+Artisan::command("app:seed-job-category-relations", function () {
+    //
+})->describe("Seed new Job Categories Relations");
+// Create Job, Job Categories & Job Categories Relations - end
+// Create Job, Job Categories & Job Categories Relations - end
