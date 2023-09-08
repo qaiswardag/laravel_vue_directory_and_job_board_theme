@@ -73,3 +73,16 @@ Artisan::command("app:seed-job-state-relations", function () {
 })->describe("Seed new Job States Relations");
 // Create Job States & Job States Relations - end
 // Create Job States & Job States Relations - end
+
+// Create Job Countries & Job Countries - start
+// Create Job Countries & Job Countries - start
+
+Artisan::command("app:seed-job-countries", function () {
+    //
+})->describe("Seed new Job Countries");
+
+Artisan::command("app:seed-job-country-relations", function () {
+    //
+})->describe("Seed new Job Countries Relations");
+// Create Job Countries & Job Countries - end
+// Create Job Countries & Job Countries - end

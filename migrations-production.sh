@@ -32,4 +32,8 @@ php artisan app:job-states
 
 php artisan app:job-state-relations
 
+php artisan app:job-countries
+
+php artisan app:job-country-relations
+
 

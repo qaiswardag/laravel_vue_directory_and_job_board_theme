@@ -11,6 +11,7 @@ import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
 import {
     CheckIcon,
+    GlobeAmericasIcon,
     MapIcon,
     MapPinIcon,
     SquaresPlusIcon,
@@ -283,8 +284,9 @@ onMounted(() => {
                                 Show Authors
                             </th>
                             <th scope="col" class="myPrimaryTableTh">
-                                Region & State
+                                Country
                             </th>
+                            <th scope="col" class="myPrimaryTableTh">States</th>
                             <th scope="col" class="myPrimaryTableTh">Types</th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Categories
@@ -399,6 +401,26 @@ onMounted(() => {
                                             post.show_author ? "Show" : "Hide"
                                         }}</span
                                     >
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
+                                    >
+                                        <p
+                                            v-for="jobCountry in post.countries &&
+                                            post.countries"
+                                            :key="jobCountry"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                        >
+                                            <GlobeAmericasIcon
+                                                class="w-3 h-3"
+                                            ></GlobeAmericasIcon>
+                                            <span>
+                                                {{ jobCountry.name }}
+                                            </span>
+                                        </p>
+                                    </div>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

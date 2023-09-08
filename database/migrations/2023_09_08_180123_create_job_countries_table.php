@@ -10,9 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create("job_states", function (Blueprint $table) {
+        Schema::create("job_countries", function (Blueprint $table) {
             $table->id();
-            $table->string("name"); // state or global
+            $table->string("name");
             $table->timestamps();
         });
     }
@@ -22,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists("job_states");
+        Schema::dropIfExists("job_countries");
     }
 };

@@ -75,4 +75,14 @@ class Job extends Model
             "state_id"
         );
     }
+
+    public function countries()
+    {
+        return $this->belongsToMany(
+            JobCountry::class,
+            "job_country_relations",
+            "job_id",
+            "country_id"
+        );
+    }
 }

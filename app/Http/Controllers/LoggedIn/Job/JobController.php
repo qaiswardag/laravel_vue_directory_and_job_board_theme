@@ -51,6 +51,7 @@ class JobController extends Controller
 
         $jobs = $team
             ->jobs()
+            ->with("countries")
             ->with("states")
             ->with("categories")
             ->with("types")
