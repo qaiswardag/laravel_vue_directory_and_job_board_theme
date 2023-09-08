@@ -38,7 +38,7 @@ Artisan::command("app:seed-job", function () {
     //
 })->describe("Seed new Jobs");
 
-Artisan::command("app:seed-job-categorys", function () {
+Artisan::command("app:seed-job-categories", function () {
     //
 })->describe("Seed new Job Categories");
 
@@ -47,3 +47,29 @@ Artisan::command("app:seed-job-category-relations", function () {
 })->describe("Seed new Job Categories Relations");
 // Create Job, Job Categories & Job Categories Relations - end
 // Create Job, Job Categories & Job Categories Relations - end
+
+// Create Job Types & Job Types Relations - start
+// Create Job Types & Job Types Relations - start
+
+Artisan::command("app:seed-job-types", function () {
+    //
+})->describe("Seed new Job Types");
+
+Artisan::command("app:seed-job-type-relations", function () {
+    //
+})->describe("Seed new Job Types Relations");
+// Create Job Types & Job Types Relations - end
+// Create Job Types & Job Types Relations - end
+
+// Create Job States & Job States Relations - start
+// Create Job States & Job States Relations - start
+
+Artisan::command("app:seed-job-states", function () {
+    //
+})->describe("Seed new Job States");
+
+Artisan::command("app:seed-job-state-relations", function () {
+    //
+})->describe("Seed new Job States Relations");
+// Create Job States & Job States Relations - end
+// Create Job States & Job States Relations - end

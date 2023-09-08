@@ -65,7 +65,7 @@ class PageBuilderComponentCategoryRelations extends Command
         }
 
         $this->info(
-            "Seeded successfully, new relations between Components Categories for production."
+            "Seeded successfully, new relations between Components & Components Categories for production."
         );
     }
 }

@@ -5,14 +5,14 @@ namespace App\Console\Commands;
 use App\Models\Job\JobCategory;
 use Illuminate\Console\Command;
 
-class JobCategorys extends Command
+class JobCategories extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = "app:job-categorys";
+    protected $signature = "app:job-categories";
 
     /**
      * The console command description.

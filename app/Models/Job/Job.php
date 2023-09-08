@@ -57,4 +57,22 @@ class Job extends Model
             "category_id"
         );
     }
+    public function types()
+    {
+        return $this->belongsToMany(
+            JobType::class,
+            "job_type_relations",
+            "job_id",
+            "type_id"
+        );
+    }
+    public function states()
+    {
+        return $this->belongsToMany(
+            JobState::class,
+            "job_state_relations",
+            "job_id",
+            "state_id"
+        );
+    }
 }

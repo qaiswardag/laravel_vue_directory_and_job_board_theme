@@ -9,7 +9,14 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
-import { TrashIcon } from "@heroicons/vue/24/outline";
+import {
+    CheckIcon,
+    MapIcon,
+    MapPinIcon,
+    SquaresPlusIcon,
+    TagIcon,
+    TrashIcon,
+} from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     posts: {
@@ -276,6 +283,10 @@ onMounted(() => {
                                 Show Authors
                             </th>
                             <th scope="col" class="myPrimaryTableTh">
+                                Region & State
+                            </th>
+                            <th scope="col" class="myPrimaryTableTh">Types</th>
+                            <th scope="col" class="myPrimaryTableTh">
                                 Categories
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
@@ -395,12 +406,56 @@ onMounted(() => {
                                         class="flex flex-wrap justify-start items-center gap-2"
                                     >
                                         <p
+                                            v-for="jobState in post.states &&
+                                            post.states"
+                                            :key="jobState"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                        >
+                                            <MapPinIcon
+                                                class="w-3 h-3"
+                                            ></MapPinIcon>
+                                            <span>
+                                                {{ jobState.name }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
+                                    >
+                                        <p
+                                            v-for="jobType in post.types &&
+                                            post.types"
+                                            :key="jobType"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                        >
+                                            <CheckIcon class="w-3 h-3">
+                                            </CheckIcon>
+                                            <span>
+                                                {{ jobType.name }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
+                                    >
+                                        <p
                                             v-for="category in post.categories &&
                                             post.categories"
                                             :key="category"
-                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
-                                            {{ category.name }}
+                                            <SquaresPlusIcon
+                                                class="w-3 h-3"
+                                            ></SquaresPlusIcon>
+                                            <span>
+                                                {{ category.name }}
+                                            </span>
                                         </p>
                                     </div>
                                 </td>
@@ -413,9 +468,12 @@ onMounted(() => {
                                             v-for="tag in post.tags &&
                                             post.tags.split(',')"
                                             :key="tag"
-                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
-                                            {{ tag }}
+                                            <TagIcon class="w-3 h-3"></TagIcon>
+                                            <span>
+                                                {{ tag }}
+                                            </span>
                                         </p>
                                     </div>
                                 </td>
