@@ -9,7 +9,7 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
-import { TrashIcon } from "@heroicons/vue/24/outline";
+import { TagIcon, TrashIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     posts: {
@@ -387,18 +387,22 @@ onMounted(() => {
                                         }}</span
                                     >
                                 </td>
-
-                                <td
-                                    class="myPrimaryTableTBodyTd flex flex-wrap justify-start items-center gap-2"
-                                >
-                                    <p
-                                        v-for="tag in post.tags &&
-                                        post.tags.split(',')"
-                                        :key="tag"
-                                        class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
                                     >
-                                        {{ tag }}
-                                    </p>
+                                        <p
+                                            v-for="tag in post.tags &&
+                                            post.tags.split(',')"
+                                            :key="tag"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                        >
+                                            <TagIcon class="w-3 h-3"></TagIcon>
+                                            <span>
+                                                {{ tag }}
+                                            </span>
+                                        </p>
+                                    </div>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
