@@ -14,7 +14,7 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
 import slugify from "slugify";
 import config from "@/utils/config";
-import SearchUserModal from "@/Components/Search/SearchUserModal.vue";
+import SearchUserCategoryOrTagModal from "@/Components/Search/SearchUserCategoryOrTagModal.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import DesignerModal from "@/Components/Modals/DesignerModal.vue";
@@ -146,7 +146,7 @@ const handleRemoveCoverImage = function () {
     postForm.cover_image_large = null;
 };
 
-const modalShowAddAuthor = ref(false);
+const modalShowSearchUserCategoryOrTagModal = ref(false);
 
 // modal content
 const titleModalSearchAuthor = ref("");
@@ -159,7 +159,7 @@ const secondModalButtonSearchAuthorFunction = ref(null);
 
 const handleAddAuthor = function () {
     // handle show modal for unique content
-    modalShowAddAuthor.value = true;
+    modalShowSearchUserCategoryOrTagModal.value = true;
     // set modal standards
     titleModalSearchAuthor.value = "Add author";
     descriptionModalSearchAuthor.value = "Add store author";
@@ -168,7 +168,7 @@ const handleAddAuthor = function () {
     // handle click
     firstModalButtonSearchAuthorFunction.value = function () {
         // handle show modal for unique content
-        modalShowAddAuthor.value = false;
+        modalShowSearchUserCategoryOrTagModal.value = false;
     };
     // handle click
     secondModalButtonSearchAuthorFunction.value = function () {
@@ -200,7 +200,7 @@ const handleAddAuthor = function () {
         postForm.author = currentAttachedUsers;
 
         // handle show modal for unique content
-        modalShowAddAuthor.value = false;
+        modalShowSearchUserCategoryOrTagModal.value = false;
     };
 
     // end modal
@@ -1209,10 +1209,11 @@ const handleDesigner = function () {
                 @thirdMediaButtonFunction="thirdMediaButtonFunction"
             >
             </MediaLibraryModal>
-            <SearchUserModal
+            <SearchUserCategoryOrTagModal
+                apiUrlName="attach.user.index"
                 :user="user"
                 :team="postForm.team"
-                :show="modalShowAddAuthor"
+                :show="modalShowSearchUserCategoryOrTagModal"
                 :title="titleModalSearchAuthor"
                 :description="descriptionModalSearchAuthor"
                 :firstButtonText="firstButtonModalSearchAuthor"
@@ -1224,7 +1225,7 @@ const handleDesigner = function () {
                     secondModalButtonSearchAuthorFunction
                 "
             >
-            </SearchUserModal>
+            </SearchUserCategoryOrTagModal>
             <NotificationsFixedBottom
                 :listOfMessages="Object.values(postForm.errors)"
                 :show="showErrorNotifications"

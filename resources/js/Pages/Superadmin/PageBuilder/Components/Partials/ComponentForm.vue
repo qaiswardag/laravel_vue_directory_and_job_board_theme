@@ -16,7 +16,7 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
 import slugify from "slugify";
 import config from "@/utils/config";
-import SearchUserModal from "@/Components/Search/SearchUserModal.vue";
+import SearchUserCategoryOrTagModal from "@/Components/Search/SearchUserCategoryOrTagModal.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import {
@@ -31,6 +31,7 @@ import TextArea from "@/Components/Forms/TextArea.vue";
 import {
     CheckIcon,
     ChevronUpDownIcon,
+    SquaresPlusIcon,
     TrashIcon,
     XMarkIcon,
 } from "@heroicons/vue/24/outline";
@@ -53,6 +54,7 @@ const props = defineProps({
 });
 
 const modalShowClearForm = ref(false);
+const modalShowSearchUserCategoryOrTagModal = ref(false);
 
 // modal content
 const typeModal = ref("");
@@ -133,21 +135,21 @@ const handleRemoveCoverImage = function () {
     postForm.cover_image_large = null;
 };
 
-// const modalShowAddAuthor = ref(false);
+// const modalShowSearchUserCategoryOrTagModal = ref(false);
 
-// // modal content
-// const titleModalSearchAuthor = ref("");
-// const descriptionModalSearchAuthor = ref("");
-// const firstButtonModalSearchAuthor = ref("");
-// const secondButtonModalSearchAuthor = ref(null);
-// // set dynamic modal handle functions
-// const firstModalButtonSearchAuthorFunction = ref(null);
-// const secondModalButtonSearchAuthorFunction = ref(null);
+// modal content
+const titleModalSearchAuthor = ref("");
+const descriptionModalSearchAuthor = ref("");
+const firstButtonModalSearchAuthor = ref("");
+const secondButtonModalSearchAuthor = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonSearchAuthorFunction = ref(null);
+const secondModalButtonSearchAuthorFunction = ref(null);
 
-const handleAddAuthor = function () {
-    return;
+const handleAddCategory = function () {
+    modalShowSearchUserCategoryOrTagModal.value = true;
+
     // handle show modal for unique content
-    modalShowAddAuthor.value = true;
     // set modal standards
     titleModalSearchAuthor.value = "Add author";
     descriptionModalSearchAuthor.value = "Add Job author";
@@ -156,7 +158,7 @@ const handleAddAuthor = function () {
     // handle click
     firstModalButtonSearchAuthorFunction.value = function () {
         // handle show modal for unique content
-        modalShowAddAuthor.value = false;
+        modalShowSearchUserCategoryOrTagModal.value = false;
     };
     // handle click
     secondModalButtonSearchAuthorFunction.value = function () {
@@ -188,7 +190,7 @@ const handleAddAuthor = function () {
         postForm.author = currentAttachedUsers;
 
         // handle show modal for unique content
-        modalShowAddAuthor.value = false;
+        modalShowSearchUserCategoryOrTagModal.value = false;
     };
 
     // end modal
@@ -211,8 +213,7 @@ const notificationsModalButton = function () {
 
 const postForm = useForm({
     title: "",
-    slug: "",
-    content: "",
+    html_code: "",
     published: true,
     team: props.currentUserTeam,
 
@@ -391,14 +392,20 @@ onBeforeMount(() => {
 
                 <!-- post content start -->
                 <InputLabel for="title" value="Component HTML" />
-                <TextArea
-                    class="myPrimaryTextArea"
-                    rows="20"
-                    placeholder="HTML for component"
-                    id="html_code"
-                    v-model="postForm.html_code"
-                    autocomplete="off"
-                ></TextArea>
+                <div class="editor">
+                    <pre class="lang-html"><code></code></pre>
+                    <TextArea
+                        autocorrect="off"
+                        autocapitalize="off"
+                        translate="no"
+                        class="myPrimaryTextArea"
+                        rows="20"
+                        placeholder="HTML for component"
+                        id="html_code"
+                        v-model="postForm.html_code"
+                        autocomplete="off"
+                    ></TextArea>
+                </div>
                 <InputError :message="postForm.errors.html_code" />
                 <!-- post content end -->
             </div>
@@ -496,25 +503,11 @@ onBeforeMount(() => {
                     class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
                 >
                     <button
-                        @click="handleAddAuthor"
+                        @click="handleAddCategory"
                         type="button"
                         class="myPrimaryButton gap-2 items-center"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                            />
-                        </svg>
-
+                        <SquaresPlusIcon class="w-4 h-4"></SquaresPlusIcon>
                         Add Category
                     </button>
                 </div>
@@ -727,6 +720,23 @@ onBeforeMount(() => {
                 <header></header>
                 <main></main>
             </DynamicModal>
+            <SearchUserCategoryOrTagModal
+                apiUrlName="attach.user.index"
+                :user="user"
+                :team="postForm.team"
+                :show="modalShowSearchUserCategoryOrTagModal"
+                :title="titleModalSearchAuthor"
+                :description="descriptionModalSearchAuthor"
+                :firstButtonText="firstButtonModalSearchAuthor"
+                :secondButtonText="secondButtonModalSearchAuthor"
+                @firstModalButtonSearchAuthorFunction="
+                    firstModalButtonSearchAuthorFunction
+                "
+                @secondModalButtonSearchAuthorFunction="
+                    secondModalButtonSearchAuthorFunction
+                "
+            >
+            </SearchUserCategoryOrTagModal>
             <MediaLibraryModal
                 :user="user"
                 :team="postForm.team"

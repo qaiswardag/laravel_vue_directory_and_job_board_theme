@@ -15,6 +15,7 @@ class PageBuilderController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index(Request $request)
     {
         $this->authorize("superadmin-can-read");
@@ -25,9 +26,9 @@ class PageBuilderController extends Controller
             $searchQuery = implode(",", $searchQuery);
         }
 
-        $components = PageBuilderComponent::latest();
+        $query = PageBuilderComponent::latest()->with("categories");
 
-        $components->when($request->filled("selected_category"), function (
+        $query->when($request->filled("selected_category"), function (
             $query
         ) use ($request, $searchQuery) {
             $selectedCategory = $request->input("selected_category");
@@ -53,7 +54,7 @@ class PageBuilderController extends Controller
             }
         });
 
-        $components = $components->paginate(4);
+        $components = $query->paginate(4);
 
         $components->appends($request->all());
 
@@ -76,11 +77,11 @@ class PageBuilderController extends Controller
 
         $team = Team::where("reference_id", $referenceId)->first();
 
-        if ($team === null) {
+        if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
                     // Error message for the user.
-                    "Only team members who belong to Team with ID 1 can create or update components.",
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
@@ -108,11 +109,11 @@ class PageBuilderController extends Controller
 
         $team = Team::where("reference_id", $referenceId)->first();
 
-        if ($team === null) {
+        if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
                     // Error message for the user.
-                    "Only team members who belong to Team with ID 1 can create or update components.",
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
@@ -137,11 +138,11 @@ class PageBuilderController extends Controller
 
         $team = Team::where("reference_id", $referenceId)->first();
 
-        if ($team === null) {
+        if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
                     // Error message for the user.
-                    "Only team members who belong to Team with ID 1 can create or update components.",
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
@@ -174,11 +175,11 @@ class PageBuilderController extends Controller
 
         $team = Team::where("reference_id", $referenceId)->first();
 
-        if ($team === null) {
+        if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
                     // Error message for the user.
-                    "Only team members who belong to Team with ID 1 can create or update components.",
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
@@ -196,11 +197,11 @@ class PageBuilderController extends Controller
         //
         $team = Team::where("reference_id", $referenceId)->first();
 
-        if ($team === null) {
+        if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
                     // Error message for the user.
-                    "Only team members who belong to Team with ID 1 can create or update components.",
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }

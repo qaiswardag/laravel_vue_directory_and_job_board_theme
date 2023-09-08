@@ -56,10 +56,55 @@ const props = defineProps({
     },
 });
 
+const showModalEditComponentTeamAuth = ref(false);
+//
+// use dynamic model
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
+const checkUserTeamAuthorization = function () {
+    // set modal standards
+    showModalEditComponentTeamAuth.value = true;
+    typeModal.value = "danger";
+    gridColumnModal.value = 2;
+    titleModal.value = "No Team selected";
+    descriptionModal.value =
+        "Sorry, you are forbidden from performing this action. Only team members who belong to unique teams can create, update or delete this resource. Please try switching team or contact IT support.";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = null;
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // set open modal
+        showModalEditComponentTeamAuth.value = false;
+    };
+    // end modal
+};
+
 const handleEdit = function (componentID) {
+    if (props.currentUserTeam === null || props.currentUserTeam === undefined) {
+        checkUserTeamAuthorization();
+        return;
+    }
+
     router.get(
         route("admin.components.component.edit", [
-            props.currentUserTeam.reference_id,
+            // if reference_id is undefined or null, then reference_id to 0
+            props.currentUserTeam &&
+            props.currentUserTeam.reference_id !== null &&
+            props.currentUserTeam.reference_id !== undefined
+                ? props.currentUserTeam.reference_id
+                : 0,
             componentID,
         ])
     );
@@ -151,9 +196,19 @@ const routesArray = [
             </template>
 
             <template #buttons>
+                <button
+                    v-if="props.currentUserTeam === null"
+                    class="myPrimaryButton"
+                    type="button"
+                    @click="checkUserTeamAuthorization"
+                >
+                    Create Component
+                </button>
                 <Link
                     class="myPrimaryButton"
                     type="button"
+                    prop
+                    v-if="props.currentUserTeam !== null"
                     :href="
                         route(
                             'admin.components.component.create',
@@ -196,6 +251,9 @@ const routesArray = [
                             <th scope="col" class="myPrimaryTableTh">Title</th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Published
+                            </th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Categories
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Edit</th>
                             <th scope="col" class="myPrimaryTableTh">Delete</th>
@@ -255,6 +313,22 @@ const routesArray = [
                                         }}</span
                                     >
                                 </td>
+
+                                <td
+                                    class="myPrimaryTableTBodyTd flex flex-wrap justify-start items-center gap-2"
+                                >
+                                    <p
+                                        v-for="category in component.categories"
+                                        :key="category"
+                                        class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                    >
+                                        {{ category.name }}
+                                    </p>
+                                </td>
+
+                                <td
+                                    class="myPrimaryTableTBodyTd flex flex-wrap justify-start items-center gap-2"
+                                ></td>
 
                                 <td class="myPrimaryTableTBodyTd">
                                     {{
@@ -330,5 +404,20 @@ const routesArray = [
             </div>
         </div>
         <Pagination :links="components.links"></Pagination>
+
+        <DynamicModal
+            :show="showModalEditComponentTeamAuth"
+            :type="typeModal"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
+        >
+        </DynamicModal>
     </LoggedInLayout>
 </template>

@@ -68,7 +68,7 @@ export default {
             }
 
             handleGetUsers(
-                route("attach.user.index", {
+                route(data.apiUrlName, {
                     team: data.teamId,
                     search_query: data.search_query,
                     page: data.page,

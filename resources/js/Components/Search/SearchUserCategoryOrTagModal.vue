@@ -29,6 +29,10 @@ const props = defineProps({
     secondButtonText: {
         type: String,
     },
+    apiUrlName: {
+        type: String,
+        required: true,
+    },
 });
 
 // store
@@ -49,11 +53,16 @@ const search_query = ref("");
 // handle search
 const handleSearch = function (page) {
     // dispatch
-    store.dispatch("attachedUsers/loadUsers", {
-        teamId: props.team.id,
-        page: page,
-        search_query: search_query.value,
-    });
+    store.dispatch(
+        "attachedUsers/loadUsers",
+        {
+            teamId: props.team.id,
+            page: page,
+            search_query: search_query.value,
+            apiUrlName: props.apiUrlName,
+        },
+        {}
+    );
 };
 
 // get result for "laravel pagination" package

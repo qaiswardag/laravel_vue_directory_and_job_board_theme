@@ -56,16 +56,23 @@ const handleBack = function () {
             >
                 {{ title }}
             </h1>
-            <p class="mt-4 text-base text-white/70 sm:mt-6">
-                {{ description }}
-            </p>
-            <p class="mt-2 text-base text-white/70 sm:mt-2">
-                {{ customError }}
-            </p>
-            <div class="mt-10 flex justify-center">
-                <button @click="handleBack" class="myPrimaryLink text-white">
-                    <span aria-hidden="true">&larr;</span> Back
-                </button>
+            <div
+                class="lg:max-w-3xl mt-8 flex flex-col gap-2 justify-center items-center mx-auto"
+            >
+                <p class="myPrimaryParagraph text-white">
+                    {{ description }}
+                    <br />
+                    <br />
+                    {{ customError }}
+                </p>
+                <div class="mt-10 flex justify-center">
+                    <button
+                        @click="handleBack"
+                        class="myPrimaryLink text-white"
+                    >
+                        <span aria-hidden="true">&larr;</span> Back
+                    </button>
+                </div>
             </div>
         </div>
     </div>

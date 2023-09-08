@@ -84,7 +84,7 @@ import {
                         myPrimaryLink: route().current('user.teams.switch'),
                     }"
                 >
-                    No Team Selected
+                    No Team selected
                 </Link>
             </p>
         </template>
