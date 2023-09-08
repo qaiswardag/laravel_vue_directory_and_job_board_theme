@@ -293,7 +293,7 @@ const deleteImage = function (imageId) {
                                     as="h3"
                                     class="tertiaryHeader my-0 py-0"
                                 >
-                                    {{ title }}
+                                    {{ title }} for
                                     {{ team.name }}
                                 </DialogTitle>
 

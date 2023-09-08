@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
         Team::factory()->create([
             "id" => 1,
             "user_id" => User::find(1)->id,
-            "name" => "myself.ae",
+            "name" => "myself",
             "public" => true,
             "personal_team" => false,
             "reference_id" => "myself",
