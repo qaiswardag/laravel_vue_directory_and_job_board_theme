@@ -285,19 +285,10 @@ const posts = [
         <Head title="Blog" />
         <template #header>
             <div class="myPrimaryMainPageHeaderParagraph">
-                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Jobs</h1>
+                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Blog</h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Experience elegance with a minimalistic Admin Panel. <br />
-                    Multiple Security Layers, advanced Team Management, Blog and
-                    Media Library.
-                    <br />
-                    <a
-                        class="text-myPrimaryLinkColor"
-                        href="https://github.com/qaiswardag/myissue-admin"
-                        target="_blank"
-                    >
-                        Visit the project's GitHub repository.
-                    </a>
+                    Team Management capabilities, Blog, and a beautiful Media
+                    Library
                 </p>
             </div>
         </template>

@@ -6,10 +6,10 @@ import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
 
 <template>
     <GuestsLayout>
-        <Head title="Stores" />
+        <Head title="Professional" />
         <template #header>
             <div class="myPrimaryMainPageHeaderParagraph">
-                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Stores</h1>
+                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Professional</h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
                     Discover the ultimate minimalist administration panel with
                     robust and multiple security layers and advanced features

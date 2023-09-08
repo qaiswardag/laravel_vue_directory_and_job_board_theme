@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Guests\Store;
+namespace App\Http\Controllers\Guests\Professional;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class StoreController extends Controller
+class ProfessionalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class StoreController extends Controller
     public function index()
     {
         // Render the view
-        return Inertia::render("Guests/Stores/Index", [
+        return Inertia::render("Guests/Professional/Professional", [
             "posts" => null,
         ]);
     }

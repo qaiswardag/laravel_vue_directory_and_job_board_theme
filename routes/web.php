@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Internal\LoggedIn\PageBuilderComponentsController;
 use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
+use App\Http\Controllers\Guests\Professional\ProfessionalController;
 use App\Http\Controllers\Guests\Store\StoreController as StoreStoreController;
 use App\Http\Controllers\LoggedIn\Post\PostController;
 use App\Http\Controllers\Superadmin\DashboardController;
@@ -371,7 +372,9 @@ Route::middleware([])
         // USERS #START
         // USERS #START
         // USERS #START
-        Route::get("/users", [UserController::class, "index"])->name("users");
+        Route::get("/users", [UserController::class, "index"])->name(
+            "users.index"
+        );
         // unique user
         Route::get("/users/{user}", [UserController::class, "show"])->name(
             "users.show"
@@ -409,13 +412,26 @@ Route::middleware([])
         // STORES #START
         // STORES #START
         // STORES #START
-        Route::get("/store", [StoreStoreController::class, "index"])->name(
+        Route::get("/stores", [StoreStoreController::class, "index"])->name(
             "stores.index"
         );
-        // STORES #END
-        // STORES #END
-        // STORES #END
-        // STORES #END
+        // PROFESSIONAL #END
+        // PROFESSIONAL #END
+        // PROFESSIONAL #END
+        // PROFESSIONAL #END
+
+        // PROFESSIONAL #START
+        // PROFESSIONAL #START
+        // PROFESSIONAL #START
+        // PROFESSIONAL #START
+        Route::get("/professional", [
+            ProfessionalController::class,
+            "index",
+        ])->name("professional.index");
+        // PROFESSIONAL #END
+        // PROFESSIONAL #END
+        // PROFESSIONAL #END
+        // PROFESSIONAL #END
     });
 
 // ADMIN ONLY #START

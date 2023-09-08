@@ -33,6 +33,41 @@ const navigation = [
         },
     },
     {
+        label: "Stores",
+        route: {
+            name: "stores.index",
+            parameters: [],
+        },
+    },
+    {
+        label: "Jobs",
+        route: {
+            name: "jobs.index",
+            parameters: [],
+        },
+    },
+    {
+        label: "Blog",
+        route: {
+            name: "blog.index",
+            parameters: [],
+        },
+    },
+    {
+        label: "Users",
+        route: {
+            name: "users.index",
+            parameters: [],
+        },
+    },
+    {
+        label: "Professional",
+        route: {
+            name: "professional.index",
+            parameters: [],
+        },
+    },
+    {
         label: "Resources",
         route: {
             name: null,
@@ -54,20 +89,6 @@ const navigation = [
                 },
             },
         ],
-    },
-    {
-        label: "Blog",
-        route: {
-            name: "blog.index",
-            parameters: [],
-        },
-    },
-    {
-        label: "Users",
-        route: {
-            name: "users",
-            parameters: [],
-        },
     },
 ];
 </script>
