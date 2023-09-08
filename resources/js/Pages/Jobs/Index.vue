@@ -14,6 +14,7 @@ import {
     GlobeAmericasIcon,
     MapIcon,
     MapPinIcon,
+    Squares2X2Icon,
     SquaresPlusIcon,
     TagIcon,
     TrashIcon,
@@ -472,9 +473,10 @@ onMounted(() => {
                                             :key="category"
                                             class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
-                                            <SquaresPlusIcon
+                                            <Squares2X2Icon
                                                 class="w-3 h-3"
-                                            ></SquaresPlusIcon>
+                                            ></Squares2X2Icon>
+
                                             <span>
                                                 {{ category.name }}
                                             </span>
