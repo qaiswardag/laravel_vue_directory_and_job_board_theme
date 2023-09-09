@@ -27,13 +27,15 @@ class JobTypes extends Command
     public function handle()
     {
         $types = [
-            "Full-time",
-            "Part-time",
             "Freelance",
-            "Temporary",
-            "Internship",
-            "Remote",
+            "Full-time",
             "Hybrid",
+            "Internship",
+            "Part-time",
+            "Remote",
+            "Student Job",
+            "Temporary",
+            "Voluntary",
         ];
 
         foreach ($types as $typeName) {

@@ -31,7 +31,7 @@ class PostCategoryRelations extends Command
         $totalPost = Post::count();
 
         // Define the number of times to run the code
-        $numberOfRuns = 3;
+        $numberOfRuns = rand(2, 4);
 
         for ($run = 1; $run <= $numberOfRuns; $run++) {
             foreach (range(1, $totalPost) as $num) {

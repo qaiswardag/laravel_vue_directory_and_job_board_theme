@@ -267,13 +267,6 @@ onMounted(async () => {
                         >
                             <template #item="{ element }">
                                 <div v-if="element">
-                                    <p
-                                        v-if="draggingItem === false"
-                                        class="myPrimaryParagraph text-xs text-myPrimaryDarkGrayColor italic"
-                                    >
-                                        {{ element.title }} / ID:
-                                        {{ element.id }}
-                                    </p>
                                     <div v-if="element.cover_image_medium">
                                         <img
                                             class="border-2 w-full border-myPrimaryLightGrayColor rounded-md cursor-grab duration-200"

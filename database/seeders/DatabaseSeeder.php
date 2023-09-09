@@ -3,9 +3,16 @@
 namespace Database\Seeders;
 
 use App\Models\Job\Job;
+use App\Models\Job\JobCategory;
+use App\Models\Job\JobCountry;
+use App\Models\Job\JobState;
+use App\Models\Job\JobType;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\Post;
+use App\Models\Post\PostCategory;
 use App\Models\Store\Store;
+use App\Models\Store\StoreCategory;
+use App\Models\Store\StoreState;
 use App\Models\Superadmin\PageBuilder\PageBuilderComponent;
 use App\Models\Superadmin\PageBuilder\PageBuilderComponentCategory;
 use App\Models\Superadmin\Superadmin;
@@ -181,72 +188,66 @@ class DatabaseSeeder extends Seeder
 
         // Shaun Pelling joined Mie Mortensens team
         TeamUser::factory()->create([
-            "team_id" => Team::find(3)->id, // Mie Mortensens
+            "team_id" => Team::find(1)->id, // Mie Mortensens
             "user_id" => User::find(2)->id, // Shaun Pelling
             "role" => "admin", // editor
         ]);
 
-        // Users joined Shaun Pelling team
-        TeamUser::factory()->create([
-            "team_id" => Team::find(2)->id, // Shaun Pelling
-            "user_id" => User::find(2)->id, // Shaun Pelling
-            "role" => "admin", // editor
-        ]);
-        // Mie Mortensen joined Shaun Pelling team
-        TeamUser::factory()->create([
-            "team_id" => Team::find(2)->id, // Shaun Pelling
-            "user_id" => User::find(3)->id, // Mie Mortensen
-            "role" => "reader", // editor
-        ]);
-        TeamUser::factory()->create([
-            "team_id" => Team::find(2)->id, // Shaun Pelling
-            "user_id" => User::find(7)->id, // Karl Lagerfeld
-            "role" => "admin", // editor
-        ]);
         // Marilyn, Oprah and Ingrid joined Shaun Pelling team
         TeamUser::factory()->create([
-            "team_id" => Team::find(2)->id, // Shaun Pelling team
+            "team_id" => Team::find(1)->id, // Shaun Pelling team
             "user_id" => User::find(4)->id, // Marilyn
             "role" => "admin",
         ]);
         TeamUser::factory()->create([
-            "team_id" => Team::find(2)->id, // Shaun Pelling team
+            "team_id" => Team::find(1)->id, // Shaun Pelling team
             "user_id" => User::find(5)->id, // Oprah
             "role" => "editor",
         ]);
         TeamUser::factory()->create([
-            "team_id" => Team::find(2)->id, // Shaun Pelling team
+            "team_id" => Team::find(1)->id, // Shaun Pelling team
             "user_id" => User::find(6)->id, // Ingrid
             "role" => "editor",
+        ]);
+        TeamUser::factory()->create([
+            "team_id" => Team::find(1)->id, // Shaun Pelling
+            "user_id" => User::find(7)->id, // Karl Lagerfeld
+            "role" => "admin", // editor
+        ]);
+        // Mie Mortensen joined Qais Wardag team
+        TeamUser::factory()->create([
+            "team_id" => Team::find(1)->id, // Shaun Pelling
+            "user_id" => User::find(3)->id, // Mie Mortensen
+            "role" => "reader", // editor
         ]);
 
         //
         // Pending invitations
         // Users Pending Team Invitations for Shaun Pelling team
         TeamInvitation::factory()->create([
-            "team_id" => 2, // Shaun Pelling
+            "team_id" => 1, // Shaun Pelling
             "email" => "join_Johns_team_1@outlook.com",
             "role" => "admin",
         ]);
         TeamInvitation::factory()->create([
-            "team_id" => 2, // Shaun Pelling
+            "team_id" => 1, // Shaun Pelling
             "email" => "join_shaun_pellings_2@outlook.com",
             "role" => "editor",
         ]);
 
         // Users Pending Team Invitations for Mie Mortensens team
         TeamInvitation::factory()->create([
-            "team_id" => 3, // Mie Mortensen
+            "team_id" => 1, // Mie Mortensen
             "email" => "join_mies_team_1@outlook.com",
             "role" => "admin",
         ]);
         TeamInvitation::factory()->create([
-            "team_id" => 3, // Mie Mortensen
+            "team_id" => 1, // Mie Mortensen
             "email" => "join_mies_team_2@outlook.com",
             "role" => "editor",
         ]);
         TeamInvitation::factory()->create([
-            "team_id" => 3, // Mie Mortensen
+            "team_id" => 1, // Mie Mortensen
             "email" => "join_mies_team_3@outlook.com",
             "role" => "admin",
         ]);
@@ -261,7 +262,7 @@ class DatabaseSeeder extends Seeder
             if ($user !== null) {
                 // User exists, proceed with creating team-user relationship
                 TeamUser::factory()->create([
-                    "team_id" => Team::find(2)->id, // Shaun Pellings team
+                    "team_id" => Team::find(1)->id, // Shaun Pellings team
                     "user_id" => $user->id,
                     "role" => "editor",
                 ]);
@@ -276,8 +277,425 @@ class DatabaseSeeder extends Seeder
         }
 
         // fake resources
+
+        // Post
+        // Post
+        // Post
+        // Post
         Post::factory(20)->create();
+        $totalPost = Post::count();
+
+        $postCategories = [
+            "Beauty",
+            "Business",
+            "Careers",
+            "Designers",
+            "Direct-to-Consumer",
+            "Entrepreneurship",
+            "Events",
+            "Fashion",
+            "Fashion Week",
+            "Financial Markets",
+            "Global Markets",
+            "Home",
+            "Insights",
+            "Jobs",
+            "Luxury",
+            "Marketing",
+            "Media",
+            "News",
+            "Opinions",
+            "People",
+            "Podcasts",
+            "Retail",
+            "Runway",
+            "Shop",
+            "Sustainability",
+            "Technology",
+            "The State of Fashion",
+            "Trends",
+            "UAE",
+            "Workplace & Talent",
+        ];
+
+        foreach ($postCategories as $categoryName) {
+            PostCategory::factory()->create([
+                "name" => $categoryName,
+            ]);
+        }
+
+        $this->associateCategoriesWithItems(
+            Post::class,
+            $totalPost,
+            rand(2, 4),
+            PostCategory::class,
+            "categories"
+        );
+
+        // Jobs
+        // Jobs
+        // Jobs
+        // Jobs
         Job::factory(20)->create();
+        $totalJobs = Job::count();
+
+        $jobCountries = [
+            "Other",
+            "Bahrain",
+            "Kuwait",
+            "Qatar",
+            "Saudi Arabia",
+            "Turkey",
+            "United Arab Emirates",
+        ];
+
+        foreach ($jobCountries as $jobCountry) {
+            JobCountry::factory()->create([
+                "name" => $jobCountry,
+            ]);
+        }
+
+        $this->associateCategoriesWithItems(
+            Job::class,
+            $totalJobs,
+            1,
+            JobCountry::class,
+            "countries"
+        );
+        //
+        //
+        $states = [
+            "Other",
+            "Abu Dhabi",
+            "Dubai",
+            "Sharjah",
+            "Ajman",
+            "Umm Al Quwain",
+            "Ras Al Khaimah",
+            "Fujairah",
+        ];
+
+        foreach ($states as $stateName) {
+            JobState::factory()->create([
+                "name" => $stateName,
+            ]);
+        }
+
+        $this->associateCategoriesWithItems(
+            Job::class,
+            $totalJobs,
+            1,
+            JobState::class,
+            "states"
+        );
+
+        //
+        //
+        $types = [
+            "Freelance",
+            "Full-time",
+            "Hybrid",
+            "Internship",
+            "Part-time",
+            "Remote",
+            "Student Job",
+            "Temporary",
+            "Voluntary",
+        ];
+
+        foreach ($types as $typeName) {
+            JobType::factory()->create([
+                "name" => $typeName,
+            ]);
+        }
+        $this->associateCategoriesWithItems(
+            Job::class,
+            $totalJobs,
+            rand(1, 2),
+            JobType::class,
+            "types"
+        );
+        //
+        //
+        $categories = [
+            "Accounting & Payroll",
+            "Administration",
+            "Analytics",
+            "Architecture & Scenography",
+            "Arts & Creative",
+            "Beauty",
+            "Business Development & Planning",
+            "Coordination",
+            "Customer Service",
+            "Design",
+            "Digital & E-commerce",
+            "Education & Research",
+            "Entrepreneur",
+            "Events",
+            "Finance",
+            "Franchise",
+            "Graphic Design",
+            "HR & Training",
+            "Influencer & Blogger",
+            "Investor Relations",
+            "IT & Support",
+            "Legal",
+            "MakeUp & Styling",
+            "Management",
+            "Marketing & Communications",
+            "Media & Editorial",
+            "Merchandising & Allocation",
+            "Model",
+            "Optics",
+            "Other Positions",
+            "Photography & Photo Editing",
+            "PR & Branding",
+            "Product Design",
+            "Product Management",
+            "Production",
+            "Project Management",
+            "Purchasing",
+            "Retail",
+            "Sales & Wholesale",
+            "Shipping & Logistics",
+            "Shopping",
+            "SoMe",
+            "Stock & Supply",
+            "Visual Merchandiser",
+            "Visual Merchandising",
+            "Web & Online",
+        ];
+
+        foreach ($categories as $categoryName) {
+            JobCategory::factory()->create([
+                "name" => $categoryName,
+            ]);
+        }
+        $this->associateCategoriesWithItems(
+            Job::class,
+            $totalJobs,
+            rand(2, 4),
+            JobCategory::class,
+            "categories"
+        );
+        //
+        // Stores
+        // Stores
+        // Stores
+        // Stores
         Store::factory(20)->create();
+        $totalStores = Store::count();
+        $states = [
+            "Other",
+            "Abu Dhabi",
+            "Dubai",
+            "Sharjah",
+            "Ajman",
+            "Umm Al Quwain",
+            "Ras Al Khaimah",
+            "Fujairah",
+        ];
+
+        foreach ($states as $stateName) {
+            StoreState::factory()->create([
+                "name" => $stateName,
+            ]);
+        }
+
+        $this->associateCategoriesWithItems(
+            Store::class,
+            $totalStores,
+            1,
+            StoreState::class,
+            "states"
+        );
+        //
+        //
+        $categories = [
+            "Accessories",
+            "Bags & Leather Goods",
+            "Beauty & Skincare",
+            "Children's Fashion",
+            "Department Stores",
+            "Events",
+            "Eyewear",
+            "Home & Lifestyle",
+            "Jewelry",
+            "Lingerie & Nightwear",
+            "Men's Fashion",
+            "Perfumes",
+            "Shoes",
+            "Sports & Leisure",
+            "Tailors",
+            "Watches",
+            "Wedding & Occasion Wear",
+            "Women's Fashion",
+        ];
+
+        foreach ($categories as $categoryName) {
+            StoreCategory::factory()->create([
+                "name" => $categoryName,
+            ]);
+        }
+
+        $this->associateCategoriesWithItems(
+            Store::class,
+            $totalStores,
+            rand(2, 4),
+            StoreCategory::class,
+            "categories"
+        );
+        //
+        //
+        // Page Builder
+        // Page Builder
+        // Page Builder
+        // Page Builder
+        $imagePath = null;
+        $pageBuilderComponents = [
+            [
+                "title" => "This one is not published",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "published" => 0,
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
+            ],
+            [
+                "title" => "Also this one is not published",
+
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "published" => 0,
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
+            ],
+            [
+                "title" => "Hello & Bonjour 3",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "published" => 1,
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
+            ],
+            [
+                "title" => "Hello & Bonjour 4",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "published" => 1,
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
+            ],
+            [
+                "title" => "Hello & Bonjour 5",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "published" => 1,
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
+            ],
+            [
+                "title" => "Hello & Bonjour 6",
+                "html_code" =>
+                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                "published" => 1,
+                "cover_image_original" => "$imagePath",
+                "cover_image_thumbnail" => "$imagePath",
+                "cover_image_medium" => "$imagePath",
+                "cover_image_large" => "$imagePath",
+            ],
+            // Add data for other components here
+        ];
+
+        foreach ($pageBuilderComponents as $pageBuildercomponent) {
+            PageBuilderComponent::factory()->create($pageBuildercomponent);
+        }
+        $pageBuilderCategories = [
+            "Headers",
+            "Call to Actions",
+            "Features",
+            "About Us",
+            "Products",
+            "Articles",
+            "Teams",
+            "Contact",
+            "Opening Hours",
+            "Headers",
+            "Links & Buttons",
+            "Templates",
+            "Social Media",
+            "Footers",
+        ];
+
+        foreach ($pageBuilderCategories as $categoryName) {
+            PageBuilderComponentCategory::factory()->create([
+                "name" => $categoryName,
+            ]);
+        }
+
+        $this->associateCategoriesWithItems(
+            PageBuilderComponent::class,
+            count($pageBuilderComponents),
+            rand(2, 4),
+            PageBuilderComponentCategory::class,
+            "categories"
+        );
+    }
+    //
+    //
+    //
+    //
+    //
+
+    private function associateCategoriesWithItems(
+        $model,
+        $total,
+        $numberOfRuns,
+        $categoryModel,
+        $categoryAttribute
+    ) {
+        for ($run = 1; $run <= $numberOfRuns; $run++) {
+            foreach (range(1, $total) as $num) {
+                $item = $model::find($num);
+
+                if ($item !== null) {
+                    $randomCategory = $categoryModel
+                        ::inRandomOrder()
+                        ->whereNotIn(
+                            "id",
+                            $item->$categoryAttribute->pluck("id")
+                        )
+                        ->first();
+
+                    if ($randomCategory !== null) {
+                        $item
+                            ->$categoryAttribute()
+                            ->attach($randomCategory->id);
+                    }
+
+                    if ($randomCategory === null) {
+                        throw new Exception(
+                            "Unable to find a unique random category."
+                        );
+                    }
+                }
+
+                if ($item === null) {
+                    throw new Exception(
+                        "Unable to find the $model with ID $num."
+                    );
+                }
+            }
+        }
     }
 }

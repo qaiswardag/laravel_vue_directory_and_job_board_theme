@@ -26,7 +26,7 @@ class Store extends Command
      */
     public function handle()
     {
-        StoreStore::factory(200)->create();
+        StoreStore::factory(20)->create();
 
         $this->info("Seeded successfully, new Stores for production.");
     }

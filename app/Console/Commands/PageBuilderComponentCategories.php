@@ -27,13 +27,20 @@ class PageBuilderComponentCategories extends Command
     public function handle()
     {
         $categories = [
-            "Forms",
-            "Teams",
+            "Headers",
+            "Call to Actions",
             "Features",
+            "About Us",
+            "Products",
             "Articles",
-            "Contact Sections",
-            "Feature Sections",
-            "Description Lists",
+            "Teams",
+            "Contact",
+            "Opening Hours",
+            "Headers",
+            "Links & Buttons",
+            "Templates",
+            "Social Media",
+            "Footers",
         ];
 
         foreach ($categories as $categoryName) {

@@ -35,7 +35,7 @@ class JobFactory extends Factory
             "slug" => $slug,
             "content" => $this->faker->sentence(rand(20, 60), false),
             "published" => rand(0, 1),
-            "tags" => "Adobe Creative,SaaS",
+            "tags" => "Sustainability, Influencers, Creativity, Eagerness",
         ];
     }
 }

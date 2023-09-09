@@ -26,7 +26,7 @@ class Post extends Command
      */
     public function handle()
     {
-        PostPost::factory(200)->create();
+        PostPost::factory(400)->create();
 
         $this->info("Seeded successfully, new Posts for production.");
     }

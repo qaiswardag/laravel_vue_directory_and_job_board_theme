@@ -38,7 +38,8 @@ class PostFactory extends Factory
             "slug" => $slug,
             "content" => $this->faker->sentence(rand(20, 60), false),
             "published" => rand(0, 1),
-            "tags" => "Summer,Event,Art,Design",
+            "tags" =>
+                "Designer Spotlight,Fashion History,Haute Couture,Special Occasions",
         ];
     }
 }

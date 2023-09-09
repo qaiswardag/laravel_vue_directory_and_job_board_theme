@@ -27,11 +27,24 @@ class StoreCategories extends Command
     public function handle()
     {
         $categories = [
-            "Store category 1",
-            "Store category 2",
-            "Store category 3",
-            "Store category 4",
-            "Store category 5",
+            "Accessories",
+            "Bags & Leather Goods",
+            "Beauty & Skincare",
+            "Children's Fashion",
+            "Department Stores",
+            "Events",
+            "Eyewear",
+            "Home & Lifestyle",
+            "Jewelry",
+            "Lingerie & Nightwear",
+            "Men's Fashion",
+            "Perfumes",
+            "Shoes",
+            "Sports & Leisure",
+            "Tailors",
+            "Watches",
+            "Wedding & Occasion Wear",
+            "Women's Fashion",
         ];
 
         foreach ($categories as $categoryName) {

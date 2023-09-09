@@ -284,14 +284,14 @@ onMounted(() => {
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Status</th>
                             <th scope="col" class="myPrimaryTableTh">
-                                Categories
-                            </th>
-                            <th scope="col" class="myPrimaryTableTh">States</th>
-                            <th scope="col" class="myPrimaryTableTh">
                                 Show Authors
                             </th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Authors
+                            </th>
+                            <th scope="col" class="myPrimaryTableTh">States</th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Categories
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
 
@@ -390,45 +390,7 @@ onMounted(() => {
                                         }}</span
                                     >
                                 </td>
-                                <td class="myPrimaryTableTBodyTd">
-                                    <div
-                                        class="flex flex-wrap justify-start items-center gap-2"
-                                    >
-                                        <p
-                                            v-for="category in post.categories &&
-                                            post.categories"
-                                            :key="category"
-                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
-                                        >
-                                            <Squares2X2Icon
-                                                class="w-3 h-3"
-                                            ></Squares2X2Icon>
 
-                                            <span>
-                                                {{ category.name }}
-                                            </span>
-                                        </p>
-                                    </div>
-                                </td>
-                                <td class="myPrimaryTableTBodyTd">
-                                    <div
-                                        class="flex flex-wrap justify-start items-center gap-2"
-                                    >
-                                        <p
-                                            v-for="storeState in post.states &&
-                                            post.states"
-                                            :key="storeState"
-                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
-                                        >
-                                            <MapPinIcon
-                                                class="w-3 h-3"
-                                            ></MapPinIcon>
-                                            <span>
-                                                {{ storeState.name }}
-                                            </span>
-                                        </p>
-                                    </div>
-                                </td>
                                 <td class="myPrimaryTableTBodyTd">
                                     <span
                                         :class="
@@ -459,6 +421,45 @@ onMounted(() => {
                                             <span>
                                                 {{ author.first_name }}
                                                 {{ author.last_name }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
+                                    >
+                                        <p
+                                            v-for="storeState in post.states &&
+                                            post.states"
+                                            :key="storeState"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                        >
+                                            <MapPinIcon
+                                                class="w-3 h-3"
+                                            ></MapPinIcon>
+                                            <span>
+                                                {{ storeState.name }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
+                                    >
+                                        <p
+                                            v-for="category in post.categories &&
+                                            post.categories"
+                                            :key="category"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                        >
+                                            <Squares2X2Icon
+                                                class="w-3 h-3"
+                                            ></Squares2X2Icon>
+
+                                            <span>
+                                                {{ category.name }}
                                             </span>
                                         </p>
                                     </div>

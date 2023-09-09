@@ -31,7 +31,7 @@ class JobTypeRelations extends Command
         $totalJobs = Job::count();
 
         // Define the number of times to run the code
-        $numberOfRuns = 1;
+        $numberOfRuns = rand(1, 2);
 
         for ($run = 1; $run <= $numberOfRuns; $run++) {
             foreach (range(1, $totalJobs) as $num) {

@@ -37,7 +37,8 @@ class StoreFactory extends Factory
             "slug" => $slug,
             "content" => $this->faker->sentence(rand(20, 60), false),
             "published" => rand(0, 1),
-            "tags" => "Jewelry,Bags",
+            "tags" =>
+                "Modest Fashion,Emirati Fashion Icons, Traditional Attire, Boutiques, Abaya Fashion",
         ];
     }
 }
