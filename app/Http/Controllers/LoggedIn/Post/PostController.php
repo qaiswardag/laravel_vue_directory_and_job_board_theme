@@ -51,6 +51,7 @@ class PostController extends Controller
 
         $posts = $team
             ->posts()
+            ->with("categories")
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")

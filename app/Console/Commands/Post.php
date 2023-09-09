@@ -2,17 +2,17 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Store\Store as StoreStore;
+use App\Models\Post\Post as PostPost;
 use Illuminate\Console\Command;
 
-class Store extends Command
+class Post extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = "app:store";
+    protected $signature = "app:post";
 
     /**
      * The console command description.
@@ -26,8 +26,8 @@ class Store extends Command
      */
     public function handle()
     {
-        StoreStore::factory(200)->create();
+        PostPost::factory(200)->create();
 
-        $this->info("Seeded successfully, new Stores for production.");
+        $this->info("Seeded successfully, new Posts for production.");
     }
 }

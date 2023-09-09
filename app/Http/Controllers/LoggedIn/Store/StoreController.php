@@ -53,6 +53,7 @@ class StoreController extends Controller
         $stores = $team
             ->stores()
             ->with("states")
+            ->with("categories")
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")

@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Job\Job;
 use App\Models\Job\JobCategory;
-use App\Models\Job\JobCategoryRelation;
 use Illuminate\Console\Command;
 use Exception;
 

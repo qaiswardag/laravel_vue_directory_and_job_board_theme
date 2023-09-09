@@ -37,9 +37,21 @@ php artisan app:job-countries
 php artisan app:job-country-relations
 
 
-# Jobs Migrations
+# Store Migrations
 php artisan app:store
 
 php artisan app:store-states
 
 php artisan app:store-state-relations
+
+php artisan app:store-categories
+
+php artisan app:store-category-relations
+
+
+# Store Migrations
+php artisan app:post
+
+php artisan app:post-categories
+
+php artisan app:post-category-relations

@@ -57,4 +57,14 @@ class Store extends Model
             "state_id"
         );
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(
+            StoreCategory::class,
+            "store_category_relations",
+            "store_id",
+            "category_id"
+        );
+    }
 }

@@ -9,7 +9,7 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
-import { TagIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import { TagIcon, TrashIcon, Squares2X2Icon } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     posts: {
@@ -274,8 +274,16 @@ onMounted(() => {
                                 Team Name
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Status</th>
+
+                            <th scope="col" class="myPrimaryTableTh">
+                                Categories
+                            </th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Show Authors
+                            </th>
+
+                            <th scope="col" class="myPrimaryTableTh">
+                                Authors
                             </th>
 
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
@@ -375,6 +383,26 @@ onMounted(() => {
                                     >
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
+                                    >
+                                        <p
+                                            v-for="category in post.categories &&
+                                            post.categories"
+                                            :key="category"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                        >
+                                            <Squares2X2Icon
+                                                class="w-3 h-3"
+                                            ></Squares2X2Icon>
+
+                                            <span>
+                                                {{ category.name }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
                                     <span
                                         :class="
                                             post.show_author
@@ -386,6 +414,26 @@ onMounted(() => {
                                             post.show_author ? "Show" : "Hide"
                                         }}</span
                                     >
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
+                                    >
+                                        <p
+                                            v-for="category in post.authors &&
+                                            post.categories"
+                                            :key="category"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                        >
+                                            <Squares2X2Icon
+                                                class="w-3 h-3"
+                                            ></Squares2X2Icon>
+
+                                            <span>
+                                                {{ category.name }}
+                                            </span>
+                                        </p>
+                                    </div>
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
                                     <div

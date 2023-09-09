@@ -47,4 +47,14 @@ class Post extends Model
     {
         return $this->belongsToMany(User::class, "author_post");
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(
+            PostCategory::class,
+            "post_category_relations",
+            "post_id",
+            "category_id"
+        );
+    }
 }
