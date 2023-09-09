@@ -164,7 +164,7 @@ import {
                 <PhotoIcon
                     class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                 ></PhotoIcon>
-                Team Media
+                Media Team
             </SideBarLink>
         </template>
 

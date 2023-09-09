@@ -561,7 +561,7 @@ onMounted(() => {
                                     {{
                                         format(
                                             parseISO(post.updated_at),
-                                            "dd/MM/yyyy"
+                                            "dd/MM/yyyy HH:mm"
                                         )
                                     }}
                                 </td>
@@ -569,7 +569,7 @@ onMounted(() => {
                                     {{
                                         format(
                                             parseISO(post.created_at),
-                                            "dd/MM/yyyy"
+                                            "dd/MM/yyyy HH:mm"
                                         )
                                     }}
                                 </td>

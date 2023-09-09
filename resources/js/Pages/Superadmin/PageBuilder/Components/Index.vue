@@ -342,7 +342,7 @@ const routesArray = [
                                     {{
                                         format(
                                             parseISO(component.updated_at),
-                                            "dd/MM/yyyy"
+                                            "dd/MM/yyyy HH:mm"
                                         )
                                     }}
                                 </td>
@@ -351,7 +351,7 @@ const routesArray = [
                                     {{
                                         format(
                                             parseISO(component.created_at),
-                                            "dd/MM/yyyy"
+                                            "dd/MM/yyyy HH:mm"
                                         )
                                     }}
                                 </td>
