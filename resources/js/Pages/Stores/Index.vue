@@ -9,7 +9,7 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
-import { TagIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import { MapPinIcon, TagIcon, TrashIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     posts: {
@@ -277,6 +277,7 @@ onMounted(() => {
                                 Team Name
                             </th>
                             <th scope="col" class="myPrimaryTableTh">Status</th>
+                            <th scope="col" class="myPrimaryTableTh">States</th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Show Authors
                             </th>
@@ -376,6 +377,25 @@ onMounted(() => {
                                                 : "Unpublished"
                                         }}</span
                                     >
+                                </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
+                                    >
+                                        <p
+                                            v-for="storeState in post.states &&
+                                            post.states"
+                                            :key="storeState"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                        >
+                                            <MapPinIcon
+                                                class="w-3 h-3"
+                                            ></MapPinIcon>
+                                            <span>
+                                                {{ storeState.name }}
+                                            </span>
+                                        </p>
+                                    </div>
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
                                     <span

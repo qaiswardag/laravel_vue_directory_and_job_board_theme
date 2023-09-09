@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Job;
+namespace App\Models\Store;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobState extends Model
+class StoreStateRelation extends Model
 {
     use HasFactory;
-    protected $fillable = ["name"];
+    protected $fillable = ["store_id", "state_id"];
 }

@@ -419,8 +419,8 @@ onMounted(() => {
             team.
         </template>
         <template #content>
-            <div class="grid grid-cols-1 lg:gap-8 gap-12 lg:grid-cols-2">
-                <div>
+            <div class="grid grid-cols-1 md:grid-cols-12 lg:gap-12 gap-18">
+                <div class="col-span-1 md:col-span-8">
                     <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
                         Details about the logged-in user
                     </h2>
@@ -435,7 +435,7 @@ onMounted(() => {
                                 <DisclosureButton
                                     class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
                                 >
-                                    <span class="myPrimaryParagraph font-medium"
+                                    <span class="myPrimaryParagraph"
                                         >{{ faq.question }}
                                     </span>
                                     <span class="ml-6 flex h-7 items-center">
@@ -463,47 +463,13 @@ onMounted(() => {
                     </dl>
                 </div>
 
-                <div>
+                <div class="col-span-1 md:col-span-4">
                     <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
-                        Details about the logged-in user
+                        Somthing here
                     </h2>
-                    <dl class="divide-y divide-myPrimaryMediumGrayColor">
-                        <Disclosure
-                            as="div"
-                            v-for="faq in faqs"
-                            :key="faq.question"
-                            v-slot="{ open }"
-                        >
-                            <dt>
-                                <DisclosureButton
-                                    class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
-                                >
-                                    <span class="myPrimaryParagraph font-medium"
-                                        >{{ faq.question }}
-                                    </span>
-                                    <span class="ml-6 flex h-7 items-center">
-                                        <PlusSmallIcon
-                                            v-if="!open"
-                                            class="h-5 w-5"
-                                            aria-hidden="true"
-                                        />
-                                        <MinusSmallIcon
-                                            v-else
-                                            class="h-5 w-5"
-                                            aria-hidden="true"
-                                        />
-                                    </span>
-                                </DisclosureButton>
-                            </dt>
-                            <DisclosurePanel as="dd" class="mt-2 pr-12 pb-16">
-                                <p
-                                    class="myPrimaryParagraph whitespace-pre-line"
-                                >
-                                    {{ faq.answer }}
-                                </p>
-                            </DisclosurePanel>
-                        </Disclosure>
-                    </dl>
+                    <div>
+                        <p class="myPrimaryParagraph">Details here</p>
+                    </div>
                 </div>
             </div>
         </template>

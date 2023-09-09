@@ -47,4 +47,14 @@ class Store extends Model
     {
         return $this->belongsToMany(User::class, "author_store");
     }
+
+    public function states()
+    {
+        return $this->belongsToMany(
+            StoreState::class,
+            "store_state_relations",
+            "store_id",
+            "state_id"
+        );
+    }
 }
