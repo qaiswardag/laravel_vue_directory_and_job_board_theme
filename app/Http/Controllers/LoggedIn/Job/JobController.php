@@ -55,6 +55,7 @@ class JobController extends Controller
             ->with("states")
             ->with("categories")
             ->with("types")
+            ->with("authors")
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")

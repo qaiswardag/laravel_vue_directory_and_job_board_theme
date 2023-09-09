@@ -241,6 +241,9 @@
     .myPrimaryTableTBodyTd {
         @apply px-6 py-4 whitespace-pre myPrimaryParagraph md:min-w-[10rem] min-w-[7rem];
     }
+    .myPrimaryResourceTableBodyTdTitle {
+        @apply whitespace-normal;
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -9,7 +9,12 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
-import { TagIcon, TrashIcon, Squares2X2Icon } from "@heroicons/vue/24/outline";
+import {
+    TagIcon,
+    TrashIcon,
+    Squares2X2Icon,
+    UserIcon,
+} from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     posts: {
@@ -339,7 +344,9 @@ onMounted(() => {
                                     </div>
                                 </td>
 
-                                <td class="myPrimaryTableTBodyTd">
+                                <td
+                                    class="myPrimaryTableTBodyTd myPrimaryResourceTableBodyTdTitle"
+                                >
                                     <Link
                                         :href="
                                             route('team.posts.post.show', [
@@ -350,9 +357,7 @@ onMounted(() => {
                                             ])
                                         "
                                     >
-                                        <span
-                                            class="text-myPrimaryLinkColor font-medium"
-                                        >
+                                        <span class="text-myPrimaryLinkColor">
                                             {{ post.title }}
                                         </span>
                                     </Link>
@@ -420,17 +425,18 @@ onMounted(() => {
                                         class="flex flex-wrap justify-start items-center gap-2"
                                     >
                                         <p
-                                            v-for="category in post.authors &&
-                                            post.categories"
-                                            :key="category"
+                                            v-for="author in post.authors &&
+                                            post.authors"
+                                            :key="author"
                                             class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
-                                            <Squares2X2Icon
+                                            <UserIcon
                                                 class="w-3 h-3"
-                                            ></Squares2X2Icon>
+                                            ></UserIcon>
 
                                             <span>
-                                                {{ category.name }}
+                                                {{ author.first_name }}
+                                                {{ author.last_name }}
                                             </span>
                                         </p>
                                     </div>

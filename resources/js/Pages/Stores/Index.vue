@@ -14,6 +14,7 @@ import {
     TagIcon,
     TrashIcon,
     Squares2X2Icon,
+    UserIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -289,6 +290,9 @@ onMounted(() => {
                             <th scope="col" class="myPrimaryTableTh">
                                 Show Authors
                             </th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Authors
+                            </th>
                             <th scope="col" class="myPrimaryTableTh">Tags</th>
 
                             <th scope="col" class="myPrimaryTableTh">
@@ -342,7 +346,9 @@ onMounted(() => {
                                     </div>
                                 </td>
 
-                                <td class="myPrimaryTableTBodyTd">
+                                <td
+                                    class="myPrimaryTableTBodyTd myPrimaryResourceTableBodyTdTitle"
+                                >
                                     <Link
                                         :href="
                                             route('team.posts.post.show', [
@@ -353,9 +359,7 @@ onMounted(() => {
                                             ])
                                         "
                                     >
-                                        <span
-                                            class="text-myPrimaryLinkColor font-medium"
-                                        >
+                                        <span class="text-myPrimaryLinkColor">
                                             {{ post.title }}
                                         </span>
                                     </Link>
@@ -438,7 +442,27 @@ onMounted(() => {
                                         }}</span
                                     >
                                 </td>
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        class="flex flex-wrap justify-start items-center gap-2"
+                                    >
+                                        <p
+                                            v-for="author in post.authors &&
+                                            post.authors"
+                                            :key="author"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                        >
+                                            <UserIcon
+                                                class="w-3 h-3"
+                                            ></UserIcon>
 
+                                            <span>
+                                                {{ author.first_name }}
+                                                {{ author.last_name }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </td>
                                 <td class="myPrimaryTableTBodyTd">
                                     <div
                                         class="flex flex-wrap justify-start items-center gap-2"

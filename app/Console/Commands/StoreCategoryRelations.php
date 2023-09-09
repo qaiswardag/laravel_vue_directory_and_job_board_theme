@@ -31,7 +31,7 @@ class StoreCategoryRelations extends Command
         $totalStores = Store::count();
 
         // Define the number of times to run the code
-        $numberOfRuns = 5;
+        $numberOfRuns = 3;
 
         for ($run = 1; $run <= $numberOfRuns; $run++) {
             foreach (range(1, $totalStores) as $num) {
