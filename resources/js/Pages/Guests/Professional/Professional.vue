@@ -11,9 +11,11 @@ import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
             <div class="myPrimaryMainPageHeaderParagraph">
                 <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Professional</h1>
                 <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Discover the ultimate minimalist administration panel with
-                    robust and multiple security layers and advanced features
-                    like Team Management, Blog and Media Library.
+                    myself.ae brings fashion to where the consumers are
+                </p>
+                <p class="myPrimaryparagraph text-center">
+                    Join Fashion's most comprehensive marketing platform in the
+                    U.A.E. Showcase stores to local consumers.
                 </p>
             </div>
         </template>

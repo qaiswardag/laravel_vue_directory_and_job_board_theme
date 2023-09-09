@@ -115,6 +115,7 @@ const faqs = [
                         myself fashion & jobs
                         <br />
                     </h1>
+
                     <p class="myPrimaryMainPageParagraphNotLoggedIn">
                         Discover Fashion in the United Arab Emirates.
                     </p>

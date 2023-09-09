@@ -130,7 +130,7 @@ const navigation = [
                                                 <DialogTitle
                                                     class="myPrimaryParagraph text-base rounded w-full py-4 font-medium"
                                                 >
-                                                    Menu
+                                                    Main Menu
                                                 </DialogTitle>
                                                 <div
                                                     class="ml-3 flex h-7 items-center"
