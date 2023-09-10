@@ -278,7 +278,7 @@ onMounted(() => {
                             class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4 gap-2 flex-wrap-reverse"
                         >
                             <TailwindPagination
-                                :limit="2"
+                                :limit="1"
                                 :keepLength="true"
                                 :class="[
                                     'space-x-1',
