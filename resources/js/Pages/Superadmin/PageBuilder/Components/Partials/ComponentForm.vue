@@ -55,7 +55,7 @@ const props = defineProps({
 });
 
 const modalShowClearForm = ref(false);
-const modalShowSearchUserCategoryOrTagModal = ref(false);
+const modalShowSearchItemsModal = ref(false);
 
 // modal content
 const typeModal = ref("");
@@ -136,33 +136,33 @@ const handleRemoveCoverImage = function () {
     postForm.cover_image_large = null;
 };
 
-// const modalShowSearchUserCategoryOrTagModal = ref(false);
+// const modalShowSearchItemsModal = ref(false);
 
 // modal content
-const titleModalSearchAuthor = ref("");
-const descriptionModalSearchAuthor = ref("");
-const firstButtonModalSearchAuthor = ref("");
-const secondButtonModalSearchAuthor = ref(null);
+const titleModalSearchItems = ref("");
+const descriptionModalSearchItems = ref("");
+const firstButtonModalSearchItems = ref("");
+const secondButtonModalSearchItems = ref(null);
 // set dynamic modal handle functions
-const firstModalButtonSearchAuthorFunction = ref(null);
-const secondModalButtonSearchAuthorFunction = ref(null);
+const firstModalButtonSearchItemsFunction = ref(null);
+const secondModalButtonSearchItemsFunction = ref(null);
 
 const handleAddCategory = function () {
-    modalShowSearchUserCategoryOrTagModal.value = true;
+    modalShowSearchItemsModal.value = true;
 
     // handle show modal for unique content
     // set modal standards
-    titleModalSearchAuthor.value = "Add author";
-    descriptionModalSearchAuthor.value = "Add Job author";
-    firstButtonModalSearchAuthor.value = "Close";
-    secondButtonModalSearchAuthor.value = "Save";
+    titleModalSearchItems.value = "Add author";
+    descriptionModalSearchItems.value = "Add Job author";
+    firstButtonModalSearchItems.value = "Close";
+    secondButtonModalSearchItems.value = "Save";
     // handle click
-    firstModalButtonSearchAuthorFunction.value = function () {
+    firstModalButtonSearchItemsFunction.value = function () {
         // handle show modal for unique content
-        modalShowSearchUserCategoryOrTagModal.value = false;
+        modalShowSearchItemsModal.value = false;
     };
     // handle click
-    secondModalButtonSearchAuthorFunction.value = function () {
+    secondModalButtonSearchItemsFunction.value = function () {
         // reasons why using the spread operator to create a non-reactive copy of an
         // array is generally considered better than using JSON.stringify
         // and JSON.parse to achieve the same result:
@@ -191,7 +191,7 @@ const handleAddCategory = function () {
         postForm.author = currentAttachedUsers;
 
         // handle show modal for unique content
-        modalShowSearchUserCategoryOrTagModal.value = false;
+        modalShowSearchItemsModal.value = false;
     };
 
     // end modal
@@ -741,16 +741,16 @@ onBeforeMount(() => {
                 apiUrlName="attach.user.index"
                 :user="user"
                 :team="postForm.team"
-                :show="modalShowSearchUserCategoryOrTagModal"
-                :title="titleModalSearchAuthor"
-                :description="descriptionModalSearchAuthor"
-                :firstButtonText="firstButtonModalSearchAuthor"
-                :secondButtonText="secondButtonModalSearchAuthor"
-                @firstModalButtonSearchAuthorFunction="
-                    firstModalButtonSearchAuthorFunction
+                :show="modalShowSearchItemsModal"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
                 "
-                @secondModalButtonSearchAuthorFunction="
-                    secondModalButtonSearchAuthorFunction
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
                 "
             >
             </SearchUserCategoryOrTagModal>

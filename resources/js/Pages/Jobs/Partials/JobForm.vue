@@ -16,7 +16,7 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
 import slugify from "slugify";
 import config from "@/utils/config";
-import SearchUserCategoryOrTagModal from "@/Components/Search/SearchUserCategoryOrTagModal.vue";
+import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import {
@@ -30,6 +30,8 @@ import {
 import {
     CheckIcon,
     ChevronUpDownIcon,
+    LockClosedIcon,
+    LockOpenIcon,
     TrashIcon,
     XMarkIcon,
 } from "@heroicons/vue/24/outline";
@@ -145,32 +147,32 @@ const handleRemoveCoverImage = function () {
     postForm.cover_image_large = null;
 };
 
-const modalShowSearchUserCategoryOrTagModal = ref(false);
+const modalShowSearchItemsModal = ref(false);
 
 // modal content
-const titleModalSearchAuthor = ref("");
-const descriptionModalSearchAuthor = ref("");
-const firstButtonModalSearchAuthor = ref("");
-const secondButtonModalSearchAuthor = ref(null);
+const titleModalSearchItems = ref("");
+const descriptionModalSearchItems = ref("");
+const firstButtonModalSearchItems = ref("");
+const secondButtonModalSearchItems = ref(null);
 // set dynamic modal handle functions
-const firstModalButtonSearchAuthorFunction = ref(null);
-const secondModalButtonSearchAuthorFunction = ref(null);
+const firstModalButtonSearchItemsFunction = ref(null);
+const secondModalButtonSearchItemsFunction = ref(null);
 
 const handleAddAuthor = function () {
     // handle show modal for unique content
-    modalShowSearchUserCategoryOrTagModal.value = true;
+    modalShowSearchItemsModal.value = true;
     // set modal standards
-    titleModalSearchAuthor.value = "Add author";
-    descriptionModalSearchAuthor.value = "Add Job author";
-    firstButtonModalSearchAuthor.value = "Close";
-    secondButtonModalSearchAuthor.value = "Save";
+    titleModalSearchItems.value = "Add author";
+    descriptionModalSearchItems.value = "Add Job author";
+    firstButtonModalSearchItems.value = "Close";
+    secondButtonModalSearchItems.value = "Save";
     // handle click
-    firstModalButtonSearchAuthorFunction.value = function () {
+    firstModalButtonSearchItemsFunction.value = function () {
         // handle show modal for unique content
-        modalShowSearchUserCategoryOrTagModal.value = false;
+        modalShowSearchItemsModal.value = false;
     };
     // handle click
-    secondModalButtonSearchAuthorFunction.value = function () {
+    secondModalButtonSearchItemsFunction.value = function () {
         // reasons why using the spread operator to create a non-reactive copy of an
         // array is generally considered better than using JSON.stringify
         // and JSON.parse to achieve the same result:
@@ -199,7 +201,7 @@ const handleAddAuthor = function () {
         postForm.author = currentAttachedUsers;
 
         // handle show modal for unique content
-        modalShowSearchUserCategoryOrTagModal.value = false;
+        modalShowSearchItemsModal.value = false;
     };
 
     // end modal
@@ -565,20 +567,10 @@ onBeforeMount(() => {
                                 @click="handleOpenLock"
                                 class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
+                                <LockClosedIcon
                                     class="w-5 h-5 text-myPrimaryErrorColor"
                                 >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                                    ></path>
-                                </svg>
+                                </LockClosedIcon>
                             </div>
                         </div>
                     </div>
@@ -597,20 +589,10 @@ onBeforeMount(() => {
                                 @click="handleCloseLock"
                                 class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
+                                <LockOpenIcon
                                     class="w-5 h-5 text-myPrimaryLinkColor"
                                 >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                                    />
-                                </svg>
+                                </LockOpenIcon>
                             </div>
                         </div>
                         <p
@@ -1234,23 +1216,23 @@ onBeforeMount(() => {
                 @thirdMediaButtonFunction="thirdMediaButtonFunction"
             >
             </MediaLibraryModal>
-            <SearchUserCategoryOrTagModal
+            <SearchUsersOrItems
                 apiUrlName="attach.user.index"
                 :user="user"
                 :team="postForm.team"
-                :show="modalShowSearchUserCategoryOrTagModal"
-                :title="titleModalSearchAuthor"
-                :description="descriptionModalSearchAuthor"
-                :firstButtonText="firstButtonModalSearchAuthor"
-                :secondButtonText="secondButtonModalSearchAuthor"
-                @firstModalButtonSearchAuthorFunction="
-                    firstModalButtonSearchAuthorFunction
+                :show="modalShowSearchItemsModal"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
                 "
-                @secondModalButtonSearchAuthorFunction="
-                    secondModalButtonSearchAuthorFunction
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
                 "
             >
-            </SearchUserCategoryOrTagModal>
+            </SearchUsersOrItems>
             <NotificationsFixedBottom
                 :listOfMessages="Object.values(postForm.errors)"
                 :show="showErrorNotifications"

@@ -40,14 +40,14 @@ const store = useStore();
 
 const frontEndError = ref(null);
 
-const getCurrentUsers = computed(() => {
+const getCurrentItems = computed(() => {
     return store.getters["attachedUsers/getCurrentUsers"];
 });
-const getCurrentAttachedUsers = computed(() => {
+const getCurrentAttachedItems = computed(() => {
     return store.getters["attachedUsers/getCurrentAttachedUsers"];
 });
 //
-const filteredUsers = ref([]);
+const filteredItems = ref([]);
 //
 const search_query = ref("");
 // handle search
@@ -71,58 +71,58 @@ const getResultsForPage = (page = 1) => {
 };
 
 const emit = defineEmits([
-    "firstModalButtonSearchAuthorFunction",
-    "secondModalButtonSearchAuthorFunction",
+    "firstModalButtonSearchItemsFunction",
+    "secondModalButtonSearchItemsFunction",
 ]);
 
 // first button function
 const firstButton = function () {
-    emit("firstModalButtonSearchAuthorFunction");
+    emit("firstModalButtonSearchItemsFunction");
 };
 // second button  function
 const secondButton = function () {
-    emit("secondModalButtonSearchAuthorFunction");
+    emit("secondModalButtonSearchItemsFunction");
 };
 
-const isUserAlreadyAdded = function (user) {
-    const isUserExists = getCurrentAttachedUsers.value.some(
-        (u) => u.id === user.id
+const isItemAlreadyAdded = function (item) {
+    const isItemExists = getCurrentAttachedItems.value.some(
+        (u) => u.id === item.id
     );
 
     // User with matching ID already exists
-    if (isUserExists === true) {
+    if (isItemExists === true) {
         return true;
     }
     // User with matching ID do not exists
-    if (isUserExists === false) {
+    if (isItemExists === false) {
         return false;
     }
 };
 
-const handleAttachUser = function (user) {
-    const isUserExists = getCurrentAttachedUsers.value.some(
-        (u) => u.id === user.id
+const handleAttachItem = function (item) {
+    const isItemExists = getCurrentAttachedItems.value.some(
+        (u) => u.id === item.id
     );
 
-    // User with matching ID already exists
-    if (isUserExists === true) {
+    // Item with matching ID already exists
+    if (isItemExists === true) {
         frontEndError.value = {
-            id: user.id,
-            error: "User aldready added.",
+            id: item.id,
+            error: "Item aldready added.",
         };
     }
-    // User with matching ID do not exists
-    if (isUserExists === false) {
+    // Item with matching ID do not exists
+    if (isItemExists === false) {
         frontEndError.value = null;
-        store.commit("attachedUsers/setCurrentAttachedUsers", user);
+        store.commit("attachedUsers/setCurrentAttachedUsers", item);
     }
 };
-const handleRemoveAttachedUser = function (userId) {
+const handleRemoveAttachedItem = function (itemId) {
     // filter the array to exclude user with matching ID
-    filteredUsers.value = getCurrentAttachedUsers.value.filter(
-        (user) => user.id !== userId
+    filteredItems.value = getCurrentAttachedItems.value.filter(
+        (item) => item.id !== itemId
     );
-    store.commit("attachedUsers/setRemoveAttachedUser", filteredUsers.value);
+    store.commit("attachedUsers/setRemoveAttachedUser", filteredItems.value);
 };
 
 onMounted(() => {
@@ -216,20 +216,20 @@ onMounted(() => {
 
                         <div
                             v-if="
-                                getCurrentUsers &&
-                                getCurrentUsers.isError === false &&
-                                getCurrentUsers.fetchedData &&
-                                getCurrentUsers.fetchedData.users &&
-                                getCurrentUsers.fetchedData.users.data &&
-                                getCurrentUsers.fetchedData.total_results !== 0
+                                getCurrentItems &&
+                                getCurrentItems.isError === false &&
+                                getCurrentItems.fetchedData &&
+                                getCurrentItems.fetchedData.users &&
+                                getCurrentItems.fetchedData.users.data &&
+                                getCurrentItems.fetchedData.total_results !== 0
                             "
                             class="flex justify-start items-center"
                         >
                             <p class="myPrimaryTag">
                                 Total
-                                {{ getCurrentUsers.fetchedData.count }}
+                                {{ getCurrentItems.fetchedData.count }}
                                 {{
-                                    getCurrentUsers.fetchedData.count.length ===
+                                    getCurrentItems.fetchedData.count.length ===
                                     1
                                         ? "item"
                                         : "items"
@@ -239,21 +239,21 @@ onMounted(() => {
 
                         <div
                             v-if="
-                                getCurrentUsers &&
-                                getCurrentUsers.isLoading === false &&
-                                getCurrentUsers.isError === true
+                                getCurrentItems &&
+                                getCurrentItems.isLoading === false &&
+                                getCurrentItems.isError === true
                             "
                             class="myPrimaryParagraphError"
                         >
-                            {{ getCurrentUsers.error }}
+                            {{ getCurrentItems.error }}
                         </div>
 
                         <div
                             v-if="
-                                getCurrentUsers &&
-                                getCurrentUsers.fetchedData &&
-                                getCurrentUsers.fetchedData.users &&
-                                getCurrentUsers.fetchedData.total_results !== 0
+                                getCurrentItems &&
+                                getCurrentItems.fetchedData &&
+                                getCurrentItems.fetchedData.users &&
+                                getCurrentItems.fetchedData.total_results !== 0
                             "
                             class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4 gap-2 flex-wrap-reverse"
                         >
@@ -279,7 +279,7 @@ onMounted(() => {
                                     'text-myPrimaryDarkGrayColor',
                                     'rounded-full',
                                 ]"
-                                :data="getCurrentUsers.fetchedData.users"
+                                :data="getCurrentItems.fetchedData.users"
                                 @pagination-change-page="getResultsForPage"
                             >
                                 <template #prev-nav>
@@ -293,9 +293,9 @@ onMounted(() => {
 
                         <div
                             v-if="
-                                getCurrentUsers &&
-                                getCurrentUsers.isLoading === true &&
-                                getCurrentUsers.isError === false
+                                getCurrentItems &&
+                                getCurrentItems.isLoading === true &&
+                                getCurrentItems.isError === false
                             "
                         >
                             <div
@@ -315,14 +315,14 @@ onMounted(() => {
                         <!-- loading - end -->
                         <template
                             v-if="
-                                getCurrentUsers &&
-                                getCurrentUsers.isLoading === false &&
-                                getCurrentUsers.isError === false &&
-                                getCurrentUsers.isSuccess === true &&
-                                getCurrentUsers.fetchedData &&
-                                getCurrentUsers.fetchedData.users &&
-                                getCurrentUsers.fetchedData.users.data &&
-                                getCurrentUsers.fetchedData.total_results !== 0
+                                getCurrentItems &&
+                                getCurrentItems.isLoading === false &&
+                                getCurrentItems.isError === false &&
+                                getCurrentItems.isSuccess === true &&
+                                getCurrentItems.fetchedData &&
+                                getCurrentItems.fetchedData.users &&
+                                getCurrentItems.fetchedData.users.data &&
+                                getCurrentItems.fetchedData.total_results !== 0
                             "
                         >
                             <div
@@ -332,9 +332,9 @@ onMounted(() => {
                                     class="flex flex-col w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
                                 >
                                     <div
-                                        v-for="user in getCurrentUsers
+                                        v-for="item in getCurrentItems
                                             .fetchedData.users.data"
-                                        :key="user.id"
+                                        :key="item.id"
                                         class="myPrimaryBorderFullRoundedUsers"
                                     >
                                         <div
@@ -347,43 +347,43 @@ onMounted(() => {
                                                 <div
                                                     class="flex-shrink-0"
                                                     v-if="
-                                                        user &&
-                                                        user.profile_photo_path !==
+                                                        item &&
+                                                        item.profile_photo_path !==
                                                             null
                                                     "
                                                 >
                                                     <img
                                                         v-if="
-                                                            user.profile_photo_path !==
+                                                            item.profile_photo_path !==
                                                             null
                                                         "
                                                         class="object-cover w-12 h-12 rounded-full"
-                                                        :src="`/storage/${user.profile_photo_path}`"
+                                                        :src="`/storage/${item.profile_photo_path}`"
                                                         :alt="
-                                                            user.first_name +
-                                                            user.last_name
+                                                            item.first_name +
+                                                            item.last_name
                                                         "
                                                     />
                                                 </div>
 
                                                 <div
                                                     v-if="
-                                                        user &&
-                                                        user.profile_photo_path ===
+                                                        item &&
+                                                        item.profile_photo_path ===
                                                             null
                                                     "
                                                     class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                                 >
                                                     <span>
                                                         {{
-                                                            user.first_name
+                                                            item.first_name
                                                                 .charAt(0)
                                                                 .toUpperCase()
                                                         }}
                                                     </span>
                                                     <span>
                                                         {{
-                                                            user.last_name
+                                                            item.last_name
                                                                 .charAt(0)
                                                                 .toUpperCase()
                                                         }}
@@ -395,19 +395,19 @@ onMounted(() => {
                                                     class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                                 >
                                                     <span class="font-medium">
-                                                        {{ user.first_name }}
-                                                        {{ user.last_name }}
+                                                        {{ item.first_name }}
+                                                        {{ item.last_name }}
                                                     </span>
                                                     <span class="italic">
-                                                        {{ user.role }}
+                                                        {{ item.role }}
                                                     </span>
                                                 </span>
                                             </div>
 
                                             <button
-                                                @click="handleAttachUser(user)"
+                                                @click="handleAttachItem(item)"
                                                 v-if="
-                                                    isUserAlreadyAdded(user) ===
+                                                    isItemAlreadyAdded(item) ===
                                                     false
                                                 "
                                                 class="myPrimaryButton text-xs flex items-center"
@@ -429,12 +429,12 @@ onMounted(() => {
                                             </button>
                                             <button
                                                 @click="
-                                                    handleRemoveAttachedUser(
-                                                        user.id
+                                                    handleRemoveAttachedItem(
+                                                        item.id
                                                     )
                                                 "
                                                 v-if="
-                                                    isUserAlreadyAdded(user) ===
+                                                    isItemAlreadyAdded(item) ===
                                                     true
                                                 "
                                                 class="myPrimaryDeleteButton text-xs flex justify-center items-center"
@@ -466,7 +466,7 @@ onMounted(() => {
                     class="h-full md:max-h-[38.5rem] max-h-[12rem] md:w-3/5 w-full bg-gray-50 pl-2 border border-gray-200 overflow-y-scroll rounded"
                 >
                     <div
-                        v-if="getCurrentAttachedUsers.length === 0"
+                        v-if="getCurrentAttachedItems.length === 0"
                         class="pb-6 space-y-6"
                     >
                         <p class="myPrimaryParagraph text-xs p-2">
@@ -475,23 +475,23 @@ onMounted(() => {
                     </div>
 
                     <div
-                        v-if="getCurrentAttachedUsers.length !== 0"
+                        v-if="getCurrentAttachedItems.length !== 0"
                         class="flex flex-col w-full divide-y divide-gray-200 p-2"
                     >
                         <div class="flex justify-start items-center">
                             <p class="myPrimaryTag">
                                 Added
-                                {{ getCurrentAttachedUsers.length }}
+                                {{ getCurrentAttachedItems.length }}
                                 {{
-                                    getCurrentAttachedUsers.length === 1
+                                    getCurrentAttachedItems.length === 1
                                         ? "item"
                                         : "items"
                                 }}
                             </p>
                         </div>
                         <div
-                            v-for="user in getCurrentAttachedUsers"
-                            :key="user.id"
+                            v-for="item in getCurrentAttachedItems"
+                            :key="item.id"
                             class="px-2 hover:bg-white"
                         >
                             <div class="flex justify-between items-center">
@@ -500,36 +500,36 @@ onMounted(() => {
                                     <div
                                         class="flex-shrink-0"
                                         v-if="
-                                            user &&
-                                            user.profile_photo_path !== null
+                                            item &&
+                                            item.profile_photo_path !== null
                                         "
                                     >
                                         <img
                                             class="object-cover w-12 h-12 rounded-full"
-                                            :src="`/storage/${user.profile_photo_path}`"
+                                            :src="`/storage/${item.profile_photo_path}`"
                                             :alt="
-                                                user.first_name + user.last_name
+                                                item.first_name + item.last_name
                                             "
                                         />
                                     </div>
 
                                     <div
                                         v-if="
-                                            user &&
-                                            user.profile_photo_path === null
+                                            item &&
+                                            item.profile_photo_path === null
                                         "
                                         class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                     >
                                         <span>
                                             {{
-                                                user.first_name
+                                                item.first_name
                                                     .charAt(0)
                                                     .toUpperCase()
                                             }}
                                         </span>
                                         <span>
                                             {{
-                                                user.last_name
+                                                item.last_name
                                                     .charAt(0)
                                                     .toUpperCase()
                                             }}
@@ -541,16 +541,16 @@ onMounted(() => {
                                         class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                     >
                                         <span class="font-medium">
-                                            {{ user.first_name }}
-                                            {{ user.last_name }}
+                                            {{ item.first_name }}
+                                            {{ item.last_name }}
                                         </span>
                                         <span>
-                                            {{ user.email }}
+                                            {{ item.email }}
                                         </span>
-                                        <span> Role: {{ user.role }} </span>
+                                        <span> Role: {{ item.role }} </span>
                                     </span>
                                 </div>
-                                <div @click="handleRemoveAttachedUser(user.id)">
+                                <div @click="handleRemoveAttachedItem(item.id)">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
