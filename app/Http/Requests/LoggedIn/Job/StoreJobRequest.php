@@ -93,6 +93,35 @@ class StoreJobRequest extends FormRequest
                     ->add("team", "The team field is required.");
             }
 
+            // validation for categories # start
+            if (
+                $this->categories === null ||
+                (gettype($this->categories) === "array" &&
+                    count($this->categories) === 0)
+            ) {
+                $validator
+                    ->errors()
+                    ->add("categories", "The categories field is required.");
+            }
+
+            if (gettype($this->categories) !== "array") {
+                $validator
+                    ->errors()
+                    ->add("categories", "categories field must be an array.");
+            }
+            if (
+                gettype($this->categories) === "array" &&
+                count($this->categories) > $maxCategories
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "categories",
+                        "Limited to a maximum of {$maxCategories} categories."
+                    );
+            }
+            // validation for categories # end
+
             // validation for author # start
             if (
                 ($this->show_author === true && $this->author === null) ||
