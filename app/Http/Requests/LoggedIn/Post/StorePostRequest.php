@@ -72,18 +72,6 @@ class StorePostRequest extends FormRequest
             // "cover_image_large" => ["required", "string", "max:255"],
         ];
 
-        // // Verify whether the post is both defined and contains a valid ID value.
-        // if ($this->post && $this->post->id !== null) {
-        //     $rules["slug"][] = Rule::unique("posts", "slug")->ignore(
-        //         $this->post->id
-        //     );
-        // }
-
-        // // if post is not defined.
-        // if ($this->post === null) {
-        //     $rules["slug"][] = Rule::unique("posts", "slug");
-        // }
-
         return $rules;
     }
 
@@ -110,23 +98,23 @@ class StorePostRequest extends FormRequest
 
             // validation for categories # start
             if (
-                $this->author === null ||
-                (gettype($this->author) === "array" &&
-                    count($this->author) === 0)
+                $this->categories === null ||
+                (gettype($this->categories) === "array" &&
+                    count($this->categories) === 0)
             ) {
                 $validator
                     ->errors()
-                    ->add("categories", "The Categories field is required.");
+                    ->add("categories", "The categories field is required.");
             }
 
-            if (gettype($this->author) !== "array") {
+            if (gettype($this->categories) !== "array") {
                 $validator
                     ->errors()
-                    ->add("categories", "Author field must be an array.");
+                    ->add("categories", "categories field must be an array.");
             }
             if (
-                gettype($this->author) === "array" &&
-                count($this->author) > $maxCategories
+                gettype($this->categories) === "array" &&
+                count($this->categories) > $maxCategories
             ) {
                 $validator
                     ->errors()

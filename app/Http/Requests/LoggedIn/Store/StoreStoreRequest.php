@@ -69,18 +69,6 @@ class StoreStoreRequest extends FormRequest
             // "cover_image_large" => ["required", "string", "max:255"],
         ];
 
-        // // Verify whether the post is both defined and contains a valid ID value.
-        // if ($this->post && $this->post->id !== null) {
-        //     $rules["slug"][] = Rule::unique("posts", "slug")->ignore(
-        //         $this->post->id
-        //     );
-        // }
-
-        // // if post is not defined.
-        // if ($this->post === null) {
-        //     $rules["slug"][] = Rule::unique("posts", "slug");
-        // }
-
         return $rules;
     }
 
