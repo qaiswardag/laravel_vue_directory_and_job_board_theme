@@ -228,6 +228,12 @@ onMounted(() => {
                             <p class="myPrimaryTag">
                                 Total
                                 {{ getCurrentUsers.fetchedData.count }}
+                                {{
+                                    getCurrentUsers.fetchedData.count.length ===
+                                    1
+                                        ? "item"
+                                        : "items"
+                                }}
                             </p>
                         </div>
 
@@ -464,7 +470,7 @@ onMounted(() => {
                         class="pb-6 space-y-6"
                     >
                         <p class="myPrimaryParagraph text-xs p-2">
-                            No users added
+                            No items added
                         </p>
                     </div>
 
@@ -476,6 +482,11 @@ onMounted(() => {
                             <p class="myPrimaryTag">
                                 Added
                                 {{ getCurrentAttachedUsers.length }}
+                                {{
+                                    getCurrentAttachedUsers.length === 1
+                                        ? "item"
+                                        : "items"
+                                }}
                             </p>
                         </div>
                         <div

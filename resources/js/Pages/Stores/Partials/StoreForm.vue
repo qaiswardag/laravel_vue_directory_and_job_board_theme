@@ -236,7 +236,7 @@ const postForm = useForm({
     cover_image_large: "",
 
     tags: "",
-    show_author: true,
+    show_author: false,
     author: [],
 });
 
@@ -366,7 +366,7 @@ const clearForm = function () {
     //
     //
     //
-    postForm.show_author = true;
+    postForm.show_author = false;
     postForm.author = [];
 
     localStorage.removeItem(pathLocalStorage);
@@ -416,7 +416,14 @@ onBeforeMount(() => {
             }
             //
             postForm.title = formLocalStorage.title;
-            postForm.content = formLocalStorage.content;
+            //
+            //
+            // postForm.content = formLocalStorage.content;
+            // TODO: UNCOMMENT ABOVE
+            postForm.content =
+                "<div><p>I am a test from storeForm.vue</p></div>";
+            //
+            //
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
             postForm.cover_image_original =
@@ -856,7 +863,12 @@ const handleDesigner = function () {
                             v-if="postForm.author.length !== 0"
                             class="myPrimaryParagraph italic text-xs py-4"
                         >
-                            Added {{ postForm.author.length }} author(s)
+                            Added {{ postForm.author.length }}
+                            {{
+                                postForm.author.length === 1
+                                    ? "person"
+                                    : "people"
+                            }}
                         </p>
 
                         <div
@@ -940,12 +952,6 @@ const handleDesigner = function () {
                         <p class="myPrimaryParagraph">No author selected.</p>
                     </div>
                     <InputError :message="postForm.errors.author" />
-                    <p
-                        v-if="postForm.author.length >= 21"
-                        class="myPrimaryParagraphError"
-                    >
-                        Maximum 20 author is allowed.
-                    </p>
                 </div>
             </div>
             <!-- post show author - end -->
@@ -1018,6 +1024,22 @@ const handleDesigner = function () {
                 <InputError :message="postForm.errors.cover_image_original" />
             </div>
             <!-- cover image - end -->
+            <!-- tags - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Categories
+                    </div>
+                    <p class="myPrimaryParagraph">
+                        Enter categories for the Store.
+                    </p>
+                </div>
+                <div class="myInputGroup">
+                    <InputError :message="postForm.errors.categroies" />
+                </div>
+            </div>
+            <!-- tags - end -->
+
             <!-- tags - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">

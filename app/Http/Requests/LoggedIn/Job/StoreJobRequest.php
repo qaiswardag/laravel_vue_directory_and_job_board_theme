@@ -92,14 +92,20 @@ class StoreJobRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $validator->after(function ($validator) {
+        $maxAuthors = 18;
+        $maxCategories = 4;
+
+        $validator->after(function ($validator) use (
+            $maxAuthors,
+            $maxCategories
+        ) {
             if ($this->team === null) {
                 $validator
                     ->errors()
                     ->add("team", "The team field is required.");
             }
 
-            // validation for author
+            // validation for author # start
             if (
                 ($this->show_author === true && $this->author === null) ||
                 ($this->show_author === true &&
@@ -122,12 +128,16 @@ class StoreJobRequest extends FormRequest
             if (
                 $this->author !== null &&
                 gettype($this->author) === "array" &&
-                count($this->author) >= 21
+                count($this->author) > $maxAuthors
             ) {
                 $validator
                     ->errors()
-                    ->add("author", "Limited to a maximum of 20 people.");
+                    ->add(
+                        "author",
+                        "Limited to a maximum of {$maxAuthors} people."
+                    );
             }
+            // validation for author # end
         });
 
         // if validator fails
