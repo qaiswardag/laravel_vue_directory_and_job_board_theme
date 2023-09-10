@@ -44,10 +44,10 @@ const store = useStore();
 const frontEndError = ref(null);
 
 const getCurrentItems = computed(() => {
-    return store.getters["attachedUsers/getCurrentUsers"];
+    return store.getters["attachedUsersOrItems/getCurrentUsers"];
 });
 const getCurrentAttachedItems = computed(() => {
-    return store.getters["attachedUsers/getCurrentAttachedUsers"];
+    return store.getters["attachedUsersOrItems/getCurrentAttachedUsers"];
 });
 //
 const filteredItems = ref([]);
@@ -57,7 +57,7 @@ const search_query = ref("");
 const handleSearch = function (page) {
     // dispatch
     store.dispatch(
-        "attachedUsers/loadUsers",
+        "attachedUsersOrItems/loadUsers",
         {
             teamId: props.team.id,
             page: page,
@@ -117,7 +117,7 @@ const handleAttachItem = function (item) {
     // Item with matching ID do not exists
     if (isItemExists === false) {
         frontEndError.value = null;
-        store.commit("attachedUsers/setCurrentAttachedUsers", item);
+        store.commit("attachedUsersOrItems/setCurrentAttachedUsers", item);
     }
 };
 const handleRemoveAttachedItem = function (itemId) {
@@ -125,18 +125,24 @@ const handleRemoveAttachedItem = function (itemId) {
     filteredItems.value = getCurrentAttachedItems.value.filter(
         (item) => item.id !== itemId
     );
-    store.commit("attachedUsers/setRemoveAttachedUser", filteredItems.value);
+    store.commit(
+        "attachedUsersOrItems/setRemoveAttachedUser",
+        filteredItems.value
+    );
 };
 
 onMounted(() => {
-    store.commit("attachedUsers/setCurrentAttachedUsersToEmptyArray", []);
+    store.commit(
+        "attachedUsersOrItems/setCurrentAttachedUsersToEmptyArray",
+        []
+    );
 
     if (
         (props.existingItems !== null || props.existingItems !== undefined) &&
         Array.isArray(props.existingItems)
     ) {
         props.existingItems.forEach((item) => {
-            store.commit("attachedUsers/setCurrentAttachedUsers", item);
+            store.commit("attachedUsersOrItems/setCurrentAttachedUsers", item);
         });
     }
 

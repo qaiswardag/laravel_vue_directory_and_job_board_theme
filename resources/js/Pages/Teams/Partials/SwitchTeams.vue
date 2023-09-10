@@ -57,7 +57,7 @@ const handleSwitchToTeam = (team, currentTeamId) => {
         // commit
         store.commit("mediaLibrary/setCurrentImage", null);
         store.commit("mediaLibrary/setCurrentPreviewImage", null);
-        store.commit("attachedUsers/setRemoveAttachedUser", []);
+        store.commit("attachedUsersOrItems/setRemoveAttachedUser", []);
 
         switchTeam(team);
     };

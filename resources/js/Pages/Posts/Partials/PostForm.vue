@@ -87,7 +87,7 @@ const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
 });
 const getCurrentAttachedUsers = computed(() => {
-    return store.getters["attachedUsers/getCurrentAttachedUsers"];
+    return store.getters["attachedUsersOrItems/getCurrentAttachedUsers"];
 });
 
 const formType = ref("create");
