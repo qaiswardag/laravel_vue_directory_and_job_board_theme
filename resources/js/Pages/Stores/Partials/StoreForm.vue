@@ -238,6 +238,7 @@ const postForm = useForm({
     tags: "",
     show_author: false,
     author: [],
+    categories: [],
 });
 
 // The above code uses the watch function from Vue 3 to watch for changes to the
@@ -434,6 +435,7 @@ onBeforeMount(() => {
             postForm.cover_image_large = formLocalStorage.cover_image_large;
             postForm.tags = formLocalStorage.tags;
 
+            // Authors
             if (
                 formLocalStorage.author === undefined ||
                 formLocalStorage.author === null
@@ -445,6 +447,19 @@ onBeforeMount(() => {
                 formLocalStorage.author !== null
             ) {
                 postForm.author = formLocalStorage.author;
+            }
+            // Categories
+            if (
+                formLocalStorage.categories === undefined ||
+                formLocalStorage.categories === null
+            ) {
+                postForm.categories = [];
+            }
+            if (
+                formLocalStorage.categories !== undefined ||
+                formLocalStorage.categories !== null
+            ) {
+                postForm.categories = formLocalStorage.categories;
             }
         }
     }
@@ -1024,21 +1039,21 @@ const handleDesigner = function () {
                 <InputError :message="postForm.errors.cover_image_original" />
             </div>
             <!-- cover image - end -->
-            <!-- tags - start -->
+            <!-- categories - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Categories
                     </div>
                     <p class="myPrimaryParagraph">
-                        Enter categories for the Store.
+                        Enter categories for the post.
                     </p>
                 </div>
                 <div class="myInputGroup">
-                    <InputError :message="postForm.errors.categroies" />
+                    <InputError :message="postForm.errors.categories" />
                 </div>
             </div>
-            <!-- tags - end -->
+            <!-- categories - end -->
 
             <!-- tags - start -->
             <div class="myInputsOrganization">
