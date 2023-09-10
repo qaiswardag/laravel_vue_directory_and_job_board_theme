@@ -31,6 +31,7 @@ import TextArea from "@/Components/Forms/TextArea.vue";
 import {
     CheckIcon,
     ChevronUpDownIcon,
+    Squares2X2Icon,
     SquaresPlusIcon,
     TrashIcon,
     XMarkIcon,
@@ -529,7 +530,12 @@ onBeforeMount(() => {
                     >
                         Added
                         {{ postForm.categories && postForm.categories.length }}
-                        category(s)
+                        {{
+                            postForm.categories &&
+                            postForm.categories.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
                     </p>
 
                     <div
@@ -545,9 +551,20 @@ onBeforeMount(() => {
                             class="hover:bg-gray-50 px-2 bg-white"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-4"
+                                class="flex justify-between items-center rounded my-2"
                             >
-                                {{ category.name }}
+                                <div class="flex items-center gap-2 my-2">
+                                    <div
+                                        class="flex-shrink-0 myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-gray-100 flex justify-center items-center text-xs font-normal text-white"
+                                    >
+                                        <Squares2X2Icon
+                                            class="w-3 h-3 text-myPrimaryDarkGrayColor"
+                                        ></Squares2X2Icon>
+                                    </div>
+                                    <p>
+                                        {{ category.name }}
+                                    </p>
+                                </div>
                                 <div
                                     @click="
                                         handleRemoveAttachedCategory(
