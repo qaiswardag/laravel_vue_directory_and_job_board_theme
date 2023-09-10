@@ -498,6 +498,9 @@ onBeforeMount(() => {
             // clear the postForm author field
             postForm.author = [];
         }
+
+        // postForm.categories = props.postCategories;
+        postForm.categories = [1, 2, 3, 4];
     }
 });
 
@@ -1232,6 +1235,7 @@ const handleDesigner = function () {
             >
             </MediaLibraryModal>
             <SearchUsersOrItems
+                :existingItems="postForm.author"
                 apiUrlName="attach.user.index"
                 :user="user"
                 :team="postForm.team"

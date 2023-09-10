@@ -29,6 +29,9 @@ const props = defineProps({
     secondButtonText: {
         type: String,
     },
+    existingItems: {
+        required: true,
+    },
     apiUrlName: {
         type: String,
         required: true,
@@ -126,6 +129,17 @@ const handleRemoveAttachedItem = function (itemId) {
 };
 
 onMounted(() => {
+    store.commit("attachedUsers/setCurrentAttachedUsersToEmptyArray", []);
+
+    if (
+        (props.existingItems !== null || props.existingItems !== undefined) &&
+        Array.isArray(props.existingItems)
+    ) {
+        props.existingItems.forEach((item) => {
+            store.commit("attachedUsers/setCurrentAttachedUsers", item);
+        });
+    }
+
     handleSearch(1);
 });
 </script>

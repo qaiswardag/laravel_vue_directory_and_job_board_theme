@@ -49,6 +49,9 @@ export default {
                 state.attachedUsers.unshift(payload);
             }
         },
+        setCurrentAttachedUsersToEmptyArray(state, payload) {
+            state.attachedUsers = payload;
+        },
         setRemoveAttachedUser(state, payload) {
             state.attachedUsers = payload;
         },
