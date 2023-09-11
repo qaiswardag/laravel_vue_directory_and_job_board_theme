@@ -293,7 +293,9 @@ onMounted(() => {
                                 Country
                             </th>
                             <th scope="col" class="myPrimaryTableTh">State</th>
-                            <th scope="col" class="myPrimaryTableTh">Types</th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Job Type
+                            </th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Categories
                             </th>

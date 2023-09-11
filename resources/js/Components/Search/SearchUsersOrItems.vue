@@ -9,6 +9,8 @@ import {
     CheckIcon,
     MapPinIcon,
     GlobeAmericasIcon,
+    PlusIcon,
+    MinusIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -542,22 +544,11 @@ onMounted(() => {
                                                     isItemAlreadyAdded(item) ===
                                                     false
                                                 "
-                                                class="myPrimaryButton text-xs flex items-center"
+                                                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLinkColor text-white"
                                             >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke-width="2"
-                                                    stroke="currentColor"
-                                                    class="w-4 h-4"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        d="M12 4.5v15m7.5-7.5h-15"
-                                                    />
-                                                </svg>
+                                                <PlusIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                ></PlusIcon>
                                             </button>
                                             <button
                                                 @click="
@@ -569,22 +560,11 @@ onMounted(() => {
                                                     isItemAlreadyAdded(item) ===
                                                     true
                                                 "
-                                                class="myPrimaryDeleteButton text-xs flex justify-center items-center"
+                                                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryErrorColor text-white"
                                             >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke-width="2"
-                                                    stroke="currentColor"
-                                                    class="w-4 h-4"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        d="M18 12H6"
-                                                    />
-                                                </svg>
+                                                <MinusIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                ></MinusIcon>
                                             </button>
                                         </div>
                                     </div>
