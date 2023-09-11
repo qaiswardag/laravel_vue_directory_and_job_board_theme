@@ -205,9 +205,11 @@ onMounted(async () => {
                                             false
                                         )
                                 "
-                                class="hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                             >
-                                <XMarkIcon class="shrink-0 w-5 h-5 m-2">
+                                <XMarkIcon
+                                    class="shrink-0 h-4 w-4 m-2 stroke-2"
+                                >
                                 </XMarkIcon>
                             </div>
                         </div>
@@ -297,11 +299,9 @@ onMounted(async () => {
             >
                 <div
                     @click="store.commit('designer/setMenuLeft', true)"
-                    class="cursor-pointer rounded-full flex items-center justify-center bg-gray-100 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
-                    <Square3Stack3DIcon
-                        class="shrink-0 w-6 h-6 m-2 cursor-pointer"
-                    >
+                    <Square3Stack3DIcon class="shrink-0 h-4 w-4 m-2 stroke-2">
                     </Square3Stack3DIcon>
                 </div>
             </div>
@@ -334,28 +334,28 @@ onMounted(async () => {
                     <div class="flex items-center justify-center gap-2">
                         <div
                             @click="handleDesignerPreview"
-                            class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <EyeIcon
-                                class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"
+                                class="shrink-0 h-4 w-4 m-2 stroke-2"
                             ></EyeIcon>
                         </div>
                         <div
                             v-if="getElement !== null"
                             @click="deselectCurrentComponent"
-                            class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <BoltSlashIcon
-                                class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"
+                                class="shrink-0 h-4 w-4 m-2 stroke-2"
                             ></BoltSlashIcon>
                         </div>
                         <div
                             v-if="getMenuRight === false"
                             @click="store.commit('designer/setMenuRight', true)"
-                            class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <Squares2X2Icon
-                                class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"
+                                class="shrink-0 h-4 w-4 m-2 stroke-2"
                             ></Squares2X2Icon>
                         </div>
                     </div>

@@ -195,7 +195,7 @@ const notificationsSlideOverButton = function () {
 
             <div
                 @click="handleMenuUserTeamModal"
-                class="hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
             >
                 <div
                     class="h-10 w-10 flex-shrink-0"

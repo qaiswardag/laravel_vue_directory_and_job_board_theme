@@ -58,9 +58,11 @@ const isHeadingElement = computed(() => {
             >
                 <div
                     @click="$emit('closeEditor')"
-                    class="hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
-                    <XMarkIcon class="shrink-0 w-5 h-5 m-2"></XMarkIcon>
+                    <XMarkIcon
+                        class="shrink-0 h-4 w-4 m-2 stroke-2"
+                    ></XMarkIcon>
                 </div>
                 <p class="font-bold text-sm">
                     Editing
