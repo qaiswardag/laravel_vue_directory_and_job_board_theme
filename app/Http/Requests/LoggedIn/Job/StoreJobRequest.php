@@ -82,10 +82,12 @@ class StoreJobRequest extends FormRequest
     {
         $maxAuthors = 18;
         $maxCategories = 4;
+        $maxJobTypes = 4;
 
         $validator->after(function ($validator) use (
             $maxAuthors,
-            $maxCategories
+            $maxCategories,
+            $maxJobTypes
         ) {
             if ($this->team === null) {
                 $validator
@@ -121,6 +123,33 @@ class StoreJobRequest extends FormRequest
                     );
             }
             // validation for categories # end
+            // validation for types # start
+            if (
+                $this->types === null ||
+                (gettype($this->types) === "array" && count($this->types) === 0)
+            ) {
+                $validator
+                    ->errors()
+                    ->add("types", "The types field is required.");
+            }
+
+            if (gettype($this->types) !== "array") {
+                $validator
+                    ->errors()
+                    ->add("types", "types field must be an array.");
+            }
+            if (
+                gettype($this->types) === "array" &&
+                count($this->types) > $maxJobTypes
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "types",
+                        "Limited to a maximum of {$maxJobTypes} types."
+                    );
+            }
+            // validation for types # end
 
             // validation for author # start
             if (

@@ -7,6 +7,7 @@ use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
 use App\Models\Job\AuthorJob;
 use App\Models\Job\Job;
 use App\Models\Job\JobCategoryRelation;
+use App\Models\Job\JobTypeRelation;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -186,6 +187,23 @@ class JobController extends Controller
                 ]);
             }
         }
+        // types
+        if (
+            $request->types !== null &&
+            gettype($request->types) === "array" &&
+            count($request->types) !== 0
+        ) {
+            // Loop through the types array and attach each category to the post
+            foreach ($request->types as $jobType) {
+                $typeId = $jobType["id"];
+
+                // Create a new record in the author_post table
+                JobTypeRelation::create([
+                    "type_id" => $typeId,
+                    "job_id" => $jobId,
+                ]);
+            }
+        }
 
         // Return the current team that the user is on, rather than the team that the user is storing the job for.
         $currentTeam = Auth::user()->currentTeam->reference_id;
@@ -301,11 +319,13 @@ class JobController extends Controller
         }
 
         $categories = $job->categories;
+        $types = $job->types;
 
         return Inertia::render("Jobs/UpdateJob/UpdateJob", [
             "post" => $job,
             "postAuthor" => $authors,
             "categories" => $categories,
+            "types" => $types,
         ]);
     }
 
@@ -419,6 +439,40 @@ class JobController extends Controller
             );
             JobCategoryRelation::where("job_id", $jobId)
                 ->whereIn("category_id", $resourcesToDelete)
+                ->delete();
+        }
+        // Update types
+        if (
+            $request->types !== null &&
+            gettype($request->types) === "array" &&
+            count($request->types) !== 0
+        ) {
+            // Retrieve the existing resource IDs for the resource
+            $existingResourceIds = JobTypeRelation::where("job_id", $jobId)
+                ->pluck("type_id")
+                ->toArray();
+
+            // Loop through the items array and update or create a record in the table
+            $updatedResourceIds = [];
+
+            foreach ($request->types as $type) {
+                $typeId = $type["id"];
+                $updatedResourceIds[] = $typeId;
+
+                // Update or create  record in the table
+                JobTypeRelation::updateOrCreate([
+                    "type_id" => $typeId,
+                    "job_id" => $jobId,
+                ]);
+            }
+
+            // Delete records that are not present in the request
+            $resourcesToDelete = array_diff(
+                $existingResourceIds,
+                $updatedResourceIds
+            );
+            JobTypeRelation::where("job_id", $jobId)
+                ->whereIn("type_id", $resourcesToDelete)
                 ->delete();
         }
 

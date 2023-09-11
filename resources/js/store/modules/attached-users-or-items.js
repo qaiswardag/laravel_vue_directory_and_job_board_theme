@@ -25,6 +25,9 @@ export default {
         jobCategories: [],
         attachedJobCategories: [],
 
+        jobTypes: [],
+        attachedJobTypes: [],
+
         storeCategories: [],
         attachedStoreCategories: [],
         // end state
@@ -53,6 +56,13 @@ export default {
             return state.attachedJobCategories;
         },
 
+        getCurrentJobTypes(state) {
+            return state.jobTypes;
+        },
+        getCurrentAttachedJobTypes(state) {
+            return state.attachedJobTypes;
+        },
+
         getCurrentStoreCategories(state) {
             return state.storeCategories;
         },
@@ -72,6 +82,9 @@ export default {
         },
         setCurrentJobCategories(state, payload) {
             state.jobCategories = payload;
+        },
+        setCurrentJobTypes(state, payload) {
+            state.jobTypes = payload;
         },
         setCurrentStoreCategories(state, payload) {
             state.storeCategories = payload;
@@ -136,6 +149,27 @@ export default {
         },
         setRemoveAttachedJobCategories(state, payload) {
             state.attachedJobCategories = payload;
+        },
+        // job types
+        // job types
+        // job types
+        // job types
+        setCurrentAttachedJobTypes(state, payload) {
+            // check if user already exists in the array
+            const itemExists = state.attachedJobTypes.some(
+                (item) => item.id === payload.id
+            );
+
+            // if user does not exist, push to array
+            if (itemExists === false) {
+                state.attachedJobTypes.unshift(payload);
+            }
+        },
+        setCurrentAttachedJobTypesToEmptyArray(state, payload) {
+            state.attachedJobTypes = payload;
+        },
+        setRemoveAttachedJobTypes(state, payload) {
+            state.attachedJobTypes = payload;
         },
         // store categories
         // store categories
@@ -238,6 +272,33 @@ export default {
 
             // context & send to mutation
             context.commit("setCurrentJobCategories", {
+                fetchedData: fetchedItems,
+                isError: isErrorItems,
+                error: errorItems,
+                errors: errorsItems,
+                isLoading: isLoadingItems,
+                isSuccess: isSuccessItems,
+            });
+        },
+        // get job types
+        async fetchJobTypes(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
+            handleGetItems(
+                route(data.apiUrlRouteName, {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
+            );
+
+            // context & send to mutation
+            context.commit("setCurrentJobTypes", {
                 fetchedData: fetchedItems,
                 isError: isErrorItems,
                 error: errorItems,

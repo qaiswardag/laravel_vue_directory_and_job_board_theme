@@ -62,6 +62,10 @@ const props = defineProps({
         default: null,
         required: false,
     },
+    types: {
+        default: null,
+        required: false,
+    },
 });
 
 const modalShowClearForm = ref(false);
@@ -102,6 +106,9 @@ const getCurrentAttachedJobCategories = computed(() => {
     return store.getters[
         "attachedUsersOrItems/getCurrentAttachedJobCategories"
     ];
+});
+const getCurrentAttachedJobTypes = computed(() => {
+    return store.getters["attachedUsersOrItems/getCurrentAttachedJobTypes"];
 });
 
 const formType = ref("create");
@@ -163,6 +170,7 @@ const handleRemoveCoverImage = function () {
 
 const showSearchUserModal = ref(false);
 const showSearchJobCategoriesModal = ref(false);
+const showSearchJobTypesModal = ref(false);
 
 // modal content
 const titleModalSearchItems = ref("");
@@ -199,7 +207,6 @@ const handleAddAuthor = function () {
     // end modal
 };
 
-const filteredUsers = ref([]);
 const handleRemoveAttachedUser = function (userId) {
     // filter the array to exclude user with matching ID
     postForm.author = postForm.author.filter((user) => user.id !== userId);
@@ -237,6 +244,37 @@ const handleAddCategories = function () {
     };
 
     // end modal
+};
+
+const handleAddJobTypes = function () {
+    // handle show modal for unique content
+    showSearchJobTypesModal.value = true;
+    // set modal standards
+    titleModalSearchItems.value = "Add Job Types";
+    descriptionModalSearchItems.value = "Add Job Types";
+    firstButtonModalSearchItems.value = "Close";
+    secondButtonModalSearchItems.value = "Save";
+    // handle click
+    firstModalButtonSearchItemsFunction.value = function () {
+        // handle show modal for unique content
+        showSearchJobTypesModal.value = false;
+    };
+    // handle click
+    secondModalButtonSearchItemsFunction.value = function () {
+        const currentAttachedPostTypes = [...getCurrentAttachedJobTypes.value];
+        // Set post form author to the non-reactive copy
+        postForm.types = currentAttachedPostTypes;
+
+        // handle show modal for unique content
+        showSearchJobTypesModal.value = false;
+    };
+
+    // end modal
+};
+
+const handleRemoveAttachedJobType = function (itemId) {
+    // filter the array to exclude item with matching ID
+    postForm.types = postForm.types.filter((item) => item.id !== itemId);
 };
 
 const showErrorNotifications = ref(false);
@@ -292,6 +330,7 @@ const postForm = useForm({
     show_author: false,
     author: [],
     categories: [],
+    types: [],
 });
 
 // The above code uses the watch function from Vue 3 to watch for changes to the
@@ -423,9 +462,9 @@ const clearForm = function () {
     postForm.show_author = false;
     postForm.author = [];
     postForm.categories = [];
+    postForm.types = [];
 
     localStorage.removeItem(pathLocalStorage);
-    $;
 };
 
 // is form dirty? returns true or false
@@ -509,6 +548,19 @@ onBeforeMount(() => {
             ) {
                 postForm.categories = formLocalStorage.categories;
             }
+            // Types
+            if (
+                formLocalStorage.types === undefined ||
+                formLocalStorage.types === null
+            ) {
+                postForm.types = [];
+            }
+            if (
+                formLocalStorage.types !== undefined ||
+                formLocalStorage.types !== null
+            ) {
+                postForm.types = formLocalStorage.types;
+            }
         }
     }
 
@@ -546,6 +598,7 @@ onBeforeMount(() => {
         }
 
         postForm.categories = props.categories;
+        postForm.types = props.types;
     }
 });
 </script>
@@ -913,6 +966,98 @@ onBeforeMount(() => {
                 <InputError :message="postForm.errors.categories" />
             </div>
             <!-- post categories - end -->
+            <!-- post types - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Job Types</div>
+                    <p class="myPrimaryParagraph">
+                        Types amet, adipiscing elit.
+                    </p>
+                </div>
+                <div
+                    class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
+                >
+                    <button
+                        @click="handleAddJobTypes"
+                        type="button"
+                        class="myPrimaryButton gap-2 items-center"
+                    >
+                        <CheckIcon class="w-4 h-4"></CheckIcon>
+                        Add Types
+                    </button>
+                </div>
+
+                <div
+                    class="p-2 mt-4"
+                    :class="
+                        postForm.types && postForm.types.length === 0
+                            ? 'bg-white'
+                            : 'bg-gray-50'
+                    "
+                >
+                    <p
+                        v-if="postForm.types && postForm.types.length !== 0"
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{ postForm.types && postForm.types.length }}
+                        {{
+                            postForm.types && postForm.types.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+
+                    <div
+                        v-if="postForm.types && postForm.types.length !== 0"
+                        class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                    >
+                        <div
+                            v-for="type in postForm.types"
+                            :key="type.id"
+                            class="bg-red-100 hover:bg-pink-200 px-4 m-4"
+                        >
+                            <div
+                                class="flex justify-between items-center rounded my-2"
+                            >
+                                <div
+                                    @click="handleAddCategories"
+                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                >
+                                    <div
+                                        class="flex-shrink-0 myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-gray-100 flex justify-center items-center text-xs font-normal text-white"
+                                    >
+                                        <CheckIcon
+                                            class="w-3 h-3 text-myPrimaryDarkGrayColor"
+                                        ></CheckIcon>
+                                    </div>
+                                    <p>
+                                        {{ type.name }}
+                                    </p>
+                                </div>
+                                <div
+                                    @click="
+                                        handleRemoveAttachedJobType(type.id)
+                                    "
+                                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                >
+                                    <TrashIcon
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    ></TrashIcon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    v-if="postForm.types && postForm.types.length === 0"
+                    class="space-y-6"
+                >
+                    <p class="myPrimaryParagraph">No category selected.</p>
+                </div>
+                <InputError :message="postForm.errors.types" />
+            </div>
+            <!-- post types - end -->
             <!-- tags - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -1365,6 +1510,33 @@ onBeforeMount(() => {
                 :displayIcon="true"
                 icon="Squares2X2Icon"
                 :show="showSearchJobCategoriesModal"
+            >
+            </SearchUsersOrItems>
+            <SearchUsersOrItems
+                v-if="showSearchJobTypesModal"
+                apiUrlRouteName="attach.job.types.index"
+                :existingItems="postForm.types"
+                vuexActionMethod="attachedUsersOrItems/fetchJobTypes"
+                vuexGetCurrentItems="attachedUsersOrItems/getCurrentJobTypes"
+                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedJobTypes"
+                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedJobTypes"
+                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedJobTypes"
+                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedJobTypesToEmptyArray"
+                :user="user"
+                :team="postForm.team"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
+                "
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
+                "
+                :displayIcon="true"
+                icon="CheckIcon"
+                :show="showSearchJobTypesModal"
             >
             </SearchUsersOrItems>
 
