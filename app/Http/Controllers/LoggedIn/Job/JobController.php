@@ -145,6 +145,9 @@ class JobController extends Controller
             "show_author" => $request->show_author,
         ]);
 
+        // Get the job ID
+        $jobId = $job->id;
+
         // Check if the "show_author" property of the $request object is true
         // and the "author" property of the $request object is not null
         if (
@@ -153,9 +156,6 @@ class JobController extends Controller
             gettype($request->author) === "array" &&
             count($request->author) !== 0
         ) {
-            // Get the job ID
-            $jobId = $job->id;
-
             // Loop through the authors array and attach each author to the job
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
@@ -324,6 +324,8 @@ class JobController extends Controller
             "tags" => $request->tags,
             "show_author" => $request->show_author,
         ]);
+        // Get the job ID
+        $jobId = $job->id;
 
         if (
             $job->show_author === true &&
@@ -331,9 +333,6 @@ class JobController extends Controller
             gettype($request->author) === "array" &&
             count($request->author) !== 0
         ) {
-            // Get the job ID
-            $jobId = $job->id;
-
             // Retrieve the existing author IDs for the job
             $existingAuthorIds = AuthorJob::where("job_id", $jobId)
                 ->pluck("user_id")
@@ -346,10 +345,10 @@ class JobController extends Controller
                 $updatedAuthorIds[] = $authorId;
 
                 // Update or create the record in the AuthorJob table
-                AuthorJob::updateOrCreate(
-                    ["user_id" => $authorId, "job_id" => $jobId],
-                    ["user_id" => $authorId, "job_id" => $jobId]
-                );
+                AuthorJob::updateOrCreate([
+                    "user_id" => $authorId,
+                    "job_id" => $jobId,
+                ]);
             }
 
             // Delete the AuthorJob records that are not present in the request

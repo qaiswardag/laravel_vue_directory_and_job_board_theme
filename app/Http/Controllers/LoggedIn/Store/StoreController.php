@@ -144,6 +144,9 @@ class StoreController extends Controller
             "show_author" => $request->show_author,
         ]);
 
+        // Get the store ID
+        $storeId = $store->id;
+
         // Check if the "show_author" property of the $request object is true
         // and the "author" property of the $request object is not null
         if (
@@ -152,9 +155,6 @@ class StoreController extends Controller
             gettype($request->author) === "array" &&
             count($request->author) !== 0
         ) {
-            // Get the store ID
-            $storeId = $store->id;
-
             // Loop through the authors array and attach each author to the job
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
@@ -324,15 +324,15 @@ class StoreController extends Controller
             "show_author" => $request->show_author,
         ]);
 
+        // Get the store ID
+        $storeId = $store->id;
+
         if (
             $store->show_author === true &&
             $request->author !== null &&
             gettype($request->author) === "array" &&
             count($request->author) !== 0
         ) {
-            // Get the store ID
-            $storeId = $store->id;
-
             // Retrieve the existing author IDs for the store
             $existingAuthorIds = AuthorStore::where("store_id", $storeId)
                 ->pluck("user_id")
@@ -345,10 +345,10 @@ class StoreController extends Controller
                 $updatedAuthorIds[] = $authorId;
 
                 // Update or create the record in the AuthorJob table
-                AuthorStore::updateOrCreate(
-                    ["user_id" => $authorId, "store_id" => $storeId],
-                    ["user_id" => $authorId, "store_id" => $storeId]
-                );
+                AuthorStore::updateOrCreate([
+                    "user_id" => $authorId,
+                    "store_id" => $storeId,
+                ]);
             }
 
             // Delete the AuthorStore records that are not present in the request

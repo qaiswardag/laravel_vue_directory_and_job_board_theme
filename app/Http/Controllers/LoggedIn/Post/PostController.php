@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Post\StorePostRequest;
 use App\Models\Post\AuthorPost;
 use App\Models\Post\Post;
+use App\Models\Post\PostCategoryRelation;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -142,6 +143,8 @@ class PostController extends Controller
             "show_author" => $request->show_author,
         ]);
 
+        $postId = $post->id;
+
         // Check if the "show_author" property of the $request object is true
         // and the "author" property of the $request object is not null
         if (
@@ -150,9 +153,6 @@ class PostController extends Controller
             gettype($request->author) === "array" &&
             count($request->author) !== 0
         ) {
-            // Get the post ID
-            $postId = $post->id;
-
             // Loop through the authors array and attach each author to the post
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
@@ -160,6 +160,23 @@ class PostController extends Controller
                 // Create a new record in the author_post table
                 AuthorPost::create([
                     "user_id" => $authorId,
+                    "post_id" => $postId,
+                ]);
+            }
+        }
+
+        if (
+            $request->categories !== null &&
+            gettype($request->categories) === "array" &&
+            count($request->categories) !== 0
+        ) {
+            // Loop through the categories array and attach each category to the post
+            foreach ($request->categories as $category) {
+                $categoryId = $category["id"];
+
+                // Create a new record in the author_post table
+                PostCategoryRelation::create([
+                    "category_id" => $categoryId,
                     "post_id" => $postId,
                 ]);
             }
@@ -228,10 +245,13 @@ class PostController extends Controller
             $post->authors = null;
         }
 
+        $categories = $post->categories;
+
         // Render the post
         return Inertia::render($postRenderView, [
             "post" => $post,
             "authors" => $authors,
+            "categories" => $categories,
         ]);
     }
 
@@ -275,9 +295,12 @@ class PostController extends Controller
             }
         }
 
+        $categories = $post->categories;
+
         return Inertia::render("Posts/UpdatePost/UpdatePost", [
             "post" => $post,
             "postAuthor" => $authors,
+            "categories" => $categories,
         ]);
     }
 
@@ -322,15 +345,16 @@ class PostController extends Controller
             "show_author" => $request->show_author,
         ]);
 
+        // Get the post ID
+        $postId = $post->id;
+
+        // Update authors
         if (
             $post->show_author === true &&
             $request->author !== null &&
             gettype($request->author) === "array" &&
             count($request->author) !== 0
         ) {
-            // Get the post ID
-            $postId = $post->id;
-
             // Retrieve the existing author IDs for the post
             $existingAuthorIds = AuthorPost::where("post_id", $postId)
                 ->pluck("user_id")
@@ -343,10 +367,10 @@ class PostController extends Controller
                 $updatedAuthorIds[] = $authorId;
 
                 // Update or create the record in the AuthorPost table
-                AuthorPost::updateOrCreate(
-                    ["user_id" => $authorId, "post_id" => $postId],
-                    ["user_id" => $authorId, "post_id" => $postId]
-                );
+                AuthorPost::updateOrCreate([
+                    "user_id" => $authorId,
+                    "post_id" => $postId,
+                ]);
             }
 
             // Delete the AuthorPost records that are not present in the request
@@ -358,6 +382,45 @@ class PostController extends Controller
                 ->whereIn("user_id", $authorsToDelete)
                 ->delete();
         }
+
+        // Update categories
+        if (
+            $request->categories !== null &&
+            gettype($request->categories) === "array" &&
+            count($request->categories) !== 0
+        ) {
+            // Retrieve the existing resource IDs for the resource
+            $existingResourceIds = PostCategoryRelation::where(
+                "post_id",
+                $postId
+            )
+                ->pluck("category_id")
+                ->toArray();
+
+            // Loop through the items array and update or create a record in the table
+            $updatedResourceIds = [];
+
+            foreach ($request->categories as $category) {
+                $categoryId = $category["id"];
+                $updatedResourceIds[] = $categoryId;
+
+                // Update or create  record in the table
+                PostCategoryRelation::updateOrCreate([
+                    "category_id" => $categoryId,
+                    "post_id" => $postId,
+                ]);
+            }
+
+            // Delete records that are not present in the request
+            $resourcesToDelete = array_diff(
+                $existingResourceIds,
+                $updatedResourceIds
+            );
+            PostCategoryRelation::where("post_id", $postId)
+                ->whereIn("category_id", $resourcesToDelete)
+                ->delete();
+        }
+
         return redirect()->route("team.posts.index", [
             "referenceId" => $team->reference_id,
         ]);

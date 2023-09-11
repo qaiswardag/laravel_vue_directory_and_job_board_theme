@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class PostCategoryRelation extends Model
 {
     use HasFactory;
-    protected $fillable = ["store_id", "category_id"];
+    protected $fillable = ["post_id", "category_id"];
 }

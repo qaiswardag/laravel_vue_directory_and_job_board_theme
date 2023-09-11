@@ -151,7 +151,7 @@ class StoreStoreRequest extends FormRequest
                     ->errors()
                     ->add(
                         "author",
-                        "Limited to a maximum of {$maxAuthors} people."
+                        "      Limited to a maximum of {$maxAuthors} people."
                     );
             }
             // validation for author # end

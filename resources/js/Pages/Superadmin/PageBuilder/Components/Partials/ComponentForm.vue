@@ -1,22 +1,17 @@
 <script setup>
-import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { useForm } from "@inertiajs/vue3";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { ref, computed, onBeforeMount, watch } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
-import Tags from "@/Components/Forms/Tags.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
-import slugify from "slugify";
-import config from "@/utils/config";
-import SearchUserCategoryOrTagModal from "@/Components/Search/SearchUserCategoryOrTagModal.vue";
+import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import {
@@ -588,15 +583,7 @@ onBeforeMount(() => {
                 >
                     <p class="myPrimaryParagraph">No category selected.</p>
                 </div>
-                <InputError :message="postForm.errors.author" />
-                <p
-                    v-if="
-                        postForm.categories && postForm.categories.length >= 21
-                    "
-                    class="myPrimaryParagraphError"
-                >
-                    Maximum 20 author is allowed.
-                </p>
+                <InputError :message="postForm.errors.categories" />
             </div>
             <!-- post categories - end -->
 
@@ -737,23 +724,7 @@ onBeforeMount(() => {
                 <header></header>
                 <main></main>
             </DynamicModal>
-            <SearchUserCategoryOrTagModal
-                apiUrlName="attach.user.index"
-                :user="user"
-                :team="postForm.team"
-                :show="modalShowSearchItemsModal"
-                :title="titleModalSearchItems"
-                :description="descriptionModalSearchItems"
-                :firstButtonText="firstButtonModalSearchItems"
-                :secondButtonText="secondButtonModalSearchItems"
-                @firstModalButtonSearchItemsFunction="
-                    firstModalButtonSearchItemsFunction
-                "
-                @secondModalButtonSearchItemsFunction="
-                    secondModalButtonSearchItemsFunction
-                "
-            >
-            </SearchUserCategoryOrTagModal>
+
             <MediaLibraryModal
                 :user="user"
                 :team="postForm.team"

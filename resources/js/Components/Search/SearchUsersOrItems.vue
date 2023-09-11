@@ -3,7 +3,9 @@ import Modal from "@/Components/Modals/Modal.vue";
 import { ref, computed, onMounted } from "vue";
 import { TailwindPagination } from "laravel-vue-pagination";
 import { useStore } from "vuex";
+import { Squares2X2Icon, TrashIcon } from "@heroicons/vue/24/outline";
 
+console.log("global variable..");
 const props = defineProps({
     team: {
         required: true,
@@ -32,9 +34,41 @@ const props = defineProps({
     existingItems: {
         required: true,
     },
-    apiUrlName: {
+    apiUrlRouteName: {
         type: String,
         required: true,
+    },
+    vuexActionMethod: {
+        type: String,
+        required: true,
+    },
+    vuexGetCurrentItems: {
+        type: String,
+        required: true,
+    },
+    vuexGetCurrentAttachedItems: {
+        type: String,
+        required: true,
+    },
+    vuexSetCurrentAttachedItems: {
+        type: String,
+        required: true,
+    },
+    vuexSetRemoveAttachedItem: {
+        type: String,
+        required: true,
+    },
+    vuexSetCurrentAttachedItemsToEmptyArray: {
+        type: String,
+        required: true,
+    },
+    displayIcon: {
+        Boolean,
+        required: true,
+    },
+    icon: {
+        String,
+        required: false,
     },
 });
 
@@ -44,10 +78,10 @@ const store = useStore();
 const frontEndError = ref(null);
 
 const getCurrentItems = computed(() => {
-    return store.getters["attachedUsersOrItems/getCurrentUsers"];
+    return store.getters[props.vuexGetCurrentItems];
 });
 const getCurrentAttachedItems = computed(() => {
-    return store.getters["attachedUsersOrItems/getCurrentAttachedUsers"];
+    return store.getters[props.vuexGetCurrentAttachedItems];
 });
 //
 const filteredItems = ref([]);
@@ -57,12 +91,12 @@ const search_query = ref("");
 const handleSearch = function (page) {
     // dispatch
     store.dispatch(
-        "attachedUsersOrItems/loadUsers",
+        props.vuexActionMethod,
         {
             teamId: props.team.id,
             page: page,
             search_query: search_query.value,
-            apiUrlName: props.apiUrlName,
+            apiUrlRouteName: props.apiUrlRouteName,
         },
         {}
     );
@@ -117,7 +151,7 @@ const handleAttachItem = function (item) {
     // Item with matching ID do not exists
     if (isItemExists === false) {
         frontEndError.value = null;
-        store.commit("attachedUsersOrItems/setCurrentAttachedUsers", item);
+        store.commit(props.vuexSetCurrentAttachedItems, item);
     }
 };
 const handleRemoveAttachedItem = function (itemId) {
@@ -125,24 +159,18 @@ const handleRemoveAttachedItem = function (itemId) {
     filteredItems.value = getCurrentAttachedItems.value.filter(
         (item) => item.id !== itemId
     );
-    store.commit(
-        "attachedUsersOrItems/setRemoveAttachedUser",
-        filteredItems.value
-    );
+    store.commit(props.vuexSetRemoveAttachedItem, filteredItems.value);
 };
 
 onMounted(() => {
-    store.commit(
-        "attachedUsersOrItems/setCurrentAttachedUsersToEmptyArray",
-        []
-    );
+    store.commit(props.vuexSetCurrentAttachedItemsToEmptyArray, []);
 
     if (
         (props.existingItems !== null || props.existingItems !== undefined) &&
         Array.isArray(props.existingItems)
     ) {
         props.existingItems.forEach((item) => {
-            store.commit("attachedUsersOrItems/setCurrentAttachedUsers", item);
+            store.commit(props.vuexSetCurrentAttachedItems, item);
         });
     }
 
@@ -239,8 +267,8 @@ onMounted(() => {
                                 getCurrentItems &&
                                 getCurrentItems.isError === false &&
                                 getCurrentItems.fetchedData &&
-                                getCurrentItems.fetchedData.users &&
-                                getCurrentItems.fetchedData.users.data &&
+                                getCurrentItems.fetchedData.items &&
+                                getCurrentItems.fetchedData.items.data &&
                                 getCurrentItems.fetchedData.total_results !== 0
                             "
                             class="flex justify-start items-center"
@@ -272,7 +300,7 @@ onMounted(() => {
                             v-if="
                                 getCurrentItems &&
                                 getCurrentItems.fetchedData &&
-                                getCurrentItems.fetchedData.users &&
+                                getCurrentItems.fetchedData.items &&
                                 getCurrentItems.fetchedData.total_results !== 0
                             "
                             class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4 gap-2 flex-wrap-reverse"
@@ -299,7 +327,7 @@ onMounted(() => {
                                     'text-myPrimaryDarkGrayColor',
                                     'rounded-full',
                                 ]"
-                                :data="getCurrentItems.fetchedData.users"
+                                :data="getCurrentItems.fetchedData.items"
                                 @pagination-change-page="getResultsForPage"
                             >
                                 <template #prev-nav>
@@ -340,9 +368,9 @@ onMounted(() => {
                                 getCurrentItems.isError === false &&
                                 getCurrentItems.isSuccess === true &&
                                 getCurrentItems.fetchedData &&
-                                getCurrentItems.fetchedData.users &&
-                                getCurrentItems.fetchedData.users.data &&
-                                getCurrentItems.fetchedData.total_results !== 0
+                                getCurrentItems.fetchedData.items &&
+                                getCurrentItems.fetchedData.items.data &&
+                                getCurrentItems.fetchedData.items.data !== 0
                             "
                         >
                             <div
@@ -353,7 +381,7 @@ onMounted(() => {
                                 >
                                     <div
                                         v-for="item in getCurrentItems
-                                            .fetchedData.users.data"
+                                            .fetchedData.items.data"
                                         :key="item.id"
                                         class="myPrimaryBorderFullRoundedUsers"
                                     >
@@ -368,29 +396,22 @@ onMounted(() => {
                                                     class="flex-shrink-0"
                                                     v-if="
                                                         item &&
-                                                        item.profile_photo_path !==
-                                                            null
+                                                        item.profile_photo_path
                                                     "
                                                 >
                                                     <img
-                                                        v-if="
-                                                            item.profile_photo_path !==
-                                                            null
-                                                        "
                                                         class="object-cover w-12 h-12 rounded-full"
                                                         :src="`/storage/${item.profile_photo_path}`"
-                                                        :alt="
-                                                            item.first_name +
-                                                            item.last_name
-                                                        "
+                                                        alt="Image"
                                                     />
                                                 </div>
 
                                                 <div
                                                     v-if="
                                                         item &&
-                                                        item.profile_photo_path ===
-                                                            null
+                                                        item.first_name &&
+                                                        item.last_name &&
+                                                        !item.profile_photo_path
                                                     "
                                                     class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                                 >
@@ -411,17 +432,56 @@ onMounted(() => {
                                                 </div>
 
                                                 <!-- end photo -->
-                                                <span
-                                                    class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                                <div>
+                                                    <p
+                                                        v-if="
+                                                            item.first_name &&
+                                                            item.last_name
+                                                        "
+                                                        class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                                    >
+                                                        <span
+                                                            class="font-medium"
+                                                        >
+                                                            {{
+                                                                item.first_name
+                                                            }}
+                                                            {{ item.last_name }}
+                                                        </span>
+                                                        <span>
+                                                            Email:
+                                                            {{ item.email }}
+                                                        </span>
+                                                        <span>
+                                                            Role:
+                                                            {{ item.role }}
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    class="flex items-center gap-2 my-2"
+                                                    v-if="item.name"
                                                 >
-                                                    <span class="font-medium">
-                                                        {{ item.first_name }}
-                                                        {{ item.last_name }}
-                                                    </span>
-                                                    <span class="italic">
-                                                        {{ item.role }}
-                                                    </span>
-                                                </span>
+                                                    <div
+                                                        class="flex-shrink-0 myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-gray-100 flex justify-center items-center text-xs font-normal text-white"
+                                                    >
+                                                        <component
+                                                            :is="Squares2X2Icon"
+                                                            class="w-3 h-3 text-myPrimaryDarkGrayColor"
+                                                            aria-hidden="true"
+                                                        />
+                                                    </div>
+                                                    <p
+                                                        v-if="item.name"
+                                                        class="myPrimaryParagraph text-xs"
+                                                    >
+                                                        <span
+                                                            class="font-medium"
+                                                        >
+                                                            {{ item.name }}
+                                                        </span>
+                                                    </p>
+                                                </div>
                                             </div>
 
                                             <button
@@ -519,17 +579,12 @@ onMounted(() => {
                                     <!-- start photo -->
                                     <div
                                         class="flex-shrink-0"
-                                        v-if="
-                                            item &&
-                                            item.profile_photo_path !== null
-                                        "
+                                        v-if="item && item.profile_photo_path"
                                     >
                                         <img
                                             class="object-cover w-12 h-12 rounded-full"
                                             :src="`/storage/${item.profile_photo_path}`"
-                                            :alt="
-                                                item.first_name + item.last_name
-                                            "
+                                            alt="Image"
                                         />
                                     </div>
 
@@ -560,31 +615,44 @@ onMounted(() => {
                                     <span
                                         class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                     >
-                                        <span class="font-medium">
-                                            {{ item.first_name }}
-                                            {{ item.last_name }}
-                                        </span>
-                                        <span>
-                                            {{ item.email }}
-                                        </span>
-                                        <span> Role: {{ item.role }} </span>
+                                        <div
+                                            class="flex items-center gap-2 my-2"
+                                            v-if="item.name"
+                                        >
+                                            <div
+                                                class="flex-shrink-0 myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-gray-100 flex justify-center items-center text-xs font-normal text-white"
+                                            >
+                                                <component
+                                                    :is="Squares2X2Icon"
+                                                    class="w-3 h-3 text-myPrimaryDarkGrayColor"
+                                                    aria-hidden="true"
+                                                />
+                                            </div>
+                                            <span class="font-medium">
+                                                {{ item.name }}
+                                            </span>
+                                        </div>
+                                        <div
+                                            class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                            v-if="
+                                                item.first_name &&
+                                                item.last_name
+                                            "
+                                        >
+                                            <span class="font-medium">
+                                                {{ item.first_name }}
+                                                {{ item.last_name }}
+                                            </span>
+                                        </div>
                                     </span>
                                 </div>
-                                <div @click="handleRemoveAttachedItem(item.id)">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
+                                <div
+                                    @click="handleRemoveAttachedItem(item.id)"
+                                    class="p-2 hover:bg-gray-200 hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                                >
+                                    <TrashIcon
                                         class="w-4 h-4 text-myPrimaryErrorColor cursor-pointer"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                        />
-                                    </svg>
+                                    ></TrashIcon>
                                 </div>
                             </div>
                         </div>

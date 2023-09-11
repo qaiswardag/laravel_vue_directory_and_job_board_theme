@@ -34,6 +34,7 @@ import {
     LockClosedIcon,
     LockOpenIcon,
     TrashIcon,
+    UserPlusIcon,
     XMarkIcon,
 } from "@heroicons/vue/24/outline";
 
@@ -148,7 +149,8 @@ const handleRemoveCoverImage = function () {
     postForm.cover_image_large = null;
 };
 
-const modalShowSearchItemsModal = ref(false);
+const showSearchUserModal = ref(false);
+const showSearchStoreCategoriesModal = ref(false);
 
 // modal content
 const titleModalSearchItems = ref("");
@@ -161,7 +163,7 @@ const secondModalButtonSearchItemsFunction = ref(null);
 
 const handleAddAuthor = function () {
     // handle show modal for unique content
-    modalShowSearchItemsModal.value = true;
+    showSearchUserModal.value = true;
     // set modal standards
     titleModalSearchItems.value = "Add author";
     descriptionModalSearchItems.value = "Add store author";
@@ -170,7 +172,7 @@ const handleAddAuthor = function () {
     // handle click
     firstModalButtonSearchItemsFunction.value = function () {
         // handle show modal for unique content
-        modalShowSearchItemsModal.value = false;
+        showSearchUserModal.value = false;
     };
     // handle click
     secondModalButtonSearchItemsFunction.value = function () {
@@ -202,7 +204,7 @@ const handleAddAuthor = function () {
         postForm.author = currentAttachedUsers;
 
         // handle show modal for unique content
-        modalShowSearchItemsModal.value = false;
+        showSearchUserModal.value = false;
     };
 
     // end modal
@@ -934,21 +936,9 @@ const handleDesigner = function () {
                             type="button"
                             class="myPrimaryButton gap-2 items-center"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-4 h-4"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                                />
-                            </svg>
-
+                            <UserPlusIcon
+                                class="w-4 h-4 stroke-2"
+                            ></UserPlusIcon>
                             Add Author
                         </button>
                     </div>
@@ -985,7 +975,10 @@ const handleDesigner = function () {
                                 <div
                                     class="flex justify-between items-center rounded"
                                 >
-                                    <div class="flex items-center gap-2 my-4">
+                                    <div
+                                        @click="handleAddAuthor"
+                                        class="flex items-center gap-2 my-4 cursor-pointer"
+                                    >
                                         <!-- start photo -->
                                         <div
                                             class="flex-shrink-0"
@@ -1236,10 +1229,28 @@ const handleDesigner = function () {
             </MediaLibraryModal>
             <SearchUsersOrItems
                 :existingItems="postForm.author"
-                apiUrlName="attach.user.index"
+                apiUrlRouteName="attach.user.index"
                 :user="user"
                 :team="postForm.team"
-                :show="modalShowSearchItemsModal"
+                :show="showSearchUserModal"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
+                "
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
+                "
+            >
+            </SearchUsersOrItems>
+            <SearchUsersOrItems
+                :existingItems="postForm.categories"
+                apiUrlRouteName="attach.store.categories.index"
+                :user="user"
+                :team="postForm.team"
+                :show="showSearchStoreCategoriesModal"
                 :title="titleModalSearchItems"
                 :description="descriptionModalSearchItems"
                 :firstButtonText="firstButtonModalSearchItems"

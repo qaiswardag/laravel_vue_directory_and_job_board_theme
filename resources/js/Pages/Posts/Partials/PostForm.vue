@@ -32,8 +32,12 @@ import {
     ChevronUpDownIcon,
     LockClosedIcon,
     LockOpenIcon,
+    SquaresPlusIcon,
     TrashIcon,
+    UserIcon,
+    UserPlusIcon,
     XMarkIcon,
+    Squares2X2Icon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -51,6 +55,10 @@ const props = defineProps({
         required: false,
     },
     postAuthor: {
+        default: null,
+        required: false,
+    },
+    categories: {
         default: null,
         required: false,
     },
@@ -88,6 +96,11 @@ const getCurrentImage = computed(() => {
 });
 const getCurrentAttachedUsers = computed(() => {
     return store.getters["attachedUsersOrItems/getCurrentAttachedUsers"];
+});
+const getCurrentAttachedPostCategories = computed(() => {
+    return store.getters[
+        "attachedUsersOrItems/getCurrentAttachedPostCategories"
+    ];
 });
 
 const formType = ref("create");
@@ -148,7 +161,8 @@ const handleRemoveCoverImage = function () {
     postForm.cover_image_large = null;
 };
 
-const modalShowSearchItemsModal = ref(false);
+const showSearchUserModal = ref(false);
+const showSearchPostCategoriesModal = ref(false);
 
 // modal content
 const titleModalSearchItems = ref("");
@@ -161,7 +175,7 @@ const secondModalButtonSearchItemsFunction = ref(null);
 
 const handleAddAuthor = function () {
     // handle show modal for unique content
-    modalShowSearchItemsModal.value = true;
+    showSearchUserModal.value = true;
     // set modal standards
     titleModalSearchItems.value = "Add author";
     descriptionModalSearchItems.value = "Add Post author";
@@ -170,48 +184,58 @@ const handleAddAuthor = function () {
     // handle click
     firstModalButtonSearchItemsFunction.value = function () {
         // handle show modal for unique content
-        modalShowSearchItemsModal.value = false;
+        showSearchUserModal.value = false;
     };
     // handle click
     secondModalButtonSearchItemsFunction.value = function () {
-        // reasons why using the spread operator to create a non-reactive copy of an
-        // array is generally considered better than using JSON.stringify
-        // and JSON.parse to achieve the same result:
-
-        // 1. Performance:
-        // The spread operator is generally faster than using JSON.stringify and JSON.parse
-        // to create a non-reactive copy of an array.
-        // This is because the spread operator is a built-in JavaScript feature,
-        // whereas JSON.stringify and JSON.parse require parsing and serializing data,
-        // which can be computationally expensive for large arrays.
-
-        // 2. Maintainability:
-        // Using the spread operator to create a non-reactive copy of an array is more
-        // maintainable than using JSON.stringify and JSON.parse because it is more
-        // concise and easier to read. The spread operator clearly indicates that a new array
-        // is being created, whereas the JSON.stringify and JSON.parse approach requires
-        // multiple function calls and string manipulations,
-        // which can be harder to read and understand.
-
-        // 3. Compatibility: The spread operator is a standard JavaScript feature that is
-        // supported by all modern browsers and Node.js, whereas JSON.stringify and JSON.parse
-        // may not be available in older browsers or
-        // environments that do not support ECMAScript 5.
         const currentAttachedUsers = [...getCurrentAttachedUsers.value];
         // Set post form author to the non-reactive copy
         postForm.author = currentAttachedUsers;
 
         // handle show modal for unique content
-        modalShowSearchItemsModal.value = false;
+        showSearchUserModal.value = false;
     };
 
     // end modal
 };
 
-const filteredUsers = ref([]);
 const handleRemoveAttachedUser = function (userId) {
-    // filter the array to exclude user with matching ID
+    // filter the array to exclude item with matching ID
     postForm.author = postForm.author.filter((user) => user.id !== userId);
+};
+
+const handleRemoveAttachedCategory = function (itemId) {
+    // filter the array to exclude item with matching ID
+    postForm.categories = postForm.categories.filter(
+        (item) => item.id !== itemId
+    );
+};
+const handleAddCategories = function () {
+    // handle show modal for unique content
+    showSearchPostCategoriesModal.value = true;
+    // set modal standards
+    titleModalSearchItems.value = "Add Categories";
+    descriptionModalSearchItems.value = "Add Post Category";
+    firstButtonModalSearchItems.value = "Close";
+    secondButtonModalSearchItems.value = "Save";
+    // handle click
+    firstModalButtonSearchItemsFunction.value = function () {
+        // handle show modal for unique content
+        showSearchPostCategoriesModal.value = false;
+    };
+    // handle click
+    secondModalButtonSearchItemsFunction.value = function () {
+        const currentAttachedPostCategories = [
+            ...getCurrentAttachedPostCategories.value,
+        ];
+        // Set post form author to the non-reactive copy
+        postForm.categories = currentAttachedPostCategories;
+
+        // handle show modal for unique content
+        showSearchPostCategoriesModal.value = false;
+    };
+
+    // end modal
 };
 
 const showErrorNotifications = ref(false);
@@ -397,6 +421,7 @@ const clearForm = function () {
     //
     postForm.show_author = false;
     postForm.author = [];
+    postForm.categories = [];
 
     localStorage.removeItem(pathLocalStorage);
 };
@@ -518,8 +543,7 @@ onBeforeMount(() => {
             postForm.author = [];
         }
 
-        // postForm.categories = props.postCategories;
-        postForm.categories = [1, 2, 3, 4];
+        postForm.categories = props.categories;
     }
 });
 </script>
@@ -784,21 +808,100 @@ onBeforeMount(() => {
                 <InputError :message="postForm.errors.cover_image_original" />
             </div>
             <!-- cover image - end -->
-            <!-- categories - start -->
+            <!-- post categories - start -->
             <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Categories
-                    </div>
-                    <p class="myPrimaryParagraph">
-                        Enter categories for the post.
+                <div
+                    class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
+                >
+                    <button
+                        @click="handleAddCategories"
+                        type="button"
+                        class="myPrimaryButton gap-2 items-center"
+                    >
+                        <SquaresPlusIcon class="w-4 h-4"></SquaresPlusIcon>
+                        Add Category
+                    </button>
+                </div>
+
+                <div
+                    class="p-2 mt-4"
+                    :class="
+                        postForm.categories && postForm.categories.length === 0
+                            ? 'bg-white'
+                            : 'bg-gray-50'
+                    "
+                >
+                    <p
+                        v-if="
+                            postForm.categories &&
+                            postForm.categories.length !== 0
+                        "
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{ postForm.categories && postForm.categories.length }}
+                        {{
+                            postForm.categories &&
+                            postForm.categories.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
                     </p>
+
+                    <div
+                        v-if="
+                            postForm.categories &&
+                            postForm.categories.length !== 0
+                        "
+                        class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                    >
+                        <div
+                            v-for="category in postForm.categories"
+                            :key="category.id"
+                            class="hover:bg-gray-50 px-2 bg-white"
+                        >
+                            <div
+                                class="flex justify-between items-center rounded my-2"
+                            >
+                                <div class="flex items-center gap-2 my-2">
+                                    <div
+                                        class="flex-shrink-0 myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-gray-100 flex justify-center items-center text-xs font-normal text-white"
+                                    >
+                                        <Squares2X2Icon
+                                            class="w-3 h-3 text-myPrimaryDarkGrayColor"
+                                        ></Squares2X2Icon>
+                                    </div>
+                                    <p>
+                                        {{ category.name }}
+                                    </p>
+                                </div>
+                                <div
+                                    @click="
+                                        handleRemoveAttachedCategory(
+                                            category.id
+                                        )
+                                    "
+                                >
+                                    <TrashIcon
+                                        class="w-4 h-4 text-myPrimaryErrorColor stroke-2 cursor-pointer"
+                                    ></TrashIcon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="myInputGroup">
-                    <InputError :message="postForm.errors.categories" />
+                <div
+                    v-if="
+                        postForm.categories && postForm.categories.length === 0
+                    "
+                    class="space-y-6"
+                >
+                    <p class="myPrimaryParagraph">No category selected.</p>
                 </div>
+                <InputError :message="postForm.errors.categories" />
             </div>
-            <!-- categories - end -->
+            <!-- post categories - end -->
+
             <!-- tags - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -906,21 +1009,9 @@ onBeforeMount(() => {
                             type="button"
                             class="myPrimaryButton gap-2 items-center"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-4 h-4"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                                />
-                            </svg>
-
+                            <UserPlusIcon
+                                class="w-4 h-4 stroke-2"
+                            ></UserPlusIcon>
                             Add Author
                         </button>
                     </div>
@@ -957,7 +1048,10 @@ onBeforeMount(() => {
                                 <div
                                     class="flex justify-between items-center rounded"
                                 >
-                                    <div class="flex items-center gap-2 my-4">
+                                    <div
+                                        @click="handleAddAuthor"
+                                        class="flex items-center gap-2 my-4 cursor-pointer"
+                                    >
                                         <!-- start photo -->
                                         <div
                                             class="flex-shrink-0"
@@ -1205,24 +1299,63 @@ onBeforeMount(() => {
                 @thirdMediaButtonFunction="thirdMediaButtonFunction"
             >
             </MediaLibraryModal>
-            <SearchUsersOrItems
-                :existingItems="postForm.author"
-                apiUrlName="attach.user.index"
-                :user="user"
-                :team="postForm.team"
-                :show="modalShowSearchItemsModal"
-                :title="titleModalSearchItems"
-                :description="descriptionModalSearchItems"
-                :firstButtonText="firstButtonModalSearchItems"
-                :secondButtonText="secondButtonModalSearchItems"
-                @firstModalButtonSearchItemsFunction="
-                    firstModalButtonSearchItemsFunction
-                "
-                @secondModalButtonSearchItemsFunction="
-                    secondModalButtonSearchItemsFunction
-                "
-            >
-            </SearchUsersOrItems>
+
+            <div v-if="showSearchUserModal">
+                <SearchUsersOrItems
+                    apiUrlRouteName="attach.user.index"
+                    :existingItems="postForm.author"
+                    vuexActionMethod="attachedUsersOrItems/fetchUsers"
+                    vuexGetCurrentItems="attachedUsersOrItems/getCurrentUsers"
+                    vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedUsers"
+                    vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedUsers"
+                    vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedUser"
+                    vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedUsersToEmptyArray"
+                    :user="user"
+                    :team="postForm.team"
+                    :title="titleModalSearchItems"
+                    :description="descriptionModalSearchItems"
+                    :firstButtonText="firstButtonModalSearchItems"
+                    :secondButtonText="secondButtonModalSearchItems"
+                    @firstModalButtonSearchItemsFunction="
+                        firstModalButtonSearchItemsFunction
+                    "
+                    @secondModalButtonSearchItemsFunction="
+                        secondModalButtonSearchItemsFunction
+                    "
+                    :displayIcon="false"
+                    :show="showSearchUserModal"
+                >
+                </SearchUsersOrItems>
+            </div>
+            <div v-if="showSearchPostCategoriesModal">
+                <SearchUsersOrItems
+                    apiUrlRouteName="attach.post.categories.index"
+                    :existingItems="postForm.categories"
+                    vuexActionMethod="attachedUsersOrItems/fetchCategories"
+                    vuexGetCurrentItems="attachedUsersOrItems/getCurrentPostCategroies"
+                    vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedPostCategories"
+                    vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedPostCategories"
+                    vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedPostCategories"
+                    vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedPostCategoriesToEmptyArray"
+                    :user="user"
+                    :team="postForm.team"
+                    :title="titleModalSearchItems"
+                    :description="descriptionModalSearchItems"
+                    :firstButtonText="firstButtonModalSearchItems"
+                    :secondButtonText="secondButtonModalSearchItems"
+                    @firstModalButtonSearchItemsFunction="
+                        firstModalButtonSearchItemsFunction
+                    "
+                    @secondModalButtonSearchItemsFunction="
+                        secondModalButtonSearchItemsFunction
+                    "
+                    :displayIcon="true"
+                    icon="Squares2X2Icon"
+                    :show="showSearchPostCategoriesModal"
+                >
+                </SearchUsersOrItems>
+            </div>
+
             <NotificationsFixedBottom
                 :listOfMessages="Object.values(postForm.errors)"
                 :show="showErrorNotifications"

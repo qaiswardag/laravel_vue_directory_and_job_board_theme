@@ -1,6 +1,10 @@
 <?php
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobCategoriesController;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobTypesController;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachPostCategoriesController;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachStoreCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
 use App\Http\Controllers\Api\Internal\LoggedIn\DashboardStatsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
@@ -161,14 +165,39 @@ Route::middleware([
         // MEDIA #END
         // MEDIA #END
 
+        // ATTACH USER, POST CATEGORIES, POST TYPES, JOB CATEGORIES, STORE CATEGORIES #START
         // ATTACH USER #START
         // ATTACH USER #START
         // ATTACH USER #START
-        // ATTACH USER #START
+        // USERS
         Route::get("/team/attach/users/index/{team}", [
             AttachUserController::class,
             "index",
         ])->name("attach.user.index");
+
+        // POST CATEGORIES
+        Route::get("/team/attach/post/categories/index/{team}", [
+            AttachPostCategoriesController::class,
+            "index",
+        ])->name("attach.post.categories.index");
+
+        // JOB CATEGORIES
+        Route::get("/team/attach/job/categories/index/{team}", [
+            AttachJobCategoriesController::class,
+            "index",
+        ])->name("attach.job.categories.index");
+
+        // JOB TYPES
+        Route::get("/team/attach/job/types/index/{team}", [
+            AttachJobTypesController::class,
+            "index",
+        ])->name("attach.job.types.index");
+
+        // STORE CATEGORES
+        Route::get("/team/attach/store/categories/index/{team}", [
+            AttachStoreCategoriesController::class,
+            "index",
+        ])->name("attach.store.categories.index");
         // ATTACH USER #END
         // ATTACH USER #END
         // ATTACH USER #END

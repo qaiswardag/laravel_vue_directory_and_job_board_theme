@@ -296,7 +296,8 @@ import {
                 route().current('admin.dashboard') ||
                 route().current('admin.users') ||
                 route().current('admin.components') ||
-                route().current('admin.components.component.create')
+                route().current('admin.components.component.create') ||
+                route().current('admin.components.component.edit')
             "
         >
             <FingerPrintIcon

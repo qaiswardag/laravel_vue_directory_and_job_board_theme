@@ -2,13 +2,13 @@ import { vueFetch } from "use-lightweight-fetch";
 
 // get users
 const {
-    handleData: handleGetUsers,
-    fetchedData: fetchedUsers,
-    isError: isErrorUsers,
-    error: errorUsers,
-    errors: errorsUsers,
-    isLoading: isLoadingUsers,
-    isSuccess: isSuccessUsers,
+    handleData: handleGetItems,
+    fetchedData: fetchedItems,
+    isError: isErrorItems,
+    error: errorItems,
+    errors: errorsItems,
+    isLoading: isLoadingItems,
+    isSuccess: isSuccessItems,
 } = vueFetch();
 
 export default {
@@ -35,11 +35,23 @@ export default {
         getCurrentAttachedUsers(state) {
             return state.attachedUsers;
         },
+
+        getCurrentPostCategroies(state) {
+            return state.postCategories;
+        },
         getCurrentAttachedPostCategories(state) {
             return state.attachedPostCategories;
         },
+
+        getCurrentJobCategroies(state) {
+            return state.jobCategories;
+        },
         getCurrentAttachedJobCategories(state) {
             return state.attachedJobCategories;
+        },
+
+        getCurrentStoreCategroies(state) {
+            return state.storeCategories;
         },
         getCurrentAttachedStoreCategories(state) {
             return state.attachedStoreCategories;
@@ -150,7 +162,7 @@ export default {
     // actions
     actions: {
         // get users
-        async loadUsers(context, data) {
+        async fetchUsers(context, data) {
             if (data.search_query === undefined) {
                 data.search_query = "";
             }
@@ -158,8 +170,8 @@ export default {
                 data.page = "";
             }
 
-            handleGetUsers(
-                route(data.apiUrlName, {
+            handleGetItems(
+                route(data.apiUrlRouteName, {
                     team: data.teamId,
                     search_query: data.search_query,
                     page: data.page,
@@ -168,12 +180,39 @@ export default {
 
             // context & send to mutation
             context.commit("setCurrentUsers", {
-                fetchedData: fetchedUsers,
-                isError: isErrorUsers,
-                error: errorUsers,
-                errors: errorsUsers,
-                isLoading: isLoadingUsers,
-                isSuccess: isSuccessUsers,
+                fetchedData: fetchedItems,
+                isError: isErrorItems,
+                error: errorItems,
+                errors: errorsItems,
+                isLoading: isLoadingItems,
+                isSuccess: isSuccessItems,
+            });
+        },
+        // get post categories
+        async fetchCategories(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
+            handleGetItems(
+                route(data.apiUrlRouteName, {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
+            );
+
+            // context & send to mutation
+            context.commit("setCurrentPostCategories", {
+                fetchedData: fetchedItems,
+                isError: isErrorItems,
+                error: errorItems,
+                errors: errorsItems,
+                isLoading: isLoadingItems,
+                isSuccess: isSuccessItems,
             });
         },
         // end action
