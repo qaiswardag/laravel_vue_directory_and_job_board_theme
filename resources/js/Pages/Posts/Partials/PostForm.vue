@@ -864,7 +864,7 @@ onBeforeMount(() => {
                         <div
                             v-for="category in postForm.categories"
                             :key="category.id"
-                            class="hover:bg-gray-50 px-2 bg-white"
+                            class="bg-red-100 hover:bg-pink-200 px-4 m-4"
                         >
                             <div
                                 class="flex justify-between items-center rounded my-2"
@@ -885,15 +885,15 @@ onBeforeMount(() => {
                                     </p>
                                 </div>
                                 <div
-                                    class="p-2 hover:bg-gray-200 hover:text-white bg-gray-100 rounded-full cursor-pointer"
                                     @click="
                                         handleRemoveAttachedCategory(
                                             category.id
                                         )
                                     "
+                                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
-                                        class="w-4 h-4 text-myPrimaryErrorColor stroke-2 cursor-pointer"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
                                     ></TrashIcon>
                                 </div>
                             </div>
@@ -1053,7 +1053,7 @@ onBeforeMount(() => {
                             <div
                                 v-for="user in postForm.author"
                                 :key="user.id"
-                                class="hover:bg-white px-2"
+                                class="bg-red-100 hover:bg-pink-200 px-4 m-4"
                             >
                                 <div
                                     class="flex justify-between items-center rounded"
@@ -1114,13 +1114,13 @@ onBeforeMount(() => {
                                         </span>
                                     </div>
                                     <div
-                                        class="p-2 hover:bg-gray-200 hover:text-white bg-gray-100 rounded-full cursor-pointer"
                                         @click="
                                             handleRemoveAttachedUser(user.id)
                                         "
+                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
-                                            class="w-4 h-4 text-myPrimaryErrorColor stroke-2 cursor-pointer"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></TrashIcon>
                                     </div>
                                 </div>

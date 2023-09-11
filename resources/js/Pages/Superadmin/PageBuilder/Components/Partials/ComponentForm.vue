@@ -538,7 +538,7 @@ onBeforeMount(() => {
                             postForm.categories &&
                             postForm.categories.length !== 0
                         "
-                        class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 bg-red-100 hover:bg-pink-200"
                     >
                         <div
                             v-for="category in postForm.categories"
