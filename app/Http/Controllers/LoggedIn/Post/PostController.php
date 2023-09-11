@@ -34,7 +34,7 @@ class PostController extends Controller
 
         if ($team === null) {
             return Inertia::render("Error", [
-                "customError" => "Please try another route.", // Error message for the user.
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
                 "status" => 404, // HTTP status code for the response.
             ]);
         }
@@ -99,7 +99,7 @@ class PostController extends Controller
 
         if ($team === null) {
             return Inertia::render("Error", [
-                "customError" => "Please try another route.", // Error message for the user.
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
                 "status" => 404, // HTTP status code for the response.
             ]);
         }
@@ -203,7 +203,7 @@ class PostController extends Controller
 
         if ($team === null) {
             return Inertia::render("Error", [
-                "customError" => "Please try another route.", // Error message for the user.
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
                 "status" => 404, // HTTP status code for the response.
             ]);
         }
@@ -268,7 +268,7 @@ class PostController extends Controller
 
         if ($team === null) {
             return Inertia::render("Error", [
-                "customError" => "Please try another route.", // Error message for the user.
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
                 "status" => 404, // HTTP status code for the response.
             ]);
         }
