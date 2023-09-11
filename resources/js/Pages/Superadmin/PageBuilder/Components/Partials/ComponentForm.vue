@@ -546,7 +546,7 @@ onBeforeMount(() => {
                             class="hover:bg-gray-50 px-2 bg-white"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-2 gap-4"
+                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
                             >
                                 <div class="flex items-center gap-4 my-2">
                                     <div

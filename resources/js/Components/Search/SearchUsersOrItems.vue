@@ -439,12 +439,13 @@ onMounted(() => {
                                                 </div>
 
                                                 <!-- end photo -->
-                                                <div>
+                                                <div
+                                                    v-if="
+                                                        item.first_name &&
+                                                        item.last_name
+                                                    "
+                                                >
                                                     <p
-                                                        v-if="
-                                                            item.first_name &&
-                                                            item.last_name
-                                                        "
                                                         class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                                     >
                                                         <span

@@ -866,7 +866,7 @@ onBeforeMount(() => {
                             :key="category.id"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-2 gap-4"
+                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
                             >
                                 <div
                                     @click="handleAddCategories"
