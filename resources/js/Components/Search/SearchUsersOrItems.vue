@@ -7,6 +7,8 @@ import {
     Squares2X2Icon,
     TrashIcon,
     CheckIcon,
+    MapPinIcon,
+    GlobeAmericasIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -66,10 +68,12 @@ const props = defineProps({
         required: true,
     },
     displayIcon: {
+        default: null,
         Boolean,
         required: true,
     },
     icon: {
+        default: null,
         String,
         required: false,
     },
@@ -377,10 +381,10 @@ onMounted(() => {
                             "
                         >
                             <div
-                                class="h-full md:max-h-[26.3rem] max-h-[13rem] overflow-y-scroll pr-1"
+                                class="h-full md:max-h-[26.3rem] max-h-[13rem] overflow-y-scroll p-2"
                             >
                                 <div
-                                    class="flex flex-col w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
+                                    class="divide-y divide-gray-200 flex flex-col w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
                                 >
                                     <div
                                         v-for="item in getCurrentItems
@@ -461,29 +465,73 @@ onMounted(() => {
                                                         </span>
                                                     </p>
                                                 </div>
+
                                                 <div
-                                                    class="flex items-center gap-4 my-2"
-                                                    v-if="item.name"
+                                                    class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                                 >
                                                     <div
-                                                        class="flex-shrink-0 myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-gray-100 flex justify-center items-center text-xs font-normal text-white"
-                                                    >
-                                                        <component
-                                                            :is="Squares2X2Icon"
-                                                            class="w-3 h-3 text-myPrimaryDarkGrayColor"
-                                                            aria-hidden="true"
-                                                        />
-                                                    </div>
-                                                    <p
+                                                        @click="
+                                                            handleAttachItem(
+                                                                item
+                                                            )
+                                                        "
+                                                        class="flex items-center gap-4 my-2"
                                                         v-if="item.name"
-                                                        class="myPrimaryParagraph text-xs"
                                                     >
+                                                        <div
+                                                            class="bg-gray-50 w-10 h-10 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                                        >
+                                                            <div
+                                                                v-if="
+                                                                    props.icon ===
+                                                                    'Squares2X2Icon'
+                                                                "
+                                                            >
+                                                                <Squares2X2Icon
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                >
+                                                                </Squares2X2Icon>
+                                                            </div>
+                                                            <div
+                                                                v-if="
+                                                                    props.icon ===
+                                                                    'CheckIcon'
+                                                                "
+                                                            >
+                                                                <CheckIcon
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                >
+                                                                </CheckIcon>
+                                                            </div>
+                                                            <div
+                                                                v-if="
+                                                                    props.icon ===
+                                                                    'MapPinIcon'
+                                                                "
+                                                            >
+                                                                <MapPinIcon
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                >
+                                                                </MapPinIcon>
+                                                            </div>
+                                                            <div
+                                                                v-if="
+                                                                    props.icon ===
+                                                                    'GlobeAmericasIcon'
+                                                                "
+                                                            >
+                                                                <GlobeAmericasIcon
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                >
+                                                                </GlobeAmericasIcon>
+                                                            </div>
+                                                        </div>
                                                         <span
                                                             class="font-medium"
                                                         >
                                                             {{ item.name }}
                                                         </span>
-                                                    </p>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -546,7 +594,7 @@ onMounted(() => {
                 </main>
                 <aside
                     aria-label="sidebar"
-                    class="h-full md:max-h-[38.5rem] max-h-[12rem] md:w-3/5 w-full bg-gray-50 pl-2 border border-gray-200 overflow-y-scroll rounded"
+                    class="h-full md:max-h-[38.5rem] max-h-[12rem] md:w-3/5 w-full pl-2 border border-gray-200 overflow-y-scroll rounded"
                 >
                     <div
                         v-if="getCurrentAttachedItems.length === 0"
@@ -561,7 +609,7 @@ onMounted(() => {
                         v-if="getCurrentAttachedItems.length !== 0"
                         class="flex flex-col w-full divide-y divide-gray-200 p-2"
                     >
-                        <div class="flex justify-start items-center">
+                        <div class="flex justify-start items-center mb-4">
                             <p class="myPrimaryTag">
                                 Added
                                 {{ getCurrentAttachedItems.length }}
@@ -577,8 +625,8 @@ onMounted(() => {
                             :key="item.id"
                             class="px-2 hover:bg-white"
                         >
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center gap-2 my-4">
+                            <div class="flex justify-between items-center my-4">
+                                <div class="flex items-center gap-2">
                                     <!-- start photo -->
                                     <div
                                         class="flex-shrink-0"
@@ -615,7 +663,8 @@ onMounted(() => {
                                     </div>
 
                                     <!-- end photo -->
-                                    <span
+
+                                    <div
                                         class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                     >
                                         <div
@@ -623,13 +672,52 @@ onMounted(() => {
                                             v-if="item.name"
                                         >
                                             <div
-                                                class="flex-shrink-0 myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-gray-100 flex justify-center items-center text-xs font-normal text-white"
+                                                class="bg-gray-50 w-10 h-10 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                             >
-                                                <component
-                                                    :is="Squares2X2Icon"
-                                                    class="w-3 h-3 text-myPrimaryDarkGrayColor"
-                                                    aria-hidden="true"
-                                                />
+                                                <div
+                                                    v-if="
+                                                        props.icon ===
+                                                        'Squares2X2Icon'
+                                                    "
+                                                >
+                                                    <Squares2X2Icon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    >
+                                                    </Squares2X2Icon>
+                                                </div>
+                                                <div
+                                                    v-if="
+                                                        props.icon ===
+                                                        'CheckIcon'
+                                                    "
+                                                >
+                                                    <CheckIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    >
+                                                    </CheckIcon>
+                                                </div>
+                                                <div
+                                                    v-if="
+                                                        props.icon ===
+                                                        'MapPinIcon'
+                                                    "
+                                                >
+                                                    <MapPinIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    >
+                                                    </MapPinIcon>
+                                                </div>
+                                                <div
+                                                    v-if="
+                                                        props.icon ===
+                                                        'GlobeAmericasIcon'
+                                                    "
+                                                >
+                                                    <GlobeAmericasIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    >
+                                                    </GlobeAmericasIcon>
+                                                </div>
                                             </div>
                                             <span class="font-medium">
                                                 {{ item.name }}
@@ -647,14 +735,14 @@ onMounted(() => {
                                                 {{ item.last_name }}
                                             </span>
                                         </div>
-                                    </span>
+                                    </div>
                                 </div>
                                 <div
                                     @click="handleRemoveAttachedItem(item.id)"
-                                    class="p-2 hover:bg-gray-200 hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
-                                        class="w-4 h-4 text-myPrimaryErrorColor cursor-pointer"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
                                     ></TrashIcon>
                                 </div>
                             </div>

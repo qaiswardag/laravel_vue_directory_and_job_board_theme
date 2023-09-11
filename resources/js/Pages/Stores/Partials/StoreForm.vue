@@ -863,7 +863,7 @@ const handleDesigner = function () {
                     :class="
                         postForm.categories && postForm.categories.length === 0
                             ? 'bg-white'
-                            : 'bg-gray-50'
+                            : 'bg-white'
                     "
                 >
                     <p
@@ -888,25 +888,24 @@ const handleDesigner = function () {
                             postForm.categories &&
                             postForm.categories.length !== 0
                         "
-                        class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
                         <div
                             v-for="category in postForm.categories"
                             :key="category.id"
-                            class="bg-red-100 hover:bg-pink-200 px-4 m-4"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-2"
+                                class="flex justify-between items-center rounded my-2 gap-4"
                             >
                                 <div
                                     @click="handleAddCategories"
                                     class="flex items-center gap-4 my-2 cursor-pointer"
                                 >
                                     <div
-                                        class="flex-shrink-0 myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-gray-100 flex justify-center items-center text-xs font-normal text-white"
+                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
                                         <Squares2X2Icon
-                                            class="w-3 h-3 text-myPrimaryDarkGrayColor"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></Squares2X2Icon>
                                     </div>
                                     <p>
@@ -1060,7 +1059,7 @@ const handleDesigner = function () {
                         :class="
                             postForm.author.length === 0
                                 ? 'bg-white'
-                                : 'bg-gray-50'
+                                : 'bg-white'
                         "
                     >
                         <p
@@ -1077,13 +1076,9 @@ const handleDesigner = function () {
 
                         <div
                             v-if="postForm.author.length !== 0"
-                            class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                            class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                         >
-                            <div
-                                v-for="user in postForm.author"
-                                :key="user.id"
-                                class="bg-red-100 hover:bg-pink-200 px-4 m-4"
-                            >
+                            <div v-for="user in postForm.author" :key="user.id">
                                 <div
                                     class="flex justify-between items-center rounded"
                                 >

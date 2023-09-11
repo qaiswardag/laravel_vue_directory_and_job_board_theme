@@ -111,7 +111,7 @@ const handleLogout = () => {
                                 route().current('team.update.information') ||
                                 route().current('team.members') ||
                                 route().current('team.delete')
-                                    ? 'bg-myPrimaryBrandColor text-white'
+                                    ? 'bg-red-100 '
                                     : '',
                             ]"
                         >
@@ -119,7 +119,7 @@ const handleLogout = () => {
                                 class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                             >
                                 <AdjustmentsHorizontalIcon
-                                    class="shrink-0 w-6 h-6 m-2 stroke-2"
+                                    class="shrink-0 h-4 w-4 m-2 stroke-2"
                                 />
                             </div>
                             <div>Team Settings</div>
@@ -147,13 +147,11 @@ const handleLogout = () => {
                             route().current('user.profile.update') ||
                             route().current('user.profile.password') ||
                             route().current('user.profile.security')
-                                ? 'bg-myPrimaryBrandColor text-white'
+                                ? 'bg-red-100'
                                 : '',
                         ]"
                     >
-                        <div
-                            class="mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
-                        >
+                        <div>
                             <div
                                 class="h-10 w-10 flex-shrink-0"
                                 v-if="
@@ -181,7 +179,7 @@ const handleLogout = () => {
                                     class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
                                     <UserIcon
-                                        class="shrink-0 w-6 h-6 m-2 stroke-2"
+                                        class="shrink-0 h-4 w-4 m-2 stroke-2"
                                     />
                                 </div>
                             </template>
@@ -199,7 +197,7 @@ const handleLogout = () => {
                             class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <ArrowRightIcon
-                                class="shrink-0 w-6 h-6 m-2 stroke-2"
+                                class="shrink-0 h-4 w-4 m-2 stroke-2"
                             />
                         </div>
                         <div>Log out</div>
