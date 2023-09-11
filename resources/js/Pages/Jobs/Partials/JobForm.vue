@@ -968,10 +968,8 @@ onBeforeMount(() => {
             <!-- post types - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Job Types</div>
-                    <p class="myPrimaryParagraph">
-                        Types amet, adipiscing elit.
-                    </p>
+                    <div class="myPrimaryFormOrganizationHeader">Job Type</div>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <div
                     class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
@@ -982,7 +980,7 @@ onBeforeMount(() => {
                         class="myPrimaryButton gap-2 items-center"
                     >
                         <CheckIcon class="w-4 h-4"></CheckIcon>
-                        Add Types
+                        Add Job Type
                     </button>
                 </div>
 
@@ -1011,7 +1009,10 @@ onBeforeMount(() => {
                         v-if="postForm.types && postForm.types.length !== 0"
                         class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
-                        <div v-for="type in postForm.types" :key="type.id">
+                        <div
+                            v-for="jobType in postForm.types"
+                            :key="jobType.id"
+                        >
                             <div
                                 class="flex justify-between items-center rounded my-2 gap-4"
                             >
@@ -1027,12 +1028,12 @@ onBeforeMount(() => {
                                         ></CheckIcon>
                                     </div>
                                     <p>
-                                        {{ type.name }}
+                                        {{ jobType.name }}
                                     </p>
                                 </div>
                                 <div
                                     @click="
-                                        handleRemoveAttachedJobType(type.id)
+                                        handleRemoveAttachedJobType(jobType.id)
                                     "
                                     class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
@@ -1048,7 +1049,7 @@ onBeforeMount(() => {
                     v-if="postForm.types && postForm.types.length === 0"
                     class="space-y-6"
                 >
-                    <p class="myPrimaryParagraph">No category selected.</p>
+                    <p class="myPrimaryParagraph">No Job Type selected.</p>
                 </div>
                 <InputError :message="postForm.errors.types" />
             </div>
