@@ -132,10 +132,10 @@ const notificationsSlideOverButton = function () {
             <template v-if="$page.props.user !== null">
                 <Link :href="route('dashboard')">
                     <div
-                        class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                     >
                         <AdjustmentsVerticalIcon
-                            class="shrink-0 w-6 h-6"
+                            class="shrink-0 w-6 h-6 m-2 stroke-2"
                             aria-hidden="true"
                         />
                     </div>
@@ -193,9 +193,12 @@ const notificationsSlideOverButton = function () {
                         "
                         @click="handleMenuUserTeamModal"
                         type="button"
-                        class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                     >
-                        <UserIcon class="shrink-0 w-6 h-6" aria-hidden="true" />
+                        <UserIcon
+                            class="shrink-0 w-6 h-6 m-2 stroke-2"
+                            aria-hidden="true"
+                        />
                     </button>
                 </div>
             </template>
@@ -204,20 +207,26 @@ const notificationsSlideOverButton = function () {
                 <button
                     @click="handleNotificationsSlideOver"
                     type="button"
-                    class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <span class="sr-only">View notifications</span>
-                    <BellIcon class="shrink-0 w-6 h-6" aria-hidden="true" />
+                    <BellIcon
+                        class="shrink-0 w-6 h-6 m-2 stroke-2"
+                        aria-hidden="true"
+                    />
                 </button>
             </template>
 
             <button
                 @click="handlePrimaryMenuSlideOver"
                 type="button"
-                class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
             >
                 <span class="sr-only">View Menu</span>
-                <Bars3Icon class="shrink-0 w-6 h-6" aria-hidden="true" />
+                <Bars3Icon
+                    class="shrink-0 w-6 h-6 m-2 stroke-2"
+                    aria-hidden="true"
+                />
             </button>
         </nav>
     </header>

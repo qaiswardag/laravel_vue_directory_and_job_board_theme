@@ -137,7 +137,7 @@ const navigation = [
                                                 >
                                                     <button
                                                         type="button"
-                                                        class="p-2 hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
+                                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                                         @click="
                                                             $emit(
                                                                 'primaryMenuSlideOverButton'
@@ -145,7 +145,7 @@ const navigation = [
                                                         "
                                                     >
                                                         <XMarkIcon
-                                                            class="shrink-0 w-6 h-6"
+                                                            class="shrink-0 w-6 h-6 m-2 stroke-2"
                                                         ></XMarkIcon>
                                                     </button>
                                                 </div>

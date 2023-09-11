@@ -116,10 +116,10 @@ const handleLogout = () => {
                             ]"
                         >
                             <div
-                                class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
+                                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                             >
                                 <AdjustmentsHorizontalIcon
-                                    class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
+                                    class="shrink-0 w-6 h-6 m-2 stroke-2"
                                 />
                             </div>
                             <div>Team Settings</div>
@@ -152,17 +152,17 @@ const handleLogout = () => {
                         ]"
                     >
                         <div
-                            class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
+                            class="mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
                         >
                             <div
-                                class="h-8 w-8 flex-shrink-0"
+                                class="h-10 w-10 flex-shrink-0"
                                 v-if="
                                     $page.props.user &&
                                     $page.props.user.profile_photo_path !== null
                                 "
                             >
                                 <img
-                                    class="object-cover w-8 h-8 rounded-full flex-shrink-0"
+                                    class="object-cover w-10 h-10 rounded-full flex-shrink-0"
                                     :src="`/storage/${$page.props.user.profile_photo_path}`"
                                     :alt="
                                         $page.props.user.first_name +
@@ -177,9 +177,13 @@ const handleLogout = () => {
                                     $page.props.user.profile_photo_path === null
                                 "
                             >
-                                <UserIcon
-                                    class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
-                                />
+                                <div
+                                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                >
+                                    <UserIcon
+                                        class="shrink-0 w-6 h-6 m-2 stroke-2"
+                                    />
+                                </div>
                             </template>
                         </div>
                         <div>Your Profile</div>
@@ -192,10 +196,10 @@ const handleLogout = () => {
                         class="hover:bg-gray-50 group relative flex gap-x-6 rounded-lg px-4 py-2 cursor-pointer bg-gray-50 items-center hover:underline"
                     >
                         <div
-                            class="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-200 border border-transparent group-hover:border-gray-300"
+                            class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <ArrowRightIcon
-                                class="h-4 w-4 text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
+                                class="shrink-0 w-6 h-6 m-2 stroke-2"
                             />
                         </div>
                         <div>Log out</div>
