@@ -839,6 +839,12 @@ const handleDesigner = function () {
             <!-- cover image - end -->
             <!-- post categories - start -->
             <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Categories
+                    </div>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
+                </div>
                 <div
                     class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
                 >
