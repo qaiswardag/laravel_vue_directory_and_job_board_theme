@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Post\PostCategory;
 use App\Models\Team;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class AttachPostCategoriesController extends Controller
 {
@@ -43,7 +42,6 @@ class AttachPostCategoriesController extends Controller
         return [
             "items" => $items,
             "count" => $count,
-            // "results" => $items->total(),
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
             ],

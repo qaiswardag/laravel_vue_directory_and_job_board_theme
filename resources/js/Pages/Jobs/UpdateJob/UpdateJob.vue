@@ -16,6 +16,9 @@ const props = defineProps({
     postAuthor: {
         required: true,
     },
+    categories: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
@@ -44,6 +47,7 @@ const breadcrumbsLinks = [
             :user="user"
             :post="post"
             :postAuthor="postAuthor"
+            :categories="categories"
         ></JobForm>
     </LoggedInLayout>
 </template>

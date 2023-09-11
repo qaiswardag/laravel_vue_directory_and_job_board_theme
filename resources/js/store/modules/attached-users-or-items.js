@@ -17,12 +17,15 @@ export default {
     // state
     state: {
         users: [],
-        postCategories: [],
-        jobCategories: [],
-        storeCategories: [],
         attachedUsers: [],
+
+        postCategories: [],
         attachedPostCategories: [],
+
+        jobCategories: [],
         attachedJobCategories: [],
+
+        storeCategories: [],
         attachedStoreCategories: [],
         // end state
     },
@@ -36,21 +39,21 @@ export default {
             return state.attachedUsers;
         },
 
-        getCurrentPostCategroies(state) {
+        getCurrentPostCategories(state) {
             return state.postCategories;
         },
         getCurrentAttachedPostCategories(state) {
             return state.attachedPostCategories;
         },
 
-        getCurrentJobCategroies(state) {
+        getCurrentJobCategories(state) {
             return state.jobCategories;
         },
         getCurrentAttachedJobCategories(state) {
             return state.attachedJobCategories;
         },
 
-        getCurrentStoreCategroies(state) {
+        getCurrentStoreCategories(state) {
             return state.storeCategories;
         },
         getCurrentAttachedStoreCategories(state) {
@@ -149,7 +152,8 @@ export default {
                 state.attachedStoreCategories.unshift(payload);
             }
         },
-        getCurrentAttachedStoreCategoriesToEmptyArray(state, payload) {
+
+        setCurrentAttachedStoreCategoriesToEmptyArray(state, payload) {
             state.attachedStoreCategories = payload;
         },
         setRemoveAttachedStoreCategories(state, payload) {
@@ -189,7 +193,7 @@ export default {
             });
         },
         // get post categories
-        async fetchCategories(context, data) {
+        async fetchPostCategories(context, data) {
             if (data.search_query === undefined) {
                 data.search_query = "";
             }
@@ -207,6 +211,60 @@ export default {
 
             // context & send to mutation
             context.commit("setCurrentPostCategories", {
+                fetchedData: fetchedItems,
+                isError: isErrorItems,
+                error: errorItems,
+                errors: errorsItems,
+                isLoading: isLoadingItems,
+                isSuccess: isSuccessItems,
+            });
+        },
+        // get job categories
+        async fetchJobCategories(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
+            handleGetItems(
+                route(data.apiUrlRouteName, {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
+            );
+
+            // context & send to mutation
+            context.commit("setCurrentJobCategories", {
+                fetchedData: fetchedItems,
+                isError: isErrorItems,
+                error: errorItems,
+                errors: errorsItems,
+                isLoading: isLoadingItems,
+                isSuccess: isSuccessItems,
+            });
+        },
+        // get store categories
+        async fetchStoreCategories(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
+            handleGetItems(
+                route(data.apiUrlRouteName, {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
+            );
+
+            // context & send to mutation
+            context.commit("setCurrentStoreCategories", {
                 fetchedData: fetchedItems,
                 isError: isErrorItems,
                 error: errorItems,

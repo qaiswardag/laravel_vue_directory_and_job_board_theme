@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
 use App\Models\Job\AuthorJob;
 use App\Models\Job\Job;
+use App\Models\Job\JobCategoryRelation;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -168,6 +169,24 @@ class JobController extends Controller
             }
         }
 
+        // categories
+        if (
+            $request->categories !== null &&
+            gettype($request->categories) === "array" &&
+            count($request->categories) !== 0
+        ) {
+            // Loop through the categories array and attach each category to the post
+            foreach ($request->categories as $category) {
+                $categoryId = $category["id"];
+
+                // Create a new record in the author_post table
+                JobCategoryRelation::create([
+                    "category_id" => $categoryId,
+                    "job_id" => $jobId,
+                ]);
+            }
+        }
+
         // Return the current team that the user is on, rather than the team that the user is storing the job for.
         $currentTeam = Auth::user()->currentTeam->reference_id;
 
@@ -231,10 +250,13 @@ class JobController extends Controller
             $job->authors = null;
         }
 
+        $categories = $job->categories;
+
         // Render the job
         return Inertia::render($jobRenderView, [
             "post" => $job,
             "authors" => $authors,
+            "categories" => $categories,
         ]);
     }
 
@@ -278,9 +300,12 @@ class JobController extends Controller
             }
         }
 
+        $categories = $job->categories;
+
         return Inertia::render("Jobs/UpdateJob/UpdateJob", [
             "post" => $job,
             "postAuthor" => $authors,
+            "categories" => $categories,
         ]);
     }
 
@@ -327,6 +352,7 @@ class JobController extends Controller
         // Get the job ID
         $jobId = $job->id;
 
+        // Update authors
         if (
             $job->show_author === true &&
             $request->author !== null &&
@@ -360,6 +386,42 @@ class JobController extends Controller
                 ->whereIn("user_id", $authorsToDelete)
                 ->delete();
         }
+
+        // Update categories
+        if (
+            $request->categories !== null &&
+            gettype($request->categories) === "array" &&
+            count($request->categories) !== 0
+        ) {
+            // Retrieve the existing resource IDs for the resource
+            $existingResourceIds = JobCategoryRelation::where("job_id", $jobId)
+                ->pluck("category_id")
+                ->toArray();
+
+            // Loop through the items array and update or create a record in the table
+            $updatedResourceIds = [];
+
+            foreach ($request->categories as $category) {
+                $categoryId = $category["id"];
+                $updatedResourceIds[] = $categoryId;
+
+                // Update or create  record in the table
+                JobCategoryRelation::updateOrCreate([
+                    "category_id" => $categoryId,
+                    "job_id" => $jobId,
+                ]);
+            }
+
+            // Delete records that are not present in the request
+            $resourcesToDelete = array_diff(
+                $existingResourceIds,
+                $updatedResourceIds
+            );
+            JobCategoryRelation::where("job_id", $jobId)
+                ->whereIn("category_id", $resourcesToDelete)
+                ->delete();
+        }
+
         return redirect()->route("team.jobs.index", [
             "referenceId" => $team->reference_id,
         ]);

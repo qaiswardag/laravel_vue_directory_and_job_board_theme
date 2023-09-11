@@ -3,9 +3,12 @@ import Modal from "@/Components/Modals/Modal.vue";
 import { ref, computed, onMounted } from "vue";
 import { TailwindPagination } from "laravel-vue-pagination";
 import { useStore } from "vuex";
-import { Squares2X2Icon, TrashIcon } from "@heroicons/vue/24/outline";
+import {
+    Squares2X2Icon,
+    TrashIcon,
+    CheckIcon,
+} from "@heroicons/vue/24/outline";
 
-console.log("global variable..");
 const props = defineProps({
     team: {
         required: true,
@@ -389,7 +392,7 @@ onMounted(() => {
                                             class="flex justify-between items-center w-full"
                                         >
                                             <div
-                                                class="flex items-center gap-2 my-2"
+                                                class="flex items-center gap-4 my-2"
                                             >
                                                 <!-- start photo -->
                                                 <div
@@ -459,7 +462,7 @@ onMounted(() => {
                                                     </p>
                                                 </div>
                                                 <div
-                                                    class="flex items-center gap-2 my-2"
+                                                    class="flex items-center gap-4 my-2"
                                                     v-if="item.name"
                                                 >
                                                     <div
@@ -616,7 +619,7 @@ onMounted(() => {
                                         class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                     >
                                         <div
-                                            class="flex items-center gap-2 my-2"
+                                            class="flex items-center gap-4 my-2"
                                             v-if="item.name"
                                         >
                                             <div

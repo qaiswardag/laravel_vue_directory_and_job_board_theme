@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoggedIn\Store\StoreStoreRequest;
 use App\Models\Store\AuthorStore;
 use App\Models\Store\Store;
+use App\Models\Store\StoreCategoryRelation;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -167,6 +168,24 @@ class StoreController extends Controller
             }
         }
 
+        // categories
+        if (
+            $request->categories !== null &&
+            gettype($request->categories) === "array" &&
+            count($request->categories) !== 0
+        ) {
+            // Loop through the categories array and attach each category to the post
+            foreach ($request->categories as $category) {
+                $categoryId = $category["id"];
+
+                // Create a new record in the author_post table
+                StoreCategoryRelation::create([
+                    "category_id" => $categoryId,
+                    "store_id" => $storeId,
+                ]);
+            }
+        }
+
         // Return the current team that the user is on, rather than the team that the user is storing the job for.
         $currentTeam = Auth::user()->currentTeam->reference_id;
 
@@ -230,10 +249,13 @@ class StoreController extends Controller
             $store->authors = null;
         }
 
+        $categories = $store->categories;
+
         // Render the Store
         return Inertia::render($storeRenderView, [
             "post" => $store,
             "authors" => $authors,
+            "categories" => $categories,
         ]);
     }
 
@@ -277,9 +299,12 @@ class StoreController extends Controller
             }
         }
 
+        $categories = $store->categories;
+
         return Inertia::render("Stores/UpdateStore/UpdateStore", [
             "post" => $store,
             "postAuthor" => $authors,
+            "categories" => $categories,
         ]);
     }
 
@@ -327,6 +352,7 @@ class StoreController extends Controller
         // Get the store ID
         $storeId = $store->id;
 
+        // Update authors
         if (
             $store->show_author === true &&
             $request->author !== null &&
@@ -360,6 +386,45 @@ class StoreController extends Controller
                 ->whereIn("user_id", $authorsToDelete)
                 ->delete();
         }
+
+        // Update categories
+        if (
+            $request->categories !== null &&
+            gettype($request->categories) === "array" &&
+            count($request->categories) !== 0
+        ) {
+            // Retrieve the existing resource IDs for the resource
+            $existingResourceIds = StoreCategoryRelation::where(
+                "store_id",
+                $storeId
+            )
+                ->pluck("category_id")
+                ->toArray();
+
+            // Loop through the items array and update or create a record in the table
+            $updatedResourceIds = [];
+
+            foreach ($request->categories as $category) {
+                $categoryId = $category["id"];
+                $updatedResourceIds[] = $categoryId;
+
+                // Update or create  record in the table
+                StoreCategoryRelation::updateOrCreate([
+                    "category_id" => $categoryId,
+                    "store_id" => $storeId,
+                ]);
+            }
+
+            // Delete records that are not present in the request
+            $resourcesToDelete = array_diff(
+                $existingResourceIds,
+                $updatedResourceIds
+            );
+            StoreCategoryRelation::where("store_id", $storeId)
+                ->whereIn("category_id", $resourcesToDelete)
+                ->delete();
+        }
+
         return redirect()->route("team.stores.index", [
             "referenceId" => $team->reference_id,
         ]);

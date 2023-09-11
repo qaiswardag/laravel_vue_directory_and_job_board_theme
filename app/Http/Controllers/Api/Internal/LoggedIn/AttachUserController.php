@@ -107,7 +107,6 @@ class AttachUserController extends Controller
         return [
             "items" => $users,
             "count" => $count,
-            // "results" => $users->total(),
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
             ],

@@ -214,8 +214,8 @@ const handleAddCategories = function () {
     // handle show modal for unique content
     showSearchPostCategoriesModal.value = true;
     // set modal standards
-    titleModalSearchItems.value = "Add Categories";
-    descriptionModalSearchItems.value = "Add Post Category";
+    titleModalSearchItems.value = "Add Post Categories";
+    descriptionModalSearchItems.value = "Add Post Categories";
     firstButtonModalSearchItems.value = "Close";
     secondButtonModalSearchItems.value = "Save";
     // handle click
@@ -863,7 +863,10 @@ onBeforeMount(() => {
                             <div
                                 class="flex justify-between items-center rounded my-2"
                             >
-                                <div class="flex items-center gap-2 my-2">
+                                <div
+                                    @click="handleAddCategories"
+                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                >
                                     <div
                                         class="flex-shrink-0 myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-gray-100 flex justify-center items-center text-xs font-normal text-white"
                                     >
@@ -876,6 +879,7 @@ onBeforeMount(() => {
                                     </p>
                                 </div>
                                 <div
+                                    class="p-2 hover:bg-gray-200 hover:text-white bg-gray-100 rounded-full cursor-pointer"
                                     @click="
                                         handleRemoveAttachedCategory(
                                             category.id
@@ -1104,6 +1108,7 @@ onBeforeMount(() => {
                                         </span>
                                     </div>
                                     <div
+                                        class="p-2 hover:bg-gray-200 hover:text-white bg-gray-100 rounded-full cursor-pointer"
                                         @click="
                                             handleRemoveAttachedUser(user.id)
                                         "
@@ -1300,61 +1305,60 @@ onBeforeMount(() => {
             >
             </MediaLibraryModal>
 
-            <div v-if="showSearchUserModal">
-                <SearchUsersOrItems
-                    apiUrlRouteName="attach.user.index"
-                    :existingItems="postForm.author"
-                    vuexActionMethod="attachedUsersOrItems/fetchUsers"
-                    vuexGetCurrentItems="attachedUsersOrItems/getCurrentUsers"
-                    vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedUsers"
-                    vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedUsers"
-                    vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedUser"
-                    vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedUsersToEmptyArray"
-                    :user="user"
-                    :team="postForm.team"
-                    :title="titleModalSearchItems"
-                    :description="descriptionModalSearchItems"
-                    :firstButtonText="firstButtonModalSearchItems"
-                    :secondButtonText="secondButtonModalSearchItems"
-                    @firstModalButtonSearchItemsFunction="
-                        firstModalButtonSearchItemsFunction
-                    "
-                    @secondModalButtonSearchItemsFunction="
-                        secondModalButtonSearchItemsFunction
-                    "
-                    :displayIcon="false"
-                    :show="showSearchUserModal"
-                >
-                </SearchUsersOrItems>
-            </div>
-            <div v-if="showSearchPostCategoriesModal">
-                <SearchUsersOrItems
-                    apiUrlRouteName="attach.post.categories.index"
-                    :existingItems="postForm.categories"
-                    vuexActionMethod="attachedUsersOrItems/fetchCategories"
-                    vuexGetCurrentItems="attachedUsersOrItems/getCurrentPostCategroies"
-                    vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedPostCategories"
-                    vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedPostCategories"
-                    vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedPostCategories"
-                    vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedPostCategoriesToEmptyArray"
-                    :user="user"
-                    :team="postForm.team"
-                    :title="titleModalSearchItems"
-                    :description="descriptionModalSearchItems"
-                    :firstButtonText="firstButtonModalSearchItems"
-                    :secondButtonText="secondButtonModalSearchItems"
-                    @firstModalButtonSearchItemsFunction="
-                        firstModalButtonSearchItemsFunction
-                    "
-                    @secondModalButtonSearchItemsFunction="
-                        secondModalButtonSearchItemsFunction
-                    "
-                    :displayIcon="true"
-                    icon="Squares2X2Icon"
-                    :show="showSearchPostCategoriesModal"
-                >
-                </SearchUsersOrItems>
-            </div>
+            <SearchUsersOrItems
+                v-if="showSearchUserModal"
+                apiUrlRouteName="attach.user.index"
+                :existingItems="postForm.author"
+                vuexActionMethod="attachedUsersOrItems/fetchUsers"
+                vuexGetCurrentItems="attachedUsersOrItems/getCurrentUsers"
+                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedUsers"
+                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedUsers"
+                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedUser"
+                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedUsersToEmptyArray"
+                :user="user"
+                :team="postForm.team"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
+                "
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
+                "
+                :displayIcon="false"
+                :show="showSearchUserModal"
+            >
+            </SearchUsersOrItems>
+
+            <SearchUsersOrItems
+                v-if="showSearchPostCategoriesModal"
+                apiUrlRouteName="attach.post.categories.index"
+                :existingItems="postForm.categories"
+                vuexActionMethod="attachedUsersOrItems/fetchPostCategories"
+                vuexGetCurrentItems="attachedUsersOrItems/getCurrentPostCategories"
+                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedPostCategories"
+                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedPostCategories"
+                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedPostCategories"
+                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedPostCategoriesToEmptyArray"
+                :user="user"
+                :team="postForm.team"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
+                "
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
+                "
+                :displayIcon="true"
+                icon="Squares2X2Icon"
+                :show="showSearchPostCategoriesModal"
+            >
+            </SearchUsersOrItems>
 
             <NotificationsFixedBottom
                 :listOfMessages="Object.values(postForm.errors)"

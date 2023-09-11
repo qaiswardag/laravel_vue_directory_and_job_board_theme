@@ -165,6 +165,7 @@ class PostController extends Controller
             }
         }
 
+        // categories
         if (
             $request->categories !== null &&
             gettype($request->categories) === "array" &&

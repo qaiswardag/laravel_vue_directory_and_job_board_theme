@@ -548,7 +548,7 @@ onBeforeMount(() => {
                             <div
                                 class="flex justify-between items-center rounded my-2"
                             >
-                                <div class="flex items-center gap-2 my-2">
+                                <div class="flex items-center gap-4 my-2">
                                     <div
                                         class="flex-shrink-0 myPrimaryParagraph w-8 h-8 gap-0.5 rounded-full bg-gray-100 flex justify-center items-center text-xs font-normal text-white"
                                     >
