@@ -26,13 +26,6 @@ const primaryMenuSlideOverButton = function () {
 
 const navigation = [
     {
-        label: "Home",
-        route: {
-            name: "home",
-            parameters: [],
-        },
-    },
-    {
         label: "Stores",
         route: {
             name: "stores.index",
