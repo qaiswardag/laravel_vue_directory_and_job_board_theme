@@ -356,6 +356,9 @@
     .myPrimarySelect {
         @apply relative w-full rounded-md border border-myPrimaryMediumGrayColor hover:border-transparent hover:ring-2 hover:ring-myPrimaryBrandColor cursor-pointer bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-myPrimaryBrandColor focus:outline-none focus:ring-1 focus:ring-myPrimaryBrandColor;
     }
+    .myPrimaryFakeSelect {
+        @apply flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-2 hover:ring-myPrimaryBrandColor focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
+    }
 
     .myPrimaryColorPreview {
         @apply aspect-square  border border-gray-200 cursor-pointer  min-h-[1.5rem] rounded-sm;

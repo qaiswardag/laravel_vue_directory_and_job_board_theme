@@ -87,7 +87,7 @@ const getTextColorCustomHex = computed(() => {
                     </label>
                     <div
                         @click="handleBackgroundColorsSlideOver"
-                        class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-2 hover:ring-myPrimaryBrandColor focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+                        class="myPrimaryFakeSelect"
                     >
                         <div class="relative flex items-center w-full py-0 p-0">
                             <div class="flex items-center gap-2 justify-start">
@@ -162,7 +162,7 @@ const getTextColorCustomHex = computed(() => {
                     <label class="myPrimaryInputLabel"> Text color </label>
                     <div
                         @click="handleTextColorsSlideOver"
-                        class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-2 hover:ring-myPrimaryBrandColor focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+                        class="myPrimaryFakeSelect"
                     >
                         <div class="relative flex items-center w-full py-0 p-0">
                             <div class="flex items-center gap-2 justify-start">
