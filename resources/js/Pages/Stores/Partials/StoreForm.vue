@@ -968,12 +968,13 @@ const handleDesigner = function () {
                 </div>
             </div>
             <!-- tags - end -->
-            <!-- post show author - start -->
+            <!-- post author - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Show Authors
                     </div>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
@@ -1050,44 +1051,58 @@ const handleDesigner = function () {
                 </div>
                 <InputError :message="postForm.errors.show_author" />
 
+                <!-- select - start -->
                 <div v-if="postForm.show_author === true">
-                    <div
-                        class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
-                    >
-                        <button
-                            @click="handleAddAuthor"
-                            type="button"
-                            class="myPrimaryButton gap-2 items-center"
+                    <div @click="handleAddAuthor" class="myPrimaryFakeSelect">
+                        <div class="relative flex items-center w-full py-0 p-0">
+                            <p class="myPrimaryParagraph">
+                                {{
+                                    postForm.author &&
+                                    postForm.author.length === 0
+                                        ? "Select Authors"
+                                        : "Update Authors"
+                                }}
+                            </p>
+                        </div>
+                        <div
+                            class="border-none rounded flex items-center justify-center h-full w-8"
                         >
-                            <UserPlusIcon
-                                class="w-4 h-4 stroke-2"
-                            ></UserPlusIcon>
-                            Add Author
-                        </button>
+                            <ChevronUpDownIcon
+                                class="w-4 h-4"
+                            ></ChevronUpDownIcon>
+                        </div>
                     </div>
+                    <!-- select - end -->
 
                     <div
-                        class="p-2 mt-4"
-                        :class="
-                            postForm.author.length === 0
-                                ? 'bg-white'
-                                : 'bg-white'
-                        "
+                        v-if="postForm.author && postForm.author.length === 0"
+                        class="space-y-6 mt-2"
                     >
+                        <p class="myPrimaryParagraph">
+                            No people have been selected.
+                        </p>
+                    </div>
+
+                    <div>
                         <p
-                            v-if="postForm.author.length !== 0"
+                            v-if="
+                                postForm.author && postForm.author.length !== 0
+                            "
                             class="myPrimaryParagraph italic text-xs py-4"
                         >
-                            Added {{ postForm.author.length }}
+                            Added
+                            {{ postForm.author && postForm.author.length }}
                             {{
-                                postForm.author.length === 1
+                                postForm.author && postForm.author.length === 1
                                     ? "person"
                                     : "people"
                             }}
                         </p>
 
                         <div
-                            v-if="postForm.author.length !== 0"
+                            v-if="
+                                postForm.author && postForm.author.length !== 0
+                            "
                             class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                         >
                             <div
@@ -1167,13 +1182,10 @@ const handleDesigner = function () {
                             </div>
                         </div>
                     </div>
-                    <div v-if="postForm.author.length === 0" class="space-y-6">
-                        <p class="myPrimaryParagraph">No author selected.</p>
-                    </div>
                     <InputError :message="postForm.errors.author" />
                 </div>
             </div>
-            <!-- post show author - end -->
+            <!-- post author - end -->
         </template>
 
         <template #actions>
