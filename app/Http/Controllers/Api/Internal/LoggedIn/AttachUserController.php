@@ -81,6 +81,7 @@ class AttachUserController extends Controller
                 "users.profile_photo_path",
                 "team_user.role"
             )
+            ->orderBy("name")
             ->paginate(20);
 
         //

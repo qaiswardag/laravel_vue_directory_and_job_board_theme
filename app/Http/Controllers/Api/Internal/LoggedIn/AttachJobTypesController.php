@@ -32,6 +32,7 @@ class AttachJobTypesController extends Controller
                 });
             })
 
+            ->orderBy("name")
             ->paginate(10);
 
         //

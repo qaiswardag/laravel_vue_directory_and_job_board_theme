@@ -32,6 +32,7 @@ class AttachPostCategoriesController extends Controller
                 });
             })
 
+            ->orderBy("name")
             ->paginate(10);
 
         //

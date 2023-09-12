@@ -32,6 +32,7 @@ class AttachStoreCategoriesController extends Controller
                 });
             })
 
+            ->orderBy("name")
             ->paginate(10);
 
         //
