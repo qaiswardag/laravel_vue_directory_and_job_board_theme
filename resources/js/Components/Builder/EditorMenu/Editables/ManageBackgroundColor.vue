@@ -109,9 +109,7 @@ const designer = new Designer(store);
 <template>
     <div class="my-3 py-3">
         <label class="myPrimaryInputLabel"> Current Background </label>
-        <div
-            class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-default focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
-        >
+        <div class="myPrimaryFakeSelectNoHover">
             <div class="relative flex items-center w-full py-0 p-0">
                 <div class="flex items-center gap-2 justify-start">
                     <div

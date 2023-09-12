@@ -39,6 +39,7 @@ import {
     UserPlusIcon,
     XMarkIcon,
     Squares2X2Icon,
+    PhotoIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -827,40 +828,18 @@ const handleDesigner = function () {
                         type="button"
                         class="myPrimaryButton gap-2 items-center"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                            />
-                        </svg>
-
+                        <PhotoIcon class="w-4 h-4"></PhotoIcon>
                         Cover image
                     </button>
 
-                    <div v-if="postForm && postForm.cover_image_medium">
-                        <svg
-                            @click="handleRemoveCoverImage"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5 text-myPrimaryErrorColor cursor-pointer"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                        </svg>
+                    <div
+                        @click="handleRemoveCoverImage"
+                        v-if="postForm && postForm.cover_image_medium"
+                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                    >
+                        <TrashIcon
+                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                        ></TrashIcon>
                     </div>
                 </div>
                 <InputError :message="postForm.errors.cover_image_original" />
@@ -874,27 +853,36 @@ const handleDesigner = function () {
                     </div>
                     <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
-                <div
-                    class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
-                >
-                    <button
-                        @click="handleAddCategories"
-                        type="button"
-                        class="myPrimaryButton gap-2 items-center"
+                <!-- select - start -->
+                <div @click="handleAddCategories" class="myPrimaryFakeSelect">
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.categories &&
+                                postForm.categories.length === 0
+                                    ? "Select Category"
+                                    : "Update Category"
+                            }}
+                        </p>
+                    </div>
+                    <div
+                        class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <SquaresPlusIcon class="w-4 h-4"></SquaresPlusIcon>
-                        Add Category
-                    </button>
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                    </div>
                 </div>
+                <!-- select - end -->
 
                 <div
-                    class="p-2 mt-4"
-                    :class="
+                    v-if="
                         postForm.categories && postForm.categories.length === 0
-                            ? 'bg-white'
-                            : 'bg-white'
                     "
+                    class="space-y-6 mt-2"
                 >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
                     <p
                         v-if="
                             postForm.categories &&
@@ -943,6 +931,7 @@ const handleDesigner = function () {
                                         {{ category.name }}
                                     </p>
                                 </div>
+
                                 <div
                                     @click="
                                         handleRemoveAttachedCategory(
@@ -958,14 +947,6 @@ const handleDesigner = function () {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div
-                    v-if="
-                        postForm.categories && postForm.categories.length === 0
-                    "
-                    class="space-y-6"
-                >
-                    <p class="myPrimaryParagraph">No category selected.</p>
                 </div>
                 <InputError :message="postForm.errors.categories" />
             </div>
