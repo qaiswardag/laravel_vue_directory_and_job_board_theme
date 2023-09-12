@@ -11,6 +11,7 @@ import {
     GlobeAmericasIcon,
     PlusIcon,
     MinusIcon,
+    NewspaperIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -89,9 +90,44 @@ const frontEndError = ref(null);
 const getCurrentItems = computed(() => {
     return store.getters[props.vuexGetCurrentItems];
 });
+
 const getCurrentAttachedItems = computed(() => {
-    return store.getters[props.vuexGetCurrentAttachedItems];
+    const items = store.getters[props.vuexGetCurrentAttachedItems];
+
+    if (Array.isArray(items)) {
+        const filteredItems = items.filter(
+            (item) =>
+                item &&
+                (item.name !== undefined || item.first_name !== undefined)
+        );
+
+        return filteredItems.sort((a, b) => {
+            if (a.name !== undefined && b.name !== undefined) {
+                // Sort by 'name' if both 'name' properties are defined.
+                const nameA = a.name;
+                const nameB = b.name;
+                return nameA.localeCompare(nameB);
+            }
+            if (a.first_name !== undefined && b.first_name !== undefined) {
+                // Sort by 'first_name' if both 'first_name' properties are defined.
+                const firstNameA = a.first_name;
+                const firstNameB = b.first_name;
+                return firstNameA.localeCompare(firstNameB);
+            }
+            if (a.name !== undefined) {
+                // Sort by 'name' if only 'name' is defined for one of the items.
+                return -1;
+            }
+            if (a.first_name !== undefined) {
+                // Sort by 'first_name' if only 'first_name' is defined for one of the items.
+                return 1;
+            }
+            // Both items have neither 'name' nor 'first_name' defined.
+            return 0;
+        });
+    }
 });
+
 //
 const filteredItems = ref([]);
 //
@@ -378,14 +414,28 @@ onMounted(() => {
                                 getCurrentItems.isSuccess === true &&
                                 getCurrentItems.fetchedData &&
                                 getCurrentItems.fetchedData.items &&
-                                getCurrentItems.fetchedData.items.data &&
-                                getCurrentItems.fetchedData.items.data !== 0
+                                getCurrentItems.fetchedData.items.data
                             "
                         >
                             <div
                                 class="h-full md:max-h-[26.3rem] max-h-[13rem] overflow-y-scroll p-2"
                             >
                                 <div
+                                    v-if="
+                                        getCurrentItems.fetchedData.items.data
+                                            .length === 0
+                                    "
+                                    class="flex justify-between items-center w-full"
+                                >
+                                    <p class="myPrimaryParagraph">
+                                        It looks like there are no items..
+                                    </p>
+                                </div>
+                                <div
+                                    v-if="
+                                        getCurrentItems.fetchedData.items.data
+                                            .length !== 0
+                                    "
                                     class="divide-y divide-gray-200 flex flex-col w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
                                 >
                                     <div
@@ -395,6 +445,10 @@ onMounted(() => {
                                         class="myPrimaryBorderFullRoundedUsers"
                                     >
                                         <div
+                                            v-if="
+                                                getCurrentItems.fetchedData
+                                                    .items.data !== 0
+                                            "
                                             class="flex justify-between items-center w-full"
                                         >
                                             <div
@@ -527,6 +581,28 @@ onMounted(() => {
                                                                     class="shrink-0 w-4 h-4 m-2 stroke-2"
                                                                 >
                                                                 </GlobeAmericasIcon>
+                                                            </div>
+                                                            <div
+                                                                v-if="
+                                                                    props.icon ===
+                                                                    'GlobeAmericasIcon'
+                                                                "
+                                                            >
+                                                                <GlobeAmericasIcon
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                >
+                                                                </GlobeAmericasIcon>
+                                                            </div>
+                                                            <div
+                                                                v-if="
+                                                                    props.icon ===
+                                                                    'NewspaperIcon'
+                                                                "
+                                                            >
+                                                                <NewspaperIcon
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                >
+                                                                </NewspaperIcon>
                                                             </div>
                                                         </div>
                                                         <span
@@ -698,6 +774,17 @@ onMounted(() => {
                                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
                                                     >
                                                     </GlobeAmericasIcon>
+                                                </div>
+                                                <div
+                                                    v-if="
+                                                        props.icon ===
+                                                        'NewspaperIcon'
+                                                    "
+                                                >
+                                                    <NewspaperIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    >
+                                                    </NewspaperIcon>
                                                 </div>
                                             </div>
                                             <span class="font-medium">

@@ -451,7 +451,19 @@ onMounted(() => {
                                     >
                                         <p
                                             v-for="category in post.categories &&
-                                            post.categories"
+                                            Array.isArray(post.categories) &&
+                                            post.categories.sort((a, b) => {
+                                                const nameA = a.name;
+                                                const nameB = b.name;
+
+                                                if (nameA < nameB) {
+                                                    return -1;
+                                                } else if (nameA > nameB) {
+                                                    return 1;
+                                                } else {
+                                                    return 0;
+                                                }
+                                            })"
                                             :key="category"
                                             class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
@@ -471,7 +483,11 @@ onMounted(() => {
                                     >
                                         <p
                                             v-for="tag in post.tags &&
-                                            post.tags.split(',')"
+                                            post.tags
+                                                .split(',')
+                                                .sort((a, b) =>
+                                                    a.localeCompare(b)
+                                                )"
                                             :key="tag"
                                             class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >

@@ -530,6 +530,35 @@ onBeforeMount(() => {
     }
 });
 
+const authorSorted = computed(() => {
+    return postForm.author.sort((a, b) => {
+        const firstNameA = a.first_name;
+        const firstNameB = b.first_name;
+
+        if (firstNameA < firstNameB) {
+            return -1;
+        } else if (firstNameA > firstNameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+const categoriesSorted = computed(() => {
+    return postForm.categories.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+
 // Builder # Start
 const openDesignerModal = ref(false);
 // use designer model
@@ -891,7 +920,9 @@ const handleDesigner = function () {
                         class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
                         <div
-                            v-for="category in postForm.categories"
+                            v-for="category in Array.isArray(
+                                categoriesSorted
+                            ) && categoriesSorted"
                             :key="category.id"
                         >
                             <div
@@ -1078,7 +1109,11 @@ const handleDesigner = function () {
                             v-if="postForm.author.length !== 0"
                             class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                         >
-                            <div v-for="user in postForm.author" :key="user.id">
+                            <div
+                                v-for="user in Array.isArray(authorSorted) &&
+                                authorSorted"
+                                :key="user.id"
+                            >
                                 <div
                                     class="flex justify-between items-center rounded"
                                 >

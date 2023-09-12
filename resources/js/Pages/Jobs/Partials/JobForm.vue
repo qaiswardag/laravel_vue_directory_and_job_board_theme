@@ -38,6 +38,7 @@ import {
     UserPlusIcon,
     XMarkIcon,
     Squares2X2Icon,
+    NewspaperIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -601,6 +602,49 @@ onBeforeMount(() => {
         postForm.types = props.types;
     }
 });
+
+const authorSorted = computed(() => {
+    return postForm.author.sort((a, b) => {
+        const firstNameA = a.first_name;
+        const firstNameB = b.first_name;
+
+        if (firstNameA < firstNameB) {
+            return -1;
+        } else if (firstNameA > firstNameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+const categoriesSorted = computed(() => {
+    return postForm.categories.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+const jobTypesSorted = computed(() => {
+    return postForm.types.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
 </script>
 
 <template>
@@ -917,7 +961,9 @@ onBeforeMount(() => {
                         class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
                         <div
-                            v-for="category in postForm.categories"
+                            v-for="category in Array.isArray(
+                                categoriesSorted
+                            ) && categoriesSorted"
                             :key="category.id"
                         >
                             <div
@@ -979,7 +1025,7 @@ onBeforeMount(() => {
                         type="button"
                         class="myPrimaryButton gap-2 items-center"
                     >
-                        <CheckIcon class="w-4 h-4"></CheckIcon>
+                        <NewspaperIcon class="w-4 h-4"></NewspaperIcon>
                         Add Job Type
                     </button>
                 </div>
@@ -1010,7 +1056,8 @@ onBeforeMount(() => {
                         class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
                         <div
-                            v-for="jobType in postForm.types"
+                            v-for="jobType in Array.isArray(jobTypesSorted) &&
+                            jobTypesSorted"
                             :key="jobType.id"
                         >
                             <div
@@ -1023,9 +1070,9 @@ onBeforeMount(() => {
                                     <div
                                         class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
-                                        <CheckIcon
+                                        <NewspaperIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                        ></CheckIcon>
+                                        ></NewspaperIcon>
                                     </div>
                                     <p>
                                         {{ jobType.name }}
@@ -1192,7 +1239,11 @@ onBeforeMount(() => {
                             v-if="postForm.author.length !== 0"
                             class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                         >
-                            <div v-for="user in postForm.author" :key="user.id">
+                            <div
+                                v-for="user in Array.isArray(authorSorted) &&
+                                authorSorted"
+                                :key="user.id"
+                            >
                                 <div
                                     class="flex justify-between items-center rounded"
                                 >
@@ -1432,7 +1483,7 @@ onBeforeMount(() => {
                     secondModalButtonSearchItemsFunction
                 "
                 :displayIcon="true"
-                icon="CheckIcon"
+                icon="NewspaperIcon"
                 :show="showSearchJobTypesModal"
             >
             </SearchUsersOrItems>

@@ -8,7 +8,7 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-import { ref, computed, onBeforeMount, watch } from "vue";
+import { ref, computed, onBeforeMount, watch, onMounted } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import Tags from "@/Components/Forms/Tags.vue";
@@ -546,6 +546,35 @@ onBeforeMount(() => {
         postForm.categories = props.categories;
     }
 });
+
+const authorSorted = computed(() => {
+    return postForm.author.sort((a, b) => {
+        const firstNameA = a.first_name;
+        const firstNameB = b.first_name;
+
+        if (firstNameA < firstNameB) {
+            return -1;
+        } else if (firstNameA > firstNameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+const categoriesSorted = computed(() => {
+    return postForm.categories.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
 </script>
 
 <template>
@@ -862,7 +891,9 @@ onBeforeMount(() => {
                         class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
                         <div
-                            v-for="category in postForm.categories"
+                            v-for="category in Array.isArray(
+                                categoriesSorted
+                            ) && categoriesSorted"
                             :key="category.id"
                         >
                             <div
@@ -1049,7 +1080,11 @@ onBeforeMount(() => {
                             v-if="postForm.author.length !== 0"
                             class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                         >
-                            <div v-for="user in postForm.author" :key="user.id">
+                            <div
+                                v-for="user in Array.isArray(authorSorted) &&
+                                authorSorted"
+                                :key="user.id"
+                            >
                                 <div
                                     class="flex justify-between items-center rounded"
                                 >

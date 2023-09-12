@@ -28,6 +28,39 @@ class StoreFactory extends Factory
 
         $deletedAt = rand(0, 1) ? Carbon::now() : null;
 
+        $tags = [
+            "Fashion Trends",
+            "Haute Couture",
+            "Street Style",
+            "Designer Wear",
+            "Fashion Week",
+            "Luxury Brands",
+            "Runway Fashion",
+            "Vintage Fashion",
+            "Fashion Photography",
+            "Fashion Modeling",
+            "Fashion Accessories",
+            "Fashion Retail",
+            "Fashion Styling",
+            "Fashion Magazines",
+            "Fashion Influencers",
+            "Fashion Illustration",
+            "Sustainable Fashion",
+            "Fashion Merchandising",
+            "Textile Design",
+            "Fashion History",
+        ];
+        // You can adjust the range to generate as many records as needed.
+        $selectedTags = array_rand($tags, rand(2, 5)); // Randomly select between 2 and 5 tags.
+
+        // Create a comma-separated list of selected tags.
+        $selectedTagsList = implode(
+            ", ",
+            array_map(function ($index) use ($tags) {
+                return $tags[$index];
+            }, $selectedTags)
+        );
+
         return [
             "team_id" => 1,
             "user_id" => 1,
@@ -37,8 +70,7 @@ class StoreFactory extends Factory
             "slug" => $slug,
             "content" => $this->faker->sentence(rand(20, 60), false),
             "published" => rand(0, 1),
-            "tags" =>
-                "Modest Fashion,Emirati Fashion Icons, Traditional Attire, Boutiques, Abaya Fashion",
+            "tags" => $selectedTagsList,
         ];
     }
 }
