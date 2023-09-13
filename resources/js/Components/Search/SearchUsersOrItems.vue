@@ -463,7 +463,7 @@ onMounted(() => {
                                                     "
                                                 >
                                                     <img
-                                                        class="object-cover w-12 h-12 rounded-full"
+                                                        class="object-cover h-12 w-12 rounded-full"
                                                         :src="`/storage/${item.profile_photo_path}`"
                                                         alt="Image"
                                                     />
@@ -476,7 +476,7 @@ onMounted(() => {
                                                         item.last_name &&
                                                         !item.profile_photo_path
                                                     "
-                                                    class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                                    class="flex-shrink-0 myPrimaryParagraph h-12 w-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                                 >
                                                     <span>
                                                         {{
@@ -536,7 +536,7 @@ onMounted(() => {
                                                         v-if="item.name"
                                                     >
                                                         <div
-                                                            class="bg-gray-50 w-10 h-10 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                                            class="bg-gray-50 h-10 w-10 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                                         >
                                                             <div
                                                                 v-if="
@@ -620,7 +620,7 @@ onMounted(() => {
                                                     isItemAlreadyAdded(item) ===
                                                     false
                                                 "
-                                                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLinkColor text-white"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLinkColor text-white"
                                             >
                                                 <PlusIcon
                                                     class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -636,7 +636,7 @@ onMounted(() => {
                                                     isItemAlreadyAdded(item) ===
                                                     true
                                                 "
-                                                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryErrorColor text-white"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryErrorColor text-white"
                                             >
                                                 <MinusIcon
                                                     class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -654,7 +654,10 @@ onMounted(() => {
                     class="h-full md:max-h-[38.5rem] max-h-[12rem] md:w-3/5 w-full pl-2 border border-gray-200 overflow-y-scroll rounded"
                 >
                     <div
-                        v-if="getCurrentAttachedItems.length === 0"
+                        v-if="
+                            Array.isArray(getCurrentAttachedItems) &&
+                            getCurrentAttachedItems.length === 0
+                        "
                         class="pb-6 space-y-6"
                     >
                         <p class="myPrimaryParagraph text-xs p-2">
@@ -663,7 +666,10 @@ onMounted(() => {
                     </div>
 
                     <div
-                        v-if="getCurrentAttachedItems.length !== 0"
+                        v-if="
+                            Array.isArray(getCurrentAttachedItems) &&
+                            getCurrentAttachedItems.length !== 0
+                        "
                         class="flex flex-col w-full divide-y divide-gray-200 p-2"
                     >
                         <div class="flex justify-start items-center mb-4">
@@ -690,7 +696,7 @@ onMounted(() => {
                                         v-if="item && item.profile_photo_path"
                                     >
                                         <img
-                                            class="object-cover w-12 h-12 rounded-full"
+                                            class="object-cover h-12 w-12 rounded-full"
                                             :src="`/storage/${item.profile_photo_path}`"
                                             alt="Image"
                                         />
@@ -701,7 +707,7 @@ onMounted(() => {
                                             item &&
                                             item.profile_photo_path === null
                                         "
-                                        class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                        class="flex-shrink-0 myPrimaryParagraph h-12 w-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                     >
                                         <span>
                                             {{
@@ -729,7 +735,7 @@ onMounted(() => {
                                             v-if="item.name"
                                         >
                                             <div
-                                                class="bg-gray-50 w-10 h-10 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                                class="bg-gray-50 h-10 w-10 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                             >
                                                 <div
                                                     v-if="
@@ -807,7 +813,7 @@ onMounted(() => {
                                 </div>
                                 <div
                                     @click="handleRemoveAttachedItem(item.id)"
-                                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
                                         class="shrink-0 w-4 h-4 m-2 stroke-2"

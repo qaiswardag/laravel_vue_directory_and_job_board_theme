@@ -72,6 +72,12 @@ const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
 });
 
+const getCurrentAttachedComponentCategories = computed(() => {
+    return store.getters[
+        "attachedUsersOrItems/getCurrentAttachedComponentCategories"
+    ];
+});
+
 const formType = ref("create");
 
 const pathLocalStorage = `page-builder-form-${
@@ -131,8 +137,6 @@ const handleRemoveCoverImage = function () {
     postForm.cover_image_large = null;
 };
 
-// const modalShowSearchItemsModal = ref(false);
-
 // modal content
 const titleModalSearchItems = ref("");
 const descriptionModalSearchItems = ref("");
@@ -142,13 +146,18 @@ const secondButtonModalSearchItems = ref(null);
 const firstModalButtonSearchItemsFunction = ref(null);
 const secondModalButtonSearchItemsFunction = ref(null);
 
-const handleAddCategory = function () {
-    modalShowSearchItemsModal.value = true;
-
+const handleRemoveAttachedCategory = function (itemId) {
+    // filter the array to exclude item with matching ID
+    postForm.categories = postForm.categories.filter(
+        (item) => item.id !== itemId
+    );
+};
+const handleAddCategories = function () {
     // handle show modal for unique content
+    modalShowSearchItemsModal.value = true;
     // set modal standards
-    titleModalSearchItems.value = "Add author";
-    descriptionModalSearchItems.value = "Add Job author";
+    titleModalSearchItems.value = "Add Component Categories";
+    descriptionModalSearchItems.value = "Add Component Categories";
     firstButtonModalSearchItems.value = "Close";
     secondButtonModalSearchItems.value = "Save";
     // handle click
@@ -158,47 +167,17 @@ const handleAddCategory = function () {
     };
     // handle click
     secondModalButtonSearchItemsFunction.value = function () {
-        // reasons why using the spread operator to create a non-reactive copy of an
-        // array is generally considered better than using JSON.stringify
-        // and JSON.parse to achieve the same result:
-
-        // 1. Performance:
-        // The spread operator is generally faster than using JSON.stringify and JSON.parse
-        // to create a non-reactive copy of an array.
-        // This is because the spread operator is a built-in JavaScript feature,
-        // whereas JSON.stringify and JSON.parse require parsing and serializing data,
-        // which can be computationally expensive for large arrays.
-
-        // 2. Maintainability:
-        // Using the spread operator to create a non-reactive copy of an array is more
-        // maintainable than using JSON.stringify and JSON.parse because it is more
-        // concise and easier to read. The spread operator clearly indicates that a new array
-        // is being created, whereas the JSON.stringify and JSON.parse approach requires
-        // multiple function calls and string manipulations,
-        // which can be harder to read and understand.
-
-        // 3. Compatibility: The spread operator is a standard JavaScript feature that is
-        // supported by all modern browsers and Node.js, whereas JSON.stringify and JSON.parse
-        // may not be available in older browsers or
-        // environments that do not support ECMAScript 5.
-        const currentAttachedUsers = [...getCurrentAttachedUsers.value];
+        const currentAttachedPostCategories = [
+            ...getCurrentAttachedComponentCategories.value,
+        ];
         // Set post form author to the non-reactive copy
-        postForm.author = currentAttachedUsers;
+        postForm.categories = currentAttachedPostCategories;
 
         // handle show modal for unique content
         modalShowSearchItemsModal.value = false;
     };
 
     // end modal
-};
-
-const filteredUsers = ref([]);
-
-const handleRemoveAttachedCategory = function (categoryId) {
-    // filter the array to exclude user with matching ID
-    postForm.category = postForm.category.filter(
-        (user) => category.id !== categoryId
-    );
 };
 
 const showErrorNotifications = ref(false);
@@ -355,6 +334,21 @@ onBeforeMount(() => {
         }
     }
 });
+
+const categoriesSorted = computed(() => {
+    return postForm.categories.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
 </script>
 
 <template>
@@ -495,27 +489,42 @@ onBeforeMount(() => {
 
             <!-- post categories - start -->
             <div class="myInputsOrganization">
-                <div
-                    class="mt-2 flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
-                >
-                    <button
-                        @click="handleAddCategory"
-                        type="button"
-                        class="myPrimaryButton gap-2 items-center"
-                    >
-                        <SquaresPlusIcon class="w-4 h-4"></SquaresPlusIcon>
-                        Add Category
-                    </button>
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Categories
+                    </div>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
+                <!-- select - start -->
+                <div @click="handleAddCategories" class="myPrimaryFakeSelect">
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.categories &&
+                                postForm.categories.length === 0
+                                    ? "Select Category"
+                                    : "Update Category"
+                            }}
+                        </p>
+                    </div>
+                    <div
+                        class="border-none rounded flex items-center justify-center h-full w-8"
+                    >
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                    </div>
+                </div>
+                <!-- select - end -->
 
                 <div
-                    class="p-2 mt-4"
-                    :class="
+                    v-if="
                         postForm.categories && postForm.categories.length === 0
-                            ? 'bg-white'
-                            : 'bg-white'
                     "
+                    class="space-y-6 mt-2"
                 >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
                     <p
                         v-if="
                             postForm.categories &&
@@ -538,19 +547,23 @@ onBeforeMount(() => {
                             postForm.categories &&
                             postForm.categories.length !== 0
                         "
-                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 bg-red-100 hover:bg-pink-200"
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
                         <div
-                            v-for="category in postForm.categories"
+                            v-for="category in Array.isArray(
+                                categoriesSorted
+                            ) && categoriesSorted"
                             :key="category.id"
-                            class="hover:bg-gray-50 px-2 bg-white"
                         >
                             <div
                                 class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
                             >
-                                <div class="flex items-center gap-4 my-2">
+                                <div
+                                    @click="handleAddCategories"
+                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                >
                                     <div
-                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
                                         <Squares2X2Icon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -560,28 +573,22 @@ onBeforeMount(() => {
                                         {{ category.name }}
                                     </p>
                                 </div>
+
                                 <div
                                     @click="
                                         handleRemoveAttachedCategory(
                                             category.id
                                         )
                                     "
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
-                                        class="w-4 h-4 text-myPrimaryErrorColor stroke-2 cursor-pointer"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
                                     ></TrashIcon>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div
-                    v-if="
-                        postForm.categories && postForm.categories.length === 0
-                    "
-                    class="space-y-6"
-                >
-                    <p class="myPrimaryParagraph">No category selected.</p>
                 </div>
                 <InputError :message="postForm.errors.categories" />
             </div>
@@ -739,6 +746,33 @@ onBeforeMount(() => {
                 @thirdMediaButtonFunction="thirdMediaButtonFunction"
             >
             </MediaLibraryModal>
+            <SearchUsersOrItems
+                v-if="modalShowSearchItemsModal"
+                apiUrlRouteName="attach.component.categories.index"
+                :existingItems="postForm.categories"
+                vuexActionMethod="attachedUsersOrItems/fetchComponentCategories"
+                vuexGetCurrentItems="attachedUsersOrItems/getCurrentComponentCategories"
+                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedComponentCategories"
+                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedComponentCategories"
+                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedComponentCategories"
+                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedComponentCategoriesToEmptyArray"
+                :user="user"
+                :team="postForm.team"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
+                "
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
+                "
+                :displayIcon="true"
+                icon="Squares2X2Icon"
+                :show="modalShowSearchItemsModal"
+            >
+            </SearchUsersOrItems>
 
             <NotificationsFixedBottom
                 :listOfMessages="Object.values(postForm.errors)"

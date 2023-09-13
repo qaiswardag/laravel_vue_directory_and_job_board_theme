@@ -272,7 +272,7 @@ watch(photoPreview, (newValue) => {
                             class="mt-2 cursor-pointer"
                         >
                             <img
-                                class="object-cover w-16 h-16 rounded-full"
+                                class="object-cover h-16 w-16 rounded-full"
                                 :src="`/storage/${user.profile_photo_path}`"
                                 :alt="user.first_name + user.last_name"
                             />
@@ -280,7 +280,7 @@ watch(photoPreview, (newValue) => {
 
                         <div v-if="photoPreview !== null">
                             <span
-                                class="block rounded-full w-16 h-16 bg-cover bg-no-repeat bg-center"
+                                class="block rounded-full h-16 w-16 bg-cover bg-no-repeat bg-center"
                                 :style="
                                     'background-image: url(\'' +
                                     photoPreview +
@@ -295,7 +295,7 @@ watch(photoPreview, (newValue) => {
                                 !photoPreview
                             "
                             @click.prevent="selectNewPhoto"
-                            class="cursor-pointer w-16 h-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                            class="cursor-pointer h-16 w-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                         >
                             {{ user.first_name.charAt(0).toUpperCase() }}
                             {{ user.last_name.charAt(0).toUpperCase() }}

@@ -835,7 +835,7 @@ const handleDesigner = function () {
                     <div
                         @click="handleRemoveCoverImage"
                         v-if="postForm && postForm.cover_image_medium"
-                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                     >
                         <TrashIcon
                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -921,7 +921,7 @@ const handleDesigner = function () {
                                     class="flex items-center gap-4 my-2 cursor-pointer"
                                 >
                                     <div
-                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
                                         <Squares2X2Icon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -938,7 +938,7 @@ const handleDesigner = function () {
                                             category.id
                                         )
                                     "
-                                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -1126,7 +1126,7 @@ const handleDesigner = function () {
                                             "
                                         >
                                             <img
-                                                class="object-cover w-12 h-12 rounded-full"
+                                                class="object-cover h-12 w-12 rounded-full"
                                                 :src="`/storage/${user.profile_photo_path}`"
                                                 :alt="
                                                     user.first_name +
@@ -1140,7 +1140,7 @@ const handleDesigner = function () {
                                                 user &&
                                                 user.profile_photo_path === null
                                             "
-                                            class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                            class="flex-shrink-0 myPrimaryParagraph h-12 w-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                         >
                                             <span>
                                                 {{
@@ -1172,7 +1172,7 @@ const handleDesigner = function () {
                                         @click="
                                             handleRemoveAttachedUser(user.id)
                                         "
-                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"

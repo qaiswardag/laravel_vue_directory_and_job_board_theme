@@ -25,6 +25,7 @@ import {
     PencilIcon,
     PlusIcon,
     TrashIcon,
+    Squares2X2Icon,
 } from "@heroicons/vue/24/outline";
 
 const breadcrumbsLinks = [
@@ -260,6 +261,10 @@ const routesArray = [
                             </th>
 
                             <th scope="col" class="myPrimaryTableTh">
+                                Updated By
+                            </th>
+
+                            <th scope="col" class="myPrimaryTableTh">
                                 Updated Date
                             </th>
 
@@ -284,7 +289,7 @@ const routesArray = [
                                             class="h-12 w-12 flex-shrink-0"
                                         >
                                             <img
-                                                class="object-cover w-12 h-12 rounded-full"
+                                                class="object-cover h-12 w-12 rounded-full"
                                                 :src="`/storage/uploads/${component.cover_image_medium}`"
                                                 :alt="component.title"
                                             />
@@ -294,7 +299,7 @@ const routesArray = [
                                             class="h-12 w-12 flex-shrink-0"
                                         >
                                             <img
-                                                class="object-cover w-12 h-12 rounded-full"
+                                                class="object-cover h-12 w-12 rounded-full"
                                                 src="/app-images/builder/components/default_component_image.jpg"
                                                 alt="Component"
                                             />
@@ -331,13 +336,99 @@ const routesArray = [
                                     >
                                         <p
                                             v-for="category in component.categories &&
-                                            component.categories"
+                                            Array.isArray(
+                                                component.categories
+                                            ) &&
+                                            component.categories.sort(
+                                                (a, b) => {
+                                                    const nameA = a.name;
+                                                    const nameB = b.name;
+
+                                                    if (nameA < nameB) {
+                                                        return -1;
+                                                    } else if (nameA > nameB) {
+                                                        return 1;
+                                                    } else {
+                                                        return 0;
+                                                    }
+                                                }
+                                            )"
                                             :key="category"
-                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
-                                            {{ category.name }}
+                                            <Squares2X2Icon
+                                                class="w-3 h-3 stroke-1"
+                                            ></Squares2X2Icon>
+
+                                            <span>
+                                                {{ category.name }}
+                                            </span>
                                         </p>
                                     </div>
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    <div
+                                        v-if="
+                                            component.updatedBy !== null &&
+                                            component.updatedBy !== undefined
+                                        "
+                                        class="flex items-center gap-2"
+                                    >
+                                        <!-- user photo - start -->
+
+                                        <div
+                                            v-if="
+                                                component.updatedBy
+                                                    .profile_photo_path !== null
+                                            "
+                                        >
+                                            <div class="h-8 w-8 flex-shrink-0">
+                                                <img
+                                                    class="object-cover h-8 w-8 rounded-full"
+                                                    :src="`/storage/${component.updatedBy.profile_photo_path}`"
+                                                    alt="avatar"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            v-if="
+                                                component.updatedBy
+                                                    .profile_photo_path === null
+                                            "
+                                            class="flex-shrink-0 h-8 w-8 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
+                                        >
+                                            {{
+                                                component.updatedBy.first_name
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                            }}
+                                            {{
+                                                component.updatedBy.last_name
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                            }}
+                                        </div>
+                                        <span
+                                            class="flex flex-col items-left gap-1 myPrimaryParagraph"
+                                        >
+                                            <span>
+                                                {{
+                                                    component.updatedBy
+                                                        .first_name
+                                                }}
+                                                {{
+                                                    component.updatedBy
+                                                        .last_name
+                                                }}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <!-- user photo - end -->
+                                    <span v-if="component.updatedBy === null">
+                                        Unknown
+                                    </span>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
@@ -361,7 +452,7 @@ const routesArray = [
                                 <td class="myPrimaryTableTBodyTd">
                                     <div
                                         @click="handleEdit(component.id)"
-                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
                                         <PencilIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -373,7 +464,7 @@ const routesArray = [
                                         @click="
                                             handleDelete(component.id, post)
                                         "
-                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"

@@ -167,7 +167,7 @@ onMounted(() => {
                                         class="flex-shrink-0"
                                     >
                                         <img
-                                            class="object-cover w-10 h-10 rounded-full"
+                                            class="object-cover h-10 w-10 rounded-full"
                                             :src="`/storage/${member.profile_photo_path}`"
                                             alt="User Image
                                             
@@ -180,7 +180,7 @@ onMounted(() => {
                                             $page.props.user &&
                                             member.profile_photo_path === null
                                         "
-                                        class="flex-shrink-0 w-10 h-10 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                        class="flex-shrink-0 h-10 w-10 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                     >
                                         {{
                                             member.first_name

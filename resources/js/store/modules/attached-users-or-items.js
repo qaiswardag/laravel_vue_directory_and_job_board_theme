@@ -19,6 +19,9 @@ export default {
         users: [],
         attachedUsers: [],
 
+        componentCategories: [],
+        attachedComponentCategories: [],
+
         postCategories: [],
         attachedPostCategories: [],
 
@@ -40,6 +43,13 @@ export default {
         },
         getCurrentAttachedUsers(state) {
             return state.attachedUsers;
+        },
+
+        getCurrentComponentategories(state) {
+            return state.componentCategories;
+        },
+        getCurrentAttachedComponentategories(state) {
+            return state.attachedComponentCategories;
         },
 
         getCurrentPostCategories(state) {
@@ -77,6 +87,9 @@ export default {
         setCurrentUsers(state, payload) {
             state.users = payload;
         },
+        setCurrentComponentCategories(state, payload) {
+            state.componentCategories = payload;
+        },
         setCurrentPostCategories(state, payload) {
             state.postCategories = payload;
         },
@@ -90,6 +103,9 @@ export default {
             state.storeCategories = payload;
         },
 
+        // users
+        // users
+        // users
         // users
         setCurrentAttachedUsers(state, payload) {
             // check if user already exists in the array
@@ -107,6 +123,27 @@ export default {
         },
         setRemoveAttachedUser(state, payload) {
             state.attachedUsers = payload;
+        },
+        // component categories
+        // component categories
+        // component categories
+        // component categories
+        setCurrentAttachedComponentCategories(state, payload) {
+            // check if user already exists in the array
+            const itemExists = state.attachedComponentCategories.some(
+                (item) => item.id === payload.id
+            );
+
+            // if user does not exist, push to array
+            if (itemExists === false) {
+                state.attachedComponentCategories.unshift(payload);
+            }
+        },
+        setCurrentAttachedComponentCategoriesToEmptyArray(state, payload) {
+            state.attachedComponentCategories = payload;
+        },
+        setRemoveAttachedComponentCategories(state, payload) {
+            state.attachedComponentCategories = payload;
         },
         // post categories
         // post categories
@@ -218,6 +255,34 @@ export default {
 
             // context & send to mutation
             context.commit("setCurrentUsers", {
+                fetchedData: fetchedItems,
+                isError: isErrorItems,
+                error: errorItems,
+                errors: errorsItems,
+                isLoading: isLoadingItems,
+                isSuccess: isSuccessItems,
+            });
+        },
+        // get component categories
+        async fetchComponentCategories(context, data) {
+            console.log("kom her. data er:", data);
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
+            handleGetItems(
+                route(data.apiUrlRouteName, {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
+            );
+
+            // context & send to mutation
+            context.commit("setCurrentComponentCategories", {
                 fetchedData: fetchedItems,
                 isError: isErrorItems,
                 error: errorItems,

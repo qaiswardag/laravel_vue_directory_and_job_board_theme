@@ -186,7 +186,7 @@ const notificationsModalButton = function () {
                                         class="flex-shrink-0"
                                     >
                                         <img
-                                            class="object-cover w-12 h-12 rounded-full"
+                                            class="object-cover h-12 w-12 rounded-full"
                                             :src="`/storage/${$page.props.team.owner.profile_photo_path}`"
                                             :alt="
                                                 $page.props.team.owner
@@ -202,7 +202,7 @@ const notificationsModalButton = function () {
                                             $page.props.team.owner
                                                 .profile_photo_path === null
                                         "
-                                        class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                        class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                     >
                                         {{
                                             $page.props.team.owner.first_name
@@ -260,7 +260,7 @@ const notificationsModalButton = function () {
                                     class="flex-shrink-0"
                                 >
                                     <img
-                                        class="object-cover w-12 h-12 rounded-full"
+                                        class="object-cover h-12 w-12 rounded-full"
                                         :src="`/storage/${$page.props.user.profile_photo_path}`"
                                         alt="User Image
                                             
@@ -274,7 +274,7 @@ const notificationsModalButton = function () {
                                         $page.props.user.profile_photo_path ===
                                             null
                                     "
-                                    class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                    class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                 >
                                     {{
                                         $page.props.user.first_name

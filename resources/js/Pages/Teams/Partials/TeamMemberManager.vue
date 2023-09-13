@@ -631,7 +631,7 @@ const displayAbleRole = (role) => {
                                                                 class="h-12 w-12 flex-shrink-0"
                                                             >
                                                                 <img
-                                                                    class="object-cover w-12 h-12 rounded-full"
+                                                                    class="object-cover h-12 w-12 rounded-full"
                                                                     :src="`/storage/${user.profile_photo_path}`"
                                                                     :alt="
                                                                         user.first_name +

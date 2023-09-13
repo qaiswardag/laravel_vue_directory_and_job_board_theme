@@ -198,7 +198,7 @@ const switchTeam = function (team) {
                                                                             .current_team_id
                                                                     )
                                                                 "
-                                                                class="w-16 h-16 rounded-full object-cover"
+                                                                class="h-16 w-16 rounded-full object-cover"
                                                                 :class="[
                                                                     team.id ===
                                                                     $page.props

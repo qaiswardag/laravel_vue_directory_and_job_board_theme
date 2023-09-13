@@ -116,7 +116,7 @@ const handleLogout = () => {
                             ]"
                         >
                             <div
-                                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                             >
                                 <AdjustmentsHorizontalIcon
                                     class="shrink-0 h-4 w-4 m-2 stroke-2"
@@ -160,7 +160,7 @@ const handleLogout = () => {
                                 "
                             >
                                 <img
-                                    class="object-cover w-10 h-10 rounded-full flex-shrink-0"
+                                    class="object-cover h-10 w-10 rounded-full flex-shrink-0"
                                     :src="`/storage/${$page.props.user.profile_photo_path}`"
                                     :alt="
                                         $page.props.user.first_name +
@@ -176,7 +176,7 @@ const handleLogout = () => {
                                 "
                             >
                                 <div
-                                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
                                     <UserIcon
                                         class="shrink-0 h-4 w-4 m-2 stroke-2"
@@ -194,7 +194,7 @@ const handleLogout = () => {
                         class="hover:bg-gray-50 group relative flex gap-x-6 rounded-lg px-4 py-2 cursor-pointer bg-gray-50 items-center hover:underline"
                     >
                         <div
-                            class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <ArrowRightIcon
                                 class="shrink-0 h-4 w-4 m-2 stroke-2"

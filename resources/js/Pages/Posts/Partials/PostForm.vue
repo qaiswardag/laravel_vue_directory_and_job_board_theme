@@ -6,8 +6,6 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import { QuillEditor } from "@vueup/vue-quill";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { ref, computed, onBeforeMount, watch, onMounted } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
@@ -245,32 +243,6 @@ const notificationsModalButton = function () {
     showErrorNotifications.value = false;
 };
 
-// start Quill Editor
-// define options
-const globalOptions = {
-    // debug: "info",
-    modules: {
-        toolbar: ["bold", "italic", "underline"],
-    },
-    placeholder: "Compose an epic...",
-    readOnly: false,
-    theme: "snow",
-
-    //
-    //
-    toolbar: [
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-        ["bold", "italic", "underline"], // toggled buttons
-
-        [{ list: "ordered" }, { list: "bullet" }],
-
-        [{ align: [] }],
-
-        ["clean"], // remove formatting button
-    ],
-};
-// end Quill Editor
-
 const isSlugEditable = ref(false);
 const slugValueTitle = ref("");
 const slugValueCustom = ref("");
@@ -471,7 +443,12 @@ onBeforeMount(() => {
             }
             //
             postForm.title = formLocalStorage.title;
-            postForm.content = formLocalStorage.content;
+
+            // postForm.content = formLocalStorage.content;
+            // TODO: UNCOMMENT ABOVE
+            postForm.content =
+                "<div><p>I am a test from postForm.vue</p></div>";
+
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
             postForm.cover_image_original =
@@ -663,22 +640,7 @@ const categoriesSorted = computed(() => {
                 <!-- post slug end -->
 
                 <!-- post content start -->
-                <div class="myInputGroup">
-                    <InputLabel
-                        for="content"
-                        value="Post description"
-                        class="mb-1"
-                    />
-                    <QuillEditor
-                        id="content"
-                        v-model:content="postForm.content"
-                        contentType="html"
-                        :options="globalOptions"
-                        class="rounded-b-md bg-white"
-                    >
-                    </QuillEditor>
-                    <InputError :message="postForm.errors.content" />
-                </div>
+                <p>post content here</p>
                 <!-- post content end -->
             </div>
         </template>
@@ -807,7 +769,7 @@ const categoriesSorted = computed(() => {
                     <div
                         @click="handleRemoveCoverImage"
                         v-if="postForm && postForm.cover_image_medium"
-                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                     >
                         <TrashIcon
                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -893,7 +855,7 @@ const categoriesSorted = computed(() => {
                                     class="flex items-center gap-4 my-2 cursor-pointer"
                                 >
                                     <div
-                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
                                         <Squares2X2Icon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -910,7 +872,7 @@ const categoriesSorted = computed(() => {
                                             category.id
                                         )
                                     "
-                                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -1099,7 +1061,7 @@ const categoriesSorted = computed(() => {
                                             "
                                         >
                                             <img
-                                                class="object-cover w-12 h-12 rounded-full"
+                                                class="object-cover h-12 w-12 rounded-full"
                                                 :src="`/storage/${user.profile_photo_path}`"
                                                 :alt="
                                                     user.first_name +
@@ -1113,7 +1075,7 @@ const categoriesSorted = computed(() => {
                                                 user &&
                                                 user.profile_photo_path === null
                                             "
-                                            class="flex-shrink-0 myPrimaryParagraph w-12 h-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                            class="flex-shrink-0 myPrimaryParagraph h-12 w-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                         >
                                             <span>
                                                 {{
@@ -1145,7 +1107,7 @@ const categoriesSorted = computed(() => {
                                         @click="
                                             handleRemoveAttachedUser(user.id)
                                         "
-                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"

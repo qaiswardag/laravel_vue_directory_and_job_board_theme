@@ -98,7 +98,7 @@ defineProps({
                                             class="flex-shrink-0"
                                         >
                                             <img
-                                                class="object-cover w-12 h-12 rounded-full"
+                                                class="object-cover h-12 w-12 rounded-full"
                                                 :src="`/storage/${post.updatedBy.profile_photo_path}`"
                                                 alt="User Image
                                             
@@ -111,7 +111,7 @@ defineProps({
                                                 post.updatedBy
                                                     .profile_photo_path === null
                                             "
-                                            class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                            class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                         >
                                             {{
                                                 post.updatedBy.first_name
@@ -213,7 +213,7 @@ defineProps({
                                             class="flex-shrink-0"
                                         >
                                             <img
-                                                class="object-cover w-12 h-12 rounded-full"
+                                                class="object-cover h-12 w-12 rounded-full"
                                                 :src="`/storage/${author.profile_photo_path}`"
                                                 alt="User Image
                                             
@@ -226,7 +226,7 @@ defineProps({
                                                 author.profile_photo_path ===
                                                 null
                                             "
-                                            class="flex-shrink-0 w-12 h-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                            class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                         >
                                             {{
                                                 author.first_name

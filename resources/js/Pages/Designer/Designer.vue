@@ -205,7 +205,7 @@ onMounted(async () => {
                                             false
                                         )
                                 "
-                                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                             >
                                 <XMarkIcon
                                     class="shrink-0 h-4 w-4 m-2 stroke-2"
@@ -299,7 +299,7 @@ onMounted(async () => {
             >
                 <div
                     @click="store.commit('designer/setMenuLeft', true)"
-                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <Square3Stack3DIcon class="shrink-0 h-4 w-4 m-2 stroke-2">
                     </Square3Stack3DIcon>
@@ -334,7 +334,7 @@ onMounted(async () => {
                     <div class="flex items-center justify-center gap-2">
                         <div
                             @click="handleDesignerPreview"
-                            class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <EyeIcon
                                 class="shrink-0 h-4 w-4 m-2 stroke-2"
@@ -343,7 +343,7 @@ onMounted(async () => {
                         <div
                             v-if="getElement !== null"
                             @click="deselectCurrentComponent"
-                            class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <BoltSlashIcon
                                 class="shrink-0 h-4 w-4 m-2 stroke-2"
@@ -352,7 +352,7 @@ onMounted(async () => {
                         <div
                             v-if="getMenuRight === false"
                             @click="store.commit('designer/setMenuRight', true)"
-                            class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <Squares2X2Icon
                                 class="shrink-0 h-4 w-4 m-2 stroke-2"

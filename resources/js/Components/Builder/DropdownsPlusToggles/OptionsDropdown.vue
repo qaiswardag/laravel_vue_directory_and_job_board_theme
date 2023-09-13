@@ -152,7 +152,7 @@ const settingsSlideOverButton = function () {
                                     class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
                                     <EyeIcon
-                                        class="stroke-2 w-3 h-3 m-1.5"
+                                        class="stroke-2 w-3 h-3 stroke-1 m-1.5"
                                     ></EyeIcon>
                                 </div>
                                 Preview page
@@ -176,7 +176,7 @@ const settingsSlideOverButton = function () {
                                     class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
                                     <AdjustmentsVerticalIcon
-                                        class="stroke-2 w-3 h-3 m-1.5"
+                                        class="stroke-2 w-3 h-3 stroke-1 m-1.5"
                                     ></AdjustmentsVerticalIcon>
                                 </div>
                                 Settings
@@ -199,7 +199,7 @@ const settingsSlideOverButton = function () {
                                     class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square"
                                 >
                                     <TrashIcon
-                                        class="stroke-2 w-3 h-3 m-1.5 group-hover:text-myPrimaryDarkGrayColor"
+                                        class="stroke-2 w-3 h-3 stroke-1 m-1.5 group-hover:text-myPrimaryDarkGrayColor"
                                     ></TrashIcon>
                                 </div>
                                 <span class="group-hover:text-white">

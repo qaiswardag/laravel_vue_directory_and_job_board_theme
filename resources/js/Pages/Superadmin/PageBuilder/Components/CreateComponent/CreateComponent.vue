@@ -26,7 +26,7 @@ const breadcrumbsLinks = [
 
 <template>
     <LoggedInLayout>
-        <Head title="Create Compoent" />
+        <Head title="Create Component" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Create a New Component</h2>
         </template>

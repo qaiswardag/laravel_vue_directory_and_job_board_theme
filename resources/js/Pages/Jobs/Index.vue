@@ -415,23 +415,68 @@ onMounted(() => {
 
                                 <td class="myPrimaryTableTBodyTd">
                                     <div
-                                        class="flex flex-wrap justify-start items-center gap-2"
+                                        class="flex flex-wrap justify-start items-center gap-1"
                                     >
-                                        <p
+                                        <div
                                             v-for="author in post.authors &&
                                             post.authors"
                                             :key="author"
-                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-0 px-1 flex justify-center items-center gap-1"
                                         >
-                                            <UserIcon
-                                                class="w-3 h-3"
-                                            ></UserIcon>
+                                            <div
+                                                v-if="
+                                                    author.profile_photo_path !==
+                                                    null
+                                                "
+                                            >
+                                                <div
+                                                    class="h-5 w-5 flex-shrink-0"
+                                                >
+                                                    <img
+                                                        class="object-cover h-5 w-5 rounded-full"
+                                                        :src="`/storage/${author.profile_photo_path}`"
+                                                        alt="avatar"
+                                                    />
+                                                </div>
+                                            </div>
 
-                                            <span>
-                                                {{ author.first_name }}
-                                                {{ author.last_name }}
+                                            <div
+                                                style="font-size: 9px; gap: 2px"
+                                                v-if="
+                                                    author.profile_photo_path ===
+                                                    null
+                                                "
+                                                class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
+                                            >
+                                                <span>
+                                                    {{
+                                                        author.first_name
+                                                            .charAt(0)
+                                                            .toUpperCase()
+                                                    }}
+                                                </span>
+                                                <span>
+                                                    {{
+                                                        author.last_name
+                                                            .charAt(0)
+                                                            .toUpperCase()
+                                                    }}
+                                                </span>
+                                            </div>
+                                            <span
+                                                class="flex flex-col items-left gap-1 myPrimaryParagraph"
+                                            >
+                                                <p
+                                                    style="font-size: 10px"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
+                                                >
+                                                    <span>
+                                                        {{ author.first_name }}
+                                                        {{ author.last_name }}
+                                                    </span>
+                                                </p>
                                             </span>
-                                        </p>
+                                        </div>
                                     </div>
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
@@ -445,7 +490,7 @@ onMounted(() => {
                                             class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
                                             <GlobeAmericasIcon
-                                                class="w-3 h-3"
+                                                class="w-3 h-3 stroke-1"
                                             ></GlobeAmericasIcon>
                                             <span>
                                                 {{ jobCountry.name }}
@@ -465,7 +510,7 @@ onMounted(() => {
                                             class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
                                             <MapPinIcon
-                                                class="w-3 h-3"
+                                                class="w-3 h-3 stroke-1"
                                             ></MapPinIcon>
                                             <span>
                                                 {{ jobState.name }}
@@ -484,7 +529,9 @@ onMounted(() => {
                                             :key="jobType"
                                             class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
-                                            <NewspaperIcon class="w-3 h-3">
+                                            <NewspaperIcon
+                                                class="w-3 h-3 stroke-1"
+                                            >
                                             </NewspaperIcon>
                                             <span>
                                                 {{ jobType.name }}
@@ -516,7 +563,7 @@ onMounted(() => {
                                             class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
                                             <Squares2X2Icon
-                                                class="w-3 h-3"
+                                                class="w-3 h-3 stroke-1"
                                             ></Squares2X2Icon>
 
                                             <span>
@@ -540,7 +587,9 @@ onMounted(() => {
                                             :key="tag"
                                             class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
                                         >
-                                            <TagIcon class="w-3 h-3"></TagIcon>
+                                            <TagIcon
+                                                class="w-3 h-3 stroke-1"
+                                            ></TagIcon>
                                             <span>
                                                 {{ tag }}
                                             </span>
@@ -563,7 +612,7 @@ onMounted(() => {
                                         >
                                             <div class="h-8 w-8 flex-shrink-0">
                                                 <img
-                                                    class="object-cover w-8 h-8 rounded-full"
+                                                    class="object-cover h-8 w-8 rounded-full"
                                                     :src="`/storage/${post.updatedBy.profile_photo_path}`"
                                                     alt="avatar"
                                                 />
@@ -623,7 +672,7 @@ onMounted(() => {
                                 <td class="myPrimaryTableTBodyTd">
                                     <div
                                         @click="handleEdit(post.id)"
-                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
                                         <PencilIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -633,7 +682,7 @@ onMounted(() => {
                                 <td class="myPrimaryTableTBodyTd">
                                     <div
                                         @click="handleDelete(post.id, post)"
-                                        class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"

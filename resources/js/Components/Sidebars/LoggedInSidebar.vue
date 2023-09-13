@@ -46,7 +46,7 @@ import {
                     >
                         <div class="h-8 w-8 flex-shrink-0">
                             <img
-                                class="w-8 h-8 rounded-full object-cover cursor-pointer"
+                                class="h-8 w-8 rounded-full object-cover cursor-pointer"
                                 :src="`/storage/uploads/${$page.props.currentUserTeam?.logo_thumbnail}`"
                                 alt="Logo"
                             />

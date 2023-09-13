@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Superadmin\StorePageBuilderComponentRequest;
 use App\Models\Superadmin\PageBuilder\PageBuilderComponent;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
@@ -57,6 +58,22 @@ class PageBuilderController extends Controller
         $components = $query->paginate(4);
 
         $components->appends($request->all());
+
+        // Post created by
+        // Retrieve user information for each post
+        foreach ($components as $component) {
+            $user = User::find($component->user_id);
+            if ($user !== null) {
+                $component->updatedBy = [
+                    "first_name" => $user->first_name,
+                    "last_name" => $user->last_name,
+                    "profile_photo_path" => $user->profile_photo_path,
+                ];
+            }
+            if ($user === null) {
+                $component->updatedBy = null;
+            }
+        }
 
         return Inertia::render("Superadmin/PageBuilder/Components/Index", [
             "components" => $components,

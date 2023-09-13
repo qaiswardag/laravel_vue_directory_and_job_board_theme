@@ -33,7 +33,7 @@ const breadcrumbsLinks = [
 
 <template>
     <LoggedInLayout>
-        <Head title="Update Compoent" />
+        <Head title="Update Component" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Update Component</h2>
         </template>

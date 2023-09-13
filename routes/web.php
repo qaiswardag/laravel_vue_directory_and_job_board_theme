@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachComponentCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobTypesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachPostCategoriesController;
@@ -174,6 +175,12 @@ Route::middleware([
             AttachUserController::class,
             "index",
         ])->name("attach.user.index");
+
+        // COMPONENT CATEGORIES
+        Route::get("/team/attach/component/categories/index/{team}", [
+            AttachComponentCategoriesController::class,
+            "index",
+        ])->name("attach.component.categories.index");
 
         // POST CATEGORIES
         Route::get("/team/attach/post/categories/index/{team}", [

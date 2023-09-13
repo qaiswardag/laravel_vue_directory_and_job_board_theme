@@ -184,7 +184,7 @@ const notificationsSlideOverButton = function () {
         >
             <Link :href="route('home')">
                 <div
-                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <HomeIcon
                         class="shrink-0 h-4 w-4 m-2 stroke-2"
@@ -195,7 +195,7 @@ const notificationsSlideOverButton = function () {
 
             <div
                 @click="handleMenuUserTeamModal"
-                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
             >
                 <div
                     class="h-10 w-10 flex-shrink-0"
@@ -205,7 +205,7 @@ const notificationsSlideOverButton = function () {
                     "
                 >
                     <img
-                        class="object-cover w-10 h-10 rounded-full flex-shrink-0"
+                        class="object-cover h-10 w-10 rounded-full flex-shrink-0"
                         :src="`/storage/${$page.props.user.profile_photo_path}`"
                         :alt="
                             $page.props.user.first_name +
@@ -220,7 +220,7 @@ const notificationsSlideOverButton = function () {
                     "
                     @click="handleMenuUserItem"
                     type="button"
-                    class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <UserIcon
                         class="shrink-0 h-4 w-4 m-2 stroke-2"
@@ -232,7 +232,7 @@ const notificationsSlideOverButton = function () {
             <button
                 @click="handleNotificationsSlideOver"
                 type="button"
-                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
             >
                 <span class="sr-only">View notifications</span>
                 <BellIcon
@@ -244,7 +244,7 @@ const notificationsSlideOverButton = function () {
             <button
                 @click="handlePrimaryMenuSlideOver"
                 type="button"
-                class="w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
             >
                 <span class="sr-only">View Menu</span>
                 <Bars3Icon
