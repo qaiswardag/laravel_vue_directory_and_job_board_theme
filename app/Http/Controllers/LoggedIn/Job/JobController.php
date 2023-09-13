@@ -7,9 +7,12 @@ use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
 use App\Models\Job\AuthorJob;
 use App\Models\Job\Job;
 use App\Models\Job\JobCategoryRelation;
+use App\Models\Job\JobCountryRelation;
+use App\Models\Job\JobStateRelation;
 use App\Models\Job\JobTypeRelation;
 use App\Models\Team;
 use App\Models\User;
+use Database\Factories\Job\JobStateFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -170,6 +173,40 @@ class JobController extends Controller
             }
         }
 
+        // countries
+        if (
+            $request->countries !== null &&
+            gettype($request->countries) === "array" &&
+            count($request->countries) !== 0
+        ) {
+            // Loop through the countries array and attach each country to the post
+            foreach ($request->countries as $country) {
+                $countryId = $country["id"];
+
+                // Create a new record in the table
+                JobCountryRelation::create([
+                    "country_id" => $countryId,
+                    "job_id" => $jobId,
+                ]);
+            }
+        }
+        // states
+        if (
+            $request->states !== null &&
+            gettype($request->states) === "array" &&
+            count($request->states) !== 0
+        ) {
+            // Loop through the states array and attach each state to the post
+            foreach ($request->states as $state) {
+                $stateId = $state["id"];
+
+                // Create a new record in the table
+                JobStateRelation::create([
+                    "state_id" => $stateId,
+                    "job_id" => $jobId,
+                ]);
+            }
+        }
         // categories
         if (
             $request->categories !== null &&
@@ -320,12 +357,16 @@ class JobController extends Controller
 
         $categories = $job->categories;
         $types = $job->types;
+        $states = $job->states;
+        $countries = $job->countries;
 
         return Inertia::render("Jobs/UpdateJob/UpdateJob", [
             "post" => $job,
             "postAuthor" => $authors,
             "categories" => $categories,
             "types" => $types,
+            "states" => $states,
+            "countries" => $countries,
         ]);
     }
 
@@ -404,6 +445,76 @@ class JobController extends Controller
             );
             AuthorJob::where("job_id", $jobId)
                 ->whereIn("user_id", $authorsToDelete)
+                ->delete();
+        }
+
+        // Update countries
+        if (
+            $request->countries !== null &&
+            gettype($request->countries) === "array" &&
+            count($request->countries) !== 0
+        ) {
+            // Retrieve the existing resource IDs for the resource
+            $existingResourceIds = JobCountryRelation::where("job_id", $jobId)
+                ->pluck("country_id")
+                ->toArray();
+
+            // Loop through the items array and update or create a record in the table
+            $updatedResourceIds = [];
+
+            foreach ($request->countries as $country) {
+                $stateId = $country["id"];
+                $updatedResourceIds[] = $stateId;
+
+                // Update or create  record in the table
+                JobCountryRelation::updateOrCreate([
+                    "country_id" => $stateId,
+                    "job_id" => $jobId,
+                ]);
+            }
+
+            // Delete records that are not present in the request
+            $resourcesToDelete = array_diff(
+                $existingResourceIds,
+                $updatedResourceIds
+            );
+            JobCountryRelation::where("job_id", $jobId)
+                ->whereIn("country_id", $resourcesToDelete)
+                ->delete();
+        }
+
+        // Update states
+        if (
+            $request->states !== null &&
+            gettype($request->states) === "array" &&
+            count($request->states) !== 0
+        ) {
+            // Retrieve the existing resource IDs for the resource
+            $existingResourceIds = JobStateRelation::where("job_id", $jobId)
+                ->pluck("state_id")
+                ->toArray();
+
+            // Loop through the items array and update or create a record in the table
+            $updatedResourceIds = [];
+
+            foreach ($request->states as $state) {
+                $stateId = $state["id"];
+                $updatedResourceIds[] = $stateId;
+
+                // Update or create  record in the table
+                JobStateRelation::updateOrCreate([
+                    "state_id" => $stateId,
+                    "job_id" => $jobId,
+                ]);
+            }
+
+            // Delete records that are not present in the request
+            $resourcesToDelete = array_diff(
+                $existingResourceIds,
+                $updatedResourceIds
+            );
+            JobStateRelation::where("job_id", $jobId)
+                ->whereIn("state_id", $resourcesToDelete)
                 ->delete();
         }
 

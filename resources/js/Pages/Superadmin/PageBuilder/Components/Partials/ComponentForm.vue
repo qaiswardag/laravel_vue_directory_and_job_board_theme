@@ -206,7 +206,7 @@ const handleCreatePost = function () {
 
 const createPost = () => {
     if (formType.value === "create") {
-        postForm.post(route("team.jobs.store"), {
+        postForm.post(route("admin.components.component.store"), {
             preserveScroll: true,
             onSuccess: () => {
                 clearForm();
@@ -216,12 +216,15 @@ const createPost = () => {
         });
     }
     if (formType.value === "update") {
-        postForm.post(route("team.jobs.update", props.post.id), {
-            preserveScroll: true,
-            onSuccess: () => {},
-            onError: () => {},
-            onFinish: () => {},
-        });
+        postForm.post(
+            route("admin.components.component.update", props.post.id),
+            {
+                preserveScroll: true,
+                onSuccess: () => {},
+                onError: () => {},
+                onFinish: () => {},
+            }
+        );
     }
 };
 
@@ -352,8 +355,6 @@ const categoriesSorted = computed(() => {
 </script>
 
 <template>
-    <p class="my-6">currentUserTeam is: {{ currentUserTeam }}</p>
-    <p class="my-6">component when edit is: {{ post }}</p>
     <FormSection @submitted="handleCreatePost">
         <template #title>Component details</template>
         <template #description> Create a new Component. </template>

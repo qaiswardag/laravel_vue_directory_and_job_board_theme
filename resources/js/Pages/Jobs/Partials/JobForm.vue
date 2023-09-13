@@ -40,6 +40,8 @@ import {
     Squares2X2Icon,
     NewspaperIcon,
     PhotoIcon,
+    MapPinIcon,
+    GlobeAmericasIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -65,6 +67,14 @@ const props = defineProps({
         required: false,
     },
     types: {
+        default: null,
+        required: false,
+    },
+    states: {
+        default: null,
+        required: false,
+    },
+    countries: {
         default: null,
         required: false,
     },
@@ -104,6 +114,14 @@ const getCurrentAttachedUsers = computed(() => {
     return store.getters["attachedUsersOrItems/getCurrentAttachedUsers"];
 });
 
+const getCurrentAttachedJobCountries = computed(() => {
+    return store.getters["attachedUsersOrItems/getCurrentAttachedJobCountries"];
+});
+const getCurrentAttachedJobStates = computed(() => {
+    return store.getters["attachedUsersOrItems/getCurrentAttachedJobStates"];
+});
+//
+//
 const getCurrentAttachedJobCategories = computed(() => {
     return store.getters[
         "attachedUsersOrItems/getCurrentAttachedJobCategories"
@@ -171,6 +189,8 @@ const handleRemoveCoverImage = function () {
 };
 
 const showSearchUserModal = ref(false);
+const showSearchJobCountriesModal = ref(false);
+const showSearchJobStatesModal = ref(false);
 const showSearchJobCategoriesModal = ref(false);
 const showSearchJobTypesModal = ref(false);
 
@@ -182,6 +202,11 @@ const secondButtonModalSearchItems = ref(null);
 // set dynamic modal handle functions
 const firstModalButtonSearchItemsFunction = ref(null);
 const secondModalButtonSearchItemsFunction = ref(null);
+
+const handleRemoveAttachedUser = function (userId) {
+    // filter the array to exclude user with matching ID
+    postForm.author = postForm.author.filter((user) => user.id !== userId);
+};
 
 const handleAddAuthor = function () {
     // handle show modal for unique content
@@ -209,9 +234,70 @@ const handleAddAuthor = function () {
     // end modal
 };
 
-const handleRemoveAttachedUser = function (userId) {
-    // filter the array to exclude user with matching ID
-    postForm.author = postForm.author.filter((user) => user.id !== userId);
+const handleRemoveAttachedCountries = function (itemId) {
+    // filter the array to exclude item with matching ID
+    postForm.countries = postForm.countries.filter(
+        (item) => item.id !== itemId
+    );
+};
+
+const handleAddCountries = function () {
+    // handle show modal for unique content
+    showSearchJobCountriesModal.value = true;
+    // set modal standards
+    titleModalSearchItems.value = "Add Job Country";
+    descriptionModalSearchItems.value = "Add Job Country";
+    firstButtonModalSearchItems.value = "Close";
+    secondButtonModalSearchItems.value = "Save";
+    // handle click
+    firstModalButtonSearchItemsFunction.value = function () {
+        // handle show modal for unique content
+        showSearchJobCountriesModal.value = false;
+    };
+    // handle click
+    secondModalButtonSearchItemsFunction.value = function () {
+        const currentAttachedPostCategories = [
+            ...getCurrentAttachedJobCountries.value,
+        ];
+        // Set post form author to the non-reactive copy
+        postForm.countries = currentAttachedPostCategories;
+
+        // handle show modal for unique content
+        showSearchJobCountriesModal.value = false;
+    };
+
+    // end modal
+};
+const handleRemoveAttachedStates = function (itemId) {
+    // filter the array to exclude item with matching ID
+    postForm.states = postForm.states.filter((item) => item.id !== itemId);
+};
+const handleAddStates = function () {
+    // handle show modal for unique content
+    showSearchJobStatesModal.value = true;
+    // set modal standards
+    titleModalSearchItems.value = "Add Job State";
+    descriptionModalSearchItems.value = "Add Job State";
+    firstButtonModalSearchItems.value = "Close";
+    secondButtonModalSearchItems.value = "Save";
+    // handle click
+    firstModalButtonSearchItemsFunction.value = function () {
+        // handle show modal for unique content
+        showSearchJobStatesModal.value = false;
+    };
+    // handle click
+    secondModalButtonSearchItemsFunction.value = function () {
+        const currentAttachedPostCategories = [
+            ...getCurrentAttachedJobStates.value,
+        ];
+        // Set post form author to the non-reactive copy
+        postForm.states = currentAttachedPostCategories;
+
+        // handle show modal for unique content
+        showSearchJobStatesModal.value = false;
+    };
+
+    // end modal
 };
 
 const handleRemoveAttachedCategory = function (itemId) {
@@ -247,7 +333,6 @@ const handleAddCategories = function () {
 
     // end modal
 };
-
 const handleAddJobTypes = function () {
     // handle show modal for unique content
     showSearchJobTypesModal.value = true;
@@ -331,6 +416,8 @@ const postForm = useForm({
     tags: "",
     show_author: false,
     author: [],
+    countries: [],
+    states: [],
     categories: [],
     types: [],
 });
@@ -463,6 +550,8 @@ const clearForm = function () {
     //
     postForm.show_author = false;
     postForm.author = [];
+    postForm.countries = [];
+    postForm.states = [];
     postForm.categories = [];
     postForm.types = [];
 
@@ -537,6 +626,32 @@ onBeforeMount(() => {
             ) {
                 postForm.author = formLocalStorage.author;
             }
+            // Countries
+            if (
+                formLocalStorage.countries === undefined ||
+                formLocalStorage.countries === null
+            ) {
+                postForm.countries = [{ name: "United Arab Emirates" }];
+            }
+            if (
+                formLocalStorage.countries !== undefined ||
+                formLocalStorage.countries !== null
+            ) {
+                postForm.countries = formLocalStorage.countries;
+            }
+            // States
+            if (
+                formLocalStorage.states === undefined ||
+                formLocalStorage.states === null
+            ) {
+                postForm.states = [];
+            }
+            if (
+                formLocalStorage.states !== undefined ||
+                formLocalStorage.states !== null
+            ) {
+                postForm.states = formLocalStorage.states;
+            }
             // Categories
             if (
                 formLocalStorage.categories === undefined ||
@@ -563,6 +678,9 @@ onBeforeMount(() => {
             ) {
                 postForm.types = formLocalStorage.types;
             }
+        }
+        if (localStorage.getItem(pathLocalStorage) === null) {
+            postForm.countries = [{ name: "United Arab Emirates" }];
         }
     }
 
@@ -599,6 +717,8 @@ onBeforeMount(() => {
             postForm.author = [];
         }
 
+        postForm.countries = props.countries;
+        postForm.states = props.states;
         postForm.categories = props.categories;
         postForm.types = props.types;
     }
@@ -612,6 +732,35 @@ const authorSorted = computed(() => {
         if (firstNameA < firstNameB) {
             return -1;
         } else if (firstNameA > firstNameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+
+const countriesSorted = computed(() => {
+    return postForm.countries.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+const statesSorted = computed(() => {
+    return postForm.states.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
             return 1;
         } else {
             return 0;
@@ -885,6 +1034,199 @@ const jobTypesSorted = computed(() => {
                 <InputError :message="postForm.errors.cover_image_original" />
             </div>
             <!-- cover image - end -->
+
+            <!-- post countries - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Country</div>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
+                </div>
+                <!-- select - start -->
+                <div @click="handleAddCountries" class="myPrimaryFakeSelect">
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.countries &&
+                                postForm.countries.length === 0
+                                    ? "Select Country"
+                                    : "Update Country"
+                            }}
+                        </p>
+                    </div>
+                    <div
+                        class="border-none rounded flex items-center justify-center h-full w-8"
+                    >
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                    </div>
+                </div>
+                <!-- select - end -->
+
+                <div
+                    v-if="postForm.countries && postForm.countries.length === 0"
+                    class="space-y-6 mt-2"
+                >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
+                    <p
+                        v-if="
+                            postForm.countries &&
+                            postForm.countries.length !== 0
+                        "
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{ postForm.countries && postForm.countries.length }}
+                        {{
+                            postForm.countries &&
+                            postForm.countries.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+
+                    <div
+                        v-if="
+                            postForm.countries &&
+                            postForm.countries.length !== 0
+                        "
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                    >
+                        <div
+                            v-for="country in Array.isArray(countriesSorted) &&
+                            countriesSorted"
+                            :key="country.id"
+                        >
+                            <div
+                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                            >
+                                <div
+                                    @click="handleAddCountries"
+                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                >
+                                    <div
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                    >
+                                        <GlobeAmericasIcon
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        ></GlobeAmericasIcon>
+                                    </div>
+                                    <p>
+                                        {{ country.name }}
+                                    </p>
+                                </div>
+
+                                <div
+                                    @click="
+                                        handleRemoveAttachedCountries(
+                                            country.id
+                                        )
+                                    "
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                >
+                                    <TrashIcon
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    ></TrashIcon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <InputError :message="postForm.errors.countries" />
+            </div>
+            <!-- post countries - end -->
+            <!-- post states - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">State</div>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
+                </div>
+                <!-- select - start -->
+                <div @click="handleAddStates" class="myPrimaryFakeSelect">
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.states && postForm.states.length === 0
+                                    ? "Select State"
+                                    : "Update State"
+                            }}
+                        </p>
+                    </div>
+                    <div
+                        class="border-none rounded flex items-center justify-center h-full w-8"
+                    >
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                    </div>
+                </div>
+                <!-- select - end -->
+
+                <div
+                    v-if="postForm.states && postForm.states.length === 0"
+                    class="space-y-6 mt-2"
+                >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
+                    <p
+                        v-if="postForm.states && postForm.states.length !== 0"
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{ postForm.states && postForm.states.length }}
+                        {{
+                            postForm.states && postForm.states.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+
+                    <div
+                        v-if="postForm.states && postForm.states.length !== 0"
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                    >
+                        <div
+                            v-for="state in Array.isArray(statesSorted) &&
+                            statesSorted"
+                            :key="state.id"
+                        >
+                            <div
+                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                            >
+                                <div
+                                    @click="handleAddStates"
+                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                >
+                                    <div
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                    >
+                                        <MapPinIcon
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        ></MapPinIcon>
+                                    </div>
+                                    <p>
+                                        {{ state.name }}
+                                    </p>
+                                </div>
+
+                                <div
+                                    @click="
+                                        handleRemoveAttachedStates(state.id)
+                                    "
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                >
+                                    <TrashIcon
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    ></TrashIcon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <InputError :message="postForm.errors.states" />
+            </div>
+            <!-- post states - end -->
 
             <!-- post categories - start -->
             <div class="myInputsOrganization">
@@ -1430,6 +1772,60 @@ const jobTypesSorted = computed(() => {
             >
             </SearchUsersOrItems>
 
+            <SearchUsersOrItems
+                v-if="showSearchJobCountriesModal"
+                apiUrlRouteName="attach.job.countries.index"
+                :existingItems="postForm.countries"
+                vuexActionMethod="attachedUsersOrItems/fetchJobCountries"
+                vuexGetCurrentItems="attachedUsersOrItems/getCurrentJobCountries"
+                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedJobCountries"
+                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedJobCountries"
+                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedJobCountries"
+                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedJobCountriesToEmptyArray"
+                :user="user"
+                :team="postForm.team"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
+                "
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
+                "
+                :displayIcon="true"
+                icon="GlobeAmericasIcon"
+                :show="showSearchJobCountriesModal"
+            >
+            </SearchUsersOrItems>
+            <SearchUsersOrItems
+                v-if="showSearchJobStatesModal"
+                apiUrlRouteName="attach.job.states.index"
+                :existingItems="postForm.states"
+                vuexActionMethod="attachedUsersOrItems/fetchJobStates"
+                vuexGetCurrentItems="attachedUsersOrItems/getCurrentJobStates"
+                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedJobStates"
+                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedJobStates"
+                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedJobStates"
+                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedJobStatesToEmptyArray"
+                :user="user"
+                :team="postForm.team"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
+                "
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
+                "
+                :displayIcon="true"
+                icon="MapPinIcon"
+                :show="showSearchJobStatesModal"
+            >
+            </SearchUsersOrItems>
             <SearchUsersOrItems
                 v-if="showSearchJobCategoriesModal"
                 apiUrlRouteName="attach.job.categories.index"

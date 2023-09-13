@@ -40,6 +40,7 @@ import {
     XMarkIcon,
     Squares2X2Icon,
     PhotoIcon,
+    MapPinIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -61,6 +62,10 @@ const props = defineProps({
         required: false,
     },
     categories: {
+        default: null,
+        required: false,
+    },
+    states: {
         default: null,
         required: false,
     },
@@ -100,6 +105,9 @@ const getCurrentAttachedUsers = computed(() => {
     return store.getters["attachedUsersOrItems/getCurrentAttachedUsers"];
 });
 
+const getCurrentAttachedStoreStates = computed(() => {
+    return store.getters["attachedUsersOrItems/getCurrentAttachedStoreStates"];
+});
 const getCurrentAttachedStoreCategories = computed(() => {
     return store.getters[
         "attachedUsersOrItems/getCurrentAttachedStoreCategories"
@@ -163,6 +171,7 @@ const handleRemoveCoverImage = function () {
     postForm.cover_image_large = null;
 };
 
+const showSearchStoreStatesModal = ref(false);
 const showSearchStoreCategoriesModal = ref(false);
 const showSearchUserModal = ref(false);
 
@@ -241,6 +250,38 @@ const handleAddCategories = function () {
     // end modal
 };
 
+const handleRemoveAttachedStates = function (itemId) {
+    // filter the array to exclude item with matching ID
+    postForm.states = postForm.states.filter((item) => item.id !== itemId);
+};
+const handleAddStates = function () {
+    // handle show modal for unique content
+    showSearchStoreStatesModal.value = true;
+    // set modal standards
+    titleModalSearchItems.value = "Add Store State";
+    descriptionModalSearchItems.value = "Add Store State";
+    firstButtonModalSearchItems.value = "Close";
+    secondButtonModalSearchItems.value = "Save";
+    // handle click
+    firstModalButtonSearchItemsFunction.value = function () {
+        // handle show modal for unique content
+        showSearchStoreStatesModal.value = false;
+    };
+    // handle click
+    secondModalButtonSearchItemsFunction.value = function () {
+        const currentAttachedPostCategories = [
+            ...getCurrentAttachedStoreStates.value,
+        ];
+        // Set post form author to the non-reactive copy
+        postForm.states = currentAttachedPostCategories;
+
+        // handle show modal for unique content
+        showSearchStoreStatesModal.value = false;
+    };
+
+    // end modal
+};
+
 const showErrorNotifications = ref(false);
 
 const notificationsModalButton = function () {
@@ -267,6 +308,7 @@ const postForm = useForm({
     tags: "",
     show_author: false,
     author: [],
+    states: [],
     categories: [],
 });
 
@@ -398,6 +440,7 @@ const clearForm = function () {
     //
     postForm.show_author = false;
     postForm.author = [];
+    postForm.states = [];
     postForm.categories = [];
 
     localStorage.removeItem(pathLocalStorage);
@@ -478,6 +521,19 @@ onBeforeMount(() => {
             ) {
                 postForm.author = formLocalStorage.author;
             }
+            // states
+            if (
+                formLocalStorage.states === undefined ||
+                formLocalStorage.states === null
+            ) {
+                postForm.states = [];
+            }
+            if (
+                formLocalStorage.states !== undefined ||
+                formLocalStorage.states !== null
+            ) {
+                postForm.states = formLocalStorage.states;
+            }
             // Categories
             if (
                 formLocalStorage.categories === undefined ||
@@ -527,6 +583,7 @@ onBeforeMount(() => {
             postForm.author = [];
         }
 
+        postForm.states = props.states;
         postForm.categories = props.categories;
     }
 });
@@ -545,6 +602,22 @@ const authorSorted = computed(() => {
         }
     });
 });
+
+const statesSorted = computed(() => {
+    return postForm.states.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+
 const categoriesSorted = computed(() => {
     return postForm.categories.sort((a, b) => {
         const nameA = a.name;
@@ -845,6 +918,97 @@ const handleDesigner = function () {
                 <InputError :message="postForm.errors.cover_image_original" />
             </div>
             <!-- cover image - end -->
+            <!-- post states - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">State</div>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
+                </div>
+                <!-- select - start -->
+                <div @click="handleAddStates" class="myPrimaryFakeSelect">
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.states && postForm.states.length === 0
+                                    ? "Select State"
+                                    : "Update State"
+                            }}
+                        </p>
+                    </div>
+                    <div
+                        class="border-none rounded flex items-center justify-center h-full w-8"
+                    >
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                    </div>
+                </div>
+                <!-- select - end -->
+
+                <div
+                    v-if="postForm.states && postForm.states.length === 0"
+                    class="space-y-6 mt-2"
+                >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
+                    <p
+                        v-if="postForm.states && postForm.states.length !== 0"
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{ postForm.states && postForm.states.length }}
+                        {{
+                            postForm.states && postForm.states.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+
+                    <div
+                        v-if="postForm.states && postForm.states.length !== 0"
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                    >
+                        <div
+                            v-for="state in Array.isArray(statesSorted) &&
+                            statesSorted"
+                            :key="state.id"
+                        >
+                            <div
+                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                            >
+                                <div
+                                    @click="handleAddStates"
+                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                >
+                                    <div
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                    >
+                                        <MapPinIcon
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        ></MapPinIcon>
+                                    </div>
+                                    <p>
+                                        {{ state.name }}
+                                    </p>
+                                </div>
+
+                                <div
+                                    @click="
+                                        handleRemoveAttachedStates(state.id)
+                                    "
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                >
+                                    <TrashIcon
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    ></TrashIcon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <InputError :message="postForm.errors.states" />
+            </div>
+            <!-- post states - end -->
             <!-- post categories - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -1293,6 +1457,34 @@ const handleDesigner = function () {
                 "
                 :displayIcon="false"
                 :show="showSearchUserModal"
+            >
+            </SearchUsersOrItems>
+
+            <SearchUsersOrItems
+                v-if="showSearchStoreStatesModal"
+                apiUrlRouteName="attach.store.states.index"
+                :existingItems="postForm.states"
+                vuexActionMethod="attachedUsersOrItems/fetchStoreStates"
+                vuexGetCurrentItems="attachedUsersOrItems/getCurrentStoreStates"
+                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedStoreStates"
+                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedStoreStates"
+                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedStoreStates"
+                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedStoreStatesToEmptyArray"
+                :user="user"
+                :team="postForm.team"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
+                "
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
+                "
+                :displayIcon="true"
+                icon="MapPinIcon"
+                :show="showSearchStoreStatesModal"
             >
             </SearchUsersOrItems>
 

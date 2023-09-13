@@ -571,17 +571,7 @@ onMounted(() => {
                                                                 >
                                                                 </MapPinIcon>
                                                             </div>
-                                                            <div
-                                                                v-if="
-                                                                    props.icon ===
-                                                                    'GlobeAmericasIcon'
-                                                                "
-                                                            >
-                                                                <GlobeAmericasIcon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                                >
-                                                                </GlobeAmericasIcon>
-                                                            </div>
+
                                                             <div
                                                                 v-if="
                                                                     props.icon ===

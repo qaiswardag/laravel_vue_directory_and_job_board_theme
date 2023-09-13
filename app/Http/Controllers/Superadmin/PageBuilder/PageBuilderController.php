@@ -116,8 +116,6 @@ class PageBuilderController extends Controller
         StorePageBuilderComponentRequest $request,
         $referenceId
     ) {
-        dd("this is store method");
-
         $this->authorize("superadmin-can-create-and-update");
 
         //

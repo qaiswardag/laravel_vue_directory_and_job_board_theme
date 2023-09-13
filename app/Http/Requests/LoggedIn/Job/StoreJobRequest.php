@@ -81,11 +81,15 @@ class StoreJobRequest extends FormRequest
     public function withValidator($validator)
     {
         $maxAuthors = 18;
+        $maxJobCountries = 1;
+        $maxJobStates = 2;
         $maxCategories = 4;
         $maxJobTypes = 4;
 
         $validator->after(function ($validator) use (
             $maxAuthors,
+            $maxJobCountries,
+            $maxJobStates,
             $maxCategories,
             $maxJobTypes
         ) {
@@ -94,6 +98,98 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add("team", "The team field is required.");
             }
+
+            // validation for countries # start
+            if (
+                $this->countries === null ||
+                (gettype($this->countries) === "array" &&
+                    count($this->countries) === 0)
+            ) {
+                $validator
+                    ->errors()
+                    ->add("countries", "The countries field is required.");
+            }
+
+            if (gettype($this->countries) !== "array") {
+                $validator
+                    ->errors()
+                    ->add("countries", "countries field must be an array.");
+            }
+            if (
+                gettype($this->countries) === "array" &&
+                count($this->countries) > $maxJobCountries
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "countries",
+                        "Limited to a maximum of {$maxJobCountries} countries."
+                    );
+            }
+            // validation for countries # end
+
+            // validation for states # start
+            if (
+                $this->states === null ||
+                (gettype($this->states) === "array" &&
+                    count($this->states) === 0)
+            ) {
+                $validator
+                    ->errors()
+                    ->add("states", "The states field is required.");
+            }
+
+            if (gettype($this->states) !== "array") {
+                $validator
+                    ->errors()
+                    ->add("states", "states field must be an array.");
+            }
+            if (
+                gettype($this->states) === "array" &&
+                count($this->states) > $maxJobStates
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "states",
+                        "Limited to a maximum of {$maxJobStates} states."
+                    );
+            }
+            // validation for states # end
+
+            // validation for author # start
+            if (
+                ($this->show_author === true && $this->author === null) ||
+                ($this->show_author === true &&
+                    gettype($this->author) === "array" &&
+                    count($this->author) === 0)
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "author",
+                        "The author field is required, when show author is set to true."
+                    );
+            }
+
+            if ($this->author !== null && gettype($this->author) !== "array") {
+                $validator
+                    ->errors()
+                    ->add("author", "Author field must be an array.");
+            }
+            if (
+                $this->author !== null &&
+                gettype($this->author) === "array" &&
+                count($this->author) > $maxAuthors
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "author",
+                        "      Limited to a maximum of {$maxAuthors} people."
+                    );
+            }
+            // validation for author # end
 
             // validation for categories # start
             if (
@@ -151,48 +247,14 @@ class StoreJobRequest extends FormRequest
             }
             // validation for types # end
 
-            // validation for author # start
-            if (
-                ($this->show_author === true && $this->author === null) ||
-                ($this->show_author === true &&
-                    gettype($this->author) === "array" &&
-                    count($this->author) === 0)
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "author",
-                        "The author field is required, when show author is set to true."
-                    );
+            // if validator fails
+            if ($validator->fails()) {
+                return back()->with(
+                    "error",
+                    "Please complete all fields correctly to proceed."
+                );
             }
-
-            if ($this->author !== null && gettype($this->author) !== "array") {
-                $validator
-                    ->errors()
-                    ->add("author", "Author field must be an array.");
-            }
-            if (
-                $this->author !== null &&
-                gettype($this->author) === "array" &&
-                count($this->author) > $maxAuthors
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "author",
-                        "      Limited to a maximum of {$maxAuthors} people."
-                    );
-            }
-            // validation for author # end
         });
-
-        // if validator fails
-        if ($validator->fails()) {
-            return back()->with(
-                "error",
-                "Please complete all fields correctly to proceed."
-            );
-        }
 
         // end of withValidator
     }

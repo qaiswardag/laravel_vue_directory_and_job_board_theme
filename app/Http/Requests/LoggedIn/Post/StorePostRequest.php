@@ -84,7 +84,7 @@ class StorePostRequest extends FormRequest
     public function withValidator($validator)
     {
         $maxAuthors = 18;
-        $maxCategories = 4;
+        $maxCategories = 2;
 
         $validator->after(function ($validator) use (
             $maxAuthors,

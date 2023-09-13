@@ -81,11 +81,13 @@ class StoreStoreRequest extends FormRequest
     public function withValidator($validator)
     {
         $maxAuthors = 18;
-        $maxCategories = 4;
+        $maxCategories = 6;
+        $maxJobStates = 1;
 
         $validator->after(function ($validator) use (
             $maxAuthors,
-            $maxCategories
+            $maxCategories,
+            $maxJobStates
         ) {
             if ($this->team === null) {
                 $validator
@@ -121,6 +123,35 @@ class StoreStoreRequest extends FormRequest
                     );
             }
             // validation for categories # end
+
+            // validation for states # start
+            if (
+                $this->states === null ||
+                (gettype($this->states) === "array" &&
+                    count($this->states) === 0)
+            ) {
+                $validator
+                    ->errors()
+                    ->add("states", "The states field is required.");
+            }
+
+            if (gettype($this->states) !== "array") {
+                $validator
+                    ->errors()
+                    ->add("states", "states field must be an array.");
+            }
+            if (
+                gettype($this->states) === "array" &&
+                count($this->states) > $maxJobStates
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "states",
+                        "Limited to a maximum of {$maxJobStates} states."
+                    );
+            }
+            // validation for states # end
 
             // validation for author # start
             if (

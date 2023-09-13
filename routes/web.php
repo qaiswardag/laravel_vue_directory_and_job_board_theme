@@ -3,9 +3,12 @@
 use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachComponentCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobCategoriesController;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobCountriesController;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobStatesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobTypesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachPostCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachStoreCategoriesController;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachStoreStatesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
 use App\Http\Controllers\Api\Internal\LoggedIn\DashboardStatsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
@@ -188,6 +191,21 @@ Route::middleware([
             "index",
         ])->name("attach.post.categories.index");
 
+        // JOB COUNTRIES
+        Route::get("/team/attach/job/countries/index/{team}", [
+            AttachJobCountriesController::class,
+            "index",
+        ])->name("attach.job.countries.index");
+        // JOB STATES
+        Route::get("/team/attach/job/states/index/{team}", [
+            AttachJobStatesController::class,
+            "index",
+        ])->name("attach.job.states.index");
+        // JOB STATES
+        Route::get("/team/attach/job/categories/index/{team}", [
+            AttachJobCategoriesController::class,
+            "index",
+        ])->name("attach.job.categories.index");
         // JOB CATEGORIES
         Route::get("/team/attach/job/categories/index/{team}", [
             AttachJobCategoriesController::class,
@@ -200,6 +218,11 @@ Route::middleware([
             "index",
         ])->name("attach.job.types.index");
 
+        // STORE STATES
+        Route::get("/team/attach/store/states/index/{team}", [
+            AttachStoreStatesController::class,
+            "index",
+        ])->name("attach.store.states.index");
         // STORE CATEGORES
         Route::get("/team/attach/store/categories/index/{team}", [
             AttachStoreCategoriesController::class,
@@ -522,6 +545,19 @@ Route::middleware([
         PageBuilderController::class,
         "edit",
     ])->name("admin.components.component.edit");
+
+    //
+    //
+    Route::post("/admin/components/component/store", [
+        PageBuilderController::class,
+        "store",
+    ])->name("admin.components.component.store");
+
+    //
+    Route::post("/admin/components/component/{component}", [
+        PageBuilderController::class,
+        "update",
+    ])->name("admin.components.component.update");
     // ADMIN ONLY #PAGE BUILDER #END
     // ADMIN ONLY #PAGE BUILDER #END
     // ADMIN ONLY #PAGE BUILDER #END

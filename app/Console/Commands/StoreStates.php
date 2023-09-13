@@ -27,7 +27,6 @@ class StoreStates extends Command
     public function handle()
     {
         $states = [
-            "Other",
             "Abu Dhabi",
             "Dubai",
             "Sharjah",

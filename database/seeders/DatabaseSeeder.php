@@ -486,7 +486,6 @@ class DatabaseSeeder extends Seeder
         Store::factory(20)->create();
         $totalStores = Store::count();
         $states = [
-            "Other",
             "Abu Dhabi",
             "Dubai",
             "Sharjah",

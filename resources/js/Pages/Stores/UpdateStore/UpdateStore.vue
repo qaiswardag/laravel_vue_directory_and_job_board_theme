@@ -19,6 +19,9 @@ const props = defineProps({
     categories: {
         required: true,
     },
+    states: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
@@ -48,6 +51,7 @@ const breadcrumbsLinks = [
             :post="post"
             :postAuthor="postAuthor"
             :categories="categories"
+            :states="states"
         ></StoreForm>
     </LoggedInLayout>
 </template>

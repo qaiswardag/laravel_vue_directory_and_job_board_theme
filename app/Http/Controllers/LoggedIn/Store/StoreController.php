@@ -9,6 +9,7 @@ use App\Http\Requests\LoggedIn\Store\StoreStoreRequest;
 use App\Models\Store\AuthorStore;
 use App\Models\Store\Store;
 use App\Models\Store\StoreCategoryRelation;
+use App\Models\Store\StoreStateRelation;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -168,6 +169,23 @@ class StoreController extends Controller
             }
         }
 
+        // states
+        if (
+            $request->states !== null &&
+            gettype($request->states) === "array" &&
+            count($request->states) !== 0
+        ) {
+            // Loop through the states array and attach each state to the post
+            foreach ($request->states as $state) {
+                $stateId = $state["id"];
+
+                // Create a new record in the table
+                StoreStateRelation::create([
+                    "state_id" => $stateId,
+                    "store_id" => $storeId,
+                ]);
+            }
+        }
         // categories
         if (
             $request->categories !== null &&
@@ -300,11 +318,13 @@ class StoreController extends Controller
         }
 
         $categories = $store->categories;
+        $states = $store->states;
 
         return Inertia::render("Stores/UpdateStore/UpdateStore", [
             "post" => $store,
             "postAuthor" => $authors,
             "categories" => $categories,
+            "states" => $states,
         ]);
     }
 
@@ -384,6 +404,44 @@ class StoreController extends Controller
             );
             AuthorStore::where("store_id", $storeId)
                 ->whereIn("user_id", $authorsToDelete)
+                ->delete();
+        }
+
+        // Update states
+        if (
+            $request->states !== null &&
+            gettype($request->states) === "array" &&
+            count($request->states) !== 0
+        ) {
+            // Retrieve the existing resource IDs for the resource
+            $existingResourceIds = StoreStateRelation::where(
+                "store_id",
+                $storeId
+            )
+                ->pluck("state_id")
+                ->toArray();
+
+            // Loop through the items array and update or create a record in the table
+            $updatedResourceIds = [];
+
+            foreach ($request->states as $state) {
+                $stateId = $state["id"];
+                $updatedResourceIds[] = $stateId;
+
+                // Update or create  record in the table
+                StoreStateRelation::updateOrCreate([
+                    "state_id" => $stateId,
+                    "store_id" => $storeId,
+                ]);
+            }
+
+            // Delete records that are not present in the request
+            $resourcesToDelete = array_diff(
+                $existingResourceIds,
+                $updatedResourceIds
+            );
+            StoreStateRelation::where("store_id", $storeId)
+                ->whereIn("state_id", $resourcesToDelete)
                 ->delete();
         }
 

@@ -25,11 +25,20 @@ export default {
         postCategories: [],
         attachedPostCategories: [],
 
+        jobStates: [],
+        attachedJobStates: [],
+
+        jobCountries: [],
+        attachedJobCountries: [],
+
         jobCategories: [],
         attachedJobCategories: [],
 
         jobTypes: [],
         attachedJobTypes: [],
+
+        storeStates: [],
+        attachedStoreStates: [],
 
         storeCategories: [],
         attachedStoreCategories: [],
@@ -45,10 +54,10 @@ export default {
             return state.attachedUsers;
         },
 
-        getCurrentComponentategories(state) {
+        getCurrentComponentCategories(state) {
             return state.componentCategories;
         },
-        getCurrentAttachedComponentategories(state) {
+        getCurrentAttachedComponentCategories(state) {
             return state.attachedComponentCategories;
         },
 
@@ -57,6 +66,20 @@ export default {
         },
         getCurrentAttachedPostCategories(state) {
             return state.attachedPostCategories;
+        },
+
+        getCurrentJobCountries(state) {
+            return state.jobCountries;
+        },
+        getCurrentAttachedJobCountries(state) {
+            return state.attachedJobCountries;
+        },
+
+        getCurrentJobStates(state) {
+            return state.jobStates;
+        },
+        getCurrentAttachedJobStates(state) {
+            return state.attachedJobStates;
         },
 
         getCurrentJobCategories(state) {
@@ -71,6 +94,13 @@ export default {
         },
         getCurrentAttachedJobTypes(state) {
             return state.attachedJobTypes;
+        },
+
+        getCurrentStoreStates(state) {
+            return state.storeStates;
+        },
+        getCurrentAttachedStoreStates(state) {
+            return state.attachedStoreStates;
         },
 
         getCurrentStoreCategories(state) {
@@ -93,11 +123,20 @@ export default {
         setCurrentPostCategories(state, payload) {
             state.postCategories = payload;
         },
+        setCurrentJobCountries(state, payload) {
+            state.jobCountries = payload;
+        },
+        setCurrentJobStates(state, payload) {
+            state.jobStates = payload;
+        },
         setCurrentJobCategories(state, payload) {
             state.jobCategories = payload;
         },
         setCurrentJobTypes(state, payload) {
             state.jobTypes = payload;
+        },
+        setCurrentStoreStates(state, payload) {
+            state.storeStates = payload;
         },
         setCurrentStoreCategories(state, payload) {
             state.storeCategories = payload;
@@ -166,6 +205,48 @@ export default {
         setRemoveAttachedPostCategories(state, payload) {
             state.attachedPostCategories = payload;
         },
+        // job countries
+        // job countries
+        // job countries
+        // job countries
+        setCurrentAttachedJobCountries(state, payload) {
+            // check if user already exists in the array
+            const itemExists = state.attachedJobCountries.some(
+                (item) => item.id === payload.id
+            );
+
+            // if user does not exist, push to array
+            if (itemExists === false) {
+                state.attachedJobCountries.unshift(payload);
+            }
+        },
+        setCurrentAttachedJobCountriesToEmptyArray(state, payload) {
+            state.attachedJobCountries = payload;
+        },
+        setRemoveAttachedJobCountries(state, payload) {
+            state.attachedJobCountries = payload;
+        },
+        // job states
+        // job states
+        // job states
+        // job states
+        setCurrentAttachedJobStates(state, payload) {
+            // check if state already exists in the array
+            const itemExists = state.attachedJobStates.some(
+                (item) => item.id === payload.id
+            );
+
+            // if state does not exist, push to array
+            if (itemExists === false) {
+                state.attachedJobStates.unshift(payload);
+            }
+        },
+        setCurrentAttachedJobStatesToEmptyArray(state, payload) {
+            state.attachedJobStates = payload;
+        },
+        setRemoveAttachedJobStates(state, payload) {
+            state.attachedJobStates = payload;
+        },
         // job categories
         // job categories
         // job categories
@@ -207,6 +288,28 @@ export default {
         },
         setRemoveAttachedJobTypes(state, payload) {
             state.attachedJobTypes = payload;
+        },
+        // store states
+        // store states
+        // store states
+        // store states
+        setCurrentAttachedStoreStates(state, payload) {
+            // check if user already exists in the array
+            const itemExists = state.attachedStoreStates.some(
+                (item) => item.id === payload.id
+            );
+
+            // if user does not exist, push to array
+            if (itemExists === false) {
+                state.attachedStoreStates.unshift(payload);
+            }
+        },
+
+        setCurrentAttachedStoreStatesToEmptyArray(state, payload) {
+            state.attachedStoreStates = payload;
+        },
+        setRemoveAttachedStoreStates(state, payload) {
+            state.attachedStoreStates = payload;
         },
         // store categories
         // store categories
@@ -265,7 +368,6 @@ export default {
         },
         // get component categories
         async fetchComponentCategories(context, data) {
-            console.log("kom her. data er:", data);
             if (data.search_query === undefined) {
                 data.search_query = "";
             }
@@ -318,6 +420,61 @@ export default {
                 isSuccess: isSuccessItems,
             });
         },
+        // get job countries
+        async fetchJobCountries(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
+            handleGetItems(
+                route(data.apiUrlRouteName, {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
+            );
+
+            // context & send to mutation
+            context.commit("setCurrentJobCountries", {
+                fetchedData: fetchedItems,
+                isError: isErrorItems,
+                error: errorItems,
+                errors: errorsItems,
+                isLoading: isLoadingItems,
+                isSuccess: isSuccessItems,
+            });
+        },
+        // get job states
+        async fetchJobStates(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
+            handleGetItems(
+                route(data.apiUrlRouteName, {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
+            );
+
+            // context & send to mutation
+            context.commit("setCurrentJobStates", {
+                fetchedData: fetchedItems,
+                isError: isErrorItems,
+                error: errorItems,
+                errors: errorsItems,
+                isLoading: isLoadingItems,
+                isSuccess: isSuccessItems,
+            });
+        },
+
         // get job categories
         async fetchJobCategories(context, data) {
             if (data.search_query === undefined) {
@@ -364,6 +521,33 @@ export default {
 
             // context & send to mutation
             context.commit("setCurrentJobTypes", {
+                fetchedData: fetchedItems,
+                isError: isErrorItems,
+                error: errorItems,
+                errors: errorsItems,
+                isLoading: isLoadingItems,
+                isSuccess: isSuccessItems,
+            });
+        },
+        // get store states
+        async fetchStoreStates(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
+            handleGetItems(
+                route(data.apiUrlRouteName, {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
+            );
+
+            // context & send to mutation
+            context.commit("setCurrentStoreStates", {
                 fetchedData: fetchedItems,
                 isError: isErrorItems,
                 error: errorItems,

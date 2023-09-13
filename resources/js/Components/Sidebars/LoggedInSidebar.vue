@@ -145,6 +145,9 @@ import {
             Your Profile
         </SideBarLink>
 
+        <div class="bg-myPrimaryDarkGrayColor py-2 px-2 my-4">
+            <p class="myPrimaryParagraph text-white">Company</p>
+        </div>
         <template
             v-if="
                 $page.props.user.all_teams.length > 0 &&
@@ -164,7 +167,7 @@ import {
                 <PhotoIcon
                     class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                 ></PhotoIcon>
-                Media Team
+                Media
             </SideBarLink>
         </template>
 
@@ -192,7 +195,7 @@ import {
                     class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                 ></DocumentTextIcon>
 
-                Blog Team
+                Blog
             </SideBarLink>
         </template>
         <template
@@ -219,7 +222,7 @@ import {
                     class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                 ></TagIcon>
 
-                Jobs Team
+                Jobs
             </SideBarLink>
         </template>
         <template
@@ -245,7 +248,7 @@ import {
                 <ShoppingBagIcon
                     class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                 ></ShoppingBagIcon>
-                Stores Team
+                Stores
             </SideBarLink>
         </template>
         <template
@@ -272,7 +275,7 @@ import {
                 <Cog6ToothIcon
                     class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
                 ></Cog6ToothIcon>
-                Settings Team
+                Team Settings
             </SideBarLink>
         </template>
 
