@@ -5,6 +5,7 @@ import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { useStore } from "vuex";
 import { CheckIcon, PencilIcon } from "@heroicons/vue/24/outline";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 
 // store
 const store = useStore();
@@ -121,6 +122,12 @@ const switchTeam = function (team) {
                                                 scope="col"
                                                 class="myPrimaryTableTh"
                                             >
+                                                Logo
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
                                                 Cover image
                                             </th>
                                             <th
@@ -160,60 +167,73 @@ const switchTeam = function (team) {
                                     <tbody class="myPrimaryTableTBody">
                                         <tr
                                             v-for="team in $page.props.user
-                                                .all_teams"
+                                                .all_teams &&
+                                            Array.isArray(
+                                                $page.props.user.all_teams
+                                            ) &&
+                                            $page.props.user.all_teams"
                                             :key="team.id"
                                             class="myPrimaryTableTBodyTr"
                                         >
-                                            <p>team: {{ team }}</p>
                                             <td class="myPrimaryTableTBodyTd">
-                                                <form
-                                                    @submit.prevent="
-                                                        handleSwitchToTeam(
-                                                            team,
-                                                            $page.props.user
-                                                                .current_team_id
-                                                        )
+                                                <div
+                                                    v-if="
+                                                        team.coverImagesWithLogos
                                                     "
+                                                    class="text-myPrimaryDarkGrayColor flex items-center justify-center px-2 py-2 text-xs font-normal"
                                                 >
                                                     <div
-                                                        class="flex items-center myPrimaryGap justify-start"
                                                         v-if="
-                                                            $page.props.user
-                                                                .all_teams
-                                                                .length > 0
+                                                            Array.isArray(
+                                                                team
+                                                                    .coverImagesWithLogos
+                                                                    .logos
+                                                            )
                                                         "
                                                     >
-                                                        <div
-                                                            v-if="
-                                                                team.logo_medium
+                                                        <ThumbnailSmallImageSlider
+                                                            :images="
+                                                                team
+                                                                    .coverImagesWithLogos
+                                                                    .logos
                                                             "
-                                                            class="h-16 w-16 flex-shrink-0"
-                                                        >
-                                                            <img
-                                                                @click="
-                                                                    handleSwitchToTeam(
-                                                                        team,
-                                                                        $page
-                                                                            .props
-                                                                            .user
-                                                                            .current_team_id
-                                                                    )
-                                                                "
-                                                                class="h-16 w-16 rounded-full object-cover"
-                                                                :class="[
-                                                                    team.id ===
-                                                                    $page.props
-                                                                        .user
-                                                                        .current_team_id
-                                                                        ? 'cursor-default'
-                                                                        : 'cursor-pointer',
-                                                                ]"
-                                                                :src="`/storage/uploads/${team.logo_medium}`"
-                                                                alt="logo"
-                                                            />
-                                                        </div>
+                                                            imageSize="medium_path"
+                                                            imageHeight="h-28"
+                                                            imageWidth="w-28"
+                                                            :rounded-full="true"
+                                                        ></ThumbnailSmallImageSlider>
                                                     </div>
-                                                </form>
+                                                </div>
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <div
+                                                    v-if="
+                                                        team.coverImagesWithLogos
+                                                    "
+                                                    class="text-myPrimaryDarkGrayColor flex items-center justify-center px-2 py-2 text-xs font-normal"
+                                                >
+                                                    <div
+                                                        v-if="
+                                                            Array.isArray(
+                                                                team
+                                                                    .coverImagesWithLogos
+                                                                    .cover_images
+                                                            )
+                                                        "
+                                                    >
+                                                        <ThumbnailSmallImageSlider
+                                                            :images="
+                                                                team
+                                                                    .coverImagesWithLogos
+                                                                    .cover_images
+                                                            "
+                                                            imageSize="medium_path"
+                                                            imageHeight="h-28"
+                                                            imageWidth="w-28"
+                                                            :rounded-full="true"
+                                                        ></ThumbnailSmallImageSlider>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
                                                 <form

@@ -69,6 +69,10 @@ const props = defineProps({
         default: null,
         required: false,
     },
+    coverImages: {
+        default: null,
+        required: false,
+    },
 });
 
 const modalShowClearForm = ref(false);
@@ -295,6 +299,7 @@ const slugValueCustom = ref("");
 const postForm = useForm({
     title: "",
     slug: "",
+    address: "",
     content: "",
     published: true,
     team: props.currentUserTeam,
@@ -418,6 +423,7 @@ const clearForm = function () {
     postForm.title = "";
     // slug
     postForm.slug = "";
+    postForm.address = "";
     isSlugEditable.value = false;
     slugValueTitle.value = "";
     slugValueCustom.value = "";
@@ -490,6 +496,7 @@ onBeforeMount(() => {
             }
             //
             postForm.title = formLocalStorage.title;
+            postForm.address = formLocalStorage.address;
             //
             //
             // postForm.content = formLocalStorage.content;
@@ -555,6 +562,7 @@ onBeforeMount(() => {
         formType.value = "update";
 
         postForm.title = props.post.title;
+        postForm.address = props.post.address;
         // slug logic
         // slug is editable when editing an existing post
         isSlugEditable.value = true;
@@ -743,6 +751,20 @@ const handleDesigner = function () {
                     <InputError :message="postForm.errors.slug" />
                 </div>
                 <!-- post slug end -->
+                <!-- post address start -->
+                <div class="myInputGroup">
+                    <InputLabel for="address" value="Store address" />
+                    <TextInput
+                        placeholder="Enter store address.."
+                        id="address"
+                        v-model="postForm.address"
+                        type="text"
+                        class="block w-full mt-1"
+                        autocomplete="off"
+                    />
+                    <InputError :message="postForm.errors.address" />
+                </div>
+                <!-- post address end -->
             </div>
 
             <!-- Builder #start -->

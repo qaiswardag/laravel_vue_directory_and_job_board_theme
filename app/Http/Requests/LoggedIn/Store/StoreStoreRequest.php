@@ -37,6 +37,7 @@ class StoreStoreRequest extends FormRequest
 
             "title" => ["required", "string", "min:2", "max:255"],
             "slug" => ["required", "string", "min:2", "max:255"],
+            "address" => ["required", "string", "min:2", "max:255"],
 
             // If user_id is a foreign key column that references the id column of the users table,
             // you can use the exists validation rule to ensure that the value of user_id exists in
@@ -78,17 +79,61 @@ class StoreStoreRequest extends FormRequest
         $maxAuthors = 18;
         $maxCategories = 6;
         $maxJobStates = 1;
+        $minCoverImages = 2;
+        $maxCoverImages = 6;
 
         $validator->after(function ($validator) use (
             $maxAuthors,
             $maxCategories,
-            $maxJobStates
+            $maxJobStates,
+            $minCoverImages,
+            $maxCoverImages
         ) {
             if ($this->team === null) {
                 $validator
                     ->errors()
                     ->add("team", "The team field is required.");
             }
+
+            // validation for cover image # start
+            if (
+                $this->cover_image === null ||
+                (gettype($this->cover_image) === "array" &&
+                    count($this->cover_image) === 0)
+            ) {
+                $validator
+                    ->errors()
+                    ->add("cover_image", "The cover image field is required.");
+            }
+
+            if (gettype($this->cover_image) !== "array") {
+                $validator
+                    ->errors()
+                    ->add("cover_image", "cover image field must be an array.");
+            }
+            if (
+                gettype($this->cover_image) === "array" &&
+                count($this->cover_image) < $minCoverImages
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "cover_image",
+                        "At least $maxCoverImages} images are necessary for a store listing."
+                    );
+            }
+            if (
+                gettype($this->cover_image) === "array" &&
+                count($this->cover_image) > $maxCoverImages
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "cover_image",
+                        "Limited to a maximum of {$maxCoverImages} cover images."
+                    );
+            }
+            // validation for cover image # end
 
             // validation for categories # start
             if (

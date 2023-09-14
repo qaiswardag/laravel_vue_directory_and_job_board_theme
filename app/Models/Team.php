@@ -87,7 +87,7 @@ class Team extends JetstreamTeam
         return $this->belongsToMany(User::class)->withPivot("role");
     }
 
-    public function coverImages()
+    public function coverImagesRelationship()
     {
         return $this->belongsToMany(
             MediaLibrary::class,
@@ -96,7 +96,8 @@ class Team extends JetstreamTeam
             "media_library_id"
         );
     }
-    public function logos()
+
+    public function logosRelationship()
     {
         return $this->belongsToMany(
             MediaLibrary::class,
@@ -105,8 +106,18 @@ class Team extends JetstreamTeam
             "media_library_id"
         );
     }
-    //
-    //
+
+    // Append the 'coverImage_i' and 'logos' attributes to the model
+    protected $appends = ["coverImagesWithLogos"];
+
+    // Define an accessor for 'coverImage_i' and 'logos'
+    public function getCoverImagesWithLogosAttribute()
+    {
+        return [
+            "cover_images" => $this->coverImagesRelationship,
+            "logos" => $this->logosRelationship,
+        ];
+    }
     //
     //
 

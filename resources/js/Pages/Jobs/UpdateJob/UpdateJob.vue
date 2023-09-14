@@ -28,6 +28,9 @@ const props = defineProps({
     countries: {
         required: true,
     },
+    coverImages: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
@@ -60,6 +63,7 @@ const breadcrumbsLinks = [
             :types="types"
             :states="states"
             :countries="countries"
+            :coverImages="coverImages"
         ></JobForm>
     </LoggedInLayout>
 </template>

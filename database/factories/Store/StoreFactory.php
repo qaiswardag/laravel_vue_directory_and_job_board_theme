@@ -68,6 +68,7 @@ class StoreFactory extends Factory
             "deleted_at" => null,
             "title" => $title,
             "slug" => $slug,
+            "address" => "Dubai Mall Fashion Avenue",
             "content" => $this->faker->sentence(rand(20, 60), false),
             "published" => rand(0, 1),
             "tags" => $selectedTagsList,

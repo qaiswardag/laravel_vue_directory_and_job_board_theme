@@ -38,14 +38,47 @@ class StorePageBuilderComponentRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $maxCategories = 5;
+        $maxCategories = 3;
+        $maxCoverImages = 1;
 
-        $validator->after(function ($validator) use ($maxCategories) {
+        $validator->after(function ($validator) use (
+            $maxCategories,
+            $maxCoverImages
+        ) {
             if ($this->team === null) {
                 $validator
                     ->errors()
                     ->add("team", "The team field is required.");
             }
+
+            // validation for cover image # start
+            if (
+                $this->cover_image === null ||
+                (gettype($this->cover_image) === "array" &&
+                    count($this->cover_image) === 0)
+            ) {
+                $validator
+                    ->errors()
+                    ->add("cover_image", "The cover image field is required.");
+            }
+
+            if (gettype($this->cover_image) !== "array") {
+                $validator
+                    ->errors()
+                    ->add("cover_image", "cover image field must be an array.");
+            }
+            if (
+                gettype($this->cover_image) === "array" &&
+                count($this->cover_image) > $maxCoverImages
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "cover_image",
+                        "Limited to a maximum of {$maxCoverImages} cover images."
+                    );
+            }
+            // validation for cover image # end
 
             // validation for categories # start
             if (

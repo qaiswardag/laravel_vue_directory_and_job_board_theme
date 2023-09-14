@@ -352,6 +352,7 @@ class JobController extends Controller
             }
         }
 
+        $coverImages = $job->coverImages;
         $categories = $job->categories;
         $types = $job->types;
         $states = $job->states;
@@ -360,10 +361,11 @@ class JobController extends Controller
         return Inertia::render("Jobs/UpdateJob/UpdateJob", [
             "post" => $job,
             "postAuthor" => $authors,
+            "coverImages" => $coverImages,
+            "countries" => $countries,
+            "states" => $states,
             "categories" => $categories,
             "types" => $types,
-            "states" => $states,
-            "countries" => $countries,
         ]);
     }
 

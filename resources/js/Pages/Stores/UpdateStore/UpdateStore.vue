@@ -22,6 +22,9 @@ const props = defineProps({
     states: {
         required: true,
     },
+    coverImages: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
@@ -52,6 +55,7 @@ const breadcrumbsLinks = [
             :postAuthor="postAuthor"
             :categories="categories"
             :states="states"
+            :coverImages="coverImages"
         ></StoreForm>
     </LoggedInLayout>
 </template>

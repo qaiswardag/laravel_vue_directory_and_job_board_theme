@@ -20,6 +20,7 @@ class Store extends Model
         "team_id",
         "title",
         "slug",
+        "address",
         "content",
         "published",
         "tags",

@@ -1,6 +1,8 @@
 <script setup>
 import { router } from "@inertiajs/vue3";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+
 import {
     FlagIcon,
     StarIcon,
@@ -27,48 +29,60 @@ import {
                 $page.props.jetstream.hasTeamFeatures
             "
         >
-            <p
-                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
+            <div
+                class="text-myPrimaryDarkGrayColor flex items-center justify-center px-2 py-2 text-xs font-normal"
+                v-if="$page.props.user.current_team.coverImagesWithLogos"
             >
-                <span>Team:</span>
+                <div
+                    v-if="
+                        Array.isArray(
+                            $page.props.user.current_team.coverImagesWithLogos
+                                .logos
+                        )
+                    "
+                >
+                    <ThumbnailSmallImageSlider
+                        :images="
+                            $page.props.user.current_team.coverImagesWithLogos
+                                ?.logos
+                        "
+                        imageSize="medium_path"
+                        imageHeight="h-16"
+                        imageWidth="w-16"
+                        :rounded-full="true"
+                    ></ThumbnailSmallImageSlider>
+                </div>
+            </div>
 
+            <div
+                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 text-xs font-normal"
+            >
+                <p class="my-4">{{ $page.props.currentUserTeam?.name }}</p>
                 <Link
                     :href="route('user.teams.switch')"
-                    class="flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    class="text-myPrimaryDarkGrayColor flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.switch'),
                     }"
                 >
-                    <template
-                        v-if="
-                            $page.props.currentUserTeam?.logo_thumbnail !== null
-                        "
-                    >
-                        <div class="h-8 w-8 flex-shrink-0">
-                            <img
-                                class="h-8 w-8 rounded-full object-cover cursor-pointer"
-                                :src="`/storage/uploads/${$page.props.currentUserTeam?.logo_thumbnail}`"
-                                alt="Logo"
-                            />
-                        </div>
-                    </template>
-                    {{ $page.props.currentUserTeam?.name }}
+                    Switch Team?
                 </Link>
-            </p>
-            <p
-                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
+            </div>
+
+            <div
+                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 text-xs font-normal border-b border-gray-200 pb-2"
             >
                 <span>Role:</span>
                 <Link
                     :href="route('user.teams.switch')"
-                    class="text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    class="text-myPrimaryDarkGrayColor text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.switch'),
                     }"
                 >
                     {{ $page.props.currentUserTeamRole?.name }}
                 </Link>
-            </p>
+            </div>
         </template>
 
         <!--  -->
@@ -110,7 +124,7 @@ import {
 
                 <Link
                     :href="route('user.teams.create')"
-                    class="flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    class="text-myPrimaryDarkGrayColor flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
                         myPrimaryLink: route().current('user.teams.create'),
                     }"

@@ -125,6 +125,7 @@ class StoreController extends Controller
         $this->authorize("can-create-and-update", $team);
 
         $title = $request->title;
+        $address = $request->address;
         $content = $request->content;
         $userId = $request->user_id;
 
@@ -137,6 +138,7 @@ class StoreController extends Controller
             "team_id" => $team->id,
             "title" => $title,
             "slug" => $slug,
+            "address" => $address,
             "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,
@@ -314,12 +316,14 @@ class StoreController extends Controller
             }
         }
 
+        $coverImages = $store->coverImages;
         $categories = $store->categories;
         $states = $store->states;
 
         return Inertia::render("Stores/UpdateStore/UpdateStore", [
             "post" => $store,
             "postAuthor" => $authors,
+            "coverImages" => $coverImages,
             "categories" => $categories,
             "states" => $states,
         ]);
@@ -341,6 +345,7 @@ class StoreController extends Controller
         $slug = $request->slug;
 
         $title = $request->title;
+        $address = $request->address;
         $content = $request->content;
         $teamId = $request->team["id"];
         $userId = $request->user_id;
@@ -354,6 +359,7 @@ class StoreController extends Controller
             "team_id" => $teamId,
             "title" => $title,
             "slug" => $slug,
+            "address" => $address,
             "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,

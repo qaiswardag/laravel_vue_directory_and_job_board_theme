@@ -61,6 +61,10 @@ const props = defineProps({
         default: null,
         required: false,
     },
+    coverImages: {
+        default: null,
+        required: false,
+    },
 });
 
 const modalShowClearForm = ref(false);
@@ -139,15 +143,31 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        postForm.cover_image =
-            getCurrentImage.value.currentImage?.mediaLibrary?.id;
+        if (Array.isArray(postForm.cover_image) === false) {
+            postForm.cover_image === [];
+        }
+
+        const idExists = postForm.cover_image.some((item) => {
+            return (
+                item.id === getCurrentImage.value.currentImage.mediaLibrary.id
+            );
+        });
+
+        if (idExists === false && Array.isArray(postForm.cover_image)) {
+            postForm.cover_image.unshift(
+                getCurrentImage.value.currentImage.mediaLibrary
+            );
+        }
+
         // handle show media library modal
         showMediaLibraryModal.value = false;
     };
     // end modal
 };
-const handleRemoveCoverImage = function () {
-    postForm.cover_image = null;
+const handleRemoveCoverImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.filter(
+        (image) => image.id !== imageId
+    );
 };
 
 const showSearchUserModal = ref(false);
@@ -245,12 +265,11 @@ const postForm = useForm({
     team: props.currentUserTeam,
     user_id: props.user.id,
 
-    cover_image: "",
-
     tags: "",
     show_author: false,
     author: [],
     categories: [],
+    cover_image: [],
 });
 
 // The above code uses the watch function from Vue 3 to watch for changes to the
@@ -367,8 +386,6 @@ const clearForm = function () {
     postForm.team = props.currentUserTeam;
     postForm.user_id = props.user.id;
 
-    postForm.cover_image = "";
-
     //
     //
     postForm.tags = "";
@@ -379,6 +396,7 @@ const clearForm = function () {
     postForm.show_author = false;
     postForm.author = [];
     postForm.categories = [];
+    postForm.cover_image = [];
 
     localStorage.removeItem(pathLocalStorage);
 };
@@ -435,12 +453,6 @@ onBeforeMount(() => {
 
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
-            postForm.cover_image_original =
-                formLocalStorage.cover_image_original;
-            postForm.cover_image_thumbnail =
-                formLocalStorage.cover_image_thumbnail;
-            postForm.cover_image_medium = formLocalStorage.cover_image_medium;
-            postForm.cover_image_large = formLocalStorage.cover_image_large;
             postForm.tags = formLocalStorage.tags;
 
             // Authors
@@ -455,6 +467,19 @@ onBeforeMount(() => {
                 formLocalStorage.author !== null
             ) {
                 postForm.author = formLocalStorage.author;
+            }
+            // Cover image
+            if (
+                formLocalStorage.cover_image === undefined ||
+                formLocalStorage.cover_image === null
+            ) {
+                postForm.cover_image = [];
+            }
+            if (
+                formLocalStorage.cover_image !== undefined ||
+                formLocalStorage.cover_image !== null
+            ) {
+                postForm.cover_image = formLocalStorage.cover_image;
             }
             // Categories
             if (
@@ -486,11 +511,6 @@ onBeforeMount(() => {
         postForm.published = props.post.published === 1 ? true : false;
         postForm.show_author = props.post.show_author === 1 ? true : false;
 
-        postForm.cover_image_original = props.post.cover_image_original;
-        postForm.cover_image_thumbnail = props.post.cover_image_thumbnail;
-        postForm.cover_image_medium = props.post.cover_image_medium;
-        postForm.cover_image_large = props.post.cover_image_large;
-
         postForm.tags = props.post.tags;
 
         // check if the post author is available and should be displayed
@@ -506,6 +526,7 @@ onBeforeMount(() => {
         }
 
         postForm.categories = props.categories;
+        postForm.cover_image = props.coverImages;
     }
 });
 
@@ -544,13 +565,6 @@ const categoriesSorted = computed(() => {
         <template #title> Post details</template>
         <template #description> Create a new Post. </template>
         <template #main>
-            <p class="my-12 p-4">
-                getCurrentImage er:
-                {{ JSON.stringify(getCurrentImage) }}
-            </p>
-            <p class="my-12 p-4">
-                postForm.cover_iamge er: {{ postForm.cover_image }}
-            </p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -728,43 +742,94 @@ const categoriesSorted = computed(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
                     </div>
-                    <p class="myPrimaryParagraph">
-                        Uplaod or select a post cover image.
-                    </p>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
-
-                <img
-                    v-if="
-                        postForm.cover_image_medium &&
-                        postForm.cover_image_medium.length !== 0
-                    "
+                <!-- select - start -->
+                <div
                     @click="handleUploadCoverImage"
-                    class="myPrimarythumbnailInsertPreview"
-                    alt="cover image"
-                    :src="`/storage/uploads/${postForm.cover_image_medium}`"
-                />
+                    class="myPrimaryFakeSelect"
+                >
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.cover_image &&
+                                postForm.cover_image.length === 0
+                                    ? "Select Cover image"
+                                    : "Update Cover image"
+                            }}
+                        </p>
+                    </div>
+                    <div
+                        class="border-none rounded flex items-center justify-center h-full w-8"
+                    >
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                    </div>
+                </div>
+                <!-- select - end -->
 
                 <div
-                    class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
+                    v-if="
+                        postForm.cover_image &&
+                        postForm.cover_image.length === 0
+                    "
+                    class="space-y-6 mt-2"
                 >
-                    <button
-                        @click="handleUploadCoverImage"
-                        type="button"
-                        class="myPrimaryButton gap-2 items-center"
-                    >
-                        <PhotoIcon class="w-4 h-4"></PhotoIcon>
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
 
-                        Cover image
-                    </button>
+                <div>
+                    <p
+                        v-if="
+                            postForm.cover_image &&
+                            postForm.cover_image.length !== 0
+                        "
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{
+                            postForm.cover_image && postForm.cover_image.length
+                        }}
+                        {{
+                            postForm.cover_image &&
+                            postForm.cover_image.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
 
                     <div
-                        @click="handleRemoveCoverImage"
-                        v-if="postForm && postForm.cover_image_medium"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                        v-if="
+                            postForm.cover_image &&
+                            postForm.cover_image.length !== 0
+                        "
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
-                        <TrashIcon
-                            class="shrink-0 w-4 h-4 m-2 stroke-2"
-                        ></TrashIcon>
+                        <div
+                            v-for="image in Array.isArray(
+                                postForm.cover_image
+                            ) && postForm.cover_image"
+                            :key="image.id"
+                        >
+                            <div
+                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                            >
+                                <img
+                                    @click="handleUploadCoverImage"
+                                    :src="`/storage/uploads/${image.medium_path}`"
+                                    alt="image"
+                                    class="myPrimarythumbnailInsertPreview"
+                                />
+
+                                <div
+                                    @click="handleRemoveCoverImage(image.id)"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                >
+                                    <TrashIcon
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    ></TrashIcon>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <InputError :message="postForm.errors.cover_image" />

@@ -25,6 +25,7 @@ return new class extends Migration {
             $table->timestamp("deleted_at")->nullable();
             $table->string("title");
             $table->string("slug");
+            $table->string("address");
             $table->longText("content");
             $table->boolean("published");
 

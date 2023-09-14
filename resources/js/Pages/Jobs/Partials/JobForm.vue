@@ -78,6 +78,10 @@ const props = defineProps({
         default: null,
         required: false,
     },
+    coverImages: {
+        default: null,
+        required: false,
+    },
 });
 
 const modalShowClearForm = ref(false);

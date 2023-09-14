@@ -323,8 +323,7 @@ onMounted(() => {
                                     <div
                                         v-if="
                                             Array.isArray(post.cover_images) &&
-                                            post.cover_images.length !== 0 &&
-                                            post.cover_images
+                                            post.cover_images.length !== 0
                                         "
                                     >
                                         <ThumbnailSmallImageSlider

@@ -293,11 +293,13 @@ class PostController extends Controller
             }
         }
 
+        $coverImages = $post->coverImages;
         $categories = $post->categories;
 
         return Inertia::render("Posts/UpdatePost/UpdatePost", [
             "post" => $post,
             "postAuthor" => $authors,
+            "coverImages" => $coverImages,
             "categories" => $categories,
         ]);
     }
