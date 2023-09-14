@@ -10,27 +10,23 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create("teams", function (Blueprint $table) {
+        Schema::create("post_cover_image_relations", function (
+            Blueprint $table
+        ) {
             $table->id();
-            // $table->foreignId("user_id")->index(); // original row structure
             $table
-                ->string("reference_id")
-                ->unique()
-                ->index();
-
-            $table
-                ->foreignId("user_id")
-                ->index()
+                ->foreignId("media_library_id")
                 ->references("id")
-                ->on("users")
+                ->on("media_libraries")
                 ->onDelete("cascade")
                 ->constrained();
-            //
-            $table->string("name");
-            $table->longText("content")->nullable();
 
-            $table->boolean("public");
-            $table->boolean("personal_team");
+            $table
+                ->foreignId("post_id")
+                ->references("id")
+                ->on("posts")
+                ->onDelete("cascade")
+                ->constrained();
             $table->timestamps();
         });
     }
@@ -40,6 +36,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists("teams");
+        Schema::dropIfExists("post_cover_image_relations");
     }
 };

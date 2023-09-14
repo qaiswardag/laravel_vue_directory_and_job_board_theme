@@ -65,11 +65,6 @@ class StorePostRequest extends FormRequest
             "content" => ["required", "string", "min:2", "max:65535"],
 
             "tags" => ["required", "string", "max:255"],
-
-            "cover_image_original" => ["required", "string", "max:255"],
-            // "cover_image_thumbnail" => ["required", "string", "max:255"],
-            // "cover_image_medium" => ["required", "string", "max:255"],
-            // "cover_image_large" => ["required", "string", "max:255"],
         ];
 
         return $rules;
@@ -83,6 +78,7 @@ class StorePostRequest extends FormRequest
      */
     public function withValidator($validator)
     {
+        dd("submitted post is:", $this);
         $maxAuthors = 18;
         $maxCategories = 2;
 

@@ -139,25 +139,15 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        postForm.cover_image_original =
-            getCurrentImage.value.currentImage?.mediaLibrary?.path;
-        postForm.cover_image_thumbnail =
-            getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
-        postForm.cover_image_medium =
-            getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
-        postForm.cover_image_large =
-            getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
-
+        postForm.cover_image =
+            getCurrentImage.value.currentImage?.mediaLibrary?.id;
         // handle show media library modal
         showMediaLibraryModal.value = false;
     };
     // end modal
 };
 const handleRemoveCoverImage = function () {
-    postForm.cover_image_original = null;
-    postForm.cover_image_thumbnail = null;
-    postForm.cover_image_medium = null;
-    postForm.cover_image_large = null;
+    postForm.cover_image = null;
 };
 
 const showSearchUserModal = ref(false);
@@ -255,10 +245,7 @@ const postForm = useForm({
     team: props.currentUserTeam,
     user_id: props.user.id,
 
-    cover_image_original: "",
-    cover_image_thumbnail: "",
-    cover_image_medium: "",
-    cover_image_large: "",
+    cover_image: "",
 
     tags: "",
     show_author: false,
@@ -380,10 +367,7 @@ const clearForm = function () {
     postForm.team = props.currentUserTeam;
     postForm.user_id = props.user.id;
 
-    postForm.cover_image_original = "";
-    postForm.cover_image_thumbnail = "";
-    postForm.cover_image_medium = "";
-    postForm.cover_image_large = "";
+    postForm.cover_image = "";
 
     //
     //
@@ -560,6 +544,13 @@ const categoriesSorted = computed(() => {
         <template #title> Post details</template>
         <template #description> Create a new Post. </template>
         <template #main>
+            <p class="my-12 p-4">
+                getCurrentImage er:
+                {{ JSON.stringify(getCurrentImage) }}
+            </p>
+            <p class="my-12 p-4">
+                postForm.cover_iamge er: {{ postForm.cover_image }}
+            </p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -776,7 +767,7 @@ const categoriesSorted = computed(() => {
                         ></TrashIcon>
                     </div>
                 </div>
-                <InputError :message="postForm.errors.cover_image_original" />
+                <InputError :message="postForm.errors.cover_image" />
             </div>
             <!-- cover image - end -->
             <!-- post categories - start -->

@@ -36,7 +36,6 @@ class PageBuilderComponentCategories extends Command
             "Teams",
             "Contact",
             "Opening Hours",
-            "Headers",
             "Links & Buttons",
             "Templates",
             "Social Media",

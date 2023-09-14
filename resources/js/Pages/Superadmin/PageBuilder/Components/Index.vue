@@ -11,6 +11,7 @@ import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import { parseISO, format } from "date-fns";
 import CardHeadings from "@/Components/Actions/CardHeadings.vue";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 
 import {
     RadioGroup,
@@ -250,8 +251,8 @@ const routesArray = [
                     <thead class="myPrimaryTableTHead">
                         <tr class="myPrimaryTableTr">
                             <th scope="col" class="myPrimaryTableTh">Image</th>
-                            <th scope="col" class="myPrimaryTableTh">ID</th>
                             <th scope="col" class="myPrimaryTableTh">Title</th>
+                            <th scope="col" class="myPrimaryTableTh">ID</th>
                             <th scope="col" class="myPrimaryTableTh">
                                 Published
                             </th>
@@ -283,35 +284,31 @@ const routesArray = [
                                 :key="component.id"
                             >
                                 <td class="myPrimaryTableTBodyTd">
-                                    <div class="flex items-center gap-2">
-                                        <div
-                                            v-if="component.cover_image_medium"
-                                            class="h-12 w-12 flex-shrink-0"
-                                        >
-                                            <img
-                                                class="object-cover h-12 w-12 rounded-full"
-                                                :src="`/storage/uploads/${component.cover_image_medium}`"
-                                                :alt="component.title"
-                                            />
-                                        </div>
-                                        <div
-                                            v-if="!component.cover_image_medium"
-                                            class="h-12 w-12 flex-shrink-0"
-                                        >
-                                            <img
-                                                class="object-cover h-12 w-12 rounded-full"
-                                                src="/app-images/builder/components/default_component_image.jpg"
-                                                alt="Component"
-                                            />
-                                        </div>
+                                    <div
+                                        v-if="
+                                            Array.isArray(
+                                                component.cover_images
+                                            ) &&
+                                            component.cover_images.length !==
+                                                0 &&
+                                            component.cover_images
+                                        "
+                                    >
+                                        <ThumbnailSmallImageSlider
+                                            :images="component.cover_images"
+                                            imageSize="medium_path"
+                                            imageHeight="h-28"
+                                            imageWidth="w-28"
+                                            :roundedFull="true"
+                                        ></ThumbnailSmallImageSlider>
                                     </div>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
-                                    {{ component.id }}
+                                    {{ component.title }}
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
-                                    {{ component.title }}
+                                    {{ component.id }}
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

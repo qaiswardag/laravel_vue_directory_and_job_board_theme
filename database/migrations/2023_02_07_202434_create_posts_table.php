@@ -30,12 +30,6 @@ return new class extends Migration {
             $table->string("slug");
             $table->longText("content");
             $table->boolean("published");
-
-            $table->string("cover_image_original")->nullable();
-            $table->string("cover_image_thumbnail")->nullable();
-            $table->string("cover_image_medium")->nullable();
-            $table->string("cover_image_large")->nullable();
-
             $table->mediumText("tags")->nullable();
             $table->timestamps();
         });

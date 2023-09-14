@@ -2,6 +2,7 @@
 
 namespace App\Models\Superadmin\PageBuilder;
 
+use App\Models\MediaLibrary\MediaLibrary;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,15 +11,7 @@ class PageBuilderComponent extends Model
     use HasFactory;
 
     // Define the fillable attributes
-    protected $fillable = [
-        "title",
-        "html_code",
-        "published",
-        "cover_image_original",
-        "cover_image_thumbnail",
-        "cover_image_medium",
-        "cover_image_large",
-    ];
+    protected $fillable = ["title", "html_code", "published"];
 
     public function categories()
     {
@@ -27,6 +20,15 @@ class PageBuilderComponent extends Model
             "page_builder_component_category_relations",
             "component_id",
             "category_id"
+        );
+    }
+    public function coverImages()
+    {
+        return $this->belongsToMany(
+            MediaLibrary::class,
+            "page_builder_cover_image_relations",
+            "component_id",
+            "media_library_id"
         );
     }
 }

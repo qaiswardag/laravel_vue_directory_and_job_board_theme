@@ -25,7 +25,6 @@ class StorePageBuilderComponentRequest extends FormRequest
         $rules = [
             "html_code" => ["required", "string", "min:2", "max:65535"],
             "title" => ["required", "string", "min:2", "max:255"],
-            "cover_image_original" => ["required", "string", "max:255"],
         ];
 
         return $rules;

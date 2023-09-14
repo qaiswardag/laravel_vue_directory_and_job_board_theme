@@ -2,6 +2,7 @@
 
 namespace App\Models\Store;
 
+use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,12 +22,6 @@ class Store extends Model
         "slug",
         "content",
         "published",
-
-        "cover_image_original",
-        "cover_image_thumbnail",
-        "cover_image_medium",
-        "cover_image_large",
-
         "tags",
         "show_author",
         "trash",
@@ -65,6 +60,15 @@ class Store extends Model
             "store_category_relations",
             "store_id",
             "category_id"
+        );
+    }
+    public function coverImages()
+    {
+        return $this->belongsToMany(
+            MediaLibrary::class,
+            "store_cover_image_relations",
+            "store_id",
+            "media_library_id"
         );
     }
 }

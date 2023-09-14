@@ -56,6 +56,7 @@ class JobController extends Controller
 
         $jobs = $team
             ->jobs()
+            ->with("coverImages")
             ->with("countries")
             ->with("states")
             ->with("categories")
@@ -141,10 +142,6 @@ class JobController extends Controller
             "title" => $title,
             "slug" => $slug,
             "published" => $request->published,
-            "cover_image_original" => $request->cover_image_original,
-            "cover_image_thumbnail" => $request->cover_image_thumbnail,
-            "cover_image_medium" => $request->cover_image_medium,
-            "cover_image_large" => $request->cover_image_large,
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
@@ -400,12 +397,6 @@ class JobController extends Controller
             "title" => $title,
             "slug" => $slug,
             "published" => $request->published,
-
-            "cover_image_original" => $request->cover_image_original,
-            "cover_image_thumbnail" => $request->cover_image_thumbnail,
-            "cover_image_medium" => $request->cover_image_medium,
-            "cover_image_large" => $request->cover_image_large,
-
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,

@@ -21,13 +21,17 @@ class PageBuilderComponentsController extends Controller
 
         if (auth()->user()->superadmin === null) {
             // User is not a superadmin, so only fetch components with published as true
-            $components = PageBuilderComponent::with("categories")
+
+            $components = PageBuilderComponent::with("coverImages")
+                ->with("categories")
                 ->where("published", true)
                 ->get();
         }
 
         if (auth()->user()->superadmin !== null) {
-            $components = PageBuilderComponent::with("categories")->get();
+            $components = PageBuilderComponent::with("coverImages")
+                ->with("categories")
+                ->get();
         }
 
         return [

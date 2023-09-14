@@ -4,6 +4,7 @@ import { onMounted, computed, onBeforeMount, ref, watch } from "vue";
 import Designer from "@/composables/Designer";
 import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
 import Preview from "@/Pages/Designer/Preview.vue";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import {
     Bars3Icon,
     XMarkIcon,
@@ -221,7 +222,7 @@ onMounted(async () => {
                             @mouseover.self="
                                 store.commit('designer/setMenuPreview', false)
                             "
-                            class="flex flex-col pt-4 pr-0 pb-0 font-normal h-full overflow-y-auto"
+                            class="flex flex-col pt-4 pr-0 font-normal h-full overflow-y-auto pb-32"
                         >
                             <li
                                 v-for="category in categories"
@@ -249,8 +250,8 @@ onMounted(async () => {
                 <!--Preview - start-->
                 <aside
                     aria-label="saidebar"
-                    :class="[!getMenuPreview ? '-left-[30rem]' : 'left-60']"
-                    class="absolute z-10 w-[20rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-gray-50"
+                    :class="[!getMenuPreview ? '-left-[30rem]' : 'left-56']"
+                    class="absolute z-10 w-[20rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-white"
                 >
                     <div class="flex flex-col gap-4 p-4 h-full font-normal">
                         <draggable
@@ -269,15 +270,38 @@ onMounted(async () => {
                         >
                             <template #item="{ element }">
                                 <div v-if="element">
-                                    <div v-if="element.cover_image_medium">
-                                        <img
-                                            class="border-2 w-full border-myPrimaryLightGrayColor rounded-md cursor-grab duration-200"
-                                            :src="`/storage/uploads/${element.cover_image_medium}`"
-                                            :alt="component.title"
-                                        />
+                                    <div
+                                        class="myPrimaryComponentToDrag"
+                                        v-if="
+                                            Array.isArray(
+                                                element.cover_images
+                                            ) &&
+                                            element.cover_images.length !== 0
+                                        "
+                                    >
+                                        <p class="myPrimaryComponentName">
+                                            {{ element.title }}
+                                        </p>
+                                        <ThumbnailSmallImageSlider
+                                            :images="element.cover_images"
+                                            imageSize="medium_path"
+                                            imageHeight="md:h-60 h-40"
+                                            imageWidth="md:w-60 w-40"
+                                            :roundedFull="false"
+                                        ></ThumbnailSmallImageSlider>
                                     </div>
-
-                                    <div v-if="!element.cover_image_medium">
+                                    <div
+                                        class="myPrimaryComponentToDrag"
+                                        v-if="
+                                            Array.isArray(
+                                                element.cover_images
+                                            ) &&
+                                            element.cover_images.length === 0
+                                        "
+                                    >
+                                        <p class="myPrimaryComponentName">
+                                            {{ element.title }}
+                                        </p>
                                         <img
                                             class="border-2 w-full border-myPrimaryLightGrayColor rounded-md cursor-grab duration-200"
                                             src="/app-images/builder/components/default_component_image.jpg"

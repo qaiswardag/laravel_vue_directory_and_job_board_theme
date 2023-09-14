@@ -9,6 +9,7 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import {
     MapPinIcon,
     TagIcon,
@@ -320,33 +321,21 @@ onMounted(() => {
                             >
                                 <td class="myPrimaryTableTBodyTd">
                                     <div
-                                        class="flex items-center justify-start myPrimaryGap"
+                                        v-if="
+                                            Array.isArray(post.cover_images) &&
+                                            post.cover_images.length !== 0 &&
+                                            post.cover_images
+                                        "
                                     >
-                                        <Link
-                                            :href="
-                                                route('team.posts.post.show', [
-                                                    $page.props.user
-                                                        .current_team
-                                                        .reference_id,
-                                                    post.id,
-                                                    post.slug,
-                                                ])
-                                            "
-                                        >
-                                            <div
-                                                v-if="post.cover_image_medium"
-                                                class="h-16 w-16 flex-shrink-0"
-                                            >
-                                                <img
-                                                    class="h-16 w-16 rounded-full object-cover"
-                                                    :src="`/storage/uploads/${post.cover_image_medium}`"
-                                                    alt=""
-                                                />
-                                            </div>
-                                        </Link>
+                                        <ThumbnailSmallImageSlider
+                                            :images="post.cover_images"
+                                            imageSize="medium_path"
+                                            imageHeight="h-28"
+                                            imageWidth="w-28"
+                                            :rounded-full="true"
+                                        ></ThumbnailSmallImageSlider>
                                     </div>
                                 </td>
-
                                 <td
                                     class="myPrimaryTableTBodyTd myPrimaryResourceTableBodyTdTitle"
                                 >

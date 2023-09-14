@@ -222,6 +222,14 @@ const handleMediaLibrary = function (imageID) {
                                     <div
                                         class="py-3 flex justify-between items-center"
                                     >
+                                        <dt class="">Name</dt>
+                                        <dd class="">
+                                            {{ file.name ? file.name : "–" }}
+                                        </dd>
+                                    </div>
+                                    <div
+                                        class="py-3 flex justify-between items-center"
+                                    >
                                         <dt class="">Size</dt>
                                         <dd class="">{{ file.size }} KB</dd>
                                     </div>

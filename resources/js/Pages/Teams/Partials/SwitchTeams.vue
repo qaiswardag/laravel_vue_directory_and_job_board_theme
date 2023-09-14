@@ -164,6 +164,7 @@ const switchTeam = function (team) {
                                             :key="team.id"
                                             class="myPrimaryTableTBodyTr"
                                         >
+                                            <p>team: {{ team }}</p>
                                             <td class="myPrimaryTableTBodyTd">
                                                 <form
                                                     @submit.prevent="

@@ -2,6 +2,7 @@
 
 namespace App\Models\Job;
 
+use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,12 +22,6 @@ class Job extends Model
         "slug",
         "content",
         "published",
-
-        "cover_image_original",
-        "cover_image_thumbnail",
-        "cover_image_medium",
-        "cover_image_large",
-
         "tags",
         "show_author",
         "trash",
@@ -83,6 +78,16 @@ class Job extends Model
             "job_country_relations",
             "job_id",
             "country_id"
+        );
+    }
+
+    public function coverImages()
+    {
+        return $this->belongsToMany(
+            MediaLibrary::class,
+            "job_cover_image_relations",
+            "job_id",
+            "media_library_id"
         );
     }
 }

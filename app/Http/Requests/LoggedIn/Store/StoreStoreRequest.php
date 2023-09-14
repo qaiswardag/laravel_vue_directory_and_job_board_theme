@@ -62,11 +62,6 @@ class StoreStoreRequest extends FormRequest
             "content" => ["required", "string", "min:2", "max:65535"],
 
             "tags" => ["required", "string", "max:255"],
-
-            "cover_image_original" => ["required", "string", "max:255"],
-            // "cover_image_thumbnail" => ["required", "string", "max:255"],
-            // "cover_image_medium" => ["required", "string", "max:255"],
-            // "cover_image_large" => ["required", "string", "max:255"],
         ];
 
         return $rules;

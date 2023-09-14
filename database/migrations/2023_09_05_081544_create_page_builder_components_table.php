@@ -16,10 +16,6 @@ return new class extends Migration {
             $table->string("title");
             $table->longText("html_code");
             $table->boolean("published");
-            $table->string("cover_image_original");
-            $table->string("cover_image_thumbnail");
-            $table->string("cover_image_medium");
-            $table->string("cover_image_large");
             $table->timestamps();
         });
     }

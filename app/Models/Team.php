@@ -36,12 +36,6 @@ class Team extends JetstreamTeam
         "name",
         "personal_team",
         "public",
-
-        "cover_image_original",
-        "cover_image_thumbnail",
-        "cover_image_medium",
-        "cover_image_large",
-
         "logo_original",
         "logo_thumbnail",
         "logo_medium",
@@ -91,6 +85,25 @@ class Team extends JetstreamTeam
     public function teamUsers()
     {
         return $this->belongsToMany(User::class)->withPivot("role");
+    }
+
+    public function coverImages()
+    {
+        return $this->belongsToMany(
+            MediaLibrary::class,
+            "team_cover_image_relations",
+            "team_id",
+            "media_library_id"
+        );
+    }
+    public function logos()
+    {
+        return $this->belongsToMany(
+            MediaLibrary::class,
+            "team_logo_relations",
+            "team_id",
+            "media_library_id"
+        );
     }
     //
     //

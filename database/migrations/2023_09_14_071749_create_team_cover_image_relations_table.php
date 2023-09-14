@@ -10,25 +10,23 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create("jobs", function (Blueprint $table) {
+        Schema::create("team_cover_image_relations", function (
+            Blueprint $table
+        ) {
             $table->id();
-            // user
-            $table->integer("user_id")->unsigned();
+            $table
+                ->foreignId("media_library_id")
+                ->references("id")
+                ->on("media_libraries")
+                ->onDelete("cascade")
+                ->constrained();
+
             $table
                 ->foreignId("team_id")
                 ->references("id")
                 ->on("teams")
                 ->onDelete("cascade")
                 ->constrained();
-            //
-            $table->boolean("show_author");
-            $table->timestamp("deleted_at")->nullable();
-            $table->string("title");
-            $table->string("slug");
-            $table->longText("content");
-            $table->boolean("published");
-
-            $table->mediumText("tags")->nullable();
             $table->timestamps();
         });
     }
@@ -38,6 +36,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists("jobs");
+        Schema::dropIfExists("team_cover_image_relations");
     }
 };

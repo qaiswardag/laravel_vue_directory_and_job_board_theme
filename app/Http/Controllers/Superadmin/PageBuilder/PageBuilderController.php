@@ -27,7 +27,9 @@ class PageBuilderController extends Controller
             $searchQuery = implode(",", $searchQuery);
         }
 
-        $query = PageBuilderComponent::latest()->with("categories");
+        $query = PageBuilderComponent::latest()
+            ->with("categories")
+            ->with("coverImages");
 
         $query->when($request->filled("selected_category"), function (
             $query

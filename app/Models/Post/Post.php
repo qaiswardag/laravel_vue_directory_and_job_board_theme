@@ -2,6 +2,8 @@
 
 namespace App\Models\Post;
 
+use App\Models\MediaLibrary\MediaLibrary;
+use App\Models\post\PostCoverImageRelation;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,12 +23,6 @@ class Post extends Model
         "slug",
         "content",
         "published",
-
-        "cover_image_original",
-        "cover_image_thumbnail",
-        "cover_image_medium",
-        "cover_image_large",
-
         "tags",
         "show_author",
         "trash",
@@ -55,6 +51,15 @@ class Post extends Model
             "post_category_relations",
             "post_id",
             "category_id"
+        );
+    }
+    public function coverImages()
+    {
+        return $this->belongsToMany(
+            MediaLibrary::class,
+            "post_cover_image_relations",
+            "post_id",
+            "media_library_id"
         );
     }
 }
