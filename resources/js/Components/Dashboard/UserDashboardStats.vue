@@ -119,22 +119,21 @@ onMounted(() => {
             >
                 <!-- column start -->
                 <div
-                    class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                 >
-                    <Link
-                        :href="
-                            route(
-                                'team.members',
-                                $page.props.user.current_team.reference_id
-                            )
-                        "
-                    >
-                        <h2
-                            class="my-2 mb-4 myFourthHeader text-myPrimaryLinkColor hover:underline"
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <Link
+                            :href="
+                                route(
+                                    'team.members',
+                                    $page.props.user.current_team.reference_id
+                                )
+                            "
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                         >
                             Latest Team Members
-                        </h2>
-                    </Link>
+                        </Link>
+                    </div>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div
@@ -212,22 +211,21 @@ onMounted(() => {
 
                 <!-- column start -->
                 <div
-                    class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                 >
-                    <Link
-                        :href="
-                            route(
-                                'media.index',
-                                $page.props.user.current_team.reference_id
-                            )
-                        "
-                    >
-                        <h2
-                            class="my-2 mb-4 myFourthHeader text-myPrimaryLinkColor hover:underline"
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <Link
+                            :href="
+                                route(
+                                    'media.index',
+                                    $page.props.user.current_team.reference_id
+                                )
+                            "
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                         >
                             Latest Team Images
-                        </h2>
-                    </Link>
+                        </Link>
+                    </div>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div
@@ -265,22 +263,21 @@ onMounted(() => {
                 <!-- column end -->
                 <!-- column start -->
                 <div
-                    class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                 >
-                    <Link
-                        :href="
-                            route(
-                                'team.posts.index',
-                                $page.props.user.current_team.reference_id
-                            )
-                        "
-                    >
-                        <h2
-                            class="my-2 mb-4 myFourthHeader text-myPrimaryLinkColor hover:underline"
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <Link
+                            :href="
+                                route(
+                                    'team.posts.index',
+                                    $page.props.user.current_team.reference_id
+                                )
+                            "
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                         >
                             Latest Team Posts
-                        </h2>
-                    </Link>
+                        </Link>
+                    </div>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <template
@@ -298,7 +295,7 @@ onMounted(() => {
                         </template>
                         <ul
                             role="list"
-                            class="grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-y-6 gap-x-6"
+                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
                         >
                             <li
                                 v-for="post in getDashboardStats.fetchedData
@@ -353,13 +350,15 @@ onMounted(() => {
                 <!-- column end -->
                 <!-- column start -->
                 <div
-                    class="lg:col-span-6 w-full rounded py-10 px-4 bg-white h-full"
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                 >
-                    <h2
-                        class="my-2 mb-4 myFourthHeader text-myPrimaryLinkColor"
-                    >
-                        Latest Team Stats
-                    </h2>
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <div
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                        >
+                            Latest Team Stats
+                        </div>
+                    </div>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div class="mx-auto">
