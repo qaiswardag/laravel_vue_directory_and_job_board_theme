@@ -68,61 +68,61 @@ const sortedImages = computed(() => {
             class="justify-center items-center flex-col"
             :class="[`${imageWidth}`]"
         >
-            <div>
-                <div class="w-full flex justify-center">
-                    <!-- Carousel wrapper -->
+            <div class="w-full flex justify-center">
+                <!-- Carousel wrapper -->
+                <template
+                    v-for="(image, index) in Array.isArray(sortedImages) &&
+                    sortedImages"
+                    :key="image.id"
+                >
+                    <!-- image #start -->
                     <div
-                        v-for="(image, index) in Array.isArray(sortedImages) &&
-                        sortedImages"
-                        :key="image.id"
+                        class="relative shrink-0 duration-200 ease-linear"
+                        :class="[
+                            `${imageHeight}`,
+                            `${imageWidth}`,
+                            { hidden: currentImageIndex !== index },
+                            { 'rounded-full': roundedFull === true },
+                        ]"
                     >
-                        <!-- image #start -->
-                        <div
-                            class="relative shrink-0 duration-200 ease-linear"
+                        <img
+                            :src="`/storage/uploads/${image[imageSize]}`"
+                            alt="image"
+                            class="object-cover"
                             :class="[
                                 `${imageHeight}`,
                                 `${imageWidth}`,
-                                { hidden: currentImageIndex !== index },
                                 { 'rounded-full': roundedFull === true },
                             ]"
-                        >
-                            <img
-                                :src="`/storage/uploads/${image[imageSize]}`"
-                                alt="image"
-                                class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover"
-                                :class="[
-                                    `${imageHeight}`,
-                                    `${imageWidth}`,
-                                    { 'rounded-full': roundedFull === true },
-                                ]"
-                            />
-                        </div>
-                        <!-- image #end -->
+                        />
                     </div>
-                    <!-- Slider controls -->
-                </div>
+                    <!-- image #end -->
+                </template>
+                <!-- Slider controls -->
             </div>
             <div
                 v-if="images.length >= 2"
                 class="flex gap-4 items-center justify-center mt-2 z-30"
             >
-                <div
+                <button
+                    type="button"
                     @click="prevSlide"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <ChevronLeftIcon
                         class="shrink-0 h-4 w-4 m-2 stroke-2"
                     ></ChevronLeftIcon>
-                </div>
+                </button>
 
-                <div
+                <button
+                    type="button"
                     @click="nextSlide"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <ChevronRightIcon
                         class="shrink-0 h-4 w-4 m-2 stroke-2"
                     ></ChevronRightIcon>
-                </div>
+                </button>
             </div>
         </div>
     </div>

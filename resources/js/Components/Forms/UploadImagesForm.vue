@@ -266,7 +266,8 @@ onMounted(() => {
                             </p>
                         </div>
 
-                        <div
+                        <button
+                            type="button"
                             @click="
                                 handleDeleteSingleImage(image.image_upload_id)
                             "
@@ -275,7 +276,7 @@ onMounted(() => {
                             <TrashIcon
                                 class="shrink-0 w-4 h-4 m-2 stroke-2"
                             ></TrashIcon>
-                        </div>
+                        </button>
                     </div>
 
                     <template

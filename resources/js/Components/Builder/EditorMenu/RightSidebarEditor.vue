@@ -56,14 +56,15 @@ const isHeadingElement = computed(() => {
             <div
                 class="flex flex-row justify-between pt-2.5 pr-4 pl-4 items-center mb-3"
             >
-                <div
+                <button
+                    type="button"
                     @click="$emit('closeEditor')"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <XMarkIcon
                         class="shrink-0 h-4 w-4 m-2 stroke-2"
                     ></XMarkIcon>
-                </div>
+                </button>
                 <p class="font-bold text-sm">
                     Editing
                     <span class="lowercase">&lt;{{ elementTag }}&gt;</span>

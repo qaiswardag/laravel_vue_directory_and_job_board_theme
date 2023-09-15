@@ -184,7 +184,7 @@ class StoreController extends Controller
             is_array($request->cover_image) &&
             count($request->cover_image) !== 0
         ) {
-            // Loop through the array and attach each category to the post
+            // Loop through the array and attach each item to the store
             foreach ($request->cover_image as $image) {
                 // Check if the "id" key exists in the $image array
                 if (array_key_exists("id", $image)) {
@@ -192,12 +192,17 @@ class StoreController extends Controller
 
                     // Check if a media library record with this ID exists
                     $mediaLibrary = MediaLibrary::find($imageId);
-
                     if ($mediaLibrary) {
+                        // Determine the primary status from the pivot
+                        $isPrimary = isset($image["pivot"]["primary"])
+                            ? $image["pivot"]["primary"]
+                            : false;
+
                         // Create a new record in the StoreCoverImageRelation table
                         StoreCoverImageRelation::create([
                             "media_library_id" => $imageId,
                             "store_id" => $storeId,
+                            "primary" => $isPrimary,
                         ]);
                     }
                 }
@@ -210,7 +215,7 @@ class StoreController extends Controller
             gettype($request->states) === "array" &&
             count($request->states) !== 0
         ) {
-            // Loop through the states array and attach each state to the post
+            // Loop through the states array and attach each state to the store
             foreach ($request->states as $state) {
                 $stateId = $state["id"];
 
@@ -233,7 +238,7 @@ class StoreController extends Controller
             is_array($request->categories) &&
             count($request->categories) !== 0
         ) {
-            // Loop through the categories array and attach each category to the post
+            // Loop through the categories array and attach each category to the store
             foreach ($request->categories as $category) {
                 // Check if the "id" key exists in the $category array
                 if (array_key_exists("id", $category)) {
@@ -243,7 +248,7 @@ class StoreController extends Controller
                     $categoryModel = StoreCategory::find($categoryId);
 
                     if ($categoryModel) {
-                        // Create a new record in the PostCategoryRelation table
+                        // Create a new record in the table
                         StoreCategoryRelation::create([
                             "category_id" => $categoryId,
                             "store_id" => $storeId,
@@ -453,6 +458,56 @@ class StoreController extends Controller
                 ->whereIn("user_id", $authorsToDelete)
                 ->delete();
         }
+
+        // Update cover images # start
+
+        // Retrieve the existing cover image relationships for the post
+        $existingCoverImages = StoreCoverImageRelation::where(
+            "store_id",
+            $storeId
+        )->get();
+
+        // Create an array to store the IDs of existing cover images
+        $existingCoverImageIds = $existingCoverImages
+            ->pluck("media_library_id")
+            ->toArray();
+
+        // Loop through the request's cover images and update or create cover image relationships
+        // Check if $request->cover_image is not null and is an array
+        if (
+            $request->cover_image !== null &&
+            gettype($request->cover_image) === "array" &&
+            count($request->cover_image) !== 0
+        ) {
+            foreach ($request->cover_image as $coverImage) {
+                $imageId = $coverImage["id"];
+                $isPrimary = isset($coverImage["pivot"]["primary"])
+                    ? $coverImage["pivot"]["primary"]
+                    : false;
+
+                // Update or create cover image relationship
+                StoreCoverImageRelation::updateOrCreate(
+                    [
+                        "media_library_id" => $imageId,
+                        "store_id" => $storeId,
+                    ],
+                    ["primary" => $isPrimary]
+                );
+
+                // Remove the image ID from the existingCoverImageIds array
+                $key = array_search($imageId, $existingCoverImageIds);
+                if ($key !== false) {
+                    unset($existingCoverImageIds[$key]);
+                }
+            }
+        }
+
+        // Delete any remaining cover image relationships that are no longer needed
+        StoreCoverImageRelation::where("store_id", $storeId)
+            ->whereIn("media_library_id", $existingCoverImageIds)
+            ->delete();
+
+        // Update cover images # end
 
         // Update states
         if (

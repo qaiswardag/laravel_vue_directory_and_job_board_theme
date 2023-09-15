@@ -131,14 +131,15 @@ const notificationsSlideOverButton = function () {
         >
             <template v-if="$page.props.user !== null">
                 <Link :href="route('dashboard')">
-                    <div
+                    <button
+                        type="button"
                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                     >
                         <AdjustmentsVerticalIcon
                             class="shrink-0 h-4 w-4 m-2 stroke-2"
                             aria-hidden="true"
                         />
-                    </div>
+                    </button>
                 </Link>
             </template>
 
@@ -159,7 +160,12 @@ const notificationsSlideOverButton = function () {
                 </Link>
             </template>
             <template v-if="$page.props.user !== null">
-                <div
+                <button
+                    v-if="
+                        $page.props.user &&
+                        $page.props.user.profile_photo_path !== null
+                    "
+                    type="button"
                     @click="handleMenuUserTeamModal"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
@@ -179,21 +185,21 @@ const notificationsSlideOverButton = function () {
                             "
                         />
                     </div>
-                    <button
-                        v-if="
-                            $page.props.user &&
-                            $page.props.user.profile_photo_path === null
-                        "
-                        @click="handleMenuUserTeamModal"
-                        type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                    >
-                        <UserIcon
-                            class="shrink-0 h-4 w-4 m-2 stroke-2"
-                            aria-hidden="true"
-                        />
-                    </button>
-                </div>
+                </button>
+                <button
+                    v-if="
+                        $page.props.user &&
+                        $page.props.user.profile_photo_path === null
+                    "
+                    @click="handleMenuUserTeamModal"
+                    type="button"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                >
+                    <UserIcon
+                        class="shrink-0 h-4 w-4 m-2 stroke-2"
+                        aria-hidden="true"
+                    />
+                </button>
             </template>
 
             <template v-if="$page.props.user !== null">

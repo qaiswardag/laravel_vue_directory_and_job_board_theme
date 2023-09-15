@@ -563,19 +563,21 @@ const categoriesSorted = computed(() => {
                                     @click="handleAddCategories"
                                     class="flex items-center gap-4 my-2 cursor-pointer"
                                 >
-                                    <div
+                                    <button
+                                        type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
                                         <Squares2X2Icon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></Squares2X2Icon>
-                                    </div>
+                                    </button>
                                     <p>
                                         {{ category.name }}
                                     </p>
                                 </div>
 
-                                <div
+                                <button
+                                    type="button"
                                     @click="
                                         handleRemoveAttachedCategory(
                                             category.id
@@ -586,7 +588,7 @@ const categoriesSorted = computed(() => {
                                     <TrashIcon
                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
                                     ></TrashIcon>
-                                </div>
+                                </button>
                             </div>
                         </div>
                     </div>

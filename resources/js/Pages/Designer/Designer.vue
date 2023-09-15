@@ -195,7 +195,8 @@ onMounted(async () => {
                         <div
                             class="flex flex-row justify-end border-b pb-3 mb-3 pr-4"
                         >
-                            <div
+                            <button
+                                type="button"
                                 @click="
                                     store.commit(
                                         'designer/setMenuLeft',
@@ -212,7 +213,7 @@ onMounted(async () => {
                                     class="shrink-0 h-4 w-4 m-2 stroke-2"
                                 >
                                 </XMarkIcon>
-                            </div>
+                            </button>
                         </div>
 
                         <p class="myPrimaryParagraph font-medium pt-4 pr-4">
@@ -321,13 +322,14 @@ onMounted(async () => {
                 v-show="getMenuLeft === false"
                 class="pt-2 mr-4 h-full flex-shrink-0 overflow-hidden"
             >
-                <div
+                <button
+                    type="button"
                     @click="store.commit('designer/setMenuLeft', true)"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <Square3Stack3DIcon class="shrink-0 h-4 w-4 m-2 stroke-2">
                     </Square3Stack3DIcon>
-                </div>
+                </button>
             </div>
             <!-- Bars - end -->
 
@@ -356,15 +358,17 @@ onMounted(async () => {
                     ></OptionsDropdown>
 
                     <div class="flex items-center justify-center gap-2">
-                        <div
+                        <button
+                            type="button"
                             @click="handleDesignerPreview"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <EyeIcon
                                 class="shrink-0 h-4 w-4 m-2 stroke-2"
                             ></EyeIcon>
-                        </div>
-                        <div
+                        </button>
+                        <button
+                            type="button"
                             v-if="getElement !== null"
                             @click="deselectCurrentComponent"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
@@ -372,8 +376,9 @@ onMounted(async () => {
                             <BoltSlashIcon
                                 class="shrink-0 h-4 w-4 m-2 stroke-2"
                             ></BoltSlashIcon>
-                        </div>
-                        <div
+                        </button>
+                        <button
+                            type="button"
                             v-if="getMenuRight === false"
                             @click="store.commit('designer/setMenuRight', true)"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
@@ -381,7 +386,7 @@ onMounted(async () => {
                             <Squares2X2Icon
                                 class="shrink-0 h-4 w-4 m-2 stroke-2"
                             ></Squares2X2Icon>
-                        </div>
+                        </button>
                     </div>
                 </div>
 

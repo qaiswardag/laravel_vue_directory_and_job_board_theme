@@ -590,24 +590,26 @@ onMounted(() => {
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
-                                    <div
+                                    <button
+                                        type="button"
                                         @click="handleEdit(post.id)"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
                                         <PencilIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></PencilIcon>
-                                    </div>
+                                    </button>
                                 </td>
                                 <td class="myPrimaryTableTBodyTd">
-                                    <div
+                                    <button
+                                        type="button"
                                         @click="handleDelete(post.id, post)"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></TrashIcon>
-                                    </div>
+                                    </button>
                                 </td>
                             </tr>
                         </TransitionGroup>

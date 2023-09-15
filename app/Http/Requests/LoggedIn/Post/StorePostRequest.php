@@ -144,7 +144,8 @@ class StorePostRequest extends FormRequest
                 }
             }
             // validation for cover image # end
-            // Additional validation to ensure only one image is marked as primary
+
+            // Additional validation to ensure only one image is marked as primary # start
             $primaryImages = array_filter($this->cover_image, function (
                 $image
             ) {
@@ -178,6 +179,8 @@ class StorePostRequest extends FormRequest
                         "Only one image can be marked as primary."
                     );
             }
+            // Additional validation to ensure only one image is marked as primary # end
+
             // validation for categories # start
             if (
                 $this->categories === null ||

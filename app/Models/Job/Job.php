@@ -2,6 +2,7 @@
 
 namespace App\Models\Job;
 
+use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -83,10 +84,10 @@ class Job extends Model
     public function coverImages()
     {
         return $this->belongsToMany(
-            MediaLibrar::class,
+            MediaLibrary::class,
             "job_cover_image_relations",
             "job_id",
             "media_library_id"
-        );
+        )->withPivot("primary");
     }
 }

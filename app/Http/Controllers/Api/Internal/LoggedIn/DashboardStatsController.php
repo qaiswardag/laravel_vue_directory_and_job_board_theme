@@ -57,6 +57,7 @@ class DashboardStatsController extends Controller
                 ->get();
             $latestPosts = Post::where("team_id", $team->id)
                 ->latest()
+                ->with("coverImages")
                 ->take(16)
                 ->get();
 

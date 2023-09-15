@@ -535,8 +535,9 @@ onMounted(() => {
                                                         class="flex items-center gap-4 my-2"
                                                         v-if="item.name"
                                                     >
-                                                        <div
-                                                            class="bg-gray-50 h-10 w-10 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                                        <button
+                                                            type="button"
+                                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                                         >
                                                             <div
                                                                 v-if="
@@ -594,7 +595,7 @@ onMounted(() => {
                                                                 >
                                                                 </NewspaperIcon>
                                                             </div>
-                                                        </div>
+                                                        </button>
                                                         <span
                                                             class="font-medium"
                                                         >
@@ -724,8 +725,9 @@ onMounted(() => {
                                             class="flex items-center gap-4 my-2"
                                             v-if="item.name"
                                         >
-                                            <div
-                                                class="bg-gray-50 h-10 w-10 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                            <button
+                                                type="button"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                             >
                                                 <div
                                                     v-if="
@@ -782,7 +784,7 @@ onMounted(() => {
                                                     >
                                                     </NewspaperIcon>
                                                 </div>
-                                            </div>
+                                            </button>
                                             <span class="font-medium">
                                                 {{ item.name }}
                                             </span>
@@ -801,14 +803,15 @@ onMounted(() => {
                                         </div>
                                     </div>
                                 </div>
-                                <div
+                                <button
+                                    type="button"
                                     @click="handleRemoveAttachedItem(item.id)"
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
                                     ></TrashIcon>
-                                </div>
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -177,7 +177,7 @@ class PostController extends Controller
             is_array($request->cover_image) &&
             count($request->cover_image) !== 0
         ) {
-            // Loop through the array and attach each category to the post
+            // Loop through the array and attach each item to the post
             foreach ($request->cover_image as $image) {
                 // Check if the "id" key exists in the $image array
                 if (array_key_exists("id", $image)) {
@@ -424,6 +424,56 @@ class PostController extends Controller
                 ->whereIn("user_id", $authorsToDelete)
                 ->delete();
         }
+
+        // Update cover images # start
+
+        // Retrieve the existing cover image relationships for the post
+        $existingCoverImages = PostCoverImageRelation::where(
+            "post_id",
+            $postId
+        )->get();
+
+        // Create an array to store the IDs of existing cover images
+        $existingCoverImageIds = $existingCoverImages
+            ->pluck("media_library_id")
+            ->toArray();
+
+        // Loop through the request's cover images and update or create cover image relationships
+        // Check if $request->cover_image is not null and is an array
+        if (
+            $request->cover_image !== null &&
+            gettype($request->cover_image) === "array" &&
+            count($request->cover_image) !== 0
+        ) {
+            foreach ($request->cover_image as $coverImage) {
+                $imageId = $coverImage["id"];
+                $isPrimary = isset($coverImage["pivot"]["primary"])
+                    ? $coverImage["pivot"]["primary"]
+                    : false;
+
+                // Update or create cover image relationship
+                PostCoverImageRelation::updateOrCreate(
+                    [
+                        "media_library_id" => $imageId,
+                        "post_id" => $postId,
+                    ],
+                    ["primary" => $isPrimary]
+                );
+
+                // Remove the image ID from the existingCoverImageIds array
+                $key = array_search($imageId, $existingCoverImageIds);
+                if ($key !== false) {
+                    unset($existingCoverImageIds[$key]);
+                }
+            }
+        }
+
+        // Delete any remaining cover image relationships that are no longer needed
+        PostCoverImageRelation::where("post_id", $postId)
+            ->whereIn("media_library_id", $existingCoverImageIds)
+            ->delete();
+
+        // Update cover images # end
 
         // Update categories
         if (

@@ -92,18 +92,20 @@ const deleteComponent = function (e) {
             </div>
 
             <div class="flex gap-2 items-center justify-center">
-                <div
+                <button
+                    type="button"
                     @click="designer.moveComponent($event, 1)"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <ArrowDownIcon class="w-4 h-4 m-2 stroke-2" />
-                </div>
-                <div
+                </button>
+                <button
+                    type="button"
                     @click="designer.moveComponent($event, -1)"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <ArrowUpIcon class="w-4 h-4 m-2 stroke-2" />
-                </div>
+                </button>
             </div>
         </div>
     </div>

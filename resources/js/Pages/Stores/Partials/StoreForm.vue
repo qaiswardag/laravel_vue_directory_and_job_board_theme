@@ -176,6 +176,39 @@ const handleUploadCoverImage = function () {
     };
     // end modal
 };
+const removePrimaryImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.map((image) => {
+        return {
+            ...image,
+            pivot: {
+                ...image.pivot,
+                primary: image.id === imageId ? false : image.pivot.primary,
+            },
+        };
+    });
+};
+
+const setAsPrimaryImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.map((image) => {
+        if (image.id === imageId) {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: true,
+                },
+            };
+        } else {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: false,
+                },
+            };
+        }
+    });
+};
 const handleRemoveCoverImage = function (imageId) {
     postForm.cover_image = postForm.cover_image.filter(
         (image) => image.id !== imageId
@@ -1011,10 +1044,10 @@ const handleDesigner = function () {
                                 : "Items"
                         }}
                     </p>
-
                     <div
                         v-if="
                             postForm.cover_image &&
+                            Array.isArray(postForm.cover_image) &&
                             postForm.cover_image.length !== 0
                         "
                         class="p-2 border border-myPrimaryLightGrayColor"
@@ -1023,31 +1056,66 @@ const handleDesigner = function () {
                             class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
                         >
                             <div
-                                v-for="image in Array.isArray(
-                                    postForm.cover_image
-                                ) && postForm.cover_image"
-                                :key="image.id"
+                                v-for="image in postForm.cover_image !== null &&
+                                postForm.cover_image"
+                                :key="image?.id"
                             >
                                 <div
                                     class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
                                 >
-                                    <img
-                                        @click="handleUploadCoverImage"
-                                        :src="`/storage/uploads/${image.medium_path}`"
-                                        alt="image"
-                                        class="myPrimarythumbnailInsertPreview"
-                                    />
-
                                     <div
+                                        class="flex justify-left items-center gap-2"
+                                    >
+                                        <img
+                                            @click="handleUploadCoverImage"
+                                            :src="`/storage/uploads/${image?.medium_path}`"
+                                            alt="image"
+                                            class="myPrimarythumbnailInsertPreview"
+                                        />
+
+                                        <button
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                                            v-if="image?.pivot?.primary"
+                                            type="button"
+                                            @click="
+                                                removePrimaryImage(image?.id)
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-center justify-center gap-2"
+                                            >
+                                                <span> Primary </span>
+                                                <CheckIcon
+                                                    class="w-3 h-3 stroke-2"
+                                                ></CheckIcon>
+                                            </div>
+                                        </button>
+                                        <button
+                                            class="myPrimaryTag transition"
+                                            v-if="
+                                                !image?.pivot?.primary &&
+                                                postForm.cover_image.length > 1
+                                            "
+                                            type="button"
+                                            @click="
+                                                setAsPrimaryImage(image?.id)
+                                            "
+                                        >
+                                            <span> Set as Primary </span>
+                                        </button>
+                                    </div>
+
+                                    <button
+                                        type="button"
                                         @click="
-                                            handleRemoveCoverImage(image.id)
+                                            handleRemoveCoverImage(image?.id)
                                         "
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></TrashIcon>
-                                    </div>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -1063,7 +1131,7 @@ const handleDesigner = function () {
                                 @click="handleUploadCoverImage"
                                 class="myPrimaryParagraph text-xs italic cursor-pointer"
                             >
-                                Add more
+                                Add Additional Images
                             </p>
                             <button
                                 type="button"
@@ -1143,19 +1211,21 @@ const handleDesigner = function () {
                                     @click="handleAddStates"
                                     class="flex items-center gap-4 my-2 cursor-pointer"
                                 >
-                                    <div
+                                    <button
+                                        type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
                                         <MapPinIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></MapPinIcon>
-                                    </div>
+                                    </button>
                                     <p>
                                         {{ state.name }}
                                     </p>
                                 </div>
 
-                                <div
+                                <button
+                                    type="button"
                                     @click="
                                         handleRemoveAttachedStates(state.id)
                                     "
@@ -1164,7 +1234,7 @@ const handleDesigner = function () {
                                     <TrashIcon
                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
                                     ></TrashIcon>
-                                </div>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1247,19 +1317,21 @@ const handleDesigner = function () {
                                     @click="handleAddCategories"
                                     class="flex items-center gap-4 my-2 cursor-pointer"
                                 >
-                                    <div
+                                    <button
+                                        type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                     >
                                         <Squares2X2Icon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></Squares2X2Icon>
-                                    </div>
+                                    </button>
                                     <p>
                                         {{ category.name }}
                                     </p>
                                 </div>
 
-                                <div
+                                <button
+                                    type="button"
                                     @click="
                                         handleRemoveAttachedCategory(
                                             category.id
@@ -1270,7 +1342,7 @@ const handleDesigner = function () {
                                     <TrashIcon
                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
                                     ></TrashIcon>
-                                </div>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1495,7 +1567,8 @@ const handleDesigner = function () {
                                             </span>
                                         </span>
                                     </div>
-                                    <div
+                                    <button
+                                        type="button"
                                         @click="
                                             handleRemoveAttachedUser(user.id)
                                         "
@@ -1504,7 +1577,7 @@ const handleDesigner = function () {
                                         <TrashIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></TrashIcon>
-                                    </div>
+                                    </button>
                                 </div>
                             </div>
                         </div>

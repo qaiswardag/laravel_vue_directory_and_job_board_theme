@@ -739,7 +739,8 @@ const deleteImage = function (imageId) {
                                                                     <dd
                                                                         class="text-gray-900"
                                                                     >
-                                                                        <div
+                                                                        <button
+                                                                            type="button"
                                                                             @click="
                                                                                 handleDeleteImage(
                                                                                     getCurrentImage
@@ -753,7 +754,7 @@ const deleteImage = function (imageId) {
                                                                             <TrashIcon
                                                                                 class="shrink-0 w-4 h-4 m-2 stroke-2"
                                                                             ></TrashIcon>
-                                                                        </div>
+                                                                        </button>
                                                                     </dd>
                                                                 </div>
                                                             </dl>

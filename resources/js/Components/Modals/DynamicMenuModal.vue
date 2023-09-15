@@ -115,13 +115,14 @@ const handleLogout = () => {
                                     : '',
                             ]"
                         >
-                            <div
+                            <button
+                                type="button"
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                             >
                                 <AdjustmentsHorizontalIcon
                                     class="shrink-0 h-4 w-4 m-2 stroke-2"
                                 />
-                            </div>
+                            </button>
                             <div>Team Settings</div>
                         </div>
                     </Link>
@@ -175,13 +176,14 @@ const handleLogout = () => {
                                     $page.props.user.profile_photo_path === null
                                 "
                             >
-                                <div
+                                <button
+                                    type="button"
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
                                     <UserIcon
                                         class="shrink-0 h-4 w-4 m-2 stroke-2"
                                     />
-                                </div>
+                                </button>
                             </template>
                         </div>
                         <div>Your Profile</div>
@@ -193,13 +195,14 @@ const handleLogout = () => {
                         @click="handleLogout"
                         class="hover:bg-gray-50 group relative flex gap-x-6 rounded-lg px-4 py-2 cursor-pointer bg-gray-50 items-center hover:underline"
                     >
-                        <div
+                        <button
+                            type="button"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <ArrowRightIcon
                                 class="shrink-0 h-4 w-4 m-2 stroke-2"
                             />
-                        </div>
+                        </button>
                         <div>Log out</div>
                     </div>
                 </form>

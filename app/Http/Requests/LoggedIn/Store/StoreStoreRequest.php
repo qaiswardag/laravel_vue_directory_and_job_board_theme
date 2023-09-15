@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\LoggedIn\Store;
 
+use App\Models\MediaLibrary\MediaLibrary;
 use Illuminate\Foundation\Http\FormRequest;
 use Validator;
 
@@ -111,6 +112,7 @@ class StoreStoreRequest extends FormRequest
                     ->errors()
                     ->add("cover_image", "cover image field must be an array.");
             }
+
             if (
                 gettype($this->cover_image) === "array" &&
                 count($this->cover_image) < $minCoverImages
@@ -122,6 +124,7 @@ class StoreStoreRequest extends FormRequest
                         "At least {$minCoverImages} images are necessary for a store listing."
                     );
             }
+
             if (
                 gettype($this->cover_image) === "array" &&
                 count($this->cover_image) > $maxCoverImages
@@ -133,7 +136,65 @@ class StoreStoreRequest extends FormRequest
                         "Limited to a maximum of {$maxCoverImages} cover images."
                     );
             }
+            // Check if the "primary" key exists, or provide a default value of false
+            if (!empty($this->cover_image)) {
+                // Loop through the array and attach each category to the post
+                foreach ($this->cover_image as $image) {
+                    // Check if the "id" key exists in the $image array
+                    if (array_key_exists("id", $image)) {
+                        $imageId = $image["id"];
+
+                        // Check if a media library record with this ID exists
+                        $mediaLibrary = MediaLibrary::find($imageId);
+
+                        if ($mediaLibrary === null) {
+                            $validator
+                                ->errors()
+                                ->add(
+                                    "cover_image",
+                                    "One of your attached images no longer exists in the Media Library. Delete the image."
+                                );
+                        }
+                    }
+                }
+            }
             // validation for cover image # end
+
+            // Additional validation to ensure only one image is marked as primary # start
+            $primaryImages = array_filter($this->cover_image, function (
+                $image
+            ) {
+                return isset($image["pivot"]) &&
+                    isset($image["pivot"]["primary"]) &&
+                    $image["pivot"]["primary"];
+            });
+
+            if (
+                count($primaryImages) === 0 &&
+                gettype($this->cover_image) === "array" &&
+                count($this->cover_image) > 1
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "cover_image",
+                        "At least one image must be marked as primary."
+                    );
+            }
+
+            if (
+                count($primaryImages) > 1 &&
+                gettype($this->cover_image) === "array" &&
+                count($this->cover_image) > 1
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "cover_image",
+                        "Only one image can be marked as primary."
+                    );
+            }
+            // Additional validation to ensure only one image is marked as primary # end
 
             // validation for categories # start
             if (

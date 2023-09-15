@@ -6,6 +6,7 @@ import EmptySectionBorder from "@/Components/Sections/EmptySectionBorder.vue";
 import { useStore } from "vuex";
 import { onMounted, computed } from "vue";
 import { parseISO, format } from "date-fns";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 
 // store
 const store = useStore();
@@ -282,7 +283,7 @@ onMounted(() => {
                     </Link>
 
                     <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
-                        <div
+                        <template
                             v-if="
                                 Array.isArray(
                                     getDashboardStats.fetchedData.latestPosts
@@ -294,16 +295,16 @@ onMounted(() => {
                             <p class="myPrimaryParagraph">
                                 Looks like there are no Posts.
                             </p>
-                        </div>
+                        </template>
                         <ul
                             role="list"
-                            class="grid grid-cols-[repeat(auto-fit,minmax(8rem,1fr))] gap-y-6 gap-x-6"
+                            class="grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-y-6 gap-x-6"
                         >
                             <li
                                 v-for="post in getDashboardStats.fetchedData
                                     .latestPosts"
                                 :key="post.id"
-                                class="whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
                             >
                                 <!-- start photo -->
 
@@ -312,28 +313,16 @@ onMounted(() => {
                                         post && post.cover_image_medium !== null
                                     "
                                 >
-                                    <img
-                                        class="pointer-events-none object-cover group-hover:opacity-75 cursor-pointer"
-                                        :src="`/storage/uploads/${post.cover_image_medium}`"
-                                        alt="Image"
-                                    />
+                                    <ThumbnailSmallImageSlider
+                                        :images="post.cover_images"
+                                        imageSize="medium_path"
+                                        imageHeight="h-36"
+                                        imageWidth="w-full"
+                                        :rounded-full="false"
+                                    ></ThumbnailSmallImageSlider>
                                 </template>
 
                                 <div class="px-2 pb-2">
-                                    <ul
-                                        class="flex flex-wrap gap-y-0 gap-x-2 mt-2"
-                                    >
-                                        <li
-                                            v-for="tag in post.tags &&
-                                            post.tags.split(',')"
-                                            :key="tag"
-                                            class="myPrimaryParagraph leading-4 font-medium cursor-pointer flex-none"
-                                        >
-                                            <span class="text-[10px] uppercase">
-                                                {{ tag }}
-                                            </span>
-                                        </li>
-                                    </ul>
                                     <p
                                         class="myPrimaryParagraph text-sm font-medium mt-2 mb-2"
                                     >

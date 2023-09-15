@@ -8,6 +8,7 @@ use App\Models\Job\AuthorJob;
 use App\Models\Job\Job;
 use App\Models\Job\JobCategory;
 use App\Models\Job\JobCategoryRelation;
+use App\Models\Job\JobCountry;
 use App\Models\Job\JobCountryRelation;
 use App\Models\job\JobCoverImageRelation;
 use App\Models\Job\JobState;
@@ -184,22 +185,30 @@ class JobController extends Controller
         // cover images
         if (
             $request->cover_image !== null &&
-            gettype($request->cover_image) === "array" &&
+            is_array($request->cover_image) &&
             count($request->cover_image) !== 0
         ) {
-            // Loop through the categories array and attach each category to the post
+            // Loop through the array and attach each item to the job
             foreach ($request->cover_image as $image) {
-                $imageId = $image["id"];
+                // Check if the "id" key exists in the $image array
+                if (array_key_exists("id", $image)) {
+                    $imageId = $image["id"];
 
-                // Check if a media library record with this ID exists
-                $mediaLibrary = MediaLibrary::find($imageId);
+                    // Check if a media library record with this ID exists
+                    $mediaLibrary = MediaLibrary::find($imageId);
+                    if ($mediaLibrary) {
+                        // Determine the primary status from the pivot
+                        $isPrimary = isset($image["pivot"]["primary"])
+                            ? $image["pivot"]["primary"]
+                            : false;
 
-                if ($mediaLibrary) {
-                    // Create a new record in the author_post table
-                    JobCoverImageRelation::create([
-                        "media_library_id" => $imageId,
-                        "job_id" => $jobId,
-                    ]);
+                        // Create a new record in the StoreCoverImageRelation table
+                        JobCoverImageRelation::create([
+                            "media_library_id" => $imageId,
+                            "job_id" => $jobId,
+                            "primary" => $isPrimary,
+                        ]);
+                    }
                 }
             }
         }
@@ -215,7 +224,7 @@ class JobController extends Controller
                 $countryId = $country["id"];
 
                 // Check if a category record with this ID exists
-                $countryModel = JobCategory::find($countryId);
+                $countryModel = JobCountry::find($countryId);
 
                 if ($countryModel) {
                     // Create a new record in the table
@@ -458,6 +467,7 @@ class JobController extends Controller
             "tags" => $request->tags,
             "show_author" => $request->show_author,
         ]);
+
         // Get the job ID
         $jobId = $job->id;
 
@@ -495,6 +505,56 @@ class JobController extends Controller
                 ->whereIn("user_id", $authorsToDelete)
                 ->delete();
         }
+
+        // Update cover images # start
+
+        // Retrieve the existing cover image relationships for the post
+        $existingCoverImages = JobCoverImageRelation::where(
+            "job_id",
+            $jobId
+        )->get();
+
+        // Create an array to store the IDs of existing cover images
+        $existingCoverImageIds = $existingCoverImages
+            ->pluck("media_library_id")
+            ->toArray();
+
+        // Loop through the request's cover images and update or create cover image relationships
+        // Check if $request->cover_image is not null and is an array
+        if (
+            $request->cover_image !== null &&
+            gettype($request->cover_image) === "array" &&
+            count($request->cover_image) !== 0
+        ) {
+            foreach ($request->cover_image as $coverImage) {
+                $imageId = $coverImage["id"];
+                $isPrimary = isset($coverImage["pivot"]["primary"])
+                    ? $coverImage["pivot"]["primary"]
+                    : false;
+
+                // Update or create cover image relationship
+                JobCoverImageRelation::updateOrCreate(
+                    [
+                        "media_library_id" => $imageId,
+                        "job_id" => $jobId,
+                    ],
+                    ["primary" => $isPrimary]
+                );
+
+                // Remove the image ID from the existingCoverImageIds array
+                $key = array_search($imageId, $existingCoverImageIds);
+                if ($key !== false) {
+                    unset($existingCoverImageIds[$key]);
+                }
+            }
+        }
+
+        // Delete any remaining cover image relationships that are no longer needed
+        JobCoverImageRelation::where("job_id", $jobId)
+            ->whereIn("media_library_id", $existingCoverImageIds)
+            ->delete();
+
+        // Update cover images # end
 
         // Update countries
         if (
