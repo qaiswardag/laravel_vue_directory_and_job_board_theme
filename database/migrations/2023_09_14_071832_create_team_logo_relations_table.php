@@ -25,6 +25,7 @@ return new class extends Migration {
                 ->on("teams")
                 ->onDelete("cascade")
                 ->constrained();
+            $table->boolean("primary")->nullable();
             $table->timestamps();
         });
     }

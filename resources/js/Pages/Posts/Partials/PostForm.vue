@@ -37,6 +37,8 @@ import {
     XMarkIcon,
     Squares2X2Icon,
     PhotoIcon,
+    PlusCircleIcon,
+    PlusIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -163,6 +165,39 @@ const handleUploadCoverImage = function () {
         showMediaLibraryModal.value = false;
     };
     // end modal
+};
+const removePrimaryImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.map((image) => {
+        return {
+            ...image,
+            pivot: {
+                ...image.pivot,
+                primary: image.id === imageId ? false : image.pivot.primary,
+            },
+        };
+    });
+};
+
+const setAsPrimaryImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.map((image) => {
+        if (image.id === imageId) {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: true,
+                },
+            };
+        } else {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: false,
+                },
+            };
+        }
+    });
 };
 const handleRemoveCoverImage = function (imageId) {
     postForm.cover_image = postForm.cover_image.filter(
@@ -466,7 +501,21 @@ onBeforeMount(() => {
                 formLocalStorage.author !== undefined ||
                 formLocalStorage.author !== null
             ) {
-                postForm.author = formLocalStorage.author;
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull = formLocalStorage.author.every(
+                    (element) => {
+                        return element === null;
+                    }
+                );
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.author = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.author = formLocalStorage.author;
+                }
             }
             // Cover image
             if (
@@ -479,7 +528,20 @@ onBeforeMount(() => {
                 formLocalStorage.cover_image !== undefined ||
                 formLocalStorage.cover_image !== null
             ) {
-                postForm.cover_image = formLocalStorage.cover_image;
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull =
+                    formLocalStorage.cover_image.every((element) => {
+                        return element === null;
+                    });
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.cover_image = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.cover_image = formLocalStorage.cover_image;
+                }
             }
             // Categories
             if (
@@ -492,7 +554,21 @@ onBeforeMount(() => {
                 formLocalStorage.categories !== undefined ||
                 formLocalStorage.categories !== null
             ) {
-                postForm.categories = formLocalStorage.categories;
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull = formLocalStorage.categories.every(
+                    (element) => {
+                        return element === null;
+                    }
+                );
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.categories = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.categories = formLocalStorage.categories;
+                }
             }
         }
     }
@@ -738,6 +814,7 @@ const categoriesSorted = computed(() => {
 
             <!-- cover image - start -->
             <div class="myInputsOrganization">
+                <p class="my-12">{{ postForm.cover_image }}</p>
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
@@ -755,7 +832,7 @@ const categoriesSorted = computed(() => {
                                 postForm.cover_image &&
                                 postForm.cover_image.length === 0
                                     ? "Select Cover image"
-                                    : "Update Cover image"
+                                    : "Add Additional Cover Images"
                             }}
                         </p>
                     </div>
@@ -796,42 +873,107 @@ const categoriesSorted = computed(() => {
                                 : "Items"
                         }}
                     </p>
-
                     <div
                         v-if="
                             postForm.cover_image &&
+                            Array.isArray(postForm.cover_image) &&
                             postForm.cover_image.length !== 0
                         "
-                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        class="p-2 border border-myPrimaryLightGrayColor"
                     >
                         <div
-                            v-for="image in Array.isArray(
-                                postForm.cover_image
-                            ) && postForm.cover_image"
-                            :key="image.id"
+                            class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                v-for="image in postForm.cover_image !== null &&
+                                postForm.cover_image"
+                                :key="image?.id"
                             >
-                                <img
-                                    @click="handleUploadCoverImage"
-                                    :src="`/storage/uploads/${image.medium_path}`"
-                                    alt="image"
-                                    class="myPrimarythumbnailInsertPreview"
-                                />
-
                                 <div
-                                    @click="handleRemoveCoverImage(image.id)"
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
                                 >
-                                    <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                    ></TrashIcon>
+                                    <div
+                                        class="flex justify-left items-center gap-2"
+                                    >
+                                        <img
+                                            @click="handleUploadCoverImage"
+                                            :src="`/storage/uploads/${image?.medium_path}`"
+                                            alt="image"
+                                            class="myPrimarythumbnailInsertPreview"
+                                        />
+
+                                        <button
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                                            v-if="image?.pivot?.primary"
+                                            type="button"
+                                            @click="
+                                                removePrimaryImage(image?.id)
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-center justify-center gap-2"
+                                            >
+                                                <span> Primary </span>
+                                                <CheckIcon
+                                                    class="w-3 h-3 stroke-2"
+                                                ></CheckIcon>
+                                            </div>
+                                        </button>
+                                        <button
+                                            class="myPrimaryTag transition"
+                                            v-if="
+                                                !image?.pivot?.primary &&
+                                                postForm.cover_image.length > 1
+                                            "
+                                            type="button"
+                                            @click="
+                                                setAsPrimaryImage(image?.id)
+                                            "
+                                        >
+                                            <span> Set as Primary </span>
+                                        </button>
+                                    </div>
+
+                                    <div
+                                        @click="
+                                            handleRemoveCoverImage(image?.id)
+                                        "
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    >
+                                        <TrashIcon
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        ></TrashIcon>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div
+                            v-if="
+                                postForm.cover_image &&
+                                postForm.cover_image.length >= 1
+                            "
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
+                        >
+                            <p
+                                @click="handleUploadCoverImage"
+                                class="myPrimaryParagraph text-xs italic cursor-pointer"
+                            >
+                                Add Additional Images
+                            </p>
+                            <button
+                                type="button"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                @click="handleUploadCoverImage"
+                            >
+                                <PlusIcon
+                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                ></PlusIcon>
+                            </button>
+                        </div>
                     </div>
                 </div>
+
                 <InputError :message="postForm.errors.cover_image" />
             </div>
             <!-- cover image - end -->

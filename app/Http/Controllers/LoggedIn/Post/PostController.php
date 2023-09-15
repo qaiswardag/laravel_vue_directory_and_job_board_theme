@@ -4,9 +4,12 @@ namespace App\Http\Controllers\LoggedIn\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Post\StorePostRequest;
+use App\Models\Job\JobCategory;
+use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\AuthorPost;
 use App\Models\Post\Post;
 use App\Models\Post\PostCategoryRelation;
+use App\Models\post\PostCoverImageRelation;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -142,6 +145,7 @@ class PostController extends Controller
 
         $postId = $post->id;
 
+        // authors
         // Check if the "show_author" property of the $request object is true
         // and the "author" property of the $request object is not null
         if (
@@ -154,29 +158,73 @@ class PostController extends Controller
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
 
-                // Create a new record in the author_post table
-                AuthorPost::create([
-                    "user_id" => $authorId,
-                    "post_id" => $postId,
-                ]);
+                // Check if a media library record with this ID exists
+                $userModel = User::find($authorId);
+
+                if ($userModel) {
+                    // Create a new record in the author_post table
+                    AuthorPost::create([
+                        "user_id" => $authorId,
+                        "post_id" => $postId,
+                    ]);
+                }
+            }
+        }
+
+        // cover images
+        if (
+            $request->cover_image !== null &&
+            is_array($request->cover_image) &&
+            count($request->cover_image) !== 0
+        ) {
+            // Loop through the array and attach each category to the post
+            foreach ($request->cover_image as $image) {
+                // Check if the "id" key exists in the $image array
+                if (array_key_exists("id", $image)) {
+                    $imageId = $image["id"];
+
+                    // Check if a media library record with this ID exists
+                    $mediaLibrary = MediaLibrary::find($imageId);
+                    if ($mediaLibrary) {
+                        // Determine the primary status from the pivot
+                        $isPrimary = isset($image["pivot"]["primary"])
+                            ? $image["pivot"]["primary"]
+                            : false;
+
+                        // Create a new record in the StoreCoverImageRelation table
+                        PostCoverImageRelation::create([
+                            "media_library_id" => $imageId,
+                            "post_id" => $postId,
+                            "primary" => $isPrimary,
+                        ]);
+                    }
+                }
             }
         }
 
         // categories
         if (
             $request->categories !== null &&
-            gettype($request->categories) === "array" &&
+            is_array($request->categories) &&
             count($request->categories) !== 0
         ) {
             // Loop through the categories array and attach each category to the post
             foreach ($request->categories as $category) {
-                $categoryId = $category["id"];
+                // Check if the "id" key exists in the $category array
+                if (array_key_exists("id", $category)) {
+                    $categoryId = $category["id"];
 
-                // Create a new record in the author_post table
-                PostCategoryRelation::create([
-                    "category_id" => $categoryId,
-                    "post_id" => $postId,
-                ]);
+                    // Check if a category record with this ID exists
+                    $categoryModel = JobCategory::find($categoryId);
+
+                    if ($categoryModel) {
+                        // Create a new record in the PostCategoryRelation table
+                        PostCategoryRelation::create([
+                            "category_id" => $categoryId,
+                            "post_id" => $postId,
+                        ]);
+                    }
+                }
             }
         }
 

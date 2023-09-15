@@ -94,7 +94,7 @@ class Team extends JetstreamTeam
             "team_cover_image_relations",
             "team_id",
             "media_library_id"
-        );
+        )->withPivot("primary");
     }
 
     public function logosRelationship()
@@ -104,7 +104,7 @@ class Team extends JetstreamTeam
             "team_logo_relations",
             "team_id",
             "media_library_id"
-        );
+        )->withPivot("primary");
     }
 
     // Append the 'coverImage_i' and 'logos' attributes to the model

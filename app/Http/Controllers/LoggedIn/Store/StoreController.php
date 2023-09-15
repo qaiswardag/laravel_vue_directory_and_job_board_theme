@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\LoggedIn\Store\StoreStoreRequest;
+use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Store\AuthorStore;
 use App\Models\Store\Store;
+use App\Models\Store\StoreCategory;
 use App\Models\Store\StoreCategoryRelation;
+use App\Models\store\StoreCoverImageRelation;
+use App\Models\Store\StoreState;
 use App\Models\Store\StoreStateRelation;
 use App\Models\Team;
 use App\Models\User;
@@ -148,6 +152,7 @@ class StoreController extends Controller
         // Get the store ID
         $storeId = $store->id;
 
+        // Authors
         // Check if the "show_author" property of the $request object is true
         // and the "author" property of the $request object is not null
         if (
@@ -160,11 +165,42 @@ class StoreController extends Controller
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
 
-                // Create a new record in the author_store table
-                AuthorStore::create([
-                    "user_id" => $authorId,
-                    "store_id" => $storeId,
-                ]);
+                // Check if a media library record with this ID exists
+                $userModel = User::find($authorId);
+
+                if ($userModel) {
+                    // Create a new record in the author_store table
+                    AuthorStore::create([
+                        "user_id" => $authorId,
+                        "store_id" => $storeId,
+                    ]);
+                }
+            }
+        }
+
+        // cover images
+        if (
+            $request->cover_image !== null &&
+            is_array($request->cover_image) &&
+            count($request->cover_image) !== 0
+        ) {
+            // Loop through the array and attach each category to the post
+            foreach ($request->cover_image as $image) {
+                // Check if the "id" key exists in the $image array
+                if (array_key_exists("id", $image)) {
+                    $imageId = $image["id"];
+
+                    // Check if a media library record with this ID exists
+                    $mediaLibrary = MediaLibrary::find($imageId);
+
+                    if ($mediaLibrary) {
+                        // Create a new record in the StoreCoverImageRelation table
+                        StoreCoverImageRelation::create([
+                            "media_library_id" => $imageId,
+                            "store_id" => $storeId,
+                        ]);
+                    }
+                }
             }
         }
 
@@ -178,28 +214,42 @@ class StoreController extends Controller
             foreach ($request->states as $state) {
                 $stateId = $state["id"];
 
-                // Create a new record in the table
-                StoreStateRelation::create([
-                    "state_id" => $stateId,
-                    "store_id" => $storeId,
-                ]);
+                // Check if a state record with this ID exists
+                $statesModel = StoreState::find($stateId);
+
+                if ($statesModel) {
+                    // Create a new record in the table
+                    StoreStateRelation::create([
+                        "state_id" => $stateId,
+                        "store_id" => $storeId,
+                    ]);
+                }
             }
         }
+
         // categories
         if (
             $request->categories !== null &&
-            gettype($request->categories) === "array" &&
+            is_array($request->categories) &&
             count($request->categories) !== 0
         ) {
             // Loop through the categories array and attach each category to the post
             foreach ($request->categories as $category) {
-                $categoryId = $category["id"];
+                // Check if the "id" key exists in the $category array
+                if (array_key_exists("id", $category)) {
+                    $categoryId = $category["id"];
 
-                // Create a new record in the author_post table
-                StoreCategoryRelation::create([
-                    "category_id" => $categoryId,
-                    "store_id" => $storeId,
-                ]);
+                    // Check if a category record with this ID exists
+                    $categoryModel = StoreCategory::find($categoryId);
+
+                    if ($categoryModel) {
+                        // Create a new record in the PostCategoryRelation table
+                        StoreCategoryRelation::create([
+                            "category_id" => $categoryId,
+                            "store_id" => $storeId,
+                        ]);
+                    }
+                }
             }
         }
 

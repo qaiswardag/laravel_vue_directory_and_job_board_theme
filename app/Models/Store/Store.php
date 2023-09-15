@@ -70,6 +70,6 @@ class Store extends Model
             "store_cover_image_relations",
             "store_id",
             "media_library_id"
-        );
+        )->withPivot("primary");
     }
 }

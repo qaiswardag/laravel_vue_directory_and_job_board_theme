@@ -27,6 +27,7 @@ return new class extends Migration {
                 ->on("stores")
                 ->onDelete("cascade")
                 ->constrained();
+            $table->boolean("primary")->nullable();
             $table->timestamps();
         });
     }

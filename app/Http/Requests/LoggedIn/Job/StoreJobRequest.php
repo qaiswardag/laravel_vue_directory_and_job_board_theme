@@ -22,6 +22,7 @@ class StoreJobRequest extends FormRequest
      */
     public function rules(): array
     {
+        dd("se om denne text bliver vist!");
         $rules = [
             "published" => ["boolean"],
             "show_author" => ["boolean"],

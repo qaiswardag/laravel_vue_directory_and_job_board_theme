@@ -119,7 +119,7 @@ class StoreStoreRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "At least $maxCoverImages} images are necessary for a store listing."
+                        "At least {$minCoverImages} images are necessary for a store listing."
                     );
             }
             if (

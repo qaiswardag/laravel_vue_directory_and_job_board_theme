@@ -42,6 +42,7 @@ import {
     PhotoIcon,
     MapPinIcon,
     GlobeAmericasIcon,
+    PlusIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -171,25 +172,31 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        postForm.cover_image_original =
-            getCurrentImage.value.currentImage?.mediaLibrary?.path;
-        postForm.cover_image_thumbnail =
-            getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
-        postForm.cover_image_medium =
-            getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
-        postForm.cover_image_large =
-            getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
+        if (Array.isArray(postForm.cover_image) === false) {
+            postForm.cover_image === [];
+        }
+
+        const idExists = postForm.cover_image.some((item) => {
+            return (
+                item.id === getCurrentImage.value.currentImage.mediaLibrary.id
+            );
+        });
+
+        if (idExists === false && Array.isArray(postForm.cover_image)) {
+            postForm.cover_image.unshift(
+                getCurrentImage.value.currentImage.mediaLibrary
+            );
+        }
 
         // handle show media library modal
         showMediaLibraryModal.value = false;
     };
     // end modal
 };
-const handleRemoveCoverImage = function () {
-    postForm.cover_image_original = null;
-    postForm.cover_image_thumbnail = null;
-    postForm.cover_image_medium = null;
-    postForm.cover_image_large = null;
+const handleRemoveCoverImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.filter(
+        (image) => image.id !== imageId
+    );
 };
 
 const showSearchUserModal = ref(false);
@@ -412,11 +419,6 @@ const postForm = useForm({
     team: props.currentUserTeam,
     user_id: props.user.id,
 
-    cover_image_original: "",
-    cover_image_thumbnail: "",
-    cover_image_medium: "",
-    cover_image_large: "",
-
     tags: "",
     show_author: false,
     author: [],
@@ -424,6 +426,7 @@ const postForm = useForm({
     states: [],
     categories: [],
     types: [],
+    cover_image: [],
 });
 
 // The above code uses the watch function from Vue 3 to watch for changes to the
@@ -540,11 +543,6 @@ const clearForm = function () {
     postForm.team = props.currentUserTeam;
     postForm.user_id = props.user.id;
 
-    postForm.cover_image_original = "";
-    postForm.cover_image_thumbnail = "";
-    postForm.cover_image_medium = "";
-    postForm.cover_image_large = "";
-
     //
     //
     postForm.tags = "";
@@ -558,6 +556,7 @@ const clearForm = function () {
     postForm.states = [];
     postForm.categories = [];
     postForm.types = [];
+    postForm.cover_image = [];
 
     localStorage.removeItem(pathLocalStorage);
 };
@@ -609,12 +608,6 @@ onBeforeMount(() => {
             postForm.content = formLocalStorage.content;
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
-            postForm.cover_image_original =
-                formLocalStorage.cover_image_original;
-            postForm.cover_image_thumbnail =
-                formLocalStorage.cover_image_thumbnail;
-            postForm.cover_image_medium = formLocalStorage.cover_image_medium;
-            postForm.cover_image_large = formLocalStorage.cover_image_large;
             postForm.tags = formLocalStorage.tags;
 
             // Authors
@@ -628,7 +621,47 @@ onBeforeMount(() => {
                 formLocalStorage.author !== undefined ||
                 formLocalStorage.author !== null
             ) {
-                postForm.author = formLocalStorage.author;
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull = formLocalStorage.author.every(
+                    (element) => {
+                        return element === null;
+                    }
+                );
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.author = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.author = formLocalStorage.author;
+                }
+            }
+            // Cover image
+            if (
+                formLocalStorage.cover_image === undefined ||
+                formLocalStorage.cover_image === null
+            ) {
+                postForm.cover_image = [];
+            }
+            if (
+                formLocalStorage.cover_image !== undefined ||
+                formLocalStorage.cover_image !== null
+            ) {
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull =
+                    formLocalStorage.cover_image.every((element) => {
+                        return element === null;
+                    });
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.cover_image = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.cover_image = formLocalStorage.cover_image;
+                }
             }
             // Countries
             if (
@@ -641,7 +674,21 @@ onBeforeMount(() => {
                 formLocalStorage.countries !== undefined ||
                 formLocalStorage.countries !== null
             ) {
-                postForm.countries = formLocalStorage.countries;
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull = formLocalStorage.countries.every(
+                    (element) => {
+                        return element === null;
+                    }
+                );
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.countries = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.countries = formLocalStorage.countries;
+                }
             }
             // States
             if (
@@ -654,7 +701,21 @@ onBeforeMount(() => {
                 formLocalStorage.states !== undefined ||
                 formLocalStorage.states !== null
             ) {
-                postForm.states = formLocalStorage.states;
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull = formLocalStorage.states.every(
+                    (element) => {
+                        return element === null;
+                    }
+                );
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.states = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.states = formLocalStorage.states;
+                }
             }
             // Categories
             if (
@@ -667,7 +728,21 @@ onBeforeMount(() => {
                 formLocalStorage.categories !== undefined ||
                 formLocalStorage.categories !== null
             ) {
-                postForm.categories = formLocalStorage.categories;
+                // Determine whether all elements in an array are null. åå
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull = formLocalStorage.categories.every(
+                    (element) => {
+                        return element === null;
+                    }
+                );
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.categories = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.categories = formLocalStorage.categories;
+                }
             }
             // Types
             if (
@@ -680,7 +755,21 @@ onBeforeMount(() => {
                 formLocalStorage.types !== undefined ||
                 formLocalStorage.types !== null
             ) {
-                postForm.types = formLocalStorage.types;
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull = formLocalStorage.types.every(
+                    (element) => {
+                        return element === null;
+                    }
+                );
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.types = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.types = formLocalStorage.types;
+                }
             }
         }
         if (localStorage.getItem(pathLocalStorage) === null) {
@@ -702,11 +791,6 @@ onBeforeMount(() => {
         postForm.published = props.post.published === 1 ? true : false;
         postForm.show_author = props.post.show_author === 1 ? true : false;
 
-        postForm.cover_image_original = props.post.cover_image_original;
-        postForm.cover_image_thumbnail = props.post.cover_image_thumbnail;
-        postForm.cover_image_medium = props.post.cover_image_medium;
-        postForm.cover_image_large = props.post.cover_image_large;
-
         postForm.tags = props.post.tags;
 
         // check if the post author is available and should be displayed
@@ -725,6 +809,7 @@ onBeforeMount(() => {
         postForm.states = props.states;
         postForm.categories = props.categories;
         postForm.types = props.types;
+        postForm.cover_image = props.coverImages;
     }
 });
 
@@ -998,44 +1083,128 @@ const jobTypesSorted = computed(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
                     </div>
-                    <p class="myPrimaryParagraph">
-                        Uplaod or select a post cover image.
-                    </p>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
-
-                <img
-                    v-if="
-                        postForm.cover_image_medium &&
-                        postForm.cover_image_medium.length !== 0
-                    "
-                    @click="handleUploadCoverImage"
-                    class="myPrimarythumbnailInsertPreview"
-                    alt="cover image"
-                    :src="`/storage/uploads/${postForm.cover_image_medium}`"
-                />
-
+                <!-- select - start -->
                 <div
-                    class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
+                    @click="handleUploadCoverImage"
+                    class="myPrimaryFakeSelect"
                 >
-                    <button
-                        @click="handleUploadCoverImage"
-                        type="button"
-                        class="myPrimaryButton gap-2 items-center"
-                    >
-                        <PhotoIcon class="w-4 h-4"></PhotoIcon>
-                        Cover image
-                    </button>
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.cover_image &&
+                                postForm.cover_image.length === 0
+                                    ? "Select Cover image"
+                                    : "Add Additional Cover Images"
+                            }}
+                        </p>
+                    </div>
                     <div
-                        @click="handleRemoveCoverImage"
-                        v-if="postForm && postForm.cover_image_medium"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                        class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <TrashIcon
-                            class="shrink-0 w-4 h-4 m-2 stroke-2"
-                        ></TrashIcon>
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
                     </div>
                 </div>
-                <InputError :message="postForm.errors.cover_image_original" />
+                <!-- select - end -->
+
+                <div
+                    v-if="
+                        postForm.cover_image &&
+                        postForm.cover_image.length === 0
+                    "
+                    class="space-y-6 mt-2"
+                >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
+                    <p
+                        v-if="
+                            postForm.cover_image &&
+                            postForm.cover_image.length !== 0
+                        "
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{
+                            postForm.cover_image && postForm.cover_image.length
+                        }}
+                        {{
+                            postForm.cover_image &&
+                            postForm.cover_image.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+
+                    <div
+                        v-if="
+                            postForm.cover_image &&
+                            postForm.cover_image.length !== 0
+                        "
+                        class="p-2 border border-myPrimaryLightGrayColor"
+                    >
+                        <div
+                            class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                        >
+                            <div
+                                v-for="image in Array.isArray(
+                                    postForm.cover_image
+                                ) && postForm.cover_image"
+                                :key="image.id"
+                            >
+                                <div
+                                    class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                >
+                                    <img
+                                        @click="handleUploadCoverImage"
+                                        :src="`/storage/uploads/${image.medium_path}`"
+                                        alt="image"
+                                        class="myPrimarythumbnailInsertPreview"
+                                    />
+
+                                    <div
+                                        @click="
+                                            handleRemoveCoverImage(image.id)
+                                        "
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    >
+                                        <TrashIcon
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        ></TrashIcon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            v-if="
+                                postForm.cover_image &&
+                                postForm.cover_image.length >= 1
+                            "
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
+                        >
+                            <p
+                                @click="handleUploadCoverImage"
+                                class="myPrimaryParagraph text-xs italic cursor-pointer"
+                            >
+                                Add more
+                            </p>
+                            <button
+                                type="button"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                @click="handleUploadCoverImage"
+                            >
+                                <PlusIcon
+                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                ></PlusIcon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <InputError :message="postForm.errors.cover_image" />
             </div>
             <!-- cover image - end -->
 

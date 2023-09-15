@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class JobCoverImageRelation extends Model
 {
     use HasFactory;
-    protected $fillable = ["media_library_id", "job_id"];
+    protected $fillable = ["media_library_id", "job_id", "primary"];
 }

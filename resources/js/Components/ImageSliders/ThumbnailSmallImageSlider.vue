@@ -7,7 +7,7 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
 } from "@heroicons/vue/24/outline";
-import { ref } from "vue";
+import { computed, onMounted, ref, watch, watchEffect } from "vue";
 
 const props = defineProps({
     images: {
@@ -42,6 +42,24 @@ const nextSlide = function () {
     currentImageIndex.value =
         (currentImageIndex.value + 1) % props.images.length;
 };
+
+const sortedImages = computed(() => {
+    // Find the primary image
+    const primaryImage = props.images.find((image) => {
+        return image?.pivot?.primary;
+    });
+
+    if (primaryImage) {
+        // If a primary image is found, create a new array with the primary image first
+        const otherImages = props.images.filter(
+            (image) => image !== primaryImage
+        );
+        return [primaryImage, ...otherImages];
+    }
+
+    // If no primary image is found, return the original array
+    return props.images;
+});
 </script>
 
 <template>
@@ -54,8 +72,8 @@ const nextSlide = function () {
                 <div class="w-full flex justify-center">
                     <!-- Carousel wrapper -->
                     <div
-                        v-for="(image, index) in Array.isArray(images) &&
-                        images"
+                        v-for="(image, index) in Array.isArray(sortedImages) &&
+                        sortedImages"
                         :key="image.id"
                     >
                         <!-- image #start -->

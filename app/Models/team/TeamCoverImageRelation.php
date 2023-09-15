@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TeamCoverImageRelation extends Model
 {
     use HasFactory;
-    protected $fillable = ["media_library_id", "team_id"];
+    protected $fillable = ["media_library_id", "team_id", "primary"];
 }

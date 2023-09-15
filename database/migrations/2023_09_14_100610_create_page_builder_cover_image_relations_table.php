@@ -27,6 +27,8 @@ return new class extends Migration {
                 ->on("page_builder_components")
                 ->onDelete("cascade")
                 ->constrained();
+
+            $table->boolean("primary")->nullable();
             $table->timestamps();
         });
     }

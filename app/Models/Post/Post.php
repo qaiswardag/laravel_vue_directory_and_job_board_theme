@@ -53,6 +53,7 @@ class Post extends Model
             "category_id"
         );
     }
+
     public function coverImages()
     {
         return $this->belongsToMany(
@@ -60,6 +61,6 @@ class Post extends Model
             "post_cover_image_relations",
             "post_id",
             "media_library_id"
-        );
+        )->withPivot("primary");
     }
 }

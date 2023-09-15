@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
 use App\Models\Job\AuthorJob;
 use App\Models\Job\Job;
+use App\Models\Job\JobCategory;
 use App\Models\Job\JobCategoryRelation;
 use App\Models\Job\JobCountryRelation;
+use App\Models\job\JobCoverImageRelation;
+use App\Models\Job\JobState;
 use App\Models\Job\JobStateRelation;
+use App\Models\Job\JobType;
 use App\Models\Job\JobTypeRelation;
+use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Team;
 use App\Models\User;
 use Database\Factories\Job\JobStateFactory;
@@ -150,6 +155,7 @@ class JobController extends Controller
         // Get the job ID
         $jobId = $job->id;
 
+        // authors
         // Check if the "show_author" property of the $request object is true
         // and the "author" property of the $request object is not null
         if (
@@ -162,11 +168,39 @@ class JobController extends Controller
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
 
-                // Create a new record in the author_job table
-                AuthorJob::create([
-                    "user_id" => $authorId,
-                    "job_id" => $jobId,
-                ]);
+                // Check if a media library record with this ID exists
+                $userModel = User::find($authorId);
+
+                if ($userModel) {
+                    // Create a new record in the author_job table
+                    AuthorJob::create([
+                        "user_id" => $authorId,
+                        "job_id" => $jobId,
+                    ]);
+                }
+            }
+        }
+
+        // cover images
+        if (
+            $request->cover_image !== null &&
+            gettype($request->cover_image) === "array" &&
+            count($request->cover_image) !== 0
+        ) {
+            // Loop through the categories array and attach each category to the post
+            foreach ($request->cover_image as $image) {
+                $imageId = $image["id"];
+
+                // Check if a media library record with this ID exists
+                $mediaLibrary = MediaLibrary::find($imageId);
+
+                if ($mediaLibrary) {
+                    // Create a new record in the author_post table
+                    JobCoverImageRelation::create([
+                        "media_library_id" => $imageId,
+                        "job_id" => $jobId,
+                    ]);
+                }
             }
         }
 
@@ -180,11 +214,16 @@ class JobController extends Controller
             foreach ($request->countries as $country) {
                 $countryId = $country["id"];
 
-                // Create a new record in the table
-                JobCountryRelation::create([
-                    "country_id" => $countryId,
-                    "job_id" => $jobId,
-                ]);
+                // Check if a category record with this ID exists
+                $countryModel = JobCategory::find($countryId);
+
+                if ($countryModel) {
+                    // Create a new record in the table
+                    JobCountryRelation::create([
+                        "country_id" => $countryId,
+                        "job_id" => $jobId,
+                    ]);
+                }
             }
         }
         // states
@@ -197,11 +236,16 @@ class JobController extends Controller
             foreach ($request->states as $state) {
                 $stateId = $state["id"];
 
-                // Create a new record in the table
-                JobStateRelation::create([
-                    "state_id" => $stateId,
-                    "job_id" => $jobId,
-                ]);
+                // Check if a state record with this ID exists
+                $statesModel = JobState::find($stateId);
+
+                if ($statesModel) {
+                    // Create a new record in the table
+                    JobStateRelation::create([
+                        "state_id" => $stateId,
+                        "job_id" => $jobId,
+                    ]);
+                }
             }
         }
         // categories
@@ -214,13 +258,19 @@ class JobController extends Controller
             foreach ($request->categories as $category) {
                 $categoryId = $category["id"];
 
-                // Create a new record in the author_post table
-                JobCategoryRelation::create([
-                    "category_id" => $categoryId,
-                    "job_id" => $jobId,
-                ]);
+                // Check if a category record with this ID exists
+                $categoryModel = JobCategory::find($categoryId);
+
+                if ($categoryModel) {
+                    // Create a new record in the author_post table
+                    JobCategoryRelation::create([
+                        "category_id" => $categoryId,
+                        "job_id" => $jobId,
+                    ]);
+                }
             }
         }
+
         // types
         if (
             $request->types !== null &&
@@ -231,11 +281,16 @@ class JobController extends Controller
             foreach ($request->types as $jobType) {
                 $typeId = $jobType["id"];
 
-                // Create a new record in the author_post table
-                JobTypeRelation::create([
-                    "type_id" => $typeId,
-                    "job_id" => $jobId,
-                ]);
+                // Check if a type record with this ID exists
+                $typesModel = JobType::find($typeId);
+
+                if ($typesModel) {
+                    // Create a new record in the author_post table
+                    JobTypeRelation::create([
+                        "type_id" => $typeId,
+                        "job_id" => $jobId,
+                    ]);
+                }
             }
         }
 

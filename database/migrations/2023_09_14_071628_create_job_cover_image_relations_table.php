@@ -28,7 +28,7 @@ return new class extends Migration {
                 ->on("jobs")
                 ->onDelete("cascade")
                 ->constrained();
-
+            $table->boolean("primary")->nullable();
             $table->timestamps();
         });
     }
