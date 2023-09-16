@@ -390,9 +390,9 @@ onMounted(() => {
                                     <ThumbnailSmallImageSlider
                                         :images="post.cover_images"
                                         imageSize="medium_path"
-                                        imageHeight="h-36"
+                                        imageHeight="h-56"
                                         imageWidth="w-full"
-                                        :rounded-full="false"
+                                        :roundedFull="false"
                                     ></ThumbnailSmallImageSlider>
                                 </template>
 

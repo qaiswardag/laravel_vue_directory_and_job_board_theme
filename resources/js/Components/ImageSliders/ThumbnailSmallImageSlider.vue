@@ -28,6 +28,10 @@ const props = defineProps({
         required: true,
         type: Boolean,
     },
+    squareButtons: {
+        required: false,
+        type: Boolean,
+    },
 });
 
 const currentImageIndex = ref(0);
@@ -63,7 +67,10 @@ const sortedImages = computed(() => {
 </script>
 
 <template>
-    <div v-if="Array.isArray(images)" class="flex justify-center items-center">
+    <div
+        v-if="Array.isArray(images)"
+        class="relative flex justify-center items-center"
+    >
         <div
             class="justify-center items-center flex-col"
             :class="[`${imageWidth}`]"
@@ -102,12 +109,13 @@ const sortedImages = computed(() => {
             </div>
             <div
                 v-if="images.length >= 2"
-                class="flex gap-4 items-center justify-center mt-2 z-30"
+                class="flex gap-[60%] items-center justify-center mt-2 z-30"
             >
                 <button
                     type="button"
                     @click="prevSlide"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="bg-opacity-70 absolute top-1/2 bottom-1/2 left-[4px] shaddow h-10 w-10 rounded-full cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    :class="[{ 'rounded-none': squareButtons === true }]"
                 >
                     <ChevronLeftIcon
                         class="shrink-0 h-4 w-4 m-2 stroke-2"
@@ -117,7 +125,8 @@ const sortedImages = computed(() => {
                 <button
                     type="button"
                     @click="nextSlide"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="bg-opacity-70 absolute top-1/2 bottom-1/2 right-[4px] shaddow h-10 w-10 rounded-full cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    :class="[{ 'rounded-none': squareButtons === true }]"
                 >
                     <ChevronRightIcon
                         class="shrink-0 h-4 w-4 m-2 stroke-2"

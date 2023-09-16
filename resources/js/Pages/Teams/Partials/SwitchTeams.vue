@@ -198,9 +198,9 @@ const switchTeam = function (team) {
                                                                     .logos
                                                             "
                                                             imageSize="medium_path"
-                                                            imageHeight="h-28"
+                                                            imageHeight="h-28 self-start"
                                                             imageWidth="w-28"
-                                                            :rounded-full="true"
+                                                            :roundedFull="true"
                                                         ></ThumbnailSmallImageSlider>
                                                     </div>
                                                 </div>
@@ -230,7 +230,7 @@ const switchTeam = function (team) {
                                                             imageSize="medium_path"
                                                             imageHeight="h-28"
                                                             imageWidth="w-28"
-                                                            :rounded-full="true"
+                                                            :roundedFull="true"
                                                         ></ThumbnailSmallImageSlider>
                                                     </div>
                                                 </div>

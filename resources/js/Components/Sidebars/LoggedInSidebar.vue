@@ -30,7 +30,7 @@ import {
             "
         >
             <div
-                class="text-myPrimaryDarkGrayColor flex items-center justify-center px-2 py-2 text-xs font-normal"
+                class="flex items-center justify-center px-2 py-2"
                 v-if="$page.props.user.current_team.coverImagesWithLogos"
             >
                 <div
@@ -41,43 +41,58 @@ import {
                         )
                     "
                 >
-                    <ThumbnailSmallImageSlider
-                        :images="
+                    <div
+                        v-if="
                             $page.props.user.current_team.coverImagesWithLogos
                                 ?.logos
                         "
-                        imageSize="medium_path"
-                        imageHeight="h-16"
-                        imageWidth="w-16"
-                        :rounded-full="true"
-                    ></ThumbnailSmallImageSlider>
+                    >
+                        <ThumbnailSmallImageSlider
+                            :images="
+                                $page.props.user.current_team
+                                    .coverImagesWithLogos?.logos
+                            "
+                            imageSize="medium_path"
+                            imageHeight="h-16"
+                            imageWidth="w-16"
+                            :roundedFull="true"
+                        ></ThumbnailSmallImageSlider>
+                    </div>
+                    <div
+                        v-if="
+                            !$page.props.user.current_team.coverImagesWithLogos
+                                ?.logos
+                        "
+                    >
+                        <p class="my-4">
+                            {{ $page.props.currentUserTeam?.name }}
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <div
-                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 text-xs font-normal"
+                class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
             >
-                <p class="my-4">{{ $page.props.currentUserTeam?.name }}</p>
                 <Link
                     :href="route('user.teams.switch')"
-                    class="text-myPrimaryDarkGrayColor flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white"
                     :class="{
-                        myPrimaryLink: route().current('user.teams.switch'),
+                        'shadow-md': route().current('user.teams.switch'),
                     }"
                 >
-                    Switch Team?
+                    Switch Team
                 </Link>
             </div>
 
             <div
-                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 text-xs font-normal border-b border-gray-200 pb-2"
+                class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
             >
-                <span>Role:</span>
                 <Link
                     :href="route('user.teams.switch')"
-                    class="text-myPrimaryDarkGrayColor text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white"
                     :class="{
-                        myPrimaryLink: route().current('user.teams.switch'),
+                        'shadow-md': route().current('user.teams.switch'),
                     }"
                 >
                     {{ $page.props.currentUserTeamRole?.name }}
@@ -93,21 +108,19 @@ import {
                 $page.props.jetstream.hasTeamFeatures
             "
         >
-            <p
-                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
+            <div
+                class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
             >
-                <span>Team:</span>
-
                 <Link
                     :href="route('user.teams.switch')"
-                    class="flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
+                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white"
                     :class="{
-                        myPrimaryLink: route().current('user.teams.switch'),
+                        'shadow-md': route().current('user.teams.switch'),
                     }"
                 >
-                    No Team selected
+                    Selected Team
                 </Link>
-            </p>
+            </div>
         </template>
         <!--  -->
         <template
@@ -120,13 +133,11 @@ import {
             <p
                 class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
             >
-                <span>Team:</span>
-
                 <Link
                     :href="route('user.teams.create')"
                     class="text-myPrimaryDarkGrayColor flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
                     :class="{
-                        myPrimaryLink: route().current('user.teams.create'),
+                        'shadow-md': route().current('user.teams.create'),
                     }"
                 >
                     Create a Team

@@ -338,7 +338,7 @@ onMounted(() => {
                                             imageSize="medium_path"
                                             imageHeight="h-28"
                                             imageWidth="w-28"
-                                            :rounded-full="true"
+                                            :roundedFull="true"
                                         ></ThumbnailSmallImageSlider>
                                     </div>
                                 </td>
