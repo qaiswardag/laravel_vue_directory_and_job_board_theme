@@ -9,6 +9,8 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
+import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
+
 import {
     TagIcon,
     TrashIcon,
@@ -17,6 +19,16 @@ import {
     PencilIcon,
 } from "@heroicons/vue/24/outline";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+
+// loading status for props and view
+const isLoaded = ref(false);
+
+router.on("start", () => {
+    isLoaded.value = true;
+});
+router.on("finish", () => {
+    isLoaded.value = false;
+});
 
 const props = defineProps({
     posts: {
@@ -160,6 +172,9 @@ onMounted(() => {
 </script>
 
 <template>
+    <template v-if="isLoaded">
+        <FullScreenSpinner></FullScreenSpinner>
+    </template>
     <LoggedInLayout>
         <Head title="Posts" />
         <DynamicModal

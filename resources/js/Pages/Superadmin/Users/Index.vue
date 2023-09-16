@@ -10,6 +10,7 @@ import { onMounted, ref, watch } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import { parseISO, format } from "date-fns";
+import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 import {
     RadioGroup,
@@ -25,6 +26,16 @@ import {
     PlusIcon,
     TrashIcon,
 } from "@heroicons/vue/24/outline";
+
+// loading status for props and view
+const isLoaded = ref(false);
+
+router.on("start", () => {
+    isLoaded.value = true;
+});
+router.on("finish", () => {
+    isLoaded.value = false;
+});
 
 const breadcrumbsLinks = [
     {
@@ -333,6 +344,9 @@ onMounted(() => {
 </script>
 
 <template>
+    <template v-if="isLoaded">
+        <FullScreenSpinner></FullScreenSpinner>
+    </template>
     <LoggedInLayout>
         <Head title="Manage Users" />
         <DynamicModal

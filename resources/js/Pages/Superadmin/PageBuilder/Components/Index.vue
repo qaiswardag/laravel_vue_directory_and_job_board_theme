@@ -12,6 +12,7 @@ import InputError from "@/Components/Forms/InputError.vue";
 import { parseISO, format } from "date-fns";
 import CardHeadings from "@/Components/Actions/CardHeadings.vue";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 import {
     RadioGroup,
@@ -28,6 +29,16 @@ import {
     TrashIcon,
     Squares2X2Icon,
 } from "@heroicons/vue/24/outline";
+
+// loading status for props and view
+const isLoaded = ref(false);
+
+router.on("start", () => {
+    isLoaded.value = true;
+});
+router.on("finish", () => {
+    isLoaded.value = false;
+});
 
 const breadcrumbsLinks = [
     {
@@ -182,6 +193,9 @@ const routesArray = [
 </script>
 
 <template>
+    <template v-if="isLoaded">
+        <FullScreenSpinner></FullScreenSpinner>
+    </template>
     <LoggedInLayout>
         <Head title="Manage Components" />
         <template #header>

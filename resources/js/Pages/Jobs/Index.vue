@@ -24,6 +24,17 @@ import {
     UserIcon,
 } from "@heroicons/vue/24/outline";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
+
+// loading status for props and view
+const isLoaded = ref(false);
+
+router.on("start", () => {
+    isLoaded.value = true;
+});
+router.on("finish", () => {
+    isLoaded.value = false;
+});
 
 const props = defineProps({
     posts: {
@@ -163,6 +174,9 @@ onMounted(() => {
 </script>
 
 <template>
+    <template v-if="isLoaded">
+        <FullScreenSpinner></FullScreenSpinner>
+    </template>
     <LoggedInLayout>
         <Head title="Jobs" />
         <DynamicModal

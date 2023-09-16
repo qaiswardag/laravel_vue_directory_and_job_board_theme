@@ -18,7 +18,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update(User $user, array $input)
     {
-        sleep(1);
         $validator = Validator::make($input, [
             "first_name" => ["required", "string", "max:255"],
             "last_name" => ["required", "string", "max:255"],

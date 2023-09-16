@@ -36,7 +36,6 @@ class SuperadminManageRoles extends Controller
             "user_id" => ["required", "integer", "unique:superadmins,user_id"],
         ])->validateWithBag("createSuperadmin");
 
-        sleep(1);
         Superadmin::create([
             "role" => $request->role,
             "user_id" => $user->id,
@@ -113,8 +112,6 @@ class SuperadminManageRoles extends Controller
         Validator::make($input, [
             "user_id" => ["required", "integer"],
         ])->validateWithBag("createSuperadmin");
-
-        sleep(1);
 
         Superadmin::where("user_id", $user->id)->delete();
 

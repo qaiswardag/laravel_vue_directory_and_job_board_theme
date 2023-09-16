@@ -166,7 +166,7 @@ const sidebarOpen = ref(false);
     <!-- Topbar - start -->
     <div class="flex flex-1 flex-col md:pl-64">
         <div
-            class="h-16 sticky top-0 z-10 flex flex-shrink-0 justify-between items-center bg-white border-b-2 border-myPrimaryBrandColor"
+            class="h-16 sticky top-0 z-10 flex flex-shrink-0 justify-between items-center bg-white border-b-2 border-gray-100"
         >
             <button
                 type="button"

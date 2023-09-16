@@ -9,9 +9,9 @@ const props = defineProps({
 });
 </script>
 <template>
-    <div class="myBreadcrumbsContainer bg-gray-50">
+    <div class="myBreadcrumbsContainer bg-gray-50 font-medium">
         <div
-            class="myPrimaryParagraph"
+            class="font-medium"
             v-for="(link, index) in links"
             :key="link.label"
         >

@@ -156,7 +156,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryLink {
-        @apply text-myPrimaryLinkColor text-sm
+        @apply text-myPrimaryLinkColor 
         focus:outline-none
         focus:ring-0 focus:ring-myPrimaryLinkColor
         focus-visible:ring-0 focus-visible:ring-myPrimaryLinkColor cursor-pointer;
