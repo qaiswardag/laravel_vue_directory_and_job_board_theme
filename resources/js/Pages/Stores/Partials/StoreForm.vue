@@ -511,6 +511,18 @@ onBeforeMount(() => {
     // User is creating a new Resource from scratch, rather than editing an existing one
     // Check local storage
     if (props.post === null) {
+        //
+        //
+        //
+        //
+        //
+        postForm.content =
+            "<div><p>I am a test from storeForm.vue - remove this line</p></div>";
+        //
+        //
+        //
+        //
+        //
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
             const formDataJson = localStorage.getItem(pathLocalStorage);
@@ -530,10 +542,17 @@ onBeforeMount(() => {
             postForm.address = formLocalStorage.address;
             //
             //
-            // postForm.content = formLocalStorage.content;
-            // TODO: UNCOMMENT ABOVE
+            postForm.content = formLocalStorage.content;
+            //
+            //
+            //
+            //
+            //
             postForm.content =
-                "<div><p>I am a test from storeForm.vue</p></div>";
+                "<div><p>I am a test from storeForm.vue - remove this line</p></div>";
+            //
+            //
+            //
             //
             //
             postForm.published = formLocalStorage.published;
@@ -1001,7 +1020,7 @@ const handleDesigner = function () {
                         <p class="myPrimaryParagraph">
                             {{
                                 postForm.cover_image &&
-                                postForm.cover_image.length === 0
+                                postForm.cover_image?.length === 0
                                     ? "Select Cover image"
                                     : "Add Additional Cover Images"
                             }}
@@ -1018,7 +1037,7 @@ const handleDesigner = function () {
                 <div
                     v-if="
                         postForm.cover_image &&
-                        postForm.cover_image.length === 0
+                        postForm.cover_image?.length === 0
                     "
                     class="space-y-6 mt-2"
                 >
@@ -1029,17 +1048,17 @@ const handleDesigner = function () {
                     <p
                         v-if="
                             postForm.cover_image &&
-                            postForm.cover_image.length !== 0
+                            postForm.cover_image?.length !== 0
                         "
                         class="myPrimaryParagraph italic text-xs py-4"
                     >
                         Added
                         {{
-                            postForm.cover_image && postForm.cover_image.length
+                            postForm.cover_image && postForm.cover_image?.length
                         }}
                         {{
                             postForm.cover_image &&
-                            postForm.cover_image.length === 1
+                            postForm.cover_image?.length === 1
                                 ? "Item"
                                 : "Items"
                         }}
@@ -1047,8 +1066,8 @@ const handleDesigner = function () {
                     <div
                         v-if="
                             postForm.cover_image &&
-                            Array.isArray(postForm.cover_image) &&
-                            postForm.cover_image.length !== 0
+                            Array.isArray(postForm?.cover_image) &&
+                            postForm.cover_image?.length !== 0
                         "
                         class="p-2 border border-myPrimaryLightGrayColor"
                     >
@@ -1094,7 +1113,7 @@ const handleDesigner = function () {
                                             class="myPrimaryTag transition"
                                             v-if="
                                                 !image?.pivot?.primary &&
-                                                postForm.cover_image.length > 1
+                                                postForm.cover_image?.length > 1
                                             "
                                             type="button"
                                             @click="
@@ -1123,7 +1142,7 @@ const handleDesigner = function () {
                         <div
                             v-if="
                                 postForm.cover_image &&
-                                postForm.cover_image.length >= 1
+                                postForm.cover_image?.length >= 1
                             "
                             class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
                         >
@@ -1160,7 +1179,7 @@ const handleDesigner = function () {
                     <div class="relative flex items-center w-full py-0 p-0">
                         <p class="myPrimaryParagraph">
                             {{
-                                postForm.states && postForm.states.length === 0
+                                postForm.states && postForm.states?.length === 0
                                     ? "Select State"
                                     : "Update State"
                             }}
@@ -1175,7 +1194,7 @@ const handleDesigner = function () {
                 <!-- select - end -->
 
                 <div
-                    v-if="postForm.states && postForm.states.length === 0"
+                    v-if="postForm.states && postForm.states?.length === 0"
                     class="space-y-6 mt-2"
                 >
                     <p class="myPrimaryParagraph">No items selected.</p>
@@ -1183,26 +1202,26 @@ const handleDesigner = function () {
 
                 <div>
                     <p
-                        v-if="postForm.states && postForm.states.length !== 0"
+                        v-if="postForm.states && postForm.states?.length !== 0"
                         class="myPrimaryParagraph italic text-xs py-4"
                     >
                         Added
-                        {{ postForm.states && postForm.states.length }}
+                        {{ postForm.states && postForm.states?.length }}
                         {{
-                            postForm.states && postForm.states.length === 1
+                            postForm.states && postForm.states?.length === 1
                                 ? "Item"
                                 : "Items"
                         }}
                     </p>
 
                     <div
-                        v-if="postForm.states && postForm.states.length !== 0"
+                        v-if="postForm.states && postForm.states?.length !== 0"
                         class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
                         <div
                             v-for="state in Array.isArray(statesSorted) &&
                             statesSorted"
-                            :key="state.id"
+                            :key="state?.id"
                         >
                             <div
                                 class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
@@ -1220,14 +1239,14 @@ const handleDesigner = function () {
                                         ></MapPinIcon>
                                     </button>
                                     <p>
-                                        {{ state.name }}
+                                        {{ state?.name }}
                                     </p>
                                 </div>
 
                                 <button
                                     type="button"
                                     @click="
-                                        handleRemoveAttachedStates(state.id)
+                                        handleRemoveAttachedStates(state?.id)
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
@@ -1256,7 +1275,7 @@ const handleDesigner = function () {
                         <p class="myPrimaryParagraph">
                             {{
                                 postForm.categories &&
-                                postForm.categories.length === 0
+                                postForm.categories?.length === 0
                                     ? "Select Category"
                                     : "Update Category"
                             }}
@@ -1272,7 +1291,7 @@ const handleDesigner = function () {
 
                 <div
                     v-if="
-                        postForm.categories && postForm.categories.length === 0
+                        postForm.categories && postForm.categories?.length === 0
                     "
                     class="space-y-6 mt-2"
                 >
@@ -1283,15 +1302,15 @@ const handleDesigner = function () {
                     <p
                         v-if="
                             postForm.categories &&
-                            postForm.categories.length !== 0
+                            postForm.categories?.length !== 0
                         "
                         class="myPrimaryParagraph italic text-xs py-4"
                     >
                         Added
-                        {{ postForm.categories && postForm.categories.length }}
+                        {{ postForm.categories && postForm.categories?.length }}
                         {{
                             postForm.categories &&
-                            postForm.categories.length === 1
+                            postForm.categories?.length === 1
                                 ? "Item"
                                 : "Items"
                         }}
@@ -1300,7 +1319,7 @@ const handleDesigner = function () {
                     <div
                         v-if="
                             postForm.categories &&
-                            postForm.categories.length !== 0
+                            postForm.categories?.length !== 0
                         "
                         class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
@@ -1308,7 +1327,7 @@ const handleDesigner = function () {
                             v-for="category in Array.isArray(
                                 categoriesSorted
                             ) && categoriesSorted"
-                            :key="category.id"
+                            :key="category?.id"
                         >
                             <div
                                 class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
@@ -1326,7 +1345,7 @@ const handleDesigner = function () {
                                         ></Squares2X2Icon>
                                     </button>
                                     <p>
-                                        {{ category.name }}
+                                        {{ category?.name }}
                                     </p>
                                 </div>
 
@@ -1334,7 +1353,7 @@ const handleDesigner = function () {
                                     type="button"
                                     @click="
                                         handleRemoveAttachedCategory(
-                                            category.id
+                                            category?.id
                                         )
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
@@ -1596,7 +1615,7 @@ const handleDesigner = function () {
                         @click="handleClearForm"
                         class="myPrimaryDeleteButton"
                     >
-                        Clear
+                        Clear form
                     </button>
                 </template>
                 <SubmitButton :disabled="postForm.processing" buttonText="Save">

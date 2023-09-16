@@ -96,6 +96,8 @@ class StoreStoreRequest extends FormRequest
                     ->add("team", "The team field is required.");
             }
 
+            $this->validateProperties($validator);
+
             // validation for cover image # start
             if (
                 $this->cover_image === null ||
@@ -152,7 +154,7 @@ class StoreStoreRequest extends FormRequest
                                 ->errors()
                                 ->add(
                                     "cover_image",
-                                    "One of your attached images no longer exists in the Media Library. Delete the image."
+                                    "At least one your attached images no longer exists in the Media Library. Delete the image and try again or click the 'Clear form' button and then try again."
                                 );
                         }
                     }
@@ -283,9 +285,10 @@ class StoreStoreRequest extends FormRequest
                     ->errors()
                     ->add(
                         "author",
-                        "      Limited to a maximum of {$maxAuthors} people."
+                        "Limited to a maximum of {$maxAuthors} people."
                     );
             }
+
             // validation for author # end
         });
 
@@ -298,5 +301,74 @@ class StoreStoreRequest extends FormRequest
         }
 
         // end of withValidator
+    }
+    // validate propertiers
+    private function validateProperties($validator)
+    {
+        // cover images
+        if (gettype($this->cover_image) === "array") {
+            foreach ($this->cover_image as $item) {
+                if (isset($item["id"]) === false) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            "cover_image",
+                            "Image ID for the image from the Media Library is not present. Please clear your form and try again."
+                        );
+                }
+                if (
+                    isset($item["pivot"]) &&
+                    !isset($item["pivot"]["primary"])
+                ) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            "cover_image",
+                            "The 'primary' attribute is missing for this image, even though the image is set as primary.  To resolve this issue, please click the 'Clear form' button and then try again."
+                        );
+                }
+            }
+        }
+        // states
+        if (gettype($this->states) === "array") {
+            foreach ($this->states as $item) {
+                if (isset($item["id"]) === false) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            "states",
+                            "The 'ID' for at least one selected state is missing. To resolve this issue, please click the 'Clear form' button and then try again."
+                        );
+                }
+            }
+        }
+        // categories
+        if (gettype($this->categories) === "array") {
+            foreach ($this->categories as $item) {
+                if (isset($item["id"]) === false) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            "categories",
+                            "The 'ID' for at least one selected category is missing. To resolve this issue, please click the 'Clear form' button and then try again."
+                        );
+                }
+            }
+        }
+
+        // author
+        if ($this->show_author && gettype($this->author) === "array") {
+            foreach ($this->author as $item) {
+                // $this->show_author === true && $this->author === null
+                if (isset($item["id"]) === false) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            "author",
+                            "The 'ID' for at least one selected person is missing. To resolve this issue, please click the 'Clear form' button and then try again."
+                        );
+                }
+            }
+        }
     }
 }

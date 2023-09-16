@@ -464,6 +464,18 @@ onBeforeMount(() => {
     // User is creating a new Resource from scratch, rather than editing an existing one
     // Check local storage
     if (props.post === null) {
+        //
+        //
+        //
+        //
+        //
+        postForm.content =
+            "<div><p>I am a test from postForm.vue - remove this line</p></div>";
+        //
+        //
+        //
+        //
+        //
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
             const formDataJson = localStorage.getItem(pathLocalStorage);
@@ -481,11 +493,19 @@ onBeforeMount(() => {
             //
             postForm.title = formLocalStorage.title;
 
-            // postForm.content = formLocalStorage.content;
-            // TODO: UNCOMMENT ABOVE
+            postForm.content = formLocalStorage.content;
+            //
+            //
+            //
+            //
+            //
             postForm.content =
-                "<div><p>I am a test from postForm.vue</p></div>";
-
+                "<div><p>I am a test from postForm.vue - remove this line</p></div>";
+            //
+            //
+            //
+            //
+            //
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
             postForm.tags = formLocalStorage.tags;
@@ -829,7 +849,7 @@ const categoriesSorted = computed(() => {
                         <p class="myPrimaryParagraph">
                             {{
                                 postForm.cover_image &&
-                                postForm.cover_image.length === 0
+                                postForm.cover_image?.length === 0
                                     ? "Select Cover image"
                                     : "Add Additional Cover Images"
                             }}
@@ -846,7 +866,7 @@ const categoriesSorted = computed(() => {
                 <div
                     v-if="
                         postForm.cover_image &&
-                        postForm.cover_image.length === 0
+                        postForm.cover_image?.length === 0
                     "
                     class="space-y-6 mt-2"
                 >
@@ -857,17 +877,17 @@ const categoriesSorted = computed(() => {
                     <p
                         v-if="
                             postForm.cover_image &&
-                            postForm.cover_image.length !== 0
+                            postForm.cover_image?.length !== 0
                         "
                         class="myPrimaryParagraph italic text-xs py-4"
                     >
                         Added
                         {{
-                            postForm.cover_image && postForm.cover_image.length
+                            postForm.cover_image && postForm.cover_image?.length
                         }}
                         {{
                             postForm.cover_image &&
-                            postForm.cover_image.length === 1
+                            postForm.cover_image?.length === 1
                                 ? "Item"
                                 : "Items"
                         }}
@@ -875,8 +895,8 @@ const categoriesSorted = computed(() => {
                     <div
                         v-if="
                             postForm.cover_image &&
-                            Array.isArray(postForm.cover_image) &&
-                            postForm.cover_image.length !== 0
+                            Array.isArray(postForm?.cover_image) &&
+                            postForm.cover_image?.length !== 0
                         "
                         class="p-2 border border-myPrimaryLightGrayColor"
                     >
@@ -922,7 +942,7 @@ const categoriesSorted = computed(() => {
                                             class="myPrimaryTag transition"
                                             v-if="
                                                 !image?.pivot?.primary &&
-                                                postForm.cover_image.length > 1
+                                                postForm.cover_image?.length > 1
                                             "
                                             type="button"
                                             @click="
@@ -951,7 +971,7 @@ const categoriesSorted = computed(() => {
                         <div
                             v-if="
                                 postForm.cover_image &&
-                                postForm.cover_image.length >= 1
+                                postForm.cover_image?.length >= 1
                             "
                             class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
                         >
@@ -991,7 +1011,7 @@ const categoriesSorted = computed(() => {
                         <p class="myPrimaryParagraph">
                             {{
                                 postForm.categories &&
-                                postForm.categories.length === 0
+                                postForm.categories?.length === 0
                                     ? "Select Category"
                                     : "Update Category"
                             }}
@@ -1007,7 +1027,7 @@ const categoriesSorted = computed(() => {
 
                 <div
                     v-if="
-                        postForm.categories && postForm.categories.length === 0
+                        postForm.categories && postForm.categories?.length === 0
                     "
                     class="space-y-6 mt-2"
                 >
@@ -1018,15 +1038,15 @@ const categoriesSorted = computed(() => {
                     <p
                         v-if="
                             postForm.categories &&
-                            postForm.categories.length !== 0
+                            postForm.categories?.length !== 0
                         "
                         class="myPrimaryParagraph italic text-xs py-4"
                     >
                         Added
-                        {{ postForm.categories && postForm.categories.length }}
+                        {{ postForm.categories && postForm.categories?.length }}
                         {{
                             postForm.categories &&
-                            postForm.categories.length === 1
+                            postForm.categories?.length === 1
                                 ? "Item"
                                 : "Items"
                         }}
@@ -1035,7 +1055,7 @@ const categoriesSorted = computed(() => {
                     <div
                         v-if="
                             postForm.categories &&
-                            postForm.categories.length !== 0
+                            postForm.categories?.length !== 0
                         "
                         class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
@@ -1061,7 +1081,7 @@ const categoriesSorted = computed(() => {
                                         ></Squares2X2Icon>
                                     </button>
                                     <p>
-                                        {{ category.name }}
+                                        {{ category?.name }}
                                     </p>
                                 </div>
 
@@ -1069,7 +1089,7 @@ const categoriesSorted = computed(() => {
                                     type="button"
                                     @click="
                                         handleRemoveAttachedCategory(
-                                            category.id
+                                            category?.id
                                         )
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
@@ -1186,14 +1206,14 @@ const categoriesSorted = computed(() => {
                 </div>
                 <InputError :message="postForm.errors.show_author" />
 
-                <!-- select - start -->
+                <!-- authors - start -->
                 <div v-if="postForm.show_author === true">
                     <div @click="handleAddAuthor" class="myPrimaryFakeSelect">
                         <div class="relative flex items-center w-full py-0 p-0">
                             <p class="myPrimaryParagraph">
                                 {{
                                     postForm.author &&
-                                    postForm.author.length === 0
+                                    postForm.author?.length === 0
                                         ? "Select Authors"
                                         : "Update Authors"
                                 }}
@@ -1210,7 +1230,7 @@ const categoriesSorted = computed(() => {
                     <!-- select - end -->
 
                     <div
-                        v-if="postForm.author && postForm.author.length === 0"
+                        v-if="postForm.author && postForm.author?.length === 0"
                         class="space-y-6 mt-2"
                     >
                         <p class="myPrimaryParagraph">
@@ -1221,14 +1241,14 @@ const categoriesSorted = computed(() => {
                     <div>
                         <p
                             v-if="
-                                postForm.author && postForm.author.length !== 0
+                                postForm.author && postForm.author?.length !== 0
                             "
                             class="myPrimaryParagraph italic text-xs py-4"
                         >
                             Added
-                            {{ postForm.author && postForm.author.length }}
+                            {{ postForm.author && postForm.author?.length }}
                             {{
-                                postForm.author && postForm.author.length === 1
+                                postForm.author && postForm.author?.length === 1
                                     ? "person"
                                     : "people"
                             }}
@@ -1236,7 +1256,7 @@ const categoriesSorted = computed(() => {
 
                         <div
                             v-if="
-                                postForm.author && postForm.author.length !== 0
+                                postForm.author && postForm.author?.length !== 0
                             "
                             class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                         >
@@ -1332,7 +1352,7 @@ const categoriesSorted = computed(() => {
                         @click="handleClearForm"
                         class="myPrimaryDeleteButton"
                     >
-                        Clear
+                        Clear form
                     </button>
                 </template>
                 <SubmitButton :disabled="postForm.processing" buttonText="Save">
