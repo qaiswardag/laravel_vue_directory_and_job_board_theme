@@ -193,7 +193,10 @@ onMounted(() => {
                                 Looks like there are no Team Members.
                             </p>
                         </div>
-                        <ul role="list" class="grid grid-cols-1 myPrimaryGap">
+                        <ul
+                            role="list"
+                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
+                        >
                             <li
                                 v-for="member in getDashboardStats.fetchedData
                                     .latestTeamMembers"
