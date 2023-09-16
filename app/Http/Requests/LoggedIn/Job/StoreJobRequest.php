@@ -151,13 +151,13 @@ class StoreJobRequest extends FormRequest
             // validation for cover image # end
 
             // Additional validation to ensure only one image is marked as primary # start
-            $primaryImages = array_filter($this->cover_image, function (
-                $image
-            ) {
-                return isset($image["pivot"]) &&
-                    isset($image["pivot"]["primary"]) &&
-                    $image["pivot"]["primary"];
-            });
+            $primaryImages = is_array($this->cover_image)
+                ? array_filter($this->cover_image, function ($image) {
+                    return isset($image["pivot"]) &&
+                        isset($image["pivot"]["primary"]) &&
+                        $image["pivot"]["primary"];
+                })
+                : [];
 
             if (
                 count($primaryImages) === 0 &&
@@ -357,7 +357,7 @@ class StoreJobRequest extends FormRequest
                         ->errors()
                         ->add(
                             "cover_image",
-                            "Image ID for the image from the Media Library is not present. Please clear your form and try again."
+                            "Image ID for the image is not present in the Media Library. Please clear your form and try again."
                         );
                 }
                 if (

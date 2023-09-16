@@ -108,7 +108,7 @@ Route::group(
                             "show",
                         ])->name("teams.show");
                         Route::put("/teams/{team}", [
-                            TeamController::class,
+                            TeamTeamController::class,
                             "update",
                         ])->name("teams.update");
 

@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Http\Requests\LoggedIn\Post;
+namespace App\Http\Requests\LoggedIn\Team;
 
 use App\Models\MediaLibrary\MediaLibrary;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use Validator;
 
-class StorePostRequest extends FormRequest
+class StoreTeamUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -27,50 +23,12 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            "published" => ["boolean"],
-            "show_author" => ["boolean"],
-            // If you do not include the string validation rule for a text input like title.
-            // it may allow non-string values to be submitted and saved in the database.
-            // This could potentially cause security issues or errors in your application,
-            // depending on how the input is used.
-
-            // For example, if the title input is used in a SQL query without
-            // being properly sanitized or escaped, non-string values could cause
-            // SQL injection vulnerabilities, allowing an attacker to execute malicious
-            // SQL code on your database.
-
-            "title" => ["required", "string", "min:2", "max:255"],
-            "slug" => ["required", "string", "min:2", "max:255"],
-
-            // If user_id is a foreign key column that references the id column of the users table,
-            // you can use the exists validation rule to ensure that the value of user_id exists in
-            // the id column of the users table.
-
-            // Note that the foreignId method in Laravel automatically creates a foreign key
-            // constraint in the database, which ensures that the value of user_id references
-            // an existing user in the users table. However, the exists validation rule
-            // provides an additional layer of validation to ensure that the foreign key reference
-            // is valid at the application level as well.
-            "user_id" => ["required", "integer", "exists:users,id"],
-
-            "team" => ["required"],
-
-            // In MySQL, the LONGTEXT data type can store up to 4GB of data,
-            // while the TEXT data type can store
-            // up to 65535 bytes (or characters) of data.
-
-            // If you want to allow the full capacity of the longText column
-            // (which is up to 4GB), you don't need to set a maximum length in
-            // the validation rule. You can simply use the required and string
-            // rules to validate that the input is not empty and is a string
-            "content" => ["required", "string", "min:2", "max:65535"],
-
-            "tags" => ["required", "string", "max:255"],
+            "name" => ["required", "string", "max:255"],
+            "public" => ["boolean"],
         ];
 
         return $rules;
     }
-
     /**
      * Configure the validator instance.
      *
@@ -79,14 +37,12 @@ class StorePostRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $maxAuthors = 18;
-        $maxCategories = 4;
         $maxCoverImages = 6;
+        $maxLogos = 6;
 
         $validator->after(function ($validator) use (
-            $maxAuthors,
-            $maxCategories,
-            $maxCoverImages
+            $maxCoverImages,
+            $maxLogos
         ) {
             if ($this->team === null) {
                 $validator
@@ -182,69 +138,92 @@ class StorePostRequest extends FormRequest
                     );
             }
             // Additional validation to ensure only one image is marked as primary # end
-
-            // validation for categories # start
+            //
+            //
+            //
+            //
+            // validation for logo # start
             if (
-                $this->categories === null ||
-                (gettype($this->categories) === "array" &&
-                    count($this->categories) === 0)
+                $this->logo === null ||
+                (gettype($this->logo) === "array" && count($this->logo) === 0)
             ) {
                 $validator
                     ->errors()
-                    ->add("categories", "The categories field is required.");
+                    ->add("logo", "The logo field is required.");
             }
 
-            if (gettype($this->categories) !== "array") {
+            if (gettype($this->logo) !== "array") {
                 $validator
                     ->errors()
-                    ->add("categories", "categories field must be an array.");
+                    ->add("logo", "logo field must be an array.");
             }
             if (
-                gettype($this->categories) === "array" &&
-                count($this->categories) > $maxCategories
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "categories",
-                        "Limited to a maximum of {$maxCategories} categories."
-                    );
-            }
-            // validation for categories # end
-
-            // validation for author # start
-            if (
-                ($this->show_author === true && $this->author === null) ||
-                ($this->show_author === true &&
-                    gettype($this->author) === "array" &&
-                    count($this->author) === 0)
+                gettype($this->logo) === "array" &&
+                count($this->logo) > $maxLogos
             ) {
                 $validator
                     ->errors()
                     ->add(
-                        "author",
-                        "The author field is required, when show author is set to true."
+                        "logo",
+                        "Limited to a maximum of {$maxLogos} logo(s)."
                     );
             }
+            // Check if the "primary" key exists, or provide a default value of false
+            if (!empty($this->logo)) {
+                // Loop through the array and attach each logo to the post
+                foreach ($this->logo as $image) {
+                    // Check if the "id" key exists in the array
+                    if (array_key_exists("id", $image)) {
+                        $imageId = $image["id"];
 
-            if ($this->author !== null && gettype($this->author) !== "array") {
-                $validator
-                    ->errors()
-                    ->add("author", "Author field must be an array.");
+                        // Check if a media library record with this ID exists
+                        $mediaLibrary = MediaLibrary::find($imageId);
+
+                        if ($mediaLibrary === null) {
+                            $validator
+                                ->errors()
+                                ->add(
+                                    "logo",
+                                    "At least one your attached images no longer exists in the Media Library. Delete the image and try again or click the 'Clear form' button and then try again."
+                                );
+                        }
+                    }
+                }
             }
+            // validation for logo # end
+
+            // Additional validation to ensure only one logo is marked as primary # start
+            $primaryImages = is_array($this->logo)
+                ? array_filter($this->logo, function ($image) {
+                    return isset($image["pivot"]) &&
+                        isset($image["pivot"]["primary"]) &&
+                        $image["pivot"]["primary"];
+                })
+                : [];
+
             if (
-                $this->author !== null &&
-                gettype($this->author) === "array" &&
-                count($this->author) > $maxAuthors
+                count($primaryImages) === 0 &&
+                gettype($this->logo) === "array" &&
+                count($this->logo) > 1
             ) {
                 $validator
                     ->errors()
                     ->add(
-                        "author",
-                        "      Limited to a maximum of {$maxAuthors} people."
+                        "logo",
+                        "At least one logo must be marked as primary."
                     );
             }
-            // validation for author # end
+
+            if (
+                count($primaryImages) > 1 &&
+                gettype($this->logo) === "array" &&
+                count($this->logo) > 1
+            ) {
+                $validator
+                    ->errors()
+                    ->add("logo", "Only one image can be marked as primary.");
+            }
+            // Additional validation to ensure only one logo is marked as primary # end
         });
 
         // if validator fails
@@ -260,7 +239,7 @@ class StorePostRequest extends FormRequest
     // validate propertiers
     private function validateProperties($validator)
     {
-        // cover images
+        // cover image
         if (gettype($this->cover_image) === "array") {
             foreach ($this->cover_image as $item) {
                 if (isset($item["id"]) === false) {
@@ -284,30 +263,26 @@ class StorePostRequest extends FormRequest
                 }
             }
         }
-
-        // categories
-        if (gettype($this->categories) === "array") {
-            foreach ($this->categories as $item) {
+        // logo
+        if (gettype($this->logo) === "array") {
+            foreach ($this->logo as $item) {
                 if (isset($item["id"]) === false) {
                     $validator
                         ->errors()
                         ->add(
-                            "categories",
-                            "The 'ID' for at least one selected category is missing. To resolve this issue, please click the 'Clear form' button and then try again."
+                            "logo",
+                            "Image ID for the logo is not present in the Media Library. Please clear your form and try again."
                         );
                 }
-            }
-        }
-        // author
-        if ($this->show_author && gettype($this->author) === "array") {
-            foreach ($this->author as $item) {
-                // $this->show_author === true && $this->author === null
-                if (isset($item["id"]) === false) {
+                if (
+                    isset($item["pivot"]) &&
+                    !isset($item["pivot"]["primary"])
+                ) {
                     $validator
                         ->errors()
                         ->add(
-                            "author",
-                            "The 'ID' for at least one selected person is missing. To resolve this issue, please click the 'Clear form' button and then try again."
+                            "logo",
+                            "The 'primary' attribute is missing for this logo, even though the image is set as primary.  To resolve this issue, please click the 'Clear form' button and then try again."
                         );
                 }
             }

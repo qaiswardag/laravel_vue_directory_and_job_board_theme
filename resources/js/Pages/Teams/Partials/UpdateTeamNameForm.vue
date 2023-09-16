@@ -13,6 +13,24 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
+import {
+    CheckIcon,
+    ChevronUpDownIcon,
+    LockClosedIcon,
+    LockOpenIcon,
+    SquaresPlusIcon,
+    TrashIcon,
+    UserIcon,
+    UserPlusIcon,
+    XMarkIcon,
+    Squares2X2Icon,
+    NewspaperIcon,
+    PhotoIcon,
+    MapPinIcon,
+    GlobeAmericasIcon,
+    PlusIcon,
+} from "@heroicons/vue/24/outline";
+import { onBeforeMount, onMounted } from "vue";
 
 // store
 const store = useStore();
@@ -22,30 +40,23 @@ const props = defineProps({
     permissions: Object,
 });
 
+// $page.props.user.current_team.coverImagesWithLogos.logos;
+
 const handleUpdateTeam = function () {
     updateTeam();
 
     // end modal
 };
 
-const form = useForm({
-    name: props.team.name,
-
-    cover_image_original: props.team.cover_image_original,
-    cover_image_thumbnail: props.team.cover_image_thumbnail,
-    cover_image_medium: props.team.cover_image_medium,
-    cover_image_large: props.team.cover_image_large,
-
-    logo_original: props.team.logo_original,
-    logo_thumbnail: props.team.logo_thumbnail,
-    logo_medium: props.team.logo_medium,
-    logo_large: props.team.logo_large,
-
-    public: props.team.public ? true : false,
+const postForm = useForm({
+    name: "",
+    public: true,
+    cover_image: [],
+    logo: [],
 });
 
 const updateTeam = () => {
-    form.put(route("teams.update", props.team), {
+    postForm.put(route("teams.update", props.team), {
         // error bag validation
         errorBag: "updateTeam",
         preserveScroll: true,
@@ -53,6 +64,12 @@ const updateTeam = () => {
         onError: (err) => {},
         onFinish: () => {},
     });
+};
+
+const showErrorNotifications = ref(false);
+
+const notificationsModalButton = function () {
+    showErrorNotifications.value = false;
 };
 
 const getCurrentImage = computed(() => {
@@ -73,38 +90,6 @@ const firstMediaButtonFunction = ref(null);
 const secondMediaButtonFunction = ref(null);
 const thirdMediaButtonFunction = ref(null);
 
-const handleUploadCoverImage = function () {
-    // handle show media library modal
-    showMediaLibraryModal.value = true;
-
-    // set media library modal standards
-    titleMedia.value = "Media Library";
-    descriptionMedia.value = null;
-    firstButtonMedia.value = "Close";
-    secondButtonMedia.value = "Select image";
-    thirdButtonMedia.value = null;
-    // handle click
-    firstMediaButtonFunction.value = function () {
-        // handle show media library modal
-        showMediaLibraryModal.value = false;
-    };
-    //
-    // handle click
-    secondMediaButtonFunction.value = function () {
-        form.cover_image_original =
-            getCurrentImage.value.currentImage?.mediaLibrary?.path;
-        form.cover_image_thumbnail =
-            getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
-        form.cover_image_medium =
-            getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
-        form.cover_image_large =
-            getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
-
-        // handle show media library modal
-        showMediaLibraryModal.value = false;
-    };
-    // end modal
-};
 const handleUploadLogo = function () {
     // handle show media library modal
     showMediaLibraryModal.value = true;
@@ -123,38 +108,158 @@ const handleUploadLogo = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        form.logo_original =
-            getCurrentImage.value.currentImage?.mediaLibrary?.path;
-        form.logo_thumbnail =
-            getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
-        form.logo_medium =
-            getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
-        form.logo_large =
-            getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
+        if (Array.isArray(postForm.logo) === false) {
+            postForm.logo === [];
+        }
+
+        const idExists = postForm.logo.some((item) => {
+            return (
+                item.id === getCurrentImage.value.currentImage.mediaLibrary.id
+            );
+        });
+
+        if (idExists === false && Array.isArray(postForm.logo)) {
+            postForm.logo.unshift(
+                getCurrentImage.value.currentImage.mediaLibrary
+            );
+        }
+
         // handle show media library modal
         showMediaLibraryModal.value = false;
     };
     // end modal
 };
-
-const handleRemoveCoverImage = function () {
-    form.cover_image_original = null;
-    form.cover_image_thumbnail = null;
-    form.cover_image_medium = null;
-    form.cover_image_large = null;
-};
-const handleRemoveLogo = function () {
-    form.logo_original = null;
-    form.logo_thumbnail = null;
-    form.logo_medium = null;
-    form.logo_large = null;
+const removePrimaryLogo = function (imageId) {
+    postForm.logo = postForm.logo.map((image) => {
+        return {
+            ...image,
+            pivot: {
+                ...image.pivot,
+                primary: image.id === imageId ? false : image.pivot.primary,
+            },
+        };
+    });
 };
 
-const showErrorNotifications = ref(false);
-
-const notificationsModalButton = function () {
-    showErrorNotifications.value = false;
+const setAsPrimaryLogo = function (imageId) {
+    postForm.logo = postForm.logo.map((image) => {
+        if (image.id === imageId) {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: true,
+                },
+            };
+        } else {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: false,
+                },
+            };
+        }
+    });
 };
+const handleRemoveLogo = function (imageId) {
+    postForm.logo = postForm.logo.filter((image) => image.id !== imageId);
+};
+
+//
+//
+//
+//
+//
+//
+const handleUploadCoverImage = function () {
+    // handle show media library modal
+    showMediaLibraryModal.value = true;
+
+    // set media library modal standards
+    titleMedia.value = "Media Library";
+    descriptionMedia.value = null;
+    firstButtonMedia.value = "Close";
+    secondButtonMedia.value = "Select image";
+    thirdButtonMedia.value = null;
+    // handle click
+    firstMediaButtonFunction.value = function () {
+        // handle show media library modal
+        showMediaLibraryModal.value = false;
+    };
+    //
+    // handle click
+    secondMediaButtonFunction.value = function () {
+        if (Array.isArray(postForm.cover_image) === false) {
+            postForm.cover_image === [];
+        }
+
+        const idExists = postForm.cover_image.some((item) => {
+            return (
+                item.id === getCurrentImage.value.currentImage.mediaLibrary.id
+            );
+        });
+
+        if (idExists === false && Array.isArray(postForm.cover_image)) {
+            postForm.cover_image.unshift(
+                getCurrentImage.value.currentImage.mediaLibrary
+            );
+        }
+
+        // handle show media library modal
+        showMediaLibraryModal.value = false;
+    };
+    // end modal
+};
+const removePrimaryImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.map((image) => {
+        return {
+            ...image,
+            pivot: {
+                ...image.pivot,
+                primary: image.id === imageId ? false : image.pivot.primary,
+            },
+        };
+    });
+};
+
+const setAsPrimaryImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.map((image) => {
+        if (image.id === imageId) {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: true,
+                },
+            };
+        } else {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: false,
+                },
+            };
+        }
+    });
+};
+const handleRemoveCoverImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.filter(
+        (image) => image.id !== imageId
+    );
+};
+
+onBeforeMount(() => {
+    // User is editing an existing Resource, rather than creating a new one from scratch.
+    if (props.team !== null) {
+        postForm.name = props.team.name;
+        postForm.public = props.team.public ? true : false;
+
+        postForm.cover_image = props.team.coverImagesWithLogos.cover_images;
+        postForm.logo = props.team.coverImagesWithLogos.logos;
+    }
+});
 </script>
 
 <template>
@@ -164,86 +269,16 @@ const notificationsModalButton = function () {
         </template>
 
         <template #description>
-            <!-- Team owner box - start -->
-            <p class="myPrimaryParagraph py-2">Team Owner</p>
+            <!-- Your Role in Team # start -->
             <div
+                v-if="
+                    $page.props.team.owner &&
+                    $page.props.user &&
+                    $page.props.team.owner.id !== $page.props.user.id
+                "
                 class="mb-6 py-6 px-6 relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
             >
-                <div
-                    class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
-                >
-                    <div class="hover:bg-white px-2">
-                        <div class="rounded">
-                            <div class="rounded">
-                                <!-- start photo -->
-                                <div class="flex items-center gap-2 my-4">
-                                    <div
-                                        v-if="
-                                            $page.props.team.owner &&
-                                            $page.props.team.owner
-                                                .profile_photo_path !== null
-                                        "
-                                        class="flex-shrink-0"
-                                    >
-                                        <img
-                                            class="object-cover h-12 w-12 rounded-full"
-                                            :src="`/storage/${$page.props.team.owner.profile_photo_path}`"
-                                            :alt="
-                                                $page.props.team.owner
-                                                    .first_name +
-                                                $page.props.team.owner.last_name
-                                            "
-                                        />
-                                    </div>
-
-                                    <div
-                                        v-if="
-                                            $page.props.team.owner &&
-                                            $page.props.team.owner
-                                                .profile_photo_path === null
-                                        "
-                                        class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                    >
-                                        {{
-                                            $page.props.team.owner.first_name
-                                                .charAt(0)
-                                                .toUpperCase()
-                                        }}
-                                        {{
-                                            $page.props.team.owner.last_name
-                                                .charAt(0)
-                                                .toUpperCase()
-                                        }}
-                                    </div>
-                                    <span
-                                        class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                    >
-                                        <p class="font-medium">
-                                            {{
-                                                $page.props.team.owner
-                                                    .first_name
-                                            }}
-                                            {{
-                                                $page.props.team.owner.last_name
-                                            }}
-                                        </p>
-                                        <p>Team Role: Owner</p>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Team owner box - end -->
-
-            <hr />
-
-            <!-- Your Role in Team - start -->
-            <p class="myPrimaryParagraph py-2">You</p>
-            <div
-                class="mb-6 py-6 px-6 relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
-            >
+                <p class="myPrimaryParagraph py-2">You</p>
                 <div
                     class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                 >
@@ -313,6 +348,88 @@ const notificationsModalButton = function () {
                 </div>
             </div>
             <!-- Your Role in Team - end -->
+            <!-- Team owner box - start -->
+            <div
+                v-if="
+                    ($page.props.team.owner &&
+                        $page.props.user &&
+                        $page.props.team.owner.id === $page.props.user.id) ||
+                    $page.props.team.owner.id !== $page.props.user.id
+                "
+                class="mb-6 py-6 px-6 relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
+            >
+                <p class="myPrimaryParagraph py-2">
+                    {{
+                        $page.props.team.owner.id === $page.props.user.id
+                            ? "You are Team Owner"
+                            : "Team Owner"
+                    }}
+                </p>
+                <div
+                    class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                >
+                    <div class="hover:bg-white px-2">
+                        <div class="rounded">
+                            <div class="rounded">
+                                <!-- start photo -->
+                                <div class="flex items-center gap-2 my-4">
+                                    <div
+                                        v-if="
+                                            $page.props.team.owner
+                                                .profile_photo_path !== null
+                                        "
+                                        class="flex-shrink-0"
+                                    >
+                                        <img
+                                            class="object-cover h-12 w-12 rounded-full"
+                                            :src="`/storage/${$page.props.team.owner.profile_photo_path}`"
+                                            :alt="
+                                                $page.props.team.owner
+                                                    .first_name +
+                                                $page.props.team.owner.last_name
+                                            "
+                                        />
+                                    </div>
+
+                                    <div
+                                        v-if="
+                                            $page.props.team.owner
+                                                .profile_photo_path === null
+                                        "
+                                        class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                    >
+                                        {{
+                                            $page.props.team.owner.first_name
+                                                .charAt(0)
+                                                .toUpperCase()
+                                        }}
+                                        {{
+                                            $page.props.team.owner.last_name
+                                                .charAt(0)
+                                                .toUpperCase()
+                                        }}
+                                    </div>
+                                    <span
+                                        class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                                    >
+                                        <p class="font-medium">
+                                            {{
+                                                $page.props.team.owner
+                                                    .first_name
+                                            }}
+                                            {{
+                                                $page.props.team.owner.last_name
+                                            }}
+                                        </p>
+                                        <p>Team Role: Owner</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Team owner box # end -->
         </template>
 
         <template #main>
@@ -320,8 +437,8 @@ const notificationsModalButton = function () {
             <div class="myInputsOrganization">
                 <div class="myInputGroup">
                     <InputLabel for="name" value="Update Team Name" />
-                    <TextInput id="name" v-model="form.name" type="text" />
-                    <InputError :message="form.errors.name" />
+                    <TextInput id="name" v-model="postForm.name" type="text" />
+                    <InputError :message="postForm.errors.name" />
                 </div>
             </div>
         </template>
@@ -336,16 +453,16 @@ const notificationsModalButton = function () {
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
                 >
                     <InputLabel
-                        :value="form.public ? 'Published' : 'Unpublished'"
+                        :value="postForm.public ? 'Published' : 'Unpublished'"
                         :class="{
-                            'text-myPrimaryLinkColor': form.public,
-                            'text-myPrimaryErrorColor': !form.public,
+                            'text-myPrimaryLinkColor': postForm.public,
+                            'text-myPrimaryErrorColor': !postForm.public,
                         }"
                     />
                     <Switch
-                        v-model="form.public"
+                        v-model="postForm.public"
                         :class="[
-                            form.public
+                            postForm.public
                                 ? 'bg-myPrimaryLinkColor'
                                 : 'bg-gray-200',
                             'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
@@ -354,13 +471,15 @@ const notificationsModalButton = function () {
                         <span class="sr-only">Use setting</span>
                         <span
                             :class="[
-                                form.public ? 'translate-x-5' : 'translate-x-0',
+                                postForm.public
+                                    ? 'translate-x-5'
+                                    : 'translate-x-0',
                                 'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
                             ]"
                         >
                             <span
                                 :class="[
-                                    form.public
+                                    postForm.public
                                         ? 'opacity-0 ease-out duration-100'
                                         : 'opacity-100 ease-in duration-200',
                                     'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
@@ -383,7 +502,7 @@ const notificationsModalButton = function () {
                             </span>
                             <span
                                 :class="[
-                                    form.public
+                                    postForm.public
                                         ? 'opacity-100 ease-in duration-200'
                                         : 'opacity-0 ease-out duration-100',
                                     'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
@@ -403,143 +522,317 @@ const notificationsModalButton = function () {
                         </span>
                     </Switch>
                 </div>
-                <InputError :message="form.errors.public" />
+                <InputError :message="postForm.errors.public" />
             </div>
-            <!-- post status - end -->
-            <!-- logo - start -->
+            <!-- post status # end -->
+            <!-- logos # start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Logo</div>
-                    <p class="myPrimaryParagraph">
-                        Uplaod or select a Team logo.
-                    </p>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
-                <img
-                    v-if="form.logo_medium && form.logo_medium.length !== 0"
-                    @click="handleUploadLogo"
-                    class="myPrimarythumbnailLogo"
-                    alt="Logo"
-                    :src="`/storage/uploads/${form.logo_medium}`"
-                />
-                <div
-                    class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
-                >
-                    <button
-                        @click="handleUploadLogo"
-                        type="button"
-                        class="myPrimaryButton gap-2 items-center"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                            />
-                        </svg>
-
-                        Logo
-                    </button>
+                <!-- select - start -->
+                <div @click="handleUploadLogo" class="myPrimaryFakeSelect">
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.logo && postForm.logo?.length === 0
+                                    ? "Select Cover image"
+                                    : "Add Additional Cover Images"
+                            }}
+                        </p>
+                    </div>
                     <div
-                        v-if="form.logo_medium && form.logo_medium.length !== 0"
+                        class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <svg
-                            @click="handleRemoveLogo"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5 text-myPrimaryErrorColor cursor-pointer"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                        </svg>
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
                     </div>
                 </div>
-                <InputError :message="form.errors.logo_original" />
+                <!-- select - end -->
+
+                <div
+                    v-if="postForm.logo && postForm.logo?.length === 0"
+                    class="space-y-6 mt-2"
+                >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
+                    <p
+                        v-if="postForm.logo && postForm.logo?.length !== 0"
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{ postForm.logo && postForm.logo?.length }}
+                        {{
+                            postForm.logo && postForm.logo?.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+                    <div
+                        v-if="
+                            postForm.logo &&
+                            Array.isArray(postForm?.logo) &&
+                            postForm.logo?.length !== 0
+                        "
+                        class="p-2 border border-myPrimaryLightGrayColor"
+                    >
+                        <div
+                            class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                        >
+                            <div
+                                v-for="image in postForm.logo !== null &&
+                                postForm.logo"
+                                :key="image?.id"
+                            >
+                                <div
+                                    class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                >
+                                    <div
+                                        class="flex justify-left items-center gap-2"
+                                    >
+                                        <img
+                                            @click="handleUploadLogo"
+                                            :src="`/storage/uploads/${image?.medium_path}`"
+                                            alt="image"
+                                            class="myPrimarythumbnailInsertPreview"
+                                        />
+
+                                        <button
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                                            v-if="image?.pivot?.primary"
+                                            type="button"
+                                            @click="
+                                                removePrimaryLogo(image?.id)
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-center justify-center gap-2"
+                                            >
+                                                <span> Primary </span>
+                                                <CheckIcon
+                                                    class="w-3 h-3 stroke-2"
+                                                ></CheckIcon>
+                                            </div>
+                                        </button>
+                                        <button
+                                            class="myPrimaryTag transition"
+                                            v-if="
+                                                !image?.pivot?.primary &&
+                                                postForm.logo?.length > 1
+                                            "
+                                            type="button"
+                                            @click="setAsPrimaryLogo(image?.id)"
+                                        >
+                                            <span> Set as Primary </span>
+                                        </button>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        @click="handleRemoveLogo(image?.id)"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    >
+                                        <TrashIcon
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        ></TrashIcon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            v-if="postForm.logo && postForm.logo?.length >= 1"
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
+                        >
+                            <p
+                                @click="handleUploadLogo"
+                                class="myPrimaryParagraph text-xs italic cursor-pointer"
+                            >
+                                Add Additional Images
+                            </p>
+                            <button
+                                type="button"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                @click="handleUploadLogo"
+                            >
+                                <PlusIcon
+                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                ></PlusIcon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <InputError :message="postForm.errors.logo" />
             </div>
-            <!-- logo - end -->
-            <!-- cover image - start -->
+            <!-- logo image - end -->
+
+            <!-- cover image # start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
                     </div>
-                    <p class="myPrimaryParagraph">
-                        Upload or select a Team Cover image.
-                    </p>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
-                <img
-                    v-if="
-                        form.cover_image_medium &&
-                        form.cover_image_medium.length !== 0
-                    "
-                    @click="handleUploadCoverImage"
-                    class="myPrimarythumbnailInsertPreview"
-                    alt="cover image"
-                    :src="`/storage/uploads/${form.cover_image_medium}`"
-                />
+                <!-- select - start -->
                 <div
-                    class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
+                    @click="handleUploadCoverImage"
+                    class="myPrimaryFakeSelect"
                 >
-                    <button
-                        @click="handleUploadCoverImage"
-                        type="button"
-                        class="myPrimaryButton gap-2 items-center"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                            />
-                        </svg>
-
-                        Cover image
-                    </button>
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.cover_image &&
+                                postForm.cover_image?.length === 0
+                                    ? "Select Cover image"
+                                    : "Add Additional Cover Images"
+                            }}
+                        </p>
+                    </div>
                     <div
-                        v-if="
-                            form.cover_image_medium &&
-                            form.cover_image_medium.length !== 0
-                        "
+                        class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <svg
-                            @click="handleRemoveCoverImage"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5 text-myPrimaryErrorColor cursor-pointer"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                        </svg>
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
                     </div>
                 </div>
-                <InputError :message="form.errors.cover_image_original" />
+                <!-- select - end -->
+
+                <div
+                    v-if="
+                        postForm.cover_image &&
+                        postForm.cover_image?.length === 0
+                    "
+                    class="space-y-6 mt-2"
+                >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
+                    <p
+                        v-if="
+                            postForm.cover_image &&
+                            postForm.cover_image?.length !== 0
+                        "
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{
+                            postForm.cover_image && postForm.cover_image?.length
+                        }}
+                        {{
+                            postForm.cover_image &&
+                            postForm.cover_image?.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+                    <div
+                        v-if="
+                            postForm.cover_image &&
+                            Array.isArray(postForm?.cover_image) &&
+                            postForm.cover_image?.length !== 0
+                        "
+                        class="p-2 border border-myPrimaryLightGrayColor"
+                    >
+                        <div
+                            class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                        >
+                            <div
+                                v-for="image in postForm.cover_image !== null &&
+                                postForm.cover_image"
+                                :key="image?.id"
+                            >
+                                <div
+                                    class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                >
+                                    <div
+                                        class="flex justify-left items-center gap-2"
+                                    >
+                                        <img
+                                            @click="handleUploadCoverImage"
+                                            :src="`/storage/uploads/${image?.medium_path}`"
+                                            alt="image"
+                                            class="myPrimarythumbnailInsertPreview"
+                                        />
+
+                                        <button
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                                            v-if="image?.pivot?.primary"
+                                            type="button"
+                                            @click="
+                                                removePrimaryImage(image?.id)
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-center justify-center gap-2"
+                                            >
+                                                <span> Primary </span>
+                                                <CheckIcon
+                                                    class="w-3 h-3 stroke-2"
+                                                ></CheckIcon>
+                                            </div>
+                                        </button>
+                                        <button
+                                            class="myPrimaryTag transition"
+                                            v-if="
+                                                !image?.pivot?.primary &&
+                                                postForm.cover_image?.length > 1
+                                            "
+                                            type="button"
+                                            @click="
+                                                setAsPrimaryImage(image?.id)
+                                            "
+                                        >
+                                            <span> Set as Primary </span>
+                                        </button>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        @click="
+                                            handleRemoveCoverImage(image?.id)
+                                        "
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    >
+                                        <TrashIcon
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        ></TrashIcon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            v-if="
+                                postForm.cover_image &&
+                                postForm.cover_image?.length >= 1
+                            "
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
+                        >
+                            <p
+                                @click="handleUploadCoverImage"
+                                class="myPrimaryParagraph text-xs italic cursor-pointer"
+                            >
+                                Add Additional Images
+                            </p>
+                            <button
+                                type="button"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                @click="handleUploadCoverImage"
+                            >
+                                <PlusIcon
+                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                ></PlusIcon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <InputError :message="postForm.errors.cover_image" />
             </div>
-            <!-- cover image - end -->
+            <!-- cover image # end -->
 
             <MediaLibraryModal
                 v-if="showMediaLibraryModal === true"
@@ -559,11 +852,11 @@ const notificationsModalButton = function () {
         </template>
 
         <template #actions>
-            <SubmitButton :disabled="form.processing" buttonText="Update">
+            <SubmitButton :disabled="postForm.processing" buttonText="Update">
             </SubmitButton>
             <div
                 class="flex justify-end mt-4"
-                v-if="Object.values(form.errors).length !== 0"
+                v-if="Object.values(postForm.errors).length !== 0"
             >
                 <div
                     @click="showErrorNotifications = true"
@@ -592,24 +885,24 @@ const notificationsModalButton = function () {
                         class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
                     >
                         Show
-                        {{ Object.values(form.errors).length }}
+                        {{ Object.values(postForm.errors).length }}
                         errors
                     </p>
                 </div>
             </div>
 
-            <ActionMessage :on="form.recentlySuccessful" type="success">
+            <ActionMessage :on="postForm.recentlySuccessful" type="success">
                 Successfully updated your team.
             </ActionMessage>
 
             <NotificationsFixedBottom
-                :listOfMessages="Object.values(form.errors)"
+                :listOfMessages="Object.values(postForm.errors)"
                 :show="showErrorNotifications"
                 @notificationsModalButton="notificationsModalButton"
             >
                 <div class="flex items-center justify-start gap-2">
                     <p class="myPrimaryParagraphError">
-                        {{ Object.values(form.errors).length }}
+                        {{ Object.values(postForm.errors).length }}
                         errors
                     </p>
                 </div>

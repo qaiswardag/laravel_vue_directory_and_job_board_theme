@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\LoggedIn\Team;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoggedIn\Team\StoreTeamUpdateRequest;
 use App\Http\Requests\Teams\StoreTeamControllerRequest;
 use App\Models\Team;
 use App\Models\User;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Laravel\Jetstream\Contracts\CreatesTeams;
 use Laravel\Jetstream\Jetstream;
+use Laravel\Jetstream\Contracts\UpdatesTeamNames;
 
 class TeamController extends Controller
 {
@@ -126,9 +128,19 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreTeamUpdateRequest $request, $teamId)
     {
-        //
+        $team = Jetstream::newTeamModel()->findOrFail($teamId);
+
+        app(UpdatesTeamNames::class)->update(
+            $request->user(),
+            $team,
+            $request->all()
+        );
+
+        return redirect()->route("teams.show", [
+            "referenceId" => $team->reference_id,
+        ]);
     }
 
     /**

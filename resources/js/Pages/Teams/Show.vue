@@ -30,49 +30,131 @@ const breadcrumbsLinks = [
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
 
-        <div class="myPrimarySection">
+        <!-- Your Role in Team # start -->
+        <div
+            v-if="
+                $page.props.team.owner &&
+                $page.props.user &&
+                $page.props.team.owner.id !== $page.props.user.id
+            "
+            class="mb-6 py-6 px-6 relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
+        >
+            <p class="myPrimaryParagraph py-2">You</p>
             <div
-                class="mb-6 py-6 px-6 relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
+                class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
             >
-                <div
-                    class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
-                >
-                    <div class="hover:bg-white px-2">
+                <div class="hover:bg-white px-2">
+                    <div class="rounded">
+                        <!-- start photo -->
+                        <div class="flex items-center gap-2 my-4">
+                            <div
+                                v-if="
+                                    $page.props.user &&
+                                    $page.props.user.profile_photo_path !== null
+                                "
+                                class="flex-shrink-0"
+                            >
+                                <img
+                                    class="object-cover h-12 w-12 rounded-full"
+                                    :src="`/storage/${$page.props.user.profile_photo_path}`"
+                                    alt="User Image
+                                            
+                                        "
+                                />
+                            </div>
+
+                            <div
+                                v-if="
+                                    $page.props.user &&
+                                    $page.props.user.profile_photo_path === null
+                                "
+                                class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                            >
+                                {{
+                                    $page.props.user.first_name
+                                        .charAt(0)
+                                        .toUpperCase()
+                                }}
+                                {{
+                                    $page.props.user.last_name
+                                        .charAt(0)
+                                        .toUpperCase()
+                                }}
+                            </div>
+                            <span
+                                class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
+                            >
+                                <p class="font-medium">
+                                    {{ $page.props.user.first_name }}
+                                    {{ $page.props.user.last_name }}
+                                </p>
+                                <p v-if="$page.props.currentUserTeamRole?.name">
+                                    Team Role:
+                                    {{ $page.props.currentUserTeamRole?.name }}
+                                </p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Your Role in Team - end -->
+        <!-- Team owner box - start -->
+        <div
+            v-if="
+                ($page.props.team.owner &&
+                    $page.props.user &&
+                    $page.props.team.owner.id === $page.props.user.id) ||
+                $page.props.team.owner.id !== $page.props.user.id
+            "
+            class="mb-6 py-6 px-6 relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
+        >
+            <p class="myPrimaryParagraph py-2">
+                {{
+                    $page.props.team.owner.id === $page.props.user.id
+                        ? "You are Team Owner"
+                        : "Team Owner"
+                }}
+            </p>
+            <div
+                class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+            >
+                <div class="hover:bg-white px-2">
+                    <div class="rounded">
                         <div class="rounded">
                             <!-- start photo -->
                             <div class="flex items-center gap-2 my-4">
                                 <div
                                     v-if="
-                                        $page.props.user &&
-                                        $page.props.user.profile_photo_path !==
-                                            null
+                                        $page.props.team.owner
+                                            .profile_photo_path !== null
                                     "
                                     class="flex-shrink-0"
                                 >
                                     <img
                                         class="object-cover h-12 w-12 rounded-full"
-                                        :src="`/storage/${$page.props.user.profile_photo_path}`"
-                                        alt="User Image
-                                            
+                                        :src="`/storage/${$page.props.team.owner.profile_photo_path}`"
+                                        :alt="
+                                            $page.props.team.owner.first_name +
+                                            $page.props.team.owner.last_name
                                         "
                                     />
                                 </div>
 
                                 <div
                                     v-if="
-                                        $page.props.user &&
-                                        $page.props.user.profile_photo_path ===
-                                            null
+                                        $page.props.team.owner
+                                            .profile_photo_path === null
                                     "
                                     class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                 >
                                     {{
-                                        $page.props.user.first_name
+                                        $page.props.team.owner.first_name
                                             .charAt(0)
                                             .toUpperCase()
                                     }}
                                     {{
-                                        $page.props.user.last_name
+                                        $page.props.team.owner.last_name
                                             .charAt(0)
                                             .toUpperCase()
                                     }}
@@ -81,27 +163,35 @@ const breadcrumbsLinks = [
                                     class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                 >
                                     <p class="font-medium">
-                                        {{ $page.props.user.first_name }}
-                                        {{ $page.props.user.last_name }}
+                                        {{ $page.props.team.owner.first_name }}
+                                        {{ $page.props.team.owner.last_name }}
                                     </p>
-                                    <p
-                                        v-if="
-                                            $page.props.currentUserTeamRole
-                                                ?.name
-                                        "
-                                    >
-                                        Team Role:
-                                        {{
-                                            $page.props.currentUserTeamRole
-                                                ?.name
-                                        }}
-                                    </p>
+                                    <p>Team Role: Owner</p>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- Team owner box # end -->
+        <div class="myPrimarySection">
+            <!-- team details # start -->
+            <div class="my-12 p-6 border-2 border-green-300">
+                <p class="font-bold text-center">Team name: {{ team.name }}</p>
+                <div class="flex myPrimaryGap">
+                    <div class="border-2 my-6 p-6 rounded border-red-300">
+                        <p class="my-6">Show team logo here</p>
+                        {{ team.coverImagesWithLogos.logos }}
+                    </div>
+                    <div class="border-2 my-6 p-6 rounded border-red-300">
+                        <p class="my-6">Show team cover image here</p>
+                        {{ team.coverImagesWithLogos.cover_images }}
+                    </div>
+                </div>
+            </div>
+            <!-- team details # start -->
+
             <div
                 class="divide-y divide-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
             >
@@ -143,7 +233,7 @@ const breadcrumbsLinks = [
                                     class="absolute inset-0"
                                     aria-hidden="true"
                                 />
-                                Team Information
+                                Update Team
                             </Link>
                         </h3>
                         <p class="mt-2 text-sm text-gray-500">

@@ -105,7 +105,7 @@
         @apply mx-auto block mt-2 mb-6 w-40 transition-all rounded-md object-cover cursor-pointer;
     }
     .myPrimarythumbnailInsertPreview {
-        @apply block md:h-20 h-20 md:w-20 w-20 hover:shadow-sm transition-all object-cover cursor-pointer rounded-full;
+        @apply block md:h-24 md:w-24 h-20 w-20 hover:shadow-sm transition-all cursor-pointer rounded-full object-cover;
     }
 
     /*

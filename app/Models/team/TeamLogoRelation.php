@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TeamLogoRelation extends Model
 {
     use HasFactory;
-    protected $fillable = ["logo_id", "team_id", "primary"];
+    protected $fillable = ["media_library_id", "team_id", "primary"];
 }
