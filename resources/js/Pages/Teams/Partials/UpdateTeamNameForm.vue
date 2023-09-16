@@ -542,6 +542,7 @@ const notificationsModalButton = function () {
             <!-- cover image - end -->
 
             <MediaLibraryModal
+                v-if="showMediaLibraryModal === true"
                 :user="$page.props.user"
                 :team="team"
                 :open="showMediaLibraryModal"

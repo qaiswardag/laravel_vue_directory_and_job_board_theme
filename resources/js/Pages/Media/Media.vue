@@ -104,6 +104,7 @@ const handleMediaLibrary = function (imageID) {
 
         <div class="myPrimarySection">
             <MediaLibraryModal
+                v-if="showMediaLibraryModal === true"
                 :user="user"
                 :team="currentUserTeam"
                 :open="showMediaLibraryModal"
@@ -222,7 +223,6 @@ const handleMediaLibrary = function (imageID) {
                                     <div
                                         class="py-3 flex justify-between items-center"
                                     >
-                                        <dt class="">Name</dt>
                                         <dd class="">
                                             {{ file.name ? file.name : "–" }}
                                         </dd>

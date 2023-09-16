@@ -20,7 +20,7 @@ const designer = new Designer(store);
 
 //
 // use media library
-const showMediaModal = ref(false);
+const showMediaLibraryModal = ref(false);
 // modal content
 const titleMedia = ref("");
 const descriptionMedia = ref("");
@@ -44,7 +44,7 @@ const getBasePrimaryImage = computed(() => {
 // image click
 const updateImage = function () {
     // open modal to true
-    showMediaModal.value = true;
+    showMediaLibraryModal.value = true;
 
     // set media library modal standards
     titleMedia.value = `Media Library`;
@@ -55,14 +55,14 @@ const updateImage = function () {
     // handle click
     firstMediaButtonFunction.value = function () {
         // close media library modal
-        showMediaModal.value = false;
+        showMediaLibraryModal.value = false;
     };
     //
     // handle click
     secondMediaButtonFunction.value = function () {
         designer.updateBasePrimaryImage();
         // close media library modal
-        showMediaModal.value = false;
+        showMediaLibraryModal.value = false;
     };
     //
     // end modal
@@ -89,9 +89,10 @@ const updateImage = function () {
         </div>
     </div>
     <MediaLibraryModal
+        v-if="showMediaLibraryModal === true"
         :user="user"
         :team="team"
-        :open="showMediaModal"
+        :open="showMediaLibraryModal"
         :title="titleMedia"
         :description="descriptionMedia"
         :firstButtonText="firstButtonMedia"

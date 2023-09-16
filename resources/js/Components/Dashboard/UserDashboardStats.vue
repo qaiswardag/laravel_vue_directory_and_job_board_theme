@@ -4,9 +4,10 @@ import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/vue/24/outline";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import EmptySectionBorder from "@/Components/Sections/EmptySectionBorder.vue";
 import { useStore } from "vuex";
-import { onMounted, computed } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { parseISO, format } from "date-fns";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 
 // store
 const store = useStore();
@@ -26,6 +27,48 @@ const props = defineProps({
 const getDashboardStats = computed(() => {
     return store.getters["userDashboard/getDashboardStats"];
 });
+
+// use media library
+const showMediaLibraryModal = ref(false);
+// modal content
+const titleMedia = ref("");
+const descriptionMedia = ref("");
+const firstButtonMedia = ref("");
+const secondButtonMedia = ref(null);
+const thirdButtonMedia = ref(null);
+// set dynamic modal handle functions
+const firstMediaButtonFunction = ref(null);
+const secondMediaButtonFunction = ref(null);
+const thirdMediaButtonFunction = ref(null);
+
+const handleMediaLibrary = function (imageID) {
+    if (imageID && typeof imageID === "number") {
+        // dispatch
+        store.dispatch("mediaLibrary/loadImage", {
+            mediaLibraryId: imageID,
+            teamId: props.currentUserTeam.id,
+        });
+    }
+    // handle show media library modal
+    showMediaLibraryModal.value = true;
+
+    // set media library modal standards
+    titleMedia.value = "Media Library";
+    descriptionMedia.value = null;
+    firstButtonMedia.value = null;
+    secondButtonMedia.value = null;
+    thirdButtonMedia.value = null;
+    // handle click
+    firstMediaButtonFunction.value = function () {
+        // handle show media library modal
+        showMediaLibraryModal.value = false;
+        store.dispatch("userDashboard/loadDashboardStats", {
+            teamId: props.currentUserTeam && props.currentUserTeam.id,
+        });
+    };
+
+    // end modal
+};
 
 const faqs = [
     {
@@ -243,19 +286,50 @@ onMounted(() => {
                         </div>
                         <ul
                             role="list"
-                            class="grid grid-cols-[repeat(auto-fit,minmax(6rem,1fr))] gap-y-6 gap-x-6"
+                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
                         >
                             <li
                                 v-for="file in getDashboardStats.fetchedData
                                     .latestMedia"
                                 :key="file.id"
-                                class="whitespace-pre-line flex-1 h-auto rounded pb-12"
+                                @click="handleMediaLibrary(file.id)"
+                                class="border border-myPrimaryLightGrayColor rounded px-2 p-2 cursor-pointer bg-gray-50"
                             >
-                                <img
-                                    :src="`/storage/uploads/${file.medium_path}`"
-                                    alt="Image"
-                                    class="pointer-events-none object-cover group-hover:opacity-75 cursor-pointer rounded"
-                                />
+                                <div
+                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100"
+                                >
+                                    <img
+                                        :src="`/storage/uploads/${file.medium_path}`"
+                                        alt=""
+                                        class="w-full pointer-events-none object-cover group-hover:opacity-75"
+                                    />
+                                </div>
+
+                                <dl
+                                    class="myPrimaryParagraph text-xs mt-2 border-b border-myPrimaryLightGrayColor divide-y"
+                                >
+                                    <div
+                                        class="py-3 flex justify-between items-center"
+                                    >
+                                        <dt class="">Dimensions</dt>
+                                        <dd class="">
+                                            {{ file.width }} x {{ file.height }}
+                                        </dd>
+                                    </div>
+                                    <div
+                                        class="py-3 flex justify-between items-center"
+                                    >
+                                        <dd class="">
+                                            {{ file.name ? file.name : "–" }}
+                                        </dd>
+                                    </div>
+                                    <div
+                                        class="py-3 flex justify-between items-center"
+                                    >
+                                        <dt class="">Size</dt>
+                                        <dd class="">{{ file.size }} KB</dd>
+                                    </div>
+                                </dl>
                             </li>
                         </ul>
                     </div>
@@ -460,6 +534,21 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
+            <MediaLibraryModal
+                v-if="showMediaLibraryModal === true"
+                :user="user"
+                :team="currentUserTeam"
+                :open="showMediaLibraryModal"
+                :title="titleMedia"
+                :description="descriptionMedia"
+                :firstButtonText="firstButtonMedia"
+                :secondButtonText="secondButtonMedia"
+                :thirdButtonText="thirdButtonMedia"
+                @firstMediaButtonFunction="firstMediaButtonFunction"
+                @secondMediaButtonFunction="secondMediaButtonFunction"
+                @thirdMediaButtonFunction="thirdMediaButtonFunction"
+            >
+            </MediaLibraryModal>
         </template>
     </FullWidthElement>
 </template>

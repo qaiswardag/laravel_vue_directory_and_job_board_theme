@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import UploadImagesForm from "@/Components/Forms/UploadImagesForm.vue";
 import MediaLibraryGalleryList from "@/Components/GalleryList/MediaLibraryGalleryList.vue";
 import {
@@ -218,6 +218,18 @@ const deleteImage = function (imageId) {
         onFinish: () => {},
     });
 };
+
+const imageNameComputed = computed(() => {
+    return getCurrentImage.value?.currentImage?.mediaLibrary?.name;
+});
+watch(imageNameComputed, (updatedImage, oldImage) => {
+    form.name = updatedImage;
+});
+
+// onMounted(() => {
+//     form.name = getCurrentImage.value?.currentImage?.mediaLibrary?.name;
+//     console.log("er:", getCurrentImage.value);
+// });
 </script>
 
 <template>
