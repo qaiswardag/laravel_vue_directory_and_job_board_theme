@@ -199,7 +199,7 @@ const removePrimaryImage = function (imageId) {
             ...image,
             pivot: {
                 ...image.pivot,
-                primary: image.id === imageId ? false : image.pivot.primary,
+                primary: image.id === imageId ? false : image?.pivot?.primary,
             },
         };
     });
@@ -1202,7 +1202,10 @@ const jobTypesSorted = computed(() => {
 
                                         <button
                                             class="myPrimaryTag bg-myPrimaryLinkColor text-white"
-                                            v-if="image?.pivot?.primary"
+                                            v-if="
+                                                image?.pivot?.primary &&
+                                                postForm.cover_image.length > 1
+                                            "
                                             type="button"
                                             @click="
                                                 removePrimaryImage(image?.id)

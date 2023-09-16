@@ -172,7 +172,7 @@ const removePrimaryImage = function (imageId) {
             ...image,
             pivot: {
                 ...image.pivot,
-                primary: image.id === imageId ? false : image.pivot.primary,
+                primary: image.id === imageId ? false : image?.pivot?.primary,
             },
         };
     });

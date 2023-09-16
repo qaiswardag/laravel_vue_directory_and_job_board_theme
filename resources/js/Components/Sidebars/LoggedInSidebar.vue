@@ -76,7 +76,7 @@ import {
             >
                 <Link
                     :href="route('user.teams.switch')"
-                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white text-xs"
                     :class="{
                         'shadow-md': route().current('user.teams.switch'),
                     }"

@@ -135,7 +135,7 @@ const removePrimaryLogo = function (imageId) {
             ...image,
             pivot: {
                 ...image.pivot,
-                primary: image.id === imageId ? false : image.pivot.primary,
+                primary: image.id === imageId ? false : image?.pivot?.primary,
             },
         };
     });
@@ -217,7 +217,7 @@ const removePrimaryImage = function (imageId) {
             ...image,
             pivot: {
                 ...image.pivot,
-                primary: image.id === imageId ? false : image.pivot.primary,
+                primary: image.id === imageId ? false : image?.pivot?.primary,
             },
         };
     });
@@ -601,7 +601,10 @@ onBeforeMount(() => {
 
                                         <button
                                             class="myPrimaryTag bg-myPrimaryLinkColor text-white"
-                                            v-if="image?.pivot?.primary"
+                                            v-if="
+                                                image?.pivot?.primary &&
+                                                postForm.logo.length > 1
+                                            "
                                             type="button"
                                             @click="
                                                 removePrimaryLogo(image?.id)
@@ -759,7 +762,10 @@ onBeforeMount(() => {
 
                                         <button
                                             class="myPrimaryTag bg-myPrimaryLinkColor text-white"
-                                            v-if="image?.pivot?.primary"
+                                            v-if="
+                                                image?.pivot?.primary &&
+                                                postForm.cover_image?.length > 1
+                                            "
                                             type="button"
                                             @click="
                                                 removePrimaryImage(image?.id)
