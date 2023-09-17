@@ -20,7 +20,7 @@ const breadcrumbsLinks = [
         label: "All Jobs",
         route: {
             name: "team.jobs.index",
-            parameters: [props.currentUserTeam.reference_id],
+            parameters: [props.currentUserTeam.id],
         },
     },
     { label: "Add Job" },

@@ -49,7 +49,7 @@ const breadcrumbsLinks = [
         label: "All Stores",
         route: {
             name: "team.stores.index",
-            parameters: [props.currentUserTeam.reference_id],
+            parameters: [props.currentUserTeam.id],
         },
     },
 ];
@@ -59,7 +59,7 @@ const routesArray = [
         label: "All Stores",
         route: {
             name: "team.stores.index",
-            parameters: [props.currentUserTeam.reference_id],
+            parameters: [props.currentUserTeam.id],
         },
     },
     {
@@ -136,10 +136,7 @@ const deletePost = (postId) => {
 // handle action
 const handleEdit = function (postId) {
     router.get(
-        route("team.stores.store.edit", [
-            props.currentUserTeam.reference_id,
-            postId,
-        ])
+        route("team.stores.store.edit", [props.currentUserTeam.id, postId])
     );
 };
 
@@ -149,15 +146,12 @@ const searchForm = useForm({
 });
 
 const handleSearch = function () {
-    searchForm.get(
-        route("team.stores.index", [props.currentUserTeam.reference_id]),
-        {
-            preserveScroll: true,
-            onSuccess: () => {},
-            onError: (err) => {},
-            onFinish: () => {},
-        }
-    );
+    searchForm.get(route("team.stores.index", [props.currentUserTeam.id]), {
+        preserveScroll: true,
+        onSuccess: () => {},
+        onError: (err) => {},
+        onFinish: () => {},
+    });
 };
 
 onMounted(() => {
@@ -215,12 +209,7 @@ onMounted(() => {
                 <Link
                     class="myPrimaryButton"
                     type="button"
-                    :href="
-                        route(
-                            'team.stores.create',
-                            currentUserTeam.reference_id
-                        )
-                    "
+                    :href="route('team.stores.create', currentUserTeam.id)"
                 >
                     Create Store
                 </Link>
@@ -354,9 +343,9 @@ onMounted(() => {
                                 >
                                     <Link
                                         :href="
-                                            route('team.posts.post.show', [
+                                            route('team.stores.store.show', [
                                                 $page.props.user.current_team
-                                                    .reference_id,
+                                                    .id,
                                                 post.id,
                                                 post.slug,
                                             ])

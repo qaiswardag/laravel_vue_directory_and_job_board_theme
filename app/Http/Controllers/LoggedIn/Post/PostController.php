@@ -31,9 +31,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $referenceId)
+    public function index(Request $request, $teamId)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -97,9 +97,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($referenceId)
+    public function create($teamId)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -231,7 +231,9 @@ class PostController extends Controller
         // Return the current team that the user is on, rather than the team that the user is storing the post for.
         $currentTeam = Auth::user()->currentTeam->reference_id;
 
-        return redirect()->route("team.posts.index", $currentTeam);
+        return redirect()->route("team.posts.index", [
+            "teamId" => $team->id,
+        ]);
     }
 
     /**
@@ -240,11 +242,11 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($referenceId, Post $post, $slug)
+    public function show($teamId, Post $post, $slug)
     {
-        $postRenderView = "Teams/Posts/Show/ShowTeamPost";
+        $postRenderView = "Posts/Show/ShowTeamPost";
 
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -307,9 +309,9 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($referenceId, Post $post)
+    public function edit($teamId, Post $post)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -514,7 +516,7 @@ class PostController extends Controller
         }
 
         return redirect()->route("team.posts.index", [
-            "referenceId" => $team->reference_id,
+            "teamId" => $team->id,
         ]);
     }
 

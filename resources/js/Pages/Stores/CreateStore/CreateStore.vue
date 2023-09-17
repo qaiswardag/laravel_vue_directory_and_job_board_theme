@@ -20,7 +20,7 @@ const breadcrumbsLinks = [
         label: "All Stores",
         route: {
             name: "team.stores.index",
-            parameters: [props.currentUserTeam.reference_id],
+            parameters: [props.currentUserTeam.id],
         },
     },
     { label: "Add Store" },

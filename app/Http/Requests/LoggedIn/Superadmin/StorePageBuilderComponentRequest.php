@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\LoggedIn\Superadmin;
 
+use App\Models\MediaLibrary\MediaLibrary;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePageBuilderComponentRequest extends FormRequest
@@ -11,7 +12,7 @@ class StorePageBuilderComponentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,15 +22,15 @@ class StorePageBuilderComponentRequest extends FormRequest
      */
     public function rules(): array
     {
-        dd("er:", $this);
         $rules = [
             "html_code" => ["required", "string", "min:2", "max:65535"],
             "title" => ["required", "string", "min:2", "max:255"],
+            "published" => ["boolean"],
+            "user_id" => ["required", "integer", "exists:users,id"],
         ];
 
         return $rules;
     }
-
     /**
      * Configure the validator instance.
      *
@@ -38,8 +39,8 @@ class StorePageBuilderComponentRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $maxCategories = 3;
-        $maxCoverImages = 1;
+        $maxCategories = 2;
+        $maxCoverImages = 2;
 
         $validator->after(function ($validator) use (
             $maxCategories,
@@ -50,6 +51,8 @@ class StorePageBuilderComponentRequest extends FormRequest
                     ->errors()
                     ->add("team", "The team field is required.");
             }
+
+            $this->validateProperties($validator);
 
             // validation for cover image # start
             if (
@@ -78,7 +81,65 @@ class StorePageBuilderComponentRequest extends FormRequest
                         "Limited to a maximum of {$maxCoverImages} cover images."
                     );
             }
+            // Check if the "primary" key exists, or provide a default value of false
+            if (!empty($this->cover_image)) {
+                // Loop through the array and attach each category to the job
+                foreach ($this->cover_image as $image) {
+                    // Check if the "id" key exists in the $image array
+                    if (array_key_exists("id", $image)) {
+                        $imageId = $image["id"];
+
+                        // Check if a media library record with this ID exists
+                        $mediaLibrary = MediaLibrary::find($imageId);
+
+                        if ($mediaLibrary === null) {
+                            $validator
+                                ->errors()
+                                ->add(
+                                    "cover_image",
+                                    "At least one your attached images no longer exists in the Media Library. Delete the image and try again or click the 'Clear form' button and then try again."
+                                );
+                        }
+                    }
+                }
+            }
             // validation for cover image # end
+
+            // Additional validation to ensure only one image is marked as primary # start
+            $primaryImages = is_array($this->cover_image)
+                ? array_filter($this->cover_image, function ($image) {
+                    return isset($image["pivot"]) &&
+                        isset($image["pivot"]["primary"]) &&
+                        $image["pivot"]["primary"];
+                })
+                : [];
+
+            if (
+                count($primaryImages) === 0 &&
+                gettype($this->cover_image) === "array" &&
+                count($this->cover_image) > 1
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "cover_image",
+                        "At least one image must be marked as primary."
+                    );
+            }
+
+            if (
+                count($primaryImages) > 1 &&
+                gettype($this->cover_image) === "array" &&
+                count($this->cover_image) > 1
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "cover_image",
+                        "Only one image can be marked as primary."
+                    );
+            }
+            // Additional validation to ensure only one image is marked as primary # end
 
             // validation for categories # start
             if (
@@ -119,5 +180,48 @@ class StorePageBuilderComponentRequest extends FormRequest
         }
 
         // end of withValidator
+    }
+
+    // validate propertiers
+    private function validateProperties($validator)
+    {
+        // cover images
+        if (gettype($this->cover_image) === "array") {
+            foreach ($this->cover_image as $item) {
+                if (isset($item["id"]) === false) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            "cover_image",
+                            "Image ID for the image is not present in the Media Library. Please clear your form and try again."
+                        );
+                }
+                if (
+                    isset($item["pivot"]) &&
+                    !isset($item["pivot"]["primary"])
+                ) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            "cover_image",
+                            "The 'primary' attribute is missing for this image, even though the image is set as primary.  To resolve this issue, please click the 'Clear form' button and then try again."
+                        );
+                }
+            }
+        }
+
+        // categories
+        if (gettype($this->categories) === "array") {
+            foreach ($this->categories as $item) {
+                if (isset($item["id"]) === false) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            "categories",
+                            "The 'ID' for at least one selected category is missing. To resolve this issue, please click the 'Clear form' button and then try again."
+                        );
+                }
+            }
+        }
     }
 }

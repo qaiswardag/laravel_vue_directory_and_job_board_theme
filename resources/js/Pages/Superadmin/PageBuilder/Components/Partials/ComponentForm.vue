@@ -30,6 +30,7 @@ import {
     SquaresPlusIcon,
     TrashIcon,
     XMarkIcon,
+    PlusIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -44,6 +45,10 @@ const props = defineProps({
         required: false,
     },
     categories: {
+        default: null,
+        required: false,
+    },
+    coverImages: {
         default: null,
         required: false,
     },
@@ -116,25 +121,64 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        postForm.cover_image_original =
-            getCurrentImage.value.currentImage?.mediaLibrary?.path;
-        postForm.cover_image_thumbnail =
-            getCurrentImage.value.currentImage?.mediaLibrary?.thumbnail_path;
-        postForm.cover_image_medium =
-            getCurrentImage.value.currentImage?.mediaLibrary?.medium_path;
-        postForm.cover_image_large =
-            getCurrentImage.value.currentImage?.mediaLibrary?.large_path;
+        if (Array.isArray(postForm.cover_image) === false) {
+            postForm.cover_image === [];
+        }
+
+        const idExists = postForm.cover_image?.some((item) => {
+            return (
+                item.id === getCurrentImage.value.currentImage.mediaLibrary.id
+            );
+        });
+
+        if (idExists === false && Array.isArray(postForm.cover_image)) {
+            postForm.cover_image.unshift(
+                getCurrentImage.value.currentImage.mediaLibrary
+            );
+        }
 
         // handle show media library modal
         showMediaLibraryModal.value = false;
     };
     // end modal
 };
-const handleRemoveCoverImage = function () {
-    postForm.cover_image_original = null;
-    postForm.cover_image_thumbnail = null;
-    postForm.cover_image_medium = null;
-    postForm.cover_image_large = null;
+const removePrimaryImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.map((image) => {
+        return {
+            ...image,
+            pivot: {
+                ...image.pivot,
+                primary: image.id === imageId ? false : image?.pivot?.primary,
+            },
+        };
+    });
+};
+
+const setAsPrimaryImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.map((image) => {
+        if (image.id === imageId) {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: true,
+                },
+            };
+        } else {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: false,
+                },
+            };
+        }
+    });
+};
+const handleRemoveCoverImage = function (imageId) {
+    postForm.cover_image = postForm.cover_image.filter(
+        (image) => image.id !== imageId
+    );
 };
 
 // modal content
@@ -190,13 +234,13 @@ const postForm = useForm({
     title: "",
     html_code: "",
     published: true,
-    team: props.currentUserTeam,
 
-    cover_image_original: "",
-    cover_image_thumbnail: "",
-    cover_image_medium: "",
-    cover_image_large: "",
+    team: props.currentUserTeam,
+    user_id: props.user.id,
+
+    team: props.currentUserTeam,
     categories: [],
+    cover_image: [],
 });
 
 const handleCreatePost = function () {
@@ -206,18 +250,27 @@ const handleCreatePost = function () {
 
 const createPost = () => {
     if (formType.value === "create") {
-        postForm.post(route("admin.components.component.store"), {
-            preserveScroll: true,
-            onSuccess: () => {
-                clearForm();
-            },
-            onError: () => {},
-            onFinish: () => {},
-        });
+        postForm.post(
+            route(
+                "admin.components.component.store",
+                props.currentUserTeam.reference_id
+            ),
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    clearForm();
+                },
+                onError: () => {},
+                onFinish: () => {},
+            }
+        );
     }
     if (formType.value === "update") {
         postForm.post(
-            route("admin.components.component.update", props.post.id),
+            route("admin.components.component.update", [
+                props.post.id,
+                props.currentUserTeam.reference_id,
+            ]),
             {
                 preserveScroll: true,
                 onSuccess: () => {},
@@ -263,11 +316,7 @@ const clearForm = function () {
     postForm.html_code = "";
     postForm.published = true;
     postForm.team = props.currentUserTeam;
-
-    postForm.cover_image_original = "";
-    postForm.cover_image_thumbnail = "";
-    postForm.cover_image_medium = "";
-    postForm.cover_image_large = "";
+    postForm.user_id = props.user.id;
 
     postForm.categories = [];
 
@@ -299,7 +348,7 @@ window.addEventListener("beforeunload", function () {
     storeDirtyFormInLocalStorage();
 });
 
-// // get unique post if needs to be updated
+// get unique post if needs to be updated
 onBeforeMount(() => {
     // User is creating a new Resource from scratch, rather than editing an existing one
     // Check local storage
@@ -312,29 +361,74 @@ onBeforeMount(() => {
             postForm.title = formLocalStorage.title;
             postForm.html_code = formLocalStorage.html_code;
             postForm.published = formLocalStorage.published;
+            //
+            //
+            //
+            // Cover image
+            if (
+                formLocalStorage.cover_image === undefined ||
+                formLocalStorage.cover_image === null
+            ) {
+                postForm.cover_image = [];
+            }
+            if (
+                formLocalStorage.cover_image !== undefined ||
+                formLocalStorage.cover_image !== null
+            ) {
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull =
+                    formLocalStorage.cover_image.every((element) => {
+                        return element === null;
+                    });
 
-            postForm.cover_image_original =
-                formLocalStorage.cover_image_original;
-            postForm.cover_image_thumbnail =
-                formLocalStorage.cover_image_thumbnail;
-            postForm.cover_image_medium = formLocalStorage.cover_image_medium;
-            postForm.cover_image_large = formLocalStorage.cover_image_large;
+                if (arrayContainsOnlyNull === true) {
+                    postForm.cover_image = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.cover_image = formLocalStorage.cover_image;
+                }
+            }
+            // Categories
+            if (
+                formLocalStorage.categories === undefined ||
+                formLocalStorage.categories === null
+            ) {
+                postForm.categories = [];
+            }
+            if (
+                formLocalStorage.categories !== undefined ||
+                formLocalStorage.categories !== null
+            ) {
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull = formLocalStorage.categories.every(
+                    (element) => {
+                        return element === null;
+                    }
+                );
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.categories = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.categories = formLocalStorage.categories;
+                }
+            }
         }
     }
+    //
     // User is editing an existing Resource, rather than creating a new one from scratch.
     if (props.post !== null) {
         formType.value = "update";
         postForm.title = props.post.title;
         postForm.html_code = props.post.html_code;
         postForm.published = props.post.published === 1 ? true : false;
-        postForm.cover_image_original = props.post.cover_image_original;
-        postForm.cover_image_thumbnail = props.post.cover_image_thumbnail;
-        postForm.cover_image_medium = props.post.cover_image_medium;
-        postForm.cover_image_large = props.post.cover_image_large;
 
-        if (props.categories !== null) {
-            postForm.categories = props.categories;
-        }
+        postForm.categories = props.categories;
+        postForm.cover_image = props.coverImages;
     }
 });
 
@@ -603,67 +697,166 @@ const categoriesSorted = computed(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
                     </div>
-                    <p class="myPrimaryParagraph">
-                        Uplaod or select a Component cover image.
-                    </p>
+                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
-
-                <img
-                    v-if="
-                        postForm.cover_image_medium &&
-                        postForm.cover_image_medium.length !== 0
-                    "
-                    @click="handleUploadCoverImage"
-                    class="myPrimarythumbnailInsertPreview"
-                    alt="cover image"
-                    :src="`/storage/uploads/${postForm.cover_image_medium}`"
-                />
-
+                <!-- select - start -->
                 <div
-                    class="myInputGroup flex items-center justify-between border-t border-myPrimaryLightGrayColor pt-4"
+                    @click="handleUploadCoverImage"
+                    class="myPrimaryFakeSelect"
                 >
-                    <button
-                        @click="handleUploadCoverImage"
-                        type="button"
-                        class="myPrimaryButton gap-2 items-center"
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <p class="myPrimaryParagraph">
+                            {{
+                                postForm.cover_image &&
+                                postForm.cover_image?.length === 0
+                                    ? "Select Cover image"
+                                    : "Add Additional Cover Images"
+                            }}
+                        </p>
+                    </div>
+                    <div
+                        class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                            />
-                        </svg>
-
-                        Cover image
-                    </button>
-
-                    <div v-if="postForm && postForm.cover_image_medium">
-                        <svg
-                            @click="handleRemoveCoverImage"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5 text-myPrimaryErrorColor cursor-pointer"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                        </svg>
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
                     </div>
                 </div>
-                <InputError :message="postForm.errors.cover_image_original" />
+                <!-- select - end -->
+
+                <div
+                    v-if="
+                        postForm.cover_image &&
+                        postForm.cover_image?.length === 0
+                    "
+                    class="space-y-6 mt-2"
+                >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
+                    <p
+                        v-if="
+                            postForm.cover_image &&
+                            postForm.cover_image?.length !== 0
+                        "
+                        class="myPrimaryParagraph italic text-xs py-4"
+                    >
+                        Added
+                        {{
+                            postForm.cover_image && postForm.cover_image?.length
+                        }}
+                        {{
+                            postForm.cover_image &&
+                            postForm.cover_image?.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+                    <div
+                        v-if="
+                            postForm.cover_image &&
+                            Array.isArray(postForm?.cover_image) &&
+                            postForm.cover_image?.length !== 0
+                        "
+                        class="p-2 border border-myPrimaryLightGrayColor"
+                    >
+                        <div
+                            class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                        >
+                            <div
+                                v-for="image in postForm.cover_image !== null &&
+                                postForm.cover_image"
+                                :key="image?.id"
+                            >
+                                <div
+                                    class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                >
+                                    <div
+                                        class="flex justify-left items-center gap-2"
+                                    >
+                                        <img
+                                            @click="handleUploadCoverImage"
+                                            :src="`/storage/uploads/${image?.medium_path}`"
+                                            alt="image"
+                                            class="myPrimarythumbnailInsertPreview"
+                                        />
+
+                                        <button
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                                            v-if="
+                                                image?.pivot?.primary &&
+                                                postForm.cover_image?.length > 1
+                                            "
+                                            type="button"
+                                            @click="
+                                                removePrimaryImage(image?.id)
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-center justify-center gap-2"
+                                            >
+                                                <span> Primary </span>
+                                                <CheckIcon
+                                                    class="w-3 h-3 stroke-2"
+                                                ></CheckIcon>
+                                            </div>
+                                        </button>
+                                        <button
+                                            class="myPrimaryTag transition"
+                                            v-if="
+                                                !image?.pivot?.primary &&
+                                                postForm.cover_image?.length > 1
+                                            "
+                                            type="button"
+                                            @click="
+                                                setAsPrimaryImage(image?.id)
+                                            "
+                                        >
+                                            <span> Set as Primary </span>
+                                        </button>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        @click="
+                                            handleRemoveCoverImage(image?.id)
+                                        "
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    >
+                                        <TrashIcon
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        ></TrashIcon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            v-if="
+                                postForm.cover_image &&
+                                postForm.cover_image?.length >= 1
+                            "
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
+                        >
+                            <p
+                                @click="handleUploadCoverImage"
+                                class="myPrimaryParagraph text-xs italic cursor-pointer"
+                            >
+                                Add Additional Images
+                            </p>
+                            <button
+                                type="button"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                @click="handleUploadCoverImage"
+                            >
+                                <PlusIcon
+                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                ></PlusIcon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <InputError :message="postForm.errors.cover_image" />
             </div>
             <!-- cover image - end -->
         </template>

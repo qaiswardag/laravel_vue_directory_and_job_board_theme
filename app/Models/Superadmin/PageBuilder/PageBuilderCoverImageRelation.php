@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PageBuilderCoverImageRelation extends Model
 {
     use HasFactory;
+
+    protected $fillable = ["component_id", "media_library_id", "primary"];
 }

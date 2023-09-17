@@ -264,7 +264,7 @@ onMounted(() => {
                             :href="
                                 route(
                                     'media.index',
-                                    $page.props.user.current_team.reference_id
+                                    $page.props.user.current_team.id
                                 )
                             "
                             class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
@@ -347,7 +347,7 @@ onMounted(() => {
                             :href="
                                 route(
                                     'team.posts.index',
-                                    $page.props.user.current_team.reference_id
+                                    $page.props.user.current_team.id
                                 )
                             "
                             class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"

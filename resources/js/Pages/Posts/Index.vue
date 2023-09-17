@@ -136,10 +136,7 @@ const deletePost = (postId) => {
 // handle action
 const handleEdit = function (postId) {
     router.get(
-        route("team.posts.post.edit", [
-            props.currentUserTeam.reference_id,
-            postId,
-        ])
+        route("team.posts.post.edit", [props.currentUserTeam.id, postId])
     );
 };
 
@@ -193,7 +190,6 @@ onMounted(() => {
             @thirdModalButtonFunction="thirdModalButtonFunction"
         >
             <header></header>
-
             <main></main>
         </DynamicModal>
         <template #header>
@@ -219,9 +215,7 @@ onMounted(() => {
                 <Link
                     class="myPrimaryButton"
                     type="button"
-                    :href="
-                        route('team.posts.create', currentUserTeam.reference_id)
-                    "
+                    :href="route('team.posts.create', currentUserTeam.id)"
                 >
                     Create Post
                 </Link>
@@ -360,7 +354,7 @@ onMounted(() => {
                                         :href="
                                             route('team.posts.post.show', [
                                                 $page.props.user.current_team
-                                                    .reference_id,
+                                                    .id,
                                                 post.id,
                                                 post.slug,
                                             ])

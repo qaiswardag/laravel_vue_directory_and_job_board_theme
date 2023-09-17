@@ -6,7 +6,7 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import DefaultTemplate from "@/Components/PageTemplates/DefaultTemplate.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import { parseISO, format } from "date-fns";
-import ArticleTemplate from "../../../Components/PageTemplates/ArticleTemplate.vue";
+import ArticleTemplate from "@/Components/PageTemplates/ArticleTemplate.vue";
 
 defineProps({
     post: {

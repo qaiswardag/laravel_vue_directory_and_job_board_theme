@@ -21,14 +21,14 @@ return new class extends Migration {
                 ->onDelete("cascade")
                 ->constrained();
 
+            $table->boolean("primary")->nullable();
+
             $table
                 ->foreignId("component_id")
                 ->references("id")
                 ->on("page_builder_components")
                 ->onDelete("cascade")
                 ->constrained();
-
-            $table->boolean("primary")->nullable();
             $table->timestamps();
         });
     }

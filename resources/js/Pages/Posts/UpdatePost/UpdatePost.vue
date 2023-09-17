@@ -29,7 +29,7 @@ const breadcrumbsLinks = [
         label: "All Posts",
         route: {
             name: "team.posts.index",
-            parameters: [props.currentUserTeam.reference_id],
+            parameters: [props.currentUserTeam.id],
         },
     },
     { label: "Update Post" },

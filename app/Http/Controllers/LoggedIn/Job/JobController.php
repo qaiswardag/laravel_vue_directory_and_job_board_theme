@@ -38,9 +38,9 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $referenceId)
+    public function index(Request $request, $teamId)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -107,9 +107,9 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($referenceId)
+    public function create($teamId)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -306,7 +306,9 @@ class JobController extends Controller
         // Return the current team that the user is on, rather than the team that the user is storing the job for.
         $currentTeam = Auth::user()->currentTeam->reference_id;
 
-        return redirect()->route("team.jobs.index", $currentTeam);
+        return redirect()->route("team.jobs.index", [
+            "teamId" => $team->id,
+        ]);
     }
 
     /**
@@ -315,11 +317,11 @@ class JobController extends Controller
      * @param  \App\Models\Job\Job $job
      * @return \Illuminate\Http\Response
      */
-    public function show($referenceId, Job $job, $slug)
+    public function show($teamId, Job $job, $slug)
     {
-        $jobRenderView = "Teams/Jobs/Show/ShowTeamJob";
+        $jobRenderView = "Jobs/Show/ShowTeamJob";
 
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -382,9 +384,9 @@ class JobController extends Controller
      * @param  \App\Models\Job\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function edit($referenceId, Job $job)
+    public function edit($teamId, Job $job)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -696,7 +698,7 @@ class JobController extends Controller
         }
 
         return redirect()->route("team.jobs.index", [
-            "referenceId" => $team->reference_id,
+            "teamId" => $team->id,
         ]);
     }
 

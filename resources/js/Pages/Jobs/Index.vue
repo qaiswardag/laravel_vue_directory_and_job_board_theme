@@ -55,7 +55,7 @@ const breadcrumbsLinks = [
         label: "All Jobs",
         route: {
             name: "team.jobs.index",
-            parameters: [props.currentUserTeam.reference_id],
+            parameters: [props.currentUserTeam.id],
         },
     },
 ];
@@ -65,7 +65,7 @@ const routesArray = [
         label: "All Jobs",
         route: {
             name: "team.jobs.index",
-            parameters: [props.currentUserTeam.reference_id],
+            parameters: [props.currentUserTeam.id],
         },
     },
     {
@@ -141,12 +141,7 @@ const deletePost = (postId) => {
 
 // handle action
 const handleEdit = function (postId) {
-    router.get(
-        route("team.jobs.job.edit", [
-            props.currentUserTeam.reference_id,
-            postId,
-        ])
-    );
+    router.get(route("team.jobs.job.edit", [props.currentUserTeam.id, postId]));
 };
 
 // form
@@ -155,15 +150,12 @@ const searchForm = useForm({
 });
 
 const handleSearch = function () {
-    searchForm.get(
-        route("team.jobs.index", [props.currentUserTeam.reference_id]),
-        {
-            preserveScroll: true,
-            onSuccess: () => {},
-            onError: (err) => {},
-            onFinish: () => {},
-        }
-    );
+    searchForm.get(route("team.jobs.index", [props.currentUserTeam.id]), {
+        preserveScroll: true,
+        onSuccess: () => {},
+        onError: (err) => {},
+        onFinish: () => {},
+    });
 };
 
 onMounted(() => {
@@ -221,9 +213,7 @@ onMounted(() => {
                 <Link
                     class="myPrimaryButton"
                     type="button"
-                    :href="
-                        route('team.jobs.create', currentUserTeam.reference_id)
-                    "
+                    :href="route('team.jobs.create', currentUserTeam.id)"
                 >
                     Create Job
                 </Link>
@@ -362,9 +352,9 @@ onMounted(() => {
                                 >
                                     <Link
                                         :href="
-                                            route('team.posts.post.show', [
+                                            route('team.jobs.job.show', [
                                                 $page.props.user.current_team
-                                                    .reference_id,
+                                                    .id,
                                                 post.id,
                                                 post.slug,
                                             ])

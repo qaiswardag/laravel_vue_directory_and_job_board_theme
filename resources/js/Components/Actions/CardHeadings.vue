@@ -37,10 +37,10 @@ defineProps({
                     <Menu as="div" class="relative inline-block text-left">
                         <div>
                             <MenuButton
-                                class="-m-2 flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                             >
                                 <EllipsisVerticalIcon
-                                    class="h-5 w-5"
+                                    class="shrink-0 h-4 w-4 m-2 stroke-2"
                                     aria-hidden="true"
                                 />
                             </MenuButton>

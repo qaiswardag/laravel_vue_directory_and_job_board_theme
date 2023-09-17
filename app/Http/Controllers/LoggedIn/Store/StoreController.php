@@ -34,9 +34,9 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $referenceId)
+    public function index(Request $request, $teamId)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -101,9 +101,9 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($referenceId)
+    public function create($teamId)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -258,10 +258,12 @@ class StoreController extends Controller
             }
         }
 
-        // Return the current team that the user is on, rather than the team that the user is storing the job for.
+        // Return the current team that the user is on, rather than the team that the user is storing the store for.
         $currentTeam = Auth::user()->currentTeam->reference_id;
 
-        return redirect()->route("team.stores.index", $currentTeam);
+        return redirect()->route("team.stores.index", [
+            "teamId" => $team->id,
+        ]);
     }
 
     /**
@@ -270,11 +272,11 @@ class StoreController extends Controller
      * @param  \App\Models\Store\Store $store
      * @return \Illuminate\Http\Response
      */
-    public function show($referenceId, Store $store, $slug)
+    public function show($teamId, Store $store, $slug)
     {
-        $storeRenderView = "Teams/Stores/Show/ShowTeamStore";
+        $storeRenderView = "Stores/Show/ShowTeamStore";
 
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -337,9 +339,9 @@ class StoreController extends Controller
      * @param  \App\Models\Store\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function edit($referenceId, Store $store)
+    public function edit($teamId, Store $store)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -586,7 +588,7 @@ class StoreController extends Controller
         }
 
         return redirect()->route("team.stores.index", [
-            "referenceId" => $team->reference_id,
+            "teamId" => $team->id,
         ]);
     }
 

@@ -21,9 +21,9 @@ class MediaLibraryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($referenceId, Request $request)
+    public function index($teamId, Request $request)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
         if ($team === null) {
             return Inertia::render("Error", [

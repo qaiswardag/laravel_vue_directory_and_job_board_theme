@@ -4,12 +4,18 @@ namespace App\Http\Controllers\Superadmin\PageBuilder;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Superadmin\StorePageBuilderComponentRequest;
+use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Superadmin\PageBuilder\PageBuilderComponent;
+use App\Models\Superadmin\PageBuilder\PageBuilderComponentCategory;
+use App\Models\Superadmin\PageBuilder\PageBuilderComponentCategoryRelations;
+use App\Models\Superadmin\PageBuilder\PageBuilderCoverImageRelation;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PageBuilderController extends Controller
 {
@@ -19,6 +25,7 @@ class PageBuilderController extends Controller
 
     public function index(Request $request)
     {
+        // Authorize superadmin
         $this->authorize("superadmin-can-read");
 
         $searchQuery = $request->input("search_query");
@@ -90,11 +97,13 @@ class PageBuilderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($referenceId)
+    public function create($teamId)
     {
-        $this->authorize("superadmin-can-create-and-update");
+        // Authorize superadmin
+        $this->authorize("superadmin-can-destroy");
 
-        $team = Team::where("reference_id", $referenceId)->first();
+        // Conponents can only be managed when a Team is selected, as Team Media Library is needed
+        $team = Team::find($teamId);
 
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
@@ -114,17 +123,12 @@ class PageBuilderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(
-        StorePageBuilderComponentRequest $request,
-        $referenceId
-    ) {
+    public function store(StorePageBuilderComponentRequest $request)
+    {
         $this->authorize("superadmin-can-create-and-update");
 
-        //
-        //
-        //
-
-        $team = Team::where("reference_id", $referenceId)->first();
+        // Conponents can only be created when a Team is selected, as Team Media Library is needed
+        $team = Team::find($request->team["id"]);
 
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
@@ -134,7 +138,87 @@ class PageBuilderController extends Controller
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
+
+        $title = $request->title;
+        $html_code = $request->html_code;
+        $published = $request->published;
+        $userId = $request->user_id;
+
         //
+        //
+        // Create the post and store it in a variable
+        $component = PageBuilderComponent::create([
+            "title" => $title,
+            "html_code" => $html_code,
+            "published" => $published,
+            "user_id" => $userId,
+        ]);
+
+        $componentId = $component->id;
+
+        // cover images
+        if (
+            $request->cover_image !== null &&
+            is_array($request->cover_image) &&
+            count($request->cover_image) !== 0
+        ) {
+            // Loop through the array and attach each item to the post
+            foreach ($request->cover_image as $image) {
+                // Check if the "id" key exists in the $image array
+                if (array_key_exists("id", $image)) {
+                    $imageId = $image["id"];
+
+                    // Check if a media library record with this ID exists
+                    $mediaLibrary = MediaLibrary::find($imageId);
+                    if ($mediaLibrary) {
+                        // Determine the primary status from the pivot
+                        $isPrimary = isset($image["pivot"]["primary"])
+                            ? $image["pivot"]["primary"]
+                            : false;
+
+                        // Create a new record in the StoreCoverImageRelation table
+                        PageBuilderCoverImageRelation::create([
+                            "media_library_id" => $imageId,
+                            "component_id" => $componentId,
+                            "primary" => $isPrimary,
+                        ]);
+                    }
+                }
+            }
+        }
+
+        // categories
+        if (
+            $request->categories !== null &&
+            is_array($request->categories) &&
+            count($request->categories) !== 0
+        ) {
+            // Loop through the categories array and attach each category to the post
+            foreach ($request->categories as $category) {
+                // Check if the "id" key exists in the $category array
+                if (array_key_exists("id", $category)) {
+                    $categoryId = $category["id"];
+
+                    // Check if a category record with this ID exists
+                    $categoryModel = PageBuilderComponentCategory::find(
+                        $categoryId
+                    );
+
+                    if ($categoryModel) {
+                        // Create a new record in the PageBuilderComponentCategoryRelations table
+                        PageBuilderComponentCategoryRelations::create([
+                            "category_id" => $categoryId,
+                            "component_id" => $componentId,
+                        ]);
+                    }
+                }
+            }
+        }
+
+        // Return the current team that the user is on, rather than the team that the user is storing the post for.
+        $currentTeam = Auth::user()->currentTeam;
+
+        return redirect()->route("admin.components", $currentTeam);
     }
 
     /**
@@ -148,13 +232,14 @@ class PageBuilderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($referenceId, PageBuilderComponent $component)
+    public function edit($teamId, PageBuilderComponent $component)
     {
+        // Authorize superadmin
         $this->authorize("superadmin-can-create-and-update");
-        //
 
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::find($teamId);
 
+        // Conponents can only be managed when a Team is selected, as Team Media Library is needed
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
@@ -164,17 +249,16 @@ class PageBuilderController extends Controller
             ]);
         }
 
-        //
-        // Retrieve the categories associated with the component
-        $categories = $component->categories; // Assuming you have a relationship set up
+        // Retrieve items associated with the component
+        $categories = $component->categories;
+        $coverImages = $component->coverImages;
 
-        //
-        //
         return Inertia::render(
             "Superadmin/PageBuilder/Components/UpdateComponent/UpdateComponent",
             [
                 "post" => $component,
                 "categories" => $categories,
+                "coverImages" => $coverImages,
             ]
         );
     }
@@ -184,14 +268,19 @@ class PageBuilderController extends Controller
      */
     public function update(
         StorePageBuilderComponentRequest $request,
-        PageBuilderComponent $pageBuilderComponent,
-        $referenceId
+        $componentId
     ) {
         $this->authorize("superadmin-can-create-and-update");
-        //
 
-        $team = Team::where("reference_id", $referenceId)->first();
+        $pageBuilderComponent = PageBuilderComponent::findOrFail($componentId);
 
+        $team = Team::findOrFail($request->team["id"]);
+
+        $userId = $request->user_id;
+
+        // Authorize superadmin
+
+        // Conponents can only be managed when a Team is selected, as Team Media Library is needed
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
@@ -200,20 +289,134 @@ class PageBuilderController extends Controller
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
+
+        // Create the post and store it in a variable
+        $pageBuilderComponent->update([
+            "title" => $request->title,
+            "html_code" => $request->html_code,
+            "published" => $request->published,
+            "user_id" => $userId,
+        ]);
+
+        // Get the post ID
+        $postId = $pageBuilderComponent->id;
+
+        // Update cover images # start
+
+        // Retrieve the existing cover image relationships for the post
+        $existingCoverImages = PageBuilderCoverImageRelation::where(
+            "component_id",
+            $postId
+        )->get();
+
+        // Create an array to store the IDs of existing cover images
+        $existingCoverImageIds = $existingCoverImages
+            ->pluck("media_library_id")
+            ->toArray();
+
+        // Loop through the request's cover images and update or create cover image relationships
+        // Check if $request->cover_image is not null and is an array
+        if (
+            $request->cover_image !== null &&
+            gettype($request->cover_image) === "array" &&
+            count($request->cover_image) !== 0
+        ) {
+            foreach ($request->cover_image as $coverImage) {
+                $imageId = $coverImage["id"];
+                $isPrimary = isset($coverImage["pivot"]["primary"])
+                    ? $coverImage["pivot"]["primary"]
+                    : false;
+
+                // Update or create cover image relationship
+                PageBuilderCoverImageRelation::updateOrCreate(
+                    [
+                        "media_library_id" => $imageId,
+                        "component_id" => $postId,
+                    ],
+                    ["primary" => $isPrimary]
+                );
+
+                // Remove the image ID from the existingCoverImageIds array
+                $key = array_search($imageId, $existingCoverImageIds);
+                if ($key !== false) {
+                    unset($existingCoverImageIds[$key]);
+                }
+            }
+        }
+
+        // Delete any remaining cover image relationships that are no longer needed
+        PageBuilderCoverImageRelation::where("component_id", $postId)
+            ->whereIn("media_library_id", $existingCoverImageIds)
+            ->delete();
+
+        // Update cover images # end
+
+        //
+        //
+        //
+        //
+        //
+        //
+        // Update categories
+        if (
+            $request->categories !== null &&
+            gettype($request->categories) === "array" &&
+            count($request->categories) !== 0
+        ) {
+            // Retrieve the existing resource IDs for the resource
+            $existingResourceIds = PageBuilderComponentCategoryRelations::where(
+                "component_id",
+                $postId
+            )
+                ->pluck("category_id")
+                ->toArray();
+
+            // Loop through the items array and update or create a record in the table
+            $updatedResourceIds = [];
+
+            foreach ($request->categories as $category) {
+                $categoryId = $category["id"];
+                $updatedResourceIds[] = $categoryId;
+
+                // Update or create  record in the table
+                PageBuilderComponentCategoryRelations::updateOrCreate([
+                    "category_id" => $categoryId,
+                    "component_id" => $postId,
+                ]);
+            }
+
+            // Delete records that are not present in the request
+            $resourcesToDelete = array_diff(
+                $existingResourceIds,
+                $updatedResourceIds
+            );
+            PageBuilderComponentCategoryRelations::where(
+                "component_id",
+                $postId
+            )
+                ->whereIn("category_id", $resourcesToDelete)
+                ->delete();
+        }
+
+        // Return the current team that the user is on, rather than the team that the user is storing the post for.
+        $currentTeam = Auth::user()->currentTeam;
+
+        return redirect()->route("admin.components", $currentTeam);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(
-        PageBuilderComponent $pageBuilderComponent,
-        $referenceId
-    ) {
+    public function destroy($componentId, $teamId)
+    {
+        // Authorize superadmin
         $this->authorize("superadmin-can-destroy");
-        //
-        //
-        $team = Team::where("reference_id", $referenceId)->first();
 
+        $pageBuilderComponent = PageBuilderComponent::findOrFail($componentId);
+
+        $team = Team::find($teamId);
+
+        // Conponents can only be managed when a Team is selected, as Team Media Library is needed
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
@@ -222,5 +425,14 @@ class PageBuilderController extends Controller
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
+
+        $pageBuilderComponent->delete();
+
+        return redirect()
+            ->back()
+            ->with(
+                "success",
+                "Successfully deleted the item with id: {$pageBuilderComponent->id}."
+            );
     }
 }

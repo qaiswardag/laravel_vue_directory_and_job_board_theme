@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create("page_builder_components", function (Blueprint $table) {
             $table->id();
+            $table->timestamp("deleted_at")->nullable();
             $table->integer("user_id")->unsigned();
             $table->string("title");
             $table->longText("html_code");

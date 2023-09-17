@@ -101,12 +101,12 @@ Route::middleware([
         // POSTS #START
         // POSTS #START
         // POSTS #START
-        Route::get("/team/posts/{referenceId}", [
+        Route::get("/team/posts/{teamId}", [
             PostController::class,
             "index",
         ])->name("team.posts.index");
         // unique post
-        Route::get("/team/posts/{referenceId}/post/{post}/{slug}", [
+        Route::get("/team/posts/{teamId}/post/{post}/{slug}", [
             PostController::class,
             "show",
         ])->name("team.posts.post.show");
@@ -119,12 +119,12 @@ Route::middleware([
         // JOBS #START
         // JOBS #START
         // JOBS #START
-        Route::get("/team/jobs/{referenceId}", [
+        Route::get("/team/jobs/{teamId}", [
             JobController::class,
             "index",
         ])->name("team.jobs.index");
-        // unique post
-        Route::get("/team/jobs/{referenceId}/job/{job}/{slug}", [
+        // unique job
+        Route::get("/team/jobs/{teamId}/job/{job}/{slug}", [
             JobController::class,
             "show",
         ])->name("team.jobs.job.show");
@@ -137,12 +137,12 @@ Route::middleware([
         // STORE #START
         // STORE #START
         // STORE #START
-        Route::get("/team/stores/{referenceId}", [
+        Route::get("/team/stores/{teamId}", [
             StoreController::class,
             "index",
         ])->name("team.stores.index");
-        // unique post
-        Route::get("/team/stores/{referenceId}/store/{store}/{slug}", [
+        // unique store
+        Route::get("/team/stores/{teamId}/store/{store}/{slug}", [
             StoreController::class,
             "show",
         ])->name("team.stores.store.show");
@@ -160,7 +160,7 @@ Route::middleware([
             "index",
         ])->name("team.media.index");
         // media
-        Route::get("/team/media/{referenceId}", [
+        Route::get("/team/media/{teamId}", [
             MediaLibraryController::class,
             "index",
         ])->name("media.index");
@@ -259,7 +259,7 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("/team/posts/post/{referenceId}/{post}", [
+    Route::get("/team/posts/post/{teamId}/{post}", [
         PostController::class,
         "edit",
     ])->name("team.posts.post.edit");
@@ -269,7 +269,7 @@ Route::middleware([
         "update",
     ])->name("team.posts.update");
 
-    Route::get("/team/posts/create/{referenceId}", [
+    Route::get("/team/posts/create/{teamId}", [
         PostController::class,
         "create",
     ])->name("team.posts.create");
@@ -287,7 +287,7 @@ Route::middleware([
     // JOBS #START
     // JOBS #START
     // JOBS #START
-    Route::get("/team/jobs/job/{referenceId}/{job}", [
+    Route::get("/team/jobs/job/{teamId}/{job}", [
         JobController::class,
         "edit",
     ])->name("team.jobs.job.edit");
@@ -297,7 +297,7 @@ Route::middleware([
         "update",
     ])->name("team.jobs.update");
 
-    Route::get("/team/jobs/create/{referenceId}", [
+    Route::get("/team/jobs/create/{teamId}", [
         JobController::class,
         "create",
     ])->name("team.jobs.create");
@@ -315,7 +315,7 @@ Route::middleware([
     // STORES #START
     // STORES #START
 
-    Route::get("/team/stores/store/{referenceId}/{store}", [
+    Route::get("/team/stores/store/{teamId}/{store}", [
         StoreController::class,
         "edit",
     ])->name("team.stores.store.edit");
@@ -325,7 +325,7 @@ Route::middleware([
         "update",
     ])->name("team.stores.update");
 
-    Route::get("/team/stores/create/{referenceId}", [
+    Route::get("/team/stores/create/{teamId}", [
         StoreController::class,
         "create",
     ])->name("team.stores.create");
@@ -536,12 +536,12 @@ Route::middleware([
         "index",
     ])->name("admin.components");
 
-    Route::get("/admin/components/create/{referenceId}", [
+    Route::get("/admin/components/create/{teamId}", [
         PageBuilderController::class,
         "create",
     ])->name("admin.components.component.create");
 
-    Route::get("/admin/components/component/edit/{referenceId}/{component}", [
+    Route::get("/admin/components/component/edit/{teamId}/{component}", [
         PageBuilderController::class,
         "edit",
     ])->name("admin.components.component.edit");
@@ -554,10 +554,16 @@ Route::middleware([
     ])->name("admin.components.component.store");
 
     //
-    Route::post("/admin/components/component/{component}", [
+    Route::post("/admin/components/component/{componentId}", [
         PageBuilderController::class,
         "update",
     ])->name("admin.components.component.update");
+
+    // destroy
+    Route::delete("/admin/components/component/{componentId}/{teamId}", [
+        PageBuilderController::class,
+        "destroy",
+    ])->name("admin.components.component.destroy");
     // ADMIN ONLY #PAGE BUILDER #END
     // ADMIN ONLY #PAGE BUILDER #END
     // ADMIN ONLY #PAGE BUILDER #END

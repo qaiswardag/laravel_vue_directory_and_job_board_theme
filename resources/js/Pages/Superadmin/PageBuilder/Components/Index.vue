@@ -71,6 +71,7 @@ const props = defineProps({
     },
 });
 
+const modalShowDeleteComponent = ref(false);
 const showModalEditComponentTeamAuth = ref(false);
 //
 // use dynamic model
@@ -114,31 +115,59 @@ const handleEdit = function (componentID) {
 
     router.get(
         route("admin.components.component.edit", [
-            // if reference_id is undefined or null, then reference_id to 0
             props.currentUserTeam &&
-            props.currentUserTeam.reference_id !== null &&
-            props.currentUserTeam.reference_id !== undefined
-                ? props.currentUserTeam.reference_id
+            props.currentUserTeam.id !== null &&
+            props.currentUserTeam.id !== undefined
+                ? props.currentUserTeam.id
                 : 0,
             componentID,
         ])
     );
 };
-const handleDelete = function (componentID) {
-    console.log("handle delete:", componentID);
 
-    //
-    // deletePostForm.delete(
-    //     route("team.posts.post.destroy", [postId, props.currentUserTeam.id]),
-    //     {
-    //         preserveScroll: true,
-    //         onSuccess: () => (modalShowDeletePost.value = false),
-    //         onError: (err) => {},
-    //         onFinish: (log) => {
-    //             modalShowDeletePost.value = false;
-    //         },
-    //     }
-    // );
+// handle action
+const handleDelete = function (postId, post) {
+    modalShowDeleteComponent.value = true;
+
+    // set modal standards
+    typeModal.value = "delete";
+    gridColumnModal.value = 3;
+    titleModal.value = `Delete Component?`;
+    descriptionModal.value = `Are you sure you want to delete this component?`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Delete Post";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowDeleteComponent.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        deleteComponent(postId);
+    };
+    // end modal
+};
+
+// form
+const deletePostForm = useForm({});
+
+const deleteComponent = function (componentId) {
+    deletePostForm.delete(
+        route("admin.components.component.destroy", [
+            componentId,
+            props.currentUserTeam.id,
+        ]),
+        {
+            preserveScroll: true,
+            onSuccess: () => (modalShowDeleteComponent.value = false),
+            onError: (err) => {},
+            onFinish: (log) => {
+                modalShowDeleteComponent.value = false;
+            },
+        }
+    );
 };
 
 // handle search
@@ -186,7 +215,7 @@ const routesArray = [
         label: "Create Compoenent",
         route: {
             name: "admin.components.component.create",
-            parameters: props.currentUserTeam?.reference_id,
+            parameters: props.currentUserTeam?.id,
         },
     },
 ];
@@ -197,6 +226,24 @@ const routesArray = [
         <FullScreenSpinner></FullScreenSpinner>
     </template>
     <LoggedInLayout>
+        <DynamicModal
+            :show="modalShowDeleteComponent"
+            :type="typeModal"
+            :disabled="deletePostForm.processing"
+            disabledWhichButton="thirdButton"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
+        >
+            <header></header>
+            <main></main>
+        </DynamicModal>
         <Head title="Manage Components" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">List of Components</h2>
@@ -231,9 +278,9 @@ const routesArray = [
                         route(
                             'admin.components.component.create',
                             props.currentUserTeam &&
-                                props.currentUserTeam.reference_id !== null &&
-                                props.currentUserTeam.reference_id !== undefined
-                                ? props.currentUserTeam.reference_id
+                                props.currentUserTeam.id !== null &&
+                                props.currentUserTeam.id !== undefined
+                                ? props.currentUserTeam.id
                                 : 0
                         )
                     "

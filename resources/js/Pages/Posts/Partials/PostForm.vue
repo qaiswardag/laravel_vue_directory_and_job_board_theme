@@ -149,7 +149,7 @@ const handleUploadCoverImage = function () {
             postForm.cover_image === [];
         }
 
-        const idExists = postForm.cover_image.some((item) => {
+        const idExists = postForm.cover_image?.some((item) => {
             return (
                 item.id === getCurrentImage.value.currentImage.mediaLibrary.id
             );
@@ -923,7 +923,10 @@ const categoriesSorted = computed(() => {
 
                                         <button
                                             class="myPrimaryTag bg-myPrimaryLinkColor text-white"
-                                            v-if="image?.pivot?.primary"
+                                            v-if="
+                                                image?.pivot?.primary &&
+                                                postForm.cover_image?.length > 1
+                                            "
                                             type="button"
                                             @click="
                                                 removePrimaryImage(image?.id)

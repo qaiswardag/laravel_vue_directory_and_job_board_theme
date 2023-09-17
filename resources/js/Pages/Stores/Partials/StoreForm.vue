@@ -159,7 +159,7 @@ const handleUploadCoverImage = function () {
             postForm.cover_image === [];
         }
 
-        const idExists = postForm.cover_image.some((item) => {
+        const idExists = postForm.cover_image?.some((item) => {
             return (
                 item.id === getCurrentImage.value.currentImage.mediaLibrary.id
             );

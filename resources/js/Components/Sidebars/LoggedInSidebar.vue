@@ -41,34 +41,39 @@ import {
                         )
                     "
                 >
-                    <div
+                    <template
                         v-if="
                             $page.props.user.current_team.coverImagesWithLogos
                                 ?.logos
                         "
                     >
-                        <ThumbnailSmallImageSlider
-                            :images="
-                                $page.props.user.current_team
-                                    .coverImagesWithLogos?.logos
-                            "
-                            imageSize="medium_path"
-                            imageHeight="h-16"
-                            imageWidth="w-16"
-                            :roundedFull="true"
-                        ></ThumbnailSmallImageSlider>
-                    </div>
-                    <div
-                        v-if="
-                            !$page.props.user.current_team.coverImagesWithLogos
-                                ?.logos
-                        "
-                    >
-                        <p class="my-4">
-                            {{ $page.props.currentUserTeam?.name }}
-                        </p>
-                    </div>
+                        <Link :href="route('user.teams.switch')">
+                            <ThumbnailSmallImageSlider
+                                :images="
+                                    $page.props.user.current_team
+                                        .coverImagesWithLogos?.logos
+                                "
+                                imageSize="medium_path"
+                                imageHeight="h-16"
+                                imageWidth="w-16"
+                                :roundedFull="true"
+                            ></ThumbnailSmallImageSlider>
+                        </Link>
+                    </template>
                 </div>
+            </div>
+            <div
+                v-if="
+                    $page.props.user.current_team.coverImagesWithLogos?.logos
+                        ?.length === 0
+                "
+                class="flex items-center justify-center px-2 py-2"
+            >
+                <Link :href="route('user.teams.switch')">
+                    <p class="myPrimaryParagraph font-medium">
+                        {{ $page.props.currentUserTeam?.name }}
+                    </p>
+                </Link>
             </div>
 
             <div
@@ -181,12 +186,7 @@ import {
             "
         >
             <SideBarLink
-                :href="
-                    route(
-                        'media.index',
-                        $page.props.user.current_team.reference_id
-                    )
-                "
+                :href="route('media.index', $page.props.user.current_team.id)"
                 :active="route().current('media.index')"
             >
                 <PhotoIcon
@@ -205,15 +205,13 @@ import {
         >
             <SideBarLink
                 :href="
-                    route(
-                        'team.posts.index',
-                        $page.props.user.current_team.reference_id
-                    )
+                    route('team.posts.index', $page.props.user.current_team.id)
                 "
                 :active="
                     route().current('team.posts.index') ||
                     route().current('team.posts.create') ||
-                    route().current('team.posts.post.edit')
+                    route().current('team.posts.post.edit') ||
+                    route().current('team.posts.post.show')
                 "
             >
                 <DocumentTextIcon
@@ -232,15 +230,13 @@ import {
         >
             <SideBarLink
                 :href="
-                    route(
-                        'team.jobs.index',
-                        $page.props.user.current_team.reference_id
-                    )
+                    route('team.jobs.index', $page.props.user.current_team.id)
                 "
                 :active="
                     route().current('team.jobs.index') ||
                     route().current('team.jobs.create') ||
-                    route().current('team.jobs.job.edit')
+                    route().current('team.jobs.job.edit') ||
+                    route().current('team.jobs.job.show')
                 "
             >
                 <TagIcon
@@ -259,15 +255,13 @@ import {
         >
             <SideBarLink
                 :href="
-                    route(
-                        'team.stores.index',
-                        $page.props.user.current_team.reference_id
-                    )
+                    route('team.stores.index', $page.props.user.current_team.id)
                 "
                 :active="
                     route().current('team.stores.index') ||
                     route().current('team.stores.create') ||
-                    route().current('team.stores.store.edit')
+                    route().current('team.stores.store.edit') ||
+                    route().current('team.stores.store.show')
                 "
             >
                 <ShoppingBagIcon
