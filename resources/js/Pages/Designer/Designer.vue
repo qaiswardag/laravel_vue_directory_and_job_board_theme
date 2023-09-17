@@ -144,8 +144,7 @@ onMounted(async () => {
         "designer/loadComponents",
         props.team
     );
-    //
-    //
+
     if (
         awaitComponentsOnMounted.value !== undefined &&
         awaitComponentsOnMounted.value !== null
