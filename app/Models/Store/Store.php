@@ -41,7 +41,12 @@ class Store extends Model
 
     public function authors()
     {
-        return $this->belongsToMany(User::class, "author_store");
+        return $this->belongsToMany(User::class, "author_store")->select(
+            "users.first_name",
+            "users.last_name",
+            "users.profile_photo_path",
+            "users.id"
+        );
     }
 
     public function states()

@@ -19,6 +19,7 @@ import {
     PencilIcon,
 } from "@heroicons/vue/24/outline";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import UserTag from "@/Components/Users/UserTag.vue";
 
 // loading status for props and view
 const isLoaded = ref(false);
@@ -377,12 +378,12 @@ onMounted(() => {
 
                                 <td class="myPrimaryTableTBodyTd">
                                     <span
+                                        class="myPrimaryTag"
                                         :class="
                                             post.published
-                                                ? 'bg-green-50 text-myPrimaryLinkColor'
-                                                : 'bg-red-100 text-myPrimaryErrorColor'
+                                                ? 'bg-myPrimaryLinkColor text-white'
+                                                : 'bg-myPrimaryErrorColor text-white'
                                         "
-                                        class="inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
                                         >{{
                                             post.published
                                                 ? "Published"
@@ -393,14 +394,16 @@ onMounted(() => {
 
                                 <td class="myPrimaryTableTBodyTd">
                                     <span
+                                        class="myPrimaryTag"
                                         :class="
                                             post.show_author
-                                                ? 'bg-green-50 text-myPrimaryLinkColor'
-                                                : 'bg-red-100 text-myPrimaryErrorColor'
+                                                ? 'bg-myPrimaryLinkColor text-white'
+                                                : 'bg-myPrimaryErrorColor text-white'
                                         "
-                                        class="inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
                                         >{{
-                                            post.show_author ? "Show" : "Hide"
+                                            post.show_author
+                                                ? "Visible"
+                                                : "Hidden"
                                         }}</span
                                     >
                                 </td>
@@ -527,58 +530,7 @@ onMounted(() => {
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
-                                    <div
-                                        v-if="post.updatedBy !== null"
-                                        class="flex items-center gap-2"
-                                    >
-                                        <!-- user photo - start -->
-
-                                        <div
-                                            v-if="
-                                                post.updatedBy
-                                                    .profile_photo_path !== null
-                                            "
-                                        >
-                                            <div class="h-8 w-8 flex-shrink-0">
-                                                <img
-                                                    class="object-cover h-8 w-8 rounded-full"
-                                                    :src="`/storage/${post.updatedBy.profile_photo_path}`"
-                                                    alt="avatar"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            v-if="
-                                                post.updatedBy
-                                                    .profile_photo_path === null
-                                            "
-                                            class="flex-shrink-0 h-8 w-8 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
-                                        >
-                                            {{
-                                                post.updatedBy.first_name
-                                                    .charAt(0)
-                                                    .toUpperCase()
-                                            }}
-                                            {{
-                                                post.updatedBy.last_name
-                                                    .charAt(0)
-                                                    .toUpperCase()
-                                            }}
-                                        </div>
-                                        <span
-                                            class="flex flex-col items-left gap-1 myPrimaryParagraph"
-                                        >
-                                            <span>
-                                                {{ post.updatedBy.first_name }}
-                                                {{ post.updatedBy.last_name }}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <!-- user photo - end -->
-                                    <span v-if="post.updatedBy === null">
-                                        Unknown
-                                    </span>
+                                    <UserTag :user="post.updatedBy"></UserTag>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

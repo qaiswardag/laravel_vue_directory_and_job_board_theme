@@ -13,6 +13,7 @@ import { parseISO, format } from "date-fns";
 import CardHeadings from "@/Components/Actions/CardHeadings.vue";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
+import UserTag from "@/Components/Users/UserTag.vue";
 
 import {
     RadioGroup,
@@ -374,12 +375,12 @@ const routesArray = [
 
                                 <td class="myPrimaryTableTBodyTd">
                                     <span
+                                        class="myPrimaryTag"
                                         :class="
                                             component.published
-                                                ? 'bg-green-50 text-myPrimaryLinkColor'
-                                                : 'bg-red-100 text-myPrimaryErrorColor'
+                                                ? 'bg-myPrimaryLinkColor text-white'
+                                                : 'bg-myPrimaryErrorColor text-white'
                                         "
-                                        class="inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
                                         >{{
                                             component.published
                                                 ? "Published"
@@ -426,67 +427,9 @@ const routesArray = [
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">
-                                    <div
-                                        v-if="
-                                            component.updatedBy !== null &&
-                                            component.updatedBy !== undefined
-                                        "
-                                        class="flex items-center gap-2"
-                                    >
-                                        <!-- user photo - start -->
-
-                                        <div
-                                            v-if="
-                                                component.updatedBy
-                                                    .profile_photo_path !== null
-                                            "
-                                        >
-                                            <div class="h-8 w-8 flex-shrink-0">
-                                                <img
-                                                    class="object-cover h-8 w-8 rounded-full"
-                                                    :src="`/storage/${component.updatedBy.profile_photo_path}`"
-                                                    alt="avatar"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            v-if="
-                                                component.updatedBy
-                                                    .profile_photo_path === null
-                                            "
-                                            class="flex-shrink-0 h-8 w-8 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
-                                        >
-                                            {{
-                                                component.updatedBy.first_name
-                                                    .charAt(0)
-                                                    .toUpperCase()
-                                            }}
-                                            {{
-                                                component.updatedBy.last_name
-                                                    .charAt(0)
-                                                    .toUpperCase()
-                                            }}
-                                        </div>
-                                        <span
-                                            class="flex flex-col items-left gap-1 myPrimaryParagraph"
-                                        >
-                                            <span>
-                                                {{
-                                                    component.updatedBy
-                                                        .first_name
-                                                }}
-                                                {{
-                                                    component.updatedBy
-                                                        .last_name
-                                                }}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <!-- user photo - end -->
-                                    <span v-if="component.updatedBy === null">
-                                        Unknown
-                                    </span>
+                                    <UserTag
+                                        :user="component.updatedBy"
+                                    ></UserTag>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

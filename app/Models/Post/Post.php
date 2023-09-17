@@ -41,7 +41,12 @@ class Post extends Model
 
     public function authors()
     {
-        return $this->belongsToMany(User::class, "author_post");
+        return $this->belongsToMany(User::class, "author_post")->select(
+            "users.first_name",
+            "users.last_name",
+            "users.profile_photo_path",
+            "users.id"
+        );
     }
 
     public function categories()

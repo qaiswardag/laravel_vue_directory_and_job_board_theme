@@ -40,7 +40,12 @@ class Job extends Model
 
     public function authors()
     {
-        return $this->belongsToMany(User::class, "author_job");
+        return $this->belongsToMany(User::class, "author_job")->select(
+            "users.first_name",
+            "users.last_name",
+            "users.profile_photo_path",
+            "users.id"
+        );
     }
 
     public function categories()

@@ -13,13 +13,22 @@ const props = defineProps({
     currentUserTeam: {
         required: true,
     },
+    categories: {
+        required: true,
+    },
+    states: {
+        required: true,
+    },
+    coverImages: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All Stores",
         route: {
-            name: "team.posts.index",
+            name: "team.stores.index",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -29,7 +38,7 @@ const breadcrumbsLinks = [
     <LoggedInLayout>
         <Head title="Post" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Støre</h2>
+            <h2 class="myPrimaryMainPageHeader">Store</h2>
         </template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
@@ -37,7 +46,13 @@ const breadcrumbsLinks = [
         <div class="myPrimarySection"></div>
 
         <!-- Show Unique Resorce - start -->
-        <UnqiueResource :post="post" :authors="authors"></UnqiueResource>
+        <UnqiueResource
+            :post="post"
+            :authors="authors"
+            :categories="categories"
+            :states="states"
+            :coverImages="coverImages"
+        ></UnqiueResource>
         <!-- sShow Unique Post - end -->
     </LoggedInLayout>
 </template>

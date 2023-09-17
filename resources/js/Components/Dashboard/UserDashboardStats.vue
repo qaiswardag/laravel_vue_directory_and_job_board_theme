@@ -383,9 +383,7 @@ onMounted(() => {
                                 <!-- start photo -->
 
                                 <template
-                                    v-if="
-                                        post && post.cover_image_medium !== null
-                                    "
+                                    v-if="post && post.cover_images !== null"
                                 >
                                     <ThumbnailSmallImageSlider
                                         :images="post.cover_images"

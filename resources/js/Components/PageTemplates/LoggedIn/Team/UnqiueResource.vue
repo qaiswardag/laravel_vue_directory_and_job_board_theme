@@ -7,12 +7,45 @@ import DefaultTemplate from "@/Components/PageTemplates/DefaultTemplate.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import { parseISO, format } from "date-fns";
 import ArticleTemplate from "@/Components/PageTemplates/ArticleTemplate.vue";
+import WidgetSectionBorder from "@/Components/Sections/WidgetSectionBorder.vue";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import UserTag from "@/Components/Users/UserTag.vue";
+
+import {
+    BriefcaseIcon,
+    CheckIcon,
+    GlobeAmericasIcon,
+    MapIcon,
+    MapPinIcon,
+    NewspaperIcon,
+    PencilIcon,
+    Squares2X2Icon,
+    SquaresPlusIcon,
+    TagIcon,
+    TrashIcon,
+    UserIcon,
+} from "@heroicons/vue/24/outline";
 
 defineProps({
     post: {
         required: true,
     },
     authors: {
+        required: false,
+    },
+    countries: {
+        required: false,
+    },
+    states: {
+        required: false,
+    },
+    jobTypes: {
+        required: false,
+    },
+    categories: {
+        required: false,
+    },
+    coverImages: {
         required: false,
     },
 });
@@ -26,235 +59,281 @@ defineProps({
         </div>
         <ArticleTemplate :sidebarArea="true" :actionsArea="false">
             <template #main>
-                <p class="my-12 break-words">post er: {{ post }}</p>
-                <div>
-                    <div
-                        v-if="post.cover_image_large !== null"
-                        class="bg-green-200 rounded-md"
-                    >
-                        <img
-                            :src="`/storage/uploads/${post.cover_image_large}`"
-                            alt=""
-                            class="inset-0 -z-10 w-full object-cover"
-                        />
-                    </div>
-
-                    <div class="py-4 my-4">
-                        <ul class="flex flex-wrap gap-y-0 gap-x-2 mt-2">
-                            <li
-                                v-for="tag in post.tags.split(',')"
-                                :key="tag"
-                                class="myPrimaryParagraph leading-4 font-medium cursor-pointer flex-none"
-                            >
-                                <span>
-                                    {{ tag }}
-                                </span>
-                            </li>
-                        </ul>
-
-                        <p
-                            class="flex gap-4 items center myPrimaryParagraph font-medium mt-2 mb-2 text-[10px] text-myPrimaryMediumGrayColor"
-                        >
-                            <span>
-                                Created:
-                                {{
-                                    format(
-                                        parseISO(post.created_at),
-                                        "dd/MM/yyyy HH:mm"
-                                    )
-                                }}
-                            </span>
-                            <span>
-                                Updated:
-                                {{
-                                    format(
-                                        parseISO(post.updated_at),
-                                        "dd/MM/yyyy HH:mm"
-                                    )
-                                }}
-                            </span>
-                        </p>
-                    </div>
-                    <p v-html="post.content" class="myPrimaryParagraph"></p>
-                </div>
+                <ThumbnailSmallImageSlider
+                    v-if="post.cover_images"
+                    :images="post.cover_images"
+                    imageSize="large_path"
+                    imageHeight="h-96 rounded"
+                    imageWidth="w-full"
+                    :roundedFull="false"
+                ></ThumbnailSmallImageSlider>
+                <div v-html="post.content" class="prose"></div>
             </template>
-
             <template #sidebar>
                 <div class="flex gap-8 flex-col">
-                    <!-- Post created / updated by - start -->
-                    <div v-if="post.updatedBy !== null" class="myPrimaryWidget">
-                        <h1 class="myTertiaryHeader">Updated By</h1>
+                    <!-- Post updated by - start -->
+                    <div class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">Updated By</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <UserTag :user="post.updatedBy"></UserTag>
+                    </div>
+                    <!-- updated by - end -->
 
-                        <div
-                            class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full bg-gray-100 hover:bg-white divide-y divide-gray-200"
+                    <!-- published # start -->
+                    <div v-if="post.published" class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">Published</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <span
+                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                            >Published</span
                         >
-                            <div class="px-2">
-                                <div class="rounded">
-                                    <div class="flex items-center gap-2 my-4">
-                                        <div
-                                            v-if="
-                                                post.updatedBy
-                                                    .profile_photo_path !== null
-                                            "
-                                            class="flex-shrink-0"
-                                        >
-                                            <img
-                                                class="object-cover h-12 w-12 rounded-full"
-                                                :src="`/storage/${post.updatedBy.profile_photo_path}`"
-                                                alt="User Image
-                                            
-                                        "
-                                            />
-                                        </div>
+                    </div>
+                    <div v-if="!post.published" class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">Published</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <span
+                            class="myPrimaryTag bg-myPrimaryErrorColor text-white"
+                            >Unpublished</span
+                        >
+                    </div>
+                    <!-- published # end -->
 
-                                        <div
-                                            v-if="
-                                                post.updatedBy
-                                                    .profile_photo_path === null
-                                            "
-                                            class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                        >
-                                            {{
-                                                post.updatedBy.first_name
-                                                    .charAt(0)
-                                                    .toUpperCase()
-                                            }}
-                                            {{
-                                                post.updatedBy.last_name
-                                                    .charAt(0)
-                                                    .toUpperCase()
-                                            }}
-                                        </div>
-                                        <span
-                                            class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                        >
-                                            <p class="font-medium">
-                                                {{ post.updatedBy.first_name }}
-                                                {{ post.updatedBy.last_name }}
-                                            </p>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- countries # start -->
+                    <div
+                        v-if="
+                            countries &&
+                            Array.isArray(countries) &&
+                            countries.length !== 0
+                        "
+                        class="myPrimaryWidget"
+                    >
+                        <h4 class="myFourthHeader">Country</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <div
+                            class="flex flex-wrap justify-start items-center gap-2"
+                        >
+                            <p
+                                v-for="jobCountry in countries && countries"
+                                :key="jobCountry"
+                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                            >
+                                <GlobeAmericasIcon
+                                    class="w-3 h-3 stroke-1"
+                                ></GlobeAmericasIcon>
+                                <span>
+                                    {{ jobCountry.name }}
+                                </span>
+                            </p>
                         </div>
                     </div>
-                    <!-- Post created / updated by - end -->
-                    <!-- Trash - start -->
-                    <div v-if="post.trash === 1" class="myPrimaryWidget">
-                        <h1 class="myTertiaryHeader">Trash</h1>
-                        <p
-                            class="bg-red-100 inline-flex rounded-full px-2 font-medium leading-5 text-myPrimaryErrorColor"
-                        >
-                            Deleted
-                        </p>
-                    </div>
-                    <!-- Trash - end -->
-                    <!-- Published - start -->
-                    <div v-if="post.published === 0" class="myPrimaryWidget">
-                        <h1 class="myTertiaryHeader">Published</h1>
-                        <p
-                            class="bg-red-100 inline-flex rounded-full px-2 font-medium leading-5 text-myPrimaryErrorColor"
-                        >
-                            Private
-                        </p>
-                    </div>
-                    <div v-if="post.published !== 0" class="myPrimaryWidget">
-                        <h1 class="myTertiaryHeader">Published</h1>
-                        <p
-                            class="myPrimaryParagraph bg-green-100 inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
-                        >
-                            Published
-                        </p>
-                    </div>
-                    <!-- Published - end -->
-                    <!-- Show Authors - start -->
-                    <div v-if="post.show_author === 0" class="myPrimaryWidget">
-                        <h1 class="myTertiaryHeader">Show Authors</h1>
-                        <p
-                            class="bg-red-100 inline-flex rounded-full px-2 font-medium leading-5 text-myPrimaryErrorColor"
-                        >
-                            Hidden
-                        </p>
-                    </div>
-                    <div v-if="post.show_author !== 0" class="myPrimaryWidget">
-                        <h1 class="myTertiaryHeader">Show Authors</h1>
-                        <p
-                            class="myPrimaryParagraph bg-green-100 inline-flex rounded-full px-2 font-medium leading-5 text-green-800"
-                        >
-                            Visible
-                        </p>
-                    </div>
-                    <!-- Show Authors - start -->
-                    <!-- List of Authors - start -->
+                    <!-- countries # end -->
+                    <!-- states # start -->
                     <div
-                        class="myPrimaryWidget"
                         v-if="
-                            post.authors !== null &&
-                            Array.isArray(post.authors) &&
-                            post.authors.length > 0
+                            states &&
+                            Array.isArray(states) &&
+                            states.length !== 0
                         "
+                        class="myPrimaryWidget"
                     >
-                        <h1 class="myTertiaryHeader">List of Authors</h1>
+                        <h4 class="myFourthHeader">State</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
                         <div
-                            class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200 bg-red-100 hover:bg-pink-200"
+                            class="flex flex-wrap justify-start items-center gap-2"
+                        >
+                            <p
+                                v-for="state in states"
+                                :key="state"
+                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                            >
+                                <MapPinIcon
+                                    class="w-3 h-3 stroke-1"
+                                ></MapPinIcon>
+                                <span>
+                                    {{ state.name }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- states # end -->
+                    <!-- job types # start -->
+                    <div
+                        v-if="
+                            jobTypes &&
+                            Array.isArray(jobTypes) &&
+                            jobTypes.length !== 0
+                        "
+                        class="myPrimaryWidget"
+                    >
+                        <h4 class="myFourthHeader">Job type</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <div
+                            class="flex flex-wrap justify-start items-center gap-2"
+                        >
+                            <p
+                                v-for="state in jobTypes && jobTypes"
+                                :key="state"
+                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                            >
+                                <NewspaperIcon
+                                    class="w-3 h-3 stroke-1"
+                                ></NewspaperIcon>
+                                <span>
+                                    {{ state.name }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- job types # end -->
+                    <!-- categories # start -->
+                    <div
+                        v-if="
+                            categories &&
+                            Array.isArray(categories) &&
+                            categories.length !== 0
+                        "
+                        class="myPrimaryWidget"
+                    >
+                        <h4 class="myFourthHeader">Categories</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <div
+                            class="flex flex-wrap justify-start items-center gap-2"
+                        >
+                            <p
+                                v-for="state in categories && categories"
+                                :key="state"
+                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                            >
+                                <Squares2X2Icon
+                                    class="w-3 h-3 stroke-1"
+                                ></Squares2X2Icon>
+                                <span>
+                                    {{ state.name }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- categories # end -->
+                    <!-- tags # start -->
+                    <div
+                        v-if="
+                            categories &&
+                            Array.isArray(categories) &&
+                            categories.length !== 0
+                        "
+                        class="myPrimaryWidget"
+                    >
+                        <h4 class="myFourthHeader">Tags</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <div
+                            class="flex flex-wrap justify-start items-center gap-2"
                         >
                             <div
-                                v-for="(author, index) in post.authors"
-                                :key="index"
+                                class="flex flex-wrap justify-start items-center gap-2"
                             >
-                                <!-- Author profile box - start -->
-
-                                <div class="rounded">
-                                    <div class="flex items-center gap-2 my-4">
-                                        <div
-                                            v-if="
-                                                author.profile_photo_path !==
-                                                null
-                                            "
-                                            class="flex-shrink-0"
-                                        >
-                                            <img
-                                                class="object-cover h-12 w-12 rounded-full"
-                                                :src="`/storage/${author.profile_photo_path}`"
-                                                alt="User Image
-                                            
-                                        "
-                                            />
-                                        </div>
-
-                                        <div
-                                            v-if="
-                                                author.profile_photo_path ===
-                                                null
-                                            "
-                                            class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                        >
-                                            {{
-                                                author.first_name
-                                                    .charAt(0)
-                                                    .toUpperCase()
-                                            }}
-                                            {{
-                                                author.last_name
-                                                    .charAt(0)
-                                                    .toUpperCase()
-                                            }}
-                                        </div>
-                                        <span
-                                            class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                        >
-                                            <p class="font-medium">
-                                                {{ author.first_name }}
-                                                {{ author.last_name }}
-                                            </p>
-                                        </span>
-                                    </div>
-                                </div>
-                                <!-- Author profile box - end -->
+                                <p
+                                    v-for="tag in post.tags &&
+                                    post.tags
+                                        .split(',')
+                                        .sort((a, b) => a.localeCompare(b))"
+                                    :key="tag"
+                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                >
+                                    <TagIcon class="w-3 h-3 stroke-1"></TagIcon>
+                                    <span>
+                                        {{ tag }}
+                                    </span>
+                                </p>
                             </div>
                         </div>
                     </div>
-                    <!-- List of Authors - end -->
+                    <!-- tags # end -->
+
+                    <!-- show authors # start -->
+                    <div v-if="post.show_author" class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">People visibility</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <span
+                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                            >Visible</span
+                        >
+                    </div>
+                    <div v-if="!post.show_author" class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">People visibility</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <span
+                            class="myPrimaryTag bg-myPrimaryErrorColor text-white"
+                            >Hidden</span
+                        >
+                    </div>
+                    <!-- show authors # end -->
+
+                    <!-- authors # start -->
+                    <div
+                        v-if="
+                            post.show_author &&
+                            Array.isArray(authors) &&
+                            authors.length !== 0
+                        "
+                        class="myPrimaryWidget"
+                    >
+                        <h4 class="myFourthHeader">People</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <div
+                            class="flex flex-wrap justify-start items-center gap-1"
+                        >
+                            <div
+                                v-for="author in authors"
+                                :key="author"
+                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-0 px-1 flex justify-center items-center gap-1"
+                            >
+                                <div v-if="author.profile_photo_path !== null">
+                                    <div class="h-5 w-5 flex-shrink-0">
+                                        <img
+                                            class="object-cover h-5 w-5 rounded-full"
+                                            :src="`/storage/${author.profile_photo_path}`"
+                                            alt="avatar"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="font-size: 9px; gap: 2px"
+                                    v-if="author.profile_photo_path === null"
+                                    class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
+                                >
+                                    <span>
+                                        {{
+                                            author.first_name
+                                                .charAt(0)
+                                                .toUpperCase()
+                                        }}
+                                    </span>
+                                    <span>
+                                        {{
+                                            author.last_name
+                                                .charAt(0)
+                                                .toUpperCase()
+                                        }}
+                                    </span>
+                                </div>
+                                <span
+                                    class="flex flex-col items-left gap-1 myPrimaryParagraph"
+                                >
+                                    <p
+                                        style="font-size: 10px"
+                                        class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
+                                    >
+                                        <span>
+                                            {{ author.first_name }}
+                                            {{ author.last_name }}
+                                        </span>
+                                    </p>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- authors # end -->
                 </div>
             </template>
         </ArticleTemplate>

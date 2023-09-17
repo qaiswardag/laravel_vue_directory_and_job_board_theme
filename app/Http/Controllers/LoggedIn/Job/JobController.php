@@ -350,19 +350,27 @@ class JobController extends Controller
             $job->updatedBy = null;
         }
 
-        $authors = null;
+        $authors = [];
 
         if ($job->show_author) {
-            $authors = $job->authors;
+            $authors = $job->authors()->get();
         }
 
         $categories = $job->categories;
+        $countries = $job->countries;
+        $states = $job->states;
+        $jobTypes = $job->types;
+        $coverImages = $job->coverImages;
 
         // Render the job
         return Inertia::render($jobRenderView, [
             "post" => $job,
             "authors" => $authors,
+            "countries" => $countries,
+            "states" => $states,
+            "jobTypes" => $jobTypes,
             "categories" => $categories,
+            "coverImages" => $coverImages,
         ]);
     }
 

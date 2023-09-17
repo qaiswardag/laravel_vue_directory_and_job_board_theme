@@ -13,13 +13,28 @@ const props = defineProps({
     currentUserTeam: {
         required: true,
     },
+    countries: {
+        required: true,
+    },
+    states: {
+        required: true,
+    },
+    jobTypes: {
+        required: true,
+    },
+    categories: {
+        required: true,
+    },
+    coverImages: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All Jobs",
         route: {
-            name: "team.posts.index",
+            name: "team.jobs.index",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -29,7 +44,7 @@ const breadcrumbsLinks = [
     <LoggedInLayout>
         <Head title="Post" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Jøb</h2>
+            <h2 class="myPrimaryMainPageHeader">Job</h2>
         </template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
@@ -37,7 +52,14 @@ const breadcrumbsLinks = [
         <div class="myPrimarySection"></div>
 
         <!-- Show Unique Resorce - start -->
-        <UnqiueResource :post="post" :authors="authors"></UnqiueResource>
+        <UnqiueResource
+            :post="post"
+            :authors="authors"
+            :countries="countries"
+            :jobTypes="jobTypes"
+            :categories="categories"
+            :coverImages="coverImages"
+        ></UnqiueResource>
         <!-- sShow Unique Post - end -->
     </LoggedInLayout>
 </template>

@@ -275,19 +275,21 @@ class PostController extends Controller
             $post->updatedBy = null;
         }
 
-        $authors = null;
+        $authors = [];
 
         if ($post->show_author) {
-            $authors = $post->authors;
+            $authors = $post->authors()->get();
         }
 
         $categories = $post->categories;
+        $coverImages = $post->coverImages;
 
         // Render the post
         return Inertia::render($postRenderView, [
             "post" => $post,
             "authors" => $authors,
             "categories" => $categories,
+            "coverImages" => $coverImages,
         ]);
     }
 

@@ -136,18 +136,18 @@
         @apply lg:max-w-3xl text-xl mx-auto text-center font-medium;
     }
     .myPrimaryHeader {
-        @apply text-3xl mb-2 font-medium text-black;
+        @apply text-3xl mb-2 font-medium text-myPrimaryDarkGrayColor;
     }
 
     .mySecondaryHeader {
-        @apply text-2xl mb-2 font-medium text-black;
+        @apply text-2xl mb-2 font-medium text-myPrimaryDarkGrayColor;
     }
 
     .myTertiaryHeader {
-        @apply text-lg mb-2 font-medium text-black;
+        @apply text-lg mb-2 font-medium text-myPrimaryDarkGrayColor;
     }
     .myFourthHeader {
-        @apply text-base mb-2 font-medium text-black;
+        @apply text-base mb-2 font-medium text-myPrimaryDarkGrayColor;
     }
 
     /*
@@ -356,7 +356,7 @@
     }
 
     .myPrimaryTextArea {
-        @apply block w-full sm:text-sm font-normal text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
+        @apply block w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
     }
 
     .myPrimaryCheckbox {

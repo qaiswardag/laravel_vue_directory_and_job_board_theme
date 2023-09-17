@@ -258,9 +258,6 @@ class StoreController extends Controller
             }
         }
 
-        // Return the current team that the user is on, rather than the team that the user is storing the store for.
-        $currentTeam = Auth::user()->currentTeam->reference_id;
-
         return redirect()->route("team.stores.index", [
             "teamId" => $team->id,
         ]);
@@ -305,19 +302,23 @@ class StoreController extends Controller
             $store->updatedBy = null;
         }
 
-        $authors = null;
+        $authors = [];
 
         if ($store->show_author) {
-            $authors = $store->authors;
+            $authors = $store->authors()->get();
         }
 
         $categories = $store->categories;
+        $states = $store->states;
+        $coverImages = $store->coverImages;
 
-        // Render the Store
+        // Render the store
         return Inertia::render($storeRenderView, [
             "post" => $store,
             "authors" => $authors,
+            "states" => $states,
             "categories" => $categories,
+            "coverImages" => $coverImages,
         ]);
     }
 

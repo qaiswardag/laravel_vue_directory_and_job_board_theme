@@ -597,14 +597,16 @@ onMounted(() => {
 
                                 <td class="myPrimaryTableTBodyTd">
                                     <span
+                                        class="myPrimaryTag"
                                         :class="
                                             user.public
-                                                ? 'bg-green-100'
-                                                : 'bg-red-100 text-myPrimaryErrorColor'
+                                                ? 'bg-myPrimaryLinkColor text-white'
+                                                : 'bg-myPrimaryErrorColor text-white'
                                         "
-                                        class="inline-flex rounded-full px-2 myPrimaryParagraph font-medium text-green-800"
                                         >{{
-                                            user.public ? "Public" : "Private"
+                                            user.public
+                                                ? "Published"
+                                                : "Unpublished"
                                         }}</span
                                     >
                                 </td>
@@ -662,7 +664,7 @@ onMounted(() => {
                                                     user.last_name
                                                 )
                                             "
-                                            class="mySecondaryButton flex items-center gap-1 text-xs"
+                                            class="myPrimaryTag flex items-center gap-1 text-xs"
                                         >
                                             <PlusIcon
                                                 class="w-4 h-4"
