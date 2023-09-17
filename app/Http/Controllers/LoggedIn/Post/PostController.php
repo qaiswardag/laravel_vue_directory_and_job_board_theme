@@ -158,7 +158,7 @@ class PostController extends Controller
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
 
-                // Check if a media library record with this ID exists
+                // Check if a user record with this ID exists
                 $userModel = User::find($authorId);
 
                 if ($userModel) {
@@ -275,22 +275,10 @@ class PostController extends Controller
             $post->updatedBy = null;
         }
 
-        // Retrieve the authors associated with the post
-        $authors = AuthorPost::where("post_id", $post->id)->get();
+        $authors = null;
 
-        // Update the $post array with updatedBy information
-        if ($authors !== null) {
-            $post->authors = $authors->map(function ($author) {
-                return [
-                    "first_name" => $author->user->first_name,
-                    "last_name" => $author->user->last_name,
-                    "profile_photo_path" => $author->user->profile_photo_path,
-                ];
-            });
-        }
-
-        if ($authors === null) {
-            $post->authors = null;
+        if ($post->show_author) {
+            $authors = $post->authors;
         }
 
         $categories = $post->categories;
@@ -325,7 +313,7 @@ class PostController extends Controller
 
         $authors = null;
 
-        if ($post->show_author === 1 && $post->authors !== null) {
+        if ($post->authors !== null) {
             // Fetch related authors
             $relatedAuthors = $post->authors;
 
@@ -410,11 +398,16 @@ class PostController extends Controller
                 $authorId = $author["id"];
                 $updatedAuthorIds[] = $authorId;
 
-                // Update or create the record in the AuthorPost table
-                AuthorPost::updateOrCreate([
-                    "user_id" => $authorId,
-                    "post_id" => $postId,
-                ]);
+                // Check if a user record with this ID exists
+                $userModel = User::find($authorId);
+
+                if ($userModel) {
+                    // Update or create the record in the AuthorPost table
+                    AuthorPost::updateOrCreate([
+                        "user_id" => $authorId,
+                        "post_id" => $postId,
+                    ]);
+                }
             }
 
             // Delete the AuthorPost records that are not present in the request

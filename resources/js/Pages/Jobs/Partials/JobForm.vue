@@ -833,11 +833,8 @@ onBeforeMount(() => {
             postForm.author = props.postAuthor;
         }
 
-        // check if the post author is not available or should not be displayed
-        if (props.post.show_author === 1 && props.postAuthor === null) {
-            // clear the postForm author field
-            postForm.author = [];
-        }
+        // add the author to the postForm
+        postForm.author = props.postAuthor;
 
         postForm.countries = props.countries;
         postForm.states = props.states;

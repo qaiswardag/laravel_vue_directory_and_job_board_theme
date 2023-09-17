@@ -615,11 +615,7 @@ onBeforeMount(() => {
             postForm.author = props.postAuthor;
         }
 
-        // check if the post author is not available or should not be displayed
-        if (props.post.show_author === 1 && props.postAuthor === null) {
-            // clear the postForm author field
-            postForm.author = [];
-        }
+        postForm.author = props.postAuthor;
 
         postForm.categories = props.categories;
         postForm.cover_image = props.coverImages;

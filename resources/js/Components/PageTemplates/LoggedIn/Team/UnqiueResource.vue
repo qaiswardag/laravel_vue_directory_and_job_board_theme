@@ -26,6 +26,7 @@ defineProps({
         </div>
         <ArticleTemplate :sidebarArea="true" :actionsArea="false">
             <template #main>
+                <p class="my-12 break-words">post er: {{ post }}</p>
                 <div>
                     <div
                         v-if="post.cover_image_large !== null"

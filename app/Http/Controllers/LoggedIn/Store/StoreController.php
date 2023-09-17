@@ -165,7 +165,7 @@ class StoreController extends Controller
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
 
-                // Check if a media library record with this ID exists
+                // Check if a user record with this ID exists
                 $userModel = User::find($authorId);
 
                 if ($userModel) {
@@ -305,22 +305,10 @@ class StoreController extends Controller
             $store->updatedBy = null;
         }
 
-        // Retrieve the authors associated with the job
-        $authors = AuthorStore::where("store_id", $store->id)->get();
+        $authors = null;
 
-        // Update the $store array with updatedBy information
-        if ($authors !== null) {
-            $store->authors = $authors->map(function ($author) {
-                return [
-                    "first_name" => $author->user->first_name,
-                    "last_name" => $author->user->last_name,
-                    "profile_photo_path" => $author->user->profile_photo_path,
-                ];
-            });
-        }
-
-        if ($authors === null) {
-            $store->authors = null;
+        if ($store->show_author) {
+            $authors = $store->authors;
         }
 
         $categories = $store->categories;
@@ -355,7 +343,7 @@ class StoreController extends Controller
 
         $authors = null;
 
-        if ($store->show_author === 1 && $store->authors !== null) {
+        if ($store->authors !== null) {
             // Fetch related authors
             $relatedAuthors = $store->authors;
 
@@ -444,11 +432,16 @@ class StoreController extends Controller
                 $authorId = $author["id"];
                 $updatedAuthorIds[] = $authorId;
 
-                // Update or create the record in the AuthorJob table
-                AuthorStore::updateOrCreate([
-                    "user_id" => $authorId,
-                    "store_id" => $storeId,
-                ]);
+                // Check if a user record with this ID exists
+                $userModel = User::find($authorId);
+
+                if ($userModel) {
+                    // Update or create the record in the AuthorJob table
+                    AuthorStore::updateOrCreate([
+                        "user_id" => $authorId,
+                        "store_id" => $storeId,
+                    ]);
+                }
             }
 
             // Delete the AuthorStore records that are not present in the request

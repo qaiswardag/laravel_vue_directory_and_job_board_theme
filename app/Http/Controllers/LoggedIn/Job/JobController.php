@@ -169,7 +169,7 @@ class JobController extends Controller
             foreach ($request->author as $author) {
                 $authorId = $author["id"];
 
-                // Check if a media library record with this ID exists
+                // Check if a user record with this ID exists
                 $userModel = User::find($authorId);
 
                 if ($userModel) {
@@ -350,22 +350,10 @@ class JobController extends Controller
             $job->updatedBy = null;
         }
 
-        // Retrieve the authors associated with the job
-        $authors = AuthorJob::where("job_id", $job->id)->get();
+        $authors = null;
 
-        // Update the $job array with updatedBy information
-        if ($authors !== null) {
-            $job->authors = $authors->map(function ($author) {
-                return [
-                    "first_name" => $author->user->first_name,
-                    "last_name" => $author->user->last_name,
-                    "profile_photo_path" => $author->user->profile_photo_path,
-                ];
-            });
-        }
-
-        if ($authors === null) {
-            $job->authors = null;
+        if ($job->show_author) {
+            $authors = $job->authors;
         }
 
         $categories = $job->categories;
@@ -400,7 +388,7 @@ class JobController extends Controller
 
         $authors = null;
 
-        if ($job->show_author === 1 && $job->authors !== null) {
+        if ($job->authors !== null) {
             // Fetch related authors
             $relatedAuthors = $job->authors;
 
@@ -491,11 +479,16 @@ class JobController extends Controller
                 $authorId = $author["id"];
                 $updatedAuthorIds[] = $authorId;
 
-                // Update or create the record in the AuthorJob table
-                AuthorJob::updateOrCreate([
-                    "user_id" => $authorId,
-                    "job_id" => $jobId,
-                ]);
+                // Check if a user record with this ID exists
+                $userModel = User::find($authorId);
+
+                if ($userModel) {
+                    // Update or create the record in the AuthorJob table
+                    AuthorJob::updateOrCreate([
+                        "user_id" => $authorId,
+                        "job_id" => $jobId,
+                    ]);
+                }
             }
 
             // Delete the AuthorJob records that are not present in the request
