@@ -2,6 +2,7 @@
 import { router } from "@inertiajs/vue3";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import UserTag from "@/Components/Users/UserTag.vue";
 
 import {
     FlagIcon,
@@ -79,31 +80,30 @@ import {
             <div
                 class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
             >
-                <Link
-                    :href="route('user.teams.switch')"
-                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white text-xs"
-                    :class="{
-                        'shadow-md': route().current('user.teams.switch'),
-                    }"
-                >
-                    Switch Team
-                </Link>
-            </div>
-
-            <div
-                class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
-            >
-                <Link
-                    :href="route('user.teams.switch')"
-                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white"
-                    :class="{
-                        'shadow-md': route().current('user.teams.switch'),
-                    }"
-                >
-                    {{ $page.props.currentUserTeamRole?.name }}
+                <Link :href="route('user.teams.switch')">
+                    <UserTag
+                        :user="$page.props.user"
+                        :showTeamRole="true"
+                        :currentUserTeamRole="$page.props.currentUserTeamRole"
+                        :clickable="true"
+                    ></UserTag>
                 </Link>
             </div>
         </template>
+
+        <div
+            v-if="!$page.props.user.current_team"
+            class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
+        >
+            <Link :href="route('user.teams.switch')">
+                <UserTag
+                    :user="$page.props.user"
+                    :showTeamRole="true"
+                    :currentUserTeamRole="$page.props.currentUserTeamRole"
+                    :clickable="true"
+                ></UserTag>
+            </Link>
+        </div>
 
         <!--  -->
         <template
@@ -140,10 +140,7 @@ import {
             >
                 <Link
                     :href="route('user.teams.create')"
-                    class="text-myPrimaryDarkGrayColor flex justify-center gap-2 items-center text-xs px-2 rounded-full ml-2 py-1.5 hover:ring-1 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-100"
-                    :class="{
-                        'shadow-md': route().current('user.teams.create'),
-                    }"
+                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     Create a Team
                 </Link>

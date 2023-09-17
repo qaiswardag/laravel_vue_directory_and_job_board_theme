@@ -398,8 +398,8 @@ export default {
     // actions
     actions: {
         // load components
-        loadComponents(context, team) {
-            handlegetElements(
+        async loadComponents(context, team) {
+            const data = await handlegetElements(
                 route("components.index", {
                     team: team.id,
                 }),
@@ -419,6 +419,8 @@ export default {
                 isLoading: isLoadingComponents,
                 isSuccess: isSuccessComponents,
             });
+
+            return data;
         },
     },
 };

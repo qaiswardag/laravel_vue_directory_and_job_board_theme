@@ -1,6 +1,13 @@
 <script setup>
 import Draggable from "vuedraggable";
-import { onMounted, computed, onBeforeMount, ref, watch } from "vue";
+import {
+    onMounted,
+    computed,
+    onBeforeMount,
+    ref,
+    watch,
+    watchEffect,
+} from "vue";
 import Designer from "@/composables/Designer";
 import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
 import Preview from "@/Pages/Designer/Preview.vue";
@@ -48,8 +55,6 @@ const getMenuPreview = computed(() => {
 });
 
 const categories = ref(null);
-
-const activeLibrary = ref("Forms");
 
 const previewCurrentDesign = function () {
     designer.previewCurrentDesign();
@@ -108,52 +113,73 @@ const onDragStart = function (evt) {
 const onDragEnd = function () {
     draggingItem.value = false;
 };
-
+//
+//
+const awaitComponentsOnMounted = ref([]);
+//
+//
 const getFetchedComponentsFilter = computed(() => {
+    console.log("KØRE");
+});
+
+const getFetchedComponents = computed(() => {
+    return store.getters["designer/getFetchedComponents"];
+});
+
+//
+//
+//
+//
+onBeforeMount(() => {
+    designer.areComponentsStoredInLocalStorage();
+});
+//
+//
+//
+const activeLibrary = ref({ name: "Forms" });
+
+onMounted(async () => {
+    // fetch components
+    awaitComponentsOnMounted.value = await store.dispatch(
+        "designer/loadComponents",
+        props.team
+    );
+    //
+    //
     if (
-        getFetchedComponents.value.fetchedData !== undefined &&
-        getFetchedComponents.value.fetchedData !== null
+        awaitComponentsOnMounted.value !== undefined &&
+        awaitComponentsOnMounted.value !== null
     ) {
-        categories.value =
-            getFetchedComponents.value.fetchedData.component_categories;
+        categories.value = awaitComponentsOnMounted.value.component_categories;
     }
 
     if (
-        getFetchedComponents.value.fetchedData !== undefined &&
-        getFetchedComponents.value.fetchedData !== null
+        awaitComponentsOnMounted.value !== undefined &&
+        awaitComponentsOnMounted.value !== null
     ) {
         // Extract the name property from the activeLibrary.value object
         const activeLibraryName = activeLibrary.value.name;
 
         // Filter components based on the active category
         const activeCategoryComponents =
-            getFetchedComponents.value.fetchedData.components.filter(
-                (component) => {
-                    // Check if the activeLibraryName matches any category name
-                    return component.categories.some(
-                        (category) => category.name === activeLibraryName
-                    );
-                }
-            );
+            awaitComponentsOnMounted.value.components.filter((component) => {
+                // Check if the activeLibraryName matches any category name
+                return component.categories.some((category) => {
+                    return category.name === "Headers";
+                });
+            });
 
-        return activeCategoryComponents;
+        awaitComponentsOnMounted.value = activeCategoryComponents;
     }
-});
-
-//
-onBeforeMount(() => {
-    designer.areComponentsStoredInLocalStorage();
-});
-
-const getFetchedComponents = computed(() => {
-    return store.getters["designer/getFetchedComponents"];
-});
-//
-//
-
-onMounted(async () => {
-    // fetch components
-    await store.dispatch("designer/loadComponents", props.team);
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
 
     store.commit("designer/setComponent", null);
     store.commit("designer/setElement", null);
@@ -262,7 +288,7 @@ onMounted(async () => {
                                 pull: 'clone',
                                 put: false,
                             }"
-                            :list="getFetchedComponentsFilter"
+                            :list="awaitComponentsOnMounted"
                             :sort="false"
                             class="flex flex-col gap-4 pr-4 overflow-y-auto"
                             item-key="id"
@@ -280,9 +306,6 @@ onMounted(async () => {
                                             element.cover_images.length !== 0
                                         "
                                     >
-                                        <p class="myPrimaryComponentName">
-                                            {{ element.title }}
-                                        </p>
                                         <ThumbnailSmallImageSlider
                                             :images="element.cover_images"
                                             imageSize="medium_path"
@@ -290,24 +313,6 @@ onMounted(async () => {
                                             imageWidth="md:w-60 w-40"
                                             :roundedFull="false"
                                         ></ThumbnailSmallImageSlider>
-                                    </div>
-                                    <div
-                                        class="myPrimaryComponentToDrag"
-                                        v-if="
-                                            Array.isArray(
-                                                element.cover_images
-                                            ) &&
-                                            element.cover_images.length === 0
-                                        "
-                                    >
-                                        <p class="myPrimaryComponentName">
-                                            {{ element.title }}
-                                        </p>
-                                        <img
-                                            class="border-2 w-full border-myPrimaryLightGrayColor rounded-md cursor-grab duration-200"
-                                            src="/app-images/builder/components/default_component_image.jpg"
-                                            alt="Component"
-                                        />
                                     </div>
                                 </div>
                             </template>
