@@ -836,7 +836,6 @@ class Designer {
     }
 
     areComponentsStoredInLocalStorage() {
-        console.log("den køre..");
         const savedCurrentDesign = localStorage.getItem(
             this.getLocalStorageItemName.value
         );
@@ -1090,9 +1089,11 @@ class Designer {
         this.handleHorizontalMargin();
         // handle color
         this.handleBackgroundColor();
+        // handle custom background color
         this.handleCustomBackgroundColor();
-
+        // handle text color
         this.handleTextColor();
+        // handle custom text color
         this.handleCustomTextColor();
         // handle classes
         this.currentClasses();

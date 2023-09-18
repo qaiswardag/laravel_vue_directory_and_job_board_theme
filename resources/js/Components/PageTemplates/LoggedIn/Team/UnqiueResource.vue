@@ -59,18 +59,11 @@ defineProps({
         </div>
         <ArticleTemplate :sidebarArea="true" :actionsArea="false">
             <template #main>
-                <ThumbnailSmallImageSlider
-                    v-if="post.cover_images"
-                    :images="post.cover_images"
-                    imageSize="large_path"
-                    imageHeight="h-96 rounded"
-                    imageWidth="w-full"
-                    :roundedFull="false"
-                ></ThumbnailSmallImageSlider>
-                <div v-html="post.content" class="prose"></div>
+                <div v-html="post.content"></div>
             </template>
             <template #sidebar>
                 <div class="flex gap-8 flex-col">
+                    <!-- updated by - end -->
                     <!-- Post updated by - start -->
                     <div class="myPrimaryWidget">
                         <h4 class="myFourthHeader">Updated By</h4>
@@ -136,11 +129,22 @@ defineProps({
                         "
                         class="myPrimaryWidget"
                     >
-                        <h4 class="myFourthHeader">State</h4>
+                        <h4 class="myFourthHeader">Location</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="flex flex-wrap justify-start items-center gap-2"
                         >
+                            <p
+                                v-if="post.address"
+                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                            >
+                                <MapPinIcon
+                                    class="w-3 h-3 stroke-1"
+                                ></MapPinIcon>
+                                <span>
+                                    {{ post.address }}
+                                </span>
+                            </p>
                             <p
                                 v-for="state in states"
                                 :key="state"
@@ -334,6 +338,16 @@ defineProps({
                         </div>
                     </div>
                     <!-- authors # end -->
+                    <!-- cover images - start -->
+                    <ThumbnailSmallImageSlider
+                        v-if="post.cover_images"
+                        :images="post.cover_images"
+                        imageSize="large_path"
+                        imageHeight="h-96 rounded"
+                        imageWidth="w-full"
+                        :roundedFull="false"
+                    ></ThumbnailSmallImageSlider>
+                    <!-- cover images - end -->
                 </div>
             </template>
         </ArticleTemplate>

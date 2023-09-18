@@ -80,6 +80,7 @@ const secondButton = function () {
     <teleport to="body">
         <TransitionRoot :show="show" as="template">
             <Dialog
+                @close="firstButton"
                 as="div"
                 class="fixed z-30 inset-0 overflow-y-auto"
                 tabindex="0"
@@ -142,7 +143,7 @@ const secondButton = function () {
                                 <main></main>
                             </DynamicModal>
                             <div
-                                class="px-6 h-[8vh] flex items-center justify-between"
+                                class="px-6 h-[10vh] flex items-center justify-between"
                             >
                                 <button
                                     class="myPrimaryButton"

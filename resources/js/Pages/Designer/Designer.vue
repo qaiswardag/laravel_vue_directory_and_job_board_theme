@@ -122,16 +122,6 @@ const getFetchedComponents = computed(() => {
     return store.getters["designer/getFetchedComponents"];
 });
 
-//
-//
-//
-//
-// onBeforeMount(() => {
-//     designer.areComponentsStoredInLocalStorage();
-// });
-//
-//
-//
 const activeLibrary = ref({ name: "Forms" });
 
 onMounted(async () => {
@@ -195,7 +185,7 @@ onMounted(async () => {
     </DesignerPreviewModal>
 
     <div
-        class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
+        class="w-full inset-x-0 h-[90vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
     >
         <div class="relative h-full flex">
             <aside

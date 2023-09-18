@@ -513,26 +513,112 @@ window.addEventListener("beforeunload", function () {
     storeDirtyFormInLocalStorage();
 });
 
+//
+//
+//
+//
+//
+
+const authorSorted = computed(() => {
+    return postForm.author.sort((a, b) => {
+        const firstNameA = a.first_name;
+        const firstNameB = b.first_name;
+
+        if (firstNameA < firstNameB) {
+            return -1;
+        } else if (firstNameA > firstNameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+
+const statesSorted = computed(() => {
+    return postForm.states.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+
+const categoriesSorted = computed(() => {
+    return postForm.categories.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+
+//
+//
+//
+//
+
+// Builder # Start
+const getComponents = computed(() => {
+    return store.getters["designer/getComponents"];
+});
+
+const openDesignerModal = ref(false);
+// use designer model
+const firstDesignerModalButtonFunction = ref(null);
+const secondDesignerModalButtonFunction = ref(null);
+//
+//
+const handlePageBuilder = function () {
+    // set modal standards
+    openDesignerModal.value = true;
+
+    // handle click
+    firstDesignerModalButtonFunction.value = function () {
+        // set open modal
+        openDesignerModal.value = false;
+    };
+    // handle click
+    secondDesignerModalButtonFunction.value = function () {
+        pageBuilder.saveCurrentDesign();
+        // set open modal
+        postForm.content = getComponents.value
+            .map((component) => {
+                return component.html_code;
+            })
+            .join(""); // Join the HTML code strings without any separator
+        openDesignerModal.value = false;
+    };
+    // end modal
+};
+//
+// Builder # End
+//
 // get unique post if needs to be updated
 onBeforeMount(() => {
     // User is creating a new Resource from scratch, rather than editing an existing one
-    // Check local storage
+    // local storage for page builder
     if (props.post === null) {
-        //
-        //
-        //
-        //
-        //
-        store.commit(
-            "designer/setLocalStorageItemName",
-            pathPageBuilderLocalStorage
-        );
+        if (localStorage.getItem(pathPageBuilderLocalStorage) !== null) {
+            store.commit(
+                "designer/setLocalStorageItemName",
+                pathPageBuilderLocalStorage
+            );
+        }
         pageBuilder.areComponentsStoredInLocalStorage();
-        //
-        //
-        //
-        //
-        //
+
+        // local storage for postForm
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
             const formDataJson = localStorage.getItem(pathLocalStorage);
@@ -582,7 +668,6 @@ onBeforeMount(() => {
                     postForm.author = formLocalStorage.author;
                 }
             }
-            // Cover image
             // Cover image
             if (
                 formLocalStorage.cover_image === undefined ||
@@ -668,6 +753,7 @@ onBeforeMount(() => {
 
     // User is editing an existing Resource, rather than creating a new one from scratch.
     if (props.post !== null) {
+        store.commit("designer/setComponents", []);
         formType.value = "update";
 
         postForm.title = props.post.title;
@@ -696,91 +782,6 @@ onBeforeMount(() => {
         postForm.cover_image = props.coverImages;
     }
 });
-
-const authorSorted = computed(() => {
-    return postForm.author.sort((a, b) => {
-        const firstNameA = a.first_name;
-        const firstNameB = b.first_name;
-
-        if (firstNameA < firstNameB) {
-            return -1;
-        } else if (firstNameA > firstNameB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
-});
-
-const statesSorted = computed(() => {
-    return postForm.states.sort((a, b) => {
-        const nameA = a.name;
-        const nameB = b.name;
-
-        if (nameA < nameB) {
-            return -1;
-        } else if (nameA > nameB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
-});
-
-const categoriesSorted = computed(() => {
-    return postForm.categories.sort((a, b) => {
-        const nameA = a.name;
-        const nameB = b.name;
-
-        if (nameA < nameB) {
-            return -1;
-        } else if (nameA > nameB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
-});
-
-//
-//
-//
-//
-// Builder # Start
-const getComponents = computed(() => {
-    return store.getters["designer/getComponents"];
-});
-
-const openDesignerModal = ref(false);
-// use designer model
-const firstDesignerModalButtonFunction = ref(null);
-const secondDesignerModalButtonFunction = ref(null);
-//
-//
-const handlePageBuilder = function () {
-    // set modal standards
-    openDesignerModal.value = true;
-
-    // handle click
-    firstDesignerModalButtonFunction.value = function () {
-        // set open modal
-        openDesignerModal.value = false;
-    };
-    // handle click
-    secondDesignerModalButtonFunction.value = function () {
-        pageBuilder.saveCurrentDesign();
-        // set open modal
-        postForm.content = getComponents.value
-            .map((component) => {
-                return component.html_code;
-            })
-            .join(""); // Join the HTML code strings without any separator
-        openDesignerModal.value = false;
-    };
-    // end modal
-};
-// Builder # End
-
 const pageBuilder = new PageBuilder(store);
 </script>
 <template>

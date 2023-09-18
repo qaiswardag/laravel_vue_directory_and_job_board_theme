@@ -617,6 +617,78 @@ window.addEventListener("beforeunload", function () {
     storeDirtyFormInLocalStorage();
 });
 
+const authorSorted = computed(() => {
+    return postForm.author.sort((a, b) => {
+        const firstNameA = a.first_name;
+        const firstNameB = b.first_name;
+
+        if (firstNameA < firstNameB) {
+            return -1;
+        } else if (firstNameA > firstNameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+
+const countriesSorted = computed(() => {
+    return postForm.countries.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+const statesSorted = computed(() => {
+    return postForm.states.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+const categoriesSorted = computed(() => {
+    return postForm.categories.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+const jobTypesSorted = computed(() => {
+    return postForm.types.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+
 // get unique post if needs to be updated
 onBeforeMount(() => {
     // User is creating a new Resource from scratch, rather than editing an existing one
@@ -842,78 +914,6 @@ onBeforeMount(() => {
         postForm.types = props.types;
         postForm.cover_image = props.coverImages;
     }
-});
-
-const authorSorted = computed(() => {
-    return postForm.author.sort((a, b) => {
-        const firstNameA = a.first_name;
-        const firstNameB = b.first_name;
-
-        if (firstNameA < firstNameB) {
-            return -1;
-        } else if (firstNameA > firstNameB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
-});
-
-const countriesSorted = computed(() => {
-    return postForm.countries.sort((a, b) => {
-        const nameA = a.name;
-        const nameB = b.name;
-
-        if (nameA < nameB) {
-            return -1;
-        } else if (nameA > nameB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
-});
-const statesSorted = computed(() => {
-    return postForm.states.sort((a, b) => {
-        const nameA = a.name;
-        const nameB = b.name;
-
-        if (nameA < nameB) {
-            return -1;
-        } else if (nameA > nameB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
-});
-const categoriesSorted = computed(() => {
-    return postForm.categories.sort((a, b) => {
-        const nameA = a.name;
-        const nameB = b.name;
-
-        if (nameA < nameB) {
-            return -1;
-        } else if (nameA > nameB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
-});
-const jobTypesSorted = computed(() => {
-    return postForm.types.sort((a, b) => {
-        const nameA = a.name;
-        const nameB = b.name;
-
-        if (nameA < nameB) {
-            return -1;
-        } else if (nameA > nameB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
 });
 </script>
 
