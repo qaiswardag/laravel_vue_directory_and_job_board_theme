@@ -571,11 +571,11 @@ class Designer {
         }
     }
 
-    saveCurrentDesignWithTimer = () => {
-        setTimeout(() => {
-            this.saveCurrentDesign();
-        }, 100);
-    };
+    // saveCurrentDesignWithTimer = () => {
+    //     setTimeout(() => {
+    //         this.saveCurrentDesign();
+    //     }, 100);
+    // };
 
     saveCurrentDesign = async () => {
         if (document.querySelector("[hovered]") !== null) {
@@ -680,40 +680,49 @@ class Designer {
         // remove component from array
         this.getComponents.value.splice(currentIndex, 1);
         this.store.commit("designer/setComponents", this.getComponents.value);
-
-        this.saveComponentsLocalStorage(this.getComponents.value);
     }
 
     // move component
     // runs when html components are rearranged
-    moveComponent(event, dir) {
-        // Get index of component
-        const currentIndex = this.getCurrentIndex(event);
-        // Return if moving first component backwards or last component forwards
-        if (
-            (currentIndex === 0 && dir === -1) ||
-            (currentIndex === this.getComponents.value.length - 1 && dir === 1)
-        )
-            return;
+    moveComponent(direction) {
+        console.log("element:", this.getComponent.value);
 
-        const currentComponent = this.getComponents.value[currentIndex];
-        // Remove current object
-        // Move it forwards if negative dir or forward if positive dir
-        this.getComponents.value.splice(currentIndex, 1);
-        this.getComponents.value.splice(
-            currentIndex + 1 * dir,
-            0,
-            currentComponent
+        // Get the component you want to move (replace this with your actual logic)
+        const componentToMove = this.getComponent.value; // Replace this with your logic to get the component to move.
+
+        // Determine the new index where you want to move the component
+        const currentIndex = this.getComponents.value.findIndex(
+            (component) => component.id === componentToMove.id
         );
-        // Follow component to new location
-        document
-            .querySelector("#pagebuilder")
-            .children[currentIndex + 1 * dir].scrollIntoView({
-                behavior: "smooth",
-            });
+
+        if (currentIndex === -1) {
+            // Component not found in the array, handle this case as needed.
+            return;
+        }
+
+        const newIndex = currentIndex + direction;
+
+        // Ensure the newIndex is within bounds
+        if (newIndex < 0 || newIndex >= this.getComponents.value.length) {
+            return;
+        }
+
+        // Move the component to the new position
+        this.getComponents.value.splice(currentIndex, 1);
+        this.getComponents.value.splice(newIndex, 0, componentToMove);
+
+        // Optionally, update other properties as needed
+        // ...
+
+        // Update the component list to trigger reactivity
+        //  this.getComponents.value = [...this.getComponents.value];
+
         //
-        // save all current added HTML components in local storage
-        this.saveComponentsLocalStorage(this.getComponents.value);
+        //
+        //
+        //
+        //
+
         // end of method "moveComponent"
     }
 

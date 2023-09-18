@@ -28,7 +28,6 @@ import { useStore } from "vuex";
 import OptionsDropdown from "@/Components/Builder/DropdownsPlusToggles/OptionsDropdown.vue";
 import RightSidebarEditor from "@/Components/Builder/EditorMenu/RightSidebarEditor.vue";
 import Spinner from "@/Components/Builder/Loaders/Spinner.vue";
-import ComponentTopMenu from "@/Components/Builder/EditorMenu/Editables/ComponentTopMenu.vue";
 
 const emit = defineEmits(["previewCurrentDesign"]);
 
@@ -410,7 +409,6 @@ onMounted(async () => {
                             "
                             class="relative group"
                         >
-                            <ComponentTopMenu></ComponentTopMenu>
                             <section
                                 v-html="element.html_code"
                                 class="m-0.5"

@@ -57,6 +57,11 @@ const deleteComponent = function (e) {
     // end modal
 };
 //
+
+const getComponents = computed(() => {
+    return store.getters["designer/getComponents"];
+});
+console.log("getComponents:", getComponents.value);
 </script>
 
 <template>
@@ -77,7 +82,7 @@ const deleteComponent = function (e) {
         <main></main>
     </DynamicModal>
     <div
-        class="mx-auto mt-4 bg-myPrimaryLightGrayColor absolute z-40 overflow-hidden left-0 right-0 top-0 text-myPrimaryDarkGrayColor border border-gray-400 duration-100 transform group-hover:block hidden max-w-[80%] rounded-full shadow-sm"
+        class="mx-auto mt-4 bg-myPrimaryLightGrayColor z-40 overflow-hidden left-0 right-0 top-[-1rem] text-myPrimaryDarkGrayColor border border-gray-400 duration-100 transform group-hover:block max-w-[80%] rounded-full shadow-sm"
     >
         <div
             class="flex flex-row justify-between mx-auto py-1.5 px-3 max-w-6xl"
@@ -94,14 +99,14 @@ const deleteComponent = function (e) {
             <div class="flex gap-2 items-center justify-center">
                 <button
                     type="button"
-                    @click="designer.moveComponent($event, 1)"
+                    @click="designer.moveComponent(1)"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <ArrowDownIcon class="w-4 h-4 m-2 stroke-2" />
                 </button>
                 <button
                     type="button"
-                    @click="designer.moveComponent($event, -1)"
+                    @click="designer.moveComponent(-1)"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <ArrowUpIcon class="w-4 h-4 m-2 stroke-2" />

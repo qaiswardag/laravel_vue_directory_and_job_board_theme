@@ -13,6 +13,7 @@ import DeleteElement from "@/Components/Builder/EditorMenu/Editables/DeleteEleme
 import BorderRadius from "@/Components/Builder/EditorMenu/Editables/BorderRadius.vue";
 import Borders from "@/Components/Builder/EditorMenu/Editables/Borders.vue";
 import LinkEditor from "@/Components/Builder/EditorMenu/Editables/LinkEditor.vue";
+import ComponentTopMenu from "@/Components/Builder/EditorMenu/Editables/ComponentTopMenu.vue";
 
 // store
 const store = useStore();
@@ -73,6 +74,9 @@ const isHeadingElement = computed(() => {
 
             <div class="mb-4 overflow-y-scroll md:pb-24 pb-12">
                 <div v-show="isHeadingElement === true">
+                    <article>
+                        <ComponentTopMenu></ComponentTopMenu>
+                    </article>
                     <article>
                         <ImageEditor :user="user" :team="team"> </ImageEditor>
                     </article>
