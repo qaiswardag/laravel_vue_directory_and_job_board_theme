@@ -49,6 +49,6 @@ const breadcrumbsLinks = [
             :categories="categories"
             :coverImages="coverImages"
         ></UnqiueResource>
-        <!-- sShow Unique Post - end -->
+        <!-- Show Unique Post - end -->
     </LoggedInLayout>
 </template>
