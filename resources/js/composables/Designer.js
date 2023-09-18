@@ -32,6 +32,9 @@ class Designer {
         this.getTextAreaVueModel = computed(
             () => this.store.getters["designer/getTextAreaVueModel"]
         );
+        this.getLocalStorageItemName = computed(
+            () => this.store.getters["designer/getLocalStorageItemName"]
+        );
 
         this.getCurrentImage = computed(
             () => this.store.getters["mediaLibrary/getCurrentImage"]
@@ -485,7 +488,10 @@ class Designer {
         );
     }
     saveComponentsLocalStorage(components) {
-        localStorage.setItem("savedCurrentDesign", JSON.stringify(components));
+        localStorage.setItem(
+            this.getLocalStorageItemName.value,
+            JSON.stringify(components)
+        );
     }
 
     /**
@@ -583,7 +589,7 @@ class Designer {
             );
 
             if (section) {
-                component.html = section.outerHTML;
+                component.html_code = section.outerHTML;
             }
         });
         this.saveComponentsLocalStorage(this.getComponents.value);
@@ -821,7 +827,10 @@ class Designer {
     }
 
     areComponentsStoredInLocalStorage() {
-        const savedCurrentDesign = localStorage.getItem("savedCurrentDesign");
+        console.log("den køre..");
+        const savedCurrentDesign = localStorage.getItem(
+            this.getLocalStorageItemName.value
+        );
         if (savedCurrentDesign) {
             try {
                 this.store.commit(
@@ -1027,7 +1036,7 @@ class Designer {
         if (this.getElement.value === null) return;
 
         // save current design
-        this.saveCurrentDesignWithTimer();
+        // this.saveCurrentDesignWithTimer();
 
         // invoke methods
         // handle custom URL

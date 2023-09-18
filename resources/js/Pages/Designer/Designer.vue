@@ -82,7 +82,7 @@ const cloneComponent = function (cloneComponent) {
 
 // When HTML component is dropped into the DOM
 const onDrop = function (droppedElement, targetIndex, originalEvent) {
-    designer.saveCurrentDesignWithTimer();
+    // designer.saveCurrentDesignWithTimer();
 };
 const getElement = computed(() => {
     return store.getters["designer/getElement"];
@@ -118,9 +118,6 @@ const onDragEnd = function () {
 const awaitComponentsOnMounted = ref([]);
 //
 //
-const getFetchedComponentsFilter = computed(() => {
-    console.log("KØRE");
-});
 
 const getFetchedComponents = computed(() => {
     return store.getters["designer/getFetchedComponents"];
@@ -130,9 +127,9 @@ const getFetchedComponents = computed(() => {
 //
 //
 //
-onBeforeMount(() => {
-    designer.areComponentsStoredInLocalStorage();
-});
+// onBeforeMount(() => {
+//     designer.areComponentsStoredInLocalStorage();
+// });
 //
 //
 //

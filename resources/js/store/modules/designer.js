@@ -16,6 +16,7 @@ export default {
 
     // state
     state: {
+        localStorageItemName: null,
         menuPreview: false,
         menuLeft: true,
         menuRight: true,
@@ -77,6 +78,9 @@ export default {
 
     // getters
     getters: {
+        getLocalStorageItemName(state) {
+            return state.localStorageItemName;
+        },
         getMenuPreview(state) {
             return state.menuPreview;
         },
@@ -230,6 +234,9 @@ export default {
     },
 
     mutations: {
+        setLocalStorageItemName(state, payload) {
+            state.localStorageItemName = payload;
+        },
         setMenuPreview(state, payload) {
             state.menuPreview = payload;
         },

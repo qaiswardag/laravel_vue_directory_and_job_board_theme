@@ -1,6 +1,7 @@
 <script setup>
 import Modal from "@/Components/Modals/Modal.vue";
-import { CheckIcon, BellIcon } from "@heroicons/vue/24/outline";
+import { CheckIcon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import {
     Dialog,
     DialogOverlay,
@@ -9,6 +10,7 @@ import {
     TransitionRoot,
 } from "@headlessui/vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { ref } from "vue";
 
 defineProps({
     show: {
@@ -18,11 +20,59 @@ defineProps({
     },
 });
 
-const emit = defineEmits(["firstDesignerModalButtonFunction"]);
+const showModalClosePageBuilder = ref(false);
+//
+// use dynamic model
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
+const firstButton = function () {
+    // set modal standards
+    showModalClosePageBuilder.value = true;
+    typeModal.value = "danger";
+    gridColumnModal.value = 2;
+    titleModal.value = "Close the Page Builder without save?";
+    descriptionModal.value =
+        "Are you sure you want to close the Page Builder without saving? Any changes will be lost.";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Exit Page Builder";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // set open modal
+        showModalClosePageBuilder.value = false;
+    };
+    //
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        closePageBuilder();
+        showModalClosePageBuilder.value = false;
+    };
+    // end modal
+};
+
+const emit = defineEmits([
+    "firstDesignerModalButtonFunction",
+    "secondDesignerModalButtonFunction",
+]);
 
 // first button function
-const firstButton = function () {
+const closePageBuilder = function () {
     emit("firstDesignerModalButtonFunction");
+};
+// first button function
+const secondButton = function () {
+    emit("secondDesignerModalButtonFunction");
 };
 </script>
 
@@ -32,7 +82,6 @@ const firstButton = function () {
             <Dialog
                 as="div"
                 class="fixed z-30 inset-0 overflow-y-auto"
-                @close="firstButton"
                 tabindex="0"
             >
                 <div
@@ -70,11 +119,40 @@ const firstButton = function () {
                         <div
                             class="inline-block align-bottom text-left transform transition-all sm:align-middle w-full overflow-hidden h-[100vh] top-0 left-0 right-0 absolute"
                         >
-                            <div
-                                class="px-6 h-[6vh] flex items-center justify-between bg-gray-50"
+                            <DynamicModal
+                                :show="showModalClosePageBuilder"
+                                :type="typeModal"
+                                :gridColumnAmount="gridColumnModal"
+                                :title="titleModal"
+                                :description="descriptionModal"
+                                :firstButtonText="firstButtonModal"
+                                :secondButtonText="secondButtonModal"
+                                :thirdButtonText="thirdButtonModal"
+                                @firstModalButtonFunction="
+                                    firstModalButtonFunction
+                                "
+                                @secondModalButtonFunction="
+                                    secondModalButtonFunction
+                                "
+                                @thirdModalButtonFunction="
+                                    thirdModalButtonFunction
+                                "
                             >
-                                test logo
-                                <div
+                                <header></header>
+                                <main></main>
+                            </DynamicModal>
+                            <div
+                                class="px-6 h-[8vh] flex items-center justify-between"
+                            >
+                                <button
+                                    class="myPrimaryButton"
+                                    @click="secondButton"
+                                    type="button"
+                                >
+                                    Save & Close
+                                </button>
+                                <button
+                                    type="button"
                                     @click="firstButton"
                                     class="flex items-center justify-center gap-1 cursor-pointer hover:underline"
                                 >
@@ -83,22 +161,10 @@ const firstButton = function () {
                                     >
                                         Close Builder
                                     </span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        aria-hidden="true"
-                                        class="h-4 w-4 text-black self-center"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M6 18L18 6M6 6l12 12"
-                                        ></path>
-                                    </svg>
-                                </div>
+                                    <XMarkIcon
+                                        class="h-4 w-4 self-center stroke-2"
+                                    ></XMarkIcon>
+                                </button>
                             </div>
                             <slot></slot>
                         </div>

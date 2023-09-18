@@ -6,7 +6,7 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import { ref, computed, onBeforeMount, watch } from "vue";
+import { ref, computed, onBeforeMount, watch, onMounted } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import Tags from "@/Components/Forms/Tags.vue";
@@ -19,6 +19,7 @@ import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import DesignerModal from "@/Components/Modals/DesignerModal.vue";
 import Designer from "@/Pages/Designer/Designer.vue";
+import PageBuilder from "@/composables/Designer";
 
 import {
     Listbox,
@@ -121,6 +122,9 @@ const getCurrentAttachedStoreCategories = computed(() => {
 
 const formType = ref("create");
 const pathLocalStorage = `store-form-${
+    props.currentUserTeam ? props.currentUserTeam.reference_id : null
+}`;
+const pathPageBuilderLocalStorage = `store-form-page-builder-${
     props.currentUserTeam ? props.currentUserTeam.reference_id : null
 }`;
 
@@ -481,6 +485,8 @@ const clearForm = function () {
     postForm.cover_image = [];
 
     localStorage.removeItem(pathLocalStorage);
+    localStorage.removeItem(pathPageBuilderLocalStorage);
+    store.commit("designer/setComponents", []);
 };
 
 // is form dirty? returns true or false
@@ -490,6 +496,7 @@ const formIsDirty = computed(() => {
 
 const storeDirtyFormInLocalStorage = function () {
     if (formIsDirty.value === true && formType.value === "create") {
+        // page-builder
         // Convert the form data to a JSON string
         postForm.isSlugEditable = isSlugEditable.value;
         const formDataJson = JSON.stringify(postForm);
@@ -516,8 +523,11 @@ onBeforeMount(() => {
         //
         //
         //
-        postForm.content =
-            "<div><p>I am a test from storeForm.vue - remove this line</p></div>";
+        store.commit(
+            "designer/setLocalStorageItemName",
+            pathPageBuilderLocalStorage
+        );
+        pageBuilder.areComponentsStoredInLocalStorage();
         //
         //
         //
@@ -540,21 +550,6 @@ onBeforeMount(() => {
             //
             postForm.title = formLocalStorage.title;
             postForm.address = formLocalStorage.address;
-            //
-            //
-            postForm.content = formLocalStorage.content;
-            //
-            //
-            //
-            //
-            //
-            postForm.content =
-                "<div><p>I am a test from storeForm.vue - remove this line</p></div>";
-            //
-            //
-            //
-            //
-            //
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
 
@@ -747,13 +742,22 @@ const categoriesSorted = computed(() => {
     });
 });
 
+//
+//
+//
+//
 // Builder # Start
+const getComponents = computed(() => {
+    return store.getters["designer/getComponents"];
+});
+
 const openDesignerModal = ref(false);
 // use designer model
 const firstDesignerModalButtonFunction = ref(null);
+const secondDesignerModalButtonFunction = ref(null);
 //
 //
-const handleDesigner = function () {
+const handlePageBuilder = function () {
     // set modal standards
     openDesignerModal.value = true;
 
@@ -762,15 +766,28 @@ const handleDesigner = function () {
         // set open modal
         openDesignerModal.value = false;
     };
+    // handle click
+    secondDesignerModalButtonFunction.value = function () {
+        pageBuilder.saveCurrentDesign();
+        // set open modal
+        postForm.content = getComponents.value
+            .map((component) => {
+                return component.html_code;
+            })
+            .join(""); // Join the HTML code strings without any separator
+        openDesignerModal.value = false;
+    };
     // end modal
 };
 // Builder # End
-</script>
 
+const pageBuilder = new PageBuilder(store);
+</script>
 <template>
     <DesignerModal
         :show="openDesignerModal"
         @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
+        @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"
     >
         <Designer :user="user" :team="postForm.team"></Designer>
     </DesignerModal>
@@ -888,7 +905,7 @@ const handleDesigner = function () {
                             <div></div>
                             <div class="mt-4">
                                 <button
-                                    @click="handleDesigner"
+                                    @click="handlePageBuilder"
                                     type="button"
                                     class="myPrimaryButton"
                                 >
@@ -898,7 +915,7 @@ const handleDesigner = function () {
                         </div>
                         <div>
                             <img
-                                @click="handleDesigner"
+                                @click="handlePageBuilder"
                                 class="w-auto object-cover cursor-pointer"
                                 src="/app-images/builder/drag-and-drop-to-build-content-example-one.webp"
                                 alt="Drag-and-drop-to-build-content-example-one"
