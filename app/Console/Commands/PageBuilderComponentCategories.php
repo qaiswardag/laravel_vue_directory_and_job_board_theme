@@ -27,20 +27,23 @@ class PageBuilderComponentCategories extends Command
     public function handle()
     {
         $categories = [
-            "Headers",
+            "Articles & Contents",
             "Call to Actions",
+            "Contact",
+            "Headers",
+            "Opening Hours",
+            "Products & Sale",
             "Features",
             "About Us",
-            "Products",
-            "Articles",
-            "Teams",
-            "Contact",
-            "Opening Hours",
             "Links & Buttons",
             "Templates",
             "Social Media",
             "Footers",
+            "Images",
         ];
+
+        // Sort the categories alphabetically
+        sort($categories);
 
         foreach ($categories as $categoryName) {
             PageBuilderComponentCategory::factory()->create([

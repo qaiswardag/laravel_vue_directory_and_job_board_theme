@@ -15,42 +15,30 @@ defineProps({
 
 <template>
     <div class="myPrimarySection">
-        <div>
-            <div>
-                <div class="text-center my-8">
-                    <p class="text-3xl">
-                        <slot name="title" />
-                    </p>
+        <slot name="title" />
+        <slot name="description" />
+        <slot name="header" />
+        <div
+            :class="{ block: sidebarArea === false }"
+            class="myPrimaryContentLayout"
+        >
+            <article
+                :class="{ 'md:w-full': sidebarArea === false }"
+                class="md:w-8/12 flex flex-col myPrimaryGap px-4 py-4"
+            >
+                <slot name="main" />
+            </article>
 
-                    <p class="myPrimaryParagraph">
-                        <slot name="description" />
-                    </p>
-                </div>
-
-                <slot name="header" />
-                <div
-                    :class="{ block: sidebarArea === false }"
-                    class="myPrimaryForm"
+            <template v-if="sidebarArea === true">
+                <aside
+                    :class="{ 'md:w-full': sidebarArea === false }"
+                    class="md:w-4/12 flex flex-col myPrimaryGap"
                 >
-                    <div
-                        :class="{ 'md:w-full': sidebarArea === false }"
-                        class="md:w-8/12 flex flex-col myPrimaryGap"
-                    >
-                        <slot name="main" />
-                    </div>
-
-                    <template v-if="sidebarArea === true">
-                        <div
-                            :class="{ 'md:w-full': sidebarArea === false }"
-                            class="md:w-4/12 flex flex-col myPrimaryGap"
-                        >
-                            <slot name="sidebar" />
-                        </div>
-                    </template>
-                </div>
-
-                <slot name="actions" />
-            </div>
+                    <slot name="sidebar" />
+                </aside>
+            </template>
         </div>
+
+        <slot name="actions" />
     </div>
 </template>

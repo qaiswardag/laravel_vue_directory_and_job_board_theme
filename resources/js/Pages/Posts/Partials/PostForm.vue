@@ -498,18 +498,6 @@ onBeforeMount(() => {
     // User is creating a new Resource from scratch, rather than editing an existing one
     // Check local storage
     if (props.post === null) {
-        //
-        //
-        //
-        //
-        //
-        postForm.content =
-            "<div><p>I am a test from postForm.vue - remove this line</p></div>";
-        //
-        //
-        //
-        //
-        //
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
             const formDataJson = localStorage.getItem(pathLocalStorage);
@@ -528,18 +516,7 @@ onBeforeMount(() => {
             postForm.title = formLocalStorage.title;
 
             postForm.content = formLocalStorage.content;
-            //
-            //
-            //
-            //
-            //
-            postForm.content =
-                "<div><p>I am a test from postForm.vue - remove this line</p></div>";
-            //
-            //
-            //
-            //
-            //
+
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
             postForm.tags = formLocalStorage.tags;

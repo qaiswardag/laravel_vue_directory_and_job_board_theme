@@ -171,6 +171,7 @@ onMounted(async () => {
 
     // Rerender `get components` when it is loaded from local storage
     designer.addClickAndHoverEvents();
+    designer.handleDesignerMethods();
 });
 </script>
 
@@ -399,10 +400,7 @@ onMounted(async () => {
                             "
                             class="relative group"
                         >
-                            <section
-                                v-html="element.html_code"
-                                class="m-0.5"
-                            ></section>
+                            <div v-html="element.html_code" class="p-1"></div>
                         </div>
                     </template>
                 </Draggable>

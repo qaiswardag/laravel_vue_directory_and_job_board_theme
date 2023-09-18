@@ -6,7 +6,7 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import { ref, computed, onBeforeMount, watch, onMounted } from "vue";
+import { ref, computed, onBeforeMount, watch, onMounted, nextTick } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import Tags from "@/Components/Forms/Tags.vue";
@@ -124,7 +124,7 @@ const formType = ref("create");
 const pathLocalStorage = `store-form-${
     props.currentUserTeam ? props.currentUserTeam.reference_id : null
 }`;
-const pathPageBuilderLocalStorage = `store-form-page-builder-${
+const pathPageBuilderLocalStorage = `create-store-form-page-builder-${
     props.currentUserTeam ? props.currentUserTeam.reference_id : null
 }`;
 
@@ -590,34 +590,56 @@ const handlePageBuilder = function () {
         openDesignerModal.value = false;
     };
     // handle click
-    secondDesignerModalButtonFunction.value = function () {
+    secondDesignerModalButtonFunction.value = async function () {
+        console.log("den er:", getComponents.value);
+        // wait for components to be saved
         pageBuilder.saveCurrentDesign();
+        await nextTick();
+
+        // save to local storage if new resource
+        if (formType.value === "create") {
+            console.log("kom heeer");
+            pageBuilder.saveComponentsLocalStorage(getComponents.value);
+            // store.commit("designer/setComponents", []);
+        }
+
         // set open modal
         postForm.content = getComponents.value
             .map((component) => {
                 return component.html_code;
             })
-            .join(""); // Join the HTML code strings without any separator
+            .join("");
+        //
+        //
         openDesignerModal.value = false;
     };
+
     // end modal
 };
 //
 // Builder # End
 //
 // get unique post if needs to be updated
-onBeforeMount(() => {
+onBeforeMount(async () => {
+    store.commit(
+        "designer/setLocalStorageItemName",
+        pathPageBuilderLocalStorage
+    );
+    //
+    //
+    //
+    //
+    //
     // User is creating a new Resource from scratch, rather than editing an existing one
     // local storage for page builder
     if (props.post === null) {
-        if (localStorage.getItem(pathPageBuilderLocalStorage) !== null) {
-            store.commit(
-                "designer/setLocalStorageItemName",
-                pathPageBuilderLocalStorage
-            );
-        }
         pageBuilder.areComponentsStoredInLocalStorage();
 
+        //
+        //
+        //
+        //
+        //
         // local storage for postForm
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
@@ -751,11 +773,55 @@ onBeforeMount(() => {
         }
     }
 
-    // User is editing an existing Resource, rather than creating a new one from scratch.
+    // User is editing an existing Resource, rather than creating a new one from scratch. øøø
     if (props.post !== null) {
-        store.commit("designer/setComponents", []);
         formType.value = "update";
 
+        // Parse the HTML content using DOMParser
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(props.post.content, "text/html");
+
+        // Select all <section> elements with data-componentid attribute
+        const sectionElements = doc.querySelectorAll(
+            "section[data-componentid]"
+        );
+
+        // Initialize an array to store extracted HTML
+        const extractedSections = [];
+
+        // Loop through the selected elements and extract outerHTML
+        // Loop through the selected elements and extract outerHTML
+        sectionElements.forEach((section) => {
+            extractedSections.push({
+                categories: [], // You can add your category objects here
+                cover_images: [], // You can add your cover image objects here
+                created_at: "your_created_at_value",
+                deleted_at: null,
+                html_code: section.outerHTML,
+                id: "your_id_value",
+                published: 1, // You can set the published value here
+                title: "your_title_value",
+                updated_at: "your_updated_at_value",
+                user_id: 1, // You can set the user_id value here
+            });
+        });
+
+        store.commit("designer/setComponents", extractedSections);
+
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
         postForm.title = props.post.title;
         postForm.address = props.post.address;
         // slug logic
@@ -786,6 +852,7 @@ const pageBuilder = new PageBuilder(store);
 </script>
 <template>
     <DesignerModal
+        v-if="openDesignerModal"
         :show="openDesignerModal"
         @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
         @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"

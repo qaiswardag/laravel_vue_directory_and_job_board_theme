@@ -24,14 +24,14 @@ defineProps({
 
         <Banner />
         <!-- Topbar - start -->
-        <div
+        <nav
             class="h-16 sticky top-0 z-10 flex flex-shrink-0 justify-between items-center bg-white border-b-2 border-gray-100"
         >
             <div class="flex flex-shrink-0 items-center px-4 justify-between">
                 <ApplicationLogo></ApplicationLogo>
             </div>
             <GuestsNavbar></GuestsNavbar>
-        </div>
+        </nav>
 
         <slot name="header" />
 

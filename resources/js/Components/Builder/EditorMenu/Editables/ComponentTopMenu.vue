@@ -56,12 +56,6 @@ const deleteComponent = function (e) {
     };
     // end modal
 };
-//
-
-const getComponents = computed(() => {
-    return store.getters["designer/getComponents"];
-});
-console.log("getComponents:", getComponents.value);
 </script>
 
 <template>
@@ -81,12 +75,8 @@ console.log("getComponents:", getComponents.value);
         <header></header>
         <main></main>
     </DynamicModal>
-    <div
-        class="mx-auto mt-4 bg-myPrimaryLightGrayColor z-40 overflow-hidden left-0 right-0 top-[-1rem] text-myPrimaryDarkGrayColor border border-gray-400 duration-100 transform group-hover:block max-w-[80%] rounded-full shadow-sm"
-    >
-        <div
-            class="flex flex-row justify-between mx-auto py-1.5 px-3 max-w-6xl"
-        >
+    <div class="myPrimaryTag py-2 mx-2">
+        <div class="flex flex-row justify-between mx-auto px-3 max-w-6xl">
             <div class="flex gap-2 items-center justify-center">
                 <div
                     @click="deleteComponent($event)"

@@ -46,7 +46,7 @@ const generateHTML = function (filename, HTML) {
 // handle download HTML
 const handleDownloadHTML = function () {
     downloadedComponents.value = getComponents.value.map((component) => {
-        return component.html;
+        return component.html_code;
     });
 
     generateHTML("downloaded_html.html", downloadedComponents.value.join(""));

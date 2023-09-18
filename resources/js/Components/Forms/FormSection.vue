@@ -17,12 +17,9 @@ defineEmits(["submitted"]);
 
 const hasActions = computed(() => !!useSlots().actions);
 </script>
-
 <template>
     <div class="myPrimarySection">
         <form @submit.prevent="$emit('submitted')">
-            <div class=""></div>
-
             <div
                 :class="
                     hasActions
@@ -44,7 +41,7 @@ const hasActions = computed(() => !!useSlots().actions);
 
                     <div
                         :class="{ block: sidebarArea === false }"
-                        class="myPrimaryForm"
+                        class="myPrimaryContentLayout"
                     >
                         <div
                             :class="{ 'md:w-full': sidebarArea === false }"

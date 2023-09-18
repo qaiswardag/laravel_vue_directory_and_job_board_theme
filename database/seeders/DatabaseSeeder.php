@@ -601,23 +601,30 @@ class DatabaseSeeder extends Seeder
         foreach ($pageBuilderComponents as $pageBuildercomponent) {
             PageBuilderComponent::factory()->create($pageBuildercomponent);
         }
-        $pageBuilderCategories = [
-            "Headers",
+        //
+        //
+        //
+        //
+        $categories = [
+            "Articles & Contents",
             "Call to Actions",
+            "Contact",
+            "Headers",
+            "Opening Hours",
+            "Products & Sale",
             "Features",
             "About Us",
-            "Products",
-            "Articles",
-            "Teams",
-            "Contact",
-            "Opening Hours",
             "Links & Buttons",
             "Templates",
             "Social Media",
             "Footers",
+            "Images",
         ];
 
-        foreach ($pageBuilderCategories as $categoryName) {
+        // Sort the categories alphabetically
+        sort($categories);
+
+        foreach ($categories as $categoryName) {
             PageBuilderComponentCategory::factory()->create([
                 "name" => $categoryName,
             ]);

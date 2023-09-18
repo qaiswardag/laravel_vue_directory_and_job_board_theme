@@ -582,6 +582,7 @@ class Designer {
             document.querySelector("[hovered]").removeAttribute("hovered");
         }
 
+        await this.nextTick;
         this.addClickAndHoverEvents();
         this.getComponents.value.forEach((component) => {
             const section = document.querySelector(
@@ -592,7 +593,6 @@ class Designer {
                 component.html_code = section.outerHTML;
             }
         });
-        this.saveComponentsLocalStorage(this.getComponents.value);
 
         // Initialize the MutationObserver
         this.observer = new MutationObserver((mutationsList, observer) => {
@@ -619,7 +619,7 @@ class Designer {
         );
 
         this.addClickAndHoverEvents();
-    };
+    }; //
 
     cloneComponent(cloneComponent) {
         // Hide slider and right menu
@@ -646,10 +646,10 @@ class Designer {
         if (section) {
             // Generate a unique ID using uuidv4() and assign it to the section
             section.dataset.componentid = uuidv4();
-
-            // Update the clonedComponent id with the newly generated unique ID
-            clonedComponent.id = section.dataset.componentid;
         }
+
+        // Update the clonedComponent id with the newly generated unique ID
+        clonedComponent.id = section.dataset.componentid;
 
         // Update the HTML content of the clonedComponent with the modified HTML
         clonedComponent.html_code = doc.querySelector("section").outerHTML;
@@ -750,7 +750,6 @@ class Designer {
             element.tagName.toLowerCase() !== "img" &&
             Number(element.textContent.length) === 0
         ) {
-            console.log("kom her");
             element.classList.add("h-7");
             element.classList.add("min-h-[7]");
             element.classList.add("bg-red-50");
@@ -1046,6 +1045,9 @@ class Designer {
         // save current design
         // this.saveCurrentDesignWithTimer();
 
+        console.log("kom her...........");
+        // this.saveComponentsLocalStorage();
+        // this.saveCurrentDesign();
         // invoke methods
         // handle custom URL
         this.handleHyperlink();

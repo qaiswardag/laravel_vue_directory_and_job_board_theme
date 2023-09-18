@@ -43,7 +43,6 @@ const breadcrumbsLinks = [
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-        <div class="myPrimarySection"></div>
 
         <!-- Show Unique Resorce - start -->
         <UnqiueResource

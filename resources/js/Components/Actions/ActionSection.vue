@@ -29,7 +29,7 @@ defineProps({
                 <slot name="header" />
                 <div
                     :class="{ block: sidebarArea === false }"
-                    class="myPrimaryForm"
+                    class="myPrimaryContentLayout"
                 >
                     <div
                         :class="{ 'md:w-full': sidebarArea === false }"

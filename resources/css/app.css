@@ -28,7 +28,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryWidget {
-        @apply py-8 px-4 border border-myPrimaryLightGrayColor rounded;
+        @apply py-8 px-4 border border-myPrimaryLightGrayColor;
     }
 
     /*
@@ -105,7 +105,7 @@
         @apply mx-auto block mt-2 mb-6 w-40 transition-all rounded-md object-cover cursor-pointer;
     }
     .myPrimarythumbnailInsertPreview {
-        @apply block md:h-24 md:w-24 h-20 w-20 hover:shadow-sm transition-all cursor-pointer rounded-full object-cover;
+        @apply block md:h-16 md:w-16 h-16 w-16 hover:shadow-sm transition-all cursor-pointer rounded-full object-cover;
     }
 
     /*
@@ -127,7 +127,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryMainPageHeader {
-        @apply mySecondaryHeader text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor border-b-2 border-gray-50 bg-gray-50;
+        @apply mySecondaryHeader text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor my-0;
     }
     .myPrimaryMainPageHeaderNotLoggedIn {
         @apply text-6xl leading-tight mb-6 font-medium text-center;
@@ -271,7 +271,7 @@
     */
 
     .myBreadcrumbsContainer {
-        @apply flex items-center justify-start gap-1 py-2 pl-4 pr-2;
+        @apply flex items-center justify-start gap-1 py-2 pl-4 pr-2 font-medium;
     }
 
     /*
@@ -292,7 +292,7 @@
     .myPrimaryFormWithActions {
         @apply flex flex-col myPrimaryGap md:pb-4  px-2 rounded;
     }
-    .myPrimaryForm {
+    .myPrimaryContentLayout {
         @apply md:flex md:flex-row flex flex-col myPrimaryGap;
     }
 

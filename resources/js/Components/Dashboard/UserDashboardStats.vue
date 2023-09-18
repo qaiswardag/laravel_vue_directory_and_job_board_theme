@@ -100,7 +100,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FullWidthElement :descriptionArea="true" class="bg-gray-100">
+    <FullWidthElement :descriptionArea="true">
         <template #title>Latest team resources</template>
         <template #description>
             You are currently viewing the latest resources uploaded by your
@@ -472,7 +472,7 @@ onMounted(() => {
         </template>
     </FullWidthElement>
 
-    <FullWidthElement :descriptionArea="true" class="bg-red-100">
+    <FullWidthElement :descriptionArea="true">
         <template #title
             >Details about the logged-in user and team insights</template
         >

@@ -59,10 +59,10 @@ defineProps({
         </div>
         <ArticleTemplate :sidebarArea="true" :actionsArea="false">
             <template #main>
-                <div v-html="post.content"></div>
+                <section v-html="post.content"></section>
             </template>
             <template #sidebar>
-                <div class="flex gap-8 flex-col">
+                <aside class="flex gap-8 flex-col">
                     <!-- updated by - end -->
                     <!-- Post updated by - start -->
                     <div class="myPrimaryWidget">
@@ -343,12 +343,12 @@ defineProps({
                         v-if="post.cover_images"
                         :images="post.cover_images"
                         imageSize="large_path"
-                        imageHeight="h-96 rounded"
+                        imageHeight="h-96"
                         imageWidth="w-full"
                         :roundedFull="false"
                     ></ThumbnailSmallImageSlider>
                     <!-- cover images - end -->
-                </div>
+                </aside>
             </template>
         </ArticleTemplate>
     </div>

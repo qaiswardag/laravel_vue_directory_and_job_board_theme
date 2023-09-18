@@ -85,7 +85,7 @@ const getCurrentAttachedComponentCategories = computed(() => {
 
 const formType = ref("create");
 
-const pathLocalStorage = `page-builder-form-${
+const pathLocalStorage = `components-form-${
     props.currentUserTeam ? props.currentUserTeam.reference_id : null
 }`;
 

@@ -9,7 +9,7 @@ const props = defineProps({
 });
 </script>
 <template>
-    <div class="myBreadcrumbsContainer bg-gray-50 font-medium">
+    <div class="myBreadcrumbsContainer">
         <div
             class="font-medium"
             v-for="(link, index) in links"

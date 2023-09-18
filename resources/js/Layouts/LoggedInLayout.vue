@@ -56,18 +56,6 @@ const sidebarOpen = ref(false);
 </script>
 
 <template>
-    <!-- head-key makes sure to only add one meta key -->
-    <!-- <Head>
-        <title>{{ title }}</title>
-        <meta type="description" content="MYISSUE" head-key="description" />
-    </Head> -->
-    <Banner />
-    <Flash :flash="$page.props.flash"></Flash>
-
-    <!-- <div v-if="isDOMLoaded">
-        <FullScreenSpinner></FullScreenSpinner>
-    </div> -->
-
     <!-- Static sidebar for mobile - start -->
     <TransitionRoot as="template" :show="sidebarOpen">
         <Dialog
@@ -170,7 +158,7 @@ const sidebarOpen = ref(false);
         >
             <button
                 type="button"
-                class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 ring-1 ring-gray-200 px-1.5 md:hidden ml-2"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white md:hidden ml-2"
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>
@@ -191,8 +179,8 @@ const sidebarOpen = ref(false);
                     <slot />
                 </main>
             </div>
-            <FooterUniversal></FooterUniversal>
         </main>
+        <FooterUniversal></FooterUniversal>
     </div>
     <!--Topbar - end -->
 </template>
