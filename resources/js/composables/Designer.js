@@ -685,7 +685,7 @@ class Designer {
     // move component
     // runs when html components are rearranged
     moveComponent(direction) {
-        console.log("element:", this.getComponent.value);
+        if (this.getComponents.value.length <= 1) return;
 
         // Get the component you want to move (replace this with your actual logic)
         const componentToMove = this.getComponent.value; // Replace this with your logic to get the component to move.
