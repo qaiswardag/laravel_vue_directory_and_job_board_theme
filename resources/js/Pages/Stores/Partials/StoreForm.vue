@@ -625,11 +625,11 @@ const handlePageBuilder = function () {
             //
             //
             //
-            // postForm.content = getComponents.value
-            //     .map((component) => {
-            //         return component.html_code;
-            //     })
-            //     .join(""); // Join the HTML code strings without any separator
+            postForm.content = getComponents.value
+                .map((component) => {
+                    return component.html_code;
+                })
+                .join(""); // Join the HTML code strings without any separator
         }
 
         //
