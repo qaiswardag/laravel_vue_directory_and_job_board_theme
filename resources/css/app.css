@@ -169,6 +169,9 @@
         focus:ring-0 focus:ring-red-500
         focus-visible:ring-0 focus-visible:ring-red-500;
     }
+    a {
+        @apply text-myPrimaryLinkColor;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -377,6 +380,9 @@
     .myPrimaryColorPreview {
         @apply aspect-square  border border-gray-200 cursor-pointer  min-h-[1.5rem] rounded-sm;
     }
+    /* .compiledCSSS {
+        @apply h-60;
+    } */
 }
 
 /* CSS styles for VueQuill - start */

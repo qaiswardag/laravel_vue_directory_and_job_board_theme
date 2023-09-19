@@ -24,7 +24,7 @@ defineProps({
         >
             <article
                 :class="{ 'md:w-full': sidebarArea === false }"
-                class="md:w-8/12 flex flex-col myPrimaryGap px-4 py-4"
+                class="md:w-8/12 flex flex-col myPrimaryGap px-4"
             >
                 <slot name="main" />
             </article>
