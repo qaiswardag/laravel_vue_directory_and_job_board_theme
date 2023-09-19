@@ -23,11 +23,13 @@ import {
     Squares2X2Icon,
     XCircleIcon,
     BoltSlashIcon,
+    FolderPlusIcon,
 } from "@heroicons/vue/24/outline";
 import { useStore } from "vuex";
 import OptionsDropdown from "@/Components/Builder/DropdownsPlusToggles/OptionsDropdown.vue";
 import RightSidebarEditor from "@/Components/Builder/EditorMenu/RightSidebarEditor.vue";
 import Spinner from "@/Components/Builder/Loaders/Spinner.vue";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 const emit = defineEmits(["previewCurrentDesign"]);
 
@@ -42,6 +44,21 @@ const props = defineProps({
 
 const store = useStore();
 const designer = new Designer(store);
+
+const showModalAddComponont = ref(false);
+
+// use dynamic model
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
 
 const getMenuLeft = computed(() => {
     return store.getters["designer/getMenuLeft"];
@@ -124,6 +141,41 @@ const getFetchedComponents = computed(() => {
 
 const activeLibrary = ref({ name: "Forms" });
 
+// handleAddComponenModal # Start
+// handleAddComponenModal # Start
+const handleAddComponenModal = function () {
+    // set modal standards
+    showModalAddComponont.value = true;
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = "Add component";
+    descriptionModal.value = "Add Component";
+    firstButtonModal.value = "Close";
+    thirdButtonModal.value = "Add Component";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // set open modal
+        showModalAddComponont.value = false;
+    };
+    //
+    // handle click
+    secondModalButtonFunction.value = function () {
+        showModalAddComponont.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        showModalAddComponont.value = false;
+    };
+    // end modal
+};
+// handleAddComponenModal # End
+// handleAddComponenModal # End
+
+const handleComponent = function (component) {
+    console.log("user cliked on component:", component);
+};
+
 onMounted(async () => {
     // fetch components
     awaitComponentsOnMounted.value = await store.dispatch(
@@ -142,16 +194,10 @@ onMounted(async () => {
         awaitComponentsOnMounted.value !== undefined &&
         awaitComponentsOnMounted.value !== null
     ) {
-        // Extract the name property from the activeLibrary.value object
-        const activeLibraryName = activeLibrary.value.name;
-
         // Filter components based on the active category
         const activeCategoryComponents =
             awaitComponentsOnMounted.value.components.filter((component) => {
-                // Check if the activeLibraryName matches any category name
-                return component.categories.some((category) => {
-                    return category.name === "Headers";
-                });
+                return component;
             });
 
         awaitComponentsOnMounted.value = activeCategoryComponents;
@@ -165,7 +211,6 @@ onMounted(async () => {
     //
     //
     //
-
     store.commit("designer/setComponent", null);
     store.commit("designer/setElement", null);
 
@@ -176,6 +221,114 @@ onMounted(async () => {
 </script>
 
 <template xmlns="http://www.w3.org/1999/html">
+    <DynamicModal
+        v-if="showModalAddComponont"
+        maxWidth="4xl"
+        :show="showModalAddComponont"
+        :type="typeModal"
+        :gridColumnAmount="gridColumnModal"
+        :title="titleModal"
+        :description="descriptionModal"
+        :firstButtonText="firstButtonModal"
+        :secondButtonText="secondButtonModal"
+        :thirdButtonText="thirdButtonModal"
+        @firstModalButtonFunction="firstModalButtonFunction"
+        @secondModalButtonFunction="secondModalButtonFunction"
+        @thirdModalButtonFunction="thirdModalButtonFunction"
+    >
+        <header></header>
+        <main class="h-full md:max-h-[30rem] max-h-[20rem] p-2">
+            <div class="flex gap-2 flex-wrap">
+                <button class="myPrimaryTag">All</button>
+                <template
+                    v-for="category in Array.isArray(categories) && categories"
+                    :key="category.id"
+                >
+                    <button class="myPrimaryTag">
+                        {{ category.name }}
+                    </button>
+                </template>
+            </div>
+            <main
+                class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 p-2"
+            >
+                <section
+                    class="h-full md:max-h-[20rem] max-h-[20rem] overflow-y-scroll p-2 md:w-4/6"
+                >
+                    <div
+                        class="grid myPrimaryGap md:grid-cols-2 grid-cols-2 divide-y divide-gray-200 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
+                    >
+                        <div
+                            class="px-4 py-4 bg-gray-50 rounded-md"
+                            v-for="component in Array.isArray(
+                                awaitComponentsOnMounted
+                            ) && awaitComponentsOnMounted"
+                            :key="component.id"
+                        >
+                            <button
+                                @click="handleComponent(component)"
+                                type="button"
+                            >
+                                {{ component.title }}
+                                <ThumbnailSmallImageSlider
+                                    :images="component.cover_images"
+                                    imageSize="medium_path"
+                                    imageHeight="md:h-40 h-40"
+                                    imageWidth="w-full"
+                                    :roundedFull="false"
+                                ></ThumbnailSmallImageSlider>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                <aside
+                    aria-label="sidebar"
+                    class="h-full md:max-h-[20rem] max-h-[20rem] md:w-2/6 w-full pl-2 border border-gray-200 overflow-y-scroll rounded"
+                >
+                    <div
+                        class="flex flex-col w-full divide-y divide-gray-200 p-2"
+                    >
+                        <p class="py-4 px-2">
+                            I sidste uge åbnede det amerikanske sportstøjsmærke
+                            Gant dørene til deres nyeste konceptbutik og dermed
+                            har Amagertorv i København fået endnu en
+                            detail-destination til sine mange daglige besøgende.
+                            Butikken, der spreder sig over 370 kvadratmeter,
+                            skal favne brandets arv og historie, der især
+                            associeres med den amerikanske østkysts Ivy
+                        </p>
+                        <p class="py-4 px-2">
+                            I sidste uge åbnede det amerikanske sportstøjsmærke
+                            Gant dørene til deres nyeste konceptbutik og dermed
+                            har Amagertorv i København fået endnu en
+                            detail-destination til sine mange daglige besøgende.
+                            Butikken, der spreder sig over 370 kvadratmeter,
+                            skal favne brandets arv og historie, der især
+                            associeres med den amerikanske østkysts Ivy
+                        </p>
+                        <p class="py-4 px-2">
+                            I sidste uge åbnede det amerikanske sportstøjsmærke
+                            Gant dørene til deres nyeste konceptbutik og dermed
+                            har Amagertorv i København fået endnu en
+                            detail-destination til sine mange daglige besøgende.
+                            Butikken, der spreder sig over 370 kvadratmeter,
+                            skal favne brandets arv og historie, der især
+                            associeres med den amerikanske østkysts Ivy
+                        </p>
+                        <p class="py-4 px-2">
+                            I sidste uge åbnede det amerikanske sportstøjsmærke
+                            Gant dørene til deres nyeste konceptbutik og dermed
+                            har Amagertorv i København fået endnu en
+                            detail-destination til sine mange daglige besøgende.
+                            Butikken, der spreder sig over 370 kvadratmeter,
+                            skal favne brandets arv og historie, der især
+                            associeres med den amerikanske østkysts Ivy
+                        </p>
+                    </div>
+                </aside>
+            </main>
+        </main>
+    </DynamicModal>
     <DesignerPreviewModal
         :show="openDesignerPreviewModal"
         @firstDesignerPreviewModalButtonFunction="
@@ -381,29 +534,65 @@ onMounted(async () => {
                     </div>
                 </div>
 
-                <Draggable
-                    id="pagebuilder"
-                    :list="getComponents"
-                    animation="200"
-                    class="bg-white grow overflow-y-auto"
-                    drag-class="opacity-0"
-                    group="components"
-                    handle=".cursor-grab"
-                    item-key="id"
-                    :onDrop="onDrop"
-                    @change="designer.addClickAndHoverEvents"
-                >
-                    <template #item="{ element }">
-                        <div
-                            @mouseup="
-                                store.commit('designer/setComponent', element)
-                            "
-                            class="relative group"
-                        >
-                            <div v-html="element.html_code" class="p-1"></div>
+                <div class="overflow-y-auto">
+                    <Draggable
+                        id="pagebuilder"
+                        :list="getComponents"
+                        animation="200"
+                        class="bg-white grow"
+                        drag-class="opacity-0"
+                        group="components"
+                        handle=".cursor-grab"
+                        item-key="id"
+                        :onDrop="onDrop"
+                        @change="designer.addClickAndHoverEvents"
+                    >
+                        <template #item="{ element }">
+                            <div
+                                @mouseup="
+                                    store.commit(
+                                        'designer/setComponent',
+                                        element
+                                    )
+                                "
+                                class="relative group"
+                            >
+                                <div
+                                    v-html="element.html_code"
+                                    class="p-1"
+                                ></div>
+                            </div>
+                        </template>
+                    </Draggable>
+
+                    <!-- Add Component # start -->
+                    <div
+                        class="rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 my-12 mx-8"
+                    >
+                        <FolderPlusIcon
+                            class="mx-auto h-12 w-12 text-gray-400"
+                        ></FolderPlusIcon>
+                        <h3 class="mt-2 text-sm font-semibold text-gray-900">
+                            Add Component
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-500">
+                            Get started adding a new component.
+                        </p>
+                        <div class="mt-6">
+                            <button
+                                @click="handleAddComponenModal"
+                                type="button"
+                                class="myPrimaryButton"
+                            >
+                                <FolderPlusIcon
+                                    class="-ml-0.5 mr-1.5 h-5 w-5"
+                                ></FolderPlusIcon>
+                                New Component
+                            </button>
                         </div>
-                    </template>
-                </Draggable>
+                    </div>
+                    <!-- Add Component # end -->
+                </div>
             </main>
 
             <aside
