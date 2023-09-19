@@ -2,6 +2,9 @@
 import Modal from "@/Components/Modals/Modal.vue";
 import { CheckIcon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import PageBuilder from "@/composables/Designer";
+import { useStore } from "vuex";
+
 import {
     Dialog,
     DialogOverlay,
@@ -19,6 +22,10 @@ defineProps({
         required: true,
     },
 });
+
+// store
+const store = useStore();
+const pageBuilder = new PageBuilder(store);
 
 const showModalClosePageBuilder = ref(false);
 //
@@ -57,12 +64,13 @@ const firstButton = function () {
         // set open modal
         secondButton();
     };
-    //
+
     // handle click
     thirdModalButtonFunction.value = function () {
         closePageBuilder();
         showModalClosePageBuilder.value = false;
     };
+    //
     // end modal
 };
 
@@ -73,10 +81,12 @@ const emit = defineEmits([
 
 // first button function
 const closePageBuilder = function () {
+    pageBuilder.removeHoveredAndSelected();
     emit("firstDesignerModalButtonFunction");
 };
 // first button function
 const secondButton = function () {
+    pageBuilder.removeHoveredAndSelected();
     emit("secondDesignerModalButtonFunction");
 };
 </script>

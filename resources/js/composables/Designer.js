@@ -100,6 +100,18 @@ class Designer {
 
         return currentCSS;
     }
+
+    removeHoveredAndSelected() {
+        console.log("iiiiiiiit ran");
+        if (document.querySelector("[hovered]") !== null) {
+            document.querySelector("[hovered]").removeAttribute("hovered");
+        }
+
+        if (document.querySelector("[selected]") !== null) {
+            document.querySelector("[selected]").removeAttribute("selected");
+        }
+    }
+
     currentClasses() {
         // convert classList to array
         let classListArray = Array.from(this.getElement.value.classList);
@@ -501,12 +513,19 @@ class Designer {
      */
     addClickAndHoverEvents = () => {
         document.querySelectorAll("section *").forEach((element) => {
+            // Check if the element is not one of the excluded tags
             if (
-                this.elementsWithListeners &&
-                this.elementsWithListeners.has(element) === false
+                !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
+                    element.tagName
+                )
             ) {
-                this.elementsWithListeners.add(element);
-                this.attachElementListeners(element);
+                if (
+                    this.elementsWithListeners &&
+                    this.elementsWithListeners.has(element) === false
+                ) {
+                    this.elementsWithListeners.add(element);
+                    this.attachElementListeners(element);
+                }
             }
         });
     };
@@ -560,16 +579,6 @@ class Designer {
             this.handleDesignerMethods();
         });
     };
-
-    removeHoveredAndSelected() {
-        if (document.querySelector("[hovered]") !== null) {
-            document.querySelector("[hovered]").removeAttribute("hovered");
-        }
-
-        if (document.querySelector("[selected]") !== null) {
-            document.querySelector("[selected]").removeAttribute("selected");
-        }
-    }
 
     // saveCurrentDesignWithTimer = () => {
     //     setTimeout(() => {
@@ -712,24 +721,14 @@ class Designer {
         this.getComponents.value.splice(newIndex, 0, componentToMove);
     }
 
-    handleTextAreaContent() {
-        const element = this.getElement.value;
-        const elementTag = element.tagName.toLowerCase();
-
+    addSpaceForEmptyTextArea = () => {
+        if (this.getElement.value === null) return;
         // text content
-        if (typeof element.innerHTML !== "string") {
+        if (typeof this.getElement.value.innerHTML !== "string") {
             return;
         }
-
-        if (typeof element.innerHTML === "string") {
-            const textContentElementClone =
-                element.innerHTML.replaceAll("<br>", "\r\n") || "";
-
-            this.store.commit(
-                "designer/setTextAreaVueModel",
-                textContentElementClone
-            );
-        }
+        const element = this.getElement.value;
+        const elementTag = element.tagName.toLowerCase();
 
         if (
             ["p", "h1", "h2", "h3", "h4", "h5", "h6"].includes(elementTag) &&
@@ -749,31 +748,31 @@ class Designer {
             element.classList.remove("min-h-[7]");
             element.classList.remove("bg-red-50");
         }
-    }
+    };
 
-    decodeHTML(html) {
-        const txt = document.createElement("textarea");
-        txt.innerHTML = html;
-        return txt.value;
-    }
+    handleTextInput = async (textContentVueModel) => {
+        const element = this.getElement.value;
 
-    async changeText(event) {
-        await this.nextTick;
+        this.addSpaceForEmptyTextArea();
 
-        const textContentElementClone = event.target.value;
+        // text content
+        if (typeof element?.innerHTML !== "string") {
+            return;
+        }
 
-        // Convert newline characters to <br> tags when saving
-        const textContentWithBr = textContentElementClone.replaceAll(
-            /\r?\n/g,
-            "<br>"
-        );
+        if (typeof element.innerHTML === "string") {
+            await this.nextTick;
 
-        // Update both the displayed content and the model
-        this.textContentVueModel = textContentWithBr;
-        this.getElement.value.innerHTML = textContentWithBr;
+            this.store.commit(
+                "designer/setTextAreaVueModel",
+                element.innerHTML
+            );
 
-        this.store.commit("designer/setElement", this.getElement.value);
-    }
+            this.getElement.value.innerHTML = textContentVueModel;
+
+            this.store.commit("designer/setElement", this.getElement.value);
+        }
+    };
 
     previewCurrentDesign() {
         this.store.commit("designer/setComponent", null);
@@ -1088,8 +1087,6 @@ class Designer {
         this.handleCustomTextColor();
         // handle classes
         this.currentClasses();
-        // handle text content
-        this.handleTextAreaContent();
     }
 }
 

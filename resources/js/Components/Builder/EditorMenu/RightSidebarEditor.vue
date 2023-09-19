@@ -6,7 +6,6 @@ import { useStore } from "vuex";
 import ClassEditor from "@/Components/Builder/EditorMenu/Editables/ClassEditor.vue";
 import ImageEditor from "@/Components/Builder/EditorMenu/Editables/ImageEditor.vue";
 import ColorsEditor from "@/Components/Builder/EditorMenu/Editables/ColorEditor.vue";
-import TextContent from "@/Components/Builder/EditorMenu/Editables/TextContent.vue";
 import Typography from "@/Components/Builder/EditorMenu/Editables/Typography.vue";
 import PaddingPlusMargin from "@/Components/Builder/EditorMenu/Editables/PaddingPlusMargin.vue";
 import DeleteElement from "@/Components/Builder/EditorMenu/Editables/DeleteElement.vue";
@@ -14,6 +13,7 @@ import BorderRadius from "@/Components/Builder/EditorMenu/Editables/BorderRadius
 import Borders from "@/Components/Builder/EditorMenu/Editables/Borders.vue";
 import LinkEditor from "@/Components/Builder/EditorMenu/Editables/LinkEditor.vue";
 import ComponentTopMenu from "@/Components/Builder/EditorMenu/Editables/ComponentTopMenu.vue";
+import TipTap from "@/Components/TipTap/TipTap.vue";
 
 // store
 const store = useStore();
@@ -81,7 +81,7 @@ const isHeadingElement = computed(() => {
                         <ImageEditor :user="user" :team="team"> </ImageEditor>
                     </article>
                     <article>
-                        <TextContent></TextContent>
+                        <TipTap></TipTap>
                     </article>
                     <article>
                         <LinkEditor></LinkEditor>
