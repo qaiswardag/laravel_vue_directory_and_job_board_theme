@@ -595,13 +595,8 @@ const handlePageBuilder = function () {
 
         // save to local storage if new resource
         if (formType.value === "create") {
-            console.log(
-                "handlePageBuilder: creating new resource:",
-                getComponents.value
-            );
             pageBuilder.saveCurrentDesign();
             pageBuilder.saveComponentsLocalStorage(getComponents.value);
-
             //
             //
             //
@@ -614,11 +609,6 @@ const handlePageBuilder = function () {
         }
         // save to local storage if new resource
         if (formType.value === "update") {
-            console.log(
-                "handlePageBuilder: update resource:",
-                getComponents.value
-            );
-
             pageBuilder.saveCurrentDesign();
 
             //

@@ -103,7 +103,6 @@ class Designer {
     }
 
     removeHoveredAndSelected() {
-        console.log("iiiiiiiit ran");
         if (document.querySelector("[hovered]") !== null) {
             document.querySelector("[hovered]").removeAttribute("hovered");
         }
