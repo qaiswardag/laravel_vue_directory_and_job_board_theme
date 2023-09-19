@@ -591,26 +591,50 @@ const handlePageBuilder = function () {
     };
     // handle click
     secondDesignerModalButtonFunction.value = async function () {
-        console.log("den er:", getComponents.value);
         // wait for components to be saved
-        pageBuilder.saveCurrentDesign();
-        await nextTick();
 
         // save to local storage if new resource
         if (formType.value === "create") {
-            console.log("kom heeer");
+            console.log(
+                "handlePageBuilder: creating new resource:",
+                getComponents.value
+            );
+            pageBuilder.saveCurrentDesign();
             pageBuilder.saveComponentsLocalStorage(getComponents.value);
-            // store.commit("designer/setComponents", []);
+
+            //
+            //
+            //
+            //
+            postForm.content = getComponents.value
+                .map((component) => {
+                    return component.html_code;
+                })
+                .join(""); // Join the HTML code strings without any separator
+        }
+        // save to local storage if new resource
+        if (formType.value === "update") {
+            console.log(
+                "handlePageBuilder: update resource:",
+                getComponents.value
+            );
+
+            pageBuilder.saveCurrentDesign();
+
+            //
+            //
+            //
+            //
+            // postForm.content = getComponents.value
+            //     .map((component) => {
+            //         return component.html_code;
+            //     })
+            //     .join(""); // Join the HTML code strings without any separator
         }
 
+        //
+        //
         // set open modal
-        postForm.content = getComponents.value
-            .map((component) => {
-                return component.html_code;
-            })
-            .join("");
-        //
-        //
         openDesignerModal.value = false;
     };
 
@@ -633,10 +657,13 @@ onBeforeMount(async () => {
     // User is creating a new Resource from scratch, rather than editing an existing one
     // local storage for page builder
     if (props.post === null) {
-        pageBuilder.areComponentsStoredInLocalStorage();
-
-        //
-        //
+        if (pageBuilder.areComponentsStoredInLocalStorage()) {
+            postForm.content = getComponents.value
+                .map((component) => {
+                    return component.html_code;
+                })
+                .join("");
+        }
         //
         //
         //
@@ -790,7 +817,6 @@ onBeforeMount(async () => {
         const extractedSections = [];
 
         // Loop through the selected elements and extract outerHTML
-        // Loop through the selected elements and extract outerHTML
         sectionElements.forEach((section) => {
             extractedSections.push({
                 categories: [], // You can add your category objects here
@@ -798,7 +824,7 @@ onBeforeMount(async () => {
                 created_at: "your_created_at_value",
                 deleted_at: null,
                 html_code: section.outerHTML,
-                id: "your_id_value",
+                id: section.dataset.componentid, // Use the data-componentid as the id
                 published: 1, // You can set the published value here
                 title: "your_title_value",
                 updated_at: "your_updated_at_value",
@@ -875,6 +901,7 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
+                    <p class="my-12">content er: {{ postForm.content }}</p>
                     <InputLabel for="title" value="Your Post title" />
                     <TextInput
                         placeholder="Enter your title.."

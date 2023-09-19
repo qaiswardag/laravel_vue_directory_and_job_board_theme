@@ -577,12 +577,12 @@ class Designer {
     //     }, 100);
     // };
 
+    // øøø
     saveCurrentDesign = async () => {
         if (document.querySelector("[hovered]") !== null) {
             document.querySelector("[hovered]").removeAttribute("hovered");
         }
 
-        await this.nextTick;
         this.addClickAndHoverEvents();
         this.getComponents.value.forEach((component) => {
             const section = document.querySelector(
@@ -710,20 +710,6 @@ class Designer {
         // Move the component to the new position
         this.getComponents.value.splice(currentIndex, 1);
         this.getComponents.value.splice(newIndex, 0, componentToMove);
-
-        // Optionally, update other properties as needed
-        // ...
-
-        // Update the component list to trigger reactivity
-        //  this.getComponents.value = [...this.getComponents.value];
-
-        //
-        //
-        //
-        //
-        //
-
-        // end of method "moveComponent"
     }
 
     handleTextAreaContent() {
@@ -847,7 +833,10 @@ class Designer {
             } catch (e) {
                 console.error("Error parsing localStorage data: ", e);
             }
+            return true;
         }
+
+        return false;
     }
     //
     updateBasePrimaryImage() {
@@ -1042,12 +1031,12 @@ class Designer {
     handleDesignerMethods() {
         if (this.getElement.value === null) return;
 
-        // save current design
-        // this.saveCurrentDesignWithTimer();
-
-        console.log("kom her...........");
+        // save to local storage
         // this.saveComponentsLocalStorage();
+
+        // save current design
         // this.saveCurrentDesign();
+
         // invoke methods
         // handle custom URL
         this.handleHyperlink();

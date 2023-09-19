@@ -225,11 +225,6 @@ const imageNameComputed = computed(() => {
 watch(imageNameComputed, (updatedImage, oldImage) => {
     form.name = updatedImage;
 });
-
-// onMounted(() => {
-//     form.name = getCurrentImage.value?.currentImage?.mediaLibrary?.name;
-//     console.log("er:", getCurrentImage.value);
-// });
 </script>
 
 <template>

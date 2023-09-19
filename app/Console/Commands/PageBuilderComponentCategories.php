@@ -28,17 +28,17 @@ class PageBuilderComponentCategories extends Command
     {
         $categories = [
             "Articles & Contents",
-            "Call to Actions",
-            "Contact",
+            // "Call to Actions",
+            // "Contact",
             "Headers",
             "Opening Hours",
             "Products & Sale",
-            "Features",
-            "About Us",
-            "Links & Buttons",
-            "Templates",
-            "Social Media",
-            "Footers",
+            // "Features",
+            // "About Us",
+            // "Links & Buttons",
+            // "Templates",
+            // "Social Media",
+            // "Footers",
             "Images",
         ];
 
