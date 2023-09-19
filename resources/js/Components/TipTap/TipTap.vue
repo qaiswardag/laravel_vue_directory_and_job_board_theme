@@ -52,6 +52,9 @@ watch(textContent, (newValue) => {
     }
 });
 
+// Check if any of the child elements have the tagName "IMG"
+const containsInvalidTags = ref(false);
+
 // Get the div element you want to check
 
 // Get the div element you want to check
@@ -59,24 +62,24 @@ const divElement = document.querySelector("div"); // Replace with your actual se
 
 // Watch for changes in textContent and update store and textContentVueModel
 watch(getElement, (newValue) => {
+    console.log("new element clicked");
     // Get all child elements of the parentDiv
     const childElements = newValue.children;
 
-    if (newValue.tagName === "IMG") return;
-
-    // Check if any of the child elements have the tagName "IMG"
-    let containsInvalidTags = false;
+    if (newValue.tagName === "IMG") {
+        containsInvalidTags.value = true;
+        console.log("there is INVALID TAG");
+        return;
+    }
 
     Array.from(childElements).forEach((element) => {
-        if (element.tagName === "IMG") {
-            containsInvalidTags = true;
-            return; // exit the forEach loop early if an <img> element is found
+        if (element.tagName === "IMG" || element.tagName === "DIV") {
+            containsInvalidTags.value = true;
+        } else {
+            containsInvalidTags.value = false;
+            editor.value?.commands?.setContent(newValue.innerHTML);
         }
     });
-
-    if (!containsInvalidTags) {
-        editor.value?.commands?.setContent(newValue.innerHTML);
-    }
 });
 
 const setLink = function () {
@@ -107,61 +110,67 @@ const setLink = function () {
 onMounted(() => {});
 </script>
 <template>
-    <div
-        v-if="editor"
-        class="my-12 blockease-linear duration-200 block px-4 ease-linear"
-    >
-        <div class="flex items-center gap-2 bg-black py-2 px-2 rounded-t-lg">
-            <button
-                @click="editor.chain().focus().toggleBold().run()"
-                class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
-                :class="{
-                    'bg-myPrimaryLinkColor text-white': editor.isActive('bold'),
-                }"
+    <template v-if="containsInvalidTags === false">
+        <div
+            v-if="editor"
+            class="my-12 blockease-linear duration-200 block px-4 ease-linear"
+        >
+            <div
+                class="flex items-center gap-2 bg-black py-2 px-2 rounded-t-lg"
             >
-                B
-            </button>
-            <button
-                @click="
-                    editor.chain().focus().toggleHeading({ level: 3 }).run()
-                "
-                class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
-                :class="{
-                    'bg-myPrimaryLinkColor text-white':
-                        editor.isActive('heading'),
-                }"
-            >
-                H3
-            </button>
-            <button
-                @click="editor.chain().focus().setHardBreak().run()"
-                class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
-            >
-                br
-            </button>
-            <button
-                class="text-base text-gray-200 font-semibold py-1 px-1 rounded-lg"
-                @click="editor.chain().focus().toggleBulletList().run()"
-                :class="{
-                    'bg-myPrimaryLinkColor text-white':
-                        editor.isActive('bulletList'),
-                }"
-            >
-                <ListBulletIcon class="w-5 h-5 stroke-2"></ListBulletIcon>
-            </button>
-            <button
-                @click="setLink"
-                class="text-base text-gray-200 font-semibold py-1 px-1 rounded-lg"
-                :class="{
-                    'bg-myPrimaryLinkColor text-white': editor.isActive('link'),
-                }"
-            >
-                <LinkIcon class="w-5 h-5 stroke-2"></LinkIcon>
-            </button>
+                <button
+                    @click="editor.chain().focus().toggleBold().run()"
+                    class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
+                    :class="{
+                        'bg-myPrimaryLinkColor text-white':
+                            editor.isActive('bold'),
+                    }"
+                >
+                    B
+                </button>
+                <button
+                    @click="
+                        editor.chain().focus().toggleHeading({ level: 3 }).run()
+                    "
+                    class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
+                    :class="{
+                        'bg-myPrimaryLinkColor text-white':
+                            editor.isActive('heading'),
+                    }"
+                >
+                    H3
+                </button>
+                <button
+                    @click="editor.chain().focus().setHardBreak().run()"
+                    class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
+                >
+                    br
+                </button>
+                <button
+                    class="text-base text-gray-200 font-semibold py-1 px-1 rounded-lg"
+                    @click="editor.chain().focus().toggleBulletList().run()"
+                    :class="{
+                        'bg-myPrimaryLinkColor text-white':
+                            editor.isActive('bulletList'),
+                    }"
+                >
+                    <ListBulletIcon class="w-5 h-5 stroke-2"></ListBulletIcon>
+                </button>
+                <button
+                    @click="setLink"
+                    class="text-base text-gray-200 font-semibold py-1 px-1 rounded-lg"
+                    :class="{
+                        'bg-myPrimaryLinkColor text-white':
+                            editor.isActive('link'),
+                    }"
+                >
+                    <LinkIcon class="w-5 h-5 stroke-2"></LinkIcon>
+                </button>
+            </div>
+            <editor-content
+                :editor="editor"
+                class="myPrimaryTextArea p-0 m-0 rounded-none rounded-b-lg"
+            />
         </div>
-        <editor-content
-            :editor="editor"
-            class="myPrimaryTextArea p-0 m-0 rounded-none rounded-b-lg"
-        />
-    </div>
+    </template>
 </template>
