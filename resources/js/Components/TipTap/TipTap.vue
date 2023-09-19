@@ -1,7 +1,7 @@
 <script setup>
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import Designer from "@/composables/Designer";
 import Bold from "@tiptap/extension-bold";
@@ -11,6 +11,7 @@ import Text from "@tiptap/extension-text";
 import { LinkIcon, ListBulletIcon } from "@heroicons/vue/24/outline";
 import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 const store = useStore();
 const designer = new Designer(store);
@@ -20,9 +21,24 @@ const getElement = computed(() => {
     return store.getters["designer/getElement"];
 });
 
+const showModalUrl = ref(false);
+//
+// use dynamic model
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
 const textContentVueModel = ref("Hello World");
 const editor = useEditor({
-    content: "TipTap",
+    content: "",
     extensions: [
         StarterKit,
         Link.configure({
@@ -54,6 +70,7 @@ watch(textContent, (newValue) => {
 
 // Check if any of the child elements have the tagName "IMG"
 const containsInvalidTags = ref(false);
+const previousUrl = ref(false);
 
 // Get the div element you want to check
 
@@ -62,54 +79,142 @@ const divElement = document.querySelector("div"); // Replace with your actual se
 
 // Watch for changes in textContent and update store and textContentVueModel
 watch(getElement, (newValue) => {
-    console.log("new element clicked");
-    // Get all child elements of the parentDiv
-    const childElements = newValue.children;
+    if (editor.value) {
+        // Get all child elements of the parentDiv
+        const childElements = newValue?.children;
 
-    if (newValue.tagName === "IMG") {
-        containsInvalidTags.value = true;
-        console.log("there is INVALID TAG");
-        return;
-    }
-
-    Array.from(childElements).forEach((element) => {
-        if (element.tagName === "IMG" || element.tagName === "DIV") {
+        if (newValue?.tagName === "IMG") {
             containsInvalidTags.value = true;
-        } else {
-            containsInvalidTags.value = false;
-            editor.value?.commands?.setContent(newValue.innerHTML);
+            return;
         }
-    });
+
+        Array.from(childElements).forEach((element) => {
+            if (element?.tagName === "IMG" || element?.tagName === "DIV") {
+                containsInvalidTags.value = true;
+            } else {
+                containsInvalidTags.value = false;
+                editor.value?.commands?.setContent(newValue?.innerHTML);
+            }
+        });
+    }
 });
 
-const setLink = function () {
-    const previousUrl = editor.value.getAttributes("link").href;
-    const url = window.prompt("URL", previousUrl);
+const urlEnteret = ref("");
+const urlError = ref();
+
+const handleURL = function () {
+    previousUrl.value = editor.value.getAttributes("link").href;
+    urlEnteret.value = previousUrl.value;
+
+    // set modal standards
+    showModalUrl.value = true;
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = "Enter URL";
+    descriptionModal.value = "Enter url";
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = urlEnteret.value ? "Remove url" : null;
+    thirdButtonModal.value = "Save";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // set open modal
+        showModalUrl.value = false;
+    };
+    //
+    // handle click
+    secondModalButtonFunction.value = function () {
+        editor.value.chain().focus().extendMarkRange("link").unsetLink().run();
+        showModalUrl.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        const isNotValidated = validateURL();
+        if (isNotValidated) {
+            return;
+        }
+        if (!isNotValidated) {
+            editor.value;
+            setLink();
+        }
+        showModalUrl.value = false;
+    };
+    // end modal
+};
+
+const validateURL = function () {
+    // url validation
+    const urlRegex = /^https?:\/\//;
+    const isValidURL = ref(true);
+    isValidURL.value = urlRegex.test(urlEnteret.value);
+
+    if (previousUrl.value) {
+        urlEnteret.value = previousUrl.value;
+    }
 
     // cancelled
-    if (url === null) {
-        return;
+    if (isValidURL.value === false) {
+        urlError.value = "Invalid URL. Remember to add https://";
+        return true;
     }
 
-    // empty
-    if (url === "") {
-        editor.value.chain().focus().extendMarkRange("link").unsetLink().run();
-
-        return;
-    }
-
+    return false;
+};
+const setLink = function () {
+    console.log(" urlEnteret.value :", urlEnteret.value);
     // update link
     editor.value
         .chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: url })
+        .setLink({ href: urlEnteret.value })
         .run();
 };
+
+onBeforeMount(() => {
+    editor.value?.destroy();
+});
 
 onMounted(() => {});
 </script>
 <template>
+    <DynamicModal
+        v-if="showModalUrl"
+        :show="showModalUrl"
+        :type="typeModal"
+        :gridColumnAmount="gridColumnModal"
+        :title="titleModal"
+        :description="descriptionModal"
+        :firstButtonText="firstButtonModal"
+        :secondButtonText="secondButtonModal"
+        :thirdButtonText="thirdButtonModal"
+        @firstModalButtonFunction="firstModalButtonFunction"
+        @secondModalButtonFunction="secondModalButtonFunction"
+        @thirdModalButtonFunction="thirdModalButtonFunction"
+    >
+        <header></header>
+        <main>
+            <div class="myInputGroup">
+                <p class="my-6">er: {{ urlEnteret }}</p>
+                <label class="myPrimaryInputLabel" for="roles"
+                    ><span>Enter URL</span></label
+                ><input
+                    v-model="urlEnteret"
+                    class="myPrimaryInput mt-1"
+                    type="url"
+                    placeholder="url"
+                />
+                <div
+                    v-if="urlError"
+                    class="min-h-[2.5rem] flex items-center justify-start"
+                >
+                    <p class="myPrimaryInputError mt-2 mb-0 py-0 self-start">
+                        {{ urlError }}
+                    </p>
+                </div>
+            </div>
+        </main>
+    </DynamicModal>
     <template v-if="containsInvalidTags === false">
         <div
             v-if="editor"
@@ -157,14 +262,14 @@ onMounted(() => {});
                     <ListBulletIcon class="w-5 h-5 stroke-2"></ListBulletIcon>
                 </button>
                 <button
-                    @click="setLink"
+                    @click="handleURL"
                     class="text-base text-gray-200 font-semibold py-1 px-1 rounded-lg"
                     :class="{
                         'bg-myPrimaryLinkColor text-white':
                             editor.isActive('link'),
                     }"
                 >
-                    <LinkIcon class="w-5 h-5 stroke-2"></LinkIcon>
+                    <LinkIcon class="w-4 h-4 stroke-2"></LinkIcon>
                 </button>
             </div>
             <editor-content

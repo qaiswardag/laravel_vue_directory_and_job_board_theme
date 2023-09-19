@@ -880,8 +880,7 @@ class Designer {
         this.store.commit("designer/setHyperlinkError", null);
 
         // url validation
-        const urlRegex =
-            /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+        const urlRegex = /^https?:\/\//;
 
         const isValidURL = ref(true);
 
