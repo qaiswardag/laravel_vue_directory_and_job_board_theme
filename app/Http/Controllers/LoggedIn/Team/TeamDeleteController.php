@@ -124,7 +124,7 @@ class TeamDeleteController extends Controller
 
         $deleter = app(DeletesTeams::class);
 
-        $path = public_path("uploads/" . $team->reference_id);
+        $path = public_path("uploads/" . $team->id);
 
         if (File::exists($path) === true) {
             File::deleteDirectory($path);

@@ -66,7 +66,7 @@ class MediaLibraryController extends Controller
         $this->authorize("can-create-and-update", $team);
 
         foreach ($request->images as $image) {
-            $teamReferenceId = $team->reference_id;
+            $teamId = $team->id;
             $image = $image["file"];
 
             // original client file name
@@ -97,7 +97,7 @@ class MediaLibraryController extends Controller
             $extension = $image->getClientOriginalExtension();
 
             $path = $this->generateUniqueImagePath(
-                $teamReferenceId,
+                $teamId,
                 $currentYearYear,
                 $currentMonth,
                 $slugifyFilename,
@@ -110,7 +110,7 @@ class MediaLibraryController extends Controller
 
             $this->saveAdditionalImageSizes(
                 $path,
-                $teamReferenceId,
+                $teamId,
                 $currentYearYear,
                 $currentMonth,
                 $slugifyFilename,
