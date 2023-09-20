@@ -16,6 +16,7 @@ use Laravel\Fortify\Actions\ConfirmPassword;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class TeamDeleteController extends Controller
 {
@@ -126,19 +127,19 @@ class TeamDeleteController extends Controller
 
         $deleter = app(DeletesTeams::class);
 
-        $path = public_path("uploads/" . $teamId);
+        $teamImagesFolder = File::exists(
+            storage_path(self::PUBLIC_UPLOAD_PATH . $teamId)
+        );
 
-        dd($path);
-        try {
-            if (File::exists($path) === true) {
-                File::deleteDirectory($path);
-            }
-            // Your code that may throw an error
-        } catch (Exception $e) {
-            // Log the error message
+        $path = storage_path(self::PUBLIC_UPLOAD_PATH . $teamId);
+
+        // Check if the directory exists in storage
+        if ($teamImagesFolder) {
+            // Delete the directory from storage
+            File::deleteDirectory($path);
+        } else {
             Log::error(
-                "An error occurred, deleting images folder for team witg id:  {$teamId}" .
-                    $e->getMessage()
+                "An error occurred while deleting the images folder for team with ID: {$teamId}."
             );
         }
 
