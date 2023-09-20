@@ -44,6 +44,8 @@ const firstButton = function () {
     emit("firstModalButtonSearchComponentsFunction");
 };
 
+const search_query = ref("");
+
 const store = useStore();
 const designer = new Designer(store);
 
@@ -103,18 +105,13 @@ onMounted(async () => {
         minHeight="min-h-[50rem]"
         maxHeight="max-h-[50rem]"
     >
+        <Spinner
+            v-if="getFetchedComponents.isLoading"
+            class="flex justify-center items-center h-full absolute inset-0"
+        ></Spinner>
         <div
             class="px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
-            <Spinner
-                class="flex justify-center items-center"
-                v-if="
-                    getFetchedComponents.isLoading &&
-                    !getFetchedComponents.fetchedData &&
-                    !getFetchedComponents.isError
-                "
-            ></Spinner>
-
             <div
                 class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
             >
@@ -138,8 +135,10 @@ onMounted(async () => {
                 </p>
             </div>
             <main
-                v-if="!getFetchedComponents.isError"
-                class="h-full md:max-h-[30rem] max-h-[20rem] p-2"
+                v-if="
+                    !getFetchedComponents.isError &&
+                    !getFetchedComponents.isLoading
+                "
             >
                 <form @submit.prevent="handleSearch(1)">
                     <div class="mysearchBarWithOptions">
@@ -199,90 +198,35 @@ onMounted(async () => {
                         </button>
                     </template>
                 </div>
-                <section
-                    class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 p-2"
-                >
-                    <section
-                        class="h-full md:max-h-[20rem] max-h-[20rem] overflow-y-scroll md:w-4/6"
+                <section class="bg-red-400">
+                    <div
+                        class="grid myPrimaryGap md:grid-cols-2 grid-cols-2 divide-y divide-gray-200 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
                     >
                         <div
-                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2 divide-y divide-gray-200 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
+                            class="px-4 py-4 bg-gray-50 rounded-md h-96 cursor-pointer"
+                            v-for="component in getFetchedComponents &&
+                            getFetchedComponents.fetchedData &&
+                            Array.isArray(
+                                getFetchedComponents.fetchedData.components
+                            ) &&
+                            getFetchedComponents.fetchedData.components"
+                            :key="component.id"
                         >
-                            <div
-                                class="px-4 py-4 bg-gray-50 rounded-md"
-                                v-for="component in getFetchedComponents &&
-                                getFetchedComponents.fetchedData &&
-                                Array.isArray(
-                                    getFetchedComponents.fetchedData.components
-                                ) &&
-                                getFetchedComponents.fetchedData.components"
-                                :key="component.id"
+                            <button
+                                @click="handleComponent(component)"
+                                type="button"
                             >
-                                <button
-                                    @click="handleComponent(component)"
-                                    type="button"
-                                >
-                                    {{ component.title }}
-                                    <ThumbnailSmallImageSlider
-                                        :images="component.cover_images"
-                                        imageSize="medium_path"
-                                        imageHeight="md:h-40 h-40"
-                                        imageWidth="w-full"
-                                        :roundedFull="false"
-                                    ></ThumbnailSmallImageSlider>
-                                </button>
-                            </div>
+                                {{ component.title }}
+                                <ThumbnailSmallImageSlider
+                                    :images="component.cover_images"
+                                    imageSize="medium_path"
+                                    imageHeight="md:h-40 h-40"
+                                    imageWidth="w-full"
+                                    :roundedFull="false"
+                                ></ThumbnailSmallImageSlider>
+                            </button>
                         </div>
-                    </section>
-                    <aside
-                        aria-label="sidebar"
-                        class="h-full md:max-h-[20rem] max-h-[20rem] md:w-2/6 w-full pl-2 border border-gray-200 overflow-y-scroll rounded"
-                    >
-                        <div
-                            class="flex flex-col w-full divide-y divide-gray-200 p-2"
-                        >
-                            <p class="py-4 px-2">
-                                I sidste uge åbnede det amerikanske
-                                sportstøjsmærke Gant dørene til deres nyeste
-                                konceptbutik og dermed har Amagertorv i
-                                København fået endnu en detail-destination til
-                                sine mange daglige besøgende. Butikken, der
-                                spreder sig over 370 kvadratmeter, skal favne
-                                brandets arv og historie, der især associeres
-                                med den amerikanske østkysts Ivy
-                            </p>
-                            <p class="py-4 px-2">
-                                I sidste uge åbnede det amerikanske
-                                sportstøjsmærke Gant dørene til deres nyeste
-                                konceptbutik og dermed har Amagertorv i
-                                København fået endnu en detail-destination til
-                                sine mange daglige besøgende. Butikken, der
-                                spreder sig over 370 kvadratmeter, skal favne
-                                brandets arv og historie, der især associeres
-                                med den amerikanske østkysts Ivy
-                            </p>
-                            <p class="py-4 px-2">
-                                I sidste uge åbnede det amerikanske
-                                sportstøjsmærke Gant dørene til deres nyeste
-                                konceptbutik og dermed har Amagertorv i
-                                København fået endnu en detail-destination til
-                                sine mange daglige besøgende. Butikken, der
-                                spreder sig over 370 kvadratmeter, skal favne
-                                brandets arv og historie, der især associeres
-                                med den amerikanske østkysts Ivy
-                            </p>
-                            <p class="py-4 px-2">
-                                I sidste uge åbnede det amerikanske
-                                sportstøjsmærke Gant dørene til deres nyeste
-                                konceptbutik og dermed har Amagertorv i
-                                København fået endnu en detail-destination til
-                                sine mange daglige besøgende. Butikken, der
-                                spreder sig over 370 kvadratmeter, skal favne
-                                brandets arv og historie, der især associeres
-                                med den amerikanske østkysts Ivy
-                            </p>
-                        </div>
-                    </aside>
+                    </div>
                 </section>
             </main>
             <!-- content end -->
