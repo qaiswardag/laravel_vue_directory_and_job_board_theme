@@ -113,15 +113,15 @@ const checkUserTeamAuthorization = function () {
 
 const duplicateForm = useForm({
     teamId: props.currentUserTeam.id,
-    postId: "",
+    componentId: "",
 });
 
 // handle action
-const handleDuplicate = function (postId) {
-    duplicateForm.postId = postId;
+const handleDuplicate = function (componentId) {
+    duplicateForm.componentId = componentId;
     //
-    duplicateForm.post(route("team.jobs.duplicate"), {
-        preserveScroll: true,
+    duplicateForm.post(route("admin.components.component.duplicate"), {
+        preserveScroll: false,
         onSuccess: () => {},
         onError: () => {},
         onFinish: () => {},
@@ -136,9 +136,8 @@ const handleEdit = function (componentID) {
 
     router.get(
         route("admin.components.component.edit", [
-            props.currentUserTeam &&
-            props.currentUserTeam.id !== null &&
-            props.currentUserTeam.id !== undefined
+            props.currentUserTeam?.id !== null &&
+            props.currentUserTeam?.id !== undefined
                 ? props.currentUserTeam.id
                 : 0,
             componentID,
@@ -507,7 +506,7 @@ const routesArray = [
                                                         type="button"
                                                         @click="
                                                             handleDuplicate(
-                                                                post.id
+                                                                component.id
                                                             )
                                                         "
                                                     >

@@ -11,6 +11,7 @@ use App\Models\Superadmin\PageBuilder\PageBuilderComponentCategoryRelations;
 use App\Models\Superadmin\PageBuilder\PageBuilderCoverImageRelation;
 use App\Models\Team;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -271,28 +272,30 @@ class PageBuilderController extends Controller
      */
     public function duplicate(Request $request)
     {
-        dd("kooom heeer!!!");
-        // $team = Team::findOrFail($request->teamId);
-        // $job = Job::findOrFail($request->postId);
+        // Authorize superadmin
+        $this->authorize("superadmin-can-create-and-update");
 
-        // if ($team === null) {
-        //     return Inertia::render("Error", [
-        //         "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
-        //         "status" => 404, // HTTP status code for the response.
-        //     ]);
-        // }
+        $team = Team::findOrFail($request->teamId);
+        $component = PageBuilderComponent::findOrFail($request->componentId);
 
-        // // Authorize the team that the user has selected
-        // $this->authorize("can-create-and-update", $team);
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
 
-        // $newJob = $job->replicate();
+        // Authorize the team that the user has selected
+        $this->authorize("can-create-and-update", $team);
 
-        // $newJob->created_at = Carbon::now();
-        // $newJob->save();
+        $newComponent = $component->replicate();
 
-        // return redirect()->route("team.jobs.index", [
-        //     "teamId" => $team->id,
-        // ]);
+        $newComponent->created_at = Carbon::now();
+        $newComponent->save();
+
+        return redirect()->route("admin.components", [
+            "teamId" => $team->id,
+        ]);
     }
 
     /**

@@ -158,7 +158,7 @@ const handleDuplicate = function (postId) {
     duplicateForm.postId = postId;
     //
     duplicateForm.post(route("team.jobs.duplicate"), {
-        preserveScroll: true,
+        preserveScroll: false,
         onSuccess: () => {},
         onError: () => {},
         onFinish: () => {},
