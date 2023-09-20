@@ -404,9 +404,19 @@ export default {
 
     // actions
     actions: {
+        // context & send to mutation
+
+        //
+        //
+        //
         // load components
-        async loadComponents(context, team) {
-            const data = await handlegetElements(
+        loadComponents(context, team) {
+            //
+            //
+            //
+            //
+            //
+            handlegetElements(
                 route("components.index", {
                     team: team.id,
                 }),
@@ -426,8 +436,6 @@ export default {
                 isLoading: isLoadingComponents,
                 isSuccess: isSuccessComponents,
             });
-
-            return data;
         },
     },
 };
