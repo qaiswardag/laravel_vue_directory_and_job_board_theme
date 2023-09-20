@@ -53,7 +53,7 @@ class TeamController extends Controller
 
         return redirect()
             ->route("team.update.information", [
-                "referenceId" => $team->load("owner")->reference_id,
+                "teamId" => $team->load("owner")->id,
             ])
             ->with("success", "Team have been successfully created.");
     }
@@ -64,9 +64,9 @@ class TeamController extends Controller
      * @param  int  $teamId
      * @return \Inertia\Response
      */
-    public function show(Request $request, $referenceId)
+    public function show(Request $request, $teamId)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::where("id", $teamId)->first();
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -100,9 +100,9 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($referenceId)
+    public function edit($teamId)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::where("id", $teamId)->first();
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -139,7 +139,7 @@ class TeamController extends Controller
         );
 
         return redirect()->route("teams.show", [
-            "referenceId" => $team->reference_id,
+            "teamId" => $team->id,
         ]);
     }
 

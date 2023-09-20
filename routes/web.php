@@ -278,6 +278,11 @@ Route::middleware([
         PostController::class,
         "store",
     ])->name("team.posts.store");
+
+    Route::post("/team/posts/post/duplicate", [
+        PostController::class,
+        "duplicate",
+    ])->name("team.posts.duplicate");
     // POSTS #END
     // POSTS #END
     // POSTS #END
@@ -305,6 +310,10 @@ Route::middleware([
     Route::post("/team/jobs/job/store", [JobController::class, "store"])->name(
         "team.jobs.store"
     );
+    Route::post("/team/jobs/jobs/duplicate", [
+        JobController::class,
+        "duplicate",
+    ])->name("team.jobs.duplicate");
     // JOBS #END
     // JOBS #END
     // JOBS #END
@@ -334,6 +343,11 @@ Route::middleware([
         StoreController::class,
         "store",
     ])->name("team.stores.store");
+
+    Route::post("/team/stores/store/duplicate", [
+        StoreController::class,
+        "duplicate",
+    ])->name("team.stores.duplicate");
     // STORES #END
     // STORES #END
     // STORES #END
@@ -558,6 +572,11 @@ Route::middleware([
         PageBuilderController::class,
         "update",
     ])->name("admin.components.component.update");
+
+    Route::post("/admin/components/component/duplicate", [
+        PageBuilderController::class,
+        "duplicate",
+    ])->name("admin.components.component.duplicate");
 
     // destroy
     Route::delete("/admin/components/component/{componentId}/{teamId}", [

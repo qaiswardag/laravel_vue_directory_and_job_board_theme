@@ -86,7 +86,7 @@ const getCurrentAttachedComponentCategories = computed(() => {
 const formType = ref("create");
 
 const pathLocalStorage = `components-form-${
-    props.currentUserTeam ? props.currentUserTeam.reference_id : null
+    props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
 
 // use media library
@@ -251,10 +251,7 @@ const handleCreatePost = function () {
 const createPost = () => {
     if (formType.value === "create") {
         postForm.post(
-            route(
-                "admin.components.component.store",
-                props.currentUserTeam.reference_id
-            ),
+            route("admin.components.component.store", props.currentUserTeam.id),
             {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -269,7 +266,7 @@ const createPost = () => {
         postForm.post(
             route("admin.components.component.update", [
                 props.post.id,
-                props.currentUserTeam.reference_id,
+                props.currentUserTeam.id,
             ]),
             {
                 preserveScroll: true,

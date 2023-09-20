@@ -275,12 +275,7 @@ import {
             "
         >
             <SideBarLink
-                :href="
-                    route(
-                        'teams.show',
-                        $page.props.user.current_team.reference_id
-                    )
-                "
+                :href="route('teams.show', $page.props.user.current_team.id)"
                 :active="
                     route().current('teams.show') ||
                     route().current('team.update.information') ||

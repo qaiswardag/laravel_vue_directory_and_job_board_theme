@@ -12,6 +12,7 @@ use App\Models\Post\PostCategoryRelation;
 use App\Models\post\PostCoverImageRelation;
 use App\Models\Team;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -228,9 +229,6 @@ class PostController extends Controller
             }
         }
 
-        // Return the current team that the user is on, rather than the team that the user is storing the post for.
-        $currentTeam = Auth::user()->currentTeam->reference_id;
-
         return redirect()->route("team.posts.index", [
             "teamId" => $team->id,
         ]);
@@ -341,6 +339,37 @@ class PostController extends Controller
             "postAuthor" => $authors,
             "coverImages" => $coverImages,
             "categories" => $categories,
+        ]);
+    }
+
+    /**
+     * Duplicate the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function duplicate(Request $request)
+    {
+        $team = Team::findOrFail($request->teamId);
+        $post = Post::findOrFail($request->postId);
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
+        // Authorize the team that the user has selected
+        $this->authorize("can-create-and-update", $team);
+
+        $newPost = $post->replicate();
+
+        $newPost->created_at = Carbon::now();
+        $newPost->save();
+
+        return redirect()->route("team.posts.index", [
+            "teamId" => $team->id,
         ]);
     }
 

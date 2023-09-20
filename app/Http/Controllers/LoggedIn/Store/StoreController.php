@@ -16,6 +16,7 @@ use App\Models\Store\StoreState;
 use App\Models\Store\StoreStateRelation;
 use App\Models\Team;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -372,6 +373,36 @@ class StoreController extends Controller
             "coverImages" => $coverImages,
             "categories" => $categories,
             "states" => $states,
+        ]);
+    }
+    /**
+     * Duplicate the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function duplicate(Request $request)
+    {
+        $team = Team::findOrFail($request->teamId);
+        $store = Store::findOrFail($request->postId);
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
+        // Authorize the team that the user has selected
+        $this->authorize("can-create-and-update", $team);
+
+        $newStore = $store->replicate();
+
+        $newStore->created_at = Carbon::now();
+        $newStore->save();
+
+        return redirect()->route("team.stores.index", [
+            "teamId" => $team->id,
         ]);
     }
 

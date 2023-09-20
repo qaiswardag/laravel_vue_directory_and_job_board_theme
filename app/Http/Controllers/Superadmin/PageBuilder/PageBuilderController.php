@@ -264,6 +264,38 @@ class PageBuilderController extends Controller
     }
 
     /**
+     * Duplicate the specified resource.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function duplicate(Request $request)
+    {
+        dd("kooom heeer!!!");
+        // $team = Team::findOrFail($request->teamId);
+        // $job = Job::findOrFail($request->postId);
+
+        // if ($team === null) {
+        //     return Inertia::render("Error", [
+        //         "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
+        //         "status" => 404, // HTTP status code for the response.
+        //     ]);
+        // }
+
+        // // Authorize the team that the user has selected
+        // $this->authorize("can-create-and-update", $team);
+
+        // $newJob = $job->replicate();
+
+        // $newJob->created_at = Carbon::now();
+        // $newJob->save();
+
+        // return redirect()->route("team.jobs.index", [
+        //     "teamId" => $team->id,
+        // ]);
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(

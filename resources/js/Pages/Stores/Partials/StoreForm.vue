@@ -122,10 +122,10 @@ const getCurrentAttachedStoreCategories = computed(() => {
 
 const formType = ref("create");
 const pathLocalStorage = `store-form-${
-    props.currentUserTeam ? props.currentUserTeam.reference_id : null
+    props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
 const pathPageBuilderLocalStorage = `create-store-form-page-builder-${
-    props.currentUserTeam ? props.currentUserTeam.reference_id : null
+    props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
 
 // use media library

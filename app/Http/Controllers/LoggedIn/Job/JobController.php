@@ -18,6 +18,7 @@ use App\Models\Job\JobTypeRelation;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Team;
 use App\Models\User;
+use Carbon\Carbon;
 use Database\Factories\Job\JobStateFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -303,9 +304,6 @@ class JobController extends Controller
             }
         }
 
-        // Return the current team that the user is on, rather than the team that the user is storing the job for.
-        $currentTeam = Auth::user()->currentTeam->reference_id;
-
         return redirect()->route("team.jobs.index", [
             "teamId" => $team->id,
         ]);
@@ -428,6 +426,37 @@ class JobController extends Controller
             "states" => $states,
             "categories" => $categories,
             "types" => $types,
+        ]);
+    }
+
+    /**
+     * Duplicate the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function duplicate(Request $request)
+    {
+        $team = Team::findOrFail($request->teamId);
+        $job = Job::findOrFail($request->postId);
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
+        // Authorize the team that the user has selected
+        $this->authorize("can-create-and-update", $team);
+
+        $newJob = $job->replicate();
+
+        $newJob->created_at = Carbon::now();
+        $newJob->save();
+
+        return redirect()->route("team.jobs.index", [
+            "teamId" => $team->id,
         ]);
     }
 

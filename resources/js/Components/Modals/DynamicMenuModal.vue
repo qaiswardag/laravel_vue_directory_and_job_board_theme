@@ -100,7 +100,7 @@ const handleLogout = () => {
                         :href="
                             route(
                                 'teams.show',
-                                $page.props.user.current_team.reference_id
+                                $page.props.user.current_team.id
                             )
                         "
                     >

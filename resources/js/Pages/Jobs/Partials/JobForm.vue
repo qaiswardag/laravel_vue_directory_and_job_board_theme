@@ -138,7 +138,7 @@ const getCurrentAttachedJobTypes = computed(() => {
 
 const formType = ref("create");
 const pathLocalStorage = `job-form-${
-    props.currentUserTeam ? props.currentUserTeam.reference_id : null
+    props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
 
 // use media library

@@ -16,7 +16,7 @@ const breadcrumbsLinks = [
         label: "Team Settings",
         route: {
             name: "teams.show",
-            parameters: [props.team.reference_id],
+            parameters: [props.team.id],
         },
     },
     {

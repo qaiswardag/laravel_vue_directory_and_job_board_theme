@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
                 "name" => "myself",
                 "public" => true,
                 "personal_team" => false,
-                "reference_id" => "myself",
+                "reference_id" => "123456789",
             ]);
         }
 

@@ -65,9 +65,9 @@ class TeamDeleteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($referenceId)
+    public function edit($teamId)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::where("id", $teamId)->first();
 
         if ($team === null) {
             return Inertia::render("Error", [

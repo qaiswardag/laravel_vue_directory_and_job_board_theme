@@ -15,7 +15,7 @@ const breadcrumbsLinks = [
         label: "Team Settings",
         route: {
             name: "teams.show",
-            parameters: [props.team.reference_id],
+            parameters: [props.team.id],
         },
     },
 ];
@@ -88,10 +88,7 @@ const breadcrumbsLinks = [
                         <h3 class="text-lg font-normal">
                             <Link
                                 :href="
-                                    route(
-                                        'team.update.information',
-                                        team.reference_id
-                                    )
+                                    route('team.update.information', team.id)
                                 "
                                 class="focus:outline-none"
                             >
@@ -151,7 +148,7 @@ const breadcrumbsLinks = [
                     <div class="mt-8">
                         <h3 class="text-lg font-normal">
                             <Link
-                                :href="route('team.members', team.reference_id)"
+                                :href="route('team.members', team.id)"
                                 class="focus:outline-none"
                             >
                                 <span
@@ -208,7 +205,7 @@ const breadcrumbsLinks = [
                     <div class="mt-8">
                         <h3 class="text-lg font-normal">
                             <Link
-                                :href="route('team.delete', team.reference_id)"
+                                :href="route('team.delete', team.id)"
                                 class="focus:outline-none"
                             >
                                 <span

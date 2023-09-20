@@ -14,6 +14,7 @@ import CardHeadings from "@/Components/Actions/CardHeadings.vue";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
 import {
     RadioGroup,
@@ -22,6 +23,8 @@ import {
     RadioGroupOption,
 } from "@headlessui/vue";
 import {
+    EllipsisVerticalIcon,
+    CheckIcon,
     ArrowPathRoundedSquareIcon,
     ArrowsRightLeftIcon,
     MinusIcon,
@@ -106,6 +109,23 @@ const checkUserTeamAuthorization = function () {
         showModalEditComponentTeamAuth.value = false;
     };
     // end modal
+};
+
+const duplicateForm = useForm({
+    teamId: props.currentUserTeam.id,
+    postId: "",
+});
+
+// handle action
+const handleDuplicate = function (postId) {
+    duplicateForm.postId = postId;
+    //
+    duplicateForm.post(route("team.jobs.duplicate"), {
+        preserveScroll: true,
+        onSuccess: () => {},
+        onError: () => {},
+        onFinish: () => {},
+    });
 };
 
 const handleEdit = function (componentID) {
@@ -334,6 +354,9 @@ const routesArray = [
                             <th scope="col" class="myPrimaryTableTh">
                                 Created Date
                             </th>
+                            <th scope="col" class="myPrimaryTableTh">
+                                Options
+                            </th>
                             <th scope="col" class="myPrimaryTableTh">Edit</th>
                             <th scope="col" class="myPrimaryTableTh">Delete</th>
                         </tr>
@@ -448,6 +471,55 @@ const routesArray = [
                                             "dd/MM/yyyy HH:mm"
                                         )
                                     }}
+                                </td>
+
+                                <td class="myPrimaryTableTBodyTd">
+                                    <Menu
+                                        as="div"
+                                        class="relative inline-block text-left"
+                                    >
+                                        <div>
+                                            <MenuButton
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                            >
+                                                <EllipsisVerticalIcon
+                                                    class="shrink-0 h-4 w-4 m-2 stroke-2"
+                                                    aria-hidden="true"
+                                                />
+                                            </MenuButton>
+                                        </div>
+                                        <transition
+                                            enter-active-class="transition ease-out duration-100"
+                                            enter-from-class="transform opacity-0 scale-95"
+                                            enter-to-class="transform opacity-100 scale-100"
+                                            leave-active-class="transition ease-in duration-75"
+                                            leave-from-class="transform opacity-100 scale-100"
+                                            leave-to-class="transform opacity-0 scale-95"
+                                        >
+                                            <MenuItems
+                                                class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                            >
+                                                <MenuItem
+                                                    class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
+                                                >
+                                                    <button
+                                                        class="flex gap-1 items-center"
+                                                        type="button"
+                                                        @click="
+                                                            handleDuplicate(
+                                                                post.id
+                                                            )
+                                                        "
+                                                    >
+                                                        <CheckIcon
+                                                            class="w-4 h-4"
+                                                        ></CheckIcon>
+                                                        Duplicate
+                                                    </button>
+                                                </MenuItem>
+                                            </MenuItems>
+                                        </transition>
+                                    </Menu>
                                 </td>
 
                                 <td class="myPrimaryTableTBodyTd">

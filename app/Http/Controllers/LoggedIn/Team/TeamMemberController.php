@@ -22,9 +22,9 @@ class TeamMemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($referenceId)
+    public function index($teamId)
     {
-        $team = Team::where("reference_id", $referenceId)->first();
+        $team = Team::where("id", $teamId)->first();
 
         if ($team === null) {
             return Inertia::render("Error", [
