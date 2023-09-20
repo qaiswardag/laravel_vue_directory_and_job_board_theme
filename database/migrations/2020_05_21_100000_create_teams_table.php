@@ -12,11 +12,6 @@ return new class extends Migration {
     {
         Schema::create("teams", function (Blueprint $table) {
             $table->id();
-            // $table->foreignId("user_id")->index(); // original row structure
-            $table
-                ->string("reference_id")
-                ->unique()
-                ->index();
 
             $table
                 ->foreignId("user_id")

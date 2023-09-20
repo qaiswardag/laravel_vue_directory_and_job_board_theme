@@ -118,48 +118,4 @@ class Team extends JetstreamTeam
             "logos" => $this->logosRelationship,
         ];
     }
-    //
-    //
-
-    /**
-     * Generate a unique reference ID for the model.
-     *
-     * The function is being called automatically by Laravel's
-     * Eloquent ORM when a new Team model instance is being created.
-     *
-     *
-     * The creating event is fired when a new instance of
-     * the model is being created and saved to the database.
-     * This event is fired just before the model is actually
-     * saved, which means that you can use it to modify
-     * any attributes on the model before it's saved.
-     * In this case, the boot method in the model is used
-     * to register the creating event listener, which generates
-     * a unique reference ID for the new team instance.
-     *
-     */
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($team) {
-            // Check if a team with ID 1 already exists
-            $teamCount = static::count();
-
-            if ($teamCount >= 1) {
-                do {
-                    // generate a random string
-                    $randomSlugString = Str::lower(
-                        Str::slug(Str::random(rand(8, 14)), "_")
-                    );
-
-                    // convert the random string to lowercase using strtolower
-                    $team->reference_id = strtolower($randomSlugString);
-                } while (
-                    static::where("reference_id", $team->reference_id)->exists()
-                );
-            }
-        });
-    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\LoggedIn\Team;
 
 use App\Http\Controllers\Controller;
 use App\Models\Team;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use Laravel\Fortify\Actions\ConfirmPassword;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
 
 class TeamDeleteController extends Controller
 {
@@ -124,10 +126,20 @@ class TeamDeleteController extends Controller
 
         $deleter = app(DeletesTeams::class);
 
-        $path = public_path("uploads/" . $team->id);
+        $path = public_path("uploads/" . $teamId);
 
-        if (File::exists($path) === true) {
-            File::deleteDirectory($path);
+        dd($path);
+        try {
+            if (File::exists($path) === true) {
+                File::deleteDirectory($path);
+            }
+            // Your code that may throw an error
+        } catch (Exception $e) {
+            // Log the error message
+            Log::error(
+                "An error occurred, deleting images folder for team witg id:  {$teamId}" .
+                    $e->getMessage()
+            );
         }
 
         // delete team

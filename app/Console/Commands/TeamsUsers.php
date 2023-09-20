@@ -55,7 +55,6 @@ class TeamsUsers extends Command
                 "name" => "myself",
                 "public" => true,
                 "personal_team" => false,
-                "reference_id" => "123456789",
             ]);
         }
 
