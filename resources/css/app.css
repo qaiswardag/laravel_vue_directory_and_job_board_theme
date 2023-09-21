@@ -172,8 +172,11 @@
     a {
         @apply text-myPrimaryLinkColor;
     }
+    h2 {
+        @apply mySecondaryHeader;
+    }
     h3 {
-        @apply mySecondaryHeader myTertiaryHeader;
+        @apply myTertiaryHeader;
     }
 
     /*

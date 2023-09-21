@@ -143,6 +143,9 @@ const handleURL = function () {
 };
 
 const validateURL = function () {
+    // initial value
+    urlError.value = null;
+
     // url validation
     const urlRegex = /^https?:\/\//;
     const isValidURL = ref(true);
@@ -235,12 +238,28 @@ onMounted(() => {});
                 </button>
                 <button
                     @click="
+                        editor.chain().focus().toggleHeading({ level: 2 }).run()
+                    "
+                    class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
+                    :class="{
+                        'bg-myPrimaryLinkColor text-white': editor.isActive(
+                            'heading',
+                            { level: 2 }
+                        ),
+                    }"
+                >
+                    H2
+                </button>
+                <button
+                    @click="
                         editor.chain().focus().toggleHeading({ level: 3 }).run()
                     "
                     class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
                     :class="{
-                        'bg-myPrimaryLinkColor text-white':
-                            editor.isActive('heading'),
+                        'bg-myPrimaryLinkColor text-white': editor.isActive(
+                            'heading',
+                            { level: 3 }
+                        ),
                     }"
                 >
                     H3
