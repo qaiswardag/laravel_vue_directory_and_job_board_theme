@@ -1,13 +1,13 @@
 <script setup>
 import tailwindPaddingPlusMargin from "@/utils/builder/tailwind-padding-margin";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
 import { useStore } from "vuex";
 import { computed, ref, watch } from "vue";
 
 const store = useStore();
 
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 const fontVerticalPadding = ref(null);
 const fontHorizontalPadding = ref(null);
@@ -67,7 +67,7 @@ watch(
                     v-model="fontVerticalPadding"
                     class="myPrimarySelect"
                     @change="
-                        designer.handleVerticalPadding(fontVerticalPadding)
+                        pageBuilder.handleVerticalPadding(fontVerticalPadding)
                     "
                 >
                     <option disabled value="">Select</option>
@@ -85,7 +85,9 @@ watch(
                     v-model="fontHorizontalPadding"
                     class="myPrimarySelect"
                     @change="
-                        designer.handleHorizontalPadding(fontHorizontalPadding)
+                        pageBuilder.handleHorizontalPadding(
+                            fontHorizontalPadding
+                        )
                     "
                 >
                     <option disabled value="">Select</option>
@@ -103,7 +105,9 @@ watch(
                 <select
                     v-model="fontVerticalMargin"
                     class="myPrimarySelect"
-                    @change="designer.handleVerticalMargin(fontVerticalMargin)"
+                    @change="
+                        pageBuilder.handleVerticalMargin(fontVerticalMargin)
+                    "
                 >
                     <option disabled value="">Select</option>
                     <option
@@ -120,7 +124,7 @@ watch(
                     v-model="fontHorizontalMargin"
                     class="myPrimarySelect"
                     @change="
-                        designer.handleHorizontalMargin(fontHorizontalMargin)
+                        pageBuilder.handleHorizontalMargin(fontHorizontalMargin)
                     "
                 >
                     <option disabled value="">Select</option>

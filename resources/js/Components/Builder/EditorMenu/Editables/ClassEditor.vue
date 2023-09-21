@@ -2,10 +2,10 @@
 import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 
 const store = useStore();
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 const currentClasses = ref(null);
 const getCurrentClasses = computed(() => {
@@ -32,7 +32,7 @@ const inputClass = ref("");
                     v-for="className in currentClasses"
                     :key="className"
                     class="myPrimaryTag cursor-pointer hover:bg-myPrimaryErrorColor hover:text-white"
-                    @click="designer.handleRemoveClasses(className)"
+                    @click="pageBuilder.handleRemoveClasses(className)"
                 >
                     <span class="mr-1">
                         {{ className }}
@@ -50,7 +50,7 @@ const inputClass = ref("");
                             type="text"
                             placeholder="Type class"
                             @keydown.enter="
-                                designer.handleAddClasses(inputClass)
+                                pageBuilder.handleAddClasses(inputClass)
                             "
                             autocomplete="off"
                             class="myPrimaryInput border-none rounded-r-none ml-0 w-full"

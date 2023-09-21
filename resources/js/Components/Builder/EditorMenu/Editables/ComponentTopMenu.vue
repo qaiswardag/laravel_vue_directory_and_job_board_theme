@@ -8,7 +8,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { useStore } from "vuex";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 
 import { ref, computed } from "vue";
 
@@ -28,7 +28,7 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 const store = useStore();
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 // remove component
 const deleteComponent = function (e) {
@@ -50,7 +50,7 @@ const deleteComponent = function (e) {
     //
     // handle click
     thirdModalButtonFunction.value = function () {
-        designer.deleteComponent(e);
+        pageBuilder.deleteComponent(e);
         // set open modal
         showModalDeleteComponent.value = false;
     };
@@ -89,14 +89,14 @@ const deleteComponent = function (e) {
             <div class="flex gap-2 items-center justify-center">
                 <button
                     type="button"
-                    @click="designer.moveComponent(1)"
+                    @click="pageBuilder.moveComponent(1)"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <ArrowDownIcon class="w-4 h-4 m-2 stroke-2" />
                 </button>
                 <button
                     type="button"
-                    @click="designer.moveComponent(-1)"
+                    @click="pageBuilder.moveComponent(-1)"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <ArrowUpIcon class="w-4 h-4 m-2 stroke-2" />

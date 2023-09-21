@@ -7,7 +7,7 @@ import {
     watch,
     watchEffect,
 } from "vue";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
 import Preview from "@/Pages/PageBuilder/Preview.vue";
 import {
@@ -41,14 +41,14 @@ const props = defineProps({
 });
 
 const store = useStore();
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 const getMenuRight = computed(() => {
     return store.getters["designer/getMenuRight"];
 });
 
 const previewCurrentDesign = function () {
-    designer.previewCurrentDesign();
+    pageBuilder.previewCurrentDesign();
 };
 
 const openDesignerPreviewModal = ref(false);
@@ -72,7 +72,7 @@ const firstButtonTextSearchComponents = ref("");
 const firstModalButtonSearchComponentsFunction = ref(null);
 
 const handleAddComponent = function () {
-    titleModalAddComponent.value = "Add Components";
+    titleModalAddComponent.value = "Add Component to your Store";
     firstButtonTextSearchComponents.value = "Close";
     showModalAddComponent.value = true;
     console.log("it ran");
@@ -94,7 +94,7 @@ const getElementOuterHTML = computed(() => {
     return getElement.value.outerHTML ? getElement.value.outerHTML : null;
 });
 watch(getElementOuterHTML, (newComponent) => {
-    designer.handleDesignerMethods();
+    pageBuilder.handleDesignerMethods();
 });
 
 const getComponents = computed(() => {
@@ -104,7 +104,7 @@ const getComponents = computed(() => {
 const deselectCurrentComponent = function () {
     store.commit("designer/setComponent", null);
     store.commit("designer/setElement", null);
-    designer.removeHoveredAndSelected();
+    pageBuilder.removeHoveredAndSelected();
 };
 
 onMounted(async () => {
@@ -112,8 +112,8 @@ onMounted(async () => {
     store.commit("designer/setElement", null);
 
     // Rerender `get components` when it is loaded from local storage
-    designer.addClickAndHoverEvents();
-    designer.handleDesignerMethods();
+    pageBuilder.addClickAndHoverEvents();
+    pageBuilder.handleDesignerMethods();
 });
 </script>
 
@@ -220,7 +220,7 @@ onMounted(async () => {
                             Add Component
                         </h3>
                         <p class="mt-1 text-sm text-gray-500">
-                            Get started adding a new component.
+                            Get started by adding a new component.
                         </p>
                         <div class="mt-6">
                             <button

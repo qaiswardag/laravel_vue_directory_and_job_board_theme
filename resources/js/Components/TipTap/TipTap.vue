@@ -3,7 +3,7 @@ import { useEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import Bold from "@tiptap/extension-bold";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
@@ -14,7 +14,7 @@ import Link from "@tiptap/extension-link";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 const store = useStore();
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 // get current element tag
 const getElement = computed(() => {
@@ -64,7 +64,7 @@ watch(textContent, (newValue) => {
         typeof newValue === "string" &&
         newValue !== textContentVueModel.value
     ) {
-        designer.handleTextInput(newValue);
+        pageBuilder.handleTextInput(newValue);
     }
 });
 

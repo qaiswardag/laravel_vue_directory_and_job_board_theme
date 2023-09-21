@@ -2,7 +2,7 @@
 import { useStore } from "vuex";
 import { computed, onMounted, watch } from "vue";
 import tailwindColors from "@/utils/builder/tailwaind-colors";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import { ref } from "vue";
 import { CheckIcon, SwatchIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { Switch } from "@headlessui/vue";
@@ -24,7 +24,7 @@ const handleCustomBackgroundColor = function () {
     }
 
     selectedHEXColor.value = [customColorInput.value];
-    designer.handleCustomBackgroundColor(
+    pageBuilder.handleCustomBackgroundColor(
         customColorInput.value,
         enabledCustomColor.value
     );
@@ -44,7 +44,7 @@ watch(enabledCustomColor, (newValue) => {
         handleCustomBackgroundColor();
     }
     if (newValue === false) {
-        designer.removeCustomColorBackground();
+        pageBuilder.removeCustomColorBackground();
     }
 });
 
@@ -103,7 +103,7 @@ const getBackgroundColorCustomHex = computed(() => {
     return rgbToHex(...rgbValues);
 });
 
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 </script>
 
 <template>
@@ -317,7 +317,7 @@ const designer = new Designer(store);
                 <div
                     v-for="color in colors.slice(1, 3)"
                     :key="color"
-                    @click="designer.handleBackgroundColor(color)"
+                    @click="pageBuilder.handleBackgroundColor(color)"
                     class="myPrimaryColorPreview flex justify-center items-center"
                     :class="[color === getBackgroundColor ? '' : '', color]"
                 >
@@ -330,7 +330,7 @@ const designer = new Designer(store);
                     </template>
                 </div>
                 <div
-                    @click="designer.handleBackgroundColor('none')"
+                    @click="pageBuilder.handleBackgroundColor('none')"
                     class="myPrimaryColorPreview relative bg-gray-100"
                     :class="[getBackgroundColor === null ? 'rounded-full' : '']"
                 >
@@ -343,7 +343,7 @@ const designer = new Designer(store);
                 <div
                     v-for="color in colors.slice(3)"
                     :key="color"
-                    @click="designer.handleBackgroundColor(color)"
+                    @click="pageBuilder.handleBackgroundColor(color)"
                     class="myPrimaryColorPreview flex justify-center items-center"
                     :class="[color === getBackgroundColor ? '' : '', color]"
                 >

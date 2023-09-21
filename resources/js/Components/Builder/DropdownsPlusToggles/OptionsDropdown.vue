@@ -8,7 +8,7 @@ import {
     EyeIcon,
     TrashIcon,
 } from "@heroicons/vue/24/outline";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import { ref, computed } from "vue";
 import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
 import Preview from "@/Pages/PageBuilder/Preview.vue";
@@ -19,7 +19,7 @@ import { useStore } from "vuex";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 const store = useStore();
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 const emit = defineEmits(["previewCurrentDesign"]);
 
 const showModalDeleteAllComponents = ref(false);
@@ -72,7 +72,7 @@ const deleteAllComponents = function () {
     //
     // handle click
     thirdModalButtonFunction.value = function () {
-        designer.deleteAllComponents();
+        pageBuilder.deleteAllComponents();
         showModalDeleteAllComponents.value = false;
     };
     // end modal

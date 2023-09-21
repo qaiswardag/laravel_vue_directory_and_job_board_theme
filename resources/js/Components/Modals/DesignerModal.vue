@@ -2,7 +2,7 @@
 import Modal from "@/Components/Modals/Modal.vue";
 import { CheckIcon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import PageBuilder from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import { useStore } from "vuex";
 
 import {

@@ -271,7 +271,7 @@
 </template>
 
 <script setup>
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import EditorAccordion from "../EditorAccordion.vue";
 import { useStore } from "vuex";
 import { computed, nextTick, ref, watch } from "vue";
@@ -285,7 +285,7 @@ import { Switch } from "@headlessui/vue";
 
 const store = useStore();
 
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 const hyperlinkEnable = ref(false);
 const urlInput = ref(null);
@@ -338,12 +338,12 @@ const handleToggleHyperlinkEnable = async function (data) {
 
     // remove hyperlink
     if (hyperlinkEnable.value === false) {
-        designer.handleHyperlink(hyperlinkEnable.value, data);
+        pageBuilder.handleHyperlink(hyperlinkEnable.value, data);
     }
 };
 // add hyperlink
 const handleHyperlink = function () {
-    designer.handleHyperlink(
+    pageBuilder.handleHyperlink(
         hyperlinkEnable.value,
         urlInput.value,
         openHyperlinkInNewTab.value
@@ -353,7 +353,7 @@ const handleHyperlink = function () {
 const handleToggleOpenHyperlinkInNewTab = async function () {
     await nextTick();
 
-    designer.handleHyperlink(
+    pageBuilder.handleHyperlink(
         hyperlinkEnable.value,
         urlInput.value,
         openHyperlinkInNewTab.value

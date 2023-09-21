@@ -385,6 +385,9 @@ export default {
             state.component = {};
             state.component = payload;
         },
+        setPushComponents(state, payload) {
+            state.components.push(payload);
+        },
         setComponents(state, payload) {
             state.components = {};
             state.components = payload;

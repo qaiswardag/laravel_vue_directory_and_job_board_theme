@@ -15,7 +15,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import Spinner from "@/Components/Builder/Loaders/Spinner.vue";
 
 import { useStore } from "vuex";
@@ -47,32 +47,32 @@ const firstButton = function () {
 const search_query = ref("");
 
 const store = useStore();
-const designer = new Designer(store);
-
-const showModalAddComponont = ref(false);
+const pageBuilder = new PageBuilder(store);
 
 const awaitComponentsOnMounted = ref([]);
-const categories = ref(null);
 
 // use dynamic model
-const typeModal = ref("");
-const gridColumnModal = ref(Number(1));
-const titleModal = ref("");
-const descriptionModal = ref("");
-const firstButtonModal = ref("");
-const secondButtonModal = ref(null);
-const thirdButtonModal = ref(null);
-// set dynamic modal handle functions
-const firstModalButtonFunction = ref(null);
-const secondModalButtonFunction = ref(null);
-const thirdModalButtonFunction = ref(null);
-
+const getComponents = computed(() => {
+    return store.getters["designer/getComponents"];
+});
 const getFetchedComponents = computed(() => {
     return store.getters["designer/getFetchedComponents"];
 });
 
 const handleComponent = function (component) {
-    console.log("user cliked on component:", component);
+    //
+    //
+    const clonedComponent = pageBuilder.cloneComponent(component);
+    //
+    this.store.commit("designer/setPushComponents", clonedComponent);
+
+    //
+    //
+    //
+    //
+    pageBuilder.addClickAndHoverEvents();
+    pageBuilder.handleDesignerMethods();
+    firstButton();
 };
 
 onMounted(async () => {
@@ -89,20 +89,19 @@ onMounted(async () => {
     //
     //
     //
-    // store.commit("designer/setComponent", null);
-    // store.commit("designer/setElement", null);
+    store.commit("designer/setComponent", null);
+    store.commit("designer/setElement", null);
     // Rerender `get components` when it is loaded from local storage
-    // designer.addClickAndHoverEvents();
-    // designer.handleDesignerMethods();
+    pageBuilder.addClickAndHoverEvents();
+    pageBuilder.handleDesignerMethods();
 });
 </script>
 
 <template>
     <Modal
-        class="relative"
+        maxWidth="5xl"
         :show="show"
         @close="firstButton"
-        maxWidth="4xl"
         minHeight="min-h-[50rem]"
         maxHeight="max-h-[50rem]"
     >

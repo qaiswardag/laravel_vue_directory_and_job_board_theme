@@ -1,7 +1,7 @@
 <script setup>
 import { useStore } from "vuex";
 import { computed, onMounted, watch } from "vue";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import {
     CheckIcon,
     SwatchIcon,
@@ -19,7 +19,7 @@ import {
 } from "@headlessui/vue";
 
 const store = useStore();
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 const opacityVueModel = ref(null);
 
@@ -93,7 +93,7 @@ watch(
                             as="template"
                             v-for="backgroundOpacity in tailwindOpacities.backgroundOpacities"
                             @click="
-                                designer.handleBackgroundOpacity(
+                                pageBuilder.handleBackgroundOpacity(
                                     backgroundOpacity
                                 )
                             "

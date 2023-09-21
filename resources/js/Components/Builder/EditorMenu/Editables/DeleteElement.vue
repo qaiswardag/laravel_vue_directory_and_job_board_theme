@@ -6,11 +6,11 @@ import {
     ArrowPathRoundedSquareIcon,
     TrashIcon,
 } from "@heroicons/vue/24/outline";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 
 // store
 const store = useStore();
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 const getRestoredElement = computed(() => {
     return store.getters["designer/getRestoredElement"];
@@ -24,7 +24,7 @@ const getRestoredElement = computed(() => {
             <div class="my-2">
                 <button
                     v-if="getRestoredElement !== null"
-                    @click="designer.handleRestoreElement"
+                    @click="pageBuilder.handleRestoreElement"
                     type="button"
                     class="myPrimaryButton gap-2 items-center w-full"
                 >
@@ -35,7 +35,7 @@ const getRestoredElement = computed(() => {
                 </button>
                 <button
                     v-if="getRestoredElement === null"
-                    @click="designer.handleDeleteElement"
+                    @click="pageBuilder.handleDeleteElement"
                     type="button"
                     class="myPrimaryDeleteButton gap-2 items-center w-full"
                 >

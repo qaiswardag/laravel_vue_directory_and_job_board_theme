@@ -4,7 +4,7 @@ import { useStore } from "vuex";
 import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { PhotoIcon } from "@heroicons/vue/24/outline";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 
 const props = defineProps({
     team: {
@@ -16,7 +16,7 @@ const props = defineProps({
 });
 
 const store = useStore();
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 //
 // use media library
@@ -60,7 +60,7 @@ const updateImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        designer.updateBasePrimaryImage();
+        pageBuilder.updateBasePrimaryImage();
         // close media library modal
         showMediaLibraryModal.value = false;
     };

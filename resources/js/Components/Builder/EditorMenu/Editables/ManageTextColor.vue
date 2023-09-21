@@ -2,7 +2,7 @@
 import { useStore } from "vuex";
 import { computed, onMounted, watch } from "vue";
 import tailwindColors from "@/utils/builder/tailwaind-colors";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import { ref } from "vue";
 import { CheckIcon, SwatchIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { Switch } from "@headlessui/vue";
@@ -24,7 +24,7 @@ const handleCustomTextColor = function () {
     }
 
     selectedHEXColor.value = [customColorInput.value];
-    designer.handleCustomTextColor(
+    pageBuilder.handleCustomTextColor(
         customColorInput.value,
         enabledCustomColor.value
     );
@@ -44,7 +44,7 @@ watch(enabledCustomColor, (newValue) => {
         handleCustomTextColor();
     }
     if (newValue === false) {
-        designer.removeCustomColorText();
+        pageBuilder.removeCustomColorText();
     }
 });
 
@@ -101,7 +101,7 @@ const getTextColorCustomHex = computed(() => {
     return rgbToHex(...rgbValues);
 });
 
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 </script>
 
 <template>
@@ -301,7 +301,7 @@ const designer = new Designer(store);
                 <div
                     v-for="color in colors.slice(1, 3)"
                     :key="color"
-                    @click="designer.handleTextColor(color)"
+                    @click="pageBuilder.handleTextColor(color)"
                     class="myPrimaryColorPreview flex justify-center items-center"
                     :class="[
                         color === getTextColor ? '' : '',
@@ -317,7 +317,7 @@ const designer = new Designer(store);
                     </template>
                 </div>
                 <div
-                    @click="designer.handleTextColor('none')"
+                    @click="pageBuilder.handleTextColor('none')"
                     class="myPrimaryColorPreview relative bg-gray-100"
                     :class="[getTextColor === null ? 'rounded-full' : '']"
                 >
@@ -330,7 +330,7 @@ const designer = new Designer(store);
                 <div
                     v-for="color in colors.slice(3)"
                     :key="color"
-                    @click="designer.handleTextColor(color)"
+                    @click="pageBuilder.handleTextColor(color)"
                     class="myPrimaryColorPreview flex justify-center items-center"
                     :class="[
                         color === getTextColor ? '' : '',

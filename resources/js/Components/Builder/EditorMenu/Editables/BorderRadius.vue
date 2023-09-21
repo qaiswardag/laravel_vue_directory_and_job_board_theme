@@ -9,7 +9,7 @@
                     v-model="borderRadiusGlobal"
                     class="myPrimarySelect"
                     @change="
-                        designer.handleBorderRadiusGlobal(borderRadiusGlobal)
+                        pageBuilder.handleBorderRadiusGlobal(borderRadiusGlobal)
                     "
                 >
                     <option disabled value="">Select</option>
@@ -30,7 +30,9 @@
                     v-model="borderRadiusTopLeft"
                     class="myPrimarySelect"
                     @change="
-                        designer.handleBorderRadiusTopLeft(borderRadiusTopLeft)
+                        pageBuilder.handleBorderRadiusTopLeft(
+                            borderRadiusTopLeft
+                        )
                     "
                 >
                     <option disabled value="">Select</option>
@@ -50,7 +52,7 @@
                     v-model="borderRadiusTopRight"
                     class="myPrimarySelect"
                     @change="
-                        designer.handleBorderRadiusTopRight(
+                        pageBuilder.handleBorderRadiusTopRight(
                             borderRadiusTopRight
                         )
                     "
@@ -72,7 +74,7 @@
                     v-model="borderRadiusBottomleft"
                     class="myPrimarySelect"
                     @change="
-                        designer.handleBorderRadiusBottomleft(
+                        pageBuilder.handleBorderRadiusBottomleft(
                             borderRadiusBottomleft
                         )
                     "
@@ -94,7 +96,7 @@
                     v-model="borderRadiusBottomRight"
                     class="myPrimarySelect"
                     @change="
-                        designer.handleBorderRadiusBottomRight(
+                        pageBuilder.handleBorderRadiusBottomRight(
                             borderRadiusBottomRight
                         )
                     "
@@ -114,7 +116,7 @@
 
 <script setup>
 import tailwindBorderRadius from "@/utils/builder/tailwind-border-radius";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
 
 import { useStore } from "vuex";
@@ -122,7 +124,7 @@ import { computed, ref, watch } from "vue";
 
 const store = useStore();
 
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 const borderRadiusGlobal = ref(null);
 const borderRadiusTopLeft = ref(null);

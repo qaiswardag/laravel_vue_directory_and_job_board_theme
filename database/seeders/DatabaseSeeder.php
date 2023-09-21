@@ -549,15 +549,14 @@ class DatabaseSeeder extends Seeder
         // Page Builder
         // Page Builder
         // Page Builder
-        PageBuilderComponent::factory(200)->create();
         //
         //
         $pageBuilderComponents = [
             [
                 "user_id" => rand(1, 2),
-                "title" => "This one is not published",
+                "title" => "Misty shroud over a forest",
                 "html_code" =>
-                    "<section> <section> <div class=\"py-8 mx-auto max-w-7xl px-6 bg-black\"> <div class=\"grid lg:grid-cols-2 sm:gap-2 gap-2\"> <div> <h2 class=\"text-4xl tracking-tight font-bold sm:text-5xl md:text-6xl mb-6 text-gray-100\"> Hello &amp; Bonjour </h2> </div> <div> <p class=\"text-gray-100\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio</span>.</p> </div> </div> </div> </section> </section>",
+                    "<section> <div class=\"py-8 mx-auto max-w-7xl px-6\">\n    <img class=\"w-full\" src=\"https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2200&amp;q=80\"> <div class=\"mt-12 my-8\"><h3>Hello &amp; Bonjour</h3></div> <div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at tellus nec lacus dignissim molestie nec non odio.</p></div> </div>  </section>",
                 "published" => 0,
             ],
             // Add data for other components here
@@ -567,6 +566,7 @@ class DatabaseSeeder extends Seeder
             PageBuilderComponent::factory()->create($pageBuildercomponent);
         }
 
+        PageBuilderComponent::factory(200)->create();
         //
         //
         //

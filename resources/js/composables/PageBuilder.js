@@ -9,7 +9,7 @@ import tailwindBorderStyleWidthPlusColor from "@/utils/builder/tailwind-border-s
 import { computed, ref, nextTick } from "vue";
 import { v4 as uuidv4 } from "uuid";
 
-class Designer {
+class PageBuilder {
     constructor(store) {
         /**
          * Initialize an instance variable 'elementsWithListeners' as a WeakSet.
@@ -586,7 +586,7 @@ class Designer {
     //     }, 100);
     // };
 
-    // øøø
+    //
     saveCurrentDesign = async () => {
         if (document.querySelector("[hovered]") !== null) {
             document.querySelector("[hovered]").removeAttribute("hovered");
@@ -631,6 +631,7 @@ class Designer {
     }; //
 
     cloneComponent(cloneComponent) {
+        console.log("er:", cloneComponent);
         // Hide slider and right menu
         this.store.commit("designer/setMenuPreview", false);
         this.store.commit("designer/setMenuRight", false);
@@ -1089,6 +1090,6 @@ class Designer {
     }
 }
 
-const designer = new Designer();
+const pageBuilder = new PageBuilder();
 
-export default Designer;
+export default PageBuilder;

@@ -14,11 +14,11 @@ import {
     CubeTransparentIcon,
 } from "@heroicons/vue/24/outline";
 import { ref, watch } from "vue";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 
 // store
 const store = useStore();
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 const showBackgroundColorsSlideOverRight = ref(false);
 const showTextColorsSlideOverRight = ref(false);
 const titleBackgroundColorsSlideOverRight = ref(null);

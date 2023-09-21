@@ -1,5 +1,5 @@
 <script setup>
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
 import { useStore } from "vuex";
 import tailwindFontSizes from "@/utils/builder/tailwind-font-sizes";
@@ -8,7 +8,7 @@ import { computed, ref, watch } from "vue";
 
 const store = useStore();
 
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 const fontBase = ref(null);
 const fontDesktop = ref(null);
@@ -102,7 +102,7 @@ watch(
                 <select
                     v-model="fontBase"
                     class="myPrimarySelect"
-                    @change="designer.handleFontSize(fontBase)"
+                    @change="pageBuilder.handleFontSize(fontBase)"
                 >
                     <option disabled value="">Select</option>
                     <option
@@ -118,7 +118,7 @@ watch(
                 <select
                     v-model="fontDesktop"
                     class="myPrimarySelect"
-                    @change="designer.handleFontSize(fontDesktop)"
+                    @change="pageBuilder.handleFontSize(fontDesktop)"
                 >
                     <option disabled value="">Select</option>
                     <option
@@ -134,7 +134,7 @@ watch(
                 <select
                     v-model="fontTablet"
                     class="myPrimarySelect"
-                    @change="designer.handleFontSize(fontTablet)"
+                    @change="pageBuilder.handleFontSize(fontTablet)"
                 >
                     <option disabled value="">Select</option>
                     <option
@@ -150,7 +150,7 @@ watch(
                 <select
                     v-model="fontMobile"
                     class="myPrimarySelect"
-                    @change="designer.handleFontSize(fontMobile)"
+                    @change="pageBuilder.handleFontSize(fontMobile)"
                 >
                     <option disabled value="">Select</option>
                     <option
@@ -168,7 +168,7 @@ watch(
                 <select
                     v-model="fontWeight"
                     class="myPrimarySelect"
-                    @change="designer.handleFontWeight(fontWeight)"
+                    @change="pageBuilder.handleFontWeight(fontWeight)"
                 >
                     <option disabled value="">Select</option>
                     <option
@@ -184,7 +184,7 @@ watch(
                 <select
                     v-model="fontFamily"
                     class="myPrimarySelect"
-                    @change="designer.handleFontFamily(fontFamily)"
+                    @change="pageBuilder.handleFontFamily(fontFamily)"
                 >
                     <option disabled value="">Select</option>
                     <option
@@ -200,7 +200,7 @@ watch(
                 <select
                     v-model="fontStyle"
                     class="myPrimarySelect"
-                    @change="designer.handleFontStyle(fontStyle)"
+                    @change="pageBuilder.handleFontStyle(fontStyle)"
                 >
                     <option disabled value="">Select</option>
                     <option

@@ -1,6 +1,6 @@
 <script setup>
 import tailwindBorderStyleWidthPlusColor from "@/utils/builder/tailwind-border-style-width-color";
-import Designer from "@/composables/Designer";
+import PageBuilder from "@/composables/PageBuilder";
 import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
 import { useStore } from "vuex";
 import { computed, ref, watch } from "vue";
@@ -15,7 +15,7 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
 
 const store = useStore();
 
-const designer = new Designer(store);
+const pageBuilder = new PageBuilder(store);
 
 const borderStyle = ref(null);
 const borderWidth = ref(null);
@@ -63,7 +63,7 @@ watch(
                 <select
                     v-model="borderStyle"
                     class="myPrimarySelect"
-                    @change="designer.handleBorderStyle(borderStyle)"
+                    @change="pageBuilder.handleBorderStyle(borderStyle)"
                 >
                     <option disabled value="">Select</option>
                     <option
@@ -79,7 +79,7 @@ watch(
                 <select
                     v-model="borderWidth"
                     class="myPrimarySelect"
-                    @change="designer.handleBorderWidth(borderWidth)"
+                    @change="pageBuilder.handleBorderWidth(borderWidth)"
                 >
                     <option disabled value="">Select</option>
                     <option
@@ -131,7 +131,9 @@ watch(
                             <ListboxOption
                                 as="template"
                                 v-for="color in tailwindBorderStyleWidthPlusColor.borderColor"
-                                @click="designer.handleBorderColor(borderColor)"
+                                @click="
+                                    pageBuilder.handleBorderColor(borderColor)
+                                "
                                 :key="color"
                                 :value="color"
                                 v-slot="{ active, borderColor }"
