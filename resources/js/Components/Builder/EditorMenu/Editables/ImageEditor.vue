@@ -42,7 +42,7 @@ const getBasePrimaryImage = computed(() => {
 //
 //
 // image click
-const updateImage = function () {
+const handleAddImage = function () {
     // open modal to true
     showMediaLibraryModal.value = true;
 
@@ -73,13 +73,13 @@ const updateImage = function () {
         <img
             class="object-cover object-center w-full"
             :src="getBasePrimaryImage"
-            @click="updateImage"
+            @click="handleAddImage"
             alt="image"
         />
 
         <div class="my-4 px-4">
             <button
-                @click="updateImage"
+                @click="handleAddImage"
                 type="button"
                 class="myPrimaryButton gap-2 items-center w-full"
             >

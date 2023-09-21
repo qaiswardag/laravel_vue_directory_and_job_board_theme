@@ -35,7 +35,12 @@ class StoreMediaLibraryRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $validator->after(function ($validator) {
+        $maxImageSize = 3000; //kilobytes
+        $maxImageUploads = 12;
+        $validator->after(function ($validator) use (
+            $maxImageUploads,
+            $maxImageSize
+        ) {
             if ($this->images === null) {
                 $validator
                     ->errors()
@@ -46,11 +51,13 @@ class StoreMediaLibraryRequest extends FormRequest
                 return;
             }
 
-            // TODO: change count to 7
-            if (count($this->images) >= 21) {
+            if (count($this->images) > $maxImageUploads) {
                 $validator
                     ->errors()
-                    ->add("images", "Max files upload is 6 per time.");
+                    ->add(
+                        "images",
+                        "Max files upload is {$maxImageUploads} per time."
+                    );
                 return;
             }
 
@@ -71,18 +78,37 @@ class StoreMediaLibraryRequest extends FormRequest
                         "png",
                         "gif",
                         "webp",
+                        // "avif", // ERROR: Unsupported image type is image/avif. GD driver is only able to decode JPG, PNG, GIF, BMP or WebP files.
                     ]) ||
                     !$image->isValid()
                 ) {
                     $validator
                         ->errors()
-                        ->add($imageId, "File type not allowed.");
+                        ->add(
+                            $imageId,
+                            "File type not allowed. Allowed file types: jpg, jpeg, png, gif, webp."
+                        );
                 }
                 if (
-                    $image->getSize() !== false &&
-                    $image->getSize() / 1024 >= 2000
+                    $image->getSize() &&
+                    $image->getSize() / 1024 >= $maxImageSize
                 ) {
-                    $validator->errors()->add($imageId, "File size is to big.");
+                    $validator
+                        ->errors()
+                        ->add(
+                            $imageId,
+                            "File size is too big. Maximum file size allowed is" .
+                                " " .
+                                round($maxImageSize, 0) .
+                                " " .
+                                "KB" .
+                                " " .
+                                "/" .
+                                " " .
+                                round($maxImageSize / 1024, 0) .
+                                " " .
+                                "MB."
+                        );
                 }
                 if ($image->getSize() === false && $image) {
                     $validator
@@ -99,7 +125,7 @@ class StoreMediaLibraryRequest extends FormRequest
         if ($validator->fails()) {
             return back()->with(
                 "error",
-                "Oops! Something went wrong. Please try again.."
+                "Oops! Something went wrong. Please try again."
             );
         }
 

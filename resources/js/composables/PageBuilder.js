@@ -849,15 +849,11 @@ class PageBuilder {
     }
     //
     updateBasePrimaryImage() {
-        if (
-            this.getCurrentImage.value.currentImage?.mediaLibrary?.path !==
-                undefined ||
-            this.getCurrentImage.value.currentImage?.mediaLibrary?.path !== null
-        ) {
+        if (this.getCurrentImage.value.currentImage?.mediaLibrary?.path) {
             this.handleDesignerMethods();
             this.store.commit(
                 "designer/setBasePrimaryImage",
-                `/storage/uploads/${this.getCurrentImage.value.currentImage.mediaLibrary.path}`
+                `/storage/uploads/${this.getCurrentImage.value.currentImage.mediaLibrary.large_path}`
             );
         }
     }

@@ -273,8 +273,11 @@ class MediaLibraryController extends Controller
                 storage_path(self::PUBLIC_UPLOAD_PATH . $path)
             );
 
+            // dd($imageType);
             // Check if the original uploaded image can be resized using Image Intervention
+            // ERROR: Unsupported image type is image/avif. GD driver is only able to decode JPG, PNG, GIF, BMP or WebP files.
             if (
+                $imageType === 1 || // IMAGETYPE_GIF
                 $imageType === 2 || // IMAGETYPE_JPEG
                 $imageType === 3 || // IMAGETYPE_PNG
                 $imageType === 6 || // IMAGETYPE_BMP

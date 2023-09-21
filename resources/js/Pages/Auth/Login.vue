@@ -38,7 +38,7 @@ const submit = () => {
 
 <template>
     <div
-        class="bg-[url('https://images.unsplash.com/photo-1661956602116-aa6865609028?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80')] w-full min-h-screen bg-cover"
+        class="bg-[url('https://auth.services.adobe.com/img/canvas/Leonardoworx.jpg')] w-full min-h-screen bg-cover"
     >
         <GuestsLayout>
             <Head title="Login" />
