@@ -86,6 +86,12 @@ const handleAddComponent = function () {
     // end modal
 };
 
+const getComponents = computed(() => {
+    return store.getters["designer/getComponents"];
+});
+const getComponent = computed(() => {
+    return store.getters["designer/getComponent"];
+});
 const getElement = computed(() => {
     return store.getters["designer/getElement"];
 });
@@ -97,14 +103,9 @@ watch(getElementOuterHTML, (newComponent) => {
     pageBuilder.handleDesignerMethods();
 });
 
-const getComponents = computed(() => {
-    return store.getters["designer/getComponents"];
-});
-
 const deselectCurrentComponent = function () {
     store.commit("designer/setComponent", null);
     store.commit("designer/setElement", null);
-    pageBuilder.removeHoveredAndSelected();
 };
 
 onMounted(async () => {
@@ -140,6 +141,7 @@ onMounted(async () => {
     <div
         class="w-full inset-x-0 h-[90vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
     >
+        <p class="my-12">er: {{ JSON.stringify(getComponent) }}</p>
         <div class="relative h-full flex ml-4">
             <main
                 class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl"
@@ -204,9 +206,17 @@ onMounted(async () => {
                         id="pagebuilder"
                         v-for="component in getComponents"
                         :key="component"
-                        v-html="component.html_code"
                         class="p-1 bg-white grow"
-                    ></div>
+                    >
+                        <div
+                            @mouseup="
+                                store.commit('designer/setComponent', component)
+                            "
+                            class="relative group bg-red-200"
+                        >
+                            <div v-html="component.html_code"></div>
+                        </div>
+                    </div>
                     <!-- Added Compoents to DOM # end -->
 
                     <!-- Add Component # start -->

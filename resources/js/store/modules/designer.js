@@ -1,4 +1,5 @@
 import { vueFetch } from "use-lightweight-fetch";
+import PageBuilder from "@/composables/PageBuilder";
 
 // get images
 const {
@@ -10,6 +11,8 @@ const {
     isLoading: isLoadingComponents,
     isSuccess: isSuccessComponents,
 } = vueFetch();
+
+const pageBuilder = new PageBuilder(null);
 
 export default {
     namespaced: true,
@@ -382,6 +385,9 @@ export default {
             state.element = payload;
         },
         setComponent(state, payload) {
+            if (!payload) {
+                pageBuilder.removeHoveredAndSelected(null);
+            }
             state.component = {};
             state.component = payload;
         },

@@ -685,10 +685,19 @@ class PageBuilder {
         return currentIndex;
     }
 
-    deleteComponent(event) {
-        const currentIndex = this.getCurrentIndex(event);
-        // remove component from array
-        this.getComponents.value.splice(currentIndex, 1);
+    deleteComponent() {
+        // Find the index of the component to delete
+        const indexToDelete = this.getComponents.value.findIndex(
+            (component) => component.id === this.getComponent.value.id
+        );
+
+        if (indexToDelete === -1) {
+            // Component not found in the array, handle this case as needed.
+            return;
+        }
+
+        // Remove the component from the array
+        this.getComponents.value.splice(indexToDelete, 1);
         this.store.commit("designer/setComponents", this.getComponents.value);
     }
 
@@ -698,7 +707,7 @@ class PageBuilder {
         if (this.getComponents.value.length <= 1) return;
 
         // Get the component you want to move (replace this with your actual logic)
-        const componentToMove = this.getComponent.value; // Replace this with your logic to get the component to move.
+        const componentToMove = this.getComponent.value;
 
         // Determine the new index where you want to move the component
         const currentIndex = this.getComponents.value.findIndex(

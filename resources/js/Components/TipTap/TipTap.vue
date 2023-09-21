@@ -87,6 +87,7 @@ watch(getElement, (newValue) => {
             containsInvalidTags.value = true;
             return;
         }
+        if (!childElements) return;
 
         Array.from(childElements).forEach((element) => {
             if (element?.tagName === "IMG" || element?.tagName === "DIV") {

@@ -64,14 +64,15 @@ const handleComponent = function (component) {
     //
     const clonedComponent = pageBuilder.cloneComponent(component);
     //
-    this.store.commit("designer/setPushComponents", clonedComponent);
+    store.commit("designer/setPushComponents", clonedComponent);
+    // store.commit("designer/setComponents", this.getComponents.value);
 
     //
     //
     //
     //
     pageBuilder.addClickAndHoverEvents();
-    pageBuilder.handleDesignerMethods();
+    // pageBuilder.handleDesignerMethods();
     firstButton();
 };
 

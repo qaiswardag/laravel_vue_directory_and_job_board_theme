@@ -36,7 +36,7 @@ const deleteComponent = function (e) {
     showModalDeleteComponent.value = true;
     typeModal.value = "delete";
     gridColumnModal.value = 2;
-    titleModal.value = "Delete component";
+    titleModal.value = "Delete entire component?";
     descriptionModal.value = "Are you sure you want to delete this component?";
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
@@ -50,7 +50,7 @@ const deleteComponent = function (e) {
     //
     // handle click
     thirdModalButtonFunction.value = function () {
-        pageBuilder.deleteComponent(e);
+        pageBuilder.deleteComponent();
         // set open modal
         showModalDeleteComponent.value = false;
     };
@@ -79,7 +79,7 @@ const deleteComponent = function (e) {
         <div class="flex flex-row justify-between mx-auto px-3 max-w-6xl">
             <div class="flex gap-2 items-center justify-center">
                 <div
-                    @click="deleteComponent($event)"
+                    @click="deleteComponent()"
                     class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                 >
                     <TrashIcon class="w-4 h-4 m-2 stroke-2" />
