@@ -9,7 +9,7 @@ import {
 } from "vue";
 import Designer from "@/composables/Designer";
 import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
-import Preview from "@/Pages/Designer/Preview.vue";
+import Preview from "@/Pages/PageBuilder/Preview.vue";
 import {
     Bars3Icon,
     XMarkIcon,

@@ -18,7 +18,7 @@ import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import DesignerModal from "@/Components/Modals/DesignerModal.vue";
-import Designer from "@/Pages/Designer/Designer.vue";
+import Designer from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/Designer";
 
 import {

@@ -314,6 +314,7 @@ const routesArray = [
                 </Link>
             </template>
         </CardHeadings>
+        <p class="my-12">errors: {{ $page.props.errors }}</p>
         <form @submit.prevent="handleSearch">
             <!-- search bar component - start -->
             <SearchBarWithOptions

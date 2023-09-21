@@ -276,13 +276,13 @@ class PageBuilderController extends Controller
         // Authorize superadmin
         $this->authorize("superadmin-can-create-and-update");
 
-        dd("ll");
         $team = Team::findOrFail($request->teamId);
         $component = PageBuilderComponent::findOrFail($request->componentId);
 
         if ($team === null) {
             return Inertia::render("Error", [
-                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
+                // Error message
+                self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 404, // HTTP status code for the response.
             ]);
         }

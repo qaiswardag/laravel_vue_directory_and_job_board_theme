@@ -573,13 +573,10 @@ Route::middleware([
         "update",
     ])->name("admin.components.component.update");
 
-    Route::post(
-        "/admin/components/component/duplicate",
-        function () {
-            dd("came here");
-        },
-        [PageBuilderController::class, "duplicate"]
-    )->name("admin.components.component.duplicate");
+    Route::post("/admin/components/component/duplicate", [
+        PageBuilderController::class,
+        "duplicate",
+    ])->name("admin.components.component.duplicate");
 
     // destroy
     Route::delete("/admin/components/component/{componentId}/{teamId}", [

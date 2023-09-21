@@ -11,7 +11,7 @@ import {
 import Designer from "@/composables/Designer";
 import { ref, computed } from "vue";
 import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
-import Preview from "@/Pages/Designer/Preview.vue";
+import Preview from "@/Pages/PageBuilder/Preview.vue";
 import SlideOverRight from "@/Components/Builder/Slidebars/SlideOverRight.vue";
 import DesignerSettings from "@/Components/Builder/Settings/DesignerSettings.vue";
 
