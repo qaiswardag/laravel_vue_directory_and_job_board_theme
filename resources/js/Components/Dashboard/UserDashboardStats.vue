@@ -201,13 +201,22 @@ onMounted(() => {
                                     .latestTeamMembers"
                                 :key="member.id"
                             >
-                                <UserTag
-                                    customClass="my-0"
-                                    :user="member"
-                                    :showTeamRole="true"
-                                    :clickable="true"
-                                    :currentUserTeamRole="member"
-                                ></UserTag>
+                                <Link
+                                    :href="
+                                        route(
+                                            'team.members',
+                                            $page.props.user.current_team.id
+                                        )
+                                    "
+                                >
+                                    <UserTag
+                                        customClass="my-0"
+                                        :user="member"
+                                        :showTeamRole="true"
+                                        :clickable="true"
+                                        :currentUserTeamRole="member"
+                                    ></UserTag>
+                                </Link>
                             </li>
                         </ul>
                     </div>

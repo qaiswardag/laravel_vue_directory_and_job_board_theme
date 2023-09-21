@@ -678,7 +678,7 @@ onMounted(() => {
                                                         <CheckIcon
                                                             class="w-4 h-4"
                                                         ></CheckIcon>
-                                                        Duplicate
+                                                        Duplicate Job
                                                     </button>
                                                 </MenuItem>
                                             </MenuItems>

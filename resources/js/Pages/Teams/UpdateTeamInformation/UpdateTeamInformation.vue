@@ -19,16 +19,16 @@ const breadcrumbsLinks = [
         },
     },
     {
-        label: "Team Information",
+        label: "Update Team",
     },
 ];
 </script>
 
 <template>
     <LoggedInLayout>
-        <Head title="Team Information" />
+        <Head title="Update Team" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Team Information</h2>
+            <h2 class="myPrimaryMainPageHeader">Update Team</h2>
         </template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

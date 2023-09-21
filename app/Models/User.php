@@ -95,19 +95,23 @@ class User extends Authenticatable
         parent::boot();
 
         static::creating(function ($user) {
-            $number = 100000; // set a default number
+            $number = 1; // set a default number
             $firstName = $user->first_name;
             $lastName = $user->last_name;
 
-            do {
-                // generate a new username using the first name, last name, and number
+            // generate a new username using the first name and last name
+            $username = Str::lower(
+                Str::slug($firstName . "_" . $lastName, "_")
+            );
+
+            // check if the username already exists in the database
+            while (static::where("username", $username)->exists()) {
+                // If the username exists, add the number suffix and check again
                 $username = Str::lower(
                     Str::slug($firstName . "_" . $lastName . "_" . $number, "_")
                 );
                 $number++; // increment the number
-
-                // check if the username already exists in the database
-            } while (static::where("username", $username)->exists());
+            }
 
             // assign the unique username to the user model
             $user->username = $username;

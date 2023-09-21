@@ -47,10 +47,15 @@ const submit = () => {
                     <AuthenticationCardLogo />
                 </template>
 
-                <div class="mb-4 text-sm text-myPrimaryDarkGrayColor">
-                    Forgot your password? No problem. Just let us know your
-                    email address and we will email you a password reset link
-                    that will allow you to choose a new one.
+                <div class="mt-4 mb-8">
+                    <h1 class="mySecondaryHeader text-center">
+                        Sign up and get started today
+                    </h1>
+                    <p class="myPrimaryParagraph text-center">
+                        Forgot your password? No problem. Just let us know your
+                        email address and we will email you a password reset
+                        link that will allow you to choose a new one.
+                    </p>
                 </div>
 
                 <div

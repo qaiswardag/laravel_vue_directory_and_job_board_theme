@@ -19,7 +19,7 @@ const breadcrumbsLinks = [
         },
     },
     {
-        label: "Team Delete",
+        label: "Delete Team",
     },
 ];
 </script>

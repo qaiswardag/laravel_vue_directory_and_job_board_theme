@@ -269,7 +269,7 @@ const routesArray = [
             <header></header>
             <main></main>
         </DynamicModal>
-        <Head title="Manage Components" />
+        <Head title="Components" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">List of Components</h2>
         </template>
@@ -519,7 +519,7 @@ const routesArray = [
                                                         <CheckIcon
                                                             class="w-4 h-4"
                                                         ></CheckIcon>
-                                                        Duplicate
+                                                        Duplicate Component
                                                     </button>
                                                 </MenuItem>
                                             </MenuItems>

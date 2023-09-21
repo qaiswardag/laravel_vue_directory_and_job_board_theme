@@ -20,18 +20,18 @@ const breadcrumbsLinks = [
         },
     },
     {
-        label: "Profile Password",
+        label: "Update Password",
     },
 ];
 </script>
 
 <template>
     <LoggedInLayout>
-        <Head title="Profile Password" />
+        <Head title="Update Password" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Update Password</h2>
         </template>
-        <template #description>Update Profile Password</template>
+        <template #description>Update Update Password</template>
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>

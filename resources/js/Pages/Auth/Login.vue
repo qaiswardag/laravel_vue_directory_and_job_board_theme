@@ -67,9 +67,6 @@ const submit = () => {
                 <form @submit.prevent="submit">
                     <div class="mt-4 mb-8">
                         <h1 class="mySecondaryHeader text-center">Login</h1>
-                        <p class="myPrimaryParagraph text-center">
-                            Millions of designers and agencies.
-                        </p>
                     </div>
                     <div>
                         <InputLabel for="email" value="Email" />

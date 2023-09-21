@@ -63,7 +63,7 @@ const submit = () => {
                                 Sign up and get started today
                             </h1>
                             <p class="myPrimaryParagraph text-center">
-                                Millions of designers and agencies.
+                                Join a community of thousands of daily shoppers.
                             </p>
                         </div>
                         <div class="myInputsFamily">
