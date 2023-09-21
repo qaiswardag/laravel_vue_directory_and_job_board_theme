@@ -8,6 +8,7 @@ import { onMounted, computed, ref } from "vue";
 import { parseISO, format } from "date-fns";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
+import UserTag from "@/Components/Users/UserTag.vue";
 
 // store
 const store = useStore();
@@ -193,18 +194,21 @@ onMounted(() => {
                                 Looks like there are no Team Members.
                             </p>
                         </div>
-                        <ul
-                            role="list"
-                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
-                        >
+
+                        <ul role="list" class="flex flex-wrap myPrimaryGap">
                             <li
                                 v-for="member in getDashboardStats.fetchedData
                                     .latestTeamMembers"
                                 :key="member.id"
-                                class="p-2 rounded-md min-h-[2rem] max-h-[6rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200 bg-white hover:border-myPrimaryMediumGrayColor"
                             >
+                                <UserTag
+                                    :user="member"
+                                    :showTeamRole="true"
+                                    :clickable="true"
+                                    :currentUserTeamRole="member"
+                                ></UserTag>
                                 <!-- start photo -->
-                                <div class="flex items-center gap-4 my-2">
+                                <!-- <div class="flex items-center gap-4 my-2">
                                     <div
                                         v-if="
                                             member &&
@@ -248,7 +252,7 @@ onMounted(() => {
                                         </p>
                                         <p>Team Role: {{ member.role }}</p>
                                     </span>
-                                </div>
+                                </div> -->
                             </li>
                         </ul>
                     </div>

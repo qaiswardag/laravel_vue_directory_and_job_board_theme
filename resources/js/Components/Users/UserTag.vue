@@ -19,7 +19,8 @@ const props = defineProps({
     <div
         v-if="user"
         :class="{
-            'hover:bg-myPrimaryLinkColor hover:text-white': clickable,
+            'hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer':
+                clickable,
         }"
         class="myPrimaryTag inline-block py-2"
     >
@@ -47,7 +48,17 @@ const props = defineProps({
 
                 <template v-if="showTeamRole && currentUserTeamRole">
                     <p class="text-xs font-normal">
-                        Role: {{ currentUserTeamRole.key }}
+                        Role:
+                        {{
+                            currentUserTeamRole?.key
+                                ? currentUserTeamRole.key
+                                : null
+                        }}
+                        {{
+                            currentUserTeamRole?.role
+                                ? currentUserTeamRole.role
+                                : null
+                        }}
                     </p>
                 </template>
             </div>
