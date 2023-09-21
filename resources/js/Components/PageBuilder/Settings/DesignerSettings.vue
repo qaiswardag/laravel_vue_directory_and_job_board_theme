@@ -1,6 +1,6 @@
 <script setup>
-import SlideOverRightParent from "@/Components/Builder/Slidebars/SlideOverRightParent.vue";
-import AdvancedDesignerSettings from "@/Components/Builder/Settings/AdvancedDesignerSettings.vue";
+import SlideOverRightParent from "@/Components/PageBuilder/Slidebars/SlideOverRightParent.vue";
+import AdvancedDesignerSettings from "@/Components/PageBuilder/Settings/AdvancedDesignerSettings.vue";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import fullHTMLContent from "@/utils/builder/html-doc-declaration-with-components";

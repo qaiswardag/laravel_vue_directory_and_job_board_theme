@@ -24,9 +24,9 @@ import {
     FolderPlusIcon,
 } from "@heroicons/vue/24/outline";
 import { useStore } from "vuex";
-import OptionsDropdown from "@/Components/Builder/DropdownsPlusToggles/OptionsDropdown.vue";
-import RightSidebarEditor from "@/Components/Builder/EditorMenu/RightSidebarEditor.vue";
-import Spinner from "@/Components/Builder/Loaders/Spinner.vue";
+import OptionsDropdown from "@/Components/PageBuilder/DropdownsPlusToggles/OptionsDropdown.vue";
+import RightSidebarEditor from "@/Components/PageBuilder/EditorMenu/RightSidebarEditor.vue";
+import Spinner from "@/Components/PageBuilder/Loaders/Spinner.vue";
 import SearchComponents from "@/Components/Search/SearchComponents.vue";
 
 const emit = defineEmits(["previewCurrentDesign"]);

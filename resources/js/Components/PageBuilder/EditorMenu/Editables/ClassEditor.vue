@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
-import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
+import EditorAccordion from "@/Components/PageBuilder/EditorMenu/EditorAccordion.vue";
 import PageBuilder from "@/composables/PageBuilder";
 
 const store = useStore();

@@ -17,7 +17,7 @@ import {
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import PageBuilder from "@/composables/PageBuilder";
-import Spinner from "@/Components/Builder/Loaders/Spinner.vue";
+import Spinner from "@/Components/PageBuilder/Loaders/Spinner.vue";
 
 import { useStore } from "vuex";
 

@@ -3,16 +3,16 @@ import { XMarkIcon } from "@heroicons/vue/24/outline";
 import { computed } from "vue";
 import { useStore } from "vuex";
 
-import ClassEditor from "@/Components/Builder/EditorMenu/Editables/ClassEditor.vue";
-import ImageEditor from "@/Components/Builder/EditorMenu/Editables/ImageEditor.vue";
-import ColorsEditor from "@/Components/Builder/EditorMenu/Editables/ColorEditor.vue";
-import Typography from "@/Components/Builder/EditorMenu/Editables/Typography.vue";
-import PaddingPlusMargin from "@/Components/Builder/EditorMenu/Editables/PaddingPlusMargin.vue";
-import DeleteElement from "@/Components/Builder/EditorMenu/Editables/DeleteElement.vue";
-import BorderRadius from "@/Components/Builder/EditorMenu/Editables/BorderRadius.vue";
-import Borders from "@/Components/Builder/EditorMenu/Editables/Borders.vue";
-import LinkEditor from "@/Components/Builder/EditorMenu/Editables/LinkEditor.vue";
-import ComponentTopMenu from "@/Components/Builder/EditorMenu/Editables/ComponentTopMenu.vue";
+import ClassEditor from "@/Components/PageBuilder/EditorMenu/Editables/ClassEditor.vue";
+import ImageEditor from "@/Components/PageBuilder/EditorMenu/Editables/ImageEditor.vue";
+import ColorsEditor from "@/Components/PageBuilder/EditorMenu/Editables/ColorEditor.vue";
+import Typography from "@/Components/PageBuilder/EditorMenu/Editables/Typography.vue";
+import PaddingPlusMargin from "@/Components/PageBuilder/EditorMenu/Editables/PaddingPlusMargin.vue";
+import DeleteElement from "@/Components/PageBuilder/EditorMenu/Editables/DeleteElement.vue";
+import BorderRadius from "@/Components/PageBuilder/EditorMenu/Editables/BorderRadius.vue";
+import Borders from "@/Components/PageBuilder/EditorMenu/Editables/Borders.vue";
+import LinkEditor from "@/Components/PageBuilder/EditorMenu/Editables/LinkEditor.vue";
+import ComponentTopMenu from "@/Components/PageBuilder/EditorMenu/Editables/ComponentTopMenu.vue";
 import TipTap from "@/Components/TipTap/TipTap.vue";
 
 // store

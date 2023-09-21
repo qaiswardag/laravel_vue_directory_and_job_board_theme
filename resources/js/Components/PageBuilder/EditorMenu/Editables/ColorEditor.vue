@@ -1,12 +1,12 @@
 <script setup>
 import { useStore } from "vuex";
 import { computed } from "vue";
-import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
-import SlideOverRight from "@/Components/Builder/Slidebars/SlideOverRight.vue";
-import ManageBackgroundColor from "@/Components/Builder/EditorMenu/Editables/ManageBackgroundColor.vue";
-import ManageTextColor from "@/Components/Builder/EditorMenu/Editables/ManageTextColor.vue";
-import ManageBackgroundOpacity from "@/Components/Builder/EditorMenu/Editables/ManageBackgroundOpacity.vue";
-import ManageOpacity from "@/Components/Builder/EditorMenu/Editables/ManageOpacity.vue";
+import EditorAccordion from "@/Components/PageBuilder/EditorMenu/EditorAccordion.vue";
+import SlideOverRight from "@/Components/PageBuilder/Slidebars/SlideOverRight.vue";
+import ManageBackgroundColor from "@/Components/PageBuilder/EditorMenu/Editables/ManageBackgroundColor.vue";
+import ManageTextColor from "@/Components/PageBuilder/EditorMenu/Editables/ManageTextColor.vue";
+import ManageBackgroundOpacity from "@/Components/PageBuilder/EditorMenu/Editables/ManageBackgroundOpacity.vue";
+import ManageOpacity from "@/Components/PageBuilder/EditorMenu/Editables/ManageOpacity.vue";
 
 import {
     XMarkIcon,

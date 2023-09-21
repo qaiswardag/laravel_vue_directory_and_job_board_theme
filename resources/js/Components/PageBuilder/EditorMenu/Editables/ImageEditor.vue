@@ -1,7 +1,7 @@
 <script setup>
 import { computed, watch, ref } from "vue";
 import { useStore } from "vuex";
-import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
+import EditorAccordion from "@/Components/PageBuilder/EditorMenu/EditorAccordion.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { PhotoIcon } from "@heroicons/vue/24/outline";
 import PageBuilder from "@/composables/PageBuilder";

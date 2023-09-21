@@ -117,7 +117,7 @@
 <script setup>
 import tailwindBorderRadius from "@/utils/builder/tailwind-border-radius";
 import PageBuilder from "@/composables/PageBuilder";
-import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
+import EditorAccordion from "@/Components/PageBuilder/EditorMenu/EditorAccordion.vue";
 
 import { useStore } from "vuex";
 import { computed, ref, watch } from "vue";

@@ -12,8 +12,8 @@ import PageBuilder from "@/composables/PageBuilder";
 import { ref, computed } from "vue";
 import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
 import Preview from "@/Pages/PageBuilder/Preview.vue";
-import SlideOverRight from "@/Components/Builder/Slidebars/SlideOverRight.vue";
-import DesignerSettings from "@/Components/Builder/Settings/DesignerSettings.vue";
+import SlideOverRight from "@/Components/PageBuilder/Slidebars/SlideOverRight.vue";
+import DesignerSettings from "@/Components/PageBuilder/Settings/DesignerSettings.vue";
 
 import { useStore } from "vuex";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";

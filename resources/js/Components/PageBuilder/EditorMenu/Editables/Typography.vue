@@ -1,6 +1,6 @@
 <script setup>
 import PageBuilder from "@/composables/PageBuilder";
-import EditorAccordion from "@/Components/Builder/EditorMenu/EditorAccordion.vue";
+import EditorAccordion from "@/Components/PageBuilder/EditorMenu/EditorAccordion.vue";
 import { useStore } from "vuex";
 import tailwindFontSizes from "@/utils/builder/tailwind-font-sizes";
 import tailwindFontStyles from "@/utils/builder/tailwind-font-styles";
