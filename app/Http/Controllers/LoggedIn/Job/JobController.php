@@ -432,7 +432,7 @@ class JobController extends Controller
     /**
      * Duplicate the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function duplicate(Request $request)
@@ -453,6 +453,7 @@ class JobController extends Controller
         $newJob = $job->replicate();
 
         $newJob->created_at = Carbon::now();
+        $newJob->published = false;
         $newJob->save();
 
         return redirect()->route("team.jobs.index", [

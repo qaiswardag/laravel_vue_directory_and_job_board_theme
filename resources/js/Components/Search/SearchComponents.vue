@@ -99,15 +99,17 @@ onMounted(async () => {
 
 <template>
     <Modal
+        class="relative"
         :show="show"
         @close="firstButton"
-        maxWidth="5xl"
+        maxWidth="4xl"
         minHeight="min-h-[50rem]"
         maxHeight="max-h-[50rem]"
     >
         <Spinner
-            v-if="getFetchedComponents.isLoading"
-            class="flex justify-center items-center h-full absolute inset-0"
+            v-if="
+                getFetchedComponents.isLoading && !getFetchedComponents.isError
+            "
         ></Spinner>
         <div
             class="px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
@@ -200,7 +202,7 @@ onMounted(async () => {
                 </div>
                 <section class="bg-red-400">
                     <div
-                        class="grid myPrimaryGap md:grid-cols-2 grid-cols-2 divide-y divide-gray-200 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
+                        class="overflow-scroll min-h-[30rem] max-h-[30rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 divide-y divide-gray-200 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
                     >
                         <div
                             class="px-4 py-4 bg-gray-50 rounded-md h-96 cursor-pointer"
@@ -212,11 +214,33 @@ onMounted(async () => {
                             getFetchedComponents.fetchedData.components"
                             :key="component.id"
                         >
-                            <button
-                                @click="handleComponent(component)"
-                                type="button"
-                            >
-                                {{ component.title }}
+                            <div @click="handleComponent(component)">
+                                <p
+                                    class="myPrimaryParagraph text-xs py-2 px-2 inline-block rounded-full my-4 text-left"
+                                    :class="[
+                                        { 'bg-red-100': component.published },
+                                        {
+                                            'bg-green-100':
+                                                !component.published,
+                                        },
+                                    ]"
+                                >
+                                    {{
+                                        component.published
+                                            ? "Published"
+                                            : "Unpublished"
+                                    }}
+                                </p>
+                                <p class="myPrimaryParagraph text-xs">
+                                    {{ component.title }}
+                                </p>
+
+                                <img
+                                    v-if="component.cover_images.length < 1"
+                                    alt="image"
+                                    class="w-full"
+                                    src="/app-images/builder/components/default_component_image.jpg"
+                                />
                                 <ThumbnailSmallImageSlider
                                     :images="component.cover_images"
                                     imageSize="medium_path"
@@ -224,7 +248,7 @@ onMounted(async () => {
                                     imageWidth="w-full"
                                     :roundedFull="false"
                                 ></ThumbnailSmallImageSlider>
-                            </button>
+                            </div>
                         </div>
                     </div>
                 </section>

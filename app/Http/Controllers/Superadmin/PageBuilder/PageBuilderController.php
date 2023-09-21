@@ -272,9 +272,11 @@ class PageBuilderController extends Controller
      */
     public function duplicate(Request $request)
     {
+        dd("kom til controller");
         // Authorize superadmin
         $this->authorize("superadmin-can-create-and-update");
 
+        dd("ll");
         $team = Team::findOrFail($request->teamId);
         $component = PageBuilderComponent::findOrFail($request->componentId);
 
@@ -291,6 +293,7 @@ class PageBuilderController extends Controller
         $newComponent = $component->replicate();
 
         $newComponent->created_at = Carbon::now();
+        $newComponent->published = false;
         $newComponent->save();
 
         return redirect()->route("admin.components", [

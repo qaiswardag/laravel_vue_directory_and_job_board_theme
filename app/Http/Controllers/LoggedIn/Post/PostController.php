@@ -345,7 +345,7 @@ class PostController extends Controller
     /**
      * Duplicate the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function duplicate(Request $request)
@@ -366,6 +366,7 @@ class PostController extends Controller
         $newPost = $post->replicate();
 
         $newPost->created_at = Carbon::now();
+        $newPost->published = false;
         $newPost->save();
 
         return redirect()->route("team.posts.index", [

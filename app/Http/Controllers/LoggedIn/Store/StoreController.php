@@ -378,7 +378,7 @@ class StoreController extends Controller
     /**
      * Duplicate the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function duplicate(Request $request)
@@ -399,6 +399,7 @@ class StoreController extends Controller
         $newStore = $store->replicate();
 
         $newStore->created_at = Carbon::now();
+        $newStore->published = false;
         $newStore->save();
 
         return redirect()->route("team.stores.index", [
