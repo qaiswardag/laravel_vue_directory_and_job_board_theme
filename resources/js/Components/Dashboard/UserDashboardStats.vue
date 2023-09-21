@@ -202,57 +202,12 @@ onMounted(() => {
                                 :key="member.id"
                             >
                                 <UserTag
+                                    customClass="my-0"
                                     :user="member"
                                     :showTeamRole="true"
                                     :clickable="true"
                                     :currentUserTeamRole="member"
                                 ></UserTag>
-                                <!-- start photo -->
-                                <!-- <div class="flex items-center gap-4 my-2">
-                                    <div
-                                        v-if="
-                                            member &&
-                                            member.profile_photo_path !== null
-                                        "
-                                        class="flex-shrink-0"
-                                    >
-                                        <img
-                                            class="object-cover h-10 w-10 rounded-full"
-                                            :src="`/storage/${member.profile_photo_path}`"
-                                            alt="User Image
-                                            
-                                        "
-                                        />
-                                    </div>
-
-                                    <div
-                                        v-if="
-                                            $page.props.user &&
-                                            member.profile_photo_path === null
-                                        "
-                                        class="flex-shrink-0 h-10 w-10 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                    >
-                                        {{
-                                            member.first_name
-                                                .charAt(0)
-                                                .toUpperCase()
-                                        }}
-                                        {{
-                                            member.last_name
-                                                .charAt(0)
-                                                .toUpperCase()
-                                        }}
-                                    </div>
-                                    <span
-                                        class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                    >
-                                        <p class="font-medium">
-                                            {{ member.first_name }}
-                                            {{ member.last_name }}
-                                        </p>
-                                        <p>Team Role: {{ member.role }}</p>
-                                    </span>
-                                </div> -->
                             </li>
                         </ul>
                     </div>

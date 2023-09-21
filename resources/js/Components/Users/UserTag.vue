@@ -12,17 +12,25 @@ const props = defineProps({
     clickable: {
         required: false,
     },
+    customClass: {
+        default: null,
+        required: false,
+    },
 });
 </script>
 
 <template>
     <div
         v-if="user"
-        :class="{
-            'hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer':
-                clickable,
-        }"
-        class="myPrimaryTag inline-block py-2"
+        :class="[
+            {
+                'hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer':
+                    clickable,
+            },
+
+            customClass,
+        ]"
+        class="myPrimaryTag inline-block"
     >
         <div class="flex items-center gap-2">
             <div v-if="user.profile_photo_path" class="flex-shrink-0">
