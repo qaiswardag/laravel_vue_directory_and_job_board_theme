@@ -2,6 +2,7 @@
 import Modal from "@/Components/Modals/Modal.vue";
 import { ref, computed, onMounted, onBeforeMount } from "vue";
 import { TailwindPagination } from "laravel-vue-pagination";
+import lineBreakDivider from "@/utils/builder/html-elements/line-break-divider";
 import {
     Squares2X2Icon,
     TrashIcon,
@@ -63,6 +64,22 @@ const handleComponent = function (component) {
     //
     //
     const clonedComponent = pageBuilder.cloneComponent(component);
+    //
+    store.commit("designer/setPushComponents", clonedComponent);
+    // store.commit("designer/setComponents", this.getComponents.value);
+
+    //
+    //
+    //
+    //
+    pageBuilder.addClickAndHoverEvents();
+    // pageBuilder.handleDesignerMethods();
+    firstButton();
+};
+const handleAddLineBreak = function () {
+    console.log("kom her");
+    //
+    const clonedComponent = pageBuilder.cloneComponent(lineBreakDivider());
     //
     store.commit("designer/setPushComponents", clonedComponent);
     // store.commit("designer/setComponents", this.getComponents.value);
@@ -200,58 +217,154 @@ onMounted(async () => {
                         </button>
                     </template>
                 </div>
-                <section class="bg-red-400">
-                    <div
-                        class="overflow-scroll min-h-[30rem] max-h-[30rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 divide-y divide-gray-200 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
-                    >
-                        <div
-                            class="px-4 py-4 bg-gray-50 rounded-md h-96 cursor-pointer"
-                            v-for="component in getFetchedComponents &&
-                            getFetchedComponents.fetchedData &&
-                            Array.isArray(
-                                getFetchedComponents.fetchedData.components
-                            ) &&
-                            getFetchedComponents.fetchedData.components"
-                            :key="component.id"
-                        >
-                            <div @click="handleComponent(component)">
-                                <p
-                                    class="myPrimaryParagraph text-xs py-2 px-2 inline-block rounded-full my-4 text-left"
-                                    :class="[
-                                        { 'bg-red-100': component.published },
-                                        {
-                                            'bg-green-100':
-                                                !component.published,
-                                        },
-                                    ]"
-                                >
-                                    {{
-                                        component.published
-                                            ? "Published"
-                                            : "Unpublished"
-                                    }}
-                                </p>
-                                <p class="myPrimaryParagraph text-xs">
-                                    {{ component.title }}
-                                </p>
 
-                                <img
-                                    v-if="component.cover_images.length < 1"
-                                    alt="image"
-                                    class="w-full"
-                                    src="/app-images/builder/components/default_component_image.jpg"
-                                />
-                                <ThumbnailSmallImageSlider
-                                    :images="component.cover_images"
-                                    imageSize="medium_path"
-                                    imageHeight="md:h-40 h-40"
-                                    imageWidth="w-full"
-                                    :roundedFull="false"
-                                ></ThumbnailSmallImageSlider>
+                <div
+                    class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 p-2 overflow-y-scroll"
+                >
+                    <section class="bg-red-400 md:w-6/8">
+                        <div
+                            class="overflow-scroll min-h-[30rem] max-h-[30rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 divide-y divide-gray-200 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
+                        >
+                            <div
+                                class="px-4 py-4 bg-gray-50 rounded-md h-96 cursor-pointer"
+                                v-for="component in getFetchedComponents &&
+                                getFetchedComponents.fetchedData &&
+                                Array.isArray(
+                                    getFetchedComponents.fetchedData.components
+                                ) &&
+                                getFetchedComponents.fetchedData.components"
+                                :key="component.id"
+                            >
+                                <div @click="handleComponent(component)">
+                                    <p
+                                        class="myPrimaryParagraph text-xs py-2 px-2 inline-block rounded-full my-4 text-left"
+                                        :class="[
+                                            {
+                                                'bg-red-100':
+                                                    component.published,
+                                            },
+                                            {
+                                                'bg-green-100':
+                                                    !component.published,
+                                            },
+                                        ]"
+                                    >
+                                        {{
+                                            component.published
+                                                ? "Published"
+                                                : "Unpublished"
+                                        }}
+                                    </p>
+                                    <p class="myPrimaryParagraph text-xs">
+                                        {{ component.title }}
+                                    </p>
+
+                                    <img
+                                        v-if="component.cover_images.length < 1"
+                                        alt="image"
+                                        class="w-full"
+                                        src="/app-images/builder/components/default_component_image.jpg"
+                                    />
+                                    <ThumbnailSmallImageSlider
+                                        :images="component.cover_images"
+                                        imageSize="medium_path"
+                                        imageHeight="md:h-40 h-40"
+                                        imageWidth="w-full"
+                                        :roundedFull="false"
+                                    ></ThumbnailSmallImageSlider>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                    <aside
+                        class="md:w-2/8 overflow-scroll min-h-[30rem] max-h-[30rem] w-full"
+                    >
+                        <div
+                            class="p-2 flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        >
+                            <!-- Unique HTML Component # start -->
+                            <div
+                                class="flex justify-between gap-4 text-xs font-medium py-4"
+                            >
+                                <button
+                                    @click="handleAddLineBreak"
+                                    class="flex items-left gap-2 my-2 cursor-pointer"
+                                >
+                                    Line Break Divider
+                                </button>
+                                <button
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                >
+                                    <PlusIcon
+                                        @click="handleAddLineBreak"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    ></PlusIcon>
+                                </button>
+                            </div>
+                            <!-- Unique HTML Component # end -->
+                            <!-- Unique HTML Component # start -->
+                            <div
+                                class="flex justify-between gap-4 text-xs font-medium py-4"
+                            >
+                                <button
+                                    @click="handleAddLineBreak"
+                                    class="flex items-left gap-2 my-2 cursor-pointer"
+                                >
+                                    Line Break Divider
+                                </button>
+                                <button
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                >
+                                    <PlusIcon
+                                        @click="handleAddLineBreak"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    ></PlusIcon>
+                                </button>
+                            </div>
+                            <!-- Unique HTML Component # end -->
+                            <!-- Unique HTML Component # start -->
+                            <div
+                                class="flex justify-between gap-4 text-xs font-medium py-4"
+                            >
+                                <button
+                                    @click="handleAddLineBreak"
+                                    class="flex items-left gap-2 my-2 cursor-pointer"
+                                >
+                                    Line Break Divider
+                                </button>
+                                <button
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                >
+                                    <PlusIcon
+                                        @click="handleAddLineBreak"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    ></PlusIcon>
+                                </button>
+                            </div>
+                            <!-- Unique HTML Component # end -->
+                            <!-- Unique HTML Component # start -->
+                            <div
+                                class="flex justify-between gap-4 text-xs font-medium py-4"
+                            >
+                                <button
+                                    @click="handleAddLineBreak"
+                                    class="flex items-left gap-2 my-2 cursor-pointer"
+                                >
+                                    Line Break Divider
+                                </button>
+                                <button
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                >
+                                    <PlusIcon
+                                        @click="handleAddLineBreak"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    ></PlusIcon>
+                                </button>
+                            </div>
+                            <!-- Unique HTML Component # end -->
+                        </div>
+                    </aside>
+                </div>
             </main>
             <!-- content end -->
         </div>

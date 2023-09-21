@@ -212,7 +212,7 @@ onMounted(async () => {
                             @mouseup="
                                 store.commit('designer/setComponent', component)
                             "
-                            class="relative group bg-red-200"
+                            class="relative group"
                         >
                             <div v-html="component.html_code"></div>
                         </div>
@@ -224,7 +224,8 @@ onMounted(async () => {
                         class="rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 my-12 mx-8"
                     >
                         <FolderPlusIcon
-                            class="mx-auto h-12 w-12 text-gray-400"
+                            @click="handleAddComponent"
+                            class="mx-auto h-12 w-12 text-gray-400 cursor-pointer"
                         ></FolderPlusIcon>
                         <h3 class="mt-2 text-sm font-semibold text-gray-900">
                             Add Component

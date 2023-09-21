@@ -631,7 +631,7 @@ class PageBuilder {
     }; //
 
     cloneComponent(cloneComponent) {
-        console.log("er:", cloneComponent);
+        console.log("cloneComponent:", cloneComponent);
         // Hide slider and right menu
         this.store.commit("designer/setMenuPreview", false);
         this.store.commit("designer/setMenuRight", false);
