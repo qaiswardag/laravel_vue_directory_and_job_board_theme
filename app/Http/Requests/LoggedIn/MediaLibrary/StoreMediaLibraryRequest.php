@@ -78,6 +78,7 @@ class StoreMediaLibraryRequest extends FormRequest
                         "png",
                         "gif",
                         "webp",
+                        "avif",
                         // "avif", // ERROR: Unsupported image type is image/avif. GD driver is only able to decode JPG, PNG, GIF, BMP or WebP files.
                     ]) ||
                     !$image->isValid()
