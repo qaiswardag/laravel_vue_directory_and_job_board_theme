@@ -224,7 +224,7 @@ onMounted(() => {
                 >
                     <div
                         @click="handleImageClick(image.id)"
-                        class="border border-myPrimaryLightGrayColor px-0 pb-2 cursor-pointer bg-gray-50 rounded-sm"
+                        class="px-0 pb-2 cursor-pointer bg-gray-50 rounded-sm"
                     >
                         <img
                             class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
@@ -268,7 +268,6 @@ onMounted(() => {
                                 </dd>
                             </div>
                             <div class="py-2 flex justify-between gap-2">
-                                <dt class="text-left">Name:</dt>
                                 <dd class="text-right">
                                     {{ image.name ? image.name : "–" }}
                                 </dd>

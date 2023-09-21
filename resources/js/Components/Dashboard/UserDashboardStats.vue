@@ -296,10 +296,10 @@ onMounted(() => {
                                     .latestMedia"
                                 :key="file.id"
                                 @click="handleMediaLibrary(file.id)"
-                                class="border border-myPrimaryLightGrayColor rounded px-2 p-2 cursor-pointer bg-gray-50"
+                                class="rounded px-0 pb-2 cursor-pointer bg-gray-50"
                             >
                                 <div
-                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100"
+                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-gray-100"
                                 >
                                     <img
                                         :src="`/storage/uploads/${file.medium_path}`"
@@ -309,7 +309,7 @@ onMounted(() => {
                                 </div>
 
                                 <dl
-                                    class="myPrimaryParagraph text-xs mt-2 border-b border-myPrimaryLightGrayColor divide-y"
+                                    class="px-2 myPrimaryParagraph text-xs border-b border-myPrimaryLightGrayColor divide-y"
                                 >
                                     <div
                                         class="py-3 flex justify-between items-center"
@@ -388,35 +388,56 @@ onMounted(() => {
                                     <ThumbnailSmallImageSlider
                                         :images="post.cover_images"
                                         imageSize="medium_path"
-                                        imageHeight="h-56"
-                                        imageWidth="w-full"
+                                        imageHeight="auto"
+                                        imageWidth="w-full pointer-events-none object-cover group-hover:opacity-75 rounded-t"
                                         :roundedFull="false"
                                     ></ThumbnailSmallImageSlider>
                                 </template>
 
                                 <div class="px-2 pb-2">
-                                    <p
-                                        class="myPrimaryParagraph text-sm font-medium mt-2 mb-2"
+                                    <Link
+                                        :href="
+                                            route('team.posts.post.show', [
+                                                $page.props.user.current_team
+                                                    .id,
+                                                post.id,
+                                                post.slug,
+                                            ])
+                                        "
                                     >
-                                        {{ post.title.slice(0, 12) }}..
-                                    </p>
+                                        <p
+                                            class="text-sm font-medium mt-2 mb-2"
+                                        >
+                                            {{ post.title.slice(0, 40)
+                                            }}{{
+                                                post.title.length > 40
+                                                    ? ".."
+                                                    : ""
+                                            }}
+                                        </p>
+                                    </Link>
                                     <p
                                         v-html="
-                                            `${post.content.slice(0, 24)}..`
+                                            `${post.content.slice(0, 100)}..`
                                         "
                                         class="myPrimaryParagraph text-xs"
                                     ></p>
-                                    <p
-                                        class="myPrimaryParagraph font-medium mt-2 mb-2 text-[10px] text-myPrimaryMediumGrayColor"
+
+                                    <Link
+                                        class="mt-4 inline-block"
+                                        :href="
+                                            route('team.posts.post.show', [
+                                                $page.props.user.current_team
+                                                    .id,
+                                                post.id,
+                                                post.slug,
+                                            ])
+                                        "
                                     >
-                                        Updated:
-                                        {{
-                                            format(
-                                                parseISO(post.updated_at),
-                                                "dd/MM/yyyy HH:mm"
-                                            )
-                                        }}
-                                    </p>
+                                        <span class="myPrimaryButton text-xs">
+                                            Read more
+                                        </span>
+                                    </Link>
                                 </div>
                             </li>
                         </ul>

@@ -197,10 +197,10 @@ const handleMediaLibrary = function (imageID) {
                                 v-for="file in images && images.data"
                                 :key="file.id"
                                 @click="handleMediaLibrary(file.id)"
-                                class="border border-myPrimaryLightGrayColor rounded px-4 p-4 cursor-pointer bg-gray-50"
+                                class="rounded pb-2 cursor-pointer bg-gray-100"
                             >
                                 <div
-                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100"
+                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-gray-100"
                                 >
                                     <img
                                         :src="`/storage/uploads/${file.medium_path}`"
@@ -210,7 +210,7 @@ const handleMediaLibrary = function (imageID) {
                                 </div>
 
                                 <dl
-                                    class="myPrimaryParagraph text-xs mt-2 border-b border-myPrimaryLightGrayColor divide-y"
+                                    class="myPrimaryParagraph text-xs mt-2 px-2 divide-y"
                                 >
                                     <div
                                         class="py-3 flex justify-between items-center"
