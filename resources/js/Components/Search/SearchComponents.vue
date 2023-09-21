@@ -285,18 +285,28 @@ onMounted(async () => {
                         >
                             <!-- Unique HTML Component # start -->
                             <div
-                                v-for="helper in componentHelpers"
-                                :key="helper.id"
-                                class="flex justify-between gap-4 text-xs font-medium py-4"
+                                v-for="helperComponent in componentHelpers"
+                                :key="helperComponent.title"
+                                class="flex justify-between items-center gap-4 text-xs font-medium py-4"
                             >
-                                <p
+                                <button
+                                    @click="
+                                        handleAddComponentHelper(
+                                            helperComponent
+                                        )
+                                    "
+                                    type="button"
                                     class="flex items-left gap-2 my-2 cursor-pointer"
                                 >
-                                    {{ helper }}
-                                </p>
+                                    {{ helperComponent.title }}
+                                </button>
                                 <button
-                                    @click="handleAddComponentHelper(helper)"
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    @click="
+                                        handleAddComponentHelper(
+                                            helperComponent
+                                        )
+                                    "
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
                                     <PlusIcon
                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
