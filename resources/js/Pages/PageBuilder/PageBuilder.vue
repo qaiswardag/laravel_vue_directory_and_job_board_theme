@@ -141,7 +141,6 @@ onMounted(async () => {
     <div
         class="w-full inset-x-0 h-[90vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
     >
-        <p class="my-12">er: {{ JSON.stringify(getComponent) }}</p>
         <div class="relative h-full flex ml-4">
             <main
                 class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl"
