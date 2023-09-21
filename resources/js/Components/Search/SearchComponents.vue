@@ -2,7 +2,7 @@
 import Modal from "@/Components/Modals/Modal.vue";
 import { ref, computed, onMounted, onBeforeMount } from "vue";
 import { TailwindPagination } from "laravel-vue-pagination";
-import lineBreakDivider from "@/utils/builder/html-elements/line-break-divider";
+import componentHelpers from "@/utils/builder/html-elements/componentHelpers";
 import {
     Squares2X2Icon,
     TrashIcon,
@@ -76,12 +76,13 @@ const handleComponent = function (component) {
     // pageBuilder.handleDesignerMethods();
     firstButton();
 };
-const handleAddLineBreak = function () {
-    console.log("kom her");
+const handleAddComponentHelper = function (Componenthelper) {
+    console.log("kom her:", Componenthelper);
+
     //
-    const clonedComponent = pageBuilder.cloneComponent(lineBreakDivider());
+    const clonedComponent = pageBuilder.cloneComponent(Componenthelper);
     //
-    store.commit("designer/setPushComponents", clonedComponent);
+    store.commit("designer/setPushComponents", Componenthelper);
     // store.commit("designer/setComponents", this.getComponents.value);
 
     //
@@ -284,84 +285,24 @@ onMounted(async () => {
                         >
                             <!-- Unique HTML Component # start -->
                             <div
+                                v-for="helper in componentHelpers"
+                                :key="helper.id"
                                 class="flex justify-between gap-4 text-xs font-medium py-4"
                             >
-                                <button
-                                    @click="handleAddLineBreak"
+                                <p
                                     class="flex items-left gap-2 my-2 cursor-pointer"
                                 >
-                                    Line Break Divider
-                                </button>
+                                    {{ helper }}
+                                </p>
                                 <button
+                                    @click="handleAddComponentHelper(helper)"
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <PlusIcon
-                                        @click="handleAddLineBreak"
                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
                                     ></PlusIcon>
                                 </button>
                             </div>
-                            <!-- Unique HTML Component # end -->
-                            <!-- Unique HTML Component # start -->
-                            <div
-                                class="flex justify-between gap-4 text-xs font-medium py-4"
-                            >
-                                <button
-                                    @click="handleAddLineBreak"
-                                    class="flex items-left gap-2 my-2 cursor-pointer"
-                                >
-                                    Line Break Divider
-                                </button>
-                                <button
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                >
-                                    <PlusIcon
-                                        @click="handleAddLineBreak"
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                    ></PlusIcon>
-                                </button>
-                            </div>
-                            <!-- Unique HTML Component # end -->
-                            <!-- Unique HTML Component # start -->
-                            <div
-                                class="flex justify-between gap-4 text-xs font-medium py-4"
-                            >
-                                <button
-                                    @click="handleAddLineBreak"
-                                    class="flex items-left gap-2 my-2 cursor-pointer"
-                                >
-                                    Line Break Divider
-                                </button>
-                                <button
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                >
-                                    <PlusIcon
-                                        @click="handleAddLineBreak"
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                    ></PlusIcon>
-                                </button>
-                            </div>
-                            <!-- Unique HTML Component # end -->
-                            <!-- Unique HTML Component # start -->
-                            <div
-                                class="flex justify-between gap-4 text-xs font-medium py-4"
-                            >
-                                <button
-                                    @click="handleAddLineBreak"
-                                    class="flex items-left gap-2 my-2 cursor-pointer"
-                                >
-                                    Line Break Divider
-                                </button>
-                                <button
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                >
-                                    <PlusIcon
-                                        @click="handleAddLineBreak"
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                    ></PlusIcon>
-                                </button>
-                            </div>
-                            <!-- Unique HTML Component # end -->
                         </div>
                     </aside>
                 </div>
