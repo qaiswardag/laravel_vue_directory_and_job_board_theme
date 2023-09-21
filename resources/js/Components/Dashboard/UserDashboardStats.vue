@@ -393,7 +393,7 @@ onMounted(() => {
                                         :images="post.cover_images"
                                         imageSize="medium_path"
                                         imageHeight="auto"
-                                        imageWidth="w-full pointer-events-none object-cover group-hover:opacity-75 rounded-t"
+                                        imageWidth="w-full object-cover group-hover:opacity-75 rounded-t"
                                         :roundedFull="false"
                                     ></ThumbnailSmallImageSlider>
                                 </template>
