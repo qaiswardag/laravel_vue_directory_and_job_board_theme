@@ -282,6 +282,9 @@ class MediaLibraryController extends Controller
                 $imageType === 3 || // IMAGETYPE_PNG
                 $imageType === 6 || // IMAGETYPE_BMP
                 $imageType === 18 // IMAGETYPE_WEBP
+
+                // ERROR: Unsupported image type is image/avif.
+                // GD driver is only able to decode JPG, PNG, GIF, BMP or WebP files.
                 // $imageType === 19 // AVIF
             ) {
                 // Create a new Image Intervention instance for the original image
