@@ -803,6 +803,7 @@ onBeforeMount(async () => {
             "section[data-componentid]"
         );
 
+        const extractedSections = [];
         // Loop through the selected elements and extract outerHTML
         sectionElements.forEach((section) => {
             extractedSections.push({

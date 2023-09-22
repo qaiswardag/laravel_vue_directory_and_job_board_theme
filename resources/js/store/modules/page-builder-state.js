@@ -371,8 +371,6 @@ export default {
             state.element = payload;
         },
         setComponent(state, payload) {
-            console.log("component payload er:", payload);
-
             if (!payload) {
                 state.element = null;
                 state.component = null;
