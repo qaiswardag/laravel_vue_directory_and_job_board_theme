@@ -178,7 +178,7 @@ class MediaLibraryController extends Controller
      * Generate unique image path
      */
     private function generateUniqueImagePath(
-        $teamReferenceId,
+        $teamId,
         $currentYearYear,
         $currentMonth,
         $slugifyFilename,
@@ -187,7 +187,7 @@ class MediaLibraryController extends Controller
         $timestamp
     ) {
         $path =
-            $teamReferenceId .
+            $teamId .
             "/" .
             $currentYearYear .
             "/" .
@@ -210,7 +210,7 @@ class MediaLibraryController extends Controller
 
             // regenerate the path
             $path =
-                $teamReferenceId .
+                $teamId .
                 "/" .
                 $currentYearYear .
                 "/" .
@@ -232,7 +232,7 @@ class MediaLibraryController extends Controller
      */
     private function saveAdditionalImageSizes(
         $path,
-        $teamReferenceId,
+        $teamId,
         $currentYearYear,
         $currentMonth,
         $slugifyFilename,
@@ -255,7 +255,7 @@ class MediaLibraryController extends Controller
 
         foreach ($sizes as $sizeName => [$width, $height]) {
             $resizedImagePath =
-                $teamReferenceId .
+                $teamId .
                 "/" .
                 $currentYearYear .
                 "/" .
