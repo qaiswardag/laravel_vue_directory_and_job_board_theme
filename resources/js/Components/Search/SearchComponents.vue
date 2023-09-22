@@ -60,18 +60,35 @@ const getFetchedComponents = computed(() => {
     return store.getters["pageBuilderState/getFetchedComponents"];
 });
 
-const handleAddComponent = function (componentObject) {
-    const clonedComponentObject =
-        pageBuilder.cloneCompObjForDOMInsertion(componentObject);
+// const handleAddComponent = function (componentObject) {
+//     const clonedComponentObject =
+//         pageBuilder.cloneCompObjForDOMInsertion(componentObject);
 
-    console.log("er:", componentObject);
+//     console.log("er:", componentObject);
 
-    // pageBuilder.observePlusSyncHTMLElements();
+//     // pageBuilder.observePlusSyncHTMLElements();
 
+//     pageBuilder.addClickAndHoverEvents();
+
+//     store.commit("pageBuilderState/setPushComponents", clonedComponentObject);
+
+//     firstButton();
+// };
+
+const handleAddComponent = function (component) {
+    //
+    //
+    const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion(component);
+    //
+    store.commit("pageBuilderState/setPushComponents", clonedComponent);
+    // store.commit("designer/setComponents", this.getComponents.value);
+
+    //
+    //
+    //
+    //
     pageBuilder.addClickAndHoverEvents();
-
-    store.commit("pageBuilderState/setPushComponents", clonedComponentObject);
-
+    // pageBuilder.handleDesignerMethods();
     firstButton();
 };
 
