@@ -66,17 +66,11 @@ const handleAddComponent = function (componentObject) {
 
     console.log("er:", componentObject);
 
-    componentObject = {
-        html_code: componentObject.html_code,
-    };
-
     // pageBuilder.observePlusSyncHTMLElements();
 
     pageBuilder.addClickAndHoverEvents();
 
-    store.commit("pageBuilderState/setPushComponents", {
-        html_code: clonedComponentObject.html_code,
-    });
+    store.commit("pageBuilderState/setPushComponents", clonedComponentObject);
 
     firstButton();
 };

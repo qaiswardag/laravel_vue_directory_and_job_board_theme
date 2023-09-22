@@ -803,18 +803,15 @@ onBeforeMount(async () => {
             "section[data-componentid]"
         );
 
-        // Initialize an array to store extracted HTML
-        const extractedSections = [];
-
         // Loop through the selected elements and extract outerHTML
         sectionElements.forEach((section) => {
             extractedSections.push({
                 html_code: section.outerHTML,
+                id: section.dataset.componentid,
             });
         });
 
         store.commit("pageBuilderState/setComponents", extractedSections);
-
         //
         //
         //
