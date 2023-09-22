@@ -15,16 +15,16 @@ const fontVerticalMargin = ref(null);
 const fontHorizontalMargin = ref(null);
 
 const getFontVerticalPadding = computed(() => {
-    return store.getters["designer/getFontVerticalPadding"];
+    return store.getters["PageBuilderGlobalState/getFontVerticalPadding"];
 });
 const getFontHorizontalPadding = computed(() => {
-    return store.getters["designer/getFontHorizontalPadding"];
+    return store.getters["PageBuilderGlobalState/getFontHorizontalPadding"];
 });
 const getFontVerticalMargin = computed(() => {
-    return store.getters["designer/getFontVerticalMargin"];
+    return store.getters["PageBuilderGlobalState/getFontVerticalMargin"];
 });
 const getFontHorizontalMargin = computed(() => {
-    return store.getters["designer/getFontHorizontalMargin"];
+    return store.getters["PageBuilderGlobalState/getFontHorizontalMargin"];
 });
 
 watch(

@@ -5,13 +5,13 @@ import { useStore } from "vuex";
 const store = useStore();
 
 const getElement = computed(() => {
-    return store.getters["designer/getElement"];
+    return store.getters["PageBuilderGlobalState/getElement"];
 });
 const getComponent = computed(() => {
-    return store.getters["designer/getComponent"];
+    return store.getters["PageBuilderGlobalState/getComponent"];
 });
 const getComponents = computed(() => {
-    return store.getters["designer/getComponents"];
+    return store.getters["PageBuilderGlobalState/getComponents"];
 });
 
 const current = ref("element");

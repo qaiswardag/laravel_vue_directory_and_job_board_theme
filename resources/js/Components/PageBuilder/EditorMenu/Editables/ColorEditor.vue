@@ -43,16 +43,16 @@ const textColorsSlideOverButton = function () {
 };
 
 const getBackgroundColor = computed(() => {
-    return store.getters["designer/getBackgroundColor"];
+    return store.getters["PageBuilderGlobalState/getBackgroundColor"];
 });
 const getTextColor = computed(() => {
-    return store.getters["designer/getTextColor"];
+    return store.getters["PageBuilderGlobalState/getTextColor"];
 });
 const getBackgroundColorCustom = computed(() => {
-    return store.getters["designer/getBackgroundColorCustom"];
+    return store.getters["PageBuilderGlobalState/getBackgroundColorCustom"];
 });
 const getTextColorCustom = computed(() => {
-    return store.getters["designer/getTextColorCustom"];
+    return store.getters["PageBuilderGlobalState/getTextColorCustom"];
 });
 
 const rgbToHex = function rgbToHex(r, g, b) {

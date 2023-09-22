@@ -37,7 +37,7 @@ const thirdMediaButtonFunction = ref(null);
 //
 // get current image from store
 const getBasePrimaryImage = computed(() => {
-    return store.getters["designer/getBasePrimaryImage"];
+    return store.getters["PageBuilderGlobalState/getBasePrimaryImage"];
 });
 //
 //

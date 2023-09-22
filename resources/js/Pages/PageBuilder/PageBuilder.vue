@@ -44,7 +44,7 @@ const store = useStore();
 const pageBuilder = new PageBuilder(store);
 
 const getMenuRight = computed(() => {
-    return store.getters["designer/getMenuRight"];
+    return store.getters["PageBuilderGlobalState/getMenuRight"];
 });
 
 const previewCurrentDesign = function () {
@@ -75,7 +75,6 @@ const handleAddComponent = function () {
     titleModalAddComponent.value = "Add Component to your Store";
     firstButtonTextSearchComponents.value = "Close";
     showModalAddComponent.value = true;
-    console.log("it ran");
 
     firstModalButtonSearchComponentsFunction.value = function () {
         console.log("also this ran, close modal here");
@@ -87,13 +86,13 @@ const handleAddComponent = function () {
 };
 
 const getComponents = computed(() => {
-    return store.getters["designer/getComponents"];
+    return store.getters["PageBuilderGlobalState/getComponents"];
 });
 const getComponent = computed(() => {
-    return store.getters["designer/getComponent"];
+    return store.getters["PageBuilderGlobalState/getComponent"];
 });
 const getElement = computed(() => {
-    return store.getters["designer/getElement"];
+    return store.getters["PageBuilderGlobalState/getElement"];
 });
 const getElementOuterHTML = computed(() => {
     if (getElement.value === null) return;
@@ -104,14 +103,14 @@ watch(getElementOuterHTML, (newComponent) => {
 });
 
 const deselectCurrentComponent = function () {
-    store.commit("designer/setComponent", null);
-    store.commit("designer/setElement", null);
+    store.commit("PageBuilderGlobalState/setComponent", null);
+    store.commit("PageBuilderGlobalState/setElement", null);
 };
 
 onMounted(async () => {
-    store.commit("designer/setComponent", null);
-    store.commit("designer/setElement", null);
-
+    store.commit("PageBuilderGlobalState/setComponent", null);
+    store.commit("PageBuilderGlobalState/setElement", null);
+    // designer /
     // Rerender `get components` when it is loaded from local storage
     pageBuilder.addClickAndHoverEvents();
     pageBuilder.handleDesignerMethods();
@@ -189,7 +188,12 @@ onMounted(async () => {
                         <button
                             type="button"
                             v-if="getMenuRight === false"
-                            @click="store.commit('designer/setMenuRight', true)"
+                            @click="
+                                store.commit(
+                                    'PageBuilderGlobalState/setMenuRight',
+                                    true
+                                )
+                            "
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <Squares2X2Icon
@@ -209,7 +213,10 @@ onMounted(async () => {
                     >
                         <div
                             @mouseup="
-                                store.commit('designer/setComponent', component)
+                                store.commit(
+                                    'PageBuilderGlobalState/setComponent',
+                                    component
+                                )
                             "
                             class="relative group"
                         >
@@ -257,7 +264,12 @@ onMounted(async () => {
                 <RightSidebarEditor
                     :user="user"
                     :team="team"
-                    @closeEditor="store.commit('designer/setMenuRight', false)"
+                    @closeEditor="
+                        store.commit(
+                            'PageBuilderGlobalState/setMenuRight',
+                            false
+                        )
+                    "
                 >
                 </RightSidebarEditor>
             </aside>

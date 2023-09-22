@@ -18,7 +18,7 @@ const pageBuilder = new PageBuilder(store);
 
 // get current element tag
 const getElement = computed(() => {
-    return store.getters["designer/getElement"];
+    return store.getters["PageBuilderGlobalState/getElement"];
 });
 
 const showModalUrl = ref(false);
@@ -58,7 +58,7 @@ const textContent = computed(() => {
 
 // Watch for changes in textContent and update store and textContentVueModel
 watch(textContent, (newValue) => {
-    store.commit("designer/setTextAreaVueModel", newValue);
+    store.commit("PageBuilderGlobalState/setTextAreaVueModel", newValue);
 
     if (
         typeof newValue === "string" &&

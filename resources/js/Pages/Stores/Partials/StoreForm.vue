@@ -486,7 +486,7 @@ const clearForm = function () {
 
     localStorage.removeItem(pathLocalStorage);
     localStorage.removeItem(pathPageBuilderLocalStorage);
-    store.commit("designer/setComponents", []);
+    store.commit("PageBuilderGlobalState/setComponents", []);
 };
 
 // is form dirty? returns true or false
@@ -571,7 +571,7 @@ const categoriesSorted = computed(() => {
 
 // Builder # Start
 const getComponents = computed(() => {
-    return store.getters["designer/getComponents"];
+    return store.getters["PageBuilderGlobalState/getComponents"];
 });
 
 const openDesignerModal = ref(false);
@@ -636,7 +636,7 @@ const handlePageBuilder = function () {
 // get unique post if needs to be updated
 onBeforeMount(async () => {
     store.commit(
-        "designer/setLocalStorageItemName",
+        "PageBuilderGlobalState/setLocalStorageItemName",
         pathPageBuilderLocalStorage
     );
     //
@@ -822,7 +822,7 @@ onBeforeMount(async () => {
             });
         });
 
-        store.commit("designer/setComponents", extractedSections);
+        store.commit("PageBuilderGlobalState/setComponents", extractedSections);
 
         //
         //

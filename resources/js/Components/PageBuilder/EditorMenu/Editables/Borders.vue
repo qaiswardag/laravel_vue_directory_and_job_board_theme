@@ -22,13 +22,13 @@ const borderWidth = ref(null);
 const borderColor = ref(null);
 
 const getBorderStyle = computed(() => {
-    return store.getters["designer/getBorderStyle"];
+    return store.getters["PageBuilderGlobalState/getBorderStyle"];
 });
 const getBorderWidth = computed(() => {
-    return store.getters["designer/getBorderWidth"];
+    return store.getters["PageBuilderGlobalState/getBorderWidth"];
 });
 const getBorderColor = computed(() => {
-    return store.getters["designer/getBorderColor"];
+    return store.getters["PageBuilderGlobalState/getBorderColor"];
 });
 
 watch(

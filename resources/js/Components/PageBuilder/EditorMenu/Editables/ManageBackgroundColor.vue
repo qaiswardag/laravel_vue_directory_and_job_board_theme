@@ -52,14 +52,16 @@ const store = useStore();
 const colors = tailwindColors.backgroundColors();
 
 const getBackgroundColor = computed(() => {
-    return store.getters["designer/getBackgroundColor"];
+    return store.getters["PageBuilderGlobalState/getBackgroundColor"];
 });
 const getBackgroundColorCustom = computed(() => {
-    return store.getters["designer/getBackgroundColorCustom"];
+    return store.getters["PageBuilderGlobalState/getBackgroundColorCustom"];
 });
 
 const getEnabledCustomColorBackground = computed(() => {
-    return store.getters["designer/getEnabledCustomColorBackground"];
+    return store.getters[
+        "PageBuilderGlobalState/getEnabledCustomColorBackground"
+    ];
 });
 
 watch(getEnabledCustomColorBackground, (newValue) => {

@@ -133,19 +133,19 @@ const borderRadiusBottomleft = ref(null);
 const borderRadiusBottomRight = ref(null);
 
 const getBorderRadiusGlobal = computed(() => {
-    return store.getters["designer/getBorderRadiusGlobal"];
+    return store.getters["PageBuilderGlobalState/getBorderRadiusGlobal"];
 });
 const getBorderRadiusTopLeft = computed(() => {
-    return store.getters["designer/getBorderRadiusTopLeft"];
+    return store.getters["PageBuilderGlobalState/getBorderRadiusTopLeft"];
 });
 const getBorderRadiusTopRight = computed(() => {
-    return store.getters["designer/getBorderRadiusTopRight"];
+    return store.getters["PageBuilderGlobalState/getBorderRadiusTopRight"];
 });
 const getBorderRadiusBottomleft = computed(() => {
-    return store.getters["designer/getBorderRadiusBottomleft"];
+    return store.getters["PageBuilderGlobalState/getBorderRadiusBottomleft"];
 });
 const getBorderRadiusBottomRight = computed(() => {
-    return store.getters["designer/getBorderRadiusBottomRight"];
+    return store.getters["PageBuilderGlobalState/getBorderRadiusBottomRight"];
 });
 
 watch(

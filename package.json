@@ -40,7 +40,6 @@
         "use-lightweight-fetch": "^2.1.1",
         "uuid": "^9.0.0",
         "vue-router": "^4.1.6",
-        "vuedraggable": "^4.1.0",
         "vuex": "^4.1.0"
     }
 }

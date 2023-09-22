@@ -24,7 +24,7 @@ const pageBuilder = new PageBuilder(store);
 const opacityVueModel = ref(null);
 
 const getBackgroundOpacity = computed(() => {
-    return store.getters["designer/getBackgroundOpacity"];
+    return store.getters["PageBuilderGlobalState/getBackgroundOpacity"];
 });
 
 watch(

@@ -13,7 +13,7 @@ const store = useStore();
 const pageBuilder = new PageBuilder(store);
 
 const getRestoredElement = computed(() => {
-    return store.getters["designer/getRestoredElement"];
+    return store.getters["PageBuilderGlobalState/getRestoredElement"];
 });
 </script>
 

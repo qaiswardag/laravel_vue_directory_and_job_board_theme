@@ -54,10 +54,10 @@ const awaitComponentsOnMounted = ref([]);
 
 // use dynamic model
 const getComponents = computed(() => {
-    return store.getters["designer/getComponents"];
+    return store.getters["PageBuilderGlobalState/getComponents"];
 });
 const getFetchedComponents = computed(() => {
-    return store.getters["designer/getFetchedComponents"];
+    return store.getters["PageBuilderGlobalState/getFetchedComponents"];
 });
 
 const handleComponent = function (component) {
@@ -65,8 +65,8 @@ const handleComponent = function (component) {
     //
     const clonedComponent = pageBuilder.cloneComponent(component);
     //
-    store.commit("designer/setPushComponents", clonedComponent);
-    // store.commit("designer/setComponents", this.getComponents.value);
+    store.commit("PageBuilderGlobalState/setPushComponents", clonedComponent);
+    // store.commit("PageBuilderGlobalState/setComponents", this.getComponents.value);
 
     //
     //
@@ -82,8 +82,8 @@ const handleAddComponentHelper = function (Componenthelper) {
     //
     const clonedComponent = pageBuilder.cloneComponent(Componenthelper);
     //
-    store.commit("designer/setPushComponents", Componenthelper);
-    // store.commit("designer/setComponents", this.getComponents.value);
+    store.commit("PageBuilderGlobalState/setPushComponents", Componenthelper);
+    // store.commit("PageBuilderGlobalState/setComponents", this.getComponents.value);
 
     //
     //
@@ -96,7 +96,7 @@ const handleAddComponentHelper = function (Componenthelper) {
 
 onMounted(async () => {
     awaitComponentsOnMounted.value = await store.dispatch(
-        "designer/loadComponents",
+        "PageBuilderGlobalState/loadComponents",
         props.team
     );
     //
@@ -108,8 +108,8 @@ onMounted(async () => {
     //
     //
     //
-    store.commit("designer/setComponent", null);
-    store.commit("designer/setElement", null);
+    store.commit("PageBuilderGlobalState/setComponent", null);
+    store.commit("PageBuilderGlobalState/setElement", null);
     // Rerender `get components` when it is loaded from local storage
     pageBuilder.addClickAndHoverEvents();
     pageBuilder.handleDesignerMethods();

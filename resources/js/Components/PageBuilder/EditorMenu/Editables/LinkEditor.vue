@@ -292,29 +292,29 @@ const urlInput = ref(null);
 const openHyperlinkInNewTab = ref(false);
 
 const getElementContainsHyperlink = computed(() => {
-    return store.getters["designer/getElementContainsHyperlink"];
+    return store.getters["PageBuilderGlobalState/getElementContainsHyperlink"];
 });
 const getHyperlinkAbility = computed(() => {
-    return store.getters["designer/getHyperlinkAbility"];
+    return store.getters["PageBuilderGlobalState/getHyperlinkAbility"];
 });
 const getHyperlinkMessage = computed(() => {
-    return store.getters["designer/getHyperlinkMessage"];
+    return store.getters["PageBuilderGlobalState/getHyperlinkMessage"];
 });
 const getHyperlinkError = computed(() => {
-    return store.getters["designer/getHyperlinkError"];
+    return store.getters["PageBuilderGlobalState/getHyperlinkError"];
 });
 const getHyperlinkInput = computed(() => {
-    return store.getters["designer/getHyperlinkInput"];
+    return store.getters["PageBuilderGlobalState/getHyperlinkInput"];
 });
 const getHyberlinkEnable = computed(() => {
-    return store.getters["designer/getHyberlinkEnable"];
+    return store.getters["PageBuilderGlobalState/getHyberlinkEnable"];
 });
 
 const getOpenHyperlinkInNewTab = computed(() => {
-    return store.getters["designer/getOpenHyperlinkInNewTab"];
+    return store.getters["PageBuilderGlobalState/getOpenHyperlinkInNewTab"];
 });
 const getElement = computed(() => {
-    return store.getters["designer/getElement"];
+    return store.getters["PageBuilderGlobalState/getElement"];
 });
 
 watch(getHyperlinkInput, (newValue) => {
@@ -330,7 +330,10 @@ watch(getOpenHyperlinkInNewTab, (newValue) => {
 // remove hyperlink
 watch(hyperlinkEnable, (hyperlinkEnableNewValue) => {
     hyperlinkEnable.value = hyperlinkEnableNewValue;
-    store.commit("designer/setHyberlinkEnable", hyperlinkEnable.value);
+    store.commit(
+        "PageBuilderGlobalState/setHyberlinkEnable",
+        hyperlinkEnable.value
+    );
 });
 
 const handleToggleHyperlinkEnable = async function (data) {
