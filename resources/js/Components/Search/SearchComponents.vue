@@ -54,49 +54,29 @@ const awaitComponentsOnMounted = ref([]);
 
 // use dynamic model
 const getComponents = computed(() => {
-    return store.getters["PageBuilderGlobalState/getComponents"];
+    return store.getters["pageBuilderState/getComponents"];
 });
 const getFetchedComponents = computed(() => {
-    return store.getters["PageBuilderGlobalState/getFetchedComponents"];
+    return store.getters["pageBuilderState/getFetchedComponents"];
 });
 
-const handleComponent = function (component) {
-    //
-    //
-    const clonedComponent = pageBuilder.cloneComponent(component);
-    //
-    store.commit("PageBuilderGlobalState/setPushComponents", clonedComponent);
-    // store.commit("PageBuilderGlobalState/setComponents", this.getComponents.value);
+const handleAddComponent = function (componentObject) {
+    const clonedComponent =
+        pageBuilder.cloneCompObjForDOMInsertion(componentObject);
 
-    //
-    //
-    //
-    //
-    pageBuilder.addClickAndHoverEvents();
-    // pageBuilder.handleDesignerMethods();
+    // store.commit("pageBuilderState/setPushComponents", clonedComponent);
+
+    pageBuilder.syncComponentIDsWithDOM();
+
     firstButton();
 };
-const handleAddComponentHelper = function (Componenthelper) {
-    console.log("kom her:", Componenthelper);
-
-    //
-    const clonedComponent = pageBuilder.cloneComponent(Componenthelper);
-    //
-    store.commit("PageBuilderGlobalState/setPushComponents", Componenthelper);
-    // store.commit("PageBuilderGlobalState/setComponents", this.getComponents.value);
-
-    //
-    //
-    //
-    //
-    pageBuilder.addClickAndHoverEvents();
-    // pageBuilder.handleDesignerMethods();
+const handleAddComponentHelper = function (componentObject) {
     firstButton();
 };
 
 onMounted(async () => {
     awaitComponentsOnMounted.value = await store.dispatch(
-        "PageBuilderGlobalState/loadComponents",
+        "pageBuilderState/loadComponents",
         props.team
     );
     //
@@ -108,11 +88,11 @@ onMounted(async () => {
     //
     //
     //
-    store.commit("PageBuilderGlobalState/setComponent", null);
-    store.commit("PageBuilderGlobalState/setElement", null);
+    store.commit("pageBuilderState/setComponent", null);
+    store.commit("pageBuilderState/setElement", null);
     // Rerender `get components` when it is loaded from local storage
     pageBuilder.addClickAndHoverEvents();
-    pageBuilder.handleDesignerMethods();
+    pageBuilder.handlePageBuilderMethods();
 });
 </script>
 
@@ -222,12 +202,12 @@ onMounted(async () => {
                 <div
                     class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 p-2 overflow-y-scroll"
                 >
-                    <section class="bg-red-400 md:w-6/8">
+                    <section class="md:w-6/8">
                         <div
-                            class="overflow-scroll min-h-[30rem] max-h-[30rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 divide-y divide-gray-200 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor rounded"
+                            class="overflow-scroll min-h-[30rem] max-h-[30rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor"
                         >
                             <div
-                                class="px-4 py-4 bg-gray-50 rounded-md h-96 cursor-pointer"
+                                class="px-4 py-4 bg-gray-50 h-96"
                                 v-for="component in getFetchedComponents &&
                                 getFetchedComponents.fetchedData &&
                                 Array.isArray(
@@ -236,43 +216,54 @@ onMounted(async () => {
                                 getFetchedComponents.fetchedData.components"
                                 :key="component.id"
                             >
-                                <div @click="handleComponent(component)">
-                                    <p
-                                        class="myPrimaryParagraph text-xs py-2 px-2 inline-block rounded-full my-4 text-left"
-                                        :class="[
-                                            {
-                                                'bg-red-100':
-                                                    component.published,
-                                            },
-                                            {
-                                                'bg-green-100':
-                                                    !component.published,
-                                            },
-                                        ]"
-                                    >
-                                        {{
-                                            component.published
-                                                ? "Published"
-                                                : "Unpublished"
-                                        }}
-                                    </p>
+                                <div>
+                                    <div>
+                                        <p
+                                            class="inline-block mb-4"
+                                            :class="[
+                                                {
+                                                    'myPrimaryTag bg-myPrimaryLinkColor text-white':
+                                                        component.published,
+                                                },
+                                                {
+                                                    'myPrimaryTag bg-myPrimaryErrorColor text-white':
+                                                        !component.published,
+                                                },
+                                            ]"
+                                        >
+                                            {{
+                                                component.published
+                                                    ? "Published"
+                                                    : "Unpublished"
+                                            }}
+                                        </p>
+                                    </div>
+
                                     <p class="myPrimaryParagraph text-xs">
                                         {{ component.title }}
                                     </p>
 
-                                    <img
-                                        v-if="component.cover_images.length < 1"
-                                        alt="image"
-                                        class="w-full"
-                                        src="/app-images/builder/components/default_component_image.jpg"
-                                    />
-                                    <ThumbnailSmallImageSlider
-                                        :images="component.cover_images"
-                                        imageSize="medium_path"
-                                        imageHeight="md:h-40 h-40"
-                                        imageWidth="w-full"
-                                        :roundedFull="false"
-                                    ></ThumbnailSmallImageSlider>
+                                    <div
+                                        @click="handleAddComponent(component)"
+                                        class="border border-gray-200 p-2 mt-8 cursor-pointer"
+                                    >
+                                        <img
+                                            v-if="
+                                                component.cover_images.length <
+                                                1
+                                            "
+                                            alt="image"
+                                            class="w-full"
+                                            src="/app-images/builder/components/default_component_image.jpg"
+                                        />
+                                        <ThumbnailSmallImageSlider
+                                            :images="component.cover_images"
+                                            imageSize="medium_path"
+                                            imageHeight="md:h-40 h-40"
+                                            imageWidth="w-full"
+                                            :roundedFull="false"
+                                        ></ThumbnailSmallImageSlider>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -37,7 +37,7 @@ const thirdMediaButtonFunction = ref(null);
 //
 // get current image from store
 const getBasePrimaryImage = computed(() => {
-    return store.getters["PageBuilderGlobalState/getBasePrimaryImage"];
+    return store.getters["pageBuilderState/getBasePrimaryImage"];
 });
 //
 //
@@ -71,7 +71,7 @@ const handleAddImage = function () {
 <template>
     <div v-if="getBasePrimaryImage !== null">
         <img
-            class="object-cover object-center w-full"
+            class="object-cover object-center w-full cursor-pointer"
             :src="getBasePrimaryImage"
             @click="handleAddImage"
             alt="image"

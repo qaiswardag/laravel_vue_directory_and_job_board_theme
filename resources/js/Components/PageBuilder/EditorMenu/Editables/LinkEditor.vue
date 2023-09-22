@@ -292,29 +292,29 @@ const urlInput = ref(null);
 const openHyperlinkInNewTab = ref(false);
 
 const getElementContainsHyperlink = computed(() => {
-    return store.getters["PageBuilderGlobalState/getElementContainsHyperlink"];
+    return store.getters["pageBuilderState/getElementContainsHyperlink"];
 });
 const getHyperlinkAbility = computed(() => {
-    return store.getters["PageBuilderGlobalState/getHyperlinkAbility"];
+    return store.getters["pageBuilderState/getHyperlinkAbility"];
 });
 const getHyperlinkMessage = computed(() => {
-    return store.getters["PageBuilderGlobalState/getHyperlinkMessage"];
+    return store.getters["pageBuilderState/getHyperlinkMessage"];
 });
 const getHyperlinkError = computed(() => {
-    return store.getters["PageBuilderGlobalState/getHyperlinkError"];
+    return store.getters["pageBuilderState/getHyperlinkError"];
 });
 const getHyperlinkInput = computed(() => {
-    return store.getters["PageBuilderGlobalState/getHyperlinkInput"];
+    return store.getters["pageBuilderState/getHyperlinkInput"];
 });
 const getHyberlinkEnable = computed(() => {
-    return store.getters["PageBuilderGlobalState/getHyberlinkEnable"];
+    return store.getters["pageBuilderState/getHyberlinkEnable"];
 });
 
 const getOpenHyperlinkInNewTab = computed(() => {
-    return store.getters["PageBuilderGlobalState/getOpenHyperlinkInNewTab"];
+    return store.getters["pageBuilderState/getOpenHyperlinkInNewTab"];
 });
 const getElement = computed(() => {
-    return store.getters["PageBuilderGlobalState/getElement"];
+    return store.getters["pageBuilderState/getElement"];
 });
 
 watch(getHyperlinkInput, (newValue) => {
@@ -330,10 +330,7 @@ watch(getOpenHyperlinkInNewTab, (newValue) => {
 // remove hyperlink
 watch(hyperlinkEnable, (hyperlinkEnableNewValue) => {
     hyperlinkEnable.value = hyperlinkEnableNewValue;
-    store.commit(
-        "PageBuilderGlobalState/setHyberlinkEnable",
-        hyperlinkEnable.value
-    );
+    store.commit("pageBuilderState/setHyberlinkEnable", hyperlinkEnable.value);
 });
 
 const handleToggleHyperlinkEnable = async function (data) {

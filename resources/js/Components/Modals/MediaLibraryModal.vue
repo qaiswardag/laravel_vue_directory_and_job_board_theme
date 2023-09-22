@@ -268,7 +268,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="relative w-full min-h-[61rem] max-h-[61rem] inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
+                            class="relative w-full min-h-[61rem] max-h-[61rem] inline-block align-bottom bg-white rounded px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
                         >
                             <div
                                 class="flex gap-2 justify-between items-center border-b border-gray-200 pb-2 mb-2"
@@ -364,7 +364,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                         class="hidden sm:block"
                                                     >
                                                         <div
-                                                            class="flex items-center border border-gray-200 py-1 px-2 rounded"
+                                                            class="flex items-center border border-gray-200 py-1 px-2"
                                                         >
                                                             <nav
                                                                 class="flex-1 -mb-px flex space-x-6 xl:space-x-8"
@@ -439,7 +439,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                             class="md:w-72 relative md:min-h-[55rem] md:max-h-[55rem] min-h-[22rem] max-h-[22rem]"
                                         >
                                             <div
-                                                class="md:w-72 md:min-h-[50.8rem] md:max-h-[50.8rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
+                                                class="md:w-72 md:min-h-[50.8rem] md:max-h-[50.8rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
                                             >
                                                 <div
                                                     v-if="
@@ -824,7 +824,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                         <aside
                                             v-if="selected === 'Upload'"
                                             aria-label="sidebar"
-                                            class="md:w-72 md:min-h-[50.6rem] md:max-h-[50.6rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
+                                            class="md:w-72 md:min-h-[50.6rem] md:max-h-[50.6rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
                                         >
                                             <div
                                                 v-if="

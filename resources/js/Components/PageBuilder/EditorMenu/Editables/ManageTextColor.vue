@@ -52,14 +52,14 @@ const store = useStore();
 const colors = tailwindColors.textColors();
 
 const getTextColor = computed(() => {
-    return store.getters["PageBuilderGlobalState/getTextColor"];
+    return store.getters["pageBuilderState/getTextColor"];
 });
 const getTextColorCustom = computed(() => {
-    return store.getters["PageBuilderGlobalState/getTextColorCustom"];
+    return store.getters["pageBuilderState/getTextColorCustom"];
 });
 
 const getEnabledCustomColorText = computed(() => {
-    return store.getters["PageBuilderGlobalState/getEnabledCustomColorText"];
+    return store.getters["pageBuilderState/getEnabledCustomColorText"];
 });
 
 watch(getEnabledCustomColorText, (newValue) => {

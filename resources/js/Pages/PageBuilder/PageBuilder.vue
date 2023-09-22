@@ -44,7 +44,7 @@ const store = useStore();
 const pageBuilder = new PageBuilder(store);
 
 const getMenuRight = computed(() => {
-    return store.getters["PageBuilderGlobalState/getMenuRight"];
+    return store.getters["pageBuilderState/getMenuRight"];
 });
 
 const previewCurrentDesign = function () {
@@ -77,7 +77,6 @@ const handleAddComponent = function () {
     showModalAddComponent.value = true;
 
     firstModalButtonSearchComponentsFunction.value = function () {
-        console.log("also this ran, close modal here");
         // handle show modal for unique content
         showModalAddComponent.value = false;
     };
@@ -86,34 +85,34 @@ const handleAddComponent = function () {
 };
 
 const getComponents = computed(() => {
-    return store.getters["PageBuilderGlobalState/getComponents"];
+    return store.getters["pageBuilderState/getComponents"];
 });
 const getComponent = computed(() => {
-    return store.getters["PageBuilderGlobalState/getComponent"];
+    return store.getters["pageBuilderState/getComponent"];
 });
 const getElement = computed(() => {
-    return store.getters["PageBuilderGlobalState/getElement"];
+    return store.getters["pageBuilderState/getElement"];
 });
 const getElementOuterHTML = computed(() => {
     if (getElement.value === null) return;
     return getElement.value.outerHTML ? getElement.value.outerHTML : null;
 });
 watch(getElementOuterHTML, (newComponent) => {
-    pageBuilder.handleDesignerMethods();
+    pageBuilder.handlePageBuilderMethods();
 });
 
 const deselectCurrentComponent = function () {
-    store.commit("PageBuilderGlobalState/setComponent", null);
-    store.commit("PageBuilderGlobalState/setElement", null);
+    store.commit("pageBuilderState/setComponent", null);
+    store.commit("pageBuilderState/setElement", null);
 };
 
 onMounted(async () => {
-    store.commit("PageBuilderGlobalState/setComponent", null);
-    store.commit("PageBuilderGlobalState/setElement", null);
-    // designer /
+    store.commit("pageBuilderState/setComponent", null);
+    store.commit("pageBuilderState/setElement", null);
+
     // Rerender `get components` when it is loaded from local storage
     pageBuilder.addClickAndHoverEvents();
-    pageBuilder.handleDesignerMethods();
+    pageBuilder.handlePageBuilderMethods();
 });
 </script>
 
@@ -190,7 +189,7 @@ onMounted(async () => {
                             v-if="getMenuRight === false"
                             @click="
                                 store.commit(
-                                    'PageBuilderGlobalState/setMenuRight',
+                                    'pageBuilderState/setMenuRight',
                                     true
                                 )
                             "
@@ -214,7 +213,7 @@ onMounted(async () => {
                         <div
                             @mouseup="
                                 store.commit(
-                                    'PageBuilderGlobalState/setComponent',
+                                    'pageBuilderState/setComponent',
                                     component
                                 )
                             "
@@ -265,10 +264,7 @@ onMounted(async () => {
                     :user="user"
                     :team="team"
                     @closeEditor="
-                        store.commit(
-                            'PageBuilderGlobalState/setMenuRight',
-                            false
-                        )
+                        store.commit('pageBuilderState/setMenuRight', false)
                     "
                 >
                 </RightSidebarEditor>

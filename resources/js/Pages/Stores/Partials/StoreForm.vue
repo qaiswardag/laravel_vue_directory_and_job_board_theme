@@ -486,7 +486,7 @@ const clearForm = function () {
 
     localStorage.removeItem(pathLocalStorage);
     localStorage.removeItem(pathPageBuilderLocalStorage);
-    store.commit("PageBuilderGlobalState/setComponents", []);
+    store.commit("pageBuilderState/setComponents", []);
 };
 
 // is form dirty? returns true or false
@@ -571,7 +571,7 @@ const categoriesSorted = computed(() => {
 
 // Builder # Start
 const getComponents = computed(() => {
-    return store.getters["PageBuilderGlobalState/getComponents"];
+    return store.getters["pageBuilderState/getComponents"];
 });
 
 const openDesignerModal = ref(false);
@@ -595,7 +595,7 @@ const handlePageBuilder = function () {
 
         // save to local storage if new resource
         if (formType.value === "create") {
-            pageBuilder.saveCurrentDesign();
+            pageBuilder.syncComponentIDsWithDOM();
             pageBuilder.saveComponentsLocalStorage(getComponents.value);
             //
             //
@@ -609,7 +609,7 @@ const handlePageBuilder = function () {
         }
         // save to local storage if new resource
         if (formType.value === "update") {
-            pageBuilder.saveCurrentDesign();
+            pageBuilder.syncComponentIDsWithDOM();
 
             //
             //
@@ -636,7 +636,7 @@ const handlePageBuilder = function () {
 // get unique post if needs to be updated
 onBeforeMount(async () => {
     store.commit(
-        "PageBuilderGlobalState/setLocalStorageItemName",
+        "pageBuilderState/setLocalStorageItemName",
         pathPageBuilderLocalStorage
     );
     //
@@ -790,7 +790,7 @@ onBeforeMount(async () => {
         }
     }
 
-    // User is editing an existing Resource, rather than creating a new one from scratch. øøø
+    // User is editing an existing Resource, rather than creating a new one from scratch.
     if (props.post !== null) {
         formType.value = "update";
 
@@ -822,7 +822,7 @@ onBeforeMount(async () => {
             });
         });
 
-        store.commit("PageBuilderGlobalState/setComponents", extractedSections);
+        store.commit("pageBuilderState/setComponents", extractedSections);
 
         //
         //

@@ -9,7 +9,7 @@ const pageBuilder = new PageBuilder(store);
 
 const currentClasses = ref(null);
 const getCurrentClasses = computed(() => {
-    return store.getters["PageBuilderGlobalState/getCurrentClasses"];
+    return store.getters["pageBuilderState/getCurrentClasses"];
 });
 
 watch(

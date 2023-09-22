@@ -19,25 +19,25 @@ const fontFamily = ref(null);
 const fontStyle = ref(null);
 
 const getFontBase = computed(() => {
-    return store.getters["PageBuilderGlobalState/getFontBase"];
+    return store.getters["pageBuilderState/getFontBase"];
 });
 const getFontDesktop = computed(() => {
-    return store.getters["PageBuilderGlobalState/getFontDesktop"];
+    return store.getters["pageBuilderState/getFontDesktop"];
 });
 const getFontTablet = computed(() => {
-    return store.getters["PageBuilderGlobalState/getFontTablet"];
+    return store.getters["pageBuilderState/getFontTablet"];
 });
 const getFontMobile = computed(() => {
-    return store.getters["PageBuilderGlobalState/getFontMobile"];
+    return store.getters["pageBuilderState/getFontMobile"];
 });
 const getFontWeight = computed(() => {
-    return store.getters["PageBuilderGlobalState/getFontWeight"];
+    return store.getters["pageBuilderState/getFontWeight"];
 });
 const getFontFamily = computed(() => {
-    return store.getters["PageBuilderGlobalState/getFontFamily"];
+    return store.getters["pageBuilderState/getFontFamily"];
 });
 const getFontStyle = computed(() => {
-    return store.getters["PageBuilderGlobalState/getFontStyle"];
+    return store.getters["pageBuilderState/getFontStyle"];
 });
 
 watch(

@@ -223,7 +223,7 @@ onMounted(() => {
         </div>
 
         <div
-            class="overflow-y-scroll md:min-h-[32rem] md:max-h-[32rem] min-h-[15rem] max-h-[15rem] p-2 border border-myPrimaryLightGrayColor rounded"
+            class="overflow-y-scroll md:min-h-[32rem] md:max-h-[32rem] min-h-[15rem] max-h-[15rem] p-2 border border-myPrimaryLightGrayColor"
         >
             <div v-if="isLoading === true">
                 <div class="flex items-center justify-center">

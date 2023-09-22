@@ -22,7 +22,7 @@ const settingsAdvancedSlideOverButton = function () {
 };
 
 const getComponents = computed(() => {
-    return store.getters["PageBuilderGlobalState/getComponents"];
+    return store.getters["pageBuilderState/getComponents"];
 });
 
 // generate HTML

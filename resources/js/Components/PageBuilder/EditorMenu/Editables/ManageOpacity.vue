@@ -24,7 +24,7 @@ const pageBuilder = new PageBuilder(store);
 const opacityVueModel = ref(null);
 
 const getOpacity = computed(() => {
-    return store.getters["PageBuilderGlobalState/getOpacity"];
+    return store.getters["pageBuilderState/getOpacity"];
 });
 
 watch(

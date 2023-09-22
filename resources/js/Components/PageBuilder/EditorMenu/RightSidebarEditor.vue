@@ -31,10 +31,10 @@ const props = defineProps({
 
 // get current element tag
 const getElement = computed(() => {
-    return store.getters["PageBuilderGlobalState/getElement"];
+    return store.getters["pageBuilderState/getElement"];
 });
 const getRestoredElement = computed(() => {
-    return store.getters["PageBuilderGlobalState/getRestoredElement"];
+    return store.getters["pageBuilderState/getRestoredElement"];
 });
 
 // Get tagName of element
