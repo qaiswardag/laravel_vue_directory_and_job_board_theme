@@ -80,7 +80,7 @@ class StoreStoreRequest extends FormRequest
         $maxAuthors = 18;
         $maxCategories = 6;
         $maxJobStates = 1;
-        $minCoverImages = 2;
+        $minCoverImages = 1;
         $maxCoverImages = 6;
 
         $validator->after(function ($validator) use (

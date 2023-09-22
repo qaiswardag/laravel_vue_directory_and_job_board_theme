@@ -81,6 +81,7 @@ class StoreJobRequest extends FormRequest
         $maxJobStates = 2;
         $maxCategories = 4;
         $maxJobTypes = 4;
+        $minCoverImages = 1;
         $maxCoverImages = 6;
 
         $validator->after(function ($validator) use (
@@ -89,6 +90,7 @@ class StoreJobRequest extends FormRequest
             $maxJobStates,
             $maxCategories,
             $maxJobTypes,
+            $minCoverImages,
             $maxCoverImages
         ) {
             if ($this->team === null) {
@@ -115,6 +117,19 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add("cover_image", "cover image field must be an array.");
             }
+
+            if (
+                gettype($this->cover_image) === "array" &&
+                count($this->cover_image) < $minCoverImages
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "cover_image",
+                        "At least {$minCoverImages} images are necessary for a store listing."
+                    );
+            }
+
             if (
                 gettype($this->cover_image) === "array" &&
                 count($this->cover_image) > $maxCoverImages
