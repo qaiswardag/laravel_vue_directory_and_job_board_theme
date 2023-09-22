@@ -76,19 +76,13 @@ const getFetchedComponents = computed(() => {
 // };
 
 const handleAddComponent = function (component) {
-    //
-    //
-    const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion(component);
-    //
-    store.commit("pageBuilderState/setPushComponents", clonedComponent);
-    // store.commit("designer/setComponents", this.getComponents.value);
+    const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion({
+        html_code: component.html_code,
+        id: component.id,
+    });
 
-    //
-    //
-    //
-    //
-    pageBuilder.addClickAndHoverEvents();
-    // pageBuilder.handleDesignerMethods();
+    store.commit("pageBuilderState/setPushComponents", clonedComponent);
+
     firstButton();
 };
 

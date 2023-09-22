@@ -159,23 +159,23 @@ class PageBuilder {
     // pageBuilderState
 
     observePlusSyncHTMLElements = async () => {
-        console.log("køre observe....");
+        if (!this.shouldRunMethods()) return;
+
         if (document.querySelector("[hovered]") !== null) {
             document.querySelector("[hovered]").removeAttribute("hovered");
         }
 
         this.addClickAndHoverEvents();
+
         this.getComponents.value.forEach((component) => {
             const section = document.querySelector(
                 `section[data-componentid="${component.id}"]`
             );
 
             if (section) {
-                component.html = section.outerHTML;
+                component.html_code = section.outerHTML;
             }
         });
-
-        this.saveComponentsLocalStorage(this.getComponents.value);
 
         // Initialize the MutationObserver
         this.observer = new MutationObserver((mutationsList, observer) => {
@@ -195,11 +195,6 @@ class PageBuilder {
             resolve();
         });
 
-        // This will be executed after the DOM has been updated
-        this.store.commit(
-            "pageBuilderState/setElement",
-            document.querySelector("[selected]")
-        );
         this.addClickAndHoverEvents();
     };
 
