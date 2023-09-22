@@ -595,7 +595,7 @@ const handlePageBuilder = function () {
 
         // save to local storage if new resource
         if (formType.value === "create") {
-            pageBuilder.observePlusSyncHTMLElement();
+            pageBuilder.observePlusSyncHTMLElements();
             pageBuilder.saveComponentsLocalStorage(getComponents.value);
             //
             //
@@ -609,7 +609,7 @@ const handlePageBuilder = function () {
         }
         // save to local storage if new resource
         if (formType.value === "update") {
-            pageBuilder.observePlusSyncHTMLElement();
+            pageBuilder.observePlusSyncHTMLElements();
 
             //
             //

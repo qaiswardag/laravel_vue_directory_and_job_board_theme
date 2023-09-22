@@ -70,7 +70,7 @@ const handleAddComponent = function (componentObject) {
         html_code: componentObject.html_code,
     };
 
-    pageBuilder.observePlusSyncHTMLElement();
+    // pageBuilder.observePlusSyncHTMLElements();
 
     pageBuilder.addClickAndHoverEvents();
 

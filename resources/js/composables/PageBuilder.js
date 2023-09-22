@@ -156,23 +156,26 @@ class PageBuilder {
         });
     };
 
-    observePlusSyncHTMLElement = async () => {
-        console.log("køre denne...");
+    // pageBuilderState
+
+    observePlusSyncHTMLElements = async () => {
+        console.log("køre observe....");
         if (document.querySelector("[hovered]") !== null) {
             document.querySelector("[hovered]").removeAttribute("hovered");
         }
 
         this.addClickAndHoverEvents();
-
         this.getComponents.value.forEach((component) => {
             const section = document.querySelector(
                 `section[data-componentid="${component.id}"]`
             );
 
             if (section) {
-                component.html_code = section.outerHTML;
+                component.html = section.outerHTML;
             }
-        }); // cloneComponentObjForDOM
+        });
+
+        this.saveComponentsLocalStorage(this.getComponents.value);
 
         // Initialize the MutationObserver
         this.observer = new MutationObserver((mutationsList, observer) => {
@@ -194,10 +197,9 @@ class PageBuilder {
 
         // This will be executed after the DOM has been updated
         this.store.commit(
-            "designer/setElement",
+            "pageBuilderState/setElement",
             document.querySelector("[selected]")
         );
-
         this.addClickAndHoverEvents();
     };
 
