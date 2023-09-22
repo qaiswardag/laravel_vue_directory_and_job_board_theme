@@ -83,6 +83,160 @@ class PageBuilder {
         return true;
     }
 
+    /**
+     * The function is adding mouseover
+     * and click event listeners to a specific DOM element
+     *
+     */
+    setElementPlusListeners = (element) => {
+        // Only run on mouse over
+        element.addEventListener("mouseover", (e) => {
+            e.stopPropagation();
+
+            if (document.querySelector("[hovered]") !== null) {
+                document.querySelector("[hovered]").removeAttribute("hovered");
+            }
+
+            element.setAttribute("hovered", "");
+        });
+
+        // Only run on mouse leave
+        element.addEventListener("mouseleave", (e) => {
+            e.stopPropagation();
+
+            if (document.querySelector("[hovered]") !== null) {
+                document.querySelector("[hovered]").removeAttribute("hovered");
+            }
+        });
+
+        // Only run during on mouse click
+        element.addEventListener("click", (e) => {
+            this.store.commit("pageBuilderState/setMenuRight", true);
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (document.querySelector("[selected]") !== null) {
+                document
+                    .querySelector("[selected]")
+                    .removeAttribute("selected");
+            }
+
+            e.currentTarget.removeAttribute("hovered");
+
+            e.currentTarget.setAttribute("selected", "");
+
+            this.store.commit("pageBuilderState/setElement", e.currentTarget);
+
+            this.handlePageBuilderMethods();
+        });
+    };
+
+    /**
+     * The function is used to
+     * attach event listeners to each element within a 'section'
+     *
+     */
+    addClickAndHoverEvents = () => {
+        document.querySelectorAll("section *").forEach((element) => {
+            // Check if the element is not one of the excluded tags
+            if (
+                !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
+                    element.tagName
+                )
+            ) {
+                if (
+                    this.elementsWithListeners &&
+                    this.elementsWithListeners.has(element) === false
+                ) {
+                    this.elementsWithListeners.add(element);
+                    this.setElementPlusListeners(element);
+                }
+            }
+        });
+    };
+
+    observePlusSyncHTMLElement = async () => {
+        console.log("køre denne...");
+        if (document.querySelector("[hovered]") !== null) {
+            document.querySelector("[hovered]").removeAttribute("hovered");
+        }
+
+        this.addClickAndHoverEvents();
+
+        this.getComponents.value.forEach((component) => {
+            const section = document.querySelector(
+                `section[data-componentid="${component.id}"]`
+            );
+
+            if (section) {
+                component.html_code = section.outerHTML;
+            }
+        }); // cloneComponentObjForDOM
+
+        // Initialize the MutationObserver
+        this.observer = new MutationObserver((mutationsList, observer) => {
+            // Once we have seen a mutation, stop observing and resolve the promise
+            observer.disconnect();
+        });
+
+        // Start observing the document with the configured parameters
+        this.observer.observe(document, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+        });
+
+        // Use the MutationObserver to wait for the next DOM change
+        await new Promise((resolve) => {
+            resolve();
+        });
+
+        // This will be executed after the DOM has been updated
+        this.store.commit(
+            "designer/setElement",
+            document.querySelector("[selected]")
+        );
+
+        this.addClickAndHoverEvents();
+    };
+
+    cloneCompObjForDOMInsertion(componentObject) {
+        // Hide slider and right menu
+        this.store.commit("pageBuilderState/setMenuRight", false);
+
+        // Deep clone clone component
+        const clonedComponent = { ...componentObject };
+
+        // Create a DOMParser instance
+        const parser = new DOMParser();
+
+        // Parse the HTML content of the clonedComponent using the DOMParser
+        const doc = parser.parseFromString(
+            clonedComponent.html_code,
+            "text/html"
+        );
+
+        // Selects all elements within the HTML document, including elements like:
+        const elements = doc.querySelectorAll("*");
+
+        // Add the component id to the section element
+        const section = doc.querySelector("section");
+        if (section) {
+            // Generate a unique ID using uuidv4() and assign it to the section
+            section.dataset.componentid = uuidv4();
+        }
+
+        // Update the clonedComponent id with the newly generated unique ID
+        clonedComponent.id = section.dataset.componentid;
+
+        // Update the HTML content of the clonedComponent with the modified HTML
+        clonedComponent.html_code = doc.querySelector("section").outerHTML;
+
+        // return to the cloned element to be dropped
+        return clonedComponent;
+    }
+
     #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
         if (!this.shouldRunMethods()) return;
 
@@ -588,155 +742,6 @@ class PageBuilder {
             this.getLocalStorageItemName.value,
             JSON.stringify(components)
         );
-    }
-
-    /**
-     * The addClickAndHoverEvents function is used to
-     * attach event listeners to each element within a 'section'
-     *
-     */
-    addClickAndHoverEvents = () => {
-        document.querySelectorAll("section *").forEach((element) => {
-            // Check if the element is not one of the excluded tags
-            if (
-                !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
-                    element.tagName
-                )
-            ) {
-                if (
-                    this.elementsWithListeners &&
-                    this.elementsWithListeners.has(element) === false
-                ) {
-                    this.elementsWithListeners.add(element);
-                    this.attachElementListeners(element);
-                }
-            }
-        });
-    };
-
-    /**
-     * The attachElementListeners function is adding mouseover
-     * and click event listeners to a specific DOM element
-     *
-     */
-    attachElementListeners = (element) => {
-        // Only run on mouse over
-        element.addEventListener("mouseover", (e) => {
-            e.stopPropagation();
-
-            if (document.querySelector("[hovered]") !== null) {
-                document.querySelector("[hovered]").removeAttribute("hovered");
-            }
-
-            element.setAttribute("hovered", "");
-        });
-
-        // Only run on mouse leave
-        element.addEventListener("mouseleave", (e) => {
-            e.stopPropagation();
-
-            if (document.querySelector("[hovered]") !== null) {
-                document.querySelector("[hovered]").removeAttribute("hovered");
-            }
-        });
-
-        // Only run during on mouse click
-        element.addEventListener("click", (e) => {
-            this.store.commit("pageBuilderState/setMenuRight", true);
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            if (document.querySelector("[selected]") !== null) {
-                document
-                    .querySelector("[selected]")
-                    .removeAttribute("selected");
-            }
-
-            e.currentTarget.removeAttribute("hovered");
-
-            e.currentTarget.setAttribute("selected", "");
-
-            this.store.commit("pageBuilderState/setElement", e.currentTarget);
-
-            this.handlePageBuilderMethods();
-        });
-    };
-
-    syncComponentIDsWithDOM = async () => {
-        if (!this.shouldRunMethods()) return;
-
-        if (document.querySelector("[hovered]") !== null) {
-            document.querySelector("[hovered]").removeAttribute("hovered");
-        }
-
-        this.addClickAndHoverEvents();
-
-        this.getComponents.value.forEach((component) => {
-            const section = document.querySelector(
-                `section[data-componentid="${component.id}"]`
-            );
-
-            if (section) {
-                component.html_code = section.outerHTML;
-            }
-        }); // cloneComponentObjForDOM
-
-        // Initialize the MutationObserver
-        this.observer = new MutationObserver((mutationsList, observer) => {
-            // Once we have seen a mutation, stop observing and resolve the promise
-            observer.disconnect();
-        });
-
-        // Start observing the document with the configured parameters
-        this.observer.observe(document, {
-            attributes: true,
-            childList: true,
-            subtree: true,
-        });
-
-        // Use the MutationObserver to wait for the next DOM change
-        await new Promise((resolve) => {
-            resolve();
-        });
-
-        this.addClickAndHoverEvents();
-    };
-
-    cloneCompObjForDOMInsertion(componentObject) {
-        // Hide slider and right menu
-        this.store.commit("pageBuilderState/setMenuRight", false);
-
-        // Deep clone clone component
-        const clonedComponent = { ...componentObject };
-
-        // Create a DOMParser instance
-        const parser = new DOMParser();
-
-        // Parse the HTML content of the clonedComponent using the DOMParser
-        const doc = parser.parseFromString(
-            clonedComponent.html_code,
-            "text/html"
-        );
-
-        // Selects all elements within the HTML document, including elements like:
-        const elements = doc.querySelectorAll("*");
-
-        // Add the component id to the section element
-        const section = doc.querySelector("section");
-        if (section) {
-            // Generate a unique ID using uuidv4() and assign it to the section
-            section.dataset.componentid = uuidv4();
-        }
-
-        // Update the clonedComponent id with the newly generated unique ID
-        clonedComponent.id = section.dataset.componentid;
-
-        // Update the HTML content of the clonedComponent with the modified HTML
-        clonedComponent.html_code = doc.querySelector("section").outerHTML;
-
-        // return to the cloned element to be dropped
-        return clonedComponent;
     }
 
     deleteAllComponents() {

@@ -595,7 +595,7 @@ const handlePageBuilder = function () {
 
         // save to local storage if new resource
         if (formType.value === "create") {
-            pageBuilder.syncComponentIDsWithDOM();
+            pageBuilder.observePlusSyncHTMLElement();
             pageBuilder.saveComponentsLocalStorage(getComponents.value);
             //
             //
@@ -609,7 +609,7 @@ const handlePageBuilder = function () {
         }
         // save to local storage if new resource
         if (formType.value === "update") {
-            pageBuilder.syncComponentIDsWithDOM();
+            pageBuilder.observePlusSyncHTMLElement();
 
             //
             //
@@ -809,16 +809,7 @@ onBeforeMount(async () => {
         // Loop through the selected elements and extract outerHTML
         sectionElements.forEach((section) => {
             extractedSections.push({
-                categories: [],
-                cover_images: [],
-                created_at: null,
-                deleted_at: null,
                 html_code: section.outerHTML,
-                id: section.dataset.componentid,
-                published: null,
-                title: null,
-                updated_at: null,
-                user_id: null,
             });
         });
 

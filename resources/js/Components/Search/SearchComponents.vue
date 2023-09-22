@@ -64,11 +64,19 @@ const handleAddComponent = function (componentObject) {
     const clonedComponentObject =
         pageBuilder.cloneCompObjForDOMInsertion(componentObject);
 
-    pageBuilder.syncComponentIDsWithDOM();
+    console.log("er:", componentObject);
+
+    componentObject = {
+        html_code: componentObject.html_code,
+    };
+
+    pageBuilder.observePlusSyncHTMLElement();
 
     pageBuilder.addClickAndHoverEvents();
 
-    store.commit("pageBuilderState/setPushComponents", clonedComponentObject);
+    store.commit("pageBuilderState/setPushComponents", {
+        html_code: clonedComponentObject.html_code,
+    });
 
     firstButton();
 };
