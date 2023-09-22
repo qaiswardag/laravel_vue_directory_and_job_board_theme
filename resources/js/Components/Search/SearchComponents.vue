@@ -61,15 +61,18 @@ const getFetchedComponents = computed(() => {
 });
 
 const handleAddComponent = function (componentObject) {
-    const clonedComponent =
+    const clonedComponentObject =
         pageBuilder.cloneCompObjForDOMInsertion(componentObject);
-
-    // store.commit("pageBuilderState/setPushComponents", clonedComponent);
 
     pageBuilder.syncComponentIDsWithDOM();
 
+    pageBuilder.addClickAndHoverEvents();
+
+    store.commit("pageBuilderState/setPushComponents", clonedComponentObject);
+
     firstButton();
 };
+
 const handleAddComponentHelper = function (componentObject) {
     firstButton();
 };
@@ -79,6 +82,7 @@ onMounted(async () => {
         "pageBuilderState/loadComponents",
         props.team
     );
+
     //
     //
     //
@@ -88,11 +92,11 @@ onMounted(async () => {
     //
     //
     //
-    store.commit("pageBuilderState/setComponent", null);
-    store.commit("pageBuilderState/setElement", null);
+    // store.commit("pageBuilderState/setComponent", null);
+    // store.commit("pageBuilderState/setElement", null);
     // Rerender `get components` when it is loaded from local storage
-    pageBuilder.addClickAndHoverEvents();
-    pageBuilder.handlePageBuilderMethods();
+    // pageBuilder.addClickAndHoverEvents();
+    // pageBuilder.handlePageBuilderMethods();
 });
 </script>
 

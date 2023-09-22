@@ -91,6 +91,7 @@ const settingsSlideOverButton = function () {
 
 <template>
     <SlideOverRight
+        v-if="showSettingsSlideOverRight"
         :open="showSettingsSlideOverRight"
         :title="titleSettingsSlideOverRight"
         @slideOverButton="settingsSlideOverButton"

@@ -72,7 +72,7 @@ const firstButtonTextSearchComponents = ref("");
 const firstModalButtonSearchComponentsFunction = ref(null);
 
 const handleAddComponent = function () {
-    titleModalAddComponent.value = "Add Component to your Store";
+    titleModalAddComponent.value = "Add Page Components to Store";
     firstButtonTextSearchComponents.value = "Close";
     showModalAddComponent.value = true;
 
@@ -87,36 +87,21 @@ const handleAddComponent = function () {
 const getComponents = computed(() => {
     return store.getters["pageBuilderState/getComponents"];
 });
-const getComponent = computed(() => {
-    return store.getters["pageBuilderState/getComponent"];
-});
+
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
-});
-const getElementOuterHTML = computed(() => {
-    if (getElement.value === null) return;
-    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
-});
-watch(getElementOuterHTML, (newComponent) => {
-    pageBuilder.handlePageBuilderMethods();
 });
 
 const deselectCurrentComponent = function () {
     store.commit("pageBuilderState/setComponent", null);
-    store.commit("pageBuilderState/setElement", null);
 };
 
 onMounted(async () => {
-    store.commit("pageBuilderState/setComponent", null);
-    store.commit("pageBuilderState/setElement", null);
-
-    // Rerender `get components` when it is loaded from local storage
     pageBuilder.addClickAndHoverEvents();
-    pageBuilder.handlePageBuilderMethods();
 });
 </script>
 
-<template xmlns="http://www.w3.org/1999/html">
+<template>
     <SearchComponents
         v-if="showModalAddComponent"
         :show="showModalAddComponent"
@@ -206,7 +191,8 @@ onMounted(async () => {
                     <!-- Added Compoents to DOM # start -->
                     <div
                         id="pagebuilder"
-                        v-for="component in getComponents"
+                        v-for="component in Array.isArray(getComponents) &&
+                        getComponents"
                         :key="component"
                         class="p-1 bg-white grow"
                     >
@@ -219,7 +205,9 @@ onMounted(async () => {
                             "
                             class="relative group"
                         >
-                            <div v-html="component.html_code"></div>
+                            <div
+                                v-html="component && component.html_code"
+                            ></div>
                         </div>
                     </div>
                     <!-- Added Compoents to DOM # end -->

@@ -151,31 +151,35 @@ const updateCurrent = function (tab) {
                     </div>
                     <div class="px-4 pb-8 pt-4 text-white text-xs break-all">
                         <div v-if="current === 'element'">
-                            <div
-                                v-if="
-                                    getElement !== null ||
-                                    getElement !== undefined
-                                "
-                            >
+                            <div v-if="!getElement">
+                                <p class="pb-2">
+                                    {{
+                                        getElement === null
+                                            ? "NULL"
+                                            : typeof getElement
+                                    }}
+                                </p>
+                            </div>
+                            <div v-if="getElement">
                                 <p class="whitespace-pre-line leading-5">
                                     {{ getElement?.outerHTML }}
                                 </p>
                             </div>
                         </div>
                         <div v-if="current === 'component'">
-                            <div
-                                v-if="
-                                    getComponent !== null &&
-                                    getComponent !== undefined
-                                "
-                            >
+                            <div v-if="!getComponent">
+                                <p class="pb-2">
+                                    {{
+                                        getComponent === null
+                                            ? "NULL"
+                                            : typeof getComponent
+                                    }}
+                                </p>
+                            </div>
+                            <div v-if="getComponent">
                                 <p class="pb-2">
                                     Component ID:
-                                    {{ getComponent.id }}
-                                </p>
-                                <p class="pb-2">
-                                    Component name:
-                                    {{ getComponent.name }}
+                                    {{ getComponent?.id }}
                                 </p>
                                 <p class="whitespace-pre-line leading-5 mt-4">
                                     Component HTML:<br />
@@ -184,12 +188,16 @@ const updateCurrent = function (tab) {
                             </div>
                         </div>
                         <div v-if="current === 'components'">
-                            <div
-                                v-if="
-                                    getComponents !== null &&
-                                    getComponents !== undefined
-                                "
-                            >
+                            <div v-if="!getComponents">
+                                <p class="pb-2">
+                                    {{
+                                        getComponents === null
+                                            ? "NULL"
+                                            : typeof getComponents
+                                    }}
+                                </p>
+                            </div>
+                            <div v-if="getComponents">
                                 <div
                                     class="border-b border-white mb-4 pb-4 last:border-none"
                                     v-for="component in getComponents"
@@ -199,9 +207,7 @@ const updateCurrent = function (tab) {
                                         Component ID:
                                         {{ component.id }}
                                     </p>
-                                    <p class="pb-2">
-                                        Component name: {{ component.name }}
-                                    </p>
+
                                     <p
                                         class="whitespace-pre-line leading-5 mt-4"
                                     >

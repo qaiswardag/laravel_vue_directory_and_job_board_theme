@@ -809,16 +809,16 @@ onBeforeMount(async () => {
         // Loop through the selected elements and extract outerHTML
         sectionElements.forEach((section) => {
             extractedSections.push({
-                categories: [], // You can add your category objects here
-                cover_images: [], // You can add your cover image objects here
-                created_at: "your_created_at_value",
+                categories: [],
+                cover_images: [],
+                created_at: null,
                 deleted_at: null,
                 html_code: section.outerHTML,
-                id: section.dataset.componentid, // Use the data-componentid as the id
-                published: 1, // You can set the published value here
-                title: "your_title_value",
-                updated_at: "your_updated_at_value",
-                user_id: 1, // You can set the user_id value here
+                id: section.dataset.componentid,
+                published: null,
+                title: null,
+                updated_at: null,
+                user_id: null,
             });
         });
 

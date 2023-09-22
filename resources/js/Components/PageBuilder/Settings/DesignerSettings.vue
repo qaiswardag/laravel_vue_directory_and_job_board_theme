@@ -55,32 +55,13 @@ const handleDownloadHTML = function () {
 
 <template>
     <SlideOverRightParent
+        v-if="showAdvancedSettingsSlideOverRight"
         :open="showAdvancedSettingsSlideOverRight"
         :title="titleSettingsSlideOverRight"
         @slideOverButton="settingsAdvancedSlideOverButton"
     >
         <AdvancedDesignerSettings></AdvancedDesignerSettings>
     </SlideOverRightParent>
-    <!-- Download Layout HTML - start -->
-    <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
-        <div class="flex items-left flex-col gap-1">
-            <h3 class="myFourthHeader">Download Page as HTML</h3>
-            <p class="myPrimaryParagraph text-xs">
-                Download current page layout.
-            </p>
-        </div>
-        <div class="mt-4">
-            <button
-                @click="handleDownloadHTML"
-                type="button"
-                class="myPrimaryButton text-xs"
-            >
-                Download HTML file
-            </button>
-        </div>
-    </div>
-    <!-- Download Layout HTML - end -->
-
     <!-- Advanced Settings - start -->
     <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
         <div class="flex items-left flex-col gap-1">
@@ -101,4 +82,23 @@ const handleDownloadHTML = function () {
         </div>
     </div>
     <!-- Advanced Settings - end -->
+    <!-- Download Layout HTML - start -->
+    <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
+        <div class="flex items-left flex-col gap-1">
+            <h3 class="myFourthHeader">Download Page as HTML</h3>
+            <p class="myPrimaryParagraph text-xs">
+                Download current page layout.
+            </p>
+        </div>
+        <div class="mt-4">
+            <button
+                @click="handleDownloadHTML"
+                type="button"
+                class="myPrimaryButton text-xs"
+            >
+                Download HTML file
+            </button>
+        </div>
+    </div>
+    <!-- Download Layout HTML - end -->
 </template>

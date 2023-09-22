@@ -20,8 +20,6 @@ export default {
     // state
     state: {
         localStorageItemName: null,
-        menuPreview: false,
-        menuLeft: true,
         menuRight: true,
         // border style, width & color / start
         borderStyle: null,
@@ -83,12 +81,6 @@ export default {
     getters: {
         getLocalStorageItemName(state) {
             return state.localStorageItemName;
-        },
-        getMenuPreview(state) {
-            return state.menuPreview;
-        },
-        getMenuLeft(state) {
-            return state.menuLeft;
         },
         getMenuRight(state) {
             return state.menuRight;
@@ -240,12 +232,6 @@ export default {
         setLocalStorageItemName(state, payload) {
             state.localStorageItemName = payload;
         },
-        setMenuPreview(state, payload) {
-            state.menuPreview = payload;
-        },
-        setMenuLeft(state, payload) {
-            state.menuLeft = payload;
-        },
         setMenuRight(state, payload) {
             state.menuRight = payload;
         },
@@ -385,18 +371,25 @@ export default {
             state.element = payload;
         },
         setComponent(state, payload) {
+            console.log("payload er:", payload);
+
             if (!payload) {
+                state.element = null;
+                state.component = null;
                 pageBuilder.removeHoveredAndSelected(null);
+                return;
             }
+
             state.component = {};
             state.component = payload;
-        },
-        setPushComponents(state, payload) {
-            state.components.push(payload);
         },
         setComponents(state, payload) {
             state.components = {};
             state.components = payload;
+        },
+
+        setPushComponents(state, payload) {
+            state.components.push(payload);
         },
 
         setBasePrimaryImage(state, payload) {

@@ -243,7 +243,7 @@ class MediaLibraryController extends Controller
         $sizes = [
             "thumbnail" => [200, 200],
             "medium" => [600, 600],
-            "large" => [1024, 1024],
+            "large" => [2048, 2048],
         ];
 
         $this->imagePaths = [

@@ -24,6 +24,7 @@ class PageBuilder {
          * This helps in managing the memory usage and performance of the application.
          */
         this.elementsWithListeners = new WeakSet();
+
         this.nextTick = nextTick();
 
         this.timer = null;
@@ -63,10 +64,27 @@ class PageBuilder {
             () => this.store.getters["pageBuilderState/getRestoredElement"]
         );
     }
-    #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
-        if (this.getElement.value === null) {
-            return;
+
+    shouldRunMethods() {
+        if (!this.getComponents.value) {
+            console.error("Components have a falsy value.");
+            return false;
         }
+
+        if (!this.getComponent.value) {
+            console.error("Component have a falsy value.");
+            return false;
+        }
+        if (!this.getElement.value) {
+            console.error("Element have a falsy value.");
+            return false;
+        }
+
+        return true;
+    }
+
+    #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
+        if (!this.shouldRunMethods()) return;
 
         const currentCSS = CSSArray.find((CSS) => {
             return this.getElement.value.classList.contains(CSS);
@@ -113,6 +131,8 @@ class PageBuilder {
     }
 
     currentClasses() {
+        if (!this.shouldRunMethods()) return;
+
         // convert classList to array
         let classListArray = Array.from(this.getElement.value.classList);
 
@@ -121,6 +141,8 @@ class PageBuilder {
     }
 
     handleAddClasses(userSelectedClass) {
+        if (!this.shouldRunMethods()) return;
+
         if (
             typeof userSelectedClass === "string" &&
             userSelectedClass !== "" &&
@@ -137,6 +159,8 @@ class PageBuilder {
         }
     }
     handleRemoveClasses(userSelectedClass) {
+        if (!this.shouldRunMethods()) return;
+
         // remove selected class from element
         if (this.getElement.value.classList.contains(userSelectedClass)) {
             this.getElement.value.classList.remove(userSelectedClass);
@@ -152,6 +176,8 @@ class PageBuilder {
     }
 
     handleDeleteElement() {
+        if (!this.shouldRunMethods()) return;
+
         // Get the element to be deleted
         const element = this.getElement.value;
 
@@ -172,12 +198,13 @@ class PageBuilder {
         );
 
         this.store.commit("pageBuilderState/setComponent", null);
-        this.store.commit("pageBuilderState/setElement", null);
 
         // Remove the element from the DOM
         element.remove();
     }
     handleRestoreElement() {
+        if (!this.shouldRunMethods()) return;
+
         // Get the stored deleted element and its parent
         if (
             this.getRestoredElement.value !== null &&
@@ -199,7 +226,6 @@ class PageBuilder {
         this.store.commit("pageBuilderState/setParentElement", null);
         this.store.commit("pageBuilderState/setRestoredElement", null);
         this.store.commit("pageBuilderState/setComponent", null);
-        this.store.commit("pageBuilderState/setElement", null);
     }
 
     handleFontWeight(userSelectedFontWeight) {
@@ -316,6 +342,8 @@ class PageBuilder {
     // border radius / end
 
     handleFontSize(userSelectedFontSize) {
+        if (!this.shouldRunMethods()) return;
+
         let fontBase = tailwindFontSizes.fontBase.find((size) => {
             return this.getElement.value.classList.contains(size);
         });
@@ -421,6 +449,8 @@ class PageBuilder {
     }
 
     handleCustomBackgroundColor(userSelectedColor, enabledCustomColor) {
+        if (!this.shouldRunMethods()) return;
+
         // if user is selecting a custom HEX color
         if (
             userSelectedColor === undefined &&
@@ -464,6 +494,8 @@ class PageBuilder {
         }
     }
     handleCustomTextColor(userSelectedColor, enabledCustomColor) {
+        if (!this.shouldRunMethods()) return;
+
         // if user is selecting a custom HEX color
         if (
             userSelectedColor === undefined &&
@@ -519,6 +551,8 @@ class PageBuilder {
         );
     }
     removeCustomColorBackground() {
+        if (!this.shouldRunMethods()) return;
+
         this.getElement.value.style.removeProperty("background-color");
         this.store.commit(
             "pageBuilderState/setEnabledCustomColorBackground",
@@ -528,6 +562,8 @@ class PageBuilder {
         this.store.commit("pageBuilderState/setElement", this.getElement.value);
     }
     removeCustomColorText() {
+        if (!this.shouldRunMethods()) return;
+
         this.getElement.value.style.removeProperty("color");
         this.store.commit("pageBuilderState/setEnabledCustomColorText", null);
         this.store.commit("pageBuilderState/setTextColorCustom", null);
@@ -622,13 +658,14 @@ class PageBuilder {
             e.currentTarget.setAttribute("selected", "");
 
             this.store.commit("pageBuilderState/setElement", e.currentTarget);
-            if (this.getElement.value === null) return;
 
             this.handlePageBuilderMethods();
         });
     };
 
     syncComponentIDsWithDOM = async () => {
+        if (!this.shouldRunMethods()) return;
+
         if (document.querySelector("[hovered]") !== null) {
             document.querySelector("[hovered]").removeAttribute("hovered");
         }
@@ -663,18 +700,11 @@ class PageBuilder {
             resolve();
         });
 
-        // This will be executed after the DOM has been updated
-        this.store.commit(
-            "pageBuilderState/setElement",
-            document.querySelector("[selected]")
-        );
-
         this.addClickAndHoverEvents();
-    }; //
+    };
 
     cloneCompObjForDOMInsertion(componentObject) {
         // Hide slider and right menu
-        this.store.commit("pageBuilderState/setMenuPreview", false);
         this.store.commit("pageBuilderState/setMenuRight", false);
 
         // Deep clone clone component
@@ -689,7 +719,7 @@ class PageBuilder {
             "text/html"
         );
 
-        // Select all elements within the parsed HTML
+        // Selects all elements within the HTML document, including elements like:
         const elements = doc.querySelectorAll("*");
 
         // Add the component id to the section element
@@ -715,6 +745,8 @@ class PageBuilder {
     }
 
     deleteComponent() {
+        if (!this.shouldRunMethods()) return;
+
         // Find the index of the component to delete
         const indexToDelete = this.getComponents.value.findIndex(
             (component) => component.id === this.getComponent.value.id
@@ -736,6 +768,8 @@ class PageBuilder {
     // move component
     // runs when html components are rearranged
     moveComponent(direction) {
+        if (!this.shouldRunMethods()) return;
+
         if (this.getComponents.value.length <= 1) return;
 
         // Get the component you want to move (replace this with your actual logic)
@@ -764,7 +798,8 @@ class PageBuilder {
     }
 
     addSpaceForEmptyTextArea = () => {
-        if (this.getElement.value === null) return;
+        if (!this.shouldRunMethods()) return;
+
         // text content
         if (typeof this.getElement.value.innerHTML !== "string") {
             return;
@@ -793,6 +828,8 @@ class PageBuilder {
     };
 
     handleTextInput = async (textContentVueModel) => {
+        if (!this.shouldRunMethods()) return;
+
         const element = this.getElement.value;
 
         this.addSpaceForEmptyTextArea();
@@ -820,9 +857,6 @@ class PageBuilder {
     };
 
     previewCurrentDesign() {
-        this.store.commit("pageBuilderState/setComponent", null);
-        this.store.commit("pageBuilderState/setElement", null);
-
         const addedHtmlComponents = ref([]);
         // preview current design in external browser tab
         // iterate over each top-level section component
@@ -915,6 +949,8 @@ class PageBuilder {
     }
 
     #addHyperlinkToElement(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
+        if (!this.shouldRunMethods()) return;
+
         const parentHyperlink = this.getElement.value.closest("a");
         const hyperlink = this.getElement.value.querySelector("a");
 
@@ -995,6 +1031,8 @@ class PageBuilder {
         }
 
         if (hyperlinkEnable === false && urlInput === "removeHyperlink") {
+            if (!this.shouldRunMethods()) return;
+
             // To remove the added hyperlink tag
             const originalText = this.getElement.value.textContent;
             const textNode = document.createTextNode(originalText);
@@ -1009,6 +1047,8 @@ class PageBuilder {
     }
 
     #checkForHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
+        if (!this.shouldRunMethods()) return;
+
         const hyperlink = this.getElement.value.querySelector("a");
         if (hyperlink !== null) {
             this.store.commit("pageBuilderState/setHyberlinkEnable", true);
@@ -1050,6 +1090,8 @@ class PageBuilder {
     }
 
     handleHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
+        if (!this.shouldRunMethods()) return;
+
         this.store.commit("pageBuilderState/setHyperlinkAbility", true);
 
         const parentHyperlink = this.getElement.value.closest("a");
@@ -1092,7 +1134,9 @@ class PageBuilder {
     }
 
     handlePageBuilderMethods() {
-        if (this.getElement.value === null) return;
+        console.log("handlePageBuilderMethods ran..");
+        if (!this.shouldRunMethods()) return;
+
         // invoke methods
         // handle custom URL
         this.handleHyperlink();
