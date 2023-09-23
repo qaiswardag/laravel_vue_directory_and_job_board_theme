@@ -96,7 +96,7 @@ const deselectCurrentComponent = function () {
     store.commit("pageBuilderState/setComponent", null);
 };
 
-const handleSetComponent = function (componentObject) {
+const handleSelectComponent = function (componentObject) {
     store.commit("pageBuilderState/setComponent", componentObject);
 };
 
@@ -201,7 +201,7 @@ onMounted(async () => {
                         class="p-1 bg-white grow"
                     >
                         <div
-                            @mouseup="handleSetComponent(component)"
+                            @mouseup="handleSelectComponent(component)"
                             class="relative group"
                         >
                             <div v-html="component.html_code"></div>

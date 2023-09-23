@@ -138,8 +138,8 @@ class PageBuilder {
      * attach event listeners to each element within a 'section'
      *
      */
-    handleSetElement = () => {
-        console.log("handleSetElement");
+    setEventListenersForElements = () => {
+        console.log("setEventListenersForElements");
         document.querySelectorAll("section *").forEach((element) => {
             // Check if the element is not one of the excluded tags
             if (
@@ -162,13 +162,20 @@ class PageBuilder {
      * attach event listeners to each element within a 'section'
      *
      */
-    // øøø
-    handleSetElementOnDrop = () => {
-        console.log("handleSetElementOnDrop");
+    //
+    setListenersToNewComponentElements = (componentID) => {
+        console.log("setListenersToNewComponentElements");
 
-        const pagebuilder = document.getElementById("pagebuilder");
+        const section = document.querySelector(
+            `section[data-componentid="${componentID}"]`
+        );
 
-        pagebuilder.querySelectorAll("section *").forEach((element) => {
+        if (!section) {
+            console.error("Unable to find section with ID:", componentID);
+            return;
+        }
+
+        section.querySelectorAll("section *").forEach((element) => {
             console.log("element is:", element);
             // Check if the element is not one of the excluded tags
             if (
@@ -243,7 +250,7 @@ class PageBuilder {
             document.querySelector("[hovered]").removeAttribute("hovered");
         }
 
-        this.handleSetElement();
+        this.setEventListenersForElements();
 
         this.getComponents.value.forEach((component) => {
             const section = document.querySelector(
@@ -273,7 +280,7 @@ class PageBuilder {
             resolve();
         });
 
-        this.handleSetElement();
+        this.setEventListenersForElements();
 
         // This will be executed after the DOM has been updated
         this.store.commit(

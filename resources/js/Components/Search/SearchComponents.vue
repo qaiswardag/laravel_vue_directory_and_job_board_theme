@@ -57,7 +57,7 @@ const getFetchedComponents = computed(() => {
     return store.getters["pageBuilderState/getFetchedComponents"];
 });
 
-// const handleAddComponent = function (componentObject) {
+// const handleDropComponent = function (componentObject) {
 //     const clonedComponentObject =
 //         pageBuilder.cloneCompObjForDOMInsertion(componentObject);
 
@@ -65,14 +65,14 @@ const getFetchedComponents = computed(() => {
 
 //     // pageBuilder.observePlusSyncHTMLElements();
 
-//     pageBuilder.handleSetElement();
+//     pageBuilder.setEventListenersForElements();
 
 //     store.commit("pageBuilderState/setPushComponents", clonedComponentObject);
 
 //     firstButton();
 // };
 
-const handleAddComponent = async function (componentObject) {
+const handleDropComponent = async function (componentObject) {
     await nextTick();
     const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion({
         html_code: componentObject.html_code,
@@ -83,9 +83,9 @@ const handleAddComponent = async function (componentObject) {
     store.commit("pageBuilderState/setPushComponents", clonedComponent);
 
     await nextTick();
-    pageBuilder.handleSetElementOnDrop();
+    await pageBuilder.setListenersToNewComponentElements(clonedComponent.id);
 
-    // pageBuilder.handleSetElement();
+    // pageBuilder.setEventListenersForElements();
     // pageBuilder.observePlusSyncHTMLElements();
 
     // Close modal
@@ -330,7 +330,7 @@ onMounted(async () => {
                                     </p>
 
                                     <div
-                                        @click="handleAddComponent(component)"
+                                        @click="handleDropComponent(component)"
                                         class="border border-gray-200 p-2 mt-8 cursor-pointer"
                                     >
                                         <img
