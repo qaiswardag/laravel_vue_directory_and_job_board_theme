@@ -85,6 +85,9 @@ const handleDropComponent = async function (componentObject) {
     await nextTick();
     await pageBuilder.setListenersToNewComponentElements(clonedComponent.id);
 
+    // await nextTick();
+    // await pageBuilder.setEventListenersForElements();
+
     // pageBuilder.setEventListenersForElements();
     // pageBuilder.observePlusSyncHTMLElements();
 

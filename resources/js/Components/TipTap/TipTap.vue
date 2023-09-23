@@ -1,5 +1,5 @@
 <script setup>
-import { useEditor, EditorContent } from "@tiptap/vue-3";
+import { Editor, useEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
@@ -13,14 +13,67 @@ import Link from "@tiptap/extension-link";
 import { LinkIcon, ListBulletIcon } from "@heroicons/vue/24/outline";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
+//
+//
 const store = useStore();
 const pageBuilder = new PageBuilder(store);
 
-// get current element tag
+// get current
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
+//
+//
+//
+// Check if any of the child elements have the tagName "IMG"
+const containsInvalidTags = ref(false);
+//
+//
+//
+const editor = useEditor({
+    content: "",
+    extensions: [
+        StarterKit,
+        Link.configure({
+            openOnClick: false,
+        }),
+    ],
+    editorProps: {
+        attributes: {
+            class: "prose dark:prose-invert prose-sm sm:prose-sm lg:prose-sm  m-5 focus:outline-none",
+        },
+    },
 
+    //
+    //
+    //
+    //
+    // Register an event listener for the 'transaction' event
+    onTransaction({ editor, transaction }) {
+        // The editor state has changed.
+        // console.log("a change happended:", editor.getHTML());
+        // pageBuilder.handleTextInput(editor.getHTML());
+        //
+        //
+        // Get the editor's content as an HTML string
+        //
+        // pageBuilder.handleTextInput(editor.getHTML());
+    },
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 const showModalUrl = ref(false);
 //
 // use dynamic model
@@ -37,71 +90,97 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 const textContentVueModel = ref("Hello World");
-const editor = useEditor({
-    content: "",
-    extensions: [
-        StarterKit,
-        Link.configure({
-            openOnClick: false,
-        }),
-    ],
-    editorProps: {
-        attributes: {
-            class: "prose dark:prose-invert prose-sm sm:prose-sm lg:prose-sm  m-5 focus:outline-none",
-        },
-    },
-});
 
 const textContent = computed(() => {
     return editor.value?.getHTML();
 });
 
 // Watch for changes in textContent and update store and textContentVueModel
-watch(textContent, (newValue) => {
-    if (getElement.value) {
-        console.log("TipTap textContent got updated");
-        store.commit("pageBuilderState/setTextAreaVueModel", newValue);
-        if (
-            typeof newValue === "string" &&
-            newValue !== textContentVueModel.value
-        ) {
-            pageBuilder.handleTextInput(newValue);
-        }
-    }
-});
+// watch(textContent, (newValue) => {
+//     if (getElement.value) {
+//         console.log("TipTap textContent got updated");
+//         store.commit("pageBuilderState/setTextAreaVueModel", newValue);
+//         if (
+//             typeof newValue === "string" &&
+//             newValue !== textContentVueModel.value
+//         ) {
+//             pageBuilder.handleTextInput(newValue);
+//         }
+//     }
+// });
 
-// Check if any of the child elements have the tagName "IMG"
-const containsInvalidTags = ref(false);
-const previousUrl = ref(false);
+// Watch for changes in textContent and update store
 
-// Get the div element you want to check
+//
+//
+//
+//
+// watch(textContent, (newValue) => {
+//     if (getElement.value) {
+//         console.log("TipTap textContent got updated");
+//         store.commit("pageBuilderState/setTextAreaVueModel", newValue);
+//         console.log("new value er:", getElement.value.textContent);
+//         // pageBuilder.handleTextInput(newValue);
+//     }
+// });
 
-// Get the div element you want to check
-const divElement = document.querySelector("div"); // Replace with your actual selector
+//
+//
+//
 
-// Watch for changes in textContent and update store and textContentVueModel
+//
+//
+//
+//
+//
+//
+//
 watch(getElement, (newValue) => {
+    // console.log("WATCH RAN....", getElement.value);
+    //
+    //
+    //
+    //
+    //
     if (editor.value) {
         // Get all child elements of the parentDiv
         const childElements = newValue?.children;
-
         if (newValue?.tagName === "IMG") {
             containsInvalidTags.value = true;
             return;
         }
         if (!childElements) return;
-
         Array.from(childElements).forEach((element) => {
             if (element?.tagName === "IMG" || element?.tagName === "DIV") {
                 containsInvalidTags.value = true;
             } else {
                 containsInvalidTags.value = false;
-                editor.value?.commands?.setContent(newValue?.innerHTML);
+                editor.value.commands.setContent(newValue.innerHTML);
+                //
+                //
+                //
+                //
+                //
+                // pageBuilder.handleTextInput(editor.value?.getHTML());
             }
         });
     }
 });
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// Manage URL
+// Manage URL
+// Manage URL
+// Manage URL
+const previousUrl = ref(false);
 const urlEnteret = ref("");
 const urlError = ref();
 
@@ -145,6 +224,8 @@ const handleURL = function () {
     // end modal
 };
 
+//
+//
 const validateURL = function () {
     // initial value
     urlError.value = null;
@@ -177,6 +258,19 @@ const setLink = function () {
         .run();
 };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 onBeforeMount(() => {
     editor.value?.destroy();
 });
@@ -184,6 +278,7 @@ onBeforeMount(() => {
 onMounted(() => {});
 </script>
 <template>
+    getElement: {{ JSON.stringify(getElement) }}
     <DynamicModal
         v-if="showModalUrl"
         :show="showModalUrl"
@@ -201,7 +296,6 @@ onMounted(() => {});
         <header></header>
         <main>
             <div class="myInputGroup">
-                <p class="my-6">er: {{ urlEnteret }}</p>
                 <label class="myPrimaryInputLabel" for="roles"
                     ><span>Enter URL</span></label
                 ><input

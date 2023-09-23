@@ -90,6 +90,7 @@ class PageBuilder {
      */
     addElementsListeners = (element) => {
         console.log("addElementsListeners");
+
         // Only run on mouse over
         element.addEventListener("mouseover", (e) => {
             e.stopPropagation();
@@ -127,6 +128,8 @@ class PageBuilder {
 
             e.currentTarget.setAttribute("selected", "");
 
+            console.log("commit me old:", e.currentTarget);
+
             this.store.commit("pageBuilderState/setElement", e.currentTarget);
 
             this.handlePageBuilderMethods();
@@ -160,21 +163,12 @@ class PageBuilder {
     //
     //
     //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
     /**
      * The function is used to
      * attach event listeners to each element within a 'section'
      *
      */
-    setListenersToNewComponentElements = (componentID) => {
+    setListenersToNewComponentElements = async (componentID) => {
         console.log("setListenersToNewComponentElements");
 
         const section = document.querySelector(
@@ -188,6 +182,7 @@ class PageBuilder {
 
         section.querySelectorAll("section *").forEach((element) => {
             //
+
             //
             // Check if the element is not one of the excluded tags
             if (
@@ -195,8 +190,13 @@ class PageBuilder {
                     element.tagName
                 )
             ) {
-                this.elementsWithListeners.add(element);
-                this.addElementsListeners(element);
+                if (
+                    this.elementsWithListeners &&
+                    !this.elementsWithListeners.has(element)
+                ) {
+                    this.addElementsListeners(element);
+                    this.elementsWithListeners.add(element);
+                }
             }
         });
     };
@@ -270,10 +270,10 @@ class PageBuilder {
         this.setEventListenersForElements();
 
         // This will be executed after the DOM has been updated
-        this.store.commit(
-            "pageBuilderState/setElement",
-            document.querySelector("[selected]")
-        );
+        // this.store.commit(
+        //     "pageBuilderState/setElement",
+        //     document.querySelector("[selected]")
+        // );
     };
 
     cloneCompObjForDOMInsertion(componentObject) {
@@ -314,6 +314,7 @@ class PageBuilder {
     }
 
     #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
+        console.log("getElement is:", this.getElement.value);
         console.log("#modifyElementCSS");
         if (!this.shouldRunMethods()) return;
 
@@ -343,10 +344,10 @@ class PageBuilder {
         ) {
             this.getElement.value.classList.remove(elementClass);
             elementClass = selectedCSS;
+            // this.store.commit("pageBuilderState/setElement", this.getElement.value);
         }
 
         this.store.commit(`pageBuilderState/${mutationName}`, elementClass);
-        this.store.commit("pageBuilderState/setElement", this.getElement.value);
 
         return currentCSS;
     }
@@ -385,10 +386,10 @@ class PageBuilder {
             !this.getElement.value.classList.contains(userSelectedClass)
         ) {
             this.getElement.value.classList.add(userSelectedClass);
-            this.store.commit(
-                "pageBuilderState/setElement",
-                this.getElement.value
-            );
+            // this.store.commit(
+            //     "pageBuilderState/setElement",
+            //     this.getElement.value
+            // );
             this.store.commit("pageBuilderState/setClass", userSelectedClass);
         }
     }
@@ -399,10 +400,10 @@ class PageBuilder {
         // remove selected class from element
         if (this.getElement.value.classList.contains(userSelectedClass)) {
             this.getElement.value.classList.remove(userSelectedClass);
-            this.store.commit(
-                "pageBuilderState/setElement",
-                this.getElement.value
-            );
+            // this.store.commit(
+            //     "pageBuilderState/setElement",
+            //     this.getElement.value
+            // );
             this.store.commit(
                 "pageBuilderState/removeClass",
                 userSelectedClass
@@ -694,10 +695,10 @@ class PageBuilder {
                 );
             }
 
-            this.store.commit(
-                "pageBuilderState/setElement",
-                this.getElement.value
-            );
+            // this.store.commit(
+            //     "pageBuilderState/setElement",
+            //     this.getElement.value
+            // );
         }
     }
 
@@ -741,10 +742,10 @@ class PageBuilder {
         // if user is selecting a custom HEX color
         if (enabledCustomColor === true) {
             this.getElement.value.style.backgroundColor = userSelectedColor;
-            this.store.commit(
-                "pageBuilderState/setElement",
-                this.getElement.value
-            );
+            // this.store.commit(
+            //     "pageBuilderState/setElement",
+            //     this.getElement.value
+            // );
         }
     }
     handleCustomTextColor(userSelectedColor, enabledCustomColor) {
@@ -784,10 +785,10 @@ class PageBuilder {
         // if user is selecting a custom HEX color
         if (enabledCustomColor === true) {
             this.getElement.value.style.color = userSelectedColor;
-            this.store.commit(
-                "pageBuilderState/setElement",
-                this.getElement.value
-            );
+            // this.store.commit(
+            //     "pageBuilderState/setElement",
+            //     this.getElement.value
+            // );
         }
     }
 
@@ -817,7 +818,7 @@ class PageBuilder {
             null
         );
         this.store.commit("pageBuilderState/setBackgroundColorCustom", null);
-        this.store.commit("pageBuilderState/setElement", this.getElement.value);
+        // this.store.commit("pageBuilderState/setElement", this.getElement.value);
     }
     removeCustomColorText() {
         console.log("removeCustomColorText");
@@ -826,7 +827,7 @@ class PageBuilder {
         this.getElement.value.style.removeProperty("color");
         this.store.commit("pageBuilderState/setEnabledCustomColorText", null);
         this.store.commit("pageBuilderState/setTextColorCustom", null);
-        this.store.commit("pageBuilderState/setElement", this.getElement.value);
+        // this.store.commit("pageBuilderState/setElement", this.getElement.value);
     }
     handleBackgroundOpacity(opacity) {
         console.log("handleBackgroundOpacity");
@@ -957,10 +958,10 @@ class PageBuilder {
 
             this.getElement.value.innerHTML = textContentVueModel;
 
-            this.store.commit(
-                "pageBuilderState/setElement",
-                this.getElement.value
-            );
+            // this.store.commit(
+            //     "pageBuilderState/setElement",
+            //     this.getElement.value
+            // );
         }
 
         this.addSpaceForEmptyTextArea();
@@ -1030,7 +1031,6 @@ class PageBuilder {
     updateBasePrimaryImage() {
         console.log("updateBasePrimaryImage");
         if (this.getCurrentImage.value.currentImage?.mediaLibrary?.path) {
-            this.handlePageBuilderMethods();
             this.store.commit(
                 "pageBuilderState/setBasePrimaryImage",
                 `/storage/uploads/${this.getCurrentImage.value.currentImage.mediaLibrary.large_path}`
@@ -1249,8 +1249,8 @@ class PageBuilder {
     }
 
     handlePageBuilderMethods() {
-        console.log("handlePageBuilderMethods ran..");
         if (!this.shouldRunMethods()) return;
+        console.log("handlePageBuilderMethods ran.");
 
         // invoke methods
         // handle custom URL

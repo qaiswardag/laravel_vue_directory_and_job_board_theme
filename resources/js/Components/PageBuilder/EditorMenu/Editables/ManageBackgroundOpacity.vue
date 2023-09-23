@@ -99,7 +99,7 @@ watch(
                             "
                             :key="backgroundOpacity"
                             :value="backgroundOpacity"
-                            v-slot="{ active, opacityVueModel }"
+                            v-slot="{ active }"
                         >
                             <li
                                 :class="[

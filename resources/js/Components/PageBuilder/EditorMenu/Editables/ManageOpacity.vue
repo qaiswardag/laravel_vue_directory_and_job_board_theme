@@ -95,7 +95,7 @@ watch(
                             @click="pageBuilder.handleOpacity(elementOpacity)"
                             :key="elementOpacity"
                             :value="elementOpacity"
-                            v-slot="{ active, opacityVueModel }"
+                            v-slot="{ active }"
                         >
                             <li
                                 :class="[
