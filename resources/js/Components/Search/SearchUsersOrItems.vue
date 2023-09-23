@@ -367,8 +367,8 @@ onMounted(() => {
                                     'p-0',
                                     'm-0',
                                     'border-none',
-                                    'bg-gray-200',
-                                    'hover:bg-gray-300',
+                                    'bg-myPrimaryLightGrayColor',
+                                    'shadow-sm',
                                     'text-myPrimaryDarkGrayColor',
                                     'rounded-full',
                                 ]"
