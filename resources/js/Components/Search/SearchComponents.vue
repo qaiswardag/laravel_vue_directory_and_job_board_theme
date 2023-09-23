@@ -1,6 +1,6 @@
 <script setup>
 import Modal from "@/Components/Modals/Modal.vue";
-import { ref, computed, onMounted, onBeforeMount } from "vue";
+import { ref, computed, onMounted, onBeforeMount, nextTick } from "vue";
 import { TailwindPagination } from "laravel-vue-pagination";
 import componentHelpers from "@/utils/builder/html-elements/componentHelpers";
 import {
@@ -72,18 +72,28 @@ const getFetchedComponents = computed(() => {
 //     firstButton();
 // };
 
-const handleAddComponent = function (component) {
+const handleAddComponent = async function (componentObject) {
+    await nextTick();
     const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion({
-        html_code: component.html_code,
-        id: component.id,
+        html_code: componentObject.html_code,
+        id: componentObject.id,
     });
 
+    await nextTick();
     store.commit("pageBuilderState/setPushComponents", clonedComponent);
 
+    await nextTick();
+    // pageBuilder.addClickAndHoverEventsOnDrop();
+
+    // pageBuilder.addClickAndHoverEvents();
+    // pageBuilder.observePlusSyncHTMLElements();
+
+    // Close modal
     firstButton();
 };
 
-const handleAddComponentHelper = function (componentObject) {
+const handleAddHelperComponent = function (helperComponentObject) {
+    // Close modal
     firstButton();
 };
 
@@ -118,21 +128,6 @@ const getResultsForPage = (page = 1) => {
 //
 onMounted(async () => {
     fetchComponents(1);
-
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // store.commit("pageBuilderState/setComponent", null);
-    // store.commit("pageBuilderState/setElement", null);
-    // Rerender `get components` when it is loaded from local storage
-    // pageBuilder.addClickAndHoverEvents();
-    // pageBuilder.handlePageBuilderMethods();
 });
 </script>
 
@@ -373,7 +368,7 @@ onMounted(async () => {
                             >
                                 <button
                                     @click="
-                                        handleAddComponentHelper(
+                                        handleAddHelperComponent(
                                             helperComponent
                                         )
                                     "
@@ -384,7 +379,7 @@ onMounted(async () => {
                                 </button>
                                 <button
                                     @click="
-                                        handleAddComponentHelper(
+                                        handleAddHelperComponent(
                                             helperComponent
                                         )
                                     "

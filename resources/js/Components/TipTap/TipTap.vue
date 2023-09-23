@@ -58,13 +58,15 @@ const textContent = computed(() => {
 
 // Watch for changes in textContent and update store and textContentVueModel
 watch(textContent, (newValue) => {
-    store.commit("pageBuilderState/setTextAreaVueModel", newValue);
-
-    if (
-        typeof newValue === "string" &&
-        newValue !== textContentVueModel.value
-    ) {
-        pageBuilder.handleTextInput(newValue);
+    if (getElement.value) {
+        console.log("TipTap textContent got updated");
+        store.commit("pageBuilderState/setTextAreaVueModel", newValue);
+        if (
+            typeof newValue === "string" &&
+            newValue !== textContentVueModel.value
+        ) {
+            pageBuilder.handleTextInput(newValue);
+        }
     }
 });
 

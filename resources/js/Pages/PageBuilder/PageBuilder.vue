@@ -96,8 +96,13 @@ const deselectCurrentComponent = function () {
     store.commit("pageBuilderState/setComponent", null);
 };
 
+const handleSetComponent = function (componentObject) {
+    console.log("handleSetComponent ran:".componentObject);
+    store.commit("pageBuilderState/setComponent", componentObject);
+};
+
 onMounted(async () => {
-    pageBuilder.addClickAndHoverEvents();
+    pageBuilder.observePlusSyncHTMLElements();
 });
 </script>
 
@@ -197,17 +202,10 @@ onMounted(async () => {
                         class="p-1 bg-white grow"
                     >
                         <div
-                            @mouseup="
-                                store.commit(
-                                    'pageBuilderState/setComponent',
-                                    component
-                                )
-                            "
-                            class="relative group"
+                            @mouseup="handleSetComponent(component)"
+                            class="relative group bg-red-100"
                         >
-                            <div
-                                v-html="component && component.html_code"
-                            ></div>
+                            <div v-html="component.html_code"></div>
                         </div>
                     </div>
                     <!-- Added Compoents to DOM # end -->

@@ -88,8 +88,8 @@ class PageBuilder {
      * and click event listeners to a specific DOM element
      *
      */
-    setElementPlusListeners = (element) => {
-        console.log("setElementPlusListeners");
+    addElementsListeners = (element) => {
+        console.log("addElementsListeners");
         // Only run on mouse over
         element.addEventListener("mouseover", (e) => {
             e.stopPropagation();
@@ -149,11 +149,78 @@ class PageBuilder {
             ) {
                 if (
                     this.elementsWithListeners &&
-                    this.elementsWithListeners.has(element) === false
+                    !this.elementsWithListeners.has(element)
                 ) {
                     this.elementsWithListeners.add(element);
-                    this.setElementPlusListeners(element);
+                    this.addElementsListeners(element);
                 }
+            }
+        });
+    };
+    /**
+     * The function is used to
+     * attach event listeners to each element within a 'section'
+     *
+     */
+    //
+    addClickAndHoverEventsOnDrop = () => {
+        console.log("addClickAndHoverEvents");
+        document.querySelectorAll("section *").forEach((element) => {
+            console.log("element is:", "åål");
+            // Check if the element is not one of the excluded tags
+            if (
+                !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
+                    element.tagName
+                )
+            ) {
+                //
+                //
+                //
+                //
+                //
+                this.elementsWithListeners.add(element);
+                //
+                //
+                //
+                //
+                //
+                // Only run on mouse leave
+                element.addEventListener("mouseleave", (e) => {
+                    e.stopPropagation();
+
+                    if (document.querySelector("[hovered]") !== null) {
+                        document
+                            .querySelector("[hovered]")
+                            .removeAttribute("hovered");
+                    }
+                });
+                //
+                //
+                //
+                //
+                //
+                // Only run during on mouse click
+                element.addEventListener("click", (e) => {
+                    console.log("you clicked me");
+                    this.store.commit("pageBuilderState/setMenuRight", true);
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if (document.querySelector("[selected]") !== null) {
+                        document
+                            .querySelector("[selected]")
+                            .removeAttribute("selected");
+                    }
+
+                    e.currentTarget.removeAttribute("hovered");
+
+                    e.currentTarget.setAttribute("selected", "");
+                    this.handlePageBuilderMethods();
+                });
+                //
+                //
+                //
             }
         });
     };
@@ -200,6 +267,12 @@ class PageBuilder {
         });
 
         this.addClickAndHoverEvents();
+
+        // This will be executed after the DOM has been updated
+        this.store.commit(
+            "pageBuilderState/setElement",
+            document.querySelector("[selected]")
+        );
     };
 
     cloneCompObjForDOMInsertion(componentObject) {
@@ -781,7 +854,6 @@ class PageBuilder {
     deleteAllComponents() {
         console.log("deleteAllComponents");
         this.store.commit("pageBuilderState/setComponents", []);
-        this.saveComponentsLocalStorage([]);
     }
 
     deleteComponent() {
