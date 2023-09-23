@@ -3,7 +3,7 @@ import PageBuilder from "@/composables/PageBuilder";
 
 // get images
 const {
-    handleData: handlegetElements,
+    handleData: handlefetchComponents,
     fetchedData: fetchedComponents,
     isError: isErrorComponents,
     error: errorComponents,
@@ -410,20 +410,28 @@ export default {
         //
         //
         // load components
-        loadComponents(context, team) {
+        loadComponents(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
             //
             //
             //
             //
             //
-            handlegetElements(
+            handlefetchComponents(
                 route("components.index", {
-                    team: team.id,
+                    team: data.team.id,
+                    search_query: data.search_query,
+                    page: data.page,
                 }),
 
                 {},
                 {
-                    additionalCallTime: 500,
+                    // additionalCallTime: 100,
                 }
             );
 

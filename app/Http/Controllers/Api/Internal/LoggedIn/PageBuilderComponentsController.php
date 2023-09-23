@@ -13,26 +13,23 @@ class PageBuilderComponentsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Team $team)
+    public function index(Team $team, Request $request)
     {
         $this->authorize("can-read", $team);
 
         $componentsCategories = PageBuilderComponentCategory::all();
 
-        if (auth()->user()->superadmin === null) {
-            // User is not a superadmin, so only fetch components with published as true
+        $query = PageBuilderComponent::with("coverImages")
+            ->with("categories")
+            ->when($request->query("search_query"), function ($query, $term) {
+                $query->where("title", "LIKE", "%" . $term . "%");
+            });
 
-            $components = PageBuilderComponent::with("coverImages")
-                ->with("categories")
-                ->where("published", true)
-                ->get();
+        if (!auth()->user()->superadmin) {
+            $query->where("published", true);
         }
 
-        if (auth()->user()->superadmin !== null) {
-            $components = PageBuilderComponent::with("coverImages")
-                ->with("categories")
-                ->get();
-        }
+        $components = $query->paginate(10);
 
         return [
             "component_categories" => $componentsCategories,

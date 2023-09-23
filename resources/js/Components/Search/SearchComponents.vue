@@ -46,11 +46,8 @@ const firstButton = function () {
 };
 
 const search_query = ref("");
-
 const store = useStore();
 const pageBuilder = new PageBuilder(store);
-
-const awaitComponentsOnMounted = ref([]);
 
 // use dynamic model
 const getComponents = computed(() => {
@@ -90,11 +87,37 @@ const handleAddComponentHelper = function (componentObject) {
     firstButton();
 };
 
+//
+//
+//
+// handle search
+const handleSearch = function (page) {
+    // dispatch
+    store.dispatch("pageBuilderState/loadComponents", {
+        team: props.team,
+        page: page,
+        search_query: search_query.value,
+    });
+};
+//
+// get media
+const fetchComponents = function (page) {
+    // dispatch
+    store.dispatch("pageBuilderState/loadComponents", {
+        team: props.team,
+        page: page,
+        search_query: search_query.value,
+    });
+};
+
+// get result for "laravel pagination" package
+const getResultsForPage = (page = 1) => {
+    search_query.value = getFetchedComponents.value?.fetchedData?.search_query;
+    fetchComponents(page);
+};
+//
 onMounted(async () => {
-    awaitComponentsOnMounted.value = await store.dispatch(
-        "pageBuilderState/loadComponents",
-        props.team
-    );
+    fetchComponents(1);
 
     //
     //
@@ -157,6 +180,7 @@ onMounted(async () => {
                     !getFetchedComponents.isLoading
                 "
             >
+                <!-- Search # Start -->
                 <form @submit.prevent="handleSearch(1)">
                     <div class="mysearchBarWithOptions">
                         <div class="relative w-full">
@@ -198,6 +222,9 @@ onMounted(async () => {
                         </button>
                     </div>
                 </form>
+                <!-- Search # End -->
+
+                <!-- Categories # Start -->
                 <div class="flex gap-2 flex-wrap">
                     <button class="myPrimaryTag">All</button>
                     <template
@@ -215,11 +242,54 @@ onMounted(async () => {
                         </button>
                     </template>
                 </div>
+                <!-- Categories # End -->
+
+                <div
+                    v-if="
+                        getFetchedComponents &&
+                        getFetchedComponents.fetchedData &&
+                        getFetchedComponents.fetchedData.components
+                    "
+                    class="flex items-center justify-center border-t border-gray-200 bg-white py-3 mt-4 gap-2"
+                >
+                    <TailwindPagination
+                        :limit="1"
+                        :keepLength="true"
+                        :class="[
+                            'space-x-1',
+                            'shadow-none',
+                            'tailwind-pagination-package',
+                        ]"
+                        :active-classes="[
+                            'bg-myPrimaryLinkColor',
+                            'text-white',
+                            'rounded-full',
+                        ]"
+                        :item-classes="[
+                            'p-0',
+                            'm-0',
+                            'border-none',
+                            'bg-gray-200',
+                            'hover:bg-gray-300',
+                            'text-myPrimaryDarkGrayColor',
+                            'rounded-full',
+                        ]"
+                        :data="getFetchedComponents.fetchedData.components"
+                        @pagination-change-page="getResultsForPage"
+                    >
+                        <template #prev-nav>
+                            <span> Prev </span>
+                        </template>
+                        <template #next-nav>
+                            <span>Next</span>
+                        </template>
+                    </TailwindPagination>
+                </div>
 
                 <div
                     class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 p-2 overflow-y-scroll"
                 >
-                    <section class="md:w-6/8">
+                    <section class="md:w-4/6">
                         <div
                             class="overflow-scroll min-h-[30rem] max-h-[30rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor"
                         >
@@ -227,10 +297,13 @@ onMounted(async () => {
                                 class="px-4 py-4 bg-gray-50 h-96"
                                 v-for="component in getFetchedComponents &&
                                 getFetchedComponents.fetchedData &&
+                                getFetchedComponents.fetchedData.components &&
                                 Array.isArray(
                                     getFetchedComponents.fetchedData.components
+                                        .data
                                 ) &&
-                                getFetchedComponents.fetchedData.components"
+                                getFetchedComponents.fetchedData.components
+                                    .data"
                                 :key="component.id"
                             >
                                 <div>
@@ -286,7 +359,7 @@ onMounted(async () => {
                         </div>
                     </section>
                     <aside
-                        class="md:w-2/8 overflow-scroll min-h-[30rem] max-h-[30rem] w-full"
+                        class="md:w-2/6 overflow-scroll min-h-[30rem] max-h-[30rem] w-full"
                     >
                         <div
                             class="p-2 flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
