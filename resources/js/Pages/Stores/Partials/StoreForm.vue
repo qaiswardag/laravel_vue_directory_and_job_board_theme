@@ -601,11 +601,13 @@ const handlePageBuilder = function () {
             //
             //
             //
-            postForm.content = getComponents.value
-                .map((component) => {
-                    return component.html_code;
-                })
-                .join(""); // Join the HTML code strings without any separator
+            postForm.content =
+                Array.isArray(getComponents.value) &&
+                getComponents.value
+                    .map((component) => {
+                        return component.html_code;
+                    })
+                    .join(""); // Join the HTML code strings without any separator
         }
         // save to local storage if new resource
         if (formType.value === "update") {
@@ -615,11 +617,13 @@ const handlePageBuilder = function () {
             //
             //
             //
-            postForm.content = getComponents.value
-                .map((component) => {
-                    return component.html_code;
-                })
-                .join(""); // Join the HTML code strings without any separator
+            postForm.content =
+                Array.isArray(getComponents.value) &&
+                getComponents.value
+                    .map((component) => {
+                        return component.html_code;
+                    })
+                    .join(""); // Join the HTML code strings without any separator
         }
 
         //
@@ -648,11 +652,13 @@ onBeforeMount(async () => {
     // local storage for page builder
     if (props.post === null) {
         if (pageBuilder.areComponentsStoredInLocalStorage()) {
-            postForm.content = getComponents.value
-                .map((component) => {
-                    return component.html_code;
-                })
-                .join("");
+            postForm.content =
+                Array.isArray(getComponents.value) &&
+                getComponents.value
+                    .map((component) => {
+                        return component.html_code;
+                    })
+                    .join("");
         }
         //
         //

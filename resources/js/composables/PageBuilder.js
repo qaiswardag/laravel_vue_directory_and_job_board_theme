@@ -89,6 +89,7 @@ class PageBuilder {
      *
      */
     setElementPlusListeners = (element) => {
+        console.log("setElementPlusListeners");
         // Only run on mouse over
         element.addEventListener("mouseover", (e) => {
             e.stopPropagation();
@@ -138,6 +139,7 @@ class PageBuilder {
      *
      */
     addClickAndHoverEvents = () => {
+        console.log("addClickAndHoverEvents");
         document.querySelectorAll("section *").forEach((element) => {
             // Check if the element is not one of the excluded tags
             if (
@@ -156,10 +158,12 @@ class PageBuilder {
         });
     };
 
-    // pageBuilderState
-
+    //
     observePlusSyncHTMLElements = async () => {
-        if (!this.shouldRunMethods()) return;
+        console.log("observePlusSyncHTMLElements");
+        if (!this.getComponents.value) {
+            this.store.commit("pageBuilderState/setComponents", []);
+        }
 
         if (document.querySelector("[hovered]") !== null) {
             document.querySelector("[hovered]").removeAttribute("hovered");
@@ -199,6 +203,7 @@ class PageBuilder {
     };
 
     cloneCompObjForDOMInsertion(componentObject) {
+        console.log("cloneCompObjForDOMInsertion");
         // Hide slider and right menu
         this.store.commit("pageBuilderState/setMenuRight", false);
 
@@ -235,6 +240,7 @@ class PageBuilder {
     }
 
     #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
+        console.log("#modifyElementCSS");
         if (!this.shouldRunMethods()) return;
 
         const currentCSS = CSSArray.find((CSS) => {
@@ -272,6 +278,7 @@ class PageBuilder {
     }
 
     removeHoveredAndSelected() {
+        console.log("removeHoveredAndSelected");
         if (document.querySelector("[hovered]") !== null) {
             document.querySelector("[hovered]").removeAttribute("hovered");
         }
@@ -282,6 +289,7 @@ class PageBuilder {
     }
 
     currentClasses() {
+        console.log("currentClasses");
         if (!this.shouldRunMethods()) return;
 
         // convert classList to array
@@ -292,6 +300,7 @@ class PageBuilder {
     }
 
     handleAddClasses(userSelectedClass) {
+        console.log("currentClasses");
         if (!this.shouldRunMethods()) return;
 
         if (
@@ -310,6 +319,7 @@ class PageBuilder {
         }
     }
     handleRemoveClasses(userSelectedClass) {
+        console.log("handleRemoveClasses");
         if (!this.shouldRunMethods()) return;
 
         // remove selected class from element
@@ -327,6 +337,7 @@ class PageBuilder {
     }
 
     handleDeleteElement() {
+        console.log("handleDeleteElement");
         if (!this.shouldRunMethods()) return;
 
         // Get the element to be deleted
@@ -354,6 +365,7 @@ class PageBuilder {
         element.remove();
     }
     handleRestoreElement() {
+        console.log("handleRestoreElement");
         if (!this.shouldRunMethods()) return;
 
         // Get the stored deleted element and its parent
@@ -380,6 +392,7 @@ class PageBuilder {
     }
 
     handleFontWeight(userSelectedFontWeight) {
+        console.log("handleFontWeight");
         this.#modifyElementCSS(
             userSelectedFontWeight,
             tailwindFontStyles.fontWeight,
@@ -387,6 +400,7 @@ class PageBuilder {
         );
     }
     handleFontFamily(userSelectedFontFamily) {
+        console.log("handleFontFamily");
         this.#modifyElementCSS(
             userSelectedFontFamily,
             tailwindFontStyles.fontFamily,
@@ -394,6 +408,7 @@ class PageBuilder {
         );
     }
     handleFontStyle(userSelectedFontStyle) {
+        console.log("handleFontStyle");
         this.#modifyElementCSS(
             userSelectedFontStyle,
             tailwindFontStyles.fontStyle,
@@ -401,6 +416,7 @@ class PageBuilder {
         );
     }
     handleVerticalPadding(userSelectedVerticalPadding) {
+        console.log("handleVerticalPadding");
         this.#modifyElementCSS(
             userSelectedVerticalPadding,
             tailwindPaddingAndMargin.verticalPadding,
@@ -408,6 +424,7 @@ class PageBuilder {
         );
     }
     handleHorizontalPadding(userSelectedHorizontalPadding) {
+        console.log("handleHorizontalPadding");
         this.#modifyElementCSS(
             userSelectedHorizontalPadding,
             tailwindPaddingAndMargin.horizontalPadding,
@@ -416,6 +433,7 @@ class PageBuilder {
     }
 
     handleVerticalMargin(userSelectedVerticalMargin) {
+        console.log("handleVerticalMargin");
         this.#modifyElementCSS(
             userSelectedVerticalMargin,
             tailwindPaddingAndMargin.verticalMargin,
@@ -423,6 +441,7 @@ class PageBuilder {
         );
     }
     handleHorizontalMargin(userSelectedHorizontalMargin) {
+        console.log("handleHorizontalMargin");
         this.#modifyElementCSS(
             userSelectedHorizontalMargin,
             tailwindPaddingAndMargin.horizontalMargin,
@@ -432,6 +451,7 @@ class PageBuilder {
 
     // border style & width / start
     handleBorderStyle(borderStyle) {
+        console.log("handleBorderStyle");
         this.#modifyElementCSS(
             borderStyle,
             tailwindBorderStyleWidthPlusColor.borderStyle,
@@ -439,6 +459,7 @@ class PageBuilder {
         );
     }
     handleBorderWidth(borderWidth) {
+        console.log("handleBorderWidth");
         this.#modifyElementCSS(
             borderWidth,
             tailwindBorderStyleWidthPlusColor.borderWidth,
@@ -446,6 +467,7 @@ class PageBuilder {
         );
     }
     handleBorderColor(borderColor) {
+        console.log("handleBorderColor");
         this.#modifyElementCSS(
             borderColor,
             tailwindBorderStyleWidthPlusColor.borderColor,
@@ -456,6 +478,7 @@ class PageBuilder {
 
     // border radius / start
     handleBorderRadiusGlobal(borderRadiusGlobal) {
+        console.log("handleBorderRadiusGlobal");
         this.#modifyElementCSS(
             borderRadiusGlobal,
             tailwindBorderRadius.roundedGlobal,
@@ -463,6 +486,7 @@ class PageBuilder {
         );
     }
     handleBorderRadiusTopLeft(borderRadiusTopLeft) {
+        console.log("handleBorderRadiusTopLeft");
         this.#modifyElementCSS(
             borderRadiusTopLeft,
             tailwindBorderRadius.roundedTopLeft,
@@ -470,6 +494,7 @@ class PageBuilder {
         );
     }
     handleBorderRadiusTopRight(borderRadiusTopRight) {
+        console.log("handleBorderRadiusTopRight");
         this.#modifyElementCSS(
             borderRadiusTopRight,
             tailwindBorderRadius.roundedTopRight,
@@ -477,6 +502,7 @@ class PageBuilder {
         );
     }
     handleBorderRadiusBottomleft(borderRadiusBottomleft) {
+        console.log("handleBorderRadiusBottomleft");
         this.#modifyElementCSS(
             borderRadiusBottomleft,
             tailwindBorderRadius.roundedBottomLeft,
@@ -484,6 +510,7 @@ class PageBuilder {
         );
     }
     handleBorderRadiusBottomRight(borderRadiusBottomRight) {
+        console.log("handleBorderRadiusBottomRight");
         this.#modifyElementCSS(
             borderRadiusBottomRight,
             tailwindBorderRadius.roundedBottomRight,
@@ -493,6 +520,7 @@ class PageBuilder {
     // border radius / end
 
     handleFontSize(userSelectedFontSize) {
+        console.log("handleFontSize");
         if (!this.shouldRunMethods()) return;
 
         let fontBase = tailwindFontSizes.fontBase.find((size) => {
@@ -600,6 +628,7 @@ class PageBuilder {
     }
 
     handleCustomBackgroundColor(userSelectedColor, enabledCustomColor) {
+        console.log("handleCustomBackgroundColor");
         if (!this.shouldRunMethods()) return;
 
         // if user is selecting a custom HEX color
@@ -645,6 +674,7 @@ class PageBuilder {
         }
     }
     handleCustomTextColor(userSelectedColor, enabledCustomColor) {
+        console.log("handleCustomTextColor");
         if (!this.shouldRunMethods()) return;
 
         // if user is selecting a custom HEX color
@@ -688,6 +718,7 @@ class PageBuilder {
     }
 
     handleBackgroundColor(userSelectedColor) {
+        console.log("handleBackgroundColor");
         this.#modifyElementCSS(
             userSelectedColor,
             this.backgroundColors,
@@ -695,6 +726,7 @@ class PageBuilder {
         );
     }
     handleTextColor(userSelectedColor) {
+        console.log("handleTextColor");
         this.#modifyElementCSS(
             userSelectedColor,
             this.textColors,
@@ -702,6 +734,7 @@ class PageBuilder {
         );
     }
     removeCustomColorBackground() {
+        console.log("removeCustomColorBackground");
         if (!this.shouldRunMethods()) return;
 
         this.getElement.value.style.removeProperty("background-color");
@@ -713,6 +746,7 @@ class PageBuilder {
         this.store.commit("pageBuilderState/setElement", this.getElement.value);
     }
     removeCustomColorText() {
+        console.log("removeCustomColorText");
         if (!this.shouldRunMethods()) return;
 
         this.getElement.value.style.removeProperty("color");
@@ -721,6 +755,7 @@ class PageBuilder {
         this.store.commit("pageBuilderState/setElement", this.getElement.value);
     }
     handleBackgroundOpacity(opacity) {
+        console.log("handleBackgroundOpacity");
         this.#modifyElementCSS(
             opacity,
             tailwindOpacities.backgroundOpacities,
@@ -728,6 +763,7 @@ class PageBuilder {
         );
     }
     handleOpacity(opacity) {
+        console.log("handleOpacity");
         this.#modifyElementCSS(
             opacity,
             tailwindOpacities.opacities,
@@ -735,6 +771,7 @@ class PageBuilder {
         );
     }
     saveComponentsLocalStorage(components) {
+        console.log("saveComponentsLocalStorage");
         localStorage.setItem(
             this.getLocalStorageItemName.value,
             JSON.stringify(components)
@@ -742,11 +779,13 @@ class PageBuilder {
     }
 
     deleteAllComponents() {
+        console.log("deleteAllComponents");
         this.store.commit("pageBuilderState/setComponents", []);
         this.saveComponentsLocalStorage([]);
     }
 
     deleteComponent() {
+        console.log("deleteComponent");
         if (!this.shouldRunMethods()) return;
 
         // Find the index of the component to delete
@@ -770,6 +809,7 @@ class PageBuilder {
     // move component
     // runs when html components are rearranged
     moveComponent(direction) {
+        console.log("moveComponent");
         if (!this.shouldRunMethods()) return;
 
         if (this.getComponents.value.length <= 1) return;
@@ -800,6 +840,7 @@ class PageBuilder {
     }
 
     addSpaceForEmptyTextArea = () => {
+        console.log("addSpaceForEmptyTextArea");
         if (!this.shouldRunMethods()) return;
 
         // text content
@@ -807,34 +848,26 @@ class PageBuilder {
             return;
         }
         const element = this.getElement.value;
-        const elementTag = element.tagName.toLowerCase();
+        const elementTag = element.tagName;
 
         if (
-            ["p", "h1", "h2", "h3", "h4", "h5", "h6"].includes(elementTag) &&
+            ["DIV"].includes(elementTag) &&
             element.tagName.toLowerCase() !== "img" &&
             Number(element.textContent.length) === 0
         ) {
-            element.classList.add("h-7");
-            element.classList.add("min-h-[7]");
+            element.classList.add("h-6");
             element.classList.add("bg-red-50");
-        }
-        if (
-            ["p", "h1", "h2", "h3", "h4", "h5", "h6"].includes(elementTag) &&
-            element.tagName.toLowerCase() !== "img" &&
-            Number(element.textContent.length) !== 0
-        ) {
-            element.classList.remove("h-7");
-            element.classList.remove("min-h-[7]");
+        } else {
+            element.classList.remove("h-6");
             element.classList.remove("bg-red-50");
         }
     };
 
     handleTextInput = async (textContentVueModel) => {
+        console.log("handleTextInput");
         if (!this.shouldRunMethods()) return;
 
         const element = this.getElement.value;
-
-        this.addSpaceForEmptyTextArea();
 
         // text content
         if (typeof element?.innerHTML !== "string") {
@@ -856,9 +889,12 @@ class PageBuilder {
                 this.getElement.value
             );
         }
+
+        this.addSpaceForEmptyTextArea();
     };
 
     previewCurrentDesign() {
+        console.log("previewCurrentDesign");
         const addedHtmlComponents = ref([]);
         // preview current design in external browser tab
         // iterate over each top-level section component
@@ -901,18 +937,17 @@ class PageBuilder {
     }
 
     areComponentsStoredInLocalStorage() {
+        console.log("areComponentsStoredInLocalStorage");
         const savedCurrentDesign = localStorage.getItem(
             this.getLocalStorageItemName.value
         );
         if (savedCurrentDesign) {
-            try {
-                this.store.commit(
-                    "pageBuilderState/setComponents",
-                    JSON.parse(savedCurrentDesign)
-                );
-            } catch (e) {
-                console.error("Error parsing localStorage data: ", e);
+            let components = JSON.parse(savedCurrentDesign);
+            if (!components) {
+                components = [];
             }
+
+            this.store.commit("pageBuilderState/setComponents", components);
             return true;
         }
 
@@ -920,6 +955,7 @@ class PageBuilder {
     }
     //
     updateBasePrimaryImage() {
+        console.log("updateBasePrimaryImage");
         if (this.getCurrentImage.value.currentImage?.mediaLibrary?.path) {
             this.handlePageBuilderMethods();
             this.store.commit(
@@ -929,6 +965,7 @@ class PageBuilder {
         }
     }
     showBasePrimaryImage() {
+        console.log("showBasePrimaryImage");
         const currentImageContainer = document.createElement("div");
         currentImageContainer.innerHTML = this.getElement.value.outerHTML;
 
@@ -951,6 +988,7 @@ class PageBuilder {
     }
 
     #addHyperlinkToElement(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
+        console.log("#addHyperlinkToElement");
         if (!this.shouldRunMethods()) return;
 
         const parentHyperlink = this.getElement.value.closest("a");
@@ -1049,6 +1087,7 @@ class PageBuilder {
     }
 
     #checkForHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
+        console.log("#checkForHyperlink");
         if (!this.shouldRunMethods()) return;
 
         const hyperlink = this.getElement.value.querySelector("a");
@@ -1092,6 +1131,7 @@ class PageBuilder {
     }
 
     handleHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
+        console.log("handleHyperlink");
         if (!this.shouldRunMethods()) return;
 
         this.store.commit("pageBuilderState/setHyperlinkAbility", true);
