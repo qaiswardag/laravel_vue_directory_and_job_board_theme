@@ -65,7 +65,7 @@ const getFetchedComponents = computed(() => {
 
 //     // pageBuilder.observePlusSyncHTMLElements();
 
-//     pageBuilder.addClickAndHoverEvents();
+//     pageBuilder.handleSetElement();
 
 //     store.commit("pageBuilderState/setPushComponents", clonedComponentObject);
 
@@ -83,9 +83,9 @@ const handleAddComponent = async function (componentObject) {
     store.commit("pageBuilderState/setPushComponents", clonedComponent);
 
     await nextTick();
-    // pageBuilder.addClickAndHoverEventsOnDrop();
+    pageBuilder.handleSetElementOnDrop();
 
-    // pageBuilder.addClickAndHoverEvents();
+    // pageBuilder.handleSetElement();
     // pageBuilder.observePlusSyncHTMLElements();
 
     // Close modal

@@ -97,7 +97,6 @@ const deselectCurrentComponent = function () {
 };
 
 const handleSetComponent = function (componentObject) {
-    console.log("handleSetComponent ran:".componentObject);
     store.commit("pageBuilderState/setComponent", componentObject);
 };
 
@@ -203,7 +202,7 @@ onMounted(async () => {
                     >
                         <div
                             @mouseup="handleSetComponent(component)"
-                            class="relative group bg-red-100"
+                            class="relative group"
                         >
                             <div v-html="component.html_code"></div>
                         </div>

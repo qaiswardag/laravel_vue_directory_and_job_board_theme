@@ -138,8 +138,8 @@ class PageBuilder {
      * attach event listeners to each element within a 'section'
      *
      */
-    addClickAndHoverEvents = () => {
-        console.log("addClickAndHoverEvents");
+    handleSetElement = () => {
+        console.log("handleSetElement");
         document.querySelectorAll("section *").forEach((element) => {
             // Check if the element is not one of the excluded tags
             if (
@@ -162,11 +162,14 @@ class PageBuilder {
      * attach event listeners to each element within a 'section'
      *
      */
-    //
-    addClickAndHoverEventsOnDrop = () => {
-        console.log("addClickAndHoverEvents");
-        document.querySelectorAll("section *").forEach((element) => {
-            console.log("element is:", "åål");
+    // øøø
+    handleSetElementOnDrop = () => {
+        console.log("handleSetElementOnDrop");
+
+        const pagebuilder = document.getElementById("pagebuilder");
+
+        pagebuilder.querySelectorAll("section *").forEach((element) => {
+            console.log("element is:", element);
             // Check if the element is not one of the excluded tags
             if (
                 !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
@@ -216,6 +219,10 @@ class PageBuilder {
                     e.currentTarget.removeAttribute("hovered");
 
                     e.currentTarget.setAttribute("selected", "");
+                    this.store.commit(
+                        "pageBuilderState/setElement",
+                        e.currentTarget
+                    );
                     this.handlePageBuilderMethods();
                 });
                 //
@@ -236,7 +243,7 @@ class PageBuilder {
             document.querySelector("[hovered]").removeAttribute("hovered");
         }
 
-        this.addClickAndHoverEvents();
+        this.handleSetElement();
 
         this.getComponents.value.forEach((component) => {
             const section = document.querySelector(
@@ -266,7 +273,7 @@ class PageBuilder {
             resolve();
         });
 
-        this.addClickAndHoverEvents();
+        this.handleSetElement();
 
         // This will be executed after the DOM has been updated
         this.store.commit(
