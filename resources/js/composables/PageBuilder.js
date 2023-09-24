@@ -6,7 +6,7 @@ import compiledCSS from "@/utils/builder/compiledCSS";
 import tailwindPaddingAndMargin from "@/utils/builder/tailwind-padding-margin";
 import tailwindBorderRadius from "@/utils/builder/tailwind-border-radius";
 import tailwindBorderStyleWidthPlusColor from "@/utils/builder/tailwind-border-style-width-color";
-import { computed, ref, nextTick } from "vue";
+import { computed, ref, nextTick, watch } from "vue";
 import { v4 as uuidv4 } from "uuid";
 
 class PageBuilder {
@@ -63,6 +63,8 @@ class PageBuilder {
         this.getRestoredElement = computed(
             () => this.store.getters["pageBuilderState/getRestoredElement"]
         );
+
+        this.showRunningMethodLogs = false;
     }
 
     shouldRunMethods() {
@@ -89,7 +91,9 @@ class PageBuilder {
      *
      */
     addElementsListeners = (element) => {
-        console.log("addElementsListeners");
+        if (this.showRunningMethodLogs) {
+            console.log("addElementsListeners");
+        }
 
         // Only run on mouse over
         element.addEventListener("mouseover", (e) => {
@@ -128,9 +132,8 @@ class PageBuilder {
 
             e.currentTarget.setAttribute("selected", "");
 
-            console.log("commit me old:", e.currentTarget);
-
             this.store.commit("pageBuilderState/setElement", e.currentTarget);
+            if (this.getElement.value === null) return;
 
             this.handlePageBuilderMethods();
         });
@@ -142,7 +145,9 @@ class PageBuilder {
      *
      */
     setEventListenersForElements = () => {
-        console.log("setEventListenersForElements");
+        if (this.showRunningMethodLogs) {
+            console.log("setEventListenersForElements");
+        }
         document.querySelectorAll("section *").forEach((element) => {
             // Check if the element is not one of the excluded tags
             if (
@@ -168,8 +173,10 @@ class PageBuilder {
      * attach event listeners to each element within a 'section'
      *
      */
-    setListenersToNewComponentElements = async (componentID) => {
-        console.log("setListenersToNewComponentElements");
+    setListenersForNewComponentElements = async (componentID) => {
+        if (this.showRunningMethodLogs) {
+            console.log("setListenersForNewComponentElements");
+        }
 
         const section = document.querySelector(
             `section[data-componentid="${componentID}"]`
@@ -228,7 +235,9 @@ class PageBuilder {
     //
     //
     observePlusSyncHTMLElements = async () => {
-        console.log("observePlusSyncHTMLElements");
+        if (this.showRunningMethodLogs) {
+            console.log("observePlusSyncHTMLElements");
+        }
         if (!this.getComponents.value) {
             this.store.commit("pageBuilderState/setComponents", []);
         }
@@ -236,8 +245,6 @@ class PageBuilder {
         if (document.querySelector("[hovered]") !== null) {
             document.querySelector("[hovered]").removeAttribute("hovered");
         }
-
-        this.setEventListenersForElements();
 
         this.getComponents.value.forEach((component) => {
             const section = document.querySelector(
@@ -268,16 +275,64 @@ class PageBuilder {
         });
 
         this.setEventListenersForElements();
+    };
 
-        // This will be executed after the DOM has been updated
-        // this.store.commit(
-        //     "pageBuilderState/setElement",
-        //     document.querySelector("[selected]")
-        // );
+    observePlusSyncHTMLElements2 = async (componentID) => {
+        if (this.showRunningMethodLogs) {
+            console.log("observePlusSyncHTMLElements2");
+        }
+        if (!this.getComponents.value) {
+            this.store.commit("pageBuilderState/setComponents", []);
+        }
+
+        if (document.querySelector("[hovered]") !== null) {
+            document.querySelector("[hovered]").removeAttribute("hovered");
+        }
+
+        const section = document.querySelector(
+            `section[data-componentid="${componentID}"]`
+        );
+
+        if (!section) {
+            console.error("Unable to find section with ID:", componentID);
+            return;
+        }
+
+        section.querySelectorAll("section *").forEach((component) => {
+            const section = document.querySelector(
+                `section[data-componentid="${component.id}"]`
+            );
+
+            if (section) {
+                component.html_code = section.outerHTML;
+            }
+        });
+
+        // Initialize the MutationObserver
+        this.observer = new MutationObserver((mutationsList, observer) => {
+            // Once we have seen a mutation, stop observing and resolve the promise
+            observer.disconnect();
+        });
+
+        // Start observing the document with the configured parameters
+        this.observer.observe(document, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+        });
+
+        // Use the MutationObserver to wait for the next DOM change
+        await new Promise((resolve) => {
+            resolve();
+        });
+
+        this.setListenersForNewComponentElements(componentID);
     };
 
     cloneCompObjForDOMInsertion(componentObject) {
-        console.log("cloneCompObjForDOMInsertion");
+        if (this.showRunningMethodLogs) {
+            console.log("cloneCompObjForDOMInsertion");
+        }
         // Hide slider and right menu
         this.store.commit("pageBuilderState/setMenuRight", false);
 
@@ -313,10 +368,24 @@ class PageBuilder {
         return clonedComponent;
     }
 
+    removeHoveredAndSelected() {
+        if (this.showRunningMethodLogs) {
+            console.log("removeHoveredAndSelected");
+        }
+
+        if (document.querySelector("[hovered]") !== null) {
+            document.querySelector("[hovered]").removeAttribute("hovered");
+        }
+
+        if (document.querySelector("[selected]") !== null) {
+            document.querySelector("[selected]").removeAttribute("selected");
+        }
+    }
+
     #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
-        console.log("getElement is:", this.getElement.value);
-        console.log("#modifyElementCSS");
-        if (!this.shouldRunMethods()) return;
+        if (this.getElement.value === null) {
+            return;
+        }
 
         const currentCSS = CSSArray.find((CSS) => {
             return this.getElement.value.classList.contains(CSS);
@@ -344,29 +413,15 @@ class PageBuilder {
         ) {
             this.getElement.value.classList.remove(elementClass);
             elementClass = selectedCSS;
-            // this.store.commit("pageBuilderState/setElement", this.getElement.value);
         }
 
         this.store.commit(`pageBuilderState/${mutationName}`, elementClass);
+        this.store.commit("pageBuilderState/setElement", this.getElement.value);
 
         return currentCSS;
     }
 
-    removeHoveredAndSelected() {
-        console.log("removeHoveredAndSelected");
-        if (document.querySelector("[hovered]") !== null) {
-            document.querySelector("[hovered]").removeAttribute("hovered");
-        }
-
-        if (document.querySelector("[selected]") !== null) {
-            document.querySelector("[selected]").removeAttribute("selected");
-        }
-    }
-
     currentClasses() {
-        console.log("currentClasses");
-        if (!this.shouldRunMethods()) return;
-
         // convert classList to array
         let classListArray = Array.from(this.getElement.value.classList);
 
@@ -375,9 +430,6 @@ class PageBuilder {
     }
 
     handleAddClasses(userSelectedClass) {
-        console.log("currentClasses");
-        if (!this.shouldRunMethods()) return;
-
         if (
             typeof userSelectedClass === "string" &&
             userSelectedClass !== "" &&
@@ -386,24 +438,22 @@ class PageBuilder {
             !this.getElement.value.classList.contains(userSelectedClass)
         ) {
             this.getElement.value.classList.add(userSelectedClass);
-            // this.store.commit(
-            //     "pageBuilderState/setElement",
-            //     this.getElement.value
-            // );
+            this.store.commit(
+                "pageBuilderState/setElement",
+                this.getElement.value
+            );
             this.store.commit("pageBuilderState/setClass", userSelectedClass);
         }
     }
-    handleRemoveClasses(userSelectedClass) {
-        console.log("handleRemoveClasses");
-        if (!this.shouldRunMethods()) return;
 
+    handleRemoveClasses(userSelectedClass) {
         // remove selected class from element
         if (this.getElement.value.classList.contains(userSelectedClass)) {
             this.getElement.value.classList.remove(userSelectedClass);
-            // this.store.commit(
-            //     "pageBuilderState/setElement",
-            //     this.getElement.value
-            // );
+            this.store.commit(
+                "pageBuilderState/setElement",
+                this.getElement.value
+            );
             this.store.commit(
                 "pageBuilderState/removeClass",
                 userSelectedClass
@@ -412,7 +462,10 @@ class PageBuilder {
     }
 
     handleDeleteElement() {
-        console.log("handleDeleteElement");
+        if (this.showRunningMethodLogs) {
+            console.log("handleDeleteElement");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         // Get the element to be deleted
@@ -439,8 +492,12 @@ class PageBuilder {
         // Remove the element from the DOM
         element.remove();
     }
+
     handleRestoreElement() {
-        console.log("handleRestoreElement");
+        if (this.showRunningMethodLogs) {
+            console.log("handleRestoreElement");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         // Get the stored deleted element and its parent
@@ -467,7 +524,10 @@ class PageBuilder {
     }
 
     handleFontWeight(userSelectedFontWeight) {
-        console.log("handleFontWeight");
+        if (this.showRunningMethodLogs) {
+            console.log("handleFontWeight");
+        }
+
         this.#modifyElementCSS(
             userSelectedFontWeight,
             tailwindFontStyles.fontWeight,
@@ -475,7 +535,10 @@ class PageBuilder {
         );
     }
     handleFontFamily(userSelectedFontFamily) {
-        console.log("handleFontFamily");
+        if (this.showRunningMethodLogs) {
+            console.log("handleFontFamily");
+        }
+
         this.#modifyElementCSS(
             userSelectedFontFamily,
             tailwindFontStyles.fontFamily,
@@ -483,7 +546,10 @@ class PageBuilder {
         );
     }
     handleFontStyle(userSelectedFontStyle) {
-        console.log("handleFontStyle");
+        if (this.showRunningMethodLogs) {
+            console.log("handleFontStyle");
+        }
+
         this.#modifyElementCSS(
             userSelectedFontStyle,
             tailwindFontStyles.fontStyle,
@@ -491,7 +557,10 @@ class PageBuilder {
         );
     }
     handleVerticalPadding(userSelectedVerticalPadding) {
-        console.log("handleVerticalPadding");
+        if (this.showRunningMethodLogs) {
+            console.log("handleVerticalPadding");
+        }
+
         this.#modifyElementCSS(
             userSelectedVerticalPadding,
             tailwindPaddingAndMargin.verticalPadding,
@@ -499,7 +568,10 @@ class PageBuilder {
         );
     }
     handleHorizontalPadding(userSelectedHorizontalPadding) {
-        console.log("handleHorizontalPadding");
+        if (this.showRunningMethodLogs) {
+            console.log("handleHorizontalPadding");
+        }
+
         this.#modifyElementCSS(
             userSelectedHorizontalPadding,
             tailwindPaddingAndMargin.horizontalPadding,
@@ -508,7 +580,10 @@ class PageBuilder {
     }
 
     handleVerticalMargin(userSelectedVerticalMargin) {
-        console.log("handleVerticalMargin");
+        if (this.showRunningMethodLogs) {
+            console.log("handleVerticalMargin");
+        }
+
         this.#modifyElementCSS(
             userSelectedVerticalMargin,
             tailwindPaddingAndMargin.verticalMargin,
@@ -516,7 +591,10 @@ class PageBuilder {
         );
     }
     handleHorizontalMargin(userSelectedHorizontalMargin) {
-        console.log("handleHorizontalMargin");
+        if (this.showRunningMethodLogs) {
+            console.log("handleHorizontalMargin");
+        }
+
         this.#modifyElementCSS(
             userSelectedHorizontalMargin,
             tailwindPaddingAndMargin.horizontalMargin,
@@ -526,7 +604,10 @@ class PageBuilder {
 
     // border style & width / start
     handleBorderStyle(borderStyle) {
-        console.log("handleBorderStyle");
+        if (this.showRunningMethodLogs) {
+            console.log("handleBorderStyle");
+        }
+
         this.#modifyElementCSS(
             borderStyle,
             tailwindBorderStyleWidthPlusColor.borderStyle,
@@ -534,7 +615,10 @@ class PageBuilder {
         );
     }
     handleBorderWidth(borderWidth) {
-        console.log("handleBorderWidth");
+        if (this.showRunningMethodLogs) {
+            console.log("handleBorderWidth");
+        }
+
         this.#modifyElementCSS(
             borderWidth,
             tailwindBorderStyleWidthPlusColor.borderWidth,
@@ -542,7 +626,10 @@ class PageBuilder {
         );
     }
     handleBorderColor(borderColor) {
-        console.log("handleBorderColor");
+        if (this.showRunningMethodLogs) {
+            console.log("handleBorderColor");
+        }
+
         this.#modifyElementCSS(
             borderColor,
             tailwindBorderStyleWidthPlusColor.borderColor,
@@ -553,7 +640,10 @@ class PageBuilder {
 
     // border radius / start
     handleBorderRadiusGlobal(borderRadiusGlobal) {
-        console.log("handleBorderRadiusGlobal");
+        if (this.showRunningMethodLogs) {
+            console.log("handleBorderRadiusGlobal");
+        }
+
         this.#modifyElementCSS(
             borderRadiusGlobal,
             tailwindBorderRadius.roundedGlobal,
@@ -561,7 +651,10 @@ class PageBuilder {
         );
     }
     handleBorderRadiusTopLeft(borderRadiusTopLeft) {
-        console.log("handleBorderRadiusTopLeft");
+        if (this.showRunningMethodLogs) {
+            console.log("handleBorderRadiusTopLeft");
+        }
+
         this.#modifyElementCSS(
             borderRadiusTopLeft,
             tailwindBorderRadius.roundedTopLeft,
@@ -569,7 +662,10 @@ class PageBuilder {
         );
     }
     handleBorderRadiusTopRight(borderRadiusTopRight) {
-        console.log("handleBorderRadiusTopRight");
+        if (this.showRunningMethodLogs) {
+            console.log("handleBorderRadiusTopRight");
+        }
+
         this.#modifyElementCSS(
             borderRadiusTopRight,
             tailwindBorderRadius.roundedTopRight,
@@ -577,7 +673,10 @@ class PageBuilder {
         );
     }
     handleBorderRadiusBottomleft(borderRadiusBottomleft) {
-        console.log("handleBorderRadiusBottomleft");
+        if (this.showRunningMethodLogs) {
+            console.log("handleBorderRadiusBottomleft");
+        }
+
         this.#modifyElementCSS(
             borderRadiusBottomleft,
             tailwindBorderRadius.roundedBottomLeft,
@@ -585,7 +684,10 @@ class PageBuilder {
         );
     }
     handleBorderRadiusBottomRight(borderRadiusBottomRight) {
-        console.log("handleBorderRadiusBottomRight");
+        if (this.showRunningMethodLogs) {
+            console.log("handleBorderRadiusBottomRight");
+        }
+
         this.#modifyElementCSS(
             borderRadiusBottomRight,
             tailwindBorderRadius.roundedBottomRight,
@@ -595,7 +697,10 @@ class PageBuilder {
     // border radius / end
 
     handleFontSize(userSelectedFontSize) {
-        console.log("handleFontSize");
+        if (this.showRunningMethodLogs) {
+            console.log("handleFontSize");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         let fontBase = tailwindFontSizes.fontBase.find((size) => {
@@ -695,15 +800,18 @@ class PageBuilder {
                 );
             }
 
-            // this.store.commit(
-            //     "pageBuilderState/setElement",
-            //     this.getElement.value
-            // );
+            this.store.commit(
+                "pageBuilderState/setElement",
+                this.getElement.value
+            );
         }
     }
 
     handleCustomBackgroundColor(userSelectedColor, enabledCustomColor) {
-        console.log("handleCustomBackgroundColor");
+        if (this.showRunningMethodLogs) {
+            console.log("handleCustomBackgroundColor");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         // if user is selecting a custom HEX color
@@ -742,14 +850,17 @@ class PageBuilder {
         // if user is selecting a custom HEX color
         if (enabledCustomColor === true) {
             this.getElement.value.style.backgroundColor = userSelectedColor;
-            // this.store.commit(
-            //     "pageBuilderState/setElement",
-            //     this.getElement.value
-            // );
+            this.store.commit(
+                "pageBuilderState/setElement",
+                this.getElement.value
+            );
         }
     }
     handleCustomTextColor(userSelectedColor, enabledCustomColor) {
-        console.log("handleCustomTextColor");
+        if (this.showRunningMethodLogs) {
+            console.log("handleCustomTextColor");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         // if user is selecting a custom HEX color
@@ -785,15 +896,18 @@ class PageBuilder {
         // if user is selecting a custom HEX color
         if (enabledCustomColor === true) {
             this.getElement.value.style.color = userSelectedColor;
-            // this.store.commit(
-            //     "pageBuilderState/setElement",
-            //     this.getElement.value
-            // );
+            this.store.commit(
+                "pageBuilderState/setElement",
+                this.getElement.value
+            );
         }
     }
 
     handleBackgroundColor(userSelectedColor) {
-        console.log("handleBackgroundColor");
+        if (this.showRunningMethodLogs) {
+            console.log("handleBackgroundColor");
+        }
+
         this.#modifyElementCSS(
             userSelectedColor,
             this.backgroundColors,
@@ -801,7 +915,10 @@ class PageBuilder {
         );
     }
     handleTextColor(userSelectedColor) {
-        console.log("handleTextColor");
+        if (this.showRunningMethodLogs) {
+            console.log("handleTextColor");
+        }
+
         this.#modifyElementCSS(
             userSelectedColor,
             this.textColors,
@@ -809,7 +926,10 @@ class PageBuilder {
         );
     }
     removeCustomColorBackground() {
-        console.log("removeCustomColorBackground");
+        if (this.showRunningMethodLogs) {
+            console.log("removeCustomColorBackground");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         this.getElement.value.style.removeProperty("background-color");
@@ -818,19 +938,25 @@ class PageBuilder {
             null
         );
         this.store.commit("pageBuilderState/setBackgroundColorCustom", null);
-        // this.store.commit("pageBuilderState/setElement", this.getElement.value);
+        this.store.commit("pageBuilderState/setElement", this.getElement.value);
     }
     removeCustomColorText() {
-        console.log("removeCustomColorText");
+        if (this.showRunningMethodLogs) {
+            console.log("removeCustomColorText");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         this.getElement.value.style.removeProperty("color");
         this.store.commit("pageBuilderState/setEnabledCustomColorText", null);
         this.store.commit("pageBuilderState/setTextColorCustom", null);
-        // this.store.commit("pageBuilderState/setElement", this.getElement.value);
+        this.store.commit("pageBuilderState/setElement", this.getElement.value);
     }
     handleBackgroundOpacity(opacity) {
-        console.log("handleBackgroundOpacity");
+        if (this.showRunningMethodLogs) {
+            console.log("handleBackgroundOpacity");
+        }
+
         this.#modifyElementCSS(
             opacity,
             tailwindOpacities.backgroundOpacities,
@@ -838,7 +964,10 @@ class PageBuilder {
         );
     }
     handleOpacity(opacity) {
-        console.log("handleOpacity");
+        if (this.showRunningMethodLogs) {
+            console.log("handleOpacity");
+        }
+
         this.#modifyElementCSS(
             opacity,
             tailwindOpacities.opacities,
@@ -846,7 +975,10 @@ class PageBuilder {
         );
     }
     saveComponentsLocalStorage(components) {
-        console.log("saveComponentsLocalStorage");
+        if (this.showRunningMethodLogs) {
+            console.log("saveComponentsLocalStorage");
+        }
+
         localStorage.setItem(
             this.getLocalStorageItemName.value,
             JSON.stringify(components)
@@ -854,12 +986,18 @@ class PageBuilder {
     }
 
     deleteAllComponents() {
-        console.log("deleteAllComponents");
+        if (this.showRunningMethodLogs) {
+            console.log("deleteAllComponents");
+        }
+
         this.store.commit("pageBuilderState/setComponents", []);
     }
 
     deleteComponent() {
-        console.log("deleteComponent");
+        if (this.showRunningMethodLogs) {
+            console.log("deleteComponent");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         // Find the index of the component to delete
@@ -883,7 +1021,10 @@ class PageBuilder {
     // move component
     // runs when html components are rearranged
     moveComponent(direction) {
-        console.log("moveComponent");
+        if (this.showRunningMethodLogs) {
+            console.log("moveComponent");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         if (this.getComponents.value.length <= 1) return;
@@ -914,7 +1055,10 @@ class PageBuilder {
     }
 
     addSpaceForEmptyTextArea = () => {
-        console.log("addSpaceForEmptyTextArea");
+        if (this.showRunningMethodLogs) {
+            console.log("addSpaceForEmptyTextArea");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         // text content
@@ -938,7 +1082,10 @@ class PageBuilder {
     };
 
     handleTextInput = async (textContentVueModel) => {
-        console.log("handleTextInput");
+        if (this.showRunningMethodLogs) {
+            console.log("handleTextInput");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         const element = this.getElement.value;
@@ -958,17 +1105,20 @@ class PageBuilder {
 
             this.getElement.value.innerHTML = textContentVueModel;
 
-            // this.store.commit(
-            //     "pageBuilderState/setElement",
-            //     this.getElement.value
-            // );
+            this.store.commit(
+                "pageBuilderState/setElement",
+                this.getElement.value
+            );
         }
 
         this.addSpaceForEmptyTextArea();
     };
 
     previewCurrentDesign() {
-        console.log("previewCurrentDesign");
+        if (this.showRunningMethodLogs) {
+            console.log("previewCurrentDesign");
+        }
+
         const addedHtmlComponents = ref([]);
         // preview current design in external browser tab
         // iterate over each top-level section component
@@ -1011,7 +1161,10 @@ class PageBuilder {
     }
 
     areComponentsStoredInLocalStorage() {
-        console.log("areComponentsStoredInLocalStorage");
+        if (this.showRunningMethodLogs) {
+            console.log("areComponentsStoredInLocalStorage");
+        }
+
         const savedCurrentDesign = localStorage.getItem(
             this.getLocalStorageItemName.value
         );
@@ -1029,7 +1182,10 @@ class PageBuilder {
     }
     //
     updateBasePrimaryImage() {
-        console.log("updateBasePrimaryImage");
+        if (this.showRunningMethodLogs) {
+            console.log("updateBasePrimaryImage");
+        }
+
         if (this.getCurrentImage.value.currentImage?.mediaLibrary?.path) {
             this.store.commit(
                 "pageBuilderState/setBasePrimaryImage",
@@ -1038,7 +1194,10 @@ class PageBuilder {
         }
     }
     showBasePrimaryImage() {
-        console.log("showBasePrimaryImage");
+        if (this.showRunningMethodLogs) {
+            console.log("showBasePrimaryImage");
+        }
+
         const currentImageContainer = document.createElement("div");
         currentImageContainer.innerHTML = this.getElement.value.outerHTML;
 
@@ -1061,7 +1220,10 @@ class PageBuilder {
     }
 
     #addHyperlinkToElement(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
-        console.log("#addHyperlinkToElement");
+        if (this.showRunningMethodLogs) {
+            console.log("#addHyperlinkToElement");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         const parentHyperlink = this.getElement.value.closest("a");
@@ -1144,8 +1306,6 @@ class PageBuilder {
         }
 
         if (hyperlinkEnable === false && urlInput === "removeHyperlink") {
-            if (!this.shouldRunMethods()) return;
-
             // To remove the added hyperlink tag
             const originalText = this.getElement.value.textContent;
             const textNode = document.createTextNode(originalText);
@@ -1160,7 +1320,10 @@ class PageBuilder {
     }
 
     #checkForHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
-        console.log("#checkForHyperlink");
+        if (this.showRunningMethodLogs) {
+            console.log("#checkForHyperlink");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         const hyperlink = this.getElement.value.querySelector("a");
@@ -1204,7 +1367,10 @@ class PageBuilder {
     }
 
     handleHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
-        console.log("handleHyperlink");
+        if (this.showRunningMethodLogs) {
+            console.log("handleHyperlink");
+        }
+
         if (!this.shouldRunMethods()) return;
 
         this.store.commit("pageBuilderState/setHyperlinkAbility", true);
@@ -1249,10 +1415,10 @@ class PageBuilder {
     }
 
     handlePageBuilderMethods() {
-        if (!this.shouldRunMethods()) return;
         console.log("handlePageBuilderMethods ran.");
 
-        // invoke methods
+        if (!this.shouldRunMethods()) return;
+
         // handle custom URL
         this.handleHyperlink();
         // handle opacity

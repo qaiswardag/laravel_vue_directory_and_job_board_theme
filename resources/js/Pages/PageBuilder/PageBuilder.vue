@@ -84,12 +84,14 @@ const handleAddComponent = function () {
     // end modal
 };
 
-const getComponents = computed(() => {
-    return store.getters["pageBuilderState/getComponents"];
-});
-
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
+});
+const getComponent = computed(() => {
+    return store.getters["pageBuilderState/getComponent"];
+});
+const getComponents = computed(() => {
+    return store.getters["pageBuilderState/getComponents"];
 });
 
 const deselectCurrentComponent = function () {

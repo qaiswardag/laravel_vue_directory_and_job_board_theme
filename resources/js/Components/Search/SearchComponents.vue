@@ -57,6 +57,17 @@ const getFetchedComponents = computed(() => {
     return store.getters["pageBuilderState/getFetchedComponents"];
 });
 
+// when working
+// observePlusSyncHTMLElements
+// setEventListenersForElements
+// addElementsListeners
+
+// not working
+// cloneCompObjForDOMInsertion
+
+// setListenersForNewComponentElements
+// addElementsListeners
+
 // const handleDropComponent = function (componentObject) {
 //     const clonedComponentObject =
 //         pageBuilder.cloneCompObjForDOMInsertion(componentObject);
@@ -83,7 +94,10 @@ const handleDropComponent = async function (componentObject) {
     store.commit("pageBuilderState/setPushComponents", clonedComponent);
 
     await nextTick();
-    await pageBuilder.setListenersToNewComponentElements(clonedComponent.id);
+    pageBuilder.observePlusSyncHTMLElements2(clonedComponent.id);
+
+    // await nextTick();
+    // await pageBuilder.setListenersForNewComponentElements(clonedComponent.id);
 
     // await nextTick();
     // await pageBuilder.setEventListenersForElements();

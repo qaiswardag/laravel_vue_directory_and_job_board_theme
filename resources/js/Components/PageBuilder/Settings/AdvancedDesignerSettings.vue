@@ -16,7 +16,7 @@ const getComponents = computed(() => {
 
 const current = ref("element");
 
-const updateCurrent = function (tab) {
+const updateCurrentTab = function (tab) {
     current.value = tab;
 };
 </script>
@@ -115,7 +115,7 @@ const updateCurrent = function (tab) {
                             class="-mb-px flex text-xs font-medium text-myPrimaryMediumGrayColor"
                         >
                             <div
-                                @click="updateCurrent('element')"
+                                @click="updateCurrentTab('element')"
                                 class="px-4 py-4 cursor-pointer"
                                 :class="[
                                     current === 'element' ? 'text-white' : '',
@@ -124,7 +124,7 @@ const updateCurrent = function (tab) {
                                 Element
                             </div>
                             <div
-                                @click="updateCurrent('component')"
+                                @click="updateCurrentTab('component')"
                                 class="px-4 py-4 cursor-pointer"
                                 :class="[
                                     current === 'component' ? 'text-white' : '',
@@ -133,7 +133,7 @@ const updateCurrent = function (tab) {
                                 Component
                             </div>
                             <div
-                                @click="updateCurrent('components')"
+                                @click="updateCurrentTab('components')"
                                 class="px-4 py-4 cursor-pointer"
                                 :class="[
                                     current === 'components'
