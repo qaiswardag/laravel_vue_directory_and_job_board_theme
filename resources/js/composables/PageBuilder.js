@@ -1169,24 +1169,26 @@ class PageBuilder {
         //
     }
 
-    saveComponentsLocalStorage() {
+    async saveComponentsLocalStorage() {
         if (this.showRunningMethodLogs) {
             console.log("saveComponentsLocalStorage");
         }
 
+        this.nextTick;
         localStorage.setItem(
             this.getLocalStorageItemName.value,
             JSON.stringify(this.getComponents.value)
         );
     }
 
-    saveComponentsLocalStorageUpdate() {
+    async saveComponentsLocalStorageUpdate() {
         console.log("DE ER:", this.getComponents.value);
 
         if (this.showRunningMethodLogs) {
             console.log("saveComponentsLocalStorageUpdate");
         }
 
+        this.nextTick;
         localStorage.setItem(
             this.getLocalStorageItemNameUpdate.value,
             JSON.stringify(this.getComponents.value)

@@ -20,6 +20,7 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import DesignerModal from "@/Components/Modals/DesignerModal.vue";
 import Designer from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
+import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 import {
     Listbox,
@@ -103,6 +104,7 @@ const userTeamsWithoutReaderRole = props.user.all_teams.filter((team) => {
 
 // store
 const store = useStore();
+const isLoading = ref(false);
 
 const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
@@ -119,6 +121,12 @@ const getCurrentAttachedStoreCategories = computed(() => {
         "attachedUsersOrItems/getCurrentAttachedStoreCategories"
     ];
 });
+
+const delay = function delay(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+};
 
 const formType = ref("create");
 const pathLocalStorage = `store-form-${
@@ -508,12 +516,45 @@ const storeDirtyFormInLocalStorage = function () {
     }
 };
 // Will be executed when the user switch current route
-router.on = () => {
+router.on = async () => {
     storeDirtyFormInLocalStorage();
+
+    isLoading.value = true;
+
+    if (formType.value === "update") {
+        await nextTick();
+        pageBuilder.observePlusSyncExistingHTMLElements();
+
+        await nextTick();
+        pageBuilder.saveComponentsLocalStorageUpdate();
+    }
+
+    // set open modal
+    openDesignerModal.value = false;
+
+    await delay(500);
+    isLoading.value = false;
 };
+
 // This function will be executed when the user clicks refresh or closes the tab/window
-window.addEventListener("beforeunload", function () {
+window.addEventListener("beforeunload", async function () {
     storeDirtyFormInLocalStorage();
+
+    isLoading.value = true;
+
+    if (formType.value === "update") {
+        await nextTick();
+        pageBuilder.observePlusSyncExistingHTMLElements();
+
+        await nextTick();
+        pageBuilder.saveComponentsLocalStorageUpdate();
+    }
+
+    // set open modal
+    openDesignerModal.value = false;
+
+    await delay(500);
+    isLoading.value = false;
 });
 
 //
@@ -583,26 +624,20 @@ const firstDesignerModalButtonFunction = ref(null);
 const secondDesignerModalButtonFunction = ref(null);
 //
 //
-const handleDraftForUpdate = function () {
+
+const handleDraftForUpdate = async function () {
+    isLoading.value = true;
     console.log("må ikke køre");
     if (formType.value === "update") {
+        await nextTick();
         pageBuilder.areComponentsStoredInLocalStorageUpdate();
+
+        await nextTick();
         pageBuilder.observePlusSyncExistingHTMLElements();
 
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        await delay(500);
+        isLoading.value = false;
     }
-
-    //
-    //
-    //
-    //
     //
     //
 };
@@ -614,43 +649,56 @@ const handlePageBuilder = function () {
     openDesignerModal.value = true;
 
     // handle click
-    firstDesignerModalButtonFunction.value = function () {
+    firstDesignerModalButtonFunction.value = async function () {
+        isLoading.value = true;
+
         if (formType.value === "update") {
+            await nextTick();
             pageBuilder.observePlusSyncExistingHTMLElements();
+
+            await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
         }
 
         // set open modal
         openDesignerModal.value = false;
+
+        await delay(500);
+        isLoading.value = false;
     };
     // handle click
     secondDesignerModalButtonFunction.value = async function () {
-        // wait for components to be saved
+        isLoading.value = true;
 
         // save to local storage if new resource
         if (formType.value === "create") {
+            await nextTick();
             pageBuilder.observePlusSyncExistingHTMLElements();
+            await nextTick();
             pageBuilder.saveComponentsLocalStorage();
             //
             //
             //
             //
+            await nextTick();
             postForm.content =
                 Array.isArray(getComponents.value) &&
                 getComponents.value
                     .map((component) => {
                         return component.html_code;
                     })
-                    .join(""); // Join the HTML code strings without any separator
+                    .join("");
         }
         // save to local storage if update
         if (formType.value === "update") {
+            await nextTick();
             pageBuilder.observePlusSyncExistingHTMLElements();
 
             //
             //
             //
             //
+            await nextTick();
             postForm.content =
                 Array.isArray(getComponents.value) &&
                 getComponents.value
@@ -664,6 +712,9 @@ const handlePageBuilder = function () {
         //
         // set open modal
         openDesignerModal.value = false;
+
+        await delay(500);
+        isLoading.value = false;
     };
 
     // end modal
@@ -901,6 +952,9 @@ onBeforeMount(async () => {
 const pageBuilder = new PageBuilder(store);
 </script>
 <template>
+    <template v-if="isLoading">
+        <FullScreenSpinner></FullScreenSpinner>
+    </template>
     <DesignerModal
         v-if="openDesignerModal"
         :show="openDesignerModal"
