@@ -904,6 +904,7 @@ const pageBuilder = new PageBuilder(store);
     <DesignerModal
         v-if="openDesignerModal"
         :show="openDesignerModal"
+        :updateOrCreate="formType"
         @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
         @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"
         @handleDraftForUpdate="handleDraftForUpdate"

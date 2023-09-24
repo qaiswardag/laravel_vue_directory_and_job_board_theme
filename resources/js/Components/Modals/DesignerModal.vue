@@ -21,6 +21,9 @@ defineProps({
         default: false,
         required: true,
     },
+    updateOrCreate: {
+        required: true,
+    },
 });
 
 // store
@@ -184,6 +187,7 @@ const handleDraftForUpdate = function () {
                                         Save & Close
                                     </button>
                                     <button
+                                        v-if="updateOrCreate === 'update'"
                                         class="mySecondaryButton py-2 mx-0 text-xs"
                                         @click="handleDraftForUpdate"
                                         type="button"
