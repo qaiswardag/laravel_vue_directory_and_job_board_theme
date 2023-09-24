@@ -132,8 +132,9 @@ class PageBuilder {
 
             e.currentTarget.setAttribute("selected", "");
 
+            console.log("COMMIT ME OLD:", e.currentTarget);
+
             this.store.commit("pageBuilderState/setElement", e.currentTarget);
-            if (this.getElement.value === null) return;
 
             this.handlePageBuilderMethods();
         });
@@ -368,24 +369,14 @@ class PageBuilder {
         return clonedComponent;
     }
 
-    removeHoveredAndSelected() {
-        if (this.showRunningMethodLogs) {
-            console.log("removeHoveredAndSelected");
-        }
-
-        if (document.querySelector("[hovered]") !== null) {
-            document.querySelector("[hovered]").removeAttribute("hovered");
-        }
-
-        if (document.querySelector("[selected]") !== null) {
-            document.querySelector("[selected]").removeAttribute("selected");
-        }
-    }
-
     #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
-        if (this.getElement.value === null) {
-            return;
+        console.log("ClICKED ELEMENT:", this.getElement.value);
+
+        if (this.showRunningMethodLogs) {
+            console.log("#modifyElementCSS");
         }
+
+        if (!this.shouldRunMethods()) return;
 
         const currentCSS = CSSArray.find((CSS) => {
             return this.getElement.value.classList.contains(CSS);
@@ -416,12 +407,31 @@ class PageBuilder {
         }
 
         this.store.commit(`pageBuilderState/${mutationName}`, elementClass);
-        this.store.commit("pageBuilderState/setElement", this.getElement.value);
 
         return currentCSS;
     }
 
+    removeHoveredAndSelected() {
+        if (this.showRunningMethodLogs) {
+            console.log("removeHoveredAndSelected");
+        }
+
+        if (document.querySelector("[hovered]") !== null) {
+            document.querySelector("[hovered]").removeAttribute("hovered");
+        }
+
+        if (document.querySelector("[selected]") !== null) {
+            document.querySelector("[selected]").removeAttribute("selected");
+        }
+    }
+
     currentClasses() {
+        if (this.showRunningMethodLogs) {
+            console.log("handleAddClasses");
+        }
+
+        if (!this.shouldRunMethods()) return;
+
         // convert classList to array
         let classListArray = Array.from(this.getElement.value.classList);
 
@@ -430,6 +440,12 @@ class PageBuilder {
     }
 
     handleAddClasses(userSelectedClass) {
+        if (this.showRunningMethodLogs) {
+            console.log("handleAddClasses");
+        }
+
+        if (!this.shouldRunMethods()) return;
+
         if (
             typeof userSelectedClass === "string" &&
             userSelectedClass !== "" &&
@@ -445,8 +461,13 @@ class PageBuilder {
             this.store.commit("pageBuilderState/setClass", userSelectedClass);
         }
     }
-
     handleRemoveClasses(userSelectedClass) {
+        if (this.showRunningMethodLogs) {
+            console.log("handleRemoveClasses");
+        }
+
+        if (!this.shouldRunMethods()) return;
+
         // remove selected class from element
         if (this.getElement.value.classList.contains(userSelectedClass)) {
             this.getElement.value.classList.remove(userSelectedClass);
@@ -492,7 +513,6 @@ class PageBuilder {
         // Remove the element from the DOM
         element.remove();
     }
-
     handleRestoreElement() {
         if (this.showRunningMethodLogs) {
             console.log("handleRestoreElement");
