@@ -42,6 +42,12 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
+const emit = defineEmits([
+    "firstDesignerModalButtonFunction",
+    "secondDesignerModalButtonFunction",
+    "handleDraftForUpdate",
+]);
+
 const firstButton = function () {
     // set modal standards
     showModalClosePageBuilder.value = true;
@@ -74,11 +80,6 @@ const firstButton = function () {
     // end modal
 };
 
-const emit = defineEmits([
-    "firstDesignerModalButtonFunction",
-    "secondDesignerModalButtonFunction",
-]);
-
 // first button function
 const closePageBuilder = function () {
     pageBuilder.removeHoveredAndSelected();
@@ -88,6 +89,13 @@ const closePageBuilder = function () {
 const secondButton = function () {
     pageBuilder.removeHoveredAndSelected();
     emit("secondDesignerModalButtonFunction");
+};
+
+//
+//
+//
+const handleDraftForUpdate = function () {
+    emit("handleDraftForUpdate");
 };
 </script>
 
@@ -166,13 +174,22 @@ const secondButton = function () {
                                 "
                                 class="px-6 h-[10vh] flex items-center justify-between"
                             >
-                                <button
-                                    class="myPrimaryButton"
-                                    @click="secondButton"
-                                    type="button"
-                                >
-                                    Save & Close
-                                </button>
+                                <div class="flex justify-start myPrimaryGap">
+                                    <button
+                                        class="myPrimaryButton py-2 mx-0 text-xs"
+                                        @click="secondButton"
+                                        type="button"
+                                    >
+                                        Save & Close
+                                    </button>
+                                    <button
+                                        class="mySecondaryButton py-2 mx-0 text-xs"
+                                        @click="handleDraftForUpdate"
+                                        type="button"
+                                    >
+                                        Draft
+                                    </button>
+                                </div>
                                 <button
                                     type="button"
                                     @click="firstButton"

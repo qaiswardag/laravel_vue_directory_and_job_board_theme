@@ -37,6 +37,12 @@ class PageBuilder {
         this.getLocalStorageItemName = computed(
             () => this.store.getters["pageBuilderState/getLocalStorageItemName"]
         );
+        this.getLocalStorageItemNameUpdate = computed(
+            () =>
+                this.store.getters[
+                    "pageBuilderState/getLocalStorageItemNameUpdate"
+                ]
+        );
 
         this.getCurrentImage = computed(
             () => this.store.getters["mediaLibrary/getCurrentImage"]
@@ -164,6 +170,15 @@ class PageBuilder {
                     this.elementsWithListeners.add(element);
                     this.addElementsListeners(element);
                 }
+            } else if (
+                element.parentNode.tagName !== "DIV" ||
+                element.parentNode.querySelector("img") !== null
+            ) {
+                // If the element is one of the excluded tags
+                // and it's not inside a div or inside an img tag, wrap it in a div
+                const divWrapper = document.createElement("div");
+                element.parentNode.insertBefore(divWrapper, element);
+                divWrapper.appendChild(element);
             }
         });
     };
@@ -983,6 +998,17 @@ class PageBuilder {
 
         localStorage.setItem(
             this.getLocalStorageItemName.value,
+            JSON.stringify(components)
+        );
+    }
+
+    saveComponentsLocalStorageUpdate(components) {
+        if (this.showRunningMethodLogs) {
+            console.log("saveComponentsLocalStorageUpdate");
+        }
+
+        localStorage.setItem(
+            this.getLocalStorageItemNameUpdate.value,
             JSON.stringify(components)
         );
     }

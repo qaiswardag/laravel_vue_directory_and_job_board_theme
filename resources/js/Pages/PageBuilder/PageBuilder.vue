@@ -269,11 +269,11 @@ onMounted(async () => {
 }
 #pagebuilder [selected] {
     outline: rgb(185, 16, 16) dashed 2px !important;
-    outline-offset: +8px !important;
+    outline-offset: -2px !important;
 }
 #pagebuilder [hovered] {
     outline: rgb(0, 140, 14, 1) dashed 2px !important;
-    outline-offset: +8px !important;
+    outline-offset: -2px !important;
 }
 
 .sortable-ghost {

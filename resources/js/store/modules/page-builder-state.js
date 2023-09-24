@@ -20,6 +20,7 @@ export default {
     // state
     state: {
         localStorageItemName: null,
+        localStorageItemNameUpdate: null,
         menuRight: true,
         // border style, width & color / start
         borderStyle: null,
@@ -81,6 +82,9 @@ export default {
     getters: {
         getLocalStorageItemName(state) {
             return state.localStorageItemName;
+        },
+        getLocalStorageItemNameUpdate(state) {
+            return state.localStorageItemNameUpdate;
         },
         getMenuRight(state) {
             return state.menuRight;
@@ -231,6 +235,9 @@ export default {
     mutations: {
         setLocalStorageItemName(state, payload) {
             state.localStorageItemName = payload;
+        },
+        setLocalStorageItemNameUpdate(state, payload) {
+            state.localStorageItemNameUpdate = payload;
         },
         setMenuRight(state, payload) {
             state.menuRight = payload;

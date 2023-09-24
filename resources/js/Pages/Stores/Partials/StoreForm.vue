@@ -127,6 +127,9 @@ const pathLocalStorage = `store-form-${
 const pathPageBuilderLocalStorage = `create-store-form-page-builder-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
+const pathPageBuilderLocalStorageUpdate = `update-store-form-page-builder-${
+    props.currentUserTeam ? props.currentUserTeam.id : null
+}`;
 
 // use media library
 const showMediaLibraryModal = ref(false);
@@ -579,6 +582,56 @@ const openDesignerModal = ref(false);
 const firstDesignerModalButtonFunction = ref(null);
 const secondDesignerModalButtonFunction = ref(null);
 //
+// øø
+const handleDraftForUpdate = function () {
+    if (formType.value === "update") {
+        store.commit("pageBuilderState/setComponents", []);
+
+        //
+        //
+
+        //
+        //
+        //
+        // Parse the HTML content using DOMParser
+        const parser = new DOMParser();
+        const decodedHTML = decodeURIComponent(
+            localStorage.getItem(pathPageBuilderLocalStorageUpdate)
+        );
+        const doc = parser.parseFromString(decodedHTML, "text/html");
+
+        // Select all <section> elements with data-componentid attribute
+        const sectionElements = doc.querySelectorAll(
+            "section[data-componentid]"
+        );
+
+        const extractedSections = [];
+        // Loop through the selected elements and extract each <section> element
+        sectionElements.forEach((section) => {
+            extractedSections.push({
+                html_code: section.outerHTML,
+                id: section.dataset.componentid,
+            });
+        });
+
+        console.log("er:", extractedSections);
+        // console.log(store.getters["pageBuilderState/getComponents"]);
+
+        //
+        store.commit("pageBuilderState/setComponents", extractedSections);
+        //
+        //
+    }
+
+    //
+    //
+    //
+    //
+    //
+    //
+};
+//
+//
 //
 const handlePageBuilder = function () {
     // set modal standards
@@ -586,6 +639,11 @@ const handlePageBuilder = function () {
 
     // handle click
     firstDesignerModalButtonFunction.value = function () {
+        if (formType.value === "update") {
+            pageBuilder.observePlusSyncExistingHTMLElements();
+            pageBuilder.saveComponentsLocalStorageUpdate(getComponents.value);
+        }
+
         // set open modal
         openDesignerModal.value = false;
     };
@@ -642,6 +700,11 @@ onBeforeMount(async () => {
     store.commit(
         "pageBuilderState/setLocalStorageItemName",
         pathPageBuilderLocalStorage
+    );
+
+    store.commit(
+        "pageBuilderState/setLocalStorageItemNameUpdate",
+        pathPageBuilderLocalStorageUpdate
     );
     //
     //
@@ -867,6 +930,7 @@ const pageBuilder = new PageBuilder(store);
         :show="openDesignerModal"
         @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
         @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"
+        @handleDraftForUpdate="handleDraftForUpdate"
     >
         <Designer :user="user" :team="postForm.team"></Designer>
     </DesignerModal>
