@@ -80,7 +80,7 @@ watch(textContent, (newValue) => {
             typeof newValue === "string" &&
             newValue !== textContentVueModel.value
         ) {
-            pageBuilder.handleTextInput(newValue);
+            // pageBuilder.handleTextInput(newValue);
         }
     }
 });

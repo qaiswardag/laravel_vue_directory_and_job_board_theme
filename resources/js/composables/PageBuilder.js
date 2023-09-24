@@ -91,6 +91,15 @@ class PageBuilder {
         return true;
     }
 
+    #autoModifyElements(element) {
+        console.log("PRIVATE FUNCTION!!!");
+        // If the element is one of the excluded tags
+        // and it's not inside a div or inside an img tag, wrap it in a div
+        const divWrapper = document.createElement("div");
+        element.parentNode.insertBefore(divWrapper, element);
+        divWrapper.appendChild(element);
+    }
+
     /**
      * The function is adding mouseover
      * and click event listeners to a specific DOM element
@@ -174,11 +183,7 @@ class PageBuilder {
                 element.parentNode.tagName !== "DIV" ||
                 element.parentNode.querySelector("img") !== null
             ) {
-                // If the element is one of the excluded tags
-                // and it's not inside a div or inside an img tag, wrap it in a div
-                const divWrapper = document.createElement("div");
-                element.parentNode.insertBefore(divWrapper, element);
-                divWrapper.appendChild(element);
+                this.#autoModifyElements(element);
             }
         });
     };
@@ -220,6 +225,11 @@ class PageBuilder {
                 ) {
                     this.addElementsListeners(element);
                     this.elementsWithListeners.add(element);
+                } else if (
+                    element.parentNode.tagName !== "DIV" ||
+                    element.parentNode.querySelector("img") !== null
+                ) {
+                    this.#autoModifyElements(element);
                 }
             }
         });
