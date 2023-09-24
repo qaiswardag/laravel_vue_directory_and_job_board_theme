@@ -108,14 +108,13 @@ const getElementOuterHTML = computed(() => {
     return getElement.value.outerHTML ? getElement.value.outerHTML : null;
 });
 
-watch(getElementOuterHTML, (newComponent) => {
-    console.log("handlePageBuilderMethods ran from PageBuilder.vue");
-    pageBuilder.handlePageBuilderMethods(newComponent);
-    pageBuilder.observePlusSyncHTMLElements();
+watch(getElementOuterHTML, () => {
+    pageBuilder.handlePageBuilderMethods();
+    pageBuilder.observePlusSyncExistingHTMLElements();
 });
 
 onMounted(async () => {
-    pageBuilder.observePlusSyncHTMLElements();
+    pageBuilder.observePlusSyncExistingHTMLElements();
 });
 </script>
 

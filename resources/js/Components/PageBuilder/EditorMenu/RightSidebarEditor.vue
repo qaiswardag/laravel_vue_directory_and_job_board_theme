@@ -39,15 +39,6 @@ const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
 
-const getElementOuterHTML = computed(() => {
-    if (getElement.value === null) return;
-    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
-});
-
-watch(getElementOuterHTML, (newComponent) => {
-    reactiveGetElement.value = newComponent;
-});
-
 //
 //
 //
@@ -99,12 +90,6 @@ const isHeadingElement = computed(() => {
             </div>
 
             <div class="mb-4 overflow-y-scroll md:pb-24 pb-12">
-                <p class="my-12 pl-4">
-                    getElement: {{ JSON.stringify(getElement) }}
-                </p>
-                <p class="my-12 pl-4">
-                    reactiveGetElement: {{ JSON.stringify(reactiveGetElement) }}
-                </p>
                 <template v-if="getElement">
                     <div v-show="isHeadingElement === true">
                         <article>

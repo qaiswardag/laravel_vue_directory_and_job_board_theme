@@ -21,6 +21,12 @@ watch(
 );
 
 const inputClass = ref("");
+
+const handleAddClasses = function () {
+    pageBuilder.handleAddClasses(inputClass.value);
+
+    inputClass.value = "";
+};
 </script>
 
 <template>
@@ -49,9 +55,7 @@ const inputClass = ref("");
                             v-model="inputClass"
                             type="text"
                             placeholder="Type class"
-                            @keydown.enter="
-                                pageBuilder.handleAddClasses(inputClass)
-                            "
+                            @keydown.enter="handleAddClasses()"
                             autocomplete="off"
                             class="myPrimaryInput border-none rounded-r-none ml-0 w-full"
                         />

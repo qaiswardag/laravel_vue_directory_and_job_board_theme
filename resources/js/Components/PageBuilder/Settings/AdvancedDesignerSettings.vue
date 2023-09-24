@@ -4,9 +4,12 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
+const reactiveGetElement = ref(null);
+
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
+
 const getComponent = computed(() => {
     return store.getters["pageBuilderState/getComponent"];
 });
@@ -15,6 +18,15 @@ const getComponents = computed(() => {
 });
 
 const current = ref("element");
+
+const getElementOuterHTML = computed(() => {
+    if (getElement.value === null) return;
+    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
+});
+
+watch(getElementOuterHTML, (newComponent) => {
+    reactiveGetElement.value = newComponent;
+});
 
 const updateCurrentTab = function (tab) {
     current.value = tab;
@@ -26,6 +38,8 @@ const updateCurrentTab = function (tab) {
         <div
             class="flex items-left flex-col myPrimaryGap border-myPrimaryMediumGrayColor"
         >
+            <p class="my-4">getElement: {{ JSON.stringify(getElement) }}</p>
+            <p class="my-4">er: {{ JSON.stringify(reactiveGetElement) }}</p>
             <h4 class="myFourthHeader">Selected HTML</h4>
             <p class="myPrimaryParagraph text-xs">
                 Overview of Selected Element, Component, and Components. This
@@ -46,24 +60,26 @@ const updateCurrentTab = function (tab) {
                     <div class="px-4 pb-8 pt-4 text-white text-xs">
                         <p
                             v-if="
-                                getElement === null || getElement === undefined
+                                reactiveGetElement === null ||
+                                reactiveGetElement === undefined
                             "
                             class="text-xs pb-2"
                         >
                             <span
                                 >Element type:
-                                {{ JSON.stringify(getElement) }}
+                                {{ JSON.stringify(reactiveGetElement) }}
                             </span>
                         </p>
                         <p
                             v-if="
-                                getElement !== null && getElement !== undefined
+                                reactiveGetElement !== null &&
+                                reactiveGetElement !== undefined
                             "
                             class="text-xs pb-2"
                         >
                             <span>Element type: </span>
                             <span>
-                                {{ typeof getElement }}
+                                {{ typeof reactiveGetElement }}
                             </span>
                         </p>
                         <p
@@ -151,18 +167,18 @@ const updateCurrentTab = function (tab) {
                     </div>
                     <div class="px-4 pb-8 pt-4 text-white text-xs break-all">
                         <div v-if="current === 'element'">
-                            <div v-if="!getElement">
+                            <div v-if="!reactiveGetElement">
                                 <p class="pb-2">
                                     {{
-                                        getElement === null
+                                        reactiveGetElement === null
                                             ? "NULL"
-                                            : typeof getElement
+                                            : typeof reactiveGetElement
                                     }}
                                 </p>
                             </div>
-                            <div v-if="getElement">
+                            <div v-if="reactiveGetElement">
                                 <p class="whitespace-pre-line leading-5">
-                                    {{ getElement?.outerHTML }}
+                                    {{ reactiveGetElement }}
                                 </p>
                             </div>
                         </div>

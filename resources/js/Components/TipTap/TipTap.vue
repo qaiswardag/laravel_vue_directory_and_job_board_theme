@@ -23,7 +23,16 @@ const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
 //
+const reactiveGetElement = ref(null);
 //
+const getElementOuterHTML = computed(() => {
+    if (getElement.value === null) return;
+    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
+});
+
+watch(getElementOuterHTML, (newComponent) => {
+    reactiveGetElement.value = newComponent;
+});
 //
 // Check if any of the child elements have the tagName "IMG"
 const containsInvalidTags = ref(false);
@@ -278,7 +287,6 @@ onBeforeMount(() => {
 onMounted(() => {});
 </script>
 <template>
-    getElement: {{ JSON.stringify(getElement) }}
     <DynamicModal
         v-if="showModalUrl"
         :show="showModalUrl"
@@ -315,7 +323,10 @@ onMounted(() => {});
             </div>
         </main>
     </DynamicModal>
-    <template v-if="containsInvalidTags === false">
+    <template v-if="!containsInvalidTags">
+        <p class="my-12">
+            reactiveGetElement: {{ JSON.stringify(reactiveGetElement) }}
+        </p>
         <div
             v-if="editor"
             class="my-12 blockease-linear duration-200 block px-4 ease-linear"

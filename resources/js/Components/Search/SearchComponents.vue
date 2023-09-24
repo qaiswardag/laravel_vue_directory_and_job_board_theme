@@ -57,32 +57,6 @@ const getFetchedComponents = computed(() => {
     return store.getters["pageBuilderState/getFetchedComponents"];
 });
 
-// when working
-// observePlusSyncHTMLElements
-// setEventListenersForElements
-// addElementsListeners
-
-// not working
-// cloneCompObjForDOMInsertion
-
-// setListenersForNewComponentElements
-// addElementsListeners
-
-// const handleDropComponent = function (componentObject) {
-//     const clonedComponentObject =
-//         pageBuilder.cloneCompObjForDOMInsertion(componentObject);
-
-//     console.log("er:", componentObject);
-
-//     // pageBuilder.observePlusSyncHTMLElements();
-
-//     pageBuilder.setEventListenersForElements();
-
-//     store.commit("pageBuilderState/setPushComponents", clonedComponentObject);
-
-//     firstButton();
-// };
-
 const handleDropComponent = async function (componentObject) {
     await nextTick();
     const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion({
@@ -94,22 +68,26 @@ const handleDropComponent = async function (componentObject) {
     store.commit("pageBuilderState/setPushComponents", clonedComponent);
 
     await nextTick();
-    pageBuilder.observePlusSyncHTMLElements2(clonedComponent.id);
-
-    // await nextTick();
-    // await pageBuilder.setListenersForNewComponentElements(clonedComponent.id);
-
-    // await nextTick();
-    // await pageBuilder.setEventListenersForElements();
-
-    // pageBuilder.setEventListenersForElements();
-    // pageBuilder.observePlusSyncHTMLElements();
+    pageBuilder.observePlusSyncDroppedHTMLElements(clonedComponent.id);
 
     // Close modal
     firstButton();
 };
 
-const handleAddHelperComponent = function (helperComponentObject) {
+const handleAddHelperComponent = async function (helperComponentObject) {
+    console.log(helperComponentObject);
+    await nextTick();
+    const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion({
+        html_code: helperComponentObject.html_code,
+        id: helperComponentObject.id,
+    });
+
+    await nextTick();
+    store.commit("pageBuilderState/setPushComponents", clonedComponent);
+
+    await nextTick();
+    pageBuilder.observePlusSyncDroppedHTMLElements(clonedComponent.id);
+
     // Close modal
     firstButton();
 };

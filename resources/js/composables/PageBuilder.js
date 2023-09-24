@@ -174,9 +174,9 @@ class PageBuilder {
      * attach event listeners to each element within a 'section'
      *
      */
-    setListenersForNewComponentElements = async (componentID) => {
+    setListenersForDroppedComponentElements = async (componentID) => {
         if (this.showRunningMethodLogs) {
-            console.log("setListenersForNewComponentElements");
+            console.log("setListenersForDroppedComponentElements");
         }
 
         const section = document.querySelector(
@@ -208,36 +208,10 @@ class PageBuilder {
             }
         });
     };
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    observePlusSyncHTMLElements = async () => {
+
+    observePlusSyncExistingHTMLElements = async () => {
         if (this.showRunningMethodLogs) {
-            console.log("observePlusSyncHTMLElements");
+            console.log("observePlusSyncExistingHTMLElements");
         }
         if (!this.getComponents.value) {
             this.store.commit("pageBuilderState/setComponents", []);
@@ -283,9 +257,9 @@ class PageBuilder {
         this.setEventListenersForElements();
     };
 
-    observePlusSyncHTMLElements2 = async (componentID) => {
+    observePlusSyncDroppedHTMLElements = async (componentID) => {
         if (this.showRunningMethodLogs) {
-            console.log("observePlusSyncHTMLElements2");
+            console.log("observePlusSyncExistingHTMLElements2");
         }
         if (!this.getComponents.value) {
             this.store.commit("pageBuilderState/setComponents", []);
@@ -337,7 +311,7 @@ class PageBuilder {
             document.querySelector("[selected]")
         );
 
-        this.setListenersForNewComponentElements(componentID);
+        this.setListenersForDroppedComponentElements(componentID);
     };
 
     cloneCompObjForDOMInsertion(componentObject) {
@@ -380,8 +354,6 @@ class PageBuilder {
     }
 
     #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
-        console.log("ClICKED ELEMENT:", this.getElement.value);
-
         if (this.showRunningMethodLogs) {
             console.log("#modifyElementCSS");
         }
@@ -1453,8 +1425,8 @@ class PageBuilder {
         );
     }
 
-    handlePageBuilderMethods(getElement) {
-        console.log("handlePageBuilderMethods ran:", getElement);
+    handlePageBuilderMethods() {
+        console.log("handlePageBuilderMethods ran");
 
         if (!this.shouldRunMethods()) return;
 
