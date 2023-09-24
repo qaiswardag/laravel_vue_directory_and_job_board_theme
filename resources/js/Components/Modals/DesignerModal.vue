@@ -95,6 +95,7 @@ const secondButton = function () {
 //
 //
 const handleDraftForUpdate = function () {
+    pageBuilder.removeHoveredAndSelected();
     emit("handleDraftForUpdate");
 };
 </script>

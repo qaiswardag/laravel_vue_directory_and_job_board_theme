@@ -991,27 +991,6 @@ class PageBuilder {
             "setOpacity"
         );
     }
-    saveComponentsLocalStorage(components) {
-        if (this.showRunningMethodLogs) {
-            console.log("saveComponentsLocalStorage");
-        }
-
-        localStorage.setItem(
-            this.getLocalStorageItemName.value,
-            JSON.stringify(components)
-        );
-    }
-
-    saveComponentsLocalStorageUpdate(components) {
-        if (this.showRunningMethodLogs) {
-            console.log("saveComponentsLocalStorageUpdate");
-        }
-
-        localStorage.setItem(
-            this.getLocalStorageItemNameUpdate.value,
-            JSON.stringify(components)
-        );
-    }
 
     deleteAllComponents() {
         if (this.showRunningMethodLogs) {
@@ -1190,6 +1169,30 @@ class PageBuilder {
         //
     }
 
+    saveComponentsLocalStorage() {
+        if (this.showRunningMethodLogs) {
+            console.log("saveComponentsLocalStorage");
+        }
+
+        localStorage.setItem(
+            this.getLocalStorageItemName.value,
+            JSON.stringify(this.getComponents.value)
+        );
+    }
+
+    saveComponentsLocalStorageUpdate() {
+        console.log("DE ER:", this.getComponents.value);
+
+        if (this.showRunningMethodLogs) {
+            console.log("saveComponentsLocalStorageUpdate");
+        }
+
+        localStorage.setItem(
+            this.getLocalStorageItemNameUpdate.value,
+            JSON.stringify(this.getComponents.value)
+        );
+    }
+
     areComponentsStoredInLocalStorage() {
         if (this.showRunningMethodLogs) {
             console.log("areComponentsStoredInLocalStorage");
@@ -1197,6 +1200,27 @@ class PageBuilder {
 
         const savedCurrentDesign = localStorage.getItem(
             this.getLocalStorageItemName.value
+        );
+        if (savedCurrentDesign) {
+            let components = JSON.parse(savedCurrentDesign);
+            if (!components) {
+                components = [];
+            }
+
+            this.store.commit("pageBuilderState/setComponents", components);
+            return true;
+        }
+
+        return false;
+    }
+    // øø
+    areComponentsStoredInLocalStorageUpdate() {
+        if (this.showRunningMethodLogs) {
+            console.log("areComponentsStoredInLocalStorageUpdate");
+        }
+
+        const savedCurrentDesign = localStorage.getItem(
+            this.getLocalStorageItemNameUpdate.value
         );
         if (savedCurrentDesign) {
             let components = JSON.parse(savedCurrentDesign);

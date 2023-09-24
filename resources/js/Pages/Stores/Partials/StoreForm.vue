@@ -127,7 +127,7 @@ const pathLocalStorage = `store-form-${
 const pathPageBuilderLocalStorage = `create-store-form-page-builder-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
-const pathPageBuilderLocalStorageUpdate = `update-store-form-page-builder-${
+const pathPageBuilderLocalStorageUpdateDraft = `update-draft-store-form-page-builder-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
 
@@ -582,43 +582,19 @@ const openDesignerModal = ref(false);
 const firstDesignerModalButtonFunction = ref(null);
 const secondDesignerModalButtonFunction = ref(null);
 //
-// øø
+//
 const handleDraftForUpdate = function () {
+    console.log("må ikke køre");
     if (formType.value === "update") {
-        store.commit("pageBuilderState/setComponents", []);
+        pageBuilder.areComponentsStoredInLocalStorageUpdate();
+        pageBuilder.observePlusSyncExistingHTMLElements();
 
         //
         //
-
         //
         //
         //
-        // Parse the HTML content using DOMParser
-        const parser = new DOMParser();
-        const decodedHTML = decodeURIComponent(
-            localStorage.getItem(pathPageBuilderLocalStorageUpdate)
-        );
-        const doc = parser.parseFromString(decodedHTML, "text/html");
-
-        // Select all <section> elements with data-componentid attribute
-        const sectionElements = doc.querySelectorAll(
-            "section[data-componentid]"
-        );
-
-        const extractedSections = [];
-        // Loop through the selected elements and extract each <section> element
-        sectionElements.forEach((section) => {
-            extractedSections.push({
-                html_code: section.outerHTML,
-                id: section.dataset.componentid,
-            });
-        });
-
-        console.log("er:", extractedSections);
-        // console.log(store.getters["pageBuilderState/getComponents"]);
-
         //
-        store.commit("pageBuilderState/setComponents", extractedSections);
         //
         //
     }
@@ -641,7 +617,7 @@ const handlePageBuilder = function () {
     firstDesignerModalButtonFunction.value = function () {
         if (formType.value === "update") {
             pageBuilder.observePlusSyncExistingHTMLElements();
-            pageBuilder.saveComponentsLocalStorageUpdate(getComponents.value);
+            pageBuilder.saveComponentsLocalStorageUpdate();
         }
 
         // set open modal
@@ -654,7 +630,7 @@ const handlePageBuilder = function () {
         // save to local storage if new resource
         if (formType.value === "create") {
             pageBuilder.observePlusSyncExistingHTMLElements();
-            pageBuilder.saveComponentsLocalStorage(getComponents.value);
+            pageBuilder.saveComponentsLocalStorage();
             //
             //
             //
@@ -667,7 +643,7 @@ const handlePageBuilder = function () {
                     })
                     .join(""); // Join the HTML code strings without any separator
         }
-        // save to local storage if new resource
+        // save to local storage if update
         if (formType.value === "update") {
             pageBuilder.observePlusSyncExistingHTMLElements();
 
@@ -704,7 +680,7 @@ onBeforeMount(async () => {
 
     store.commit(
         "pageBuilderState/setLocalStorageItemNameUpdate",
-        pathPageBuilderLocalStorageUpdate
+        pathPageBuilderLocalStorageUpdateDraft
     );
     //
     //
