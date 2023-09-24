@@ -342,9 +342,10 @@ defineProps({
                         v-if="post.cover_images"
                         :images="post.cover_images"
                         imageSize="large_path"
-                        imageHeight="h-96"
+                        imageHeight="max-h-72"
                         imageWidth="w-full"
                         :roundedFull="false"
+                        :squareButtons="true"
                     ></ThumbnailSmallImageSlider>
                     <!-- cover images - end -->
                 </aside>

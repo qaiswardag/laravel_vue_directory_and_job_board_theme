@@ -109,13 +109,22 @@ const sortedImages = computed(() => {
             </div>
             <div
                 v-if="images.length >= 2"
-                class="flex gap-[60%] items-center justify-center mt-2 z-30"
+                class="flex gap-[60%] items-center justify-center z-30"
             >
                 <button
                     type="button"
                     @click="prevSlide"
-                    class="bg-opacity-70 absolute top-1/2 bottom-1/2 left-[4px] shaddow h-10 w-10 rounded-full cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                    :class="[{ 'rounded-none': squareButtons === true }]"
+                    class="bg-opacity-20 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
+                    :class="[
+                        {
+                            'rounded-none h-full top-0 bottom-0 left-0 w-8':
+                                squareButtons,
+                        },
+                        {
+                            'bg-opacity-60 top-1/2 bottom-1/2 left-[4px] shaddow h-10 w-10 rounded-full ':
+                                !squareButtons,
+                        },
+                    ]"
                 >
                     <ChevronLeftIcon
                         class="shrink-0 h-4 w-4 m-2 stroke-2"
@@ -125,8 +134,17 @@ const sortedImages = computed(() => {
                 <button
                     type="button"
                     @click="nextSlide"
-                    class="bg-opacity-70 absolute top-1/2 bottom-1/2 right-[4px] shaddow h-10 w-10 rounded-full cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                    :class="[{ 'rounded-none': squareButtons === true }]"
+                    class="bg-opacity-80 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
+                    :class="[
+                        {
+                            'rounded-none h-full top-0 right-0 bottom-0 w-8':
+                                squareButtons,
+                        },
+                        {
+                            'bg-opacity-80 top-1/2 bottom-1/2 right-[4px] shaddow h-10 w-10 rounded-full ':
+                                !squareButtons,
+                        },
+                    ]"
                 >
                     <ChevronRightIcon
                         class="shrink-0 h-4 w-4 m-2 stroke-2"

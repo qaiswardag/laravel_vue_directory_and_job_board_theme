@@ -981,7 +981,6 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <p class="my-12">content er: {{ postForm.content }}</p>
                     <InputLabel for="title" value="Your Post title" />
                     <TextInput
                         placeholder="Enter your title.."
