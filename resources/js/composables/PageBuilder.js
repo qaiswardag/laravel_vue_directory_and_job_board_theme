@@ -276,7 +276,7 @@ class PageBuilder {
         });
 
         this.store.commit(
-            "designer/setElement",
+            "pageBuilderState/setElement",
             document.querySelector("[selected]")
         );
 
@@ -333,7 +333,7 @@ class PageBuilder {
         });
 
         this.store.commit(
-            "designer/setElement",
+            "pageBuilderState/setElement",
             document.querySelector("[selected]")
         );
 
@@ -1155,7 +1155,7 @@ class PageBuilder {
             console.log("previewCurrentDesign");
         }
 
-        this.store.commit("designer/setElement", null);
+        this.store.commit("pageBuilderState/setElement", null);
 
         const addedHtmlComponents = ref([]);
         // preview current design in external browser tab
@@ -1453,8 +1453,8 @@ class PageBuilder {
         );
     }
 
-    handlePageBuilderMethods() {
-        console.log("handlePageBuilderMethods ran.");
+    handlePageBuilderMethods(getElement) {
+        console.log("handlePageBuilderMethods ran:", getElement);
 
         if (!this.shouldRunMethods()) return;
 
