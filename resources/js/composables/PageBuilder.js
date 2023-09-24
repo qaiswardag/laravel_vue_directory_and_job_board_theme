@@ -103,7 +103,10 @@ class PageBuilder {
                 document.querySelector("[hovered]").removeAttribute("hovered");
             }
 
-            element.setAttribute("hovered", "");
+            if (!element.hasAttribute("selected")) {
+                // Only set "hovered" if "selected" is not present
+                element.setAttribute("hovered", "");
+            }
         });
 
         // Only run on mouse leave
@@ -134,7 +137,7 @@ class PageBuilder {
 
             this.store.commit("pageBuilderState/setElement", e.currentTarget);
 
-            this.handlePageBuilderMethods();
+            // this.handlePageBuilderMethods();
         });
     };
 

@@ -158,6 +158,12 @@ const secondButton = function () {
                                 <main></main>
                             </DynamicModal>
                             <div
+                                @click="
+                                    store.commit(
+                                        'pageBuilderState/setComponent',
+                                        null
+                                    )
+                                "
                                 class="px-6 h-[10vh] flex items-center justify-between"
                             >
                                 <button

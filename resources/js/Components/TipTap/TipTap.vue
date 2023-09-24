@@ -68,16 +68,6 @@ const editor = useEditor({
     // Register an event listener for the 'transaction' event
     onTransaction({ editor, transaction }) {
         // The editor state has changed.
-        // console.log("a change happended:", editor.getHTML());
-        // pageBuilder.handleTextInput(editor.getHTML());
-        //
-        //
-        // Get the editor's content as an HTML string
-        // getElementtextContentLength.value
-        if (getElement.value) {
-            //
-        }
-        console.log("err:", editor.getHTML());
     },
 });
 //

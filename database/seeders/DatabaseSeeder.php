@@ -551,6 +551,9 @@ class DatabaseSeeder extends Seeder
         // Page Builder
         //
         //
+        PageBuilderComponent::factory(200)->create();
+
+        //
         $pageBuilderComponents = [
             [
                 "user_id" => rand(1, 2),
@@ -566,7 +569,6 @@ class DatabaseSeeder extends Seeder
             PageBuilderComponent::factory()->create($pageBuildercomponent);
         }
 
-        PageBuilderComponent::factory(200)->create();
         //
         //
         //

@@ -19,7 +19,8 @@ class PageBuilderComponentsController extends Controller
 
         $componentsCategories = PageBuilderComponentCategory::all();
 
-        $query = PageBuilderComponent::with("coverImages")
+        $query = PageBuilderComponent::latest()
+            ->with("coverImages")
             ->with("categories")
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("title", "LIKE", "%" . $term . "%");

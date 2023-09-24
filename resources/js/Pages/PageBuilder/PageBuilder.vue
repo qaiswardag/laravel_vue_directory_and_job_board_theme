@@ -98,10 +98,6 @@ const getElementOuterHTML = computed(() => {
     return getElement.value.outerHTML ? getElement.value.outerHTML : null;
 });
 
-const deselectCurrentComponent = function () {
-    store.commit("pageBuilderState/setComponent", null);
-};
-
 const handleSelectComponent = function (componentObject) {
     store.commit("pageBuilderState/setComponent", componentObject);
 };
@@ -144,6 +140,7 @@ onMounted(async () => {
                 class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl"
             >
                 <div
+                    @click="store.commit('pageBuilderState/setComponent', null)"
                     class="flex items-center justify-between primary-gap rounded-t-2xl bg-myPrimaryLightGrayColor py-2 px-4"
                 >
                     <div>
@@ -174,16 +171,7 @@ onMounted(async () => {
                                 class="shrink-0 h-4 w-4 m-2 stroke-2"
                             ></EyeIcon>
                         </button>
-                        <button
-                            type="button"
-                            v-if="getElement !== null"
-                            @click="deselectCurrentComponent"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                        >
-                            <BoltSlashIcon
-                                class="shrink-0 h-4 w-4 m-2 stroke-2"
-                            ></BoltSlashIcon>
-                        </button>
+
                         <button
                             type="button"
                             v-if="getMenuRight === false"
@@ -202,49 +190,55 @@ onMounted(async () => {
                     </div>
                 </div>
 
-                <div class="overflow-y-auto">
-                    <!-- Added Compoents to DOM # start -->
-                    <div
-                        id="pagebuilder"
-                        v-for="component in Array.isArray(getComponents) &&
-                        getComponents"
-                        :key="component"
-                        class="p-1 bg-white grow"
-                    >
+                <div
+                    @click="store.commit('pageBuilderState/setComponent', null)"
+                    class="p-2 bg-red-50 overflow-y-auto h-screen"
+                >
+                    <div id="pagebuilder" class="">
+                        <!-- Added Compoents to DOM # start -->
                         <div
-                            @mouseup="handleSelectComponent(component)"
-                            class="relative group"
+                            v-for="component in Array.isArray(getComponents) &&
+                            getComponents"
+                            :key="component"
+                            class="p-1 bg-white grow"
                         >
-                            <div v-html="component.html_code"></div>
-                        </div>
-                    </div>
-                    <!-- Added Compoents to DOM # end -->
-
-                    <!-- Add Component # start -->
-                    <div
-                        class="rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 my-12 mx-8"
-                    >
-                        <FolderPlusIcon
-                            @click="handleAddComponent"
-                            class="mx-auto h-12 w-12 text-gray-400 cursor-pointer"
-                        ></FolderPlusIcon>
-                        <h3 class="mt-2 text-sm font-semibold text-gray-900">
-                            Add Component
-                        </h3>
-                        <p class="mt-1 text-sm text-gray-500">
-                            Get started by adding a new component.
-                        </p>
-                        <div class="mt-6">
-                            <button
-                                @click="handleAddComponent"
-                                type="button"
-                                class="myPrimaryButton"
+                            <div
+                                @mouseup="handleSelectComponent(component)"
+                                class="relative group"
                             >
-                                <FolderPlusIcon
-                                    class="-ml-0.5 mr-1.5 h-5 w-5"
-                                ></FolderPlusIcon>
-                                New Component
-                            </button>
+                                <div v-html="component.html_code"></div>
+                            </div>
+                        </div>
+                        <!-- Added Compoents to DOM # end -->
+
+                        <!-- Add Component # start -->
+                        <div
+                            class="rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 my-12 mx-8"
+                        >
+                            <FolderPlusIcon
+                                @click="handleAddComponent"
+                                class="mx-auto h-12 w-12 text-gray-400 cursor-pointer"
+                            ></FolderPlusIcon>
+                            <h3
+                                class="mt-2 text-sm font-semibold text-gray-900"
+                            >
+                                Add Component
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">
+                                Get started by adding a new component.
+                            </p>
+                            <div class="mt-6">
+                                <button
+                                    @click="handleAddComponent"
+                                    type="button"
+                                    class="myPrimaryButton"
+                                >
+                                    <FolderPlusIcon
+                                        class="-ml-0.5 mr-1.5 h-5 w-5"
+                                    ></FolderPlusIcon>
+                                    New Component
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -274,12 +268,12 @@ onMounted(async () => {
     cursor: default;
 }
 #pagebuilder [selected] {
-    outline: rgb(185, 16, 16) solid 2px !important;
-    outline-offset: -2px !important;
+    outline: rgb(185, 16, 16) dashed 2px !important;
+    outline-offset: +8px !important;
 }
 #pagebuilder [hovered] {
-    outline: rgb(0, 140, 14, 1) solid 2px !important;
-    outline-offset: -2px !important;
+    outline: rgb(0, 140, 14, 1) dashed 2px !important;
+    outline-offset: +8px !important;
 }
 
 .sortable-ghost {

@@ -26,6 +26,8 @@ class PageBuilderComponents extends Command
      */
     public function handle()
     {
+        PageBuilderComponent::factory(200)->create();
+
         $pageBuilderComponents = [
             "user_id" => rand(1, 2),
             "title" => "Misty shroud over a forest",
@@ -37,8 +39,6 @@ class PageBuilderComponents extends Command
         foreach ($pageBuilderComponents as $component) {
             PageBuilderComponent::factory()->create($component);
         }
-
-        PageBuilderComponent::factory(200)->create();
 
         $this->info("Seeded successfully, new Components for production.");
     }
