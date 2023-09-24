@@ -55,7 +55,6 @@ const handleDownloadHTML = function () {
 
 <template>
     <SlideOverRightParent
-        v-if="showAdvancedSettingsSlideOverRight"
         :open="showAdvancedSettingsSlideOverRight"
         :title="titleSettingsSlideOverRight"
         @slideOverButton="settingsAdvancedSlideOverButton"

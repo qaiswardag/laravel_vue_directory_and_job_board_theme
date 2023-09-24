@@ -132,8 +132,6 @@ class PageBuilder {
 
             e.currentTarget.setAttribute("selected", "");
 
-            console.log("COMMIT ME OLD:", e.currentTarget);
-
             this.store.commit("pageBuilderState/setElement", e.currentTarget);
 
             this.handlePageBuilderMethods();
@@ -318,8 +316,6 @@ class PageBuilder {
         if (this.showRunningMethodLogs) {
             console.log("cloneCompObjForDOMInsertion");
         }
-        // Hide slider and right menu
-        this.store.commit("pageBuilderState/setMenuRight", false);
 
         // Deep clone clone component
         const clonedComponent = { ...componentObject };
@@ -473,8 +469,6 @@ class PageBuilder {
             console.log("handleDeleteElement");
         }
 
-        if (!this.shouldRunMethods()) return;
-
         // Get the element to be deleted
         const element = this.getElement.value;
 
@@ -500,18 +494,15 @@ class PageBuilder {
         // Remove the element from the DOM
         element.remove();
     }
+
     handleRestoreElement() {
         if (this.showRunningMethodLogs) {
             console.log("handleRestoreElement");
         }
 
-        if (!this.shouldRunMethods()) return;
-
         // Get the stored deleted element and its parent
-        if (
-            this.getRestoredElement.value !== null &&
-            this.getParentElement.value !== null
-        ) {
+        if (this.getRestoredElement.value && this.getParentElement.value) {
+            console.log("SKAL KOMME");
             // Create a new element from the stored outerHTML
             const newElement = document.createElement("div");
             newElement.innerHTML = this.getRestoredElement.value;

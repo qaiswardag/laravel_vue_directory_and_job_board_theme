@@ -90,53 +90,51 @@ const isHeadingElement = computed(() => {
             </div>
 
             <div class="mb-4 overflow-y-scroll md:pb-24 pb-12">
-                <template v-if="getElement">
-                    <div v-show="isHeadingElement === true">
-                        <article>
-                            <ComponentTopMenu></ComponentTopMenu>
-                        </article>
-                        <article>
-                            <ImageEditor :user="user" :team="team">
-                            </ImageEditor>
-                        </article>
-                        <article>
-                            <TipTap></TipTap>
-                        </article>
-                        <article>
-                            <LinkEditor></LinkEditor>
-                        </article>
-                        <article>
-                            <Typography></Typography>
-                        </article>
-                        <article>
-                            <ColorsEditor> </ColorsEditor>
-                        </article>
-                        <article>
-                            <PaddingPlusMargin> </PaddingPlusMargin>
-                        </article>
-                        <article>
-                            <BorderRadius></BorderRadius>
-                        </article>
-                        <article>
-                            <Borders></Borders>
-                        </article>
-                        <article>
-                            <ClassEditor></ClassEditor>
-                        </article>
-                    </div>
+                <div v-show="isHeadingElement === true">
+                    <article>
+                        <ComponentTopMenu></ComponentTopMenu>
+                    </article>
 
                     <article>
-                        <div
-                            v-show="
-                                isHeadingElement === true ||
-                                getRestoredElement !== null
-                            "
-                        >
-                            <DeleteElement> </DeleteElement>
-                        </div>
+                        <ImageEditor :user="user" :team="team"> </ImageEditor>
                     </article>
-                    <article class="min-h-[20em]"></article>
-                </template>
+                    <article>
+                        <TipTap></TipTap>
+                    </article>
+                    <article>
+                        <LinkEditor></LinkEditor>
+                    </article>
+                    <article>
+                        <Typography></Typography>
+                    </article>
+                    <article>
+                        <ColorsEditor> </ColorsEditor>
+                    </article>
+                    <article>
+                        <PaddingPlusMargin> </PaddingPlusMargin>
+                    </article>
+                    <article>
+                        <BorderRadius></BorderRadius>
+                    </article>
+                    <article>
+                        <Borders></Borders>
+                    </article>
+                    <article>
+                        <ClassEditor></ClassEditor>
+                    </article>
+                </div>
+
+                <article>
+                    <div
+                        v-show="
+                            isHeadingElement === true ||
+                            getRestoredElement !== null
+                        "
+                    >
+                        <DeleteElement> </DeleteElement>
+                    </div>
+                </article>
+                <article class="min-h-[20em]"></article>
             </div>
         </div>
     </div>

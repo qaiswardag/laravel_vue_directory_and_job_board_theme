@@ -75,7 +75,6 @@ const handleDropComponent = async function (componentObject) {
 };
 
 const handleAddHelperComponent = async function (helperComponentObject) {
-    console.log(helperComponentObject);
     await nextTick();
     const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion({
         html_code: helperComponentObject.html_code,

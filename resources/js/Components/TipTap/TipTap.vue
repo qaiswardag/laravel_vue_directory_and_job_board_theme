@@ -13,15 +13,20 @@ import Link from "@tiptap/extension-link";
 import { LinkIcon, ListBulletIcon } from "@heroicons/vue/24/outline";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
-//
-//
 const store = useStore();
 const pageBuilder = new PageBuilder(store);
-
-// get current
+// get current element
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
+const textContentVueModel = ref("Hello World");
+const textContent = computed(() => {
+    return editor.value?.getHTML();
+});
+//
+//
+const getElementtextContentLength = ref(0);
+
 //
 const reactiveGetElement = ref(null);
 //
@@ -30,8 +35,11 @@ const getElementOuterHTML = computed(() => {
     return getElement.value.outerHTML ? getElement.value.outerHTML : null;
 });
 
-watch(getElementOuterHTML, (newComponent) => {
-    reactiveGetElement.value = newComponent;
+watch(getElement, (newComponent) => {
+    const tempContainer = document.createElement("div");
+    tempContainer.innerHTML = newComponent;
+    const textContent = tempContainer.textContent;
+    getElementtextContentLength.value = textContent.length;
 });
 //
 // Check if any of the child elements have the tagName "IMG"
@@ -65,10 +73,68 @@ const editor = useEditor({
         //
         //
         // Get the editor's content as an HTML string
-        //
-        // pageBuilder.handleTextInput(editor.getHTML());
+        // getElementtextContentLength.value
+        if (getElement.value) {
+            //
+        }
+        console.log("err:", editor.getHTML());
     },
 });
+//
+//
+// watch for changes in textContent and update store and textContentVueModel
+watch(textContent, (newValue) => {
+    if (getElement.value) {
+        store.commit("pageBuilderState/setTextAreaVueModel", newValue);
+        if (
+            typeof newValue === "string" &&
+            newValue !== textContentVueModel.value
+        ) {
+            pageBuilder.handleTextInput(newValue);
+        }
+    }
+});
+//
+//
+//
+//
+watch(getElement, (newValue) => {
+    if (editor.value) {
+        // Get all child elements of the parentDiv
+        const childElements = newValue?.children;
+        if (newValue?.tagName === "IMG") {
+            containsInvalidTags.value = true;
+            return;
+        }
+        if (!childElements) return;
+        Array.from(childElements).forEach((element) => {
+            if (element?.tagName === "IMG" || element?.tagName === "DIV") {
+                containsInvalidTags.value = true;
+            } else {
+                containsInvalidTags.value = false;
+                editor.value.commands.setContent(newValue.innerHTML);
+            }
+        });
+    }
+});
+//
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -98,45 +164,6 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-const textContentVueModel = ref("Hello World");
-
-const textContent = computed(() => {
-    return editor.value?.getHTML();
-});
-
-// Watch for changes in textContent and update store and textContentVueModel
-// watch(textContent, (newValue) => {
-//     if (getElement.value) {
-//         console.log("TipTap textContent got updated");
-//         store.commit("pageBuilderState/setTextAreaVueModel", newValue);
-//         if (
-//             typeof newValue === "string" &&
-//             newValue !== textContentVueModel.value
-//         ) {
-//             pageBuilder.handleTextInput(newValue);
-//         }
-//     }
-// });
-
-// Watch for changes in textContent and update store
-
-//
-//
-//
-//
-// watch(textContent, (newValue) => {
-//     if (getElement.value) {
-//         console.log("TipTap textContent got updated");
-//         store.commit("pageBuilderState/setTextAreaVueModel", newValue);
-//         console.log("new value er:", getElement.value.textContent);
-//         // pageBuilder.handleTextInput(newValue);
-//     }
-// });
-
-//
-//
-//
-
 //
 //
 //
@@ -144,37 +171,6 @@ const textContent = computed(() => {
 //
 //
 //
-watch(getElement, (newValue) => {
-    // console.log("WATCH RAN....", getElement.value);
-    //
-    //
-    //
-    //
-    //
-    if (editor.value) {
-        // Get all child elements of the parentDiv
-        const childElements = newValue?.children;
-        if (newValue?.tagName === "IMG") {
-            containsInvalidTags.value = true;
-            return;
-        }
-        if (!childElements) return;
-        Array.from(childElements).forEach((element) => {
-            if (element?.tagName === "IMG" || element?.tagName === "DIV") {
-                containsInvalidTags.value = true;
-            } else {
-                containsInvalidTags.value = false;
-                editor.value.commands.setContent(newValue.innerHTML);
-                //
-                //
-                //
-                //
-                //
-                // pageBuilder.handleTextInput(editor.value?.getHTML());
-            }
-        });
-    }
-});
 //
 //
 //

@@ -84,11 +84,18 @@ const handleAddComponent = function () {
     // end modal
 };
 
+const getComponents = computed(() => {
+    return store.getters["pageBuilderState/getComponents"];
+});
 const getComponent = computed(() => {
     return store.getters["pageBuilderState/getComponent"];
 });
-const getComponents = computed(() => {
-    return store.getters["pageBuilderState/getComponents"];
+const getElement = computed(() => {
+    return store.getters["pageBuilderState/getElement"];
+});
+const getElementOuterHTML = computed(() => {
+    if (getElement.value === null) return;
+    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
 });
 
 const deselectCurrentComponent = function () {
@@ -98,15 +105,6 @@ const deselectCurrentComponent = function () {
 const handleSelectComponent = function (componentObject) {
     store.commit("pageBuilderState/setComponent", componentObject);
 };
-
-const getElement = computed(() => {
-    return store.getters["pageBuilderState/getElement"];
-});
-
-const getElementOuterHTML = computed(() => {
-    if (getElement.value === null) return;
-    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
-});
 
 watch(getElementOuterHTML, () => {
     pageBuilder.handlePageBuilderMethods();
@@ -276,11 +274,11 @@ onMounted(async () => {
     cursor: default;
 }
 #pagebuilder [selected] {
-    outline: rgb(185, 16, 16) dashed 4px !important;
+    outline: rgb(185, 16, 16) solid 2px !important;
     outline-offset: -2px !important;
 }
 #pagebuilder [hovered] {
-    outline: rgb(0, 140, 14, 1) dashed 4px !important;
+    outline: rgb(0, 140, 14, 1) solid 2px !important;
     outline-offset: -2px !important;
 }
 

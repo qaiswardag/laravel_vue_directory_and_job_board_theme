@@ -25,6 +25,7 @@ const getElementOuterHTML = computed(() => {
 });
 
 watch(getElementOuterHTML, (newComponent) => {
+    console.log("watch ran");
     reactiveGetElement.value = newComponent;
 });
 
