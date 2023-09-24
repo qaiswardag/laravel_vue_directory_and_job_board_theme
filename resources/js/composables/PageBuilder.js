@@ -275,6 +275,11 @@ class PageBuilder {
             resolve();
         });
 
+        this.store.commit(
+            "designer/setElement",
+            document.querySelector("[selected]")
+        );
+
         this.setEventListenersForElements();
     };
 
@@ -326,6 +331,11 @@ class PageBuilder {
         await new Promise((resolve) => {
             resolve();
         });
+
+        this.store.commit(
+            "designer/setElement",
+            document.querySelector("[selected]")
+        );
 
         this.setListenersForNewComponentElements(componentID);
     };
@@ -407,6 +417,7 @@ class PageBuilder {
         }
 
         this.store.commit(`pageBuilderState/${mutationName}`, elementClass);
+        this.store.commit("pageBuilderState/setElement", this.getElement.value);
 
         return currentCSS;
     }
@@ -454,10 +465,12 @@ class PageBuilder {
             !this.getElement.value.classList.contains(userSelectedClass)
         ) {
             this.getElement.value.classList.add(userSelectedClass);
+
             this.store.commit(
                 "pageBuilderState/setElement",
                 this.getElement.value
             );
+
             this.store.commit("pageBuilderState/setClass", userSelectedClass);
         }
     }
@@ -471,6 +484,7 @@ class PageBuilder {
         // remove selected class from element
         if (this.getElement.value.classList.contains(userSelectedClass)) {
             this.getElement.value.classList.remove(userSelectedClass);
+
             this.store.commit(
                 "pageBuilderState/setElement",
                 this.getElement.value
@@ -509,6 +523,7 @@ class PageBuilder {
         );
 
         this.store.commit("pageBuilderState/setComponent", null);
+        this.store.commit("pageBuilderState/setElement", null);
 
         // Remove the element from the DOM
         element.remove();
@@ -541,6 +556,7 @@ class PageBuilder {
         this.store.commit("pageBuilderState/setParentElement", null);
         this.store.commit("pageBuilderState/setRestoredElement", null);
         this.store.commit("pageBuilderState/setComponent", null);
+        this.store.commit("pageBuilderState/setElement", null);
     }
 
     handleFontWeight(userSelectedFontWeight) {
@@ -1139,6 +1155,8 @@ class PageBuilder {
             console.log("previewCurrentDesign");
         }
 
+        this.store.commit("designer/setElement", null);
+
         const addedHtmlComponents = ref([]);
         // preview current design in external browser tab
         // iterate over each top-level section component
@@ -1292,6 +1310,7 @@ class PageBuilder {
                     "pageBuilderState/setElementContainsHyperlink",
                     true
                 );
+
                 return;
             }
 

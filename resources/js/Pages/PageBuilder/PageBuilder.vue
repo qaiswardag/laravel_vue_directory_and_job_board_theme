@@ -84,9 +84,6 @@ const handleAddComponent = function () {
     // end modal
 };
 
-const getElement = computed(() => {
-    return store.getters["pageBuilderState/getElement"];
-});
 const getComponent = computed(() => {
     return store.getters["pageBuilderState/getComponent"];
 });
@@ -101,6 +98,19 @@ const deselectCurrentComponent = function () {
 const handleSelectComponent = function (componentObject) {
     store.commit("pageBuilderState/setComponent", componentObject);
 };
+
+const getElement = computed(() => {
+    return store.getters["pageBuilderState/getElement"];
+});
+
+const getElementOuterHTML = computed(() => {
+    if (getElement.value === null) return;
+    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
+});
+
+watch(getElementOuterHTML, (newComponent) => {
+    pageBuilder.handlePageBuilderMethods();
+});
 
 onMounted(async () => {
     pageBuilder.observePlusSyncHTMLElements();
