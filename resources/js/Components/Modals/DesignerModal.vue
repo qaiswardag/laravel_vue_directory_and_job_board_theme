@@ -30,6 +30,8 @@ defineProps({
 const store = useStore();
 const pageBuilder = new PageBuilder(store);
 
+const hideDraftButton = ref(true);
+
 const showModalClosePageBuilder = ref(false);
 //
 // use dynamic model
@@ -98,6 +100,7 @@ const secondButton = function () {
 //
 //
 const handleDraftForUpdate = function () {
+    hideDraftButton.value = false;
     pageBuilder.removeHoveredAndSelected();
     emit("handleDraftForUpdate");
 };
@@ -187,7 +190,10 @@ const handleDraftForUpdate = function () {
                                         Save & Close
                                     </button>
                                     <button
-                                        v-if="updateOrCreate === 'update'"
+                                        v-if="
+                                            updateOrCreate === 'update' &&
+                                            hideDraftButton
+                                        "
                                         class="mySecondaryButton py-2 mx-0 text-xs"
                                         @click="handleDraftForUpdate"
                                         type="button"
