@@ -92,7 +92,6 @@ class PageBuilder {
     }
 
     #autoModifyElements(element) {
-        console.log("PRIVATE FUNCTION!!!");
         // If the element is one of the excluded tags
         // and it's not inside a div or inside an img tag, wrap it in a div
         const divWrapper = document.createElement("div");

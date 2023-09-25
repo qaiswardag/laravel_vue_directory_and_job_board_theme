@@ -285,12 +285,12 @@ const switchTeam = function (team) {
 
                                             <td class="myPrimaryTableTBodyTd">
                                                 <span
+                                                    class="myPrimaryTag"
                                                     :class="
                                                         team.public
-                                                            ? 'bg-green-100'
-                                                            : 'bg-red-100 text-myPrimaryErrorColor'
+                                                            ? 'bg-myPrimaryLinkColor text-white'
+                                                            : 'bg-myPrimaryErrorColor text-white'
                                                     "
-                                                    class="inline-flex rounded-full px-2 myPrimaryParagraph font-medium text-green-800"
                                                     >{{
                                                         team.public
                                                             ? "Public"

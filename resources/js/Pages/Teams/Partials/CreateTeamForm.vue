@@ -132,7 +132,7 @@ const createTeam = () => {
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
                 >
                     <InputLabel
-                        :value="form.public ? 'Published' : 'Unpublished'"
+                        :value="form.public ? 'Public' : 'Private'"
                         :class="{
                             'text-myPrimaryLinkColor': form.public,
                             'text-myPrimaryErrorColor': !form.public,

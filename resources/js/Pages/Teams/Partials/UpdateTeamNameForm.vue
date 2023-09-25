@@ -108,8 +108,8 @@ const handleUploadLogo = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        if (Array.isArray(postForm.logo) === false) {
-            postForm.logo === [];
+        if (!Array.isArray(postForm.logo)) {
+            postForm.logo = [];
         }
 
         const idExists = postForm.logo.some((item) => {
@@ -190,8 +190,8 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        if (Array.isArray(postForm.cover_image) === false) {
-            postForm.cover_image === [];
+        if (!Array.isArray(postForm.cover_image)) {
+            postForm.cover_image = [];
         }
 
         const idExists = postForm.cover_image?.some((item) => {
@@ -291,7 +291,7 @@ onBeforeMount(() => {
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
                 >
                     <InputLabel
-                        :value="postForm.public ? 'Published' : 'Unpublished'"
+                        :value="postForm.public ? 'Public' : 'Private'"
                         :class="{
                             'text-myPrimaryLinkColor': postForm.public,
                             'text-myPrimaryErrorColor': !postForm.public,
