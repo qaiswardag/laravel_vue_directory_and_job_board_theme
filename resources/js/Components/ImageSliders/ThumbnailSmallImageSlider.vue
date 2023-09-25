@@ -134,14 +134,14 @@ const sortedImages = computed(() => {
                 <button
                     type="button"
                     @click="nextSlide"
-                    class="bg-opacity-80 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
+                    class="bg-opacity-20 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
                     :class="[
                         {
                             'rounded-none h-full top-0 right-0 bottom-0 w-8':
                                 squareButtons,
                         },
                         {
-                            'bg-opacity-80 top-1/2 bottom-1/2 right-[4px] shaddow h-10 w-10 rounded-full ':
+                            'bg-opacity-60 top-1/2 bottom-1/2 right-[4px] shaddow h-10 w-10 rounded-full ':
                                 !squareButtons,
                         },
                     ]"
