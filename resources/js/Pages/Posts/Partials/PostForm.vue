@@ -146,7 +146,7 @@ const handleUploadCoverImage = function () {
     // handle click
     secondMediaButtonFunction.value = function () {
         if (Array.isArray(postForm.cover_image) === false) {
-            postForm.cover_image === [];
+            postForm.cover_image = [];
         }
 
         const idExists = postForm.cover_image?.some((item) => {

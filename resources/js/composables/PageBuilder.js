@@ -1192,8 +1192,6 @@ class PageBuilder {
     }
 
     async saveComponentsLocalStorageUpdate() {
-        console.log("DE ER:", this.getComponents.value);
-
         if (this.showRunningMethodLogs) {
             console.log("saveComponentsLocalStorageUpdate");
         }
@@ -1225,7 +1223,7 @@ class PageBuilder {
 
         return false;
     }
-    // øø
+    //
     areComponentsStoredInLocalStorageUpdate() {
         if (this.showRunningMethodLogs) {
             console.log("areComponentsStoredInLocalStorageUpdate");

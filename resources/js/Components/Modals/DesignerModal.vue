@@ -13,7 +13,7 @@ import {
     TransitionRoot,
 } from "@headlessui/vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 defineProps({
     show: {
@@ -98,12 +98,29 @@ const secondButton = function () {
 
 //
 //
+const getLocalStorageItemNameUpdate = computed(() => {
+    return store.getters["pageBuilderState/getLocalStorageItemNameUpdate"];
+});
 //
 const handleDraftForUpdate = function () {
     hideDraftButton.value = false;
     pageBuilder.removeHoveredAndSelected();
     emit("handleDraftForUpdate");
 };
+
+onMounted(() => {
+    const item = localStorage.getItem(getLocalStorageItemNameUpdate.value);
+    if (item) {
+        const parsedValue = JSON.parse(item);
+
+        if (Array.isArray(parsedValue) && parsedValue.length === 0) {
+            hideDraftButton.value = false;
+        }
+    }
+    if (!item) {
+        hideDraftButton.value = false;
+    }
+});
 </script>
 
 <template>
