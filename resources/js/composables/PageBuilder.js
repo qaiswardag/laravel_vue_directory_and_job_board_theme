@@ -1204,6 +1204,14 @@ class PageBuilder {
             JSON.stringify(this.getComponents.value)
         );
     }
+    async removeItemComponentsLocalStorageUpdate() {
+        if (this.showRunningMethodLogs) {
+            console.log("saveComponentsLocalStorageUpdate");
+        }
+
+        this.nextTick;
+        localStorage.removeItem(this.getLocalStorageItemNameUpdate.value);
+    }
 
     areComponentsStoredInLocalStorage() {
         if (this.showRunningMethodLogs) {

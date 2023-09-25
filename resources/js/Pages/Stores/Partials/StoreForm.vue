@@ -132,7 +132,7 @@ const formType = ref("create");
 const pathLocalStorage = `store-form-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
-const pathPageBuilderLocalStorage = `page-builder-create-store-team-${
+const pathPageBuilderLocalStorageCreate = `page-builder-create-store-team-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
 
@@ -420,6 +420,8 @@ const handleCreatePost = function () {
     createPost();
 };
 
+const submittedOnUpdate = ref(false);
+
 const createPost = () => {
     if (formType.value === "create") {
         postForm.post(route("team.stores.store"), {
@@ -434,7 +436,10 @@ const createPost = () => {
     if (formType.value === "update") {
         postForm.post(route("team.stores.update", props.post.id), {
             preserveScroll: true,
-            onSuccess: () => {},
+            onSuccess: () => {
+                submittedOnUpdate.value = true;
+                clearPageBuilderOnUpdate();
+            },
             onError: () => {},
             onFinish: () => {},
         });
@@ -495,7 +500,11 @@ const clearForm = function () {
     postForm.cover_image = [];
 
     localStorage.removeItem(pathLocalStorage);
-    localStorage.removeItem(pathPageBuilderLocalStorage);
+    localStorage.removeItem(pathPageBuilderLocalStorageCreate);
+    store.commit("pageBuilderState/setComponents", []);
+};
+const clearPageBuilderOnUpdate = function () {
+    pageBuilder.removeItemComponentsLocalStorageUpdate();
     store.commit("pageBuilderState/setComponents", []);
 };
 
@@ -524,8 +533,11 @@ router.on = async () => {
         await nextTick();
         pageBuilder.observePlusSyncExistingHTMLElements();
 
-        await nextTick();
-        pageBuilder.saveComponentsLocalStorageUpdate();
+        if (submittedOnUpdate.value) {
+            console.log("er:", submittedOnUpdate.value);
+            await nextTick();
+            pageBuilder.saveComponentsLocalStorageUpdate();
+        }
     }
 
     // set open modal
@@ -545,8 +557,11 @@ window.addEventListener("beforeunload", async function () {
         await nextTick();
         pageBuilder.observePlusSyncExistingHTMLElements();
 
-        await nextTick();
-        pageBuilder.saveComponentsLocalStorageUpdate();
+        if (submittedOnUpdate.value) {
+            console.log("er:", submittedOnUpdate.value);
+            await nextTick();
+            pageBuilder.saveComponentsLocalStorageUpdate();
+        }
     }
 
     // set open modal
@@ -919,8 +934,8 @@ onBeforeMount(async () => {
         //
         //
         //
-        pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-update-store-${
-            props.post.id ? props.post.id : "øøøø"
+        pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-draft-update-store-${
+            props.post.id ? props.post.id : null
         }-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
         //
         //
@@ -999,7 +1014,7 @@ onBeforeMount(async () => {
     //
     store.commit(
         "pageBuilderState/setLocalStorageItemName",
-        pathPageBuilderLocalStorage
+        pathPageBuilderLocalStorageCreate
     );
 
     store.commit(
