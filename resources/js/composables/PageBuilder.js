@@ -460,7 +460,10 @@ class PageBuilder {
             // Check if class already exists
             !this.getElement.value.classList.contains(userSelectedClass)
         ) {
-            this.getElement.value.classList.add(userSelectedClass);
+            // Remove any leading/trailing spaces
+            const cleanedClass = userSelectedClass.trim();
+
+            this.getElement.value.classList.add(cleanedClass);
 
             this.store.commit(
                 "pageBuilderState/setElement",

@@ -40,7 +40,7 @@ class StorePageBuilderComponentRequest extends FormRequest
     public function withValidator($validator)
     {
         $maxCategories = 2;
-        $maxCoverImages = 2;
+        $maxCoverImages = 6;
 
         $validator->after(function ($validator) use (
             $maxCategories,

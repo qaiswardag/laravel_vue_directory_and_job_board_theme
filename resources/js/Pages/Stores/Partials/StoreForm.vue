@@ -135,6 +135,7 @@ const pathLocalStorage = `store-form-${
 const pathPageBuilderLocalStorage = `page-builder-create-store-team-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
+
 const pathPageBuilderLocalStorageUpdateDraft = ref(null);
 
 // use media library
@@ -643,6 +644,9 @@ const handleDraftForUpdate = async function () {
 //
 //
 const handlePageBuilder = function () {
+    // set modal standards
+    openDesignerModal.value = true;
+
     if (formType.value === "create") {
         store.commit("pageBuilderState/setComponents", []);
 
@@ -665,8 +669,6 @@ const handlePageBuilder = function () {
     //
     //
     //
-    // set modal standards
-    openDesignerModal.value = true;
 
     // handle click
     firstDesignerModalButtonFunction.value = async function () {
@@ -678,14 +680,21 @@ const handlePageBuilder = function () {
 
             await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
+            await delay(500);
+
+            // // set components to empty array
+            // store.commit("pageBuilderState/setComponents", []);
         }
 
         // set open modal
+        //
+        //
+        //
+        //
         openDesignerModal.value = false;
-        await delay(500);
+        isLoading.value = false;
     };
 
-    isLoading.value = false;
     // handle click
     secondDesignerModalButtonFunction.value = async function () {
         isLoading.value = true;
@@ -748,21 +757,6 @@ const handlePageBuilder = function () {
 //
 // get unique post if needs to be updated
 onBeforeMount(async () => {
-    if (formType.value === "update") {
-        pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-update-store-${
-            props.post.id
-        }-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
-    }
-
-    store.commit(
-        "pageBuilderState/setLocalStorageItemName",
-        pathPageBuilderLocalStorage
-    );
-
-    store.commit(
-        "pageBuilderState/setLocalStorageItemNameUpdate",
-        pathPageBuilderLocalStorageUpdateDraft.value
-    );
     //
     //
     //
@@ -920,6 +914,20 @@ onBeforeMount(async () => {
     if (props.post !== null) {
         formType.value = "update";
 
+        //
+        //
+        //
+        //
+        //
+        pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-update-store-${
+            props.post.id ? props.post.id : "øøøø"
+        }-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
+        //
+        //
+        //
+        //
+        //
+        //
         // Parse the HTML content using DOMParser
         const parser = new DOMParser();
         const doc = parser.parseFromString(props.post.content, "text/html");
@@ -978,6 +986,26 @@ onBeforeMount(async () => {
         postForm.categories = props.categories;
         postForm.cover_image = props.coverImages;
     }
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    store.commit(
+        "pageBuilderState/setLocalStorageItemName",
+        pathPageBuilderLocalStorage
+    );
+
+    store.commit(
+        "pageBuilderState/setLocalStorageItemNameUpdate",
+        pathPageBuilderLocalStorageUpdateDraft.value
+    );
 });
 const pageBuilder = new PageBuilder(store);
 </script>

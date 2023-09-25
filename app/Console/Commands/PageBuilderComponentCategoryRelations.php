@@ -31,7 +31,7 @@ class PageBuilderComponentCategoryRelations extends Command
         $totalComponents = PageBuilderComponent::count();
 
         // Define the number of times to run the code
-        $numberOfRuns = 3;
+        $numberOfRuns = 2;
 
         // Iterate to run the code multiple times
         for ($run = 1; $run <= $numberOfRuns; $run++) {
