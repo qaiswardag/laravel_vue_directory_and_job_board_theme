@@ -97,8 +97,9 @@ class PageBuilder {
         }
         // Add padding to every DIV
         if (element.tagName === "DIV") {
+            // If the <div> does not contain any classes, add the following classes
             if (element.tagName === "DIV" && element.classList.length === 0) {
-                element.classList.add("m-2");
+                element.classList.add("p-2");
             }
         }
     }
@@ -124,7 +125,7 @@ class PageBuilder {
             element.parentNode.insertBefore(divWrapper, element);
             divWrapper.appendChild(element);
 
-            divWrapper.classList.add("m-2");
+            divWrapper.classList.add("p-2");
         }
 
         await this.nextTick;

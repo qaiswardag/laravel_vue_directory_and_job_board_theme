@@ -80,7 +80,7 @@ watch(textContent, (newValue) => {
             newValue !== textContentVueModel.value
         ) {
             // TODO: FIX BELOW
-            // pageBuilder.handleTextInput(newValue);
+            pageBuilder.handleTextInput(newValue);
         }
     }
 });
