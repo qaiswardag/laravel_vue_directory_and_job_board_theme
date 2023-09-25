@@ -661,6 +661,11 @@ const handlePageBuilder = function () {
     }
     //
     //
+    if (formType.value === "update") {
+        // store.commit("pageBuilderState/setComponents", []);
+    }
+    //
+    //
     //
     // set modal standards
     openDesignerModal.value = true;
@@ -679,10 +684,10 @@ const handlePageBuilder = function () {
 
         // set open modal
         openDesignerModal.value = false;
-
         await delay(500);
-        isLoading.value = false;
     };
+
+    isLoading.value = false;
     // handle click
     secondDesignerModalButtonFunction.value = async function () {
         isLoading.value = true;
