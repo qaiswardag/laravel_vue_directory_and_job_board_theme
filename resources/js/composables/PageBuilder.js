@@ -97,19 +97,38 @@ class PageBuilder {
         }
         // Add padding to every DIV
         if (element.tagName === "DIV") {
-            element.classList.add("p-2");
+            if (element.tagName === "DIV" && element.classList.length === 0) {
+                element.classList.add("m-2");
+            }
         }
     }
 
-    #wrapElementInDivIfExcluded(element) {
+    async #wrapElementInDivIfExcluded(element) {
         if (this.showRunningMethodLogs) {
             console.log("wrapElementInDivIfExcluded");
         }
         // If the element is one of the excluded tags
         // and it's not inside a div or inside an img tag, wrap it in a div
-        const divWrapper = document.createElement("div");
-        element.parentNode.insertBefore(divWrapper, element);
-        divWrapper.appendChild(element);
+
+        if (
+            element.tagName === "P" ||
+            element.tagName === "H1" ||
+            element.tagName === "H2" ||
+            element.tagName === "H3" ||
+            element.tagName === "H4" ||
+            element.tagName === "H5" ||
+            element.tagName === "H6"
+        ) {
+            const divWrapper = document.createElement("div");
+
+            element.parentNode.insertBefore(divWrapper, element);
+            divWrapper.appendChild(element);
+
+            divWrapper.classList.add("m-2");
+        }
+
+        await this.nextTick;
+        this.#applyUniversalClassesToElements(element);
     }
 
     /**
@@ -163,8 +182,6 @@ class PageBuilder {
             e.currentTarget.setAttribute("selected", "");
 
             this.store.commit("pageBuilderState/setElement", e.currentTarget);
-
-            // this.handlePageBuilderMethods();
         });
     };
 
@@ -177,7 +194,7 @@ class PageBuilder {
         if (this.showRunningMethodLogs) {
             console.log("setEventListenersForElements");
         }
-        document.querySelectorAll("section *").forEach((element) => {
+        document.querySelectorAll("section *").forEach(async (element) => {
             // apply universal CSS class
             this.#applyUniversalClassesToElements(element);
 
@@ -198,6 +215,7 @@ class PageBuilder {
                 element.parentNode.tagName !== "DIV" ||
                 element.parentNode.querySelector("img") !== null
             ) {
+                await this.nextTick;
                 this.#wrapElementInDivIfExcluded(element);
             }
         });
@@ -224,11 +242,10 @@ class PageBuilder {
             return;
         }
 
-        section.querySelectorAll("section *").forEach((element) => {
-            //
+        section.querySelectorAll("section *").forEach(async (element) => {
             // apply universal CSS class
             this.#applyUniversalClassesToElements(element);
-            //
+
             // Check if the element is not one of the excluded tags
             if (
                 !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
@@ -241,6 +258,12 @@ class PageBuilder {
                 ) {
                     this.addElementsListeners(element);
                     this.elementsWithListeners.add(element);
+                } else if (
+                    element.parentNode.tagName !== "DIV" ||
+                    element.parentNode.querySelector("img") !== null
+                ) {
+                    await this.nextTick;
+                    this.#wrapElementInDivIfExcluded(element);
                 }
             }
         });

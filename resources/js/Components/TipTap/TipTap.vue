@@ -28,7 +28,6 @@ const textContent = computed(() => {
 const getElementtextContentLength = ref(0);
 
 //
-const reactiveGetElement = ref(null);
 //
 const getElementOuterHTML = computed(() => {
     if (getElement.value === null) return;
@@ -80,7 +79,8 @@ watch(textContent, (newValue) => {
             typeof newValue === "string" &&
             newValue !== textContentVueModel.value
         ) {
-            pageBuilder.handleTextInput(newValue);
+            // TODO: FIX BELOW
+            // pageBuilder.handleTextInput(newValue);
         }
     }
 });
@@ -310,9 +310,6 @@ onMounted(() => {});
         </main>
     </DynamicModal>
     <template v-if="!containsInvalidTags">
-        <p class="my-12">
-            reactiveGetElement: {{ JSON.stringify(reactiveGetElement) }}
-        </p>
         <div
             v-if="editor"
             class="my-12 blockease-linear duration-200 block px-4 ease-linear"

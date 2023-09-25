@@ -1084,6 +1084,16 @@ const compiledCSS = {
         "pl-80",
         "pl-96",
     ],
+    grid: [
+        "grid ",
+        "grid-flow-row-dense",
+        "grid-cols-3 ",
+        "grid-rows-3",
+        "grid-cols-4",
+        "grid-rows-4",
+        "grid-flow-col auto-cols-max",
+        "auto-cols-max",
+    ],
 };
 
 export default compiledCSS;

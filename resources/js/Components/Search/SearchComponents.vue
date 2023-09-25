@@ -70,6 +70,9 @@ const handleDropComponent = async function (componentObject) {
     await nextTick();
     pageBuilder.observePlusSyncDroppedHTMLElements(clonedComponent.id);
 
+    await nextTick();
+    pageBuilder.observePlusSyncExistingHTMLElements();
+
     // Close modal
     firstButton();
 };
@@ -86,6 +89,9 @@ const handleAddHelperComponent = async function (helperComponentObject) {
 
     await nextTick();
     pageBuilder.observePlusSyncDroppedHTMLElements(clonedComponent.id);
+
+    await nextTick();
+    pageBuilder.observePlusSyncExistingHTMLElements();
 
     // Close modal
     firstButton();
