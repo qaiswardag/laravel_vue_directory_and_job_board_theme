@@ -438,7 +438,7 @@ const createPost = () => {
             preserveScroll: true,
             onSuccess: () => {
                 submittedOnUpdate.value = true;
-                clearPageBuilderOnUpdate();
+                clearPageBuilderOnSuccessUpdate();
             },
             onError: () => {},
             onFinish: () => {},
@@ -503,7 +503,7 @@ const clearForm = function () {
     localStorage.removeItem(pathPageBuilderLocalStorageCreate);
     store.commit("pageBuilderState/setComponents", []);
 };
-const clearPageBuilderOnUpdate = function () {
+const clearPageBuilderOnSuccessUpdate = function () {
     pageBuilder.removeItemComponentsLocalStorageUpdate();
     store.commit("pageBuilderState/setComponents", []);
 };
@@ -530,20 +530,21 @@ router.on = async () => {
     isLoading.value = true;
 
     if (formType.value === "update") {
-        await nextTick();
-        pageBuilder.observePlusSyncExistingHTMLElements();
-
-        if (submittedOnUpdate.value) {
-            console.log("er:", submittedOnUpdate.value);
+        if (!submittedOnUpdate.value) {
             await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
         }
+        //
+        //
+        //
+        await nextTick();
+        pageBuilder.observePlusSyncExistingHTMLElements();
     }
 
     // set open modal
     openDesignerModal.value = false;
 
-    await delay(500);
+    await delay(100);
     isLoading.value = false;
 };
 
@@ -554,20 +555,21 @@ window.addEventListener("beforeunload", async function () {
     isLoading.value = true;
 
     if (formType.value === "update") {
-        await nextTick();
-        pageBuilder.observePlusSyncExistingHTMLElements();
-
-        if (submittedOnUpdate.value) {
-            console.log("er:", submittedOnUpdate.value);
+        if (!submittedOnUpdate.value) {
             await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
         }
+        //
+        //
+        //
+        await nextTick();
+        pageBuilder.observePlusSyncExistingHTMLElements();
     }
 
     // set open modal
     openDesignerModal.value = false;
 
-    await delay(500);
+    await delay(100);
     isLoading.value = false;
 });
 
@@ -1021,6 +1023,10 @@ onBeforeMount(async () => {
         "pageBuilderState/setLocalStorageItemNameUpdate",
         pathPageBuilderLocalStorageUpdateDraft.value
     );
+});
+
+onMounted(() => {
+    submittedOnUpdate.value = false;
 });
 const pageBuilder = new PageBuilder(store);
 </script>

@@ -61,6 +61,11 @@ class StoreFactory extends Factory
             }, $selectedTags)
         );
 
+        $content =
+            "<section><div class=\"w-full pt-32 pb-32\"><div class=\"mx-auto max-w-7xl px-6 lg:flex lg:px-8\">" .
+            $this->faker->sentence(rand(20, 60), false) .
+            "</div></div></section>";
+
         return [
             "team_id" => 1,
             "user_id" => 1,
@@ -69,7 +74,7 @@ class StoreFactory extends Factory
             "title" => $title,
             "slug" => $slug,
             "address" => "Dubai Mall Fashion Avenue",
-            "content" => $this->faker->sentence(rand(20, 60), false),
+            "content" => $content,
             "published" => rand(0, 1),
             "tags" => $selectedTagsList,
         ];
