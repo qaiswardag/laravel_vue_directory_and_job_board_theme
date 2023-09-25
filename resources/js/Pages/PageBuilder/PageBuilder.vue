@@ -267,14 +267,51 @@ onMounted(async () => {
 #pagebuilder a {
     cursor: default;
 }
-#pagebuilder [selected] {
-    outline: rgb(185, 16, 16) dashed 2px !important;
-    outline-offset: -2px !important;
-}
+
 #pagebuilder [hovered] {
-    outline: rgb(0, 140, 14, 1) dashed 2px !important;
+    outline: rgb(0, 140, 14, 1) solid 2px !important;
     outline-offset: -2px !important;
 }
+
+#pagebuilder [selected] {
+    position: relative;
+
+    outline: rgb(185, 16, 16) solid 2px !important;
+    outline-offset: -2px !important;
+}
+
+#pagebuilder [selected]::before,
+#pagebuilder [selected]::after {
+    content: "";
+    position: absolute;
+    width: 20px; /* Adjust the size of the circle as needed */
+    height: 20px; /* Adjust the size of the circle as needed */
+    background-color: rgb(185, 16, 16);
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+#pagebuilder [selected]::before {
+    top: -10px; /* Adjust the distance from the top */
+    left: -10px; /* Adjust the distance from the left */
+}
+
+#pagebuilder [selected]::after {
+    top: -10px; /* Adjust the distance from the top */
+    right: -10px; /* Adjust the distance from the right */
+}
+
+#pagebuilder [selected]::nth-child(2)::before {
+    bottom: -10px; /* Adjust the distance from the bottom */
+    left: -10px; /* Adjust the distance from the left */
+}
+
+#pagebuilder [selected]::nth-child(2)::after {
+    bottom: -10px; /* Adjust the distance from the bottom */
+    right: -10px; /* Adjust the distance from the right */
+}
+
+/* sortable */
 
 .sortable-ghost {
     display: flex;
