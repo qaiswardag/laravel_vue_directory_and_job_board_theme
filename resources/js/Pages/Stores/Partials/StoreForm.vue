@@ -135,9 +135,7 @@ const pathLocalStorage = `store-form-${
 const pathPageBuilderLocalStorage = `page-builder-create-store-team-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
-const pathPageBuilderLocalStorageUpdateDraft = `page-builder-update-store-${
-    props.post.id
-}-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
+const pathPageBuilderLocalStorageUpdateDraft = ref(null);
 
 // use media library
 const showMediaLibraryModal = ref(false);
@@ -750,6 +748,12 @@ const handlePageBuilder = function () {
 //
 // get unique post if needs to be updated
 onBeforeMount(async () => {
+    if (formType.value === "update") {
+        pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-update-store-${
+            props.post.id
+        }-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
+    }
+
     store.commit(
         "pageBuilderState/setLocalStorageItemName",
         pathPageBuilderLocalStorage
@@ -757,7 +761,7 @@ onBeforeMount(async () => {
 
     store.commit(
         "pageBuilderState/setLocalStorageItemNameUpdate",
-        pathPageBuilderLocalStorageUpdateDraft
+        pathPageBuilderLocalStorageUpdateDraft.value
     );
     //
     //

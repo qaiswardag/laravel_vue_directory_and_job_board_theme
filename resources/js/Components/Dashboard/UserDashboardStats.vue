@@ -363,7 +363,7 @@ onMounted(() => {
                                     ></ThumbnailSmallImageSlider>
                                 </template>
 
-                                <div class="px-2 pb-2">
+                                <div class="px-2 pt-4 pb-2">
                                     <Link
                                         :href="
                                             route('team.posts.post.show', [
