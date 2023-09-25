@@ -5,6 +5,7 @@ import EditorAccordion from "@/Components/PageBuilder/EditorMenu/EditorAccordion
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { PhotoIcon } from "@heroicons/vue/24/outline";
 import PageBuilder from "@/composables/PageBuilder";
+import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 const props = defineProps({
     team: {
@@ -18,6 +19,13 @@ const props = defineProps({
 const store = useStore();
 const pageBuilder = new PageBuilder(store);
 
+const delay = function delay(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+};
+
+const isLoading = ref(false);
 //
 // use media library
 const showMediaLibraryModal = ref(false);
@@ -59,16 +67,22 @@ const handleAddImage = function () {
     };
     //
     // handle click
-    secondMediaButtonFunction.value = function () {
+    secondMediaButtonFunction.value = async function () {
+        isLoading.value = true;
+        await delay(200);
         pageBuilder.updateBasePrimaryImage();
         // close media library modal
         showMediaLibraryModal.value = false;
+        isLoading.value = false;
     };
     //
     // end modal
 };
 </script>
 <template>
+    <template v-if="isLoading">
+        <FullScreenSpinner></FullScreenSpinner>
+    </template>
     <div v-if="getBasePrimaryImage !== null">
         <img
             class="object-cover object-center w-full cursor-pointer"

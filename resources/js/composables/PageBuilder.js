@@ -1245,12 +1245,13 @@ class PageBuilder {
         return false;
     }
     //
-    updateBasePrimaryImage() {
+    async updateBasePrimaryImage() {
         if (this.showRunningMethodLogs) {
             console.log("updateBasePrimaryImage");
         }
 
         if (this.getCurrentImage.value.currentImage?.mediaLibrary?.path) {
+            await this.nextTick;
             this.store.commit(
                 "pageBuilderState/setBasePrimaryImage",
                 `/storage/uploads/${this.getCurrentImage.value.currentImage.mediaLibrary.large_path}`

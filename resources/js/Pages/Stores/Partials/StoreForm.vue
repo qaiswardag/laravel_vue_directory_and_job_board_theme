@@ -645,6 +645,23 @@ const handleDraftForUpdate = async function () {
 //
 //
 const handlePageBuilder = function () {
+    if (formType.value === "create") {
+        store.commit("pageBuilderState/setComponents", []);
+
+        // local storage for page builder
+        if (pageBuilder.areComponentsStoredInLocalStorage()) {
+            postForm.content =
+                Array.isArray(getComponents.value) &&
+                getComponents.value
+                    .map((component) => {
+                        return component.html_code;
+                    })
+                    .join("");
+        }
+    }
+    //
+    //
+    //
     // set modal standards
     openDesignerModal.value = true;
 
@@ -717,6 +734,10 @@ const handlePageBuilder = function () {
         isLoading.value = false;
     };
 
+    //
+    //
+    //
+    //
     // end modal
 };
 //
@@ -753,7 +774,7 @@ onBeforeMount(async () => {
         //
         //
         //
-        // local storage for postForm
+        // local storage for form
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
             const formDataJson = localStorage.getItem(pathLocalStorage);
