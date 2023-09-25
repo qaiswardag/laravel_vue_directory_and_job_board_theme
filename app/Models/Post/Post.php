@@ -3,7 +3,7 @@
 namespace App\Models\Post;
 
 use App\Models\MediaLibrary\MediaLibrary;
-use App\Models\post\PostCoverImageRelation;
+use App\Models\Post\PostCoverImageRelation;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

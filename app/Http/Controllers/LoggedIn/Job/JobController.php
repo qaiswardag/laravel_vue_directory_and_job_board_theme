@@ -10,7 +10,7 @@ use App\Models\Job\JobCategory;
 use App\Models\Job\JobCategoryRelation;
 use App\Models\Job\JobCountry;
 use App\Models\Job\JobCountryRelation;
-use App\Models\job\JobCoverImageRelation;
+use App\Models\Job\JobCoverImageRelation;
 use App\Models\Job\JobState;
 use App\Models\Job\JobStateRelation;
 use App\Models\Job\JobType;

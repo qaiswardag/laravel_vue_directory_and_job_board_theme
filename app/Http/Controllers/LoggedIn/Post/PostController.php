@@ -9,7 +9,7 @@ use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\AuthorPost;
 use App\Models\Post\Post;
 use App\Models\Post\PostCategoryRelation;
-use App\Models\post\PostCoverImageRelation;
+use App\Models\Post\PostCoverImageRelation;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
