@@ -177,7 +177,7 @@ class PageBuilderController extends Controller
                             ? $image["pivot"]["primary"]
                             : false;
 
-                        // Create a new record in the StoreCoverImageRelation table
+                        // Create a new record in the table
                         PageBuilderCoverImageRelation::create([
                             "media_library_id" => $imageId,
                             "component_id" => $componentId,

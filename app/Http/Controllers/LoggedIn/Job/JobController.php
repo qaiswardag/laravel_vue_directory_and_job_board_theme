@@ -203,7 +203,7 @@ class JobController extends Controller
                             ? $image["pivot"]["primary"]
                             : false;
 
-                        // Create a new record in the StoreCoverImageRelation table
+                        // Create a new record in the table
                         JobCoverImageRelation::create([
                             "media_library_id" => $imageId,
                             "job_id" => $jobId,

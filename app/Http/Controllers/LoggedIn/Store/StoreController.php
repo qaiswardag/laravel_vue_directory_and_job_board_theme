@@ -11,7 +11,7 @@ use App\Models\Store\AuthorStore;
 use App\Models\Store\Store;
 use App\Models\Store\StoreCategory;
 use App\Models\Store\StoreCategoryRelation;
-use App\Models\store\StoreCoverImageRelation;
+use App\Models\Store\StoreCoverImageRelation;
 use App\Models\Store\StoreState;
 use App\Models\Store\StoreStateRelation;
 use App\Models\Team;
@@ -199,7 +199,7 @@ class StoreController extends Controller
                             ? $image["pivot"]["primary"]
                             : false;
 
-                        // Create a new record in the StoreCoverImageRelation table
+                        // Create a new record in the table
                         StoreCoverImageRelation::create([
                             "media_library_id" => $imageId,
                             "store_id" => $storeId,

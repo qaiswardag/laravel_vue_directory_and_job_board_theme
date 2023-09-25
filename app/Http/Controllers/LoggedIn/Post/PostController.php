@@ -192,7 +192,7 @@ class PostController extends Controller
                             ? $image["pivot"]["primary"]
                             : false;
 
-                        // Create a new record in the StoreCoverImageRelation table
+                        // Create a new record in the table
                         PostCoverImageRelation::create([
                             "media_library_id" => $imageId,
                             "post_id" => $postId,
