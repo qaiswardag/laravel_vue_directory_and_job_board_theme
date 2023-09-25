@@ -420,7 +420,7 @@ const handleCreatePost = function () {
     createPost();
 };
 
-const submittedOnUpdate = ref(false);
+const submittedOnUpdate = ref(true);
 
 const createPost = () => {
     if (formType.value === "create") {
@@ -437,7 +437,7 @@ const createPost = () => {
         postForm.post(route("team.stores.update", props.post.id), {
             preserveScroll: true,
             onSuccess: () => {
-                submittedOnUpdate.value = true;
+                submittedOnUpdate.value = false;
                 clearPageBuilderOnSuccessUpdate();
             },
             onError: () => {},
@@ -530,7 +530,11 @@ router.on = async () => {
     isLoading.value = true;
 
     if (formType.value === "update") {
-        if (!submittedOnUpdate.value) {
+        if (
+            submittedOnUpdate.value &&
+            Array.isArray(getComponents.value) &&
+            getComponents.value.length !== 0
+        ) {
             await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
         }
@@ -555,7 +559,11 @@ window.addEventListener("beforeunload", async function () {
     isLoading.value = true;
 
     if (formType.value === "update") {
-        if (!submittedOnUpdate.value) {
+        if (
+            submittedOnUpdate.value &&
+            Array.isArray(getComponents.value) &&
+            getComponents.value.length !== 0
+        ) {
             await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
         }
@@ -698,9 +706,6 @@ const handlePageBuilder = function () {
             await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
             await delay(500);
-
-            // // set components to empty array
-            // store.commit("pageBuilderState/setComponents", []);
         }
 
         // set open modal
@@ -1026,7 +1031,7 @@ onBeforeMount(async () => {
 });
 
 onMounted(() => {
-    submittedOnUpdate.value = false;
+    submittedOnUpdate.value = true;
 });
 const pageBuilder = new PageBuilder(store);
 </script>
