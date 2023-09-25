@@ -132,12 +132,12 @@ const formType = ref("create");
 const pathLocalStorage = `store-form-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
-const pathPageBuilderLocalStorage = `create-store-form-page-builder-${
+const pathPageBuilderLocalStorage = `page-builder-create-store-team-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
-const pathPageBuilderLocalStorageUpdateDraft = `update-draft-store-form-page-builder-${
-    props.currentUserTeam ? props.currentUserTeam.id : null
-}`;
+const pathPageBuilderLocalStorageUpdateDraft = `page-builder-update-store-${
+    props.post.id
+}-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
 
 // use media library
 const showMediaLibraryModal = ref(false);
