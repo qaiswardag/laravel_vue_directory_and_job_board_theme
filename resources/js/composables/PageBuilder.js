@@ -91,7 +91,20 @@ class PageBuilder {
         return true;
     }
 
-    #autoModifyElements(element) {
+    #applyUniversalClassesToElements(element) {
+        if (this.showRunningMethodLogs) {
+            console.log("applyUniversalClassesToElements");
+        }
+        // Add padding to every DIV
+        if (element.tagName === "DIV") {
+            element.classList.add("p-2");
+        }
+    }
+
+    #wrapElementInDivIfExcluded(element) {
+        if (this.showRunningMethodLogs) {
+            console.log("wrapElementInDivIfExcluded");
+        }
         // If the element is one of the excluded tags
         // and it's not inside a div or inside an img tag, wrap it in a div
         const divWrapper = document.createElement("div");
@@ -165,6 +178,9 @@ class PageBuilder {
             console.log("setEventListenersForElements");
         }
         document.querySelectorAll("section *").forEach((element) => {
+            // apply universal CSS class
+            this.#applyUniversalClassesToElements(element);
+
             // Check if the element is not one of the excluded tags
             if (
                 !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
@@ -182,7 +198,7 @@ class PageBuilder {
                 element.parentNode.tagName !== "DIV" ||
                 element.parentNode.querySelector("img") !== null
             ) {
-                this.#autoModifyElements(element);
+                this.#wrapElementInDivIfExcluded(element);
             }
         });
     };
@@ -210,7 +226,8 @@ class PageBuilder {
 
         section.querySelectorAll("section *").forEach((element) => {
             //
-
+            // apply universal CSS class
+            this.#applyUniversalClassesToElements(element);
             //
             // Check if the element is not one of the excluded tags
             if (
@@ -224,11 +241,6 @@ class PageBuilder {
                 ) {
                     this.addElementsListeners(element);
                     this.elementsWithListeners.add(element);
-                } else if (
-                    element.parentNode.tagName !== "DIV" ||
-                    element.parentNode.querySelector("img") !== null
-                ) {
-                    this.#autoModifyElements(element);
                 }
             }
         });
