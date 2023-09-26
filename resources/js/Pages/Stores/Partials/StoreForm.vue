@@ -18,7 +18,7 @@ import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
-import Designer from "@/Pages/PageBuilder/PageBuilder.vue";
+import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
@@ -1039,16 +1039,22 @@ const pageBuilder = new PageBuilder(store);
     <template v-if="isLoading">
         <FullScreenSpinner></FullScreenSpinner>
     </template>
-    <PageBuilderModal
-        v-if="openDesignerModal"
-        :show="openDesignerModal"
-        :updateOrCreate="formType"
-        @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
-        @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"
-        @handleDraftForUpdate="handleDraftForUpdate"
-    >
-        <Designer :user="user" :team="postForm.team"></Designer>
-    </PageBuilderModal>
+    <KeepAlive>
+        <PageBuilderModal
+            :show="openDesignerModal"
+            :updateOrCreate="formType"
+            @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
+            @secondDesignerModalButtonFunction="
+                secondDesignerModalButtonFunction
+            "
+            @handleDraftForUpdate="handleDraftForUpdate"
+        >
+            <PageBuilderView
+                :user="user"
+                :team="postForm.team"
+            ></PageBuilderView>
+        </PageBuilderModal>
+    </KeepAlive>
 
     <FormSection @submitted="handleCreatePost">
         <template #title> Store details</template>
