@@ -19,12 +19,6 @@ const props = defineProps({
 const store = useStore();
 const pageBuilder = new PageBuilder(store);
 
-const delay = function delay(ms) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
-};
-
 const isLoading = ref(false);
 //
 // use media library
@@ -67,9 +61,8 @@ const handleAddImage = function () {
     };
     //
     // handle click
-    secondMediaButtonFunction.value = async function () {
+    secondMediaButtonFunction.value = function () {
         isLoading.value = true;
-        await delay(200);
         pageBuilder.updateBasePrimaryImage();
         // close media library modal
         showMediaLibraryModal.value = false;
