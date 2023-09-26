@@ -1982,7 +1982,6 @@ onBeforeMount(() => {
                 <main></main>
             </DynamicModal>
             <MediaLibraryModal
-                v-if="showMediaLibraryModal === true"
                 :user="user"
                 :team="postForm.team"
                 :open="showMediaLibraryModal"

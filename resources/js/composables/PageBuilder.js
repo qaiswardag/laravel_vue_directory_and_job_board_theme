@@ -73,6 +73,55 @@ class PageBuilder {
         this.showRunningMethodLogs = false;
     }
 
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    #handleElementClick = (event) => {
+        const target = event.target;
+
+        // Check if the clicked element is an image or div
+        if (target.tagName === "IMG" || target.tagName === "DIV") {
+            // Handle the click event for images and divs
+            // ...
+        }
+    };
+
+    #handleMouseOver = (event) => {
+        const target = event.target;
+
+        // Check if the hovered element is an image or div
+        if (target.tagName === "IMG" || target.tagName === "DIV") {
+            // Handle the mouseover event for images and divs
+            // ...
+        }
+    };
+
+    #handleMouseLeave = (event) => {
+        const target = event.target;
+
+        // Check if the mouse-left element is an image or div
+        if (target.tagName === "IMG" || target.tagName === "DIV") {
+            // Handle the mouseleave event for images and divs
+            // ...
+        }
+    };
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+
     shouldRunMethods() {
         if (!this.getComponents.value) {
             console.error("Components have a falsy value.");
@@ -101,6 +150,11 @@ class PageBuilder {
             if (element.tagName === "DIV" && element.classList.length === 0) {
                 element.classList.add("p-2");
             }
+        }
+
+        // Check if the element is an image and set the loading attribute to "lazy"
+        if (element.tagName === "IMG") {
+            element.setAttribute("loading", "lazy");
         }
     }
 
@@ -189,12 +243,24 @@ class PageBuilder {
     /**
      * The function is used to
      * attach event listeners to each element within a 'section'
-     *
      */
     setEventListenersForElements = () => {
         if (this.showRunningMethodLogs) {
             console.log("setEventListenersForElements");
         }
+
+        // Attach event listeners to the closest common ancestor of the elements you want to target
+        const commonAncestor = document.querySelector("section");
+
+        if (commonAncestor) {
+            commonAncestor.addEventListener("click", this.#handleElementClick);
+            commonAncestor.addEventListener("mouseover", this.#handleMouseOver);
+            commonAncestor.addEventListener(
+                "mouseleave",
+                this.#handleMouseLeave
+            );
+        }
+
         document.querySelectorAll("section *").forEach(async (element) => {
             // apply universal CSS class
             this.#applyUniversalClassesToElements(element);
@@ -209,8 +275,9 @@ class PageBuilder {
                     this.elementsWithListeners &&
                     !this.elementsWithListeners.has(element)
                 ) {
-                    this.elementsWithListeners.add(element);
+                    // Add event listeners to individual elements
                     this.addElementsListeners(element);
+                    this.elementsWithListeners.add(element);
                 }
             } else if (
                 element.parentNode.tagName !== "DIV" ||
@@ -227,7 +294,6 @@ class PageBuilder {
     /**
      * The function is used to
      * attach event listeners to each element within a 'section'
-     *
      */
     setListenersForDroppedComponentElements = async (componentID) => {
         if (this.showRunningMethodLogs) {
@@ -241,6 +307,18 @@ class PageBuilder {
         if (!section) {
             console.error("Unable to find section with ID:", componentID);
             return;
+        }
+
+        // Attach event listeners to the closest common ancestor of the elements you want to target
+        const commonAncestor = section;
+
+        if (commonAncestor) {
+            commonAncestor.addEventListener("click", this.#handleElementClick);
+            commonAncestor.addEventListener("mouseover", this.#handleMouseOver);
+            commonAncestor.addEventListener(
+                "mouseleave",
+                this.#handleMouseLeave
+            );
         }
 
         section.querySelectorAll("section *").forEach(async (element) => {
@@ -257,15 +335,16 @@ class PageBuilder {
                     this.elementsWithListeners &&
                     !this.elementsWithListeners.has(element)
                 ) {
+                    // Add event listeners to individual elements
                     this.addElementsListeners(element);
                     this.elementsWithListeners.add(element);
-                } else if (
-                    element.parentNode.tagName !== "DIV" ||
-                    element.parentNode.querySelector("img") !== null
-                ) {
-                    await this.nextTick;
-                    this.#wrapElementInDivIfExcluded(element);
                 }
+            } else if (
+                element.parentNode.tagName !== "DIV" ||
+                element.parentNode.querySelector("img") !== null
+            ) {
+                await this.nextTick;
+                this.#wrapElementInDivIfExcluded(element);
             }
         });
     };

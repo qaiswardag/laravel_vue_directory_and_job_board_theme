@@ -104,7 +104,6 @@ const handleMediaLibrary = function (imageID) {
 
         <div class="myPrimarySection">
             <MediaLibraryModal
-                v-if="showMediaLibraryModal === true"
                 :user="user"
                 :team="currentUserTeam"
                 :open="showMediaLibraryModal"

@@ -1948,7 +1948,6 @@ const pageBuilder = new PageBuilder(store);
                 <main></main>
             </DynamicModal>
             <MediaLibraryModal
-                v-if="showMediaLibraryModal === true"
                 :user="user"
                 :team="postForm.team"
                 :open="showMediaLibraryModal"

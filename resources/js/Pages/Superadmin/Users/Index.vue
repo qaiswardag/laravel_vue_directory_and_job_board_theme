@@ -25,6 +25,8 @@ import {
     PencilIcon,
     PlusIcon,
     TrashIcon,
+    ArrowLeftIcon,
+    ArrowRightIcon,
 } from "@heroicons/vue/24/outline";
 
 // loading status for props and view
@@ -333,6 +335,19 @@ const search = () => {
     });
 };
 
+const scrolTableContainer = ref("scrolTableContainer");
+
+const handleLeft = function () {
+    if (scrolTableContainer.value) {
+        scrolTableContainer.value.scrollLeft -= 500;
+    }
+};
+const handleRight = function () {
+    if (scrolTableContainer.value) {
+        scrolTableContainer.value.scrollLeft += 500;
+    }
+};
+
 onMounted(() => {
     if (props.oldInput?.search_query) {
         searchForm.search_query = props.oldInput.search_query;
@@ -499,223 +514,265 @@ onMounted(() => {
             <!-- search bar componenet - ens -->
         </form>
 
-        <div class="myTableContainer">
-            <div class="myTableSubContainer">
-                <table class="myPrimaryTable">
-                    <caption class="myPrimaryTableCaption">
-                        <p class="myPrimaryParagraph">Result {{ results }}</p>
-                    </caption>
-                    <thead class="myPrimaryTableTHead">
-                        <tr class="myPrimaryTableTr">
-                            <th scope="col" class="myPrimaryTableTh">User</th>
-                            <th scope="col" class="myPrimaryTableTh">
-                                User ID
-                            </th>
-                            <th scope="col" class="myPrimaryTableTh">Name</th>
-                            <th scope="col" class="myPrimaryTableTh">Status</th>
-                            <th scope="col" class="myPrimaryTableTh">
-                                Superadmin role
-                            </th>
-                            <th scope="col" class="myPrimaryTableTh">
-                                Updated Date
-                            </th>
-                            <th scope="col" class="myPrimaryTableTh">
-                                Created at
-                            </th>
-                            <th scope="col" class="myPrimaryTableTh">Edit</th>
-                            <th scope="col" class="myPrimaryTableTh">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody class="myPrimaryTableTBody">
-                        <TransitionGroup name="table">
-                            <tr
-                                class="myPrimaryTableTBodyTr"
-                                v-for="user in users.data"
-                                :key="user.id"
-                            >
-                                <td class="myPrimaryTableTBodyTd">
-                                    <div class="flex items-center gap-2">
-                                        <div
-                                            v-if="
-                                                user && user.profile_photo_path
-                                            "
-                                        >
-                                            <div
-                                                class="h-12 w-12 flex-shrink-0"
-                                            >
-                                                <img
-                                                    class="object-cover h-12 w-12 rounded-full"
-                                                    :src="`/storage/${user.profile_photo_path}`"
-                                                    :alt="
-                                                        user.first_name +
-                                                        user.last_name
-                                                    "
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            v-if="
-                                                user &&
-                                                user.profile_photo_path === null
-                                            "
-                                        >
-                                            <div
-                                                class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                            >
-                                                {{
-                                                    user.first_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-                                                }}
-                                                {{
-                                                    user.last_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-                                                }}
-                                            </div>
-                                        </div>
-                                        <span
-                                            class="flex flex-col items-left gap-1 myPrimaryParagraph font-medium"
-                                        >
-                                            <span>
-                                                {{ user.first_name }}
-                                                {{ user.last_name }}
-                                            </span>
-                                        </span>
-                                    </div>
-                                </td>
-
-                                <td class="myPrimaryTableTBodyTd">
-                                    {{ user.id }}
-                                </td>
-
-                                <td class="myPrimaryTableTBodyTd">
-                                    {{ user.first_name }}
-                                    {{ user.last_name }}
-                                </td>
-
-                                <td class="myPrimaryTableTBodyTd">
-                                    <span
-                                        class="myPrimaryTag"
-                                        :class="
-                                            user.public
-                                                ? 'bg-myPrimaryLinkColor text-white'
-                                                : 'bg-myPrimaryErrorColor text-white'
-                                        "
-                                        >{{
-                                            user.public
-                                                ? "Published"
-                                                : "Unpublished"
-                                        }}</span
-                                    >
-                                </td>
-
-                                <td class="myPrimaryTableTBodyTd">
-                                    <template v-if="user.superadmin !== null">
-                                        <div class="flex gap-2">
-                                            <button
-                                                @click="
-                                                    handleUpdateSuperadmin(
-                                                        user.id,
-                                                        user.first_name,
-                                                        user.last_name
-                                                    )
-                                                "
-                                                class="myPrimaryButton flex items-center gap-1 text-xs"
-                                            >
-                                                <ArrowPathRoundedSquareIcon
-                                                    class="h-4 w-4"
-                                                ></ArrowPathRoundedSquareIcon>
-                                                <p>
-                                                    {{
-                                                        user.superadmin.role
-                                                            .charAt(0)
-                                                            .toUpperCase() +
-                                                        user.superadmin.role.slice(
-                                                            1
-                                                        )
-                                                    }}
-                                                </p>
-                                            </button>
-                                            <button
-                                                @click="
-                                                    handleRemoveSuperadmin(
-                                                        user.id,
-                                                        user.first_name,
-                                                        user.last_name
-                                                    )
-                                                "
-                                                class="myPrimaryDeleteButton flex items-center gap-1 text-xs"
-                                            >
-                                                <MinusIcon
-                                                    class="w-4 h-4"
-                                                ></MinusIcon>
-                                                Remove
-                                            </button>
-                                        </div>
-                                    </template>
-                                    <template v-if="user.superadmin === null">
-                                        <button
-                                            @click="
-                                                handleCreateSuperadmin(
-                                                    user.id,
-                                                    user.first_name,
-                                                    user.last_name
-                                                )
-                                            "
-                                            class="myPrimaryTag flex items-center gap-1 text-xs"
-                                        >
-                                            <PlusIcon
-                                                class="w-4 h-4"
-                                            ></PlusIcon>
-                                            <p>Add Superadmin</p>
-                                        </button>
-                                    </template>
-                                </td>
-                                <td class="myPrimaryTableTBodyTd">
-                                    {{
-                                        format(
-                                            parseISO(user.updated_at),
-                                            "dd/MM/yyyy HH:mm"
-                                        )
-                                    }}
-                                </td>
-                                <td class="myPrimaryTableTBodyTd">
-                                    {{
-                                        format(
-                                            parseISO(user.created_at),
-                                            "dd/MM/yyyy HH:mm"
-                                        )
-                                    }}
-                                </td>
-
-                                <td class="myPrimaryTableTBodyTd">
-                                    <button
-                                        type="button"
-                                        @click="handleEdit(user.id)"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                                    >
-                                        <PencilIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                        ></PencilIcon>
-                                    </button>
-                                </td>
-                                <td class="myPrimaryTableTBodyTd">
-                                    <button
-                                        type="button"
-                                        @click="handleDelete(user.id, user)"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                    >
-                                        <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                        ></TrashIcon>
-                                    </button>
-                                </td>
+        <!-- table start -->
+        <div
+            v-if="
+                user &&
+                users.data &&
+                Array.isArray(users.data) &&
+                users.data.length >= 1
+            "
+            class="myTableContainerPlusScrollButton"
+        >
+            <div class="myScrollButtonContainer">
+                <button
+                    @click="handleLeft"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                >
+                    <ArrowLeftIcon
+                        class="shrink-0 h-4 w-4 m-2 stroke-2"
+                    ></ArrowLeftIcon>
+                </button>
+                <button
+                    @click="handleRight"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                >
+                    <ArrowRightIcon
+                        class="shrink-0 h-4 w-4 m-2 stroke-2"
+                    ></ArrowRightIcon>
+                </button>
+            </div>
+            <div ref="scrolTableContainer" class="myTableContainer">
+                <div class="myTableSubContainer">
+                    <table class="myPrimaryTable" aria-describedby="index">
+                        <thead class="myPrimaryTableTHead">
+                            <tr class="myPrimaryTableTr">
+                                <th scope="col" class="myPrimaryTableTh">
+                                    User
+                                </th>
+                                <th scope="col" class="myPrimaryTableTh">
+                                    User ID
+                                </th>
+                                <th scope="col" class="myPrimaryTableTh">
+                                    Name
+                                </th>
+                                <th scope="col" class="myPrimaryTableTh">
+                                    Status
+                                </th>
+                                <th scope="col" class="myPrimaryTableTh">
+                                    Superadmin role
+                                </th>
+                                <th scope="col" class="myPrimaryTableTh">
+                                    Updated Date
+                                </th>
+                                <th scope="col" class="myPrimaryTableTh">
+                                    Created at
+                                </th>
+                                <th scope="col" class="myPrimaryTableTh">
+                                    Edit
+                                </th>
+                                <th scope="col" class="myPrimaryTableTh">
+                                    Delete
+                                </th>
                             </tr>
-                        </TransitionGroup>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="myPrimaryTableTBody">
+                            <TransitionGroup name="table">
+                                <tr
+                                    class="myPrimaryTableTBodyTr"
+                                    v-for="user in users.data"
+                                    :key="user.id"
+                                >
+                                    <td class="myPrimaryTableTBodyTd">
+                                        <div class="flex items-center gap-2">
+                                            <div
+                                                v-if="
+                                                    user &&
+                                                    user.profile_photo_path
+                                                "
+                                            >
+                                                <div
+                                                    class="h-12 w-12 flex-shrink-0"
+                                                >
+                                                    <img
+                                                        class="object-cover h-12 w-12 rounded-full"
+                                                        :src="`/storage/${user.profile_photo_path}`"
+                                                        :alt="
+                                                            user.first_name +
+                                                            user.last_name
+                                                        "
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                v-if="
+                                                    user &&
+                                                    user.profile_photo_path ===
+                                                        null
+                                                "
+                                            >
+                                                <div
+                                                    class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
+                                                >
+                                                    {{
+                                                        user.first_name
+                                                            .charAt(0)
+                                                            .toUpperCase()
+                                                    }}
+                                                    {{
+                                                        user.last_name
+                                                            .charAt(0)
+                                                            .toUpperCase()
+                                                    }}
+                                                </div>
+                                            </div>
+                                            <span
+                                                class="flex flex-col items-left gap-1 myPrimaryParagraph font-medium"
+                                            >
+                                                <span>
+                                                    {{ user.first_name }}
+                                                    {{ user.last_name }}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    <td class="myPrimaryTableTBodyTd">
+                                        {{ user.id }}
+                                    </td>
+
+                                    <td class="myPrimaryTableTBodyTd">
+                                        {{ user.first_name }}
+                                        {{ user.last_name }}
+                                    </td>
+
+                                    <td class="myPrimaryTableTBodyTd">
+                                        <span
+                                            class="myPrimaryTag"
+                                            :class="
+                                                user.public
+                                                    ? 'bg-myPrimaryLinkColor text-white'
+                                                    : 'bg-myPrimaryErrorColor text-white'
+                                            "
+                                            >{{
+                                                user.public
+                                                    ? "Published"
+                                                    : "Unpublished"
+                                            }}</span
+                                        >
+                                    </td>
+
+                                    <td class="myPrimaryTableTBodyTd">
+                                        <template
+                                            v-if="user.superadmin !== null"
+                                        >
+                                            <div class="flex gap-2">
+                                                <button
+                                                    @click="
+                                                        handleUpdateSuperadmin(
+                                                            user.id,
+                                                            user.first_name,
+                                                            user.last_name
+                                                        )
+                                                    "
+                                                    class="myPrimaryButton flex items-center gap-1 text-xs"
+                                                >
+                                                    <ArrowPathRoundedSquareIcon
+                                                        class="h-4 w-4"
+                                                    ></ArrowPathRoundedSquareIcon>
+                                                    <p>
+                                                        {{
+                                                            user.superadmin.role
+                                                                .charAt(0)
+                                                                .toUpperCase() +
+                                                            user.superadmin.role.slice(
+                                                                1
+                                                            )
+                                                        }}
+                                                    </p>
+                                                </button>
+                                                <button
+                                                    @click="
+                                                        handleRemoveSuperadmin(
+                                                            user.id,
+                                                            user.first_name,
+                                                            user.last_name
+                                                        )
+                                                    "
+                                                    class="myPrimaryDeleteButton flex items-center gap-1 text-xs"
+                                                >
+                                                    <MinusIcon
+                                                        class="w-4 h-4"
+                                                    ></MinusIcon>
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        </template>
+                                        <template
+                                            v-if="user.superadmin === null"
+                                        >
+                                            <button
+                                                @click="
+                                                    handleCreateSuperadmin(
+                                                        user.id,
+                                                        user.first_name,
+                                                        user.last_name
+                                                    )
+                                                "
+                                                class="myPrimaryTag flex items-center gap-1 text-xs"
+                                            >
+                                                <PlusIcon
+                                                    class="w-4 h-4"
+                                                ></PlusIcon>
+                                                <p>Add Superadmin</p>
+                                            </button>
+                                        </template>
+                                    </td>
+                                    <td class="myPrimaryTableTBodyTd">
+                                        {{
+                                            format(
+                                                parseISO(user.updated_at),
+                                                "dd/MM/yyyy HH:mm"
+                                            )
+                                        }}
+                                    </td>
+                                    <td class="myPrimaryTableTBodyTd">
+                                        {{
+                                            format(
+                                                parseISO(user.created_at),
+                                                "dd/MM/yyyy HH:mm"
+                                            )
+                                        }}
+                                    </td>
+
+                                    <td class="myPrimaryTableTBodyTd">
+                                        <button
+                                            type="button"
+                                            @click="handleEdit(user.id)"
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        >
+                                            <PencilIcon
+                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            ></PencilIcon>
+                                        </button>
+                                    </td>
+                                    <td class="myPrimaryTableTBodyTd">
+                                        <button
+                                            type="button"
+                                            @click="handleDelete(user.id, user)"
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        >
+                                            <TrashIcon
+                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            ></TrashIcon>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </TransitionGroup>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <Pagination :links="users.links"></Pagination>

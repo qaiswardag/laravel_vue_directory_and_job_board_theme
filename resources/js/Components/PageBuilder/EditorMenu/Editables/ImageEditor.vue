@@ -103,7 +103,6 @@ const handleAddImage = function () {
         </div>
     </div>
     <MediaLibraryModal
-        v-if="showMediaLibraryModal === true"
         :user="user"
         :team="team"
         :open="showMediaLibraryModal"

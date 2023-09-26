@@ -356,7 +356,7 @@ onMounted(() => {
                                     <ThumbnailSmallImageSlider
                                         :images="post.cover_images"
                                         imageSize="medium_path"
-                                        imageHeight="max-h-72"
+                                        imageHeight="max-h-96"
                                         imageWidth="w-full object-cover"
                                         :roundedFull="false"
                                         :squareButtons="true"
@@ -526,7 +526,6 @@ onMounted(() => {
                 </div>
             </div>
             <MediaLibraryModal
-                v-if="showMediaLibraryModal === true"
                 :user="user"
                 :team="currentUserTeam"
                 :open="showMediaLibraryModal"

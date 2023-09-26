@@ -342,7 +342,7 @@ defineProps({
                         v-if="post.cover_images"
                         :images="post.cover_images"
                         imageSize="large_path"
-                        imageHeight="max-h-72"
+                        imageHeight="h-auto"
                         imageWidth="w-full"
                         :roundedFull="false"
                         :squareButtons="true"
