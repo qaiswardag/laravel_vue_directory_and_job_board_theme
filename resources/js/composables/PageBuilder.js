@@ -128,11 +128,6 @@ class PageBuilder {
                 element.classList.add("p-2");
             }
         }
-
-        // Check if the element is an image and set the loading attribute to "lazy"
-        if (element.tagName === "IMG") {
-            element.setAttribute("loading", "lazy");
-        }
     }
 
     async #wrapElementInDivIfExcluded(element) {
