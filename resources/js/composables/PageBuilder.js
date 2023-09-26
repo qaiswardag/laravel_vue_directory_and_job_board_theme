@@ -262,11 +262,7 @@ class PageBuilder {
         });
     };
 
-    // øøø
-
     observePlusSyncExistingHTMLElements = async () => {
-        await this.delay(1000);
-
         if (this.showRunningMethodLogs) {
             console.log("observePlusSyncExistingHTMLElements");
         }
