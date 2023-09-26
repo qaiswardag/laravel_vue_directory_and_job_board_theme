@@ -71,57 +71,18 @@ class PageBuilder {
         );
 
         this.showRunningMethodLogs = false;
+
+        this.delay = function delay(ms) {
+            return new Promise((resolve) => {
+                setTimeout(resolve, ms);
+            });
+        };
     }
 
     //
     //
     //
     //
-    //
-    //
-    //
-    //
-    //
-    #handleElementClick = (event) => {
-        const target = event.target;
-
-        // Check if the clicked element is an image or div
-        if (target.tagName === "IMG" || target.tagName === "DIV") {
-            // Handle the click event for images and divs
-            // ...
-        }
-    };
-
-    #handleMouseOver = (event) => {
-        const target = event.target;
-
-        // Check if the hovered element is an image or div
-        if (target.tagName === "IMG" || target.tagName === "DIV") {
-            // Handle the mouseover event for images and divs
-            // ...
-        }
-    };
-
-    #handleMouseLeave = (event) => {
-        const target = event.target;
-
-        // Check if the mouse-left element is an image or div
-        if (target.tagName === "IMG" || target.tagName === "DIV") {
-            // Handle the mouseleave event for images and divs
-            // ...
-        }
-    };
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-
     shouldRunMethods() {
         if (!this.getComponents.value) {
             console.error("Components have a falsy value.");
@@ -140,7 +101,23 @@ class PageBuilder {
         return true;
     }
 
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     #applyUniversalClassesToElements(element) {
+        console.log("universal:", element);
         if (this.showRunningMethodLogs) {
             console.log("applyUniversalClassesToElements");
         }
@@ -159,12 +136,12 @@ class PageBuilder {
     }
 
     async #wrapElementInDivIfExcluded(element) {
+        console.log("må komme me:", element.tagName);
         if (this.showRunningMethodLogs) {
             console.log("wrapElementInDivIfExcluded");
         }
         // If the element is one of the excluded tags
         // and it's not inside a div or inside an img tag, wrap it in a div
-
         if (
             element.tagName === "P" ||
             element.tagName === "H1" ||
@@ -186,58 +163,56 @@ class PageBuilder {
         this.#applyUniversalClassesToElements(element);
     }
 
-    /**
-     * The function is adding mouseover
-     * and click event listeners to a specific DOM element
-     *
-     */
-    addElementsListeners = (element) => {
-        if (this.showRunningMethodLogs) {
-            console.log("addElementsListeners");
+    //
+    //
+    //
+
+    #handleElementClick = (e) => {
+        const target = e.target;
+        console.log("YOU CLICKED ME!", target);
+
+        this.store.commit("pageBuilderState/setMenuRight", true);
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (document.querySelector("[selected]") !== null) {
+            document.querySelector("[selected]").removeAttribute("selected");
         }
 
-        // Only run on mouse over
-        element.addEventListener("mouseover", (e) => {
-            e.stopPropagation();
+        target.removeAttribute("hovered");
+        target.setAttribute("selected", "");
 
-            if (document.querySelector("[hovered]") !== null) {
-                document.querySelector("[hovered]").removeAttribute("hovered");
-            }
+        this.store.commit("pageBuilderState/setElement", target);
+    };
 
-            if (!element.hasAttribute("selected")) {
-                // Only set "hovered" if "selected" is not present
-                element.setAttribute("hovered", "");
-            }
-        });
+    #handleMouseOver = (e) => {
+        const target = e.target;
+        // console.log("YOU MOUSE OVER ME!", target);
 
-        // Only run on mouse leave
-        element.addEventListener("mouseleave", (e) => {
-            e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-            if (document.querySelector("[hovered]") !== null) {
-                document.querySelector("[hovered]").removeAttribute("hovered");
-            }
-        });
+        if (
+            !target.hasAttribute("selected") &&
+            !target.hasAttribute("hovered")
+        ) {
+            // Only set "hovered" if "selected" is not present and "hovered" is not already set
+            target.setAttribute("hovered", "");
+        }
+    };
 
-        // Only run during on mouse click
-        element.addEventListener("click", (e) => {
-            this.store.commit("pageBuilderState/setMenuRight", true);
+    #handleMouseLeave = (e) => {
+        const target = e.target;
+        // console.log("YOU MOUSE LEAVE ME!", target);
 
-            e.preventDefault();
-            e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-            if (document.querySelector("[selected]") !== null) {
-                document
-                    .querySelector("[selected]")
-                    .removeAttribute("selected");
-            }
-
-            e.currentTarget.removeAttribute("hovered");
-
-            e.currentTarget.setAttribute("selected", "");
-
-            this.store.commit("pageBuilderState/setElement", e.currentTarget);
-        });
+        // Only run on mouse leave when "hovered" is set
+        if (target.hasAttribute("hovered")) {
+            target.removeAttribute("hovered");
+        }
     };
 
     /**
@@ -249,82 +224,11 @@ class PageBuilder {
             console.log("setEventListenersForElements");
         }
 
-        // Attach event listeners to the closest common ancestor of the elements you want to target
-        const commonAncestor = document.querySelector("section");
-
-        if (commonAncestor) {
-            commonAncestor.addEventListener("click", this.#handleElementClick);
-            commonAncestor.addEventListener("mouseover", this.#handleMouseOver);
-            commonAncestor.addEventListener(
-                "mouseleave",
-                this.#handleMouseLeave
-            );
-        }
-
         document.querySelectorAll("section *").forEach(async (element) => {
             // apply universal CSS class
             this.#applyUniversalClassesToElements(element);
 
             // Check if the element is not one of the excluded tags
-            if (
-                !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
-                    element.tagName
-                )
-            ) {
-                if (
-                    this.elementsWithListeners &&
-                    !this.elementsWithListeners.has(element)
-                ) {
-                    // Add event listeners to individual elements
-                    this.addElementsListeners(element);
-                    this.elementsWithListeners.add(element);
-                }
-            } else if (
-                element.parentNode.tagName !== "DIV" ||
-                element.parentNode.querySelector("img") !== null
-            ) {
-                await this.nextTick;
-                this.#wrapElementInDivIfExcluded(element);
-            }
-        });
-    };
-    //
-    //
-    //
-    /**
-     * The function is used to
-     * attach event listeners to each element within a 'section'
-     */
-    setListenersForDroppedComponentElements = async (componentID) => {
-        if (this.showRunningMethodLogs) {
-            console.log("setListenersForDroppedComponentElements");
-        }
-
-        const section = document.querySelector(
-            `section[data-componentid="${componentID}"]`
-        );
-
-        if (!section) {
-            console.error("Unable to find section with ID:", componentID);
-            return;
-        }
-
-        // Attach event listeners to the closest common ancestor of the elements you want to target
-        const commonAncestor = section;
-
-        if (commonAncestor) {
-            commonAncestor.addEventListener("click", this.#handleElementClick);
-            commonAncestor.addEventListener("mouseover", this.#handleMouseOver);
-            commonAncestor.addEventListener(
-                "mouseleave",
-                this.#handleMouseLeave
-            );
-        }
-
-        section.querySelectorAll("section *").forEach(async (element) => {
-            // apply universal CSS class
-            this.#applyUniversalClassesToElements(element);
-
             // Check if the element is not one of the excluded tags
             if (
                 !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
@@ -335,21 +239,39 @@ class PageBuilder {
                     this.elementsWithListeners &&
                     !this.elementsWithListeners.has(element)
                 ) {
-                    // Add event listeners to individual elements
-                    this.addElementsListeners(element);
-                    this.elementsWithListeners.add(element);
+                    // Attach event listeners directly to individual elements
+                    element.addEventListener("click", this.#handleElementClick);
+                    //
+                    //
+                    element.addEventListener(
+                        "mouseover",
+                        this.#handleMouseOver
+                    );
+                    //
+                    //
+                    element.addEventListener(
+                        "mouseleave",
+                        this.#handleMouseLeave
+                    );
+                    //
+                    //
+                    if (
+                        element.parentNode.tagName !== "DIV" ||
+                        element.parentNode.querySelector("img") !== null
+                    ) {
+                        await this.nextTick;
+                        this.#wrapElementInDivIfExcluded(element);
+                    }
                 }
-            } else if (
-                element.parentNode.tagName !== "DIV" ||
-                element.parentNode.querySelector("img") !== null
-            ) {
-                await this.nextTick;
-                this.#wrapElementInDivIfExcluded(element);
             }
         });
     };
 
+    // øøø
+
     observePlusSyncExistingHTMLElements = async () => {
+        await this.delay(1000);
+
         if (this.showRunningMethodLogs) {
             console.log("observePlusSyncExistingHTMLElements");
         }
@@ -395,63 +317,6 @@ class PageBuilder {
         );
 
         this.setEventListenersForElements();
-    };
-
-    observePlusSyncDroppedHTMLElements = async (componentID) => {
-        if (this.showRunningMethodLogs) {
-            console.log("observePlusSyncExistingHTMLElements2");
-        }
-        if (!this.getComponents.value) {
-            this.store.commit("pageBuilderState/setComponents", []);
-        }
-
-        if (document.querySelector("[hovered]") !== null) {
-            document.querySelector("[hovered]").removeAttribute("hovered");
-        }
-
-        const section = document.querySelector(
-            `section[data-componentid="${componentID}"]`
-        );
-
-        if (!section) {
-            console.error("Unable to find section with ID:", componentID);
-            return;
-        }
-
-        section.querySelectorAll("section *").forEach((component) => {
-            const section = document.querySelector(
-                `section[data-componentid="${component.id}"]`
-            );
-
-            if (section) {
-                component.html_code = section.outerHTML;
-            }
-        });
-
-        // Initialize the MutationObserver
-        this.observer = new MutationObserver((mutationsList, observer) => {
-            // Once we have seen a mutation, stop observing and resolve the promise
-            observer.disconnect();
-        });
-
-        // Start observing the document with the configured parameters
-        this.observer.observe(document, {
-            attributes: true,
-            childList: true,
-            subtree: true,
-        });
-
-        // Use the MutationObserver to wait for the next DOM change
-        await new Promise((resolve) => {
-            resolve();
-        });
-
-        this.store.commit(
-            "pageBuilderState/setElement",
-            document.querySelector("[selected]")
-        );
-
-        this.setListenersForDroppedComponentElements(componentID);
     };
 
     cloneCompObjForDOMInsertion(componentObject) {
