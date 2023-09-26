@@ -17,7 +17,7 @@ import config from "@/utils/config";
 import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import DesignerModal from "@/Components/Modals/DesignerModal.vue";
+import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import Designer from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
@@ -1039,7 +1039,7 @@ const pageBuilder = new PageBuilder(store);
     <template v-if="isLoading">
         <FullScreenSpinner></FullScreenSpinner>
     </template>
-    <DesignerModal
+    <PageBuilderModal
         v-if="openDesignerModal"
         :show="openDesignerModal"
         :updateOrCreate="formType"
@@ -1048,7 +1048,7 @@ const pageBuilder = new PageBuilder(store);
         @handleDraftForUpdate="handleDraftForUpdate"
     >
         <Designer :user="user" :team="postForm.team"></Designer>
-    </DesignerModal>
+    </PageBuilderModal>
 
     <FormSection @submitted="handleCreatePost">
         <template #title> Store details</template>

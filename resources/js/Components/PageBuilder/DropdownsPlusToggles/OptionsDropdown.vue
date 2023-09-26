@@ -10,7 +10,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import PageBuilder from "@/composables/PageBuilder";
 import { ref, computed } from "vue";
-import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
+import PageBuilderPreviewModal from "@/Components/Modals/PageBuilderPreviewModal.vue";
 import Preview from "@/Pages/PageBuilder/Preview.vue";
 import SlideOverRight from "@/Components/PageBuilder/Slidebars/SlideOverRight.vue";
 import DesignerSettings from "@/Components/PageBuilder/Settings/DesignerSettings.vue";
@@ -212,12 +212,12 @@ const settingsSlideOverButton = function () {
             </MenuItems>
         </transition>
     </Menu>
-    <DesignerPreviewModal
+    <PageBuilderPreviewModal
         :show="openDesignerPreviewModal"
         @firstDesignerPreviewModalButtonFunction="
             firstDesignerPreviewModalButtonFunction
         "
     >
         <Preview></Preview>
-    </DesignerPreviewModal>
+    </PageBuilderPreviewModal>
 </template>

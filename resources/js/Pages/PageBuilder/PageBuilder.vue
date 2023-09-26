@@ -8,7 +8,7 @@ import {
     watchEffect,
 } from "vue";
 import PageBuilder from "@/composables/PageBuilder";
-import DesignerPreviewModal from "@/Components/Modals/DesignerPreviewModal.vue";
+import PageBuilderPreviewModal from "@/Components/Modals/PageBuilderPreviewModal.vue";
 import Preview from "@/Pages/PageBuilder/Preview.vue";
 import {
     Bars3Icon,
@@ -123,14 +123,14 @@ onMounted(async () => {
             firstModalButtonSearchComponentsFunction
         "
     ></SearchComponents>
-    <DesignerPreviewModal
+    <PageBuilderPreviewModal
         :show="openDesignerPreviewModal"
         @firstDesignerPreviewModalButtonFunction="
             firstDesignerPreviewModalButtonFunction
         "
     >
         <Preview></Preview>
-    </DesignerPreviewModal>
+    </PageBuilderPreviewModal>
 
     <div
         class="w-full inset-x-0 h-[90vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
