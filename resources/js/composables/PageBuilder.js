@@ -117,12 +117,13 @@ class PageBuilder {
     if (this.showRunningMethodLogs) {
       console.log('#applyUniversalClassesToElements');
     }
+    element.classList.add('smooth-transition');
+
     // Add padding to every DIV
     if (element.tagName === 'DIV') {
       // If the <div> does not contain any classes, add the following classes
       if (element.tagName === 'DIV' && element.classList.length === 0) {
         element.classList.add('p-2');
-        element.classList.add('smooth-transition');
       }
     }
   }
