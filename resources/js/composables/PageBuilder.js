@@ -355,7 +355,30 @@ class PageBuilder {
     return clonedComponent;
   }
 
-  // chagen name to: applyElementClassChanges
+  // Here's an optimized version of your function with these optimizations applied
+  // This optimized version should reduce the number of DOM reflows and make the function faster, providing a better user experience.
+  // modifyElementCSS(selectedCSS, CSSArray, mutationName) {
+  //   if (!this.shouldRunMethods()) return;
+
+  //   const currentCSS = CSSArray.find((CSS) => this.getElement.value.classList.contains(CSS)) || 'none';
+
+  //   if (currentCSS !== selectedCSS) {
+  //     this.getElement.value.classList.remove(currentCSS);
+
+  //     if (selectedCSS !== 'none') {
+  //       this.getElement.value.classList.add(selectedCSS);
+  //     }
+
+  //     this.store.commit(`pageBuilderState/${mutationName}`, selectedCSS);
+  //     this.store.commit('pageBuilderState/setElement', this.getElement.value);
+
+  //     return currentCSS;
+  //   }
+
+  //   return currentCSS;
+  // }
+
+  // change name to: applyElementClassChanges
   #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
     if (this.showRunningMethodLogs) {
       console.log('#modifyElementCSS');
