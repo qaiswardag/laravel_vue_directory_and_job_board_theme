@@ -355,6 +355,7 @@ class PageBuilder {
     return clonedComponent;
   }
 
+  // chagen name to: applyElementClassChanges
   #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
     if (this.showRunningMethodLogs) {
       console.log('#modifyElementCSS');
