@@ -171,12 +171,15 @@ class PageBuilder {
         e.stopPropagation();
         e.stopPropagation();
 
+        const pagebuilder = document.querySelector("#pagebuilder");
+        if (!pagebuilder) return;
+
         console.log("YOU CLICKED ME!");
 
         this.store.commit("pageBuilderState/setMenuRight", true);
 
-        if (document.querySelector("[selected]") !== null) {
-            document.querySelector("[selected]").removeAttribute("selected");
+        if (pagebuilder.querySelector("[selected]") !== null) {
+            pagebuilder.querySelector("[selected]").removeAttribute("selected");
         }
 
         element.removeAttribute("hovered");
@@ -194,12 +197,14 @@ class PageBuilder {
         e.preventDefault();
         e.stopPropagation();
 
-        if (document.querySelector("[hovered]") !== null) {
-            document.querySelector("[hovered]").removeAttribute("hovered");
+        const pagebuilder = document.querySelector("#pagebuilder");
+        if (!pagebuilder) return;
+
+        if (pagebuilder.querySelector("[hovered]") !== null) {
+            pagebuilder.querySelector("[hovered]").removeAttribute("hovered");
         }
 
         if (!element.hasAttribute("selected")) {
-            // Only set "hovered" if "selected" is not present
             element.setAttribute("hovered", "");
         }
     };
@@ -213,8 +218,11 @@ class PageBuilder {
         e.preventDefault();
         e.stopPropagation();
 
-        if (document.querySelector("[hovered]") !== null) {
-            document.querySelector("[hovered]").removeAttribute("hovered");
+        const pagebuilder = document.querySelector("#pagebuilder");
+        if (!pagebuilder) return;
+
+        if (pagebuilder.querySelector("[hovered]") !== null) {
+            pagebuilder.querySelector("[hovered]").removeAttribute("hovered");
         }
     };
 

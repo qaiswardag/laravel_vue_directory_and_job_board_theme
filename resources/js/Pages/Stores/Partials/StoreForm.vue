@@ -651,7 +651,6 @@ const secondDesignerModalButtonFunction = ref(null);
 
 const handleDraftForUpdate = async function () {
     isLoading.value = true;
-    console.log("må ikke køre");
     if (formType.value === "update") {
         await nextTick();
         pageBuilder.areComponentsStoredInLocalStorageUpdate();
