@@ -12,6 +12,7 @@ import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
+import { PencilIcon } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     team: Object,
@@ -683,27 +684,35 @@ const displayAbleRole = (role) => {
                                                     class="myPrimaryTableTBodyTd"
                                                 >
                                                     <!-- Manage Team Member Role -->
-                                                    <button
+                                                    <div
                                                         v-if="
                                                             availableRoles.length
                                                         "
-                                                        class="myPrimaryButtonNoBackground flex items-center gap-2"
-                                                        @click="
-                                                            manageRole(user)
-                                                        "
+                                                        class="flex items-center gap-2"
                                                     >
-                                                        {{
-                                                            displayAbleRole(
-                                                                user.membership
-                                                                    .role
-                                                            )
-                                                        }}
-
-                                                        div class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white">
-                                                        <PencilIcon class="shrink-0 h-4 w-4 m-2 stroke-2">
-                                                        </PencilIcon
-                                                        </div>
-                                                    </button>
+                                                        <span
+                                                            class="myPrimaryParagraph"
+                                                        >
+                                                            {{
+                                                                displayAbleRole(
+                                                                    user
+                                                                        .membership
+                                                                        .role
+                                                                )
+                                                            }}
+                                                        </span>
+                                                        <button
+                                                            @click="
+                                                                manageRole(user)
+                                                            "
+                                                            type="button"
+                                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                                        >
+                                                            <PencilIcon
+                                                                class="shrink-0 h-4 w-4 m-2 stroke-2"
+                                                            ></PencilIcon>
+                                                        </button>
+                                                    </div>
                                                 </td>
 
                                                 <!-- Cancel Team Invitation -->
