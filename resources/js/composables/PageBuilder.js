@@ -237,9 +237,6 @@ class PageBuilder {
     const pagebuilder = document.querySelector('#pagebuilder');
     if (!pagebuilder) return;
 
-    // Create a document fragment to hold the elements
-    const fragment = document.createDocumentFragment();
-
     pagebuilder.querySelectorAll('section *').forEach(async (element) => {
       // apply universal CSS class
       this.#applyUniversalClassesToElements(element);
@@ -271,8 +268,6 @@ class PageBuilder {
             await this.nextTick;
             this.#wrapElementInDivIfExcluded(element);
           }
-          // Append the element to the fragment
-          fragment.appendChild(element);
         }
       }
     });
