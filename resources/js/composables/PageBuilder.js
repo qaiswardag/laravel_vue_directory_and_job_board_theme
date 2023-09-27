@@ -98,35 +98,48 @@ class PageBuilder {
     }
 
     #applyElementClassChanges(selectedCSS, CSSArray, mutationName) {
+        if (this.showRunningMethodLogs) {
+            console.log("#applyElementClassChanges");
+        }
         if (!this.shouldRunMethods()) return;
 
-        const currentCSS =
-            CSSArray.find((CSS) =>
-                this.getElement.value.classList.contains(CSS)
-            ) || "none";
+        const currentCSS = CSSArray.find((CSS) => {
+            return this.getElement.value.classList.contains(CSS);
+        });
 
-        if (currentCSS !== selectedCSS) {
-            this.getElement.value.classList.remove(currentCSS);
+        // set to 'none' if undefined
+        let elementClass = currentCSS || "none";
 
-            if (selectedCSS !== "none") {
-                this.getElement.value.classList.add(selectedCSS);
+        this.store.commit(`pageBuilderState/${mutationName}`, elementClass);
+
+        if (typeof selectedCSS === "string" && selectedCSS !== "none") {
+            if (
+                elementClass &&
+                this.getElement.value.classList.contains(elementClass)
+            ) {
+                this.getElement.value.classList.remove(elementClass);
             }
 
-            this.store.commit(`pageBuilderState/${mutationName}`, selectedCSS);
-            this.store.commit(
-                "pageBuilderState/setElement",
-                this.getElement.value
-            );
-
-            return currentCSS;
+            this.getElement.value.classList.add(selectedCSS);
+            elementClass = selectedCSS;
+        } else if (
+            typeof selectedCSS === "string" &&
+            selectedCSS === "none" &&
+            elementClass
+        ) {
+            this.getElement.value.classList.remove(elementClass);
+            elementClass = selectedCSS;
         }
+
+        this.store.commit(`pageBuilderState/${mutationName}`, elementClass);
+        this.store.commit("pageBuilderState/setElement", this.getElement.value);
 
         return currentCSS;
     }
 
-    #applyUniversalClassesToElements(element) {
+    #applyHelperCSSToElements(element) {
         if (this.showRunningMethodLogs) {
-            console.log("#applyUniversalClassesToElements");
+            console.log("#applyHelperCSSToElements");
         }
         element.classList.add("smooth-transition");
 
@@ -161,13 +174,15 @@ class PageBuilder {
             const divWrapper = document.createElement("div");
 
             element.parentNode.insertBefore(divWrapper, element);
+
             divWrapper.appendChild(element);
 
             divWrapper.classList.add("p-2");
         }
 
-        await this.nextTick;
-        this.#applyUniversalClassesToElements(element);
+        // await this.nextTick;
+
+        this.#applyHelperCSSToElements(element);
     }
 
     #handleElementClick = (e, element) => {
@@ -189,6 +204,7 @@ class PageBuilder {
         }
 
         element.removeAttribute("hovered");
+
         element.setAttribute("selected", "");
 
         this.store.commit("pageBuilderState/setElement", element);
@@ -246,7 +262,7 @@ class PageBuilder {
 
         pagebuilder.querySelectorAll("section *").forEach(async (element) => {
             // apply universal CSS class
-            this.#applyUniversalClassesToElements(element);
+            this.#applyHelperCSSToElements(element);
 
             // Check if the element is not one of the excluded tags
             if (
@@ -274,7 +290,7 @@ class PageBuilder {
                         element.parentNode.tagName !== "DIV" ||
                         element.parentNode.querySelector("img") !== null
                     ) {
-                        await this.nextTick;
+                        // await this.nextTick;
                         this.#wrapElementInDivIfExcluded(element);
                     }
                 }
