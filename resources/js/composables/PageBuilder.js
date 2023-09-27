@@ -1171,7 +1171,7 @@ class PageBuilder {
             console.log("saveComponentsLocalStorage");
         }
 
-        this.nextTick;
+        await this.nextTick;
         localStorage.setItem(
             this.getLocalStorageItemName.value,
             JSON.stringify(this.getComponents.value)
@@ -1183,7 +1183,7 @@ class PageBuilder {
             console.log("saveComponentsLocalStorageUpdate");
         }
 
-        this.nextTick;
+        await this.nextTick;
         localStorage.setItem(
             this.getLocalStorageItemNameUpdate.value,
             JSON.stringify(this.getComponents.value)
@@ -1194,7 +1194,7 @@ class PageBuilder {
             console.log("saveComponentsLocalStorageUpdate");
         }
 
-        this.nextTick;
+        await this.nextTick;
         localStorage.removeItem(this.getLocalStorageItemNameUpdate.value);
     }
 
