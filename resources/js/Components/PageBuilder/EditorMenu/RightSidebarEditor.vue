@@ -79,7 +79,6 @@ const isHeadingElement = computed(() => {
 
 <template>
     <div class="h-full w-80 bg-white">
-        <p class="my-4">getElement: {{ JSON.stringify(reactiveGetElement) }}</p>
         <div class="h-screen flex flex-col">
             <div
                 class="flex flex-row justify-between pt-2.5 pr-4 pl-4 items-center mb-3"

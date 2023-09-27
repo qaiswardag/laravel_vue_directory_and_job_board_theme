@@ -164,64 +164,58 @@ class PageBuilder {
     //
     //
 
-    #handleElementClick = (e) => {
+    #handleElementClick = (e, element) => {
         if (this.showRunningMethodLogs) {
             console.log("#handleElementClick");
         }
-        const target = e.target;
-        console.log("YOU CLICKED ME!", target);
+        e.stopPropagation();
+        e.stopPropagation();
+
+        console.log("YOU CLICKED ME!");
 
         this.store.commit("pageBuilderState/setMenuRight", true);
-
-        e.preventDefault();
-        e.stopPropagation();
 
         if (document.querySelector("[selected]") !== null) {
             document.querySelector("[selected]").removeAttribute("selected");
         }
 
-        target.removeAttribute("hovered");
-        target.setAttribute("selected", "");
+        element.removeAttribute("hovered");
+        element.setAttribute("selected", "");
 
-        this.store.commit("pageBuilderState/setElement", target);
+        this.store.commit("pageBuilderState/setElement", element);
     };
 
-    #handleMouseOver = (e) => {
+    #handleMouseOver = (e, element) => {
         if (this.showRunningMethodLogs) {
             console.log("#handleMouseOver");
         }
-        const target = e.target;
-        // console.log("YOU MOUSE OVER ME!", target);
+        // console.log("YOU MOUSE OVER ME!");
 
         e.preventDefault();
         e.stopPropagation();
 
-        if (
-            !target.hasAttribute("selected") &&
-            !target.hasAttribute("hovered")
-        ) {
-            // Only set "hovered" if "selected" is not present and "hovered" is not already set
-            target.setAttribute("hovered", "");
+        if (document.querySelector("[hovered]") !== null) {
+            document.querySelector("[hovered]").removeAttribute("hovered");
+        }
+
+        if (!element.hasAttribute("selected")) {
+            // Only set "hovered" if "selected" is not present
+            element.setAttribute("hovered", "");
         }
     };
 
-    #handleMouseLeave = (e) => {
+    #handleMouseLeave = (e, element) => {
         if (this.showRunningMethodLogs) {
             console.log("#handleMouseLeave");
         }
-        const target = e.target;
-        // console.log("YOU MOUSE LEAVE ME!", target);
+        // console.log("YOU MOUSE LEAVE ME!");
 
         e.preventDefault();
         e.stopPropagation();
 
-        // Only run on mouse leave when "hovered" is set
-        if (target.hasAttribute("hovered")) {
-            target.removeAttribute("hovered");
+        if (document.querySelector("[hovered]") !== null) {
+            document.querySelector("[hovered]").removeAttribute("hovered");
         }
-
-        // Set "hovered" attribute only on the current target
-        target.setAttribute("hovered", "");
     };
 
     /**
@@ -241,7 +235,6 @@ class PageBuilder {
             this.#applyUniversalClassesToElements(element);
 
             // Check if the element is not one of the excluded tags
-            // Check if the element is not one of the excluded tags
             if (
                 !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
                     element.tagName
@@ -251,22 +244,18 @@ class PageBuilder {
                     this.elementsWithListeners &&
                     !this.elementsWithListeners.has(element)
                 ) {
+                    this.elementsWithListeners.add(element);
                     // Attach event listeners directly to individual elements
-                    element.addEventListener("click", this.#handleElementClick);
-                    //
-                    //
-                    element.addEventListener(
-                        "mouseover",
-                        this.#handleMouseOver
+                    element.addEventListener("click", (e) =>
+                        this.#handleElementClick(e, element)
                     );
-                    //
-                    //
-                    element.addEventListener(
-                        "mouseleave",
-                        this.#handleMouseLeave
+                    element.addEventListener("mouseover", (e) =>
+                        this.#handleMouseOver(e, element)
                     );
-                    //
-                    //
+                    element.addEventListener("mouseleave", (e) =>
+                        this.#handleMouseLeave(e, element)
+                    );
+
                     if (
                         element.parentNode.tagName !== "DIV" ||
                         element.parentNode.querySelector("img") !== null
