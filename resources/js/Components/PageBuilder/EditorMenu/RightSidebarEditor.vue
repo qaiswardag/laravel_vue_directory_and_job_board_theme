@@ -39,6 +39,15 @@ const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
 
+const getElementOuterHTML = computed(() => {
+    if (getElement.value === null) return;
+    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
+});
+
+watch(getElementOuterHTML, (newComponent) => {
+    console.log("watch ran");
+    reactiveGetElement.value = newComponent;
+});
 //
 //
 //
@@ -70,6 +79,7 @@ const isHeadingElement = computed(() => {
 
 <template>
     <div class="h-full w-80 bg-white">
+        <p class="my-4">getElement: {{ JSON.stringify(reactiveGetElement) }}</p>
         <div class="h-screen flex flex-col">
             <div
                 class="flex flex-row justify-between pt-2.5 pr-4 pl-4 items-center mb-3"

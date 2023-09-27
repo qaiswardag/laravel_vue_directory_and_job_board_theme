@@ -280,36 +280,36 @@ onMounted(async () => {
     outline-offset: -2px !important;
 }
 
-#pagebuilder [selected]::before,
+/* #pagebuilder [selected]::before,
 #pagebuilder [selected]::after {
     content: "";
     position: absolute;
-    width: 20px; /* Adjust the size of the circle as needed */
-    height: 20px; /* Adjust the size of the circle as needed */
+    width: 20px;
+    height: 20px;
     background-color: rgb(185, 16, 16);
     border-radius: 50%;
     z-index: 1000;
 }
 
 #pagebuilder [selected]::before {
-    top: -10px; /* Adjust the distance from the top */
-    left: -10px; /* Adjust the distance from the left */
+    top: -10px;
+    left: -10px;
 }
 
 #pagebuilder [selected]::after {
-    top: -10px; /* Adjust the distance from the top */
-    right: -10px; /* Adjust the distance from the right */
+    top: -10px;
+    right: -10px;
 }
 
 #pagebuilder [selected]::nth-child(2)::before {
-    bottom: -10px; /* Adjust the distance from the bottom */
-    left: -10px; /* Adjust the distance from the left */
+    bottom: -10px;
+    left: -10px;
 }
 
 #pagebuilder [selected]::nth-child(2)::after {
-    bottom: -10px; /* Adjust the distance from the bottom */
-    right: -10px; /* Adjust the distance from the right */
-}
+    bottom: -10px;
+    right: -10px;
+} */
 
 /* sortable */
 

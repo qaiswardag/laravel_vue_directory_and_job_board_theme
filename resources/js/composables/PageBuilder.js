@@ -117,9 +117,8 @@ class PageBuilder {
     //
     //
     #applyUniversalClassesToElements(element) {
-        console.log("universal:", element);
         if (this.showRunningMethodLogs) {
-            console.log("applyUniversalClassesToElements");
+            console.log("#applyUniversalClassesToElements");
         }
         // Add padding to every DIV
         if (element.tagName === "DIV") {
@@ -131,7 +130,10 @@ class PageBuilder {
     }
 
     async #wrapElementInDivIfExcluded(element) {
-        console.log("må komme me:", element.tagName);
+        if (this.wrapElementInDivIfExcluded) {
+            console.log("#handleElementClick");
+        }
+
         if (this.showRunningMethodLogs) {
             console.log("wrapElementInDivIfExcluded");
         }
@@ -163,6 +165,9 @@ class PageBuilder {
     //
 
     #handleElementClick = (e) => {
+        if (this.showRunningMethodLogs) {
+            console.log("#handleElementClick");
+        }
         const target = e.target;
         console.log("YOU CLICKED ME!", target);
 
@@ -182,6 +187,9 @@ class PageBuilder {
     };
 
     #handleMouseOver = (e) => {
+        if (this.showRunningMethodLogs) {
+            console.log("#handleMouseOver");
+        }
         const target = e.target;
         // console.log("YOU MOUSE OVER ME!", target);
 
@@ -198,6 +206,9 @@ class PageBuilder {
     };
 
     #handleMouseLeave = (e) => {
+        if (this.showRunningMethodLogs) {
+            console.log("#handleMouseLeave");
+        }
         const target = e.target;
         // console.log("YOU MOUSE LEAVE ME!", target);
 
@@ -208,6 +219,9 @@ class PageBuilder {
         if (target.hasAttribute("hovered")) {
             target.removeAttribute("hovered");
         }
+
+        // Set "hovered" attribute only on the current target
+        target.setAttribute("hovered", "");
     };
 
     /**
@@ -219,7 +233,10 @@ class PageBuilder {
             console.log("setEventListenersForElements");
         }
 
-        document.querySelectorAll("section *").forEach(async (element) => {
+        const pagebuilder = document.querySelector("#pagebuilder");
+        if (!pagebuilder) return;
+
+        pagebuilder.querySelectorAll("section *").forEach(async (element) => {
             // apply universal CSS class
             this.#applyUniversalClassesToElements(element);
 
