@@ -146,20 +146,16 @@ class PageBuilder {
         // Add padding to every DIV
         if (element.tagName === "DIV") {
             // If the <div> does not contain any classes, add the following classes
-            if (element.tagName === "DIV" && element.classList.length === 0) {
-                element.classList.add("p-2");
-            }
+
+            element.classList.add("p-2");
         }
     }
 
-    async #wrapElementInDivIfExcluded(element) {
-        if (this.wrapElementInDivIfExcluded) {
-            console.log("#handleElementClick");
+    #wrapElementInDivIfExcluded(element) {
+        if (this.showRunningMethodLogs) {
+            console.log("#wrapElementInDivIfExcluded");
         }
 
-        if (this.showRunningMethodLogs) {
-            console.log("wrapElementInDivIfExcluded");
-        }
         // If the element is one of the excluded tags
         // and it's not inside a div or inside an img tag, wrap it in a div
         if (
@@ -176,13 +172,7 @@ class PageBuilder {
             element.parentNode.insertBefore(divWrapper, element);
 
             divWrapper.appendChild(element);
-
-            divWrapper.classList.add("p-2");
         }
-
-        // await this.nextTick;
-
-        this.#applyHelperCSSToElements(element);
     }
 
     #handleElementClick = (e, element) => {
@@ -257,12 +247,22 @@ class PageBuilder {
             console.log("setEventListenersForElements");
         }
 
+        // Create a document fragment to hold the elements
+        const fragment = document.createDocumentFragment();
+
+        //
+        //
+        //
         const pagebuilder = document.querySelector("#pagebuilder");
         if (!pagebuilder) return;
 
         pagebuilder.querySelectorAll("section *").forEach(async (element) => {
-            // apply universal CSS class
-            this.#applyHelperCSSToElements(element);
+            //
+            //
+            //
+            //
+            //
+            //
 
             // Check if the element is not one of the excluded tags
             if (
@@ -285,17 +285,31 @@ class PageBuilder {
                     element.addEventListener("mouseleave", (e) =>
                         this.#handleMouseLeave(e, element)
                     );
-
-                    if (
-                        element.parentNode.tagName !== "DIV" ||
-                        element.parentNode.querySelector("img") !== null
-                    ) {
-                        // await this.nextTick;
-                        this.#wrapElementInDivIfExcluded(element);
-                    }
                 }
             }
+
+            //
+            //
+            //
+            //
+            //
+            // apply CSS classes
+            this.#applyHelperCSSToElements(element);
+
+            if (
+                element.parentNode.tagName !== "DIV" ||
+                element.parentNode.querySelector("img") !== null
+            ) {
+                this.#wrapElementInDivIfExcluded(element);
+            }
         });
+        //
+        //
+        //
+        //
+        //
+        // After processing all elements, append the fragment to the main DOM
+        pagebuilder.appendChild(fragment);
     };
 
     /**
