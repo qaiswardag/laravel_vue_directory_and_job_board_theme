@@ -126,9 +126,7 @@ const sortedImages = computed(() => {
                         },
                     ]"
                 >
-                    <ChevronLeftIcon
-                        class="shrink-0 h-4 w-4 m-2 stroke-2"
-                    ></ChevronLeftIcon>
+                    <ChevronLeftIcon class="mySmallIcon"></ChevronLeftIcon>
                 </button>
 
                 <button
@@ -146,9 +144,7 @@ const sortedImages = computed(() => {
                         },
                     ]"
                 >
-                    <ChevronRightIcon
-                        class="shrink-0 h-4 w-4 m-2 stroke-2"
-                    ></ChevronRightIcon>
+                    <ChevronRightIcon class="mySmallIcon"></ChevronRightIcon>
                 </button>
             </div>
         </div>

@@ -65,7 +65,7 @@ class PostController extends Controller
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
             ->latest()
-            ->paginate(5);
+            ->paginate(12);
 
         $posts->appends($request->all());
 

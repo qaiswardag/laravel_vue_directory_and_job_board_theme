@@ -187,9 +187,7 @@ onMounted(async () => {
                             @click="handleDesignerPreview"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
-                            <EyeIcon
-                                class="shrink-0 h-4 w-4 m-2 stroke-2"
-                            ></EyeIcon>
+                            <EyeIcon class="mySmallIcon"></EyeIcon>
                         </button>
 
                         <button
@@ -204,7 +202,7 @@ onMounted(async () => {
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <Squares2X2Icon
-                                class="shrink-0 h-4 w-4 m-2 stroke-2"
+                                class="mySmallIcon"
                             ></Squares2X2Icon>
                         </button>
                     </div>

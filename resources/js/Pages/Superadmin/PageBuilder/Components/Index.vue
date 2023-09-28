@@ -353,17 +353,13 @@ const routesArray = [
                     @click="handleLeft"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
-                    <ArrowLeftIcon
-                        class="shrink-0 h-4 w-4 m-2 stroke-2"
-                    ></ArrowLeftIcon>
+                    <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
                 </button>
                 <button
                     @click="handleRight"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
-                    <ArrowRightIcon
-                        class="shrink-0 h-4 w-4 m-2 stroke-2"
-                    ></ArrowRightIcon>
+                    <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
                 </button>
             </div>
             <div ref="scrolTableContainer" class="myTableContainer">
@@ -537,7 +533,7 @@ const routesArray = [
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                                 >
                                                     <EllipsisVerticalIcon
-                                                        class="shrink-0 h-4 w-4 m-2 stroke-2"
+                                                        class="mySmallIcon"
                                                         aria-hidden="true"
                                                     />
                                                 </MenuButton>

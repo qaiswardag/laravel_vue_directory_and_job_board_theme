@@ -138,7 +138,7 @@ const navigation = [
                                                         "
                                                     >
                                                         <XMarkIcon
-                                                            class="shrink-0 h-4 w-4 m-2 stroke-2"
+                                                            class="mySmallIcon"
                                                         ></XMarkIcon>
                                                     </button>
                                                 </div>

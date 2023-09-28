@@ -221,7 +221,10 @@
     |--------------------------------------------------------------------------
     */
     .mySmallIcon {
-        @apply cursor-pointer flex-shrink-0 mr-1.5 h-7 w-7 text-myPrimaryDarkGrayColor transform duration-200 stroke-2;
+        @apply shrink-0 h-4 w-4 m-2 stroke-2;
+    }
+    .myMediumIcon {
+        @apply shrink-0 h-6 w-6 m-2 stroke-2;
     }
 
     /*
@@ -237,7 +240,7 @@
         @apply sticky h-12 top-16 left-0 right-0 flex items-center justify-center myPrimaryGap z-20 bg-gray-100;
     }
     .myTableContainer {
-        @apply overflow-x-auto myPrimarySection relative py-0 px-0;
+        @apply overflow-x-auto myPrimarySection py-0 px-0;
     }
     .myTableSubContainer {
         @apply min-w-full align-middle;

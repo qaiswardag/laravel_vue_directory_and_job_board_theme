@@ -6,7 +6,7 @@ import CardHeadings from "@/Components/Actions/CardHeadings.vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
-import { onMounted, ref } from "vue";
+import { computed, nextTick, onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
 import UserTag from "@/Components/Users/UserTag.vue";
@@ -185,15 +185,31 @@ const scrolTableContainer = ref("scrolTableContainer");
 
 const handleLeft = function () {
     if (scrolTableContainer.value) {
-        scrolTableContainer.value.scrollLeft -= 500;
+        // scrolTableContainer.value.scrollLeft += 400;
+        scrolTableContainer.value.scrollBy({
+            left: -600,
+            behavior: "smooth",
+        });
     }
 };
 const handleRight = function () {
     if (scrolTableContainer.value) {
-        scrolTableContainer.value.scrollLeft += 500;
+        // scrolTableContainer.value.scrollLeft += 400;
+        scrolTableContainer.value.scrollBy({
+            left: +600,
+            behavior: "smooth",
+        });
     }
 };
 
+window.addEventListener("keyup", (e) => {
+    if (e.key === "ArrowLeft") {
+        handleLeft();
+    }
+    if (e.key === "ArrowRight") {
+        handleRight();
+    }
+});
 onMounted(() => {
     if (props.oldInput?.search_query) {
         searchForm.search_query = props.oldInput.search_query;
@@ -313,21 +329,15 @@ onMounted(() => {
             <div class="myScrollButtonContainer">
                 <button
                     @click="handleLeft"
-                    @key.left="handleLeft"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 bg-gray-50 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
-                    <ArrowLeftIcon
-                        class="shrink-0 h-4 w-4 m-2 stroke-2"
-                    ></ArrowLeftIcon>
+                    <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
                 </button>
                 <button
                     @click="handleRight"
-                    @key.right="handleRight"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 bg-gray-50 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
-                    <ArrowRightIcon
-                        class="shrink-0 h-4 w-4 m-2 stroke-2"
-                    ></ArrowRightIcon>
+                    <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
                 </button>
             </div>
             <div ref="scrolTableContainer" class="myTableContainer">
@@ -709,7 +719,7 @@ onMounted(() => {
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                                 >
                                                     <EllipsisVerticalIcon
-                                                        class="shrink-0 h-4 w-4 m-2 stroke-2"
+                                                        class="mySmallIcon"
                                                         aria-hidden="true"
                                                     />
                                                 </MenuButton>

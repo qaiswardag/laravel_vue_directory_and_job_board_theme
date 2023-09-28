@@ -186,10 +186,7 @@ const notificationsSlideOverButton = function () {
                 <div
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
-                    <HomeIcon
-                        class="shrink-0 h-4 w-4 m-2 stroke-2"
-                        aria-hidden="true"
-                    />
+                    <HomeIcon class="myMediumIcon" aria-hidden="true" />
                 </div>
             </Link>
 
@@ -228,10 +225,7 @@ const notificationsSlideOverButton = function () {
                 type="button"
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
             >
-                <UserIcon
-                    class="shrink-0 h-4 w-4 m-2 stroke-2"
-                    aria-hidden="true"
-                />
+                <UserIcon class="myMediumIcon" aria-hidden="true" />
             </button>
 
             <button
@@ -240,10 +234,7 @@ const notificationsSlideOverButton = function () {
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
             >
                 <span class="sr-only">View notifications</span>
-                <BellIcon
-                    class="shrink-0 h-4 w-4 m-2 stroke-2"
-                    aria-hidden="true"
-                />
+                <BellIcon class="myMediumIcon" aria-hidden="true" />
             </button>
 
             <button
@@ -252,10 +243,7 @@ const notificationsSlideOverButton = function () {
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
             >
                 <span class="sr-only">View Menu</span>
-                <Bars3Icon
-                    class="shrink-0 h-4 w-4 m-2 stroke-2"
-                    aria-hidden="true"
-                />
+                <Bars3Icon class="myMediumIcon" aria-hidden="true" />
             </button>
         </nav>
     </header>

@@ -151,9 +151,7 @@ import {
             :href="route('dashboard')"
             :active="route().current('dashboard')"
         >
-            <Squares2X2Icon
-                class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
-            ></Squares2X2Icon>
+            <Squares2X2Icon class="myMediumIcon"></Squares2X2Icon>
 
             Dashboard
         </SideBarLink>
@@ -166,9 +164,7 @@ import {
                 route().current('user.profile.security')
             "
         >
-            <UserIcon
-                class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
-            ></UserIcon>
+            <UserIcon class="myMediumIcon"></UserIcon>
             Your Profile
         </SideBarLink>
 
@@ -190,9 +186,7 @@ import {
                 :href="route('media.index', $page.props.user.current_team.id)"
                 :active="route().current('media.index')"
             >
-                <PhotoIcon
-                    class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
-                ></PhotoIcon>
+                <PhotoIcon class="myMediumIcon"></PhotoIcon>
                 Media
             </SideBarLink>
         </template>
@@ -215,9 +209,7 @@ import {
                     route().current('team.posts.post.show')
                 "
             >
-                <DocumentTextIcon
-                    class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
-                ></DocumentTextIcon>
+                <DocumentTextIcon class="myMediumIcon"></DocumentTextIcon>
 
                 Blog
             </SideBarLink>
@@ -240,9 +232,7 @@ import {
                     route().current('team.jobs.job.show')
                 "
             >
-                <TagIcon
-                    class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
-                ></TagIcon>
+                <TagIcon class="myMediumIcon"></TagIcon>
 
                 Jobs
             </SideBarLink>
@@ -265,9 +255,7 @@ import {
                     route().current('team.stores.store.show')
                 "
             >
-                <ShoppingBagIcon
-                    class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
-                ></ShoppingBagIcon>
+                <ShoppingBagIcon class="myMediumIcon"></ShoppingBagIcon>
                 Stores
             </SideBarLink>
         </template>
@@ -287,9 +275,7 @@ import {
                     route().current('team.delete')
                 "
             >
-                <Cog6ToothIcon
-                    class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
-                ></Cog6ToothIcon>
+                <Cog6ToothIcon class="myMediumIcon"></Cog6ToothIcon>
                 Team Settings
             </SideBarLink>
         </template>
@@ -302,9 +288,7 @@ import {
                 route().current('user.teams.create')
             "
         >
-            <Square3Stack3DIcon
-                class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
-            ></Square3Stack3DIcon>
+            <Square3Stack3DIcon class="myMediumIcon"></Square3Stack3DIcon>
             All Teams
         </SideBarLink>
         <SideBarLink
@@ -318,9 +302,7 @@ import {
                 route().current('admin.components.component.edit')
             "
         >
-            <FingerPrintIcon
-                class="text-myPrimaryDarkGrayColor mr-4 flex-shrink-0 h-6 w-6"
-            ></FingerPrintIcon>
+            <FingerPrintIcon class="myMediumIcon"></FingerPrintIcon>
             Superadmin
         </SideBarLink>
     </nav>

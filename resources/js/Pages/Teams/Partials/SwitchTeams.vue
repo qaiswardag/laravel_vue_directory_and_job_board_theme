@@ -141,7 +141,7 @@ const switchTeam = function (team) {
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
                                     <ArrowLeftIcon
-                                        class="shrink-0 h-4 w-4 m-2 stroke-2"
+                                        class="mySmallIcon"
                                     ></ArrowLeftIcon>
                                 </button>
                                 <button
@@ -149,7 +149,7 @@ const switchTeam = function (team) {
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
                                     <ArrowRightIcon
-                                        class="shrink-0 h-4 w-4 m-2 stroke-2"
+                                        class="mySmallIcon"
                                     ></ArrowRightIcon>
                                 </button>
                             </div>

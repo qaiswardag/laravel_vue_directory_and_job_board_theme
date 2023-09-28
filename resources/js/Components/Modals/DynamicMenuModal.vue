@@ -120,7 +120,7 @@ const handleLogout = () => {
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                             >
                                 <AdjustmentsHorizontalIcon
-                                    class="shrink-0 h-4 w-4 m-2 stroke-2"
+                                    class="mySmallIcon"
                                 />
                             </button>
                             <div>Team Settings</div>
@@ -180,9 +180,7 @@ const handleLogout = () => {
                                     type="button"
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
-                                    <UserIcon
-                                        class="shrink-0 h-4 w-4 m-2 stroke-2"
-                                    />
+                                    <UserIcon class="mySmallIcon" />
                                 </button>
                             </template>
                         </div>
@@ -199,9 +197,7 @@ const handleLogout = () => {
                             type="button"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
-                            <ArrowRightIcon
-                                class="shrink-0 h-4 w-4 m-2 stroke-2"
-                            />
+                            <ArrowRightIcon class="mySmallIcon" />
                         </button>
                         <div>Log out</div>
                     </div>

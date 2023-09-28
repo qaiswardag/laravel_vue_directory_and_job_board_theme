@@ -69,7 +69,7 @@ class StoreController extends Controller
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
             ->latest()
-            ->paginate(5);
+            ->paginate(12);
 
         $stores->appends($request->all());
 
