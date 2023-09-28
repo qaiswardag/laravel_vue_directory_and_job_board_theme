@@ -68,7 +68,7 @@ const handleDropComponent = async function (componentObject) {
     store.commit("pageBuilderState/setPushComponents", clonedComponent);
 
     await nextTick();
-    pageBuilder.observePlusSyncExistingHTMLElements();
+    pageBuilder.setEventListenersForElements();
 
     // Close modal
     firstButton();
@@ -85,7 +85,7 @@ const handleAddHelperComponent = async function (helperComponentObject) {
     store.commit("pageBuilderState/setPushComponents", clonedComponent);
 
     await nextTick();
-    pageBuilder.observePlusSyncExistingHTMLElements();
+    pageBuilder.setEventListenersForElements();
 
     // Close modal
     firstButton();

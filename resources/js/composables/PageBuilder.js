@@ -23,6 +23,43 @@ class PageBuilder {
          * we can prevent redundant addition of the same event listener to an element.
          * This helps in managing the memory usage and performance of the application.
          */
+
+        // Use below:
+        // 1.
+        // this.setEventListenersForElements();
+
+        //
+        // 2.
+        // apply CSS classes
+        //
+        //
+        // this.#applyHelperCSSToElements(element);
+        //
+        // if (
+        // element.parentNode.tagName !== "DIV" ||
+        // element.parentNode.querySelector("img") !== null
+        // ) {
+        // this.#wrapElementInDivIfExcluded(element);
+        // }
+        //
+        //
+        //
+        // 3.
+        //
+
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
         this.elementsWithListeners = new WeakSet();
 
         this.nextTick = nextTick();
@@ -70,7 +107,19 @@ class PageBuilder {
             () => this.store.getters["pageBuilderState/getRestoredElement"]
         );
 
-        this.showRunningMethodLogs = false;
+        this.headerTags = ["P", "H1", "H2", "H3", "H4", "H5", "H6"];
+        this.structuringTags = [
+            "DIV",
+            "HEADER",
+            "NAV",
+            "MAIN",
+            "ARTICLE",
+            "SECTION",
+            "ASIDE",
+            "FOOTER",
+        ];
+
+        this.showRunningMethodLogs = true;
 
         this.delay = function delay(ms) {
             return new Promise((resolve) => {
@@ -185,8 +234,6 @@ class PageBuilder {
         const pagebuilder = document.querySelector("#pagebuilder");
         if (!pagebuilder) return;
 
-        console.log("YOU CLICKED ME!");
-
         this.store.commit("pageBuilderState/setMenuRight", true);
 
         if (pagebuilder.querySelector("[selected]") !== null) {
@@ -202,7 +249,7 @@ class PageBuilder {
 
     #handleMouseOver = (e, element) => {
         if (this.showRunningMethodLogs) {
-            console.log("#handleMouseOver");
+            // console.log("#handleMouseOver");
         }
         // console.log("YOU MOUSE OVER ME!");
 
@@ -223,7 +270,7 @@ class PageBuilder {
 
     #handleMouseLeave = (e, element) => {
         if (this.showRunningMethodLogs) {
-            console.log("#handleMouseLeave");
+            // console.log("#handleMouseLeave");
         }
         // console.log("YOU MOUSE LEAVE ME!");
 
@@ -247,29 +294,14 @@ class PageBuilder {
             console.log("setEventListenersForElements");
         }
 
-        // Create a document fragment to hold the elements
-        const fragment = document.createDocumentFragment();
-
-        //
-        //
         //
         const pagebuilder = document.querySelector("#pagebuilder");
         if (!pagebuilder) return;
 
         pagebuilder.querySelectorAll("section *").forEach(async (element) => {
             //
-            //
-            //
-            //
-            //
-            //
-
-            // Check if the element is not one of the excluded tags
-            if (
-                !["P", "H1", "H2", "H3", "H4", "H5", "H6"].includes(
-                    element.tagName
-                )
-            ) {
+            // exclude headerTags
+            if (!this.headerTags.includes(element.tagName)) {
                 if (
                     this.elementsWithListeners &&
                     !this.elementsWithListeners.has(element)
@@ -288,28 +320,8 @@ class PageBuilder {
                 }
             }
 
-            //
-            //
-            //
-            //
-            //
-            // apply CSS classes
-            this.#applyHelperCSSToElements(element);
-
-            if (
-                element.parentNode.tagName !== "DIV" ||
-                element.parentNode.querySelector("img") !== null
-            ) {
-                this.#wrapElementInDivIfExcluded(element);
-            }
+            // end for each iterating over elements
         });
-        //
-        //
-        //
-        //
-        //
-        // After processing all elements, append the fragment to the main DOM
-        pagebuilder.appendChild(fragment);
     };
 
     /**
@@ -317,9 +329,14 @@ class PageBuilder {
      * intersection of a target element with an ancestor element or with a top-level document's viewport.
      */
 
-    observePlusSyncExistingHTMLElements = async () => {
+    //
+    //
+    // observePlusSyncExistingHTMLElements
+    //
+    //
+    saveDOM = async () => {
         if (this.showRunningMethodLogs) {
-            console.log("observePlusSyncExistingHTMLElements");
+            console.log("saveDOM");
         }
         if (!this.getComponents.value) {
             this.store.commit("pageBuilderState/setComponents", []);
@@ -362,8 +379,23 @@ class PageBuilder {
             document.querySelector("[selected]")
         );
 
+        //
         this.setEventListenersForElements();
     };
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
 
     cloneCompObjForDOMInsertion(componentObject) {
         if (this.showRunningMethodLogs) {

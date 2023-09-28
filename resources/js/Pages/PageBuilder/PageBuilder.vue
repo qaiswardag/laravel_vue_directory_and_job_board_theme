@@ -104,11 +104,11 @@ const handleSelectComponent = function (componentObject) {
 
 watch(getElementOuterHTML, () => {
     pageBuilder.handlePageBuilderMethods();
-    pageBuilder.observePlusSyncExistingHTMLElements();
+    pageBuilder.setEventListenersForElements();
 });
 
 onMounted(async () => {
-    pageBuilder.observePlusSyncExistingHTMLElements();
+    pageBuilder.setEventListenersForElements();
 });
 </script>
 
