@@ -538,11 +538,6 @@ router.on = async () => {
             await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
         }
-        //
-        //
-        //
-        await nextTick();
-        pageBuilder.saveDOM();
     }
 
     // set open modal
@@ -567,11 +562,6 @@ window.addEventListener("beforeunload", async function () {
             await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
         }
-        //
-        //
-        //
-        await nextTick();
-        pageBuilder.saveDOM();
     }
 
     // set open modal
@@ -655,9 +645,6 @@ const handleDraftForUpdate = async function () {
         await nextTick();
         pageBuilder.areComponentsStoredInLocalStorageUpdate();
 
-        await nextTick();
-        pageBuilder.saveDOM();
-
         await delay(500);
         isLoading.value = false;
     }
@@ -700,9 +687,6 @@ const handlePageBuilder = function () {
 
         if (formType.value === "update") {
             await nextTick();
-            pageBuilder.saveDOM();
-
-            await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
             await delay(500);
         }
@@ -723,8 +707,6 @@ const handlePageBuilder = function () {
         // save to local storage if new resource
         if (formType.value === "create") {
             await nextTick();
-            pageBuilder.saveDOM();
-            await nextTick();
             pageBuilder.saveComponentsLocalStorage();
             //
             //
@@ -741,13 +723,6 @@ const handlePageBuilder = function () {
         }
         // save to local storage if update
         if (formType.value === "update") {
-            await nextTick();
-            pageBuilder.saveDOM();
-
-            //
-            //
-            //
-            //
             await nextTick();
             postForm.content =
                 Array.isArray(getComponents.value) &&

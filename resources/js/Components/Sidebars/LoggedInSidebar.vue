@@ -172,8 +172,12 @@ import {
             Your Profile
         </SideBarLink>
 
-        <div class="bg-myPrimaryDarkGrayColor py-2 px-2 my-4">
-            <p class="myPrimaryParagraph text-white">Company</p>
+        <div class="px-2 pt-4 rounded-none">
+            <p
+                class="myPrimaryParagraph text-myPrimaryMediumGrayColor italic text-xs pt-2 border-t"
+            >
+                Company
+            </p>
         </div>
         <template
             v-if="

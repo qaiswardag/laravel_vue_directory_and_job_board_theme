@@ -25,26 +25,7 @@ class PageBuilder {
          */
 
         // Use below:
-        // 1.
-        // this.setEventListenersForElements();
 
-        //
-        // 2.
-        // apply CSS classes
-        //
-        //
-        // this.#applyHelperCSSToElements(element);
-        //
-        // if (
-        // element.parentNode.tagName !== "DIV" ||
-        // element.parentNode.querySelector("img") !== null
-        // ) {
-        // this.#wrapElementInDivIfExcluded(element);
-        // }
-        //
-        //
-        //
-        // 3.
         //
 
         //
@@ -198,6 +179,13 @@ class PageBuilder {
 
             element.classList.add("p-2");
         }
+
+        //
+        //
+        //
+        //
+        //
+        this.#wrapElementInDivIfExcluded(element);
     }
 
     #wrapElementInDivIfExcluded(element) {
@@ -205,22 +193,14 @@ class PageBuilder {
             console.log("#wrapElementInDivIfExcluded");
         }
 
-        // If the element is one of the excluded tags
-        // and it's not inside a div or inside an img tag, wrap it in a div
-        if (
-            element.tagName === "P" ||
-            element.tagName === "H1" ||
-            element.tagName === "H2" ||
-            element.tagName === "H3" ||
-            element.tagName === "H4" ||
-            element.tagName === "H5" ||
-            element.tagName === "H6"
-        ) {
+        if (this.headerTags.includes(element.tagName)) {
             const divWrapper = document.createElement("div");
 
             element.parentNode.insertBefore(divWrapper, element);
 
             divWrapper.appendChild(element);
+
+            divWrapper.classList.add("bg-orange-100");
         }
     }
 
@@ -334,9 +314,9 @@ class PageBuilder {
     // observePlusSyncExistingHTMLElements
     //
     //
-    saveDOM = async () => {
+    #synchronizeDOMAndComponents = async () => {
         if (this.showRunningMethodLogs) {
-            console.log("saveDOM");
+            console.log("synchronizeDOMAndComponents");
         }
         if (!this.getComponents.value) {
             this.store.commit("pageBuilderState/setComponents", []);
@@ -373,14 +353,6 @@ class PageBuilder {
         await new Promise((resolve) => {
             resolve();
         });
-
-        this.store.commit(
-            "pageBuilderState/setElement",
-            document.querySelector("[selected]")
-        );
-
-        //
-        this.setEventListenersForElements();
     };
     //
     //
@@ -416,6 +388,10 @@ class PageBuilder {
 
         // Selects all elements within the HTML document, including elements like:
         const elements = doc.querySelectorAll("*");
+
+        elements.forEach((element) => {
+            this.#applyHelperCSSToElements(element);
+        });
 
         // Add the component id to the section element
         const section = doc.querySelector("section");
@@ -1199,6 +1175,9 @@ class PageBuilder {
     }
 
     async saveComponentsLocalStorage() {
+        await this.nextTick;
+        this.#synchronizeDOMAndComponents();
+
         if (this.showRunningMethodLogs) {
             console.log("saveComponentsLocalStorage");
         }

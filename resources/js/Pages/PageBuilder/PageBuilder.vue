@@ -93,19 +93,39 @@ const getComponent = computed(() => {
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
-const getElementOuterHTML = computed(() => {
-    if (getElement.value === null) return;
-    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
+const getElementAttributes = computed(() => {
+    const element = getElement.value;
+
+    if (element === null) return {};
+
+    // Extract the attributes you want to watch
+    const attributesToWatch = {
+        src: element.getAttribute("src"),
+        href: element.getAttribute("href"),
+        style: element.getAttribute("style"),
+        class: element.getAttribute("class"),
+    };
+
+    return attributesToWatch;
+});
+
+watch(getElementAttributes, (newAttributes, oldAttributes) => {
+    // Check if any of the specified attributes have changed
+    if (
+        newAttributes.src !== oldAttributes.src ||
+        newAttributes.href !== oldAttributes.href ||
+        newAttributes.style !== oldAttributes.style ||
+        newAttributes.class !== oldAttributes.class
+    ) {
+        // Trigger your method when any of the specified attributes change
+        pageBuilder.handlePageBuilderMethods();
+        pageBuilder.setEventListenersForElements();
+    }
 });
 
 const handleSelectComponent = function (componentObject) {
     store.commit("pageBuilderState/setComponent", componentObject);
 };
-
-watch(getElementOuterHTML, () => {
-    pageBuilder.handlePageBuilderMethods();
-    pageBuilder.setEventListenersForElements();
-});
 
 onMounted(async () => {
     pageBuilder.setEventListenersForElements();
