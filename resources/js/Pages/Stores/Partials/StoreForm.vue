@@ -21,6 +21,7 @@ import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
+import { delay } from "@/helpers/delay";
 
 import {
     Listbox,
@@ -121,12 +122,6 @@ const getCurrentAttachedStoreCategories = computed(() => {
         "attachedUsersOrItems/getCurrentAttachedStoreCategories"
     ];
 });
-
-const delay = function delay(ms) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
-};
 
 const formType = ref("create");
 const pathLocalStorage = `store-form-${
@@ -543,7 +538,7 @@ router.on = async () => {
     // set open modal
     openDesignerModal.value = false;
 
-    await delay(100);
+    await delay();
     isLoading.value = false;
 };
 
@@ -567,7 +562,7 @@ window.addEventListener("beforeunload", async function () {
     // set open modal
     openDesignerModal.value = false;
 
-    await delay(100);
+    await delay();
     isLoading.value = false;
 });
 
@@ -644,8 +639,10 @@ const handleDraftForUpdate = async function () {
     if (formType.value === "update") {
         await nextTick();
         pageBuilder.areComponentsStoredInLocalStorageUpdate();
+        await nextTick();
+        pageBuilder.setEventListenersForElements();
 
-        await delay(500);
+        await delay();
         isLoading.value = false;
     }
     //
@@ -688,7 +685,7 @@ const handlePageBuilder = function () {
         if (formType.value === "update") {
             await nextTick();
             pageBuilder.saveComponentsLocalStorageUpdate();
-            await delay(500);
+            await delay();
         }
 
         // set open modal
@@ -730,7 +727,7 @@ const handlePageBuilder = function () {
                     .map((component) => {
                         return component.html_code;
                     })
-                    .join(""); // Join the HTML code strings without any separator
+                    .join("");
         }
 
         //
@@ -738,7 +735,7 @@ const handlePageBuilder = function () {
         // set open modal
         openDesignerModal.value = false;
 
-        await delay(500);
+        await delay();
         isLoading.value = false;
     };
 
@@ -1013,27 +1010,32 @@ const pageBuilder = new PageBuilder(store);
     <template v-if="isLoading">
         <FullScreenSpinner></FullScreenSpinner>
     </template>
-    <KeepAlive>
-        <PageBuilderModal
-            :show="openDesignerModal"
-            :updateOrCreate="formType"
-            @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
-            @secondDesignerModalButtonFunction="
-                secondDesignerModalButtonFunction
-            "
-            @handleDraftForUpdate="handleDraftForUpdate"
-        >
-            <PageBuilderView
-                :user="user"
-                :team="postForm.team"
-            ></PageBuilderView>
-        </PageBuilderModal>
-    </KeepAlive>
+    <PageBuilderModal
+        :show="openDesignerModal"
+        :updateOrCreate="formType"
+        @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
+        @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"
+        @handleDraftForUpdate="handleDraftForUpdate"
+    >
+        <PageBuilderView :user="user" :team="postForm.team"></PageBuilderView>
+    </PageBuilderModal>
 
     <FormSection @submitted="handleCreatePost">
         <template #title> Store details</template>
         <template #description> Create a new Store. </template>
         <template #main>
+            <p class="my-12 p-8 border">
+                getComponents.value:
+                <br />
+                <br />
+                {{ JSON.stringify(getComponents.value) }}
+            </p>
+            <p class="my-12 p-8 border">
+                postForm.content:
+                <br />
+                <br />
+                {{ JSON.stringify(postForm.content) }}
+            </p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">

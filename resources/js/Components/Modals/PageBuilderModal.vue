@@ -104,7 +104,6 @@ const getLocalStorageItemNameUpdate = computed(() => {
 //
 const handleDraftForUpdate = function () {
     hideDraftButton.value = false;
-    pageBuilder.removeHoveredAndSelected();
     emit("handleDraftForUpdate");
 };
 

@@ -313,6 +313,7 @@ onMounted(() => {
             <div class="myScrollButtonContainer">
                 <button
                     @click="handleLeft"
+                    @key.left="handleLeft"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <ArrowLeftIcon
@@ -321,6 +322,7 @@ onMounted(() => {
                 </button>
                 <button
                     @click="handleRight"
+                    @key.right="handleRight"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
                     <ArrowRightIcon

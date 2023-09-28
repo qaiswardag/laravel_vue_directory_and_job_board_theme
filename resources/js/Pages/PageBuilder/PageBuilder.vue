@@ -288,6 +288,10 @@ onMounted(async () => {
     cursor: default;
 }
 
+#pagebuilder {
+    outline: rgb(251, 255, 0) solid 2px !important;
+    outline-offset: -2px !important;
+}
 #pagebuilder [hovered] {
     outline: rgb(0, 140, 14, 1) solid 2px !important;
     outline-offset: -2px !important;

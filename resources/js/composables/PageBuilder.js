@@ -8,6 +8,7 @@ import tailwindBorderRadius from "@/utils/builder/tailwind-border-radius";
 import tailwindBorderStyleWidthPlusColor from "@/utils/builder/tailwind-border-style-width-color";
 import { computed, ref, nextTick, watch } from "vue";
 import { v4 as uuidv4 } from "uuid";
+import { delay } from "@/helpers/delay";
 
 class PageBuilder {
     constructor(store) {
@@ -23,24 +24,6 @@ class PageBuilder {
          * we can prevent redundant addition of the same event listener to an element.
          * This helps in managing the memory usage and performance of the application.
          */
-
-        // Use below:
-
-        //
-
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-
         this.elementsWithListeners = new WeakSet();
 
         this.nextTick = nextTick();
@@ -102,11 +85,7 @@ class PageBuilder {
 
         this.showRunningMethodLogs = true;
 
-        this.delay = function delay(ms) {
-            return new Promise((resolve) => {
-                setTimeout(resolve, ms);
-            });
-        };
+        this.delay = delay();
     }
 
     shouldRunMethods() {
@@ -177,7 +156,9 @@ class PageBuilder {
         if (element.tagName === "DIV") {
             // If the <div> does not contain any classes, add the following classes
 
-            element.classList.add("p-2");
+            if (element.classList.length === 0) {
+                element.classList.add("p-2");
+            }
         }
 
         //
@@ -1066,9 +1047,9 @@ class PageBuilder {
         this.getComponents.value.splice(newIndex, 0, componentToMove);
     }
 
-    addSpaceForEmptyTextArea = () => {
+    ensureTextAreaHasContent = () => {
         if (this.showRunningMethodLogs) {
-            console.log("addSpaceForEmptyTextArea");
+            console.log("ensureTextAreaHasContent");
         }
 
         if (!this.shouldRunMethods()) return;
@@ -1123,7 +1104,7 @@ class PageBuilder {
             );
         }
 
-        this.addSpaceForEmptyTextArea();
+        this.ensureTextAreaHasContent();
     };
 
     previewCurrentDesign() {
