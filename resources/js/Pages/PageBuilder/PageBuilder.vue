@@ -184,6 +184,15 @@ onMounted(async () => {
                     <div class="flex items-center justify-center gap-2">
                         <button
                             type="button"
+                            @click="handleAddComponent"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                        >
+                            <Square3Stack3DIcon
+                                class="mySmallIcon"
+                            ></Square3Stack3DIcon>
+                        </button>
+                        <button
+                            type="button"
                             @click="handleDesignerPreview"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
