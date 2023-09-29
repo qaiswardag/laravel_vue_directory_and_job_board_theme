@@ -286,8 +286,8 @@ onMounted(async () => {
     cursor: default;
 }
 
-#pagebuilder {
-    outline: rgb(251, 255, 0) solid 2px !important;
+#pagebuilder [element] {
+    outline: rgba(255, 255, 255, 0) solid 2px !important;
     outline-offset: -2px !important;
 }
 #pagebuilder [hovered] {
@@ -302,7 +302,7 @@ onMounted(async () => {
     outline-offset: -2px !important;
 }
 
-/* #pagebuilder [selected]::before,
+#pagebuilder [selected]::before,
 #pagebuilder [selected]::after {
     content: "";
     position: absolute;
@@ -331,7 +331,7 @@ onMounted(async () => {
 #pagebuilder [selected]::nth-child(2)::after {
     bottom: -10px;
     right: -10px;
-} */
+}
 
 /* sortable */
 

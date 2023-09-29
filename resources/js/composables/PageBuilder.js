@@ -151,6 +151,7 @@ class PageBuilder {
             console.log("#applyHelperCSSToElements");
         }
         element.classList.add("smooth-transition");
+        element.setAttribute("element", "");
 
         // Add padding to every DIV
         if (element.tagName === "DIV") {
@@ -180,8 +181,6 @@ class PageBuilder {
             element.parentNode.insertBefore(divWrapper, element);
 
             divWrapper.appendChild(element);
-
-            divWrapper.classList.add("bg-orange-100");
         }
     }
 
@@ -289,13 +288,7 @@ class PageBuilder {
      * The Intersection Observer API provides a way to asynchronously observe changes in the
      * intersection of a target element with an ancestor element or with a top-level document's viewport.
      */
-
-    //
-    //
-    // observePlusSyncExistingHTMLElements
-    //
-    //
-    #synchronizeDOMAndComponents = async () => {
+    synchronizeDOMAndComponents = async () => {
         if (this.showRunningMethodLogs) {
             console.log("synchronizeDOMAndComponents");
         }
@@ -335,20 +328,6 @@ class PageBuilder {
             resolve();
         });
     };
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
 
     cloneCompObjForDOMInsertion(componentObject) {
         if (this.showRunningMethodLogs) {
@@ -1157,7 +1136,7 @@ class PageBuilder {
 
     async saveComponentsLocalStorage() {
         await this.nextTick;
-        this.#synchronizeDOMAndComponents();
+        this.synchronizeDOMAndComponents();
 
         if (this.showRunningMethodLogs) {
             console.log("saveComponentsLocalStorage");

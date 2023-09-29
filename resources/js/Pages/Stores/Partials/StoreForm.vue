@@ -721,6 +721,9 @@ const handlePageBuilder = function () {
         // save to local storage if update
         if (formType.value === "update") {
             await nextTick();
+            pageBuilder.synchronizeDOMAndComponents();
+
+            await nextTick();
             postForm.content =
                 Array.isArray(getComponents.value) &&
                 getComponents.value
