@@ -331,13 +331,17 @@ onMounted(() => {
                     @click="handleLeft"
                     class="h-10 w-10 bg-gray-50 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
-                    <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
+                    <ArrowLeftIcon
+                        class="shrink-0 h-4 w-4 m-2 stroke-2"
+                    ></ArrowLeftIcon>
                 </button>
                 <button
                     @click="handleRight"
                     class="h-10 w-10 bg-gray-50 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                 >
-                    <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
+                    <ArrowRightIcon
+                        class="shrink-0 h-4 w-4 m-2 stroke-2"
+                    ></ArrowRightIcon>
                 </button>
             </div>
             <div ref="scrolTableContainer" class="myTableContainer">
@@ -719,7 +723,7 @@ onMounted(() => {
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                                 >
                                                     <EllipsisVerticalIcon
-                                                        class="mySmallIcon"
+                                                        class="shrink-0 h-4 w-4 m-2 stroke-2"
                                                         aria-hidden="true"
                                                     />
                                                 </MenuButton>

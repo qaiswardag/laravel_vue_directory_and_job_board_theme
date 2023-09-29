@@ -173,7 +173,7 @@ const thirdButton = function () {
             </div>
         </div>
 
-        <div class="bg-gray-100 px-6 py-4 flex sm:justify-end justify-center">
+        <div class="bg-gray-50 px-6 py-4 flex sm:justify-end justify-center">
             <slot name="footer" />
             <div
                 :class="{

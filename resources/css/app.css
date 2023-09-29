@@ -195,7 +195,7 @@
     }
 
     .mySecondaryButton {
-        @apply myPrimaryButton bg-gray-600 hover:bg-gray-700 focus:ring-gray-700;
+        @apply myPrimaryButton bg-gray-300 hover:bg-opacity-90 focus:ring-myPrimaryLightGrayColor text-myPrimaryDarkGrayColor hover:text-white shadow-sm;
     }
 
     .myPrimaryDeleteButton {
@@ -253,7 +253,7 @@
         @apply bg-white myPrimaryParagraph py-4;
     }
     .myPrimaryTableTHead {
-        @apply bg-gray-50;
+        @apply bg-gray-50 sticky;
     }
     .myPrimaryTableTr {
         @apply divide-x divide-gray-300;
