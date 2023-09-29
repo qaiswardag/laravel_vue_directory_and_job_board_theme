@@ -46,6 +46,7 @@ const firstButton = function () {
 };
 
 const search_query = ref("");
+const categorySelected = ref({ name: "All", id: null });
 const store = useStore();
 const pageBuilder = new PageBuilder(store);
 
@@ -101,6 +102,7 @@ const handleSearch = function (page) {
         team: props.team,
         page: page,
         search_query: search_query.value,
+        category: categorySelected.value,
     });
 };
 //
@@ -111,6 +113,7 @@ const fetchComponents = function (page) {
         team: props.team,
         page: page,
         search_query: search_query.value,
+        category: categorySelected.value,
     });
 };
 
@@ -118,6 +121,22 @@ const fetchComponents = function (page) {
 const getResultsForPage = (page = 1) => {
     search_query.value = getFetchedComponents.value?.fetchedData?.search_query;
     fetchComponents(page);
+};
+//
+//
+//
+const handleCategory = function (category) {
+    categorySelected.value = category;
+
+    //
+    //
+    // dispatch
+    store.dispatch("pageBuilderState/loadComponents", {
+        team: props.team,
+        page: 1,
+        search_query: search_query.value,
+        category: category,
+    });
 };
 //
 onMounted(async () => {
@@ -141,6 +160,7 @@ onMounted(async () => {
         <div
             class="px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
+            <p class="my-4">categorySelected: {{ categorySelected }}</p>
             <div
                 class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
             >
@@ -215,7 +235,19 @@ onMounted(async () => {
 
                 <!-- Categories # Start -->
                 <div class="flex gap-2 flex-wrap">
-                    <button class="myPrimaryTag">All</button>
+                    <button
+                        @click="handleCategory({ name: 'All', id: null })"
+                        class="myPrimaryTag"
+                        :class="[
+                            {
+                                'bg-myPrimaryLinkColor text-white':
+                                    categorySelected.name === 'All',
+                            },
+                        ]"
+                        :disabled="categorySelected.name === 'All'"
+                    >
+                        All
+                    </button>
                     <template
                         v-for="category in getFetchedComponents &&
                         getFetchedComponents.fetchedData &&
@@ -226,7 +258,26 @@ onMounted(async () => {
                         getFetchedComponents.fetchedData.component_categories"
                         :key="category.id"
                     >
-                        <button class="myPrimaryTag">
+                        <button
+                            @click="
+                                handleCategory({
+                                    name: category.name,
+                                    id: category.id,
+                                })
+                            "
+                            class="myPrimaryTag"
+                            :class="[
+                                {
+                                    'bg-myPrimaryLinkColor text-white':
+                                        categorySelected.name === category.name,
+                                },
+                                {
+                                    'bg-myPrimaryLinkColor text-white':
+                                        categorySelected.name === category.name,
+                                },
+                            ]"
+                            :disabled="categorySelected.name === category.name"
+                        >
                             {{ category.name }}
                         </button>
                     </template>
@@ -328,6 +379,41 @@ onMounted(async () => {
                                     >
                                         {{ component.title }}
                                     </button>
+
+                                    <div
+                                        class="flex flex-wrap gap-2 items-center justify-left"
+                                    >
+                                        <button
+                                            @click="
+                                                handleCategory({
+                                                    name: category.name,
+                                                    id: category.id,
+                                                })
+                                            "
+                                            v-for="category in component.categories &&
+                                            component.categories"
+                                            :key="category.id"
+                                            class="myPrimaryTag text-[10px] py-2 px-2"
+                                            :class="[
+                                                {
+                                                    'bg-myPrimaryLinkColor text-white':
+                                                        categorySelected.name ===
+                                                        category.name,
+                                                },
+                                                {
+                                                    'bg-myPrimaryLinkColor text-white':
+                                                        categorySelected.name ===
+                                                        category.name,
+                                                },
+                                            ]"
+                                            :disabled="
+                                                categorySelected.name ===
+                                                category.name
+                                            "
+                                        >
+                                            {{ category.name }}
+                                        </button>
+                                    </div>
 
                                     <div
                                         class="py-4 mt-4 border-t border-gray-200"

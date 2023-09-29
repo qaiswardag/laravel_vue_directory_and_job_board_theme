@@ -15,6 +15,12 @@ class PageBuilderComponentsController extends Controller
      */
     public function index(Team $team, Request $request)
     {
+        $categoryID = null;
+
+        if (isset($request->category["id"])) {
+            $categoryID = $request->category["id"];
+        }
+
         $this->authorize("can-read", $team);
 
         $componentsCategories = PageBuilderComponentCategory::all();
@@ -26,11 +32,20 @@ class PageBuilderComponentsController extends Controller
                 $query->where("title", "LIKE", "%" . $term . "%");
             });
 
+        if ($categoryID) {
+            $query->whereHas("categories", function ($query) use ($categoryID) {
+                $query->where(
+                    "page_builder_component_categories.id",
+                    $categoryID
+                );
+            });
+        }
+
         if (!auth()->user()->superadmin) {
             $query->where("published", true);
         }
 
-        $components = $query->paginate(10);
+        $components = $query->paginate(2);
 
         return [
             "component_categories" => $componentsCategories,

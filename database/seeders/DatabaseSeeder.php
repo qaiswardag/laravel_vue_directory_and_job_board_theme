@@ -552,7 +552,6 @@ class DatabaseSeeder extends Seeder
         // Page Builder
         //
         //
-        // PageBuilderComponent::factory(200)->create();
 
         //
         // Create an instance of PageBuilderComponentsTemplates
@@ -566,6 +565,8 @@ class DatabaseSeeder extends Seeder
         }
 
         //
+        PageBuilderComponent::factory(200)->create();
+        $totalComponents = PageBuilderComponent::count();
         //
         //
         $categories = [
@@ -595,7 +596,7 @@ class DatabaseSeeder extends Seeder
 
         $this->associateCategoriesWithItems(
             PageBuilderComponent::class,
-            count($pageBuilderComponents),
+            $totalComponents,
             2,
             PageBuilderComponentCategory::class,
             "categories"

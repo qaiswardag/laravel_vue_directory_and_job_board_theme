@@ -27,8 +27,6 @@ class PageBuilderComponents extends Command
      */
     public function handle()
     {
-        // PageBuilderComponent::factory(200)->create();
-
         // Create an instance of PageBuilderComponentsTemplates
         $pageBuilderTemplates = new PageBuilderComponentsTemplates();
 
@@ -40,5 +38,7 @@ class PageBuilderComponents extends Command
         }
 
         $this->info("Seeded successfully, new Components for production.");
+
+        // PageBuilderComponent::factory(200)->create();
     }
 }

@@ -433,6 +433,7 @@ export default {
                 route("components.index", {
                     team: data.team.id,
                     search_query: data.search_query,
+                    category: data.category,
                     page: data.page,
                 }),
 
@@ -451,6 +452,8 @@ export default {
                 isLoading: isLoadingComponents,
                 isSuccess: isSuccessComponents,
             });
+
+            console.log(`data er:`, data);
         },
     },
 };

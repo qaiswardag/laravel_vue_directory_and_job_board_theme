@@ -10,6 +10,7 @@ import {
     BeakerIcon,
     Square3Stack3DIcon,
 } from "@heroicons/vue/24/outline";
+import UserTag from "@/Components/Users/UserTag.vue";
 
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
@@ -55,118 +56,19 @@ const actions = [
         </template>
 
         <div class="myPrimarySection">
-            <div
-                class="mb-6 py-6 px-6 relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor"
-            >
-                <div
-                    class="p-2 rounded-md min-h-[4rem] max-h-[18rem] flex flex-col w-full border border-myPrimaryLightGrayColor divide-y divide-gray-200"
-                >
-                    <div class="hover:bg-white px-2">
-                        <div class="rounded">
-                            <!-- start photo -->
-                            <div class="flex items-center gap-2 my-4">
-                                <div
-                                    v-if="
-                                        $page.props.user.profile_photo_path !==
-                                        null
-                                    "
-                                    class="flex-shrink-0"
-                                >
-                                    <img
-                                        class="object-cover h-12 w-12 rounded-full"
-                                        :src="`/storage/${$page.props.user.profile_photo_path}`"
-                                        :alt="
-                                            $page.props.user.first_name +
-                                            $page.props.user.last_name
-                                        "
-                                    />
-                                </div>
-
-                                <div
-                                    v-if="
-                                        $page.props.user &&
-                                        $page.props.user.profile_photo_path ===
-                                            null
-                                    "
-                                    class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                >
-                                    {{
-                                        $page.props.user.first_name
-                                            .charAt(0)
-                                            .toUpperCase()
-                                    }}
-                                    {{
-                                        $page.props.user.last_name
-                                            .charAt(0)
-                                            .toUpperCase()
-                                    }}
-                                </div>
-                                <div
-                                    class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                >
-                                    <p class="font-medium">
-                                        {{ $page.props.user.first_name }}
-                                        {{ $page.props.user.last_name }}
-                                    </p>
-                                    <p>
-                                        Superadmin Role:
-                                        <span
-                                            v-if="
-                                                $page.props.user.superadmin &&
-                                                $page.props.user.superadmin
-                                                    .role === 'reader'
-                                            "
-                                        >
-                                            {{
-                                                $page.props.user.superadmin &&
-                                                $page.props.user.superadmin.role
-                                                    .charAt(0)
-                                                    .toUpperCase() +
-                                                    $page.props.user.superadmin.role.slice(
-                                                        1
-                                                    )
-                                            }}
-                                        </span>
-                                        <span
-                                            v-if="
-                                                $page.props.user.superadmin &&
-                                                $page.props.user.superadmin
-                                                    .role === 'editor'
-                                            "
-                                        >
-                                            {{
-                                                $page.props.user.superadmin &&
-                                                $page.props.user.superadmin.role
-                                                    .charAt(0)
-                                                    .toUpperCase() +
-                                                    $page.props.user.superadmin.role.slice(
-                                                        1
-                                                    )
-                                            }}
-                                        </span>
-                                        <span
-                                            v-if="
-                                                $page.props.user.superadmin &&
-                                                $page.props.user.superadmin
-                                                    .role === 'admin'
-                                            "
-                                        >
-                                            {{
-                                                $page.props.user.superadmin &&
-                                                $page.props.user.superadmin.role
-                                                    .charAt(0)
-                                                    .toUpperCase() +
-                                                    $page.props.user.superadmin.role.slice(
-                                                        1
-                                                    )
-                                            }}
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="flex gap-2 justify-center items-center mb-8">
+                <UserTag
+                    customClass="my-0"
+                    :user="$page.props.user"
+                    :showTeamRole="true"
+                    :clickable="true"
+                    :currentUserTeamRole="
+                        $page.props.user.superadmin &&
+                        $page.props.user.superadmin.role === 'admin'
+                            ? { role: 'superadmin' }
+                            : $page.props.user.superadmin
+                    "
+                ></UserTag>
             </div>
             <div
                 class="divide-y divide-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"

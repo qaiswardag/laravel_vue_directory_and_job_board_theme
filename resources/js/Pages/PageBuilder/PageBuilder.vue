@@ -72,7 +72,7 @@ const firstButtonTextSearchComponents = ref("");
 const firstModalButtonSearchComponentsFunction = ref(null);
 
 const handleAddComponent = function () {
-    titleModalAddComponent.value = "Add Page Components to Store";
+    titleModalAddComponent.value = "Add Components to Page";
     firstButtonTextSearchComponents.value = "Close";
     showModalAddComponent.value = true;
 
