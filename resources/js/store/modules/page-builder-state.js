@@ -452,8 +452,6 @@ export default {
                 isLoading: isLoadingComponents,
                 isSuccess: isSuccessComponents,
             });
-
-            console.log(`data er:`, data);
         },
     },
 };

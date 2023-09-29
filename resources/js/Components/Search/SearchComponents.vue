@@ -160,7 +160,6 @@ onMounted(async () => {
         <div
             class="px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
-            <p class="my-4">categorySelected: {{ categorySelected }}</p>
             <div
                 class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
             >
