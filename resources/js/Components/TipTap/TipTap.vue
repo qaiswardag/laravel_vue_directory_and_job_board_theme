@@ -19,7 +19,7 @@ const pageBuilder = new PageBuilder(store);
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
-const textContentVueModel = ref("Hello World");
+const textContentVueModel = ref("");
 const textContent = computed(() => {
     return editor.value?.getHTML();
 });
@@ -61,9 +61,6 @@ const editor = useEditor({
     },
 
     //
-    //
-    //
-    //
     // Register an event listener for the 'transaction' event
     onTransaction({ editor, transaction }) {
         // The editor state has changed.
@@ -79,7 +76,6 @@ watch(textContent, (newValue) => {
             typeof newValue === "string" &&
             newValue !== textContentVueModel.value
         ) {
-            // TODO: FIX BELOW
             pageBuilder.handleTextInput(newValue);
         }
     }
@@ -88,11 +84,11 @@ watch(textContent, (newValue) => {
 //
 //
 //
-watch(getElement, (newValue) => {
+watch(getElement, (getElementNewValue) => {
     if (editor.value) {
         // Get all child elements of the parentDiv
-        const childElements = newValue?.children;
-        if (newValue?.tagName === "IMG") {
+        const childElements = getElementNewValue?.children;
+        if (getElementNewValue?.tagName === "IMG") {
             containsInvalidTags.value = true;
             return;
         }
@@ -102,7 +98,8 @@ watch(getElement, (newValue) => {
                 containsInvalidTags.value = true;
             } else {
                 containsInvalidTags.value = false;
-                editor.value.commands.setContent(newValue.innerHTML);
+                console.log(`getElementNewValue:`, getElementNewValue);
+                editor.value.commands.setContent(getElementNewValue.innerHTML);
             }
         });
     }

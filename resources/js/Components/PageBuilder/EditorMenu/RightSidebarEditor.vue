@@ -107,10 +107,20 @@ const isHeadingElement = computed(() => {
                     <article>
                         <TipTap></TipTap>
                     </article>
-                    <article>
+                    <article
+                        v-if="
+                            $page.props.user.superadmin !== null &&
+                            $page.props.user.superadmin.role === 'admin'
+                        "
+                    >
                         <LinkEditor></LinkEditor>
                     </article>
-                    <article>
+                    <article
+                        v-if="
+                            $page.props.user.superadmin !== null &&
+                            $page.props.user.superadmin.role === 'admin'
+                        "
+                    >
                         <Typography></Typography>
                     </article>
                     <article>

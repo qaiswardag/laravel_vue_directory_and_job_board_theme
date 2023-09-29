@@ -354,16 +354,14 @@ onMounted(async () => {
                         >
                             <!-- Unique HTML Component # start -->
                             <div
+                                @click="
+                                    handleAddHelperComponent(helperComponent)
+                                "
                                 v-for="helperComponent in componentHelpers"
                                 :key="helperComponent.title"
-                                class="flex justify-between items-center gap-4 text-xs font-medium py-4"
+                                class="flex justify-between items-center gap-4 text-xs font-medium py-4 hover:bg-gray-50 cursor-pointer px-2"
                             >
                                 <button
-                                    @click="
-                                        handleAddHelperComponent(
-                                            helperComponent
-                                        )
-                                    "
                                     type="button"
                                     class="flex items-left gap-2 my-2 cursor-pointer"
                                 >

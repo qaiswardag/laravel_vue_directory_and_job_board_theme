@@ -1027,18 +1027,6 @@ const pageBuilder = new PageBuilder(store);
         <template #title> Store details</template>
         <template #description> Create a new Store. </template>
         <template #main>
-            <p class="my-12 p-8 border">
-                getComponents.value:
-                <br />
-                <br />
-                {{ JSON.stringify(getComponents.value) }}
-            </p>
-            <p class="my-12 p-8 border">
-                postForm.content:
-                <br />
-                <br />
-                {{ JSON.stringify(postForm.content) }}
-            </p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">

@@ -83,7 +83,7 @@ class PageBuilder {
             "FOOTER",
         ];
 
-        this.showRunningMethodLogs = true;
+        this.showRunningMethodLogs = false;
 
         this.delay = delay();
     }
@@ -147,11 +147,15 @@ class PageBuilder {
     }
 
     #applyHelperCSSToElements(element) {
+        this.#wrapElementInDivIfExcluded(element);
+
         if (this.showRunningMethodLogs) {
             console.log("#applyHelperCSSToElements");
         }
-        element.classList.add("smooth-transition");
-        element.setAttribute("element", "");
+
+        if (element.tagName === "IMG") {
+            element.classList.add("smooth-transition");
+        }
 
         // Add padding to every DIV
         if (element.tagName === "DIV") {
@@ -167,7 +171,6 @@ class PageBuilder {
         //
         //
         //
-        this.#wrapElementInDivIfExcluded(element);
     }
 
     #wrapElementInDivIfExcluded(element) {
@@ -351,6 +354,8 @@ class PageBuilder {
 
         elements.forEach((element) => {
             this.#applyHelperCSSToElements(element);
+
+            element.setAttribute("element", "");
         });
 
         // Add the component id to the section element
@@ -1060,27 +1065,23 @@ class PageBuilder {
 
         if (!this.shouldRunMethods()) return;
 
-        const element = this.getElement.value;
-
-        // text content
-        if (typeof element?.innerHTML !== "string") {
+        // // text content
+        if (typeof this.getElement.value?.innerHTML !== "string") {
             return;
         }
 
-        if (typeof element.innerHTML === "string") {
+        if (typeof this.getElement.value.innerHTML === "string") {
             await this.nextTick;
+
+            // Update text content
+            this.getElement.value.textContent = textContentVueModel;
 
             this.store.commit(
                 "pageBuilderState/setTextAreaVueModel",
-                element.innerHTML
+                this.getElement.value.innerHTML
             );
 
             this.getElement.value.innerHTML = textContentVueModel;
-
-            this.store.commit(
-                "pageBuilderState/setElement",
-                this.getElement.value
-            );
         }
 
         this.ensureTextAreaHasContent();
