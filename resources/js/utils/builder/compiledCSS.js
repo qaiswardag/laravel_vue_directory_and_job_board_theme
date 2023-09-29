@@ -1093,6 +1093,9 @@ const compiledCSS = {
         "grid-rows-4",
         "grid-flow-col auto-cols-max",
         "auto-cols-max",
+        "grid-cols-[minmax(10rem,1fr)]",
+        "grid-cols-[minmax(14rem,1fr)]",
+        "grid-cols-[minmax(50px,100px)]",
     ],
 };
 
