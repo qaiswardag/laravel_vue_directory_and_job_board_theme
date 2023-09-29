@@ -39,8 +39,6 @@ const updateCurrentTab = function (tab) {
         <div
             class="flex items-left flex-col myPrimaryGap border-myPrimaryMediumGrayColor"
         >
-            <p class="my-4">getElement: {{ JSON.stringify(getElement) }}</p>
-            <p class="my-4">er: {{ JSON.stringify(reactiveGetElement) }}</p>
             <h4 class="myFourthHeader">Selected HTML</h4>
             <p class="myPrimaryParagraph text-xs">
                 Overview of Selected Element, Component, and Components. This
@@ -61,26 +59,24 @@ const updateCurrentTab = function (tab) {
                     <div class="px-4 pb-8 pt-4 text-white text-xs">
                         <p
                             v-if="
-                                reactiveGetElement === null ||
-                                reactiveGetElement === undefined
+                                getElement === null || getElement === undefined
                             "
                             class="text-xs pb-2"
                         >
                             <span
                                 >Element type:
-                                {{ JSON.stringify(reactiveGetElement) }}
+                                {{ JSON.stringify(getElement) }}
                             </span>
                         </p>
                         <p
                             v-if="
-                                reactiveGetElement !== null &&
-                                reactiveGetElement !== undefined
+                                getElement !== null && getElement !== undefined
                             "
                             class="text-xs pb-2"
                         >
                             <span>Element type: </span>
                             <span>
-                                {{ typeof reactiveGetElement }}
+                                {{ typeof getElement }}
                             </span>
                         </p>
                         <p
