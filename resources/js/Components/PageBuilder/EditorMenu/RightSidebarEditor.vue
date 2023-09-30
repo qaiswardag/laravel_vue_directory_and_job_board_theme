@@ -10,7 +10,8 @@ import Typography from "@/Components/PageBuilder/EditorMenu/Editables/Typography
 import PaddingPlusMargin from "@/Components/PageBuilder/EditorMenu/Editables/PaddingPlusMargin.vue";
 import DeleteElement from "@/Components/PageBuilder/EditorMenu/Editables/DeleteElement.vue";
 import BorderRadius from "@/Components/PageBuilder/EditorMenu/Editables/BorderRadius.vue";
-import ColorsEditor from "@/Components/PageBuilder/EditorMenu/Editables/ColorsEditor.vue";
+import BackgroundColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/BackgroundColorEditor.vue";
+import TextColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/TextColorEditor.vue";
 import Borders from "@/Components/PageBuilder/EditorMenu/Editables/Borders.vue";
 import LinkEditor from "@/Components/PageBuilder/EditorMenu/Editables/LinkEditor.vue";
 import ComponentTopMenu from "@/Components/PageBuilder/EditorMenu/Editables/ComponentTopMenu.vue";
@@ -105,7 +106,10 @@ const isHeadingElement = computed(() => {
                         <Typography></Typography>
                     </article>
                     <article>
-                        <ColorsEditor></ColorsEditor>
+                        <TextColorEditor></TextColorEditor>
+                    </article>
+                    <article>
+                        <BackgroundColorEditor></BackgroundColorEditor>
                     </article>
                     <article>
                         <OpacityEditor> </OpacityEditor>

@@ -17,16 +17,16 @@ const store = useStore();
 
 const pageBuilder = new PageBuilder(store);
 
-const backgroundColor = ref(null);
+const textColor = ref(null);
 
-const getBackgroundColor = computed(() => {
-    return store.getters["pageBuilderState/getBackgroundColor"];
+const getTextColor = computed(() => {
+    return store.getters["pageBuilderState/getTextColor"];
 });
 
 watch(
-    getBackgroundColor,
+    getTextColor,
     (newValue) => {
-        backgroundColor.value = newValue;
+        textColor.value = newValue;
     },
     { immediate: true }
 );
@@ -34,27 +34,22 @@ watch(
 
 <template>
     <EditorAccordion>
-        <template #title>Colors</template>
+        <template #title>Text Color</template>
         <template #content>
-            <label class="myPrimaryInputLabel"> Background Color </label>
-            <Listbox as="div" v-model="backgroundColor">
+            <label class="myPrimaryInputLabel"> Text color </label>
+            <Listbox as="div" v-model="textColor">
                 <div class="relative mt-2">
                     <ListboxButton class="myPrimarySelect">
                         <span class="flex items-center">
                             <div
-                                v-if="backgroundColor !== 'none'"
+                                v-if="textColor !== 'none'"
                                 class="aspect-square w-6 h-6"
-                                :class="`bg-${backgroundColor?.replace(
-                                    'bg-',
-                                    ''
-                                )}`"
+                                :class="`bg-${textColor?.replace('text-', '')}`"
                             ></div>
                             <span
                                 class="block truncate"
-                                :class="[
-                                    backgroundColor !== 'none' ? 'ml-3' : '',
-                                ]"
-                                >{{ backgroundColor }}</span
+                                :class="[textColor !== 'none' ? 'ml-3' : '']"
+                                >{{ textColor }}</span
                             >
                         </span>
                         <span
@@ -77,15 +72,11 @@ watch(
                         >
                             <ListboxOption
                                 as="template"
-                                v-for="color in tailwindColors.backgroundColorVariables"
-                                @click="
-                                    pageBuilder.handleBackgroundColor(
-                                        backgroundColor
-                                    )
-                                "
+                                v-for="color in tailwindColors.textColorVariables"
+                                @click="pageBuilder.handleTextColor(textColor)"
                                 :key="color"
                                 :value="color"
-                                v-slot="{ active, backgroundColor }"
+                                v-slot="{ active, textColor }"
                             >
                                 <li
                                     :class="[
@@ -99,7 +90,7 @@ watch(
                                         <div
                                             class="aspect-square w-6 h-6"
                                             :class="`bg-${color.replace(
-                                                'bg-',
+                                                'text-',
                                                 ''
                                             )}`"
                                         ></div>
