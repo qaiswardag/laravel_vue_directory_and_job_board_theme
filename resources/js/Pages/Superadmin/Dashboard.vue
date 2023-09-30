@@ -89,12 +89,12 @@ const actions = [
                             :class="[
                                 action.iconBackground,
                                 action.iconForeground,
-                                'inline-flex p-3 ring-4 ring-white',
+                                'h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white',
                             ]"
                         >
                             <component
                                 :is="action.icon"
-                                class="h-6 w-6"
+                                class="myMediumIcon"
                                 aria-hidden="true"
                             />
                         </span>

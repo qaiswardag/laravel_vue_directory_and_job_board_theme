@@ -42,22 +42,6 @@ const breadcrumbsLinks = [
         </div>
         <!-- Team owner box # end -->
         <div class="myPrimarySection">
-            <!-- team details # start -->
-            <div class="my-12 p-6 border-2 border-green-300">
-                <p class="font-bold text-center">Team name: {{ team.name }}</p>
-                <div class="flex myPrimaryGap">
-                    <div class="border-2 my-6 p-6 rounded border-red-300">
-                        <p class="my-6">Show team logo here</p>
-                        {{ team.coverImagesWithLogos.logos }}
-                    </div>
-                    <div class="border-2 my-6 p-6 rounded border-red-300">
-                        <p class="my-6">Show team cover image here</p>
-                        {{ team.coverImagesWithLogos.cover_images }}
-                    </div>
-                </div>
-            </div>
-            <!-- team details # start -->
-
             <div
                 class="divide-y divide-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
             >
@@ -66,7 +50,7 @@ const breadcrumbsLinks = [
                 >
                     <div>
                         <span
-                            class="rounded bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +58,7 @@ const breadcrumbsLinks = [
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class="text-myPrimaryBrandColor flex-shrink-0 h-6 w-6"
+                                class="myMediumIcon"
                             >
                                 <path
                                     stroke-linecap="round"
@@ -127,7 +111,7 @@ const breadcrumbsLinks = [
                 >
                     <div>
                         <span
-                            class="rounded bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +119,7 @@ const breadcrumbsLinks = [
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class="text-myPrimaryBrandColor flex-shrink-0 h-6 w-6"
+                                class="myMediumIcon"
                             >
                                 <path
                                     stroke-linecap="round"
@@ -184,7 +168,7 @@ const breadcrumbsLinks = [
                 >
                     <div>
                         <span
-                            class="rounded bg-gray-50 text-myPrimaryBrandColor justify-center inline-flex p-3 ring-4 ring-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +176,7 @@ const breadcrumbsLinks = [
                                 viewBox="0 0 24 24"
                                 stroke-width="1.5"
                                 stroke="currentColor"
-                                class="text-myPrimaryBrandColor flex-shrink-0 h-6 w-6"
+                                class="myMediumIcon"
                             >
                                 <path
                                     stroke-linecap="round"

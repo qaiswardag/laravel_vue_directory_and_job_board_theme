@@ -38,7 +38,7 @@ class StoreTeamUpdateRequest extends FormRequest
     public function withValidator($validator)
     {
         $maxCoverImages = 6;
-        $maxLogos = 6;
+        $maxLogos = 1;
 
         $validator->after(function ($validator) use (
             $maxCoverImages,
