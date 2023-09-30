@@ -29,8 +29,6 @@ class PageBuilder {
         this.nextTick = nextTick();
 
         this.timer = null;
-        this.backgroundColors = tailwindColors.backgroundColors();
-        this.textColors = tailwindColors.textColors();
         this.store = store;
         this.getTextAreaVueModel = computed(
             () => this.store.getters["pageBuilderState/getTextAreaVueModel"]
@@ -497,7 +495,6 @@ class PageBuilder {
 
         // Get the stored deleted element and its parent
         if (this.getRestoredElement.value && this.getParentElement.value) {
-            console.log("SKAL KOMME");
             // Create a new element from the stored outerHTML
             const newElement = document.createElement("div");
             newElement.innerHTML = this.getRestoredElement.value;
@@ -515,6 +512,8 @@ class PageBuilder {
         this.store.commit("pageBuilderState/setRestoredElement", null);
         this.store.commit("pageBuilderState/setComponent", null);
         this.store.commit("pageBuilderState/setElement", null);
+
+        this.setEventListenersForElements();
     }
 
     handleFontWeight(userSelectedFontWeight) {
@@ -596,7 +595,7 @@ class PageBuilder {
         );
     }
 
-    // border style & width / start
+    // border color, style & width / start
     handleBorderStyle(borderStyle) {
         if (this.showRunningMethodLogs) {
             console.log("handleBorderStyle");
@@ -630,7 +629,22 @@ class PageBuilder {
             "setBorderColor"
         );
     }
-    // border style & width / end
+    // border color, style & width / end
+
+    handleBackgroundColor(color) {
+        this.#applyElementClassChanges(
+            color,
+            tailwindColors.backgroundColorVariables,
+            "setBackgroundColor"
+        );
+    }
+    handleTextColor(color) {
+        this.#applyElementClassChanges(
+            color,
+            tailwindColors.textColorVariables,
+            "setTextColor"
+        );
+    }
 
     // border radius / start
     handleBorderRadiusGlobal(borderRadiusGlobal) {
@@ -801,151 +815,6 @@ class PageBuilder {
         }
     }
 
-    handleCustomBackgroundColor(userSelectedColor, enabledCustomColor) {
-        if (this.showRunningMethodLogs) {
-            console.log("handleCustomBackgroundColor");
-        }
-
-        if (!this.shouldRunMethods()) return;
-
-        // if user is selecting a custom HEX color
-        if (
-            userSelectedColor === undefined &&
-            enabledCustomColor === undefined
-        ) {
-            // Get the style property
-            let bgColor = this.getElement.value.style.backgroundColor;
-
-            // Check for inline background color
-            if (typeof bgColor === "string" && bgColor.length !== 0) {
-                this.store.commit(
-                    "pageBuilderState/setEnabledCustomColorBackground",
-                    true
-                );
-                this.store.commit(
-                    "pageBuilderState/setBackgroundColorCustom",
-                    bgColor
-                );
-            }
-
-            // Check for inline background color
-            if (typeof bgColor === "string" && bgColor.length === 0) {
-                this.store.commit(
-                    "pageBuilderState/setEnabledCustomColorBackground",
-                    false
-                );
-                this.store.commit(
-                    "pageBuilderState/setBackgroundColorCustom",
-                    null
-                );
-            }
-        }
-
-        // if user is selecting a custom HEX color
-        if (enabledCustomColor === true) {
-            this.getElement.value.style.backgroundColor = userSelectedColor;
-            this.store.commit(
-                "pageBuilderState/setElement",
-                this.getElement.value
-            );
-        }
-    }
-    handleCustomTextColor(userSelectedColor, enabledCustomColor) {
-        if (this.showRunningMethodLogs) {
-            console.log("handleCustomTextColor");
-        }
-
-        if (!this.shouldRunMethods()) return;
-
-        // if user is selecting a custom HEX color
-        if (
-            userSelectedColor === undefined &&
-            enabledCustomColor === undefined
-        ) {
-            // Get the style property
-            let textColor = this.getElement.value.style.color;
-
-            // Check for inline background color
-            if (typeof textColor === "string" && textColor.length !== 0) {
-                this.store.commit(
-                    "pageBuilderState/setEnabledCustomColorText",
-                    true
-                );
-                this.store.commit(
-                    "pageBuilderState/setTextColorCustom",
-                    textColor
-                );
-            }
-
-            // Check for inline background color
-            if (typeof textColor === "string" && textColor.length === 0) {
-                this.store.commit(
-                    "pageBuilderState/setEnabledCustomColorText",
-                    false
-                );
-                this.store.commit("pageBuilderState/setTextColorCustom", null);
-            }
-        }
-
-        // if user is selecting a custom HEX color
-        if (enabledCustomColor === true) {
-            this.getElement.value.style.color = userSelectedColor;
-            this.store.commit(
-                "pageBuilderState/setElement",
-                this.getElement.value
-            );
-        }
-    }
-
-    handleBackgroundColor(userSelectedColor) {
-        if (this.showRunningMethodLogs) {
-            console.log("handleBackgroundColor");
-        }
-
-        this.#applyElementClassChanges(
-            userSelectedColor,
-            this.backgroundColors,
-            "setBackgroundColor"
-        );
-    }
-    handleTextColor(userSelectedColor) {
-        if (this.showRunningMethodLogs) {
-            console.log("handleTextColor");
-        }
-
-        this.#applyElementClassChanges(
-            userSelectedColor,
-            this.textColors,
-            "setTextColor"
-        );
-    }
-    removeCustomColorBackground() {
-        if (this.showRunningMethodLogs) {
-            console.log("removeCustomColorBackground");
-        }
-
-        if (!this.shouldRunMethods()) return;
-
-        this.getElement.value.style.removeProperty("background-color");
-        this.store.commit(
-            "pageBuilderState/setEnabledCustomColorBackground",
-            null
-        );
-        this.store.commit("pageBuilderState/setBackgroundColorCustom", null);
-        this.store.commit("pageBuilderState/setElement", this.getElement.value);
-    }
-    removeCustomColorText() {
-        if (this.showRunningMethodLogs) {
-            console.log("removeCustomColorText");
-        }
-
-        if (!this.shouldRunMethods()) return;
-
-        this.getElement.value.style.removeProperty("color");
-        this.store.commit("pageBuilderState/setEnabledCustomColorText", null);
-        this.store.commit("pageBuilderState/setTextColorCustom", null);
-        this.store.commit("pageBuilderState/setElement", this.getElement.value);
-    }
     handleBackgroundOpacity(opacity) {
         if (this.showRunningMethodLogs) {
             console.log("handleBackgroundOpacity");
@@ -1459,6 +1328,9 @@ class PageBuilder {
 
         if (!this.shouldRunMethods()) return;
 
+        this.store.commit("pageBuilderState/setParentElement", null);
+        this.store.commit("pageBuilderState/setRestoredElement", null);
+
         // handle custom URL
         this.handleHyperlink();
         // handle opacity
@@ -1501,12 +1373,8 @@ class PageBuilder {
         this.handleHorizontalMargin();
         // handle color
         this.handleBackgroundColor();
-        // handle custom background color
-        this.handleCustomBackgroundColor();
         // handle text color
         this.handleTextColor();
-        // handle custom text color
-        this.handleCustomTextColor();
         // handle classes
         this.currentClasses();
     }

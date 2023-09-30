@@ -1185,7 +1185,7 @@ onBeforeMount(() => {
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                    class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
@@ -1218,7 +1218,7 @@ onBeforeMount(() => {
                                             </div>
                                         </button>
                                         <button
-                                            class="myPrimaryTag transition"
+                                            class="myPrimaryTag transition bg-white"
                                             v-if="
                                                 !image?.pivot?.primary &&
                                                 postForm.cover_image?.length > 1
@@ -1342,7 +1342,7 @@ onBeforeMount(() => {
                             :key="country.id"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
                             >
                                 <div
                                     @click="handleAddCountries"
@@ -1437,7 +1437,7 @@ onBeforeMount(() => {
                             :key="state?.id"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
                             >
                                 <div
                                     @click="handleAddStates"
@@ -1544,7 +1544,7 @@ onBeforeMount(() => {
                             :key="category?.id"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
                             >
                                 <div
                                     @click="handleAddCategories"
@@ -1640,7 +1640,7 @@ onBeforeMount(() => {
                             :key="jobType?.id"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
                             >
                                 <div
                                     @click="handleAddJobTypes"

@@ -5,11 +5,12 @@ import { useStore } from "vuex";
 
 import ClassEditor from "@/Components/PageBuilder/EditorMenu/Editables/ClassEditor.vue";
 import ImageEditor from "@/Components/PageBuilder/EditorMenu/Editables/ImageEditor.vue";
-import ColorsEditor from "@/Components/PageBuilder/EditorMenu/Editables/ColorEditor.vue";
+import OpacityEditor from "@/Components/PageBuilder/EditorMenu/Editables/OpacityEditor.vue";
 import Typography from "@/Components/PageBuilder/EditorMenu/Editables/Typography.vue";
 import PaddingPlusMargin from "@/Components/PageBuilder/EditorMenu/Editables/PaddingPlusMargin.vue";
 import DeleteElement from "@/Components/PageBuilder/EditorMenu/Editables/DeleteElement.vue";
 import BorderRadius from "@/Components/PageBuilder/EditorMenu/Editables/BorderRadius.vue";
+import ColorsEditor from "@/Components/PageBuilder/EditorMenu/Editables/ColorsEditor.vue";
 import Borders from "@/Components/PageBuilder/EditorMenu/Editables/Borders.vue";
 import LinkEditor from "@/Components/PageBuilder/EditorMenu/Editables/LinkEditor.vue";
 import ComponentTopMenu from "@/Components/PageBuilder/EditorMenu/Editables/ComponentTopMenu.vue";
@@ -32,32 +33,10 @@ const props = defineProps({
 const reactiveGetElement = ref(null);
 
 // get current element tag
-const getComponent = computed(() => {
-    return store.getters["pageBuilderState/getComponent"];
-});
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
 
-const getElementOuterHTML = computed(() => {
-    if (getElement.value === null) return;
-    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
-});
-
-watch(getElementOuterHTML, (newComponent) => {
-    reactiveGetElement.value = newComponent;
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 const getRestoredElement = computed(() => {
     return store.getters["pageBuilderState/getRestoredElement"];
 });
@@ -126,7 +105,10 @@ const isHeadingElement = computed(() => {
                         <Typography></Typography>
                     </article>
                     <article>
-                        <ColorsEditor> </ColorsEditor>
+                        <ColorsEditor></ColorsEditor>
+                    </article>
+                    <article>
+                        <OpacityEditor> </OpacityEditor>
                     </article>
                     <article>
                         <PaddingPlusMargin> </PaddingPlusMargin>

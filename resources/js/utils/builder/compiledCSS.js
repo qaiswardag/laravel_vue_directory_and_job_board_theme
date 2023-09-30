@@ -1097,6 +1097,7 @@ const compiledCSS = {
         "grid-cols-[minmax(14rem,1fr)]",
         "grid-cols-[minmax(50px,100px)]",
     ],
+    image: ["aspect-square"],
 };
 
 export default compiledCSS;

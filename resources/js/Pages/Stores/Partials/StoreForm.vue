@@ -1237,7 +1237,7 @@ const pageBuilder = new PageBuilder(store);
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                    class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
@@ -1270,7 +1270,7 @@ const pageBuilder = new PageBuilder(store);
                                             </div>
                                         </button>
                                         <button
-                                            class="myPrimaryTag transition"
+                                            class="myPrimaryTag transition bg-white"
                                             v-if="
                                                 !image?.pivot?.primary &&
                                                 postForm.cover_image?.length > 1
@@ -1384,7 +1384,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="state?.id"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
                             >
                                 <div
                                     @click="handleAddStates"
@@ -1490,7 +1490,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="category?.id"
                         >
                             <div
-                                class="flex justify-between items-center rounded my-2 gap-4 text-xs font-medium"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
                             >
                                 <div
                                     @click="handleAddCategories"

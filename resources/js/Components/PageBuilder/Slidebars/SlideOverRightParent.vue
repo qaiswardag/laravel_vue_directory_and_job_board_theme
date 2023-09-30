@@ -40,7 +40,7 @@ const slideOverButton = function () {
         <TransitionRoot as="template" :show="open">
             <Dialog
                 as="div"
-                class="relative z-30"
+                class="relative z-40"
                 @click="$emit('slideOverButton')"
             >
                 <div class="fixed inset-0" />

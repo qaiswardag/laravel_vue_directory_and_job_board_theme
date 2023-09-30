@@ -190,7 +190,6 @@ const sidebarOpen = ref(false);
         </div>
 
         <main class="flex-1 bg-gray-50">
-            <p>er: {{ shouldShowFlash }}</p>
             <header v-if="$slots.header">
                 <slot name="header" />
                 <slot name="breadcrumbs" />

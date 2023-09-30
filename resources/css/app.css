@@ -302,7 +302,7 @@
     */
 
     .mysearchBarWithOptions {
-        @apply flex gap-2 bg-myPrimaryLightGrayColor py-2 px-2;
+        @apply flex gap-2 py-2 px-4 rounded-full border border-gray-200 bg-gray-100;
     }
 
     /*
@@ -358,7 +358,7 @@
     }
 
     .myPrimaryInput {
-        @apply block w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3  border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
+        @apply block text-left bg-white w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3  border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryMediumGrayColor focus:border-transparent;
     }
     .myPrimaryInputReadonly {
         @apply myPrimaryInput bg-gray-50 focus:ring-0 focus:bg-gray-100 focus:border-myPrimaryMediumGrayColor;
@@ -385,7 +385,7 @@
     }
 
     .myPrimarySelect {
-        @apply relative w-full rounded-md border border-myPrimaryMediumGrayColor hover:border-transparent hover:ring-2 hover:ring-myPrimaryBrandColor cursor-pointer bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-myPrimaryBrandColor focus:outline-none focus:ring-1 focus:ring-myPrimaryBrandColor;
+        @apply relative myPrimaryInput w-full;
     }
     .myPrimaryFakeSelect {
         @apply flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-2 hover:ring-myPrimaryBrandColor focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;

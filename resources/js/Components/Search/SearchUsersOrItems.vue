@@ -227,7 +227,7 @@ onMounted(() => {
     <Modal
         :show="show"
         @close="firstButton"
-        maxWidth="5xl"
+        maxWidth="4xl"
         minHeight="min-h-[50rem]"
         maxHeight="max-h-[50rem]"
     >
@@ -679,7 +679,9 @@ onMounted(() => {
                             :key="item.id"
                             class="px-2 hover:bg-white"
                         >
-                            <div class="flex justify-between items-center my-4">
+                            <div
+                                class="flex justify-between items-center my-2 myPrimaryTag"
+                            >
                                 <div class="flex items-center gap-2">
                                     <!-- start photo -->
                                     <div
