@@ -76,7 +76,7 @@ class StoreTeamUpdateRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "Limited to a maximum of {$maxCoverImages} cover images."
+                        "The field is limited to a maximum of {$maxCoverImages} selection(s)."
                     );
             }
             // Check if the "primary" key exists, or provide a default value of false
@@ -165,7 +165,7 @@ class StoreTeamUpdateRequest extends FormRequest
                     ->errors()
                     ->add(
                         "logo",
-                        "Limited to a maximum of {$maxLogos} logo(s)."
+                        "The field is limited to a maximum of {$maxLogos} selection(s)."
                     );
             }
             // Check if the "primary" key exists, or provide a default value of false

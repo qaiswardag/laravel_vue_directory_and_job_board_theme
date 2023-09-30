@@ -135,7 +135,7 @@ class StoreStoreRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "Limited to a maximum of {$maxCoverImages} cover images."
+                        "The field is limited to a maximum of {$maxCoverImages} selection(s)."
                     );
             }
             // Check if the "primary" key exists, or provide a default value of false
@@ -251,7 +251,7 @@ class StoreStoreRequest extends FormRequest
                     ->errors()
                     ->add(
                         "states",
-                        "Limited to a maximum of {$maxJobStates} states."
+                        "The field is limited to a maximum of {$maxJobStates} selection(s)."
                     );
             }
             // validation for states # end
@@ -285,7 +285,7 @@ class StoreStoreRequest extends FormRequest
                     ->errors()
                     ->add(
                         "author",
-                        "Limited to a maximum of {$maxAuthors} people."
+                        "The field is limited to a maximum of {$maxAuthors} selection(s)."
                     );
             }
 

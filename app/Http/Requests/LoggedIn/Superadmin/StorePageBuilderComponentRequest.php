@@ -78,7 +78,7 @@ class StorePageBuilderComponentRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "Limited to a maximum of {$maxCoverImages} cover images."
+                        "The field is limited to a maximum of {$maxCoverImages} selection(s)."
                     );
             }
             // Check if the "primary" key exists, or provide a default value of false
