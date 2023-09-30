@@ -78,9 +78,9 @@ class StoreJobRequest extends FormRequest
     {
         $maxAuthors = 18;
         $maxJobCountries = 1;
-        $maxJobStates = 2;
-        $maxCategories = 4;
-        $maxJobTypes = 4;
+        $maxJobStates = 1;
+        $maxCategories = 2;
+        $maxJobTypes = 2;
         $minCoverImages = 1;
         $maxCoverImages = 6;
 

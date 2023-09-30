@@ -78,15 +78,15 @@ class StoreStoreRequest extends FormRequest
     public function withValidator($validator)
     {
         $maxAuthors = 18;
-        $maxCategories = 6;
-        $maxJobStates = 1;
+        $maxCategories = 4;
+        $maxStoreStates = 1;
         $minCoverImages = 1;
         $maxCoverImages = 6;
 
         $validator->after(function ($validator) use (
             $maxAuthors,
             $maxCategories,
-            $maxJobStates,
+            $maxStoreStates,
             $minCoverImages,
             $maxCoverImages
         ) {
@@ -245,13 +245,13 @@ class StoreStoreRequest extends FormRequest
             }
             if (
                 gettype($this->states) === "array" &&
-                count($this->states) > $maxJobStates
+                count($this->states) > $maxStoreStates
             ) {
                 $validator
                     ->errors()
                     ->add(
                         "states",
-                        "The field is limited to a maximum of {$maxJobStates} selection(s)."
+                        "The field is limited to a maximum of {$maxStoreStates} selection(s)."
                     );
             }
             // validation for states # end
