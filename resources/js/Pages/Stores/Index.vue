@@ -182,14 +182,29 @@ const scrolTableContainer = ref("scrolTableContainer");
 
 const handleLeft = function () {
     if (scrolTableContainer.value) {
-        scrolTableContainer.value.scrollLeft -= 500;
+        scrolTableContainer.value.scrollBy({
+            left: -800,
+            behavior: "smooth",
+        });
     }
 };
 const handleRight = function () {
     if (scrolTableContainer.value) {
-        scrolTableContainer.value.scrollLeft += 500;
+        scrolTableContainer.value.scrollBy({
+            left: +800,
+            behavior: "smooth",
+        });
     }
 };
+
+window.addEventListener("keyup", (e) => {
+    if (e.key === "ArrowLeft") {
+        handleLeft();
+    }
+    if (e.key === "ArrowRight") {
+        handleRight();
+    }
+});
 
 onMounted(() => {
     if (props.oldInput?.search_query) {

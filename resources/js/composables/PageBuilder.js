@@ -185,6 +185,13 @@ class PageBuilder {
 
             divWrapper.appendChild(element);
         }
+        if (element.tagName === "IMG") {
+            const divWrapper = document.createElement("div");
+
+            element.parentNode.insertBefore(divWrapper, element);
+
+            divWrapper.appendChild(element);
+        }
     }
 
     #handleElementClick = (e, element) => {

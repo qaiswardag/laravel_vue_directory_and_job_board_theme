@@ -236,14 +236,14 @@ const getTextColorCustomHex = computed(() => {
                 :title="titleBackgroundColorsSlideOverRight"
                 @slideOverButton="backgroundColorsSlideOverButton"
             >
-                <ManageBackgroundColor></ManageBackgroundColor>
+                <!-- <ManageBackgroundColor></ManageBackgroundColor> -->
             </SlideOverRight>
             <SlideOverRight
                 :open="showTextColorsSlideOverRight"
                 :title="titleTextColorsSlideOverRight"
                 @slideOverButton="textColorsSlideOverButton"
             >
-                <ManageTextColor></ManageTextColor>
+                <!-- <ManageTextColor></ManageTextColor> -->
             </SlideOverRight>
         </template>
     </EditorAccordion>

@@ -374,7 +374,7 @@ onMounted(async () => {
                                     <button
                                         type="button"
                                         @click="handleDropComponent(component)"
-                                        class="text-sm font-medium mt-2 mb-2 text-myPrimaryLinkColor inline-block text-left"
+                                        class="text-sm font-medium mt-2 mb-2 text-myPrimaryLinkColor inline-block text-left min-h-[2.5rem] h-full"
                                     >
                                         {{ component.title }}
                                     </button>

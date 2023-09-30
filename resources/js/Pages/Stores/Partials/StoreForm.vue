@@ -364,7 +364,6 @@ const postForm = useForm({
 
 // The above code uses the watch function from Vue 3 to watch for changes to the
 // slugValueCustom property and update the postForm.slug field with the new value
-
 const watchSlugInputChanges = function () {
     watch(
         () => slugValueCustom.value,
@@ -481,13 +480,10 @@ const clearForm = function () {
     postForm.published = true;
     postForm.team = props.currentUserTeam;
     postForm.user_id = props.user.id;
-    //
-    //
+
     postForm.tags = "";
     clearTags.value++;
-    //
-    //
-    //
+
     postForm.show_author = false;
     postForm.author = [];
     postForm.states = [];
@@ -503,7 +499,7 @@ const clearPageBuilderOnSuccessUpdate = function () {
     store.commit("pageBuilderState/setComponents", []);
 };
 
-// is form dirty? returns true or false
+// Is form dirty? Returns true or false
 const formIsDirty = computed(() => {
     return postForm.isDirty;
 });
@@ -542,7 +538,7 @@ router.on = async () => {
     isLoading.value = false;
 };
 
-// This function will be executed when the user clicks refresh or closes the tab/window
+// Will be executed when the user clicks refresh or closes the tab/window
 window.addEventListener("beforeunload", async function () {
     storeDirtyFormInLocalStorage();
 
@@ -565,12 +561,6 @@ window.addEventListener("beforeunload", async function () {
     await delay();
     isLoading.value = false;
 });
-
-//
-//
-//
-//
-//
 
 const authorSorted = computed(() => {
     return postForm.author.sort((a, b) => {
@@ -617,23 +607,16 @@ const categoriesSorted = computed(() => {
     });
 });
 
-//
-//
-//
-//
-
 // Builder # Start
 const getComponents = computed(() => {
     return store.getters["pageBuilderState/getComponents"];
 });
 
 const openDesignerModal = ref(false);
+
 // use designer model
 const firstDesignerModalButtonFunction = ref(null);
 const secondDesignerModalButtonFunction = ref(null);
-//
-//
-
 const handleDraftForUpdate = async function () {
     isLoading.value = true;
     if (formType.value === "update") {
@@ -645,12 +628,8 @@ const handleDraftForUpdate = async function () {
         await delay();
         isLoading.value = false;
     }
-    //
-    //
 };
-//
-//
-//
+
 const handlePageBuilder = function () {
     // set modal standards
     openDesignerModal.value = true;
@@ -669,14 +648,10 @@ const handlePageBuilder = function () {
                     .join("");
         }
     }
-    //
-    //
+
     if (formType.value === "update") {
         // store.commit("pageBuilderState/setComponents", []);
     }
-    //
-    //
-    //
 
     // handle click
     firstDesignerModalButtonFunction.value = async function () {
@@ -689,10 +664,6 @@ const handlePageBuilder = function () {
         }
 
         // set open modal
-        //
-        //
-        //
-        //
         openDesignerModal.value = false;
         isLoading.value = false;
     };
@@ -705,10 +676,7 @@ const handlePageBuilder = function () {
         if (formType.value === "create") {
             await nextTick();
             pageBuilder.saveComponentsLocalStorage();
-            //
-            //
-            //
-            //
+
             await nextTick();
             postForm.content =
                 Array.isArray(getComponents.value) &&
@@ -733,8 +701,6 @@ const handlePageBuilder = function () {
                     .join("");
         }
 
-        //
-        //
         // set open modal
         openDesignerModal.value = false;
 
@@ -742,24 +708,12 @@ const handlePageBuilder = function () {
         isLoading.value = false;
     };
 
-    //
-    //
-    //
-    //
     // end modal
 };
-//
 // Builder # End
-//
+
 // get unique post if needs to be updated
 onBeforeMount(async () => {
-    //
-    //
-    //
-    //
-    //
-    // User is creating a new Resource from scratch, rather than editing an existing one
-    // local storage for page builder
     if (props.post === null) {
         if (pageBuilder.areComponentsStoredInLocalStorage()) {
             postForm.content =
@@ -770,25 +724,23 @@ onBeforeMount(async () => {
                     })
                     .join("");
         }
-        //
-        //
-        //
+
         // local storage for form
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
             const formDataJson = localStorage.getItem(pathLocalStorage);
             let formLocalStorage = JSON.parse(formDataJson);
-            //
+
             isSlugEditable.value = formLocalStorage.isSlugEditable;
-            //
+
             if (formLocalStorage.isSlugEditable === false) {
                 slugValueTitle.slug = formLocalStorage.title;
             }
-            //
+
             if (formLocalStorage.isSlugEditable === true) {
                 slugValueCustom.value = formLocalStorage.slug;
             }
-            //
+
             postForm.title = formLocalStorage.title;
             postForm.address = formLocalStorage.address;
             postForm.published = formLocalStorage.published;
@@ -808,8 +760,6 @@ onBeforeMount(async () => {
                 formLocalStorage.author !== null
             ) {
                 // Determine whether all elements in an array are null.
-                // Checks if each element is equal to null.
-                // If every element in the array is indeed null, the function returns true,
                 const arrayContainsOnlyNull = formLocalStorage.author.every(
                     (element) => {
                         return element === null;
@@ -834,9 +784,6 @@ onBeforeMount(async () => {
                 formLocalStorage.cover_image !== undefined ||
                 formLocalStorage.cover_image !== null
             ) {
-                // Determine whether all elements in an array are null.
-                // Checks if each element is equal to null.
-                // If every element in the array is indeed null, the function returns true,
                 const arrayContainsOnlyNull =
                     formLocalStorage.cover_image.every((element) => {
                         return element === null;
@@ -910,20 +857,10 @@ onBeforeMount(async () => {
     if (props.post !== null) {
         formType.value = "update";
 
-        //
-        //
-        //
-        //
-        //
         pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-draft-update-store-${
             props.post.id ? props.post.id : null
         }-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
-        //
-        //
-        //
-        //
-        //
-        //
+
         // Parse the HTML content using DOMParser
         const parser = new DOMParser();
         const doc = parser.parseFromString(props.post.content, "text/html");
@@ -943,20 +880,7 @@ onBeforeMount(async () => {
         });
 
         store.commit("pageBuilderState/setComponents", extractedSections);
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+
         postForm.title = props.post.title;
         postForm.address = props.post.address;
         // slug logic
@@ -977,22 +901,11 @@ onBeforeMount(async () => {
         }
 
         postForm.author = props.postAuthor;
-
         postForm.states = props.states;
         postForm.categories = props.categories;
         postForm.cover_image = props.coverImages;
     }
 
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
     store.commit(
         "pageBuilderState/setLocalStorageItemName",
         pathPageBuilderLocalStorageCreate

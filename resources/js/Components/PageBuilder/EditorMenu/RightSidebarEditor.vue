@@ -109,6 +109,7 @@ const isHeadingElement = computed(() => {
                     </article>
                     <article
                         v-if="
+                            false &&
                             $page.props.user.superadmin !== null &&
                             $page.props.user.superadmin.role === 'admin'
                         "
@@ -117,6 +118,7 @@ const isHeadingElement = computed(() => {
                     </article>
                     <article
                         v-if="
+                            false &&
                             $page.props.user.superadmin !== null &&
                             $page.props.user.superadmin.role === 'admin'
                         "

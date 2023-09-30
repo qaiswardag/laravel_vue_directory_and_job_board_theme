@@ -219,7 +219,7 @@ onMounted(async () => {
 
                 <div
                     @click="store.commit('pageBuilderState/setComponent', null)"
-                    class="p-2 bg-red-50 overflow-y-auto h-screen"
+                    class="p-2 bg-gray-800 overflow-y-auto h-screen"
                 >
                     <div id="pagebuilder" class="">
                         <!-- Added Compoents to DOM # start -->
@@ -227,7 +227,7 @@ onMounted(async () => {
                             v-for="component in Array.isArray(getComponents) &&
                             getComponents"
                             :key="component"
-                            class="p-1 bg-white grow"
+                            class="bg-white grow"
                         >
                             <div
                                 @mouseup="handleSelectComponent(component)"

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { router } from "@inertiajs/vue3";
 import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
 import Banner from "@/Components/Banners/Banner.vue";
@@ -11,6 +11,7 @@ import LoggedInNavbar from "@/Components/Navbars/LoggedInNavbar.vue";
 import Flash from "@/Components/Actions/Flash.vue";
 import FooterUniversal from "@/Components/Footer/FooterUniversal.vue";
 import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
+import { usePage } from "@inertiajs/vue3";
 
 import {
     Dialog,
@@ -36,7 +37,7 @@ import {
 import ApplicationMark from "@/Components/MarkComponents/ApplicationMark.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
-defineProps({
+const props = defineProps({
     title: {
         required: false,
     },
@@ -52,10 +53,31 @@ router.on("finish", () => {
     isDOMLoaded.value = false;
 });
 
+const shouldShowFlash = ref(false);
+
+const flashState = computed(() => {
+    return usePage().props.flash;
+});
+
+watch(flashState, (newValue) => {
+    console.log(`ok:`, newValue);
+    if (newValue) {
+        shouldShowFlash.value = true;
+    }
+    setTimeout(() => {
+        shouldShowFlash.value = false;
+    }, 1000);
+});
+
 const sidebarOpen = ref(false);
 </script>
 
 <template>
+    <Flash
+        v-show="shouldShowFlash"
+        :showCloseButton="false"
+        :flash="$page.props.flash"
+    ></Flash>
     <!-- Static sidebar for mobile - start -->
     <TransitionRoot as="template" :show="sidebarOpen">
         <Dialog
@@ -168,6 +190,7 @@ const sidebarOpen = ref(false);
         </div>
 
         <main class="flex-1 bg-gray-50">
+            <p>er: {{ shouldShowFlash }}</p>
             <header v-if="$slots.header">
                 <slot name="header" />
                 <slot name="breadcrumbs" />

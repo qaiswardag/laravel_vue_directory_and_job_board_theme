@@ -377,9 +377,9 @@ onMounted(() => {
                                         <p
                                             class="text-sm font-medium mt-2 mb-2"
                                         >
-                                            {{ post.title.slice(0, 40)
+                                            {{ post.title.slice(0, 25)
                                             }}{{
-                                                post.title.length > 40
+                                                post.title.length > 25
                                                     ? ".."
                                                     : ""
                                             }}
