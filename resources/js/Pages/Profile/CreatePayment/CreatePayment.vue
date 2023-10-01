@@ -6,7 +6,10 @@ import PaymentForm from "@/Pages/Profile/Partials/PaymentForm.vue";
 
 const props = defineProps({
     team: {
-        required: false,
+        required: true,
+    },
+    user: {
+        required: true,
     },
 });
 
@@ -32,6 +35,6 @@ const breadcrumbsLinks = [
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-        <PaymentForm :team="team"></PaymentForm>
+        <PaymentForm :team="team" :user="user"></PaymentForm>
     </LoggedInLayout>
 </template>

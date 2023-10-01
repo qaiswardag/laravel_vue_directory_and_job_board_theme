@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import { Link, router, useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/Actions/ActionMessage.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
@@ -17,12 +17,12 @@ const props = defineProps({
     team: {
         required: true,
     },
+    user: {
+        required: true,
+    },
 });
 
 const modalShowModal = ref(false);
-const form = useForm({
-    _method: "PUT",
-});
 
 // modal content
 const typeModal = ref("");
@@ -37,25 +37,54 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-const updateProfileInformation = () => {
-    // if (photoInput.value) {
-    //     form.photo = photoInput.value.files[0];
-    // }
-    // form.post(route("user-profile-information.update"), {
-    //     errorBag: "updateProfileInformation",
-    //     preserveScroll: true,
-    //     onSuccess: () => {
-    //         clearPhotoFileInput();
-    //         profilePhotoIsDirty.value = false;
-    //     },
-    //     onError: (err) => {},
-    //     onFinish: () => {},
-    // });
+const formType = ref("create");
+
+const form = useForm({
+    team: props.team,
+    user_id: props.user.id,
+});
+
+const handleSubmit = () => {
+    // try to store post
+    createOrUpdate();
 };
+
+const createOrUpdate = () => {
+    if (formType.value === "create") {
+        console.log(`came here..`);
+        form.post(route("team.stores.store.subscription"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                clearForm();
+            },
+            onError: () => {},
+            onFinish: () => {},
+        });
+    }
+
+    // if (formType.value === "update") {
+    //     form.post(route("team.stores.update.subscription", props.post.id), {
+    //         preserveScroll: true,
+    //         onSuccess: () => {
+    //             submittedOnUpdate.value = false;
+    //             clearPageBuilderOnSuccessUpdate();
+    //         },
+    //         onError: () => {},
+    //         onFinish: () => {},
+    //     });
+    // }
+};
+
+onBeforeMount(() => {
+    if (props.post) {
+        console.log(`ook:`, props.post);
+        formType.value = "update";
+    }
+});
 </script>
 
 <template>
-    <FormSection @submitted="updateProfileInformation">
+    <FormSection @submitted="handleSubmit">
         <template #title> Payment Form </template>
 
         <template #description> Payment form </template>
@@ -72,24 +101,34 @@ const updateProfileInformation = () => {
                     </p>
                 </div>
             </div>
-
-            <DynamicModal
-                :show="modalShowModal"
-                :type="typeModal"
-                :gridColumnAmount="gridColumnModal"
-                :title="titleModal"
-                :description="descriptionModal"
-                :firstButtonText="firstButtonModal"
-                :secondButtonText="secondButtonModal"
-                :thirdButtonText="thirdButtonModal"
-                @firstModalButtonFunction="firstModalButtonFunction"
-                @secondModalButtonFunction="secondModalButtonFunction"
-                @thirdModalButtonFunction="thirdModalButtonFunction"
-            >
-                <header></header>
-                <main></main>
-            </DynamicModal>
         </template>
+        <template #sidebar>
+            <!-- post status - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Status</div>
+                    <p class="myPrimaryParagraph">Specify post status.</p>
+                </div>
+            </div>
+        </template>
+
+        <DynamicModal
+            :show="modalShowModal"
+            :type="typeModal"
+            :gridColumnAmount="gridColumnModal"
+            :title="titleModal"
+            :description="descriptionModal"
+            :firstButtonText="firstButtonModal"
+            :secondButtonText="secondButtonModal"
+            :thirdButtonText="thirdButtonModal"
+            @firstModalButtonFunction="firstModalButtonFunction"
+            @secondModalButtonFunction="secondModalButtonFunction"
+            @thirdModalButtonFunction="thirdModalButtonFunction"
+        >
+            <header></header>
+            <main></main>
+        </DynamicModal>
+
         <template #actions>
             <SubmitButton :disabled="form.processing" buttonText="Save">
             </SubmitButton>

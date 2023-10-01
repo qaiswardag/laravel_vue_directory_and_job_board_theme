@@ -352,10 +352,17 @@ Route::middleware([
 
     // STORE CREATE SUBSCRIPTION
     // STORE CREATE SUBSCRIPTION
-    Route::get("/team/stores/create/subscription/{team}", [
+    Route::get("/team/stores/create/subscription/{user}/{team}", [
         SubscriptionController::class,
         "create",
     ])->name("team.stores.create.subscription");
+
+    Route::post("/team/stores/store/subscription", [
+        SubscriptionController::class,
+        "store",
+    ])->name("team.stores.store.subscription");
+    // STORE CREATE SUBSCRIPTION
+    // STORE CREATE SUBSCRIPTION
     // STORES #END
     // STORES #END
     // STORES #END

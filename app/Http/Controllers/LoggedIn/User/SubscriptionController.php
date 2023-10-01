@@ -4,6 +4,7 @@ namespace App\Http\Controllers\LoggedIn\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,7 +15,7 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Team $team)
+    public function create(User $user, Team $team)
     {
         $this->authorize("can-create-and-update", $team);
 
@@ -31,8 +32,9 @@ class SubscriptionController extends Controller
      */
     public function store(Request $request)
     {
-        dd("cam to store");
-        //
-        // $this->authorize("can-create-and-update", $team);
+        $team = Team::findOrFail($request->team["id"]);
+        $user = User::findOrFail($request->user_id);
+
+        $this->authorize("can-create-and-update", $team);
     }
 }

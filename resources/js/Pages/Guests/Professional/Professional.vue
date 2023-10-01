@@ -11,6 +11,7 @@ const frequencies = [
     { value: "monthly", label: "Monthly", priceSuffix: "/month" },
     { value: "annually", label: "Annually", priceSuffix: "/year" },
 ];
+
 const tiers = [
     {
         name: "Single Store",
@@ -19,8 +20,9 @@ const tiers = [
             name: "team.stores.create.subscription",
             parameters: [
                 usePage().props.currentUserTeam
-                    ? usePage().props.currentUserTeam.id
+                    ? usePage().props.currentUserTeam
                     : null,
+                usePage().props.user ? usePage().props.user : null,
             ],
         },
         price: { monthly: "$15", annually: "$144" },
