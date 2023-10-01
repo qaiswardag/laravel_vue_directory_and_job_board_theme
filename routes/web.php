@@ -26,6 +26,7 @@ use App\Http\Controllers\Guests\User\UserController;
 use App\Http\Controllers\LoggedIn\Job\JobController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
+use App\Http\Controllers\LoggedIn\User\SubscriptionController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
 use App\Http\Controllers\Superadmin\PageBuilder\PageBuilderController;
 use App\Http\Controllers\Superadmin\SuperadminManageRoles;
@@ -348,6 +349,13 @@ Route::middleware([
         StoreController::class,
         "duplicate",
     ])->name("team.stores.duplicate");
+
+    // STORE CREATE SUBSCRIPTION
+    // STORE CREATE SUBSCRIPTION
+    Route::get("/team/stores/create/subscription/{team}", [
+        SubscriptionController::class,
+        "create",
+    ])->name("team.stores.create.subscription");
     // STORES #END
     // STORES #END
     // STORES #END
