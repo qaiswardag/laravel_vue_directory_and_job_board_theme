@@ -217,7 +217,7 @@ class PageBuilder {
 
     #handleMouseOver = (e, element) => {
         if (this.showRunningMethodLogs) {
-            // console.log("#handleMouseOver");
+            console.log("#handleMouseOver");
         }
         // console.log("YOU MOUSE OVER ME!");
 
@@ -238,7 +238,7 @@ class PageBuilder {
 
     #handleMouseLeave = (e, element) => {
         if (this.showRunningMethodLogs) {
-            // console.log("#handleMouseLeave");
+            console.log("#handleMouseLeave");
         }
         // console.log("YOU MOUSE LEAVE ME!");
 
@@ -869,6 +869,9 @@ class PageBuilder {
             "pageBuilderState/setComponents",
             this.getComponents.value
         );
+
+        this.store.commit("pageBuilderState/setComponent", null);
+        this.store.commit("pageBuilderState/setElement", null);
     }
 
     // move component

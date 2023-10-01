@@ -75,33 +75,32 @@ const deleteComponent = function (e) {
         <header></header>
         <main></main>
     </DynamicModal>
-    <div class="myPrimaryTag py-2 mx-2">
-        <div class="flex flex-row justify-between mx-auto px-3 max-w-6xl">
-            <div class="flex gap-2 items-center justify-center">
-                <div
-                    @click="deleteComponent()"
-                    class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                >
-                    <TrashIcon class="w-4 h-4 m-2 stroke-2" />
-                </div>
-            </div>
 
-            <div class="flex gap-2 items-center justify-center">
-                <button
-                    type="button"
-                    @click="pageBuilder.moveComponent(1)"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                >
-                    <ArrowDownIcon class="w-4 h-4 m-2 stroke-2" />
-                </button>
-                <button
-                    type="button"
-                    @click="pageBuilder.moveComponent(-1)"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                >
-                    <ArrowUpIcon class="w-4 h-4 m-2 stroke-2" />
-                </button>
+    <div class="flex items-center justify-center gap-2">
+        <div class="flex gap-2 items-center justify-center">
+            <div
+                @click="deleteComponent()"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+            >
+                <TrashIcon class="mySmallIcon" />
             </div>
+        </div>
+
+        <div class="flex gap-2 items-center justify-center">
+            <button
+                type="button"
+                @click="pageBuilder.moveComponent(1)"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+            >
+                <ArrowDownIcon class="mySmallIcon" />
+            </button>
+            <button
+                type="button"
+                @click="pageBuilder.moveComponent(-1)"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+            >
+                <ArrowUpIcon class="mySmallIcon" />
+            </button>
         </div>
     </div>
 </template>

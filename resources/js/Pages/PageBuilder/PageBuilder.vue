@@ -1,15 +1,10 @@
 <script setup>
-import {
-    onMounted,
-    computed,
-    onBeforeMount,
-    ref,
-    watch,
-    watchEffect,
-} from "vue";
+import { onMounted, computed, ref, watch } from "vue";
 import PageBuilder from "@/composables/PageBuilder";
 import PageBuilderPreviewModal from "@/Components/Modals/PageBuilderPreviewModal.vue";
 import Preview from "@/Pages/PageBuilder/Preview.vue";
+import ComponentTopMenu from "@/Components/PageBuilder/EditorMenu/Editables/ComponentTopMenu.vue";
+
 import {
     Bars3Icon,
     XMarkIcon,
@@ -160,60 +155,68 @@ onMounted(async () => {
                 class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl"
             >
                 <div
-                    @click="store.commit('pageBuilderState/setComponent', null)"
-                    class="flex items-center justify-between primary-gap rounded-t-2xl bg-myPrimaryLightGrayColor py-2 px-4"
+                    class="flex items-center justify-between primary-gap rounded-t-2xl bg-myPrimaryLightGrayColor"
                 >
-                    <div>
-                        <div class="flex gap-2">
-                            <span
-                                class="w-2 h-2 rounded-full bg-red-400"
-                            ></span>
-                            <span
-                                class="w-2 h-2 rounded-full bg-yellow-400"
-                            ></span>
-                            <span
-                                class="w-2 h-2 rounded-full bg-green-400"
-                            ></span>
-                        </div>
+                    <div
+                        @click.self="
+                            store.commit('pageBuilderState/setComponent', null)
+                        "
+                        class="w-4/12 flex justify-start py-2 pl-2"
+                    >
+                        <ComponentTopMenu v-if="getElement"></ComponentTopMenu>
                     </div>
 
-                    <OptionsDropdown
-                        @previewCurrentDesign="previewCurrentDesign"
-                    ></OptionsDropdown>
+                    <div
+                        @click.self="
+                            store.commit('pageBuilderState/setComponent', null)
+                        "
+                        class="w-4/12 flex justify-center py-2"
+                    >
+                        <OptionsDropdown
+                            @previewCurrentDesign="previewCurrentDesign"
+                        ></OptionsDropdown>
+                    </div>
 
-                    <div class="flex items-center justify-center gap-2">
-                        <button
-                            type="button"
-                            @click="handleAddComponent"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                        >
-                            <Square3Stack3DIcon
-                                class="mySmallIcon"
-                            ></Square3Stack3DIcon>
-                        </button>
-                        <button
-                            type="button"
-                            @click="handleDesignerPreview"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                        >
-                            <EyeIcon class="mySmallIcon"></EyeIcon>
-                        </button>
+                    <div
+                        @click.self="
+                            store.commit('pageBuilderState/setComponent', null)
+                        "
+                        class="w-4/12 flex justify-end py-2 pr-2"
+                    >
+                        <div class="flex items-center justify-center gap-2">
+                            <button
+                                type="button"
+                                @click="handleAddComponent"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            >
+                                <Square3Stack3DIcon
+                                    class="mySmallIcon"
+                                ></Square3Stack3DIcon>
+                            </button>
+                            <button
+                                type="button"
+                                @click="handleDesignerPreview"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            >
+                                <EyeIcon class="mySmallIcon"></EyeIcon>
+                            </button>
 
-                        <button
-                            type="button"
-                            v-if="getMenuRight === false"
-                            @click="
-                                store.commit(
-                                    'pageBuilderState/setMenuRight',
-                                    true
-                                )
-                            "
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                        >
-                            <Squares2X2Icon
-                                class="mySmallIcon"
-                            ></Squares2X2Icon>
-                        </button>
+                            <button
+                                type="button"
+                                v-if="getMenuRight === false"
+                                @click="
+                                    store.commit(
+                                        'pageBuilderState/setMenuRight',
+                                        true
+                                    )
+                                "
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            >
+                                <Squares2X2Icon
+                                    class="mySmallIcon"
+                                ></Squares2X2Icon>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -222,7 +225,7 @@ onMounted(async () => {
                     class="p-2 bg-gray-800 overflow-y-auto h-screen"
                 >
                     <div id="pagebuilder" class="">
-                        <!-- Added Compoents to DOM # start -->
+                        <!-- Added Components to DOM # start -->
                         <div
                             v-for="component in Array.isArray(getComponents) &&
                             getComponents"
@@ -236,7 +239,7 @@ onMounted(async () => {
                                 <div v-html="component.html_code"></div>
                             </div>
                         </div>
-                        <!-- Added Compoents to DOM # end -->
+                        <!-- Added Components to DOM # end -->
 
                         <!-- Add Component # start -->
                         <div

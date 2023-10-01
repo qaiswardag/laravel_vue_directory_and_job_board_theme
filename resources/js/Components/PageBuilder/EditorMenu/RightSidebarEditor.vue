@@ -14,7 +14,6 @@ import BackgroundColorEditor from "@/Components/PageBuilder/EditorMenu/Editables
 import TextColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/TextColorEditor.vue";
 import Borders from "@/Components/PageBuilder/EditorMenu/Editables/Borders.vue";
 import LinkEditor from "@/Components/PageBuilder/EditorMenu/Editables/LinkEditor.vue";
-import ComponentTopMenu from "@/Components/PageBuilder/EditorMenu/Editables/ComponentTopMenu.vue";
 import TipTap from "@/Components/TipTap/TipTap.vue";
 
 // store
@@ -77,10 +76,6 @@ const isHeadingElement = computed(() => {
 
             <div class="mb-4 overflow-y-scroll md:pb-24 pb-12">
                 <div v-show="isHeadingElement === true">
-                    <article>
-                        <ComponentTopMenu></ComponentTopMenu>
-                    </article>
-
                     <article>
                         <ImageEditor :user="user" :team="team"> </ImageEditor>
                     </article>
