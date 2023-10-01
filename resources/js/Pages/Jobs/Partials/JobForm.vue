@@ -693,7 +693,7 @@ const jobTypesSorted = computed(() => {
 onBeforeMount(() => {
     // User is creating a new Resource from scratch, rather than editing an existing one
     // Check local storage
-    if (props.post === null) {
+    if (!props.post) {
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
             const formDataJson = localStorage.getItem(pathLocalStorage);
@@ -884,7 +884,7 @@ onBeforeMount(() => {
     }
 
     // User is editing an existing Resource, rather than creating a new one from scratch.
-    if (props.post !== null) {
+    if (props.post) {
         formType.value = "update";
 
         postForm.title = props.post.title;

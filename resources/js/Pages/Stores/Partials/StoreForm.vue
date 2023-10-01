@@ -714,7 +714,7 @@ const handlePageBuilder = function () {
 
 // get unique post if needs to be updated
 onBeforeMount(async () => {
-    if (props.post === null) {
+    if (!props.post) {
         if (pageBuilder.areComponentsStoredInLocalStorage()) {
             postForm.content =
                 Array.isArray(getComponents.value) &&
@@ -854,7 +854,7 @@ onBeforeMount(async () => {
     }
 
     // User is editing an existing Resource, rather than creating a new one from scratch.
-    if (props.post !== null) {
+    if (props.post) {
         formType.value = "update";
 
         pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-draft-update-store-${
