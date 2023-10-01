@@ -176,7 +176,6 @@ class PageBuilder {
                     element.nextElementSibling.tagName === "IMG"))
         ) {
             const divWrapper = document.createElement("div");
-            divWrapper.classList.add("p-2");
             divWrapper.classList.add("bg-green-400");
 
             element.parentNode.insertBefore(divWrapper, element);
