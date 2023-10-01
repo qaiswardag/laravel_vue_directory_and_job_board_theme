@@ -155,20 +155,12 @@ class PageBuilder {
             element.classList.add("smooth-transition");
         }
 
-        // Add padding to every DIV
+        // Add padding to DIV
         if (element.tagName === "DIV") {
-            // If the <div> does not contain any classes, add the following classes
-
             if (element.classList.length === 0) {
                 element.classList.add("p-2");
             }
         }
-
-        //
-        //
-        //
-        //
-        //
     }
 
     #wrapElementInDivIfExcluded(element) {
@@ -178,6 +170,7 @@ class PageBuilder {
 
         if (this.headerTags.includes(element.tagName)) {
             const divWrapper = document.createElement("div");
+            divWrapper.classList.add("p-2");
 
             element.parentNode.insertBefore(divWrapper, element);
 
@@ -185,6 +178,8 @@ class PageBuilder {
         }
         if (element.tagName === "IMG") {
             const divWrapper = document.createElement("div");
+
+            divWrapper.classList.add("p-2");
 
             element.parentNode.insertBefore(divWrapper, element);
 

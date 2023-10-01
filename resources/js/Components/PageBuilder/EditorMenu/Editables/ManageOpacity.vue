@@ -66,7 +66,7 @@ watch(
                             :class="[opacityVueModel !== 'none' ? '' : '']"
                             >{{
                                 opacityVueModel === "none"
-                                    ? "None"
+                                    ? "none"
                                     : opacityVueModel
                             }}</span
                         >
