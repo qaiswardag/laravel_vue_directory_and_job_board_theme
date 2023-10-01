@@ -60,7 +60,6 @@ const flashState = computed(() => {
 });
 
 watch(flashState, (newValue) => {
-    console.log(`ok:`, newValue);
     if (newValue) {
         shouldShowFlash.value = true;
     }

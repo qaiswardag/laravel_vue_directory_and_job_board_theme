@@ -11,7 +11,11 @@ import {
     ListboxOption,
     ListboxOptions,
 } from "@headlessui/vue";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
+import {
+    CheckIcon,
+    ChevronUpDownIcon,
+    XMarkIcon,
+} from "@heroicons/vue/20/solid";
 
 const store = useStore();
 
@@ -40,17 +44,21 @@ watch(
             <Listbox as="div" v-model="textColor">
                 <div class="relative mt-2">
                     <ListboxButton class="myPrimarySelect">
-                        <span class="flex items-center">
+                        <span class="flex items-center gap-2">
+                            <div
+                                v-if="getTextColor === 'none'"
+                                class="w-6 h-6 cursor-default border border-gray-200 rounded-sm"
+                            >
+                                <XMarkIcon
+                                    class="text-myPrimaryErrorColor stroke-2"
+                                ></XMarkIcon>
+                            </div>
                             <div
                                 v-if="textColor !== 'none'"
-                                class="aspect-square w-6 h-6"
+                                class="aspect-square w-6 h-6 border border-gray-100 rounded-sm"
                                 :class="`bg-${textColor?.replace('text-', '')}`"
                             ></div>
-                            <span
-                                class="block truncate"
-                                :class="[textColor !== 'none' ? 'ml-3' : '']"
-                                >{{ textColor }}</span
-                            >
+                            <span class="block truncate">{{ textColor }}</span>
                         </span>
                         <span
                             class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2"
@@ -86,9 +94,25 @@ watch(
                                         'relative cursor-default select-none py-2 pl-3 pr-9',
                                     ]"
                                 >
-                                    <div class="flex items-center">
+                                    <div
+                                        v-if="color === 'none'"
+                                        class="flex items-center"
+                                    >
                                         <div
-                                            class="aspect-square w-6 h-6"
+                                            class="w-6 h-6 cursor-default border border-gray-200 rounded-sm bg-white"
+                                        >
+                                            <XMarkIcon
+                                                class="text-myPrimaryErrorColor stroke-2"
+                                            ></XMarkIcon>
+                                        </div>
+                                        <span class="ml-3">{{ color }}</span>
+                                    </div>
+                                    <div
+                                        v-if="color !== 'none'"
+                                        class="flex items-center"
+                                    >
+                                        <div
+                                            class="aspect-square w-6 h-6 border border-gray-100 rounded-sm"
                                             :class="`bg-${color.replace(
                                                 'text-',
                                                 ''
