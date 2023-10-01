@@ -168,23 +168,38 @@ class PageBuilder {
             console.log("#wrapElementInDivIfExcluded");
         }
 
-        if (this.headerTags.includes(element.tagName)) {
+        if (
+            this.headerTags.includes(element.tagName) &&
+            ((element.previousElementSibling &&
+                element.previousElementSibling.tagName === "IMG") ||
+                (element.nextElementSibling &&
+                    element.nextElementSibling.tagName === "IMG"))
+        ) {
             const divWrapper = document.createElement("div");
             divWrapper.classList.add("p-2");
+            divWrapper.classList.add("bg-green-400");
 
             element.parentNode.insertBefore(divWrapper, element);
 
             divWrapper.appendChild(element);
         }
-        if (element.tagName === "IMG") {
-            const divWrapper = document.createElement("div");
 
-            divWrapper.classList.add("p-2");
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        // if (element.tagName === "IMG") {
+        //     const divWrapper = document.createElement("div");
 
-            element.parentNode.insertBefore(divWrapper, element);
+        //     divWrapper.classList.add("p-2");
 
-            divWrapper.appendChild(element);
-        }
+        //     element.parentNode.insertBefore(divWrapper, element);
+
+        //     divWrapper.appendChild(element);
+        // }
     }
 
     #handleElementClick = (e, element) => {
