@@ -12,16 +12,16 @@ const frequencies = [
 ];
 const tiers = [
     {
-        name: "Hobby",
+        name: "Single Store",
         id: "tier-hobby",
         href: "#",
         price: { monthly: "$15", annually: "$144" },
         description: "The essentials to provide your best work for clients.",
         features: ["5 products", "Up to 1,000 subscribers", "Basic analytics"],
-        mostPopular: false,
+        mostPopular: true,
     },
     {
-        name: "Freelancer",
+        name: "Up to 3 Stores",
         id: "tier-freelancer",
         href: "#",
         price: { monthly: "$30", annually: "$288" },
@@ -35,7 +35,7 @@ const tiers = [
         mostPopular: false,
     },
     {
-        name: "Startup",
+        name: "Up to 10 Stores",
         id: "tier-startup",
         href: "#",
         price: { monthly: "$60", annually: "$576" },
@@ -47,7 +47,7 @@ const tiers = [
             "24-hour support response time",
             "Marketing automations",
         ],
-        mostPopular: true,
+        mostPopular: false,
     },
     {
         name: "Enterprise",
@@ -90,13 +90,15 @@ const frequency = ref(frequencies[0]);
             <template #title>Pricing plans for all sizes</template>
             <template #description>
                 What if there was a digital solution that would bring online
-                shoppers back to real stores? Choose an affordable plan that’s
-                packed with the best features for engaging your audience,
-                creating customer loyalty, and driving sales. Select the ideal
-                subscription based on number of stores.
+                shoppers back to real stores?
+                <br />
+                Choose an affordable plan that’s packed with the best features
+                for engaging your audience, creating customer loyalty, and
+                driving sales. Select the ideal subscription based on number of
+                stores.
             </template>
             <template #content>
-                <div class="mt-16 flex justify-center">
+                <div class="flex justify-center">
                     <RadioGroup
                         v-model="frequency"
                         class="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200"
