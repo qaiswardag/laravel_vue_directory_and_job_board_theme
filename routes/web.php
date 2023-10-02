@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
 use App\Http\Controllers\Api\Internal\LoggedIn\DashboardStatsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
 use App\Http\Controllers\Api\Internal\LoggedIn\PageBuilderComponentsController;
+use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\PaymentMethodsController;
 use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
@@ -352,10 +353,19 @@ Route::middleware([
 
     // STORE CREATE SUBSCRIPTION
     // STORE CREATE SUBSCRIPTION
-    Route::get("/team/stores/create/subscription/{user}/{team}", [
-        SubscriptionController::class,
-        "create",
-    ])->name("team.stores.create.subscription");
+    Route::get("/stripe/payment/methods/{user}/{team}", [
+        PaymentMethodsController::class,
+        "index",
+    ])->name("stripe.payment.methods.index");
+    //
+    //
+    //
+
+    Route::get(
+        // "/team/stores/create/subscription/{user}/{team}/product={product}",
+        "/team/stores/create/subscription/{user}/{team}",
+        [SubscriptionController::class, "create"]
+    )->name("team.stores.create.subscription");
 
     Route::post("/team/stores/store/subscription", [
         SubscriptionController::class,

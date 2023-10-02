@@ -6,6 +6,11 @@
 
         <title inertia>{{ config('app.name', 'myself') }}</title>
         <!-- Fonts -->
+
+        <script src="https://js.stripe.com/v3/"></script>
+        
+
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link

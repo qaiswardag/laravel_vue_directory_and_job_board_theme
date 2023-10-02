@@ -11,6 +11,12 @@ const props = defineProps({
     user: {
         required: true,
     },
+    intent: {
+        required: true,
+    },
+    paymentMethods: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
@@ -27,7 +33,7 @@ const breadcrumbsLinks = [
 
 <template>
     <LoggedInLayout>
-        <Head title="Create Post" />
+        <Head title="Create Payment" />
         <template #header>
             <h2 class="myPrimaryMainPageHeader">Create Payment</h2>
         </template>
@@ -35,6 +41,6 @@ const breadcrumbsLinks = [
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-        <PaymentForm :team="team" :user="user"></PaymentForm>
+        <PaymentForm :team="team" :user="user" :intent="intent"></PaymentForm>
     </LoggedInLayout>
 </template>

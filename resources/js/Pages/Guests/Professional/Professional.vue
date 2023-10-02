@@ -15,7 +15,7 @@ const frequencies = [
 const tiers = [
     {
         name: "Single Store",
-        id: "tier-single-store",
+        id: "single_store",
         route: {
             name: "team.stores.create.subscription",
             parameters: [
