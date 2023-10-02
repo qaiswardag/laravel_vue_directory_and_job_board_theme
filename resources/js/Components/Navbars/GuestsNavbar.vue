@@ -156,7 +156,7 @@ const notificationsSlideOverButton = function () {
                     class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
                     :href="route('register')"
                 >
-                    Register
+                    Sign up
                 </Link>
             </template>
             <template v-if="$page.props.user !== null">

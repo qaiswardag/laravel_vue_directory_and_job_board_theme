@@ -40,10 +40,10 @@ const submit = () => {
         class="bg-[url('https://images.unsplash.com/photo-1661956602116-aa6865609028?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80')] w-full min-h-screen bg-cover"
     >
         <GuestsLayout>
-            <Head title="Register" />
+            <Head title="Sign up" />
             <template #header>
                 <div class="myPrimaryMainPageHeaderParagraph">
-                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Register</h1>
+                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Sign up</h1>
                     <p class="myPrimaryMainPageParagraphNotLoggedIn">
                         Dolor sit amet consectetur adipisicing elit. Culpa illo
                         ipsa fugit quo ad, et, placeat minima assumenda soluta

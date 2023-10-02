@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
 use App\Http\Controllers\Api\Internal\LoggedIn\DashboardStatsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
 use App\Http\Controllers\Api\Internal\LoggedIn\PageBuilderComponentsController;
+use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\PaymentMethodsController;
 use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Guests\User\UserController;
 use App\Http\Controllers\LoggedIn\Job\JobController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
+use App\Http\Controllers\LoggedIn\User\SubscriptionController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
 use App\Http\Controllers\Superadmin\PageBuilder\PageBuilderController;
 use App\Http\Controllers\Superadmin\SuperadminManageRoles;
@@ -348,6 +350,29 @@ Route::middleware([
         StoreController::class,
         "duplicate",
     ])->name("team.stores.duplicate");
+
+    // STORE CREATE SUBSCRIPTION
+    // STORE CREATE SUBSCRIPTION
+    Route::get("/stripe/payment/methods/{user}/{team}", [
+        PaymentMethodsController::class,
+        "index",
+    ])->name("stripe.payment.methods.index");
+    //
+    //
+    //
+
+    Route::get(
+        // "/team/stores/create/subscription/{user}/{team}/product={product}",
+        "/team/stores/create/subscription/{user}/{team}",
+        [SubscriptionController::class, "create"]
+    )->name("team.stores.create.subscription");
+
+    Route::post("/team/stores/store/subscription", [
+        SubscriptionController::class,
+        "store",
+    ])->name("team.stores.store.subscription");
+    // STORE CREATE SUBSCRIPTION
+    // STORE CREATE SUBSCRIPTION
     // STORES #END
     // STORES #END
     // STORES #END

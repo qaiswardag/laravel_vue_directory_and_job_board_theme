@@ -5,26 +5,41 @@ import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import { ref } from "vue";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
 import { CheckIcon } from "@heroicons/vue/20/solid";
+import { usePage } from "@inertiajs/vue3";
 
 const frequencies = [
     { value: "monthly", label: "Monthly", priceSuffix: "/month" },
     { value: "annually", label: "Annually", priceSuffix: "/year" },
 ];
+
 const tiers = [
     {
         name: "Single Store",
-        id: "tier-hobby",
-        href: "#",
+        id: "single_store",
+        route: {
+            name: "team.stores.create.subscription",
+            parameters: [
+                usePage().props.currentUserTeam
+                    ? usePage().props.currentUserTeam
+                    : null,
+                usePage().props.user ? usePage().props.user : null,
+            ],
+        },
         price: { monthly: "$15", annually: "$144" },
+        title: "Most popular",
         description: "The essentials to provide your best work for clients.",
         features: ["5 products", "Up to 1,000 subscribers", "Basic analytics"],
         mostPopular: true,
     },
     {
         name: "Up to 3 Stores",
-        id: "tier-freelancer",
-        href: "#",
+        id: "tier-3-stores",
+        route: {
+            name: "stores.index",
+            parameters: [],
+        },
         price: { monthly: "$30", annually: "$288" },
+        title: null,
         description: "The essentials to provide your best work for clients.",
         features: [
             "5 products",
@@ -36,9 +51,13 @@ const tiers = [
     },
     {
         name: "Up to 10 Stores",
-        id: "tier-startup",
-        href: "#",
+        id: "tier-10-stores",
+        route: {
+            name: "stores.index",
+            parameters: [],
+        },
         price: { monthly: "$60", annually: "$576" },
+        title: null,
         description: "A plan that scales with your rapidly growing business.",
         features: [
             "25 products",
@@ -52,8 +71,12 @@ const tiers = [
     {
         name: "Enterprise",
         id: "tier-enterprise",
-        href: "#",
+        route: {
+            name: "stores.index",
+            parameters: [],
+        },
         price: { monthly: "$90", annually: "$864" },
+        title: null,
         description: "Dedicated support and infrastructure for your company.",
         features: [
             "Unlimited products",
@@ -136,9 +159,15 @@ const frequency = ref(frequencies[0]);
                             tier.mostPopular
                                 ? 'border-2 border-myPrimaryLinkColor'
                                 : 'border-2 border-gray-200',
-                            'rounded-3xl p-8 hover:border-2 hover:border-myPrimaryLinkColor',
+                            'rounded-3xl p-8 hover:border-2 hover:border-myPrimaryLinkColor relative',
                         ]"
                     >
+                        <p
+                            v-if="tier.title"
+                            class="myPrimaryParagraph text-xs italic absolute top-1 left-0 right-0 text-center"
+                        >
+                            {{ tier.title }}
+                        </p>
                         <h3
                             :id="tier.id"
                             :class="[
@@ -163,17 +192,31 @@ const frequency = ref(frequencies[0]);
                                 >{{ frequency.priceSuffix }}</span
                             >
                         </p>
-                        <a
-                            :href="tier.href"
-                            :aria-describedby="tier.id"
+
+                        <Link
+                            v-if="$page.props?.user?.current_team?.id"
                             :class="[
                                 tier.mostPopular
                                     ? 'bg-myPrimaryLinkColor text-white shadow-sm hover:bg-myPrimaryLinkColor'
                                     : 'text-myPrimaryLinkColor ring-1 ring-inset ring-myPrimaryLinkColor hover:ring-myPrimaryLinkColor',
                                 'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-myPrimaryLinkColor',
                             ]"
-                            >Buy plan</a
-                        >
+                            :href="
+                                route(tier.route.name, tier.route.parameters)
+                            "
+                            >{{ tier.name }}
+                        </Link>
+                        <Link
+                            v-if="!$page.props?.user?.current_team?.id"
+                            :class="[
+                                tier.mostPopular
+                                    ? 'bg-myPrimaryLinkColor text-white shadow-sm hover:bg-myPrimaryLinkColor'
+                                    : 'text-myPrimaryLinkColor ring-1 ring-inset ring-myPrimaryLinkColor hover:ring-myPrimaryLinkColor',
+                                'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-myPrimaryLinkColor',
+                            ]"
+                            href="register"
+                            >Sign up
+                        </Link>
                         <ul
                             role="list"
                             class="mt-8 space-y-3 text-sm leading-6 text-gray-600"

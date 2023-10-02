@@ -45,10 +45,7 @@ export default {
                     teamId: data.teamId,
                 }),
                 {},
-                {
-                    additionalCallTime: 0,
-                    abortTimeoutTime: 8000,
-                }
+                {}
             );
 
             // context & send to mutation
