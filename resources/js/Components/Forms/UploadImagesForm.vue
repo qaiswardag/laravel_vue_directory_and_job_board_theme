@@ -223,7 +223,7 @@ onMounted(() => {
         </div>
 
         <div
-            class="overflow-y-scroll md:min-h-[32rem] md:max-h-[32rem] min-h-[15rem] max-h-[15rem] p-2 border border-myPrimaryLightGrayColor"
+            class="overflow-y-scroll rounded md:min-h-[30.2rem] md:max-h-[30.2rem] min-h-[15rem] max-h-[15rem] p-2 border border-myPrimaryLightGrayColor"
         >
             <div v-if="isLoading === true">
                 <div class="flex items-center justify-center">
@@ -254,7 +254,7 @@ onMounted(() => {
                                 @click="clickedImage(image.image_upload_id)"
                                 :src="image.preview_url"
                                 alt="image"
-                                class="h-14 w-14 object-cover rounded-md cursor-pointer"
+                                class="w-16 object-cover rounded-sm cursor-pointer"
                             />
                             <p class="myPrimaryParagraph text-xs py-2">
                                 {{ image.file_name }}
@@ -296,7 +296,7 @@ onMounted(() => {
 
         <div
             v-if="isLoading === false && imagesPreview.length !== 0"
-            class="py-2 my-2"
+            class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
         >
             <SubmitButton :disabled="form.processing" buttonText="Upload">
             </SubmitButton>

@@ -263,7 +263,6 @@ const handleAddAuthor = function () {
     // end modal
 };
 
-const filteredUsers = ref([]);
 const handleRemoveAttachedUser = function (userId) {
     // filter the array to exclude user with matching ID
     postForm.author = postForm.author.filter((user) => user.id !== userId);
@@ -923,9 +922,6 @@ onMounted(() => {
 const pageBuilder = new PageBuilder(store);
 </script>
 <template>
-    <template v-if="isLoading || postForm.processing">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
     <PageBuilderModal
         :show="openDesignerModal"
         :updateOrCreate="formType"

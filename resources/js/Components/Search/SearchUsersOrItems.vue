@@ -824,7 +824,7 @@ onMounted(() => {
         <!-- content end -->
 
         <div
-            class="bg-red-50 px-2 py-2 mt-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
+            class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
         >
             <div class="sm:w-3/6 w-full px-2 my-2 flex gap-2 justify-end">
                 <button

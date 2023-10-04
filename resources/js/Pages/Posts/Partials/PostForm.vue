@@ -17,7 +17,6 @@ import config from "@/utils/config";
 import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 import {
     Listbox,
@@ -97,7 +96,6 @@ const userTeamsWithoutReaderRole = props.user.all_teams.filter((team) => {
 
 // store
 const store = useStore();
-const isLoading = ref(false);
 
 const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
@@ -638,10 +636,6 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <template v-if="isLoading || postForm.processing">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
-
     <FormSection @submitted="handleCreatePost">
         <template #title> Post details</template>
         <template #description> Create a new Post. </template>

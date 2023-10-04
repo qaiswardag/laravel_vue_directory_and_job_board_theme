@@ -58,9 +58,9 @@ const firstButton = function () {
     showModalClosePageBuilder.value = true;
     typeModal.value = "danger";
     gridColumnModal.value = 3;
-    titleModal.value = "Close the Page Builder without save?";
+    titleModal.value = "Close page builder without save?";
     descriptionModal.value =
-        "Are you sure you want to close the Page Builder without saving? Any changes will be lost.";
+        "Are you sure you want to close the page builder without saving? Any changes will be lost.";
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Exit Page Builder";

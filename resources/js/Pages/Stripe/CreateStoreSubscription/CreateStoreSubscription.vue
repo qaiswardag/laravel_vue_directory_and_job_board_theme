@@ -24,15 +24,18 @@ const breadcrumbsLinks = [
             parameters: [props.user.id],
         },
     },
-    { label: "Create Subscriptions" },
+    { label: "Create Subscription" },
 ];
 </script>
 
 <template>
     <LoggedInLayout>
-        <Head title="Create Payment" />
+        <Head
+            title="Create Subscription
+"
+        />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Create Subscriptions</h2>
+            <h2 class="myPrimaryMainPageHeader">Create Subscription</h2>
         </template>
 
         <template #breadcrumbs>

@@ -12,8 +12,6 @@ import { Switch } from "@headlessui/vue";
 import { ref } from "@vue/reactivity";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
-const isLoading = ref(false);
-
 const form = useForm({
     name: "",
     public: true,
@@ -75,9 +73,6 @@ const createTeam = () => {
 </script>
 
 <template>
-    <template v-if="isLoading || form.processing">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
     <DynamicModal
         :show="modalShowCreateTeam"
         :type="typeModal"

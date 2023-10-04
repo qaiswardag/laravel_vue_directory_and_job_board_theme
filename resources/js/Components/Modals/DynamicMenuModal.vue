@@ -77,11 +77,10 @@ const handleLogout = () => {
             class="px-4 relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full pb-6"
         >
             <div class="myPrimaryParagraph flex flex-col gap-1">
-                <p class="px-2 py-2 rounded-lg bg-gray-50">
+                <p class="px-2 py-2 mb-2 rounded-lg bg-gray-50 text-xs">
                     Logged in as {{ $page.props.user.first_name }}
                     {{ $page.props.user.last_name }}
                 </p>
-                <p class="py-2 px-2 rounded-lg mt-2">Manage Team</p>
 
                 <template
                     v-if="
@@ -90,6 +89,7 @@ const handleLogout = () => {
                         $page.props.jetstream.hasTeamFeatures
                     "
                 >
+                    <p class="py-2 px-2 rounded-lg mt-2">Manage Team</p>
                     <Link
                         :href="
                             route(

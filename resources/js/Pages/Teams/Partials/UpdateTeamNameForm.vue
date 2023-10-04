@@ -36,7 +36,6 @@ import { onBeforeMount, onMounted } from "vue";
 
 // store
 const store = useStore();
-const isLoading = ref(false);
 
 const props = defineProps({
     team: Object,
@@ -266,9 +265,6 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <template v-if="isLoading || postForm.processing">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
     <FormSection @submitted="handleUpdateTeam" :sidebarArea="true">
         <template #title>
             {{ $page.props.team && $page.props.team.name }}

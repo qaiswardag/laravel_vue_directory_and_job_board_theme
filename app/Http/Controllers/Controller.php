@@ -15,4 +15,5 @@ class Controller extends BaseController
     const FORBIDDEN_ADMIN_TEAM_ACTION = "Sorry, you are forbidden from performing this action. Only team members who belong to unique teams can create, update or delete this resource. Please try switching team or contact IT support.";
     const TRY_ANOTHER_ROUTE = "Please try another route.";
     const TRY_CATCH_FORM_SUBMISSION_ERROR = "Oops! Something went wrong with your form submission. Please try again.";
+    const TRY_CATCH_LOAD_FORM_ERROR = "Oops! Something went wrong with your form submission. Please try again.";
 }

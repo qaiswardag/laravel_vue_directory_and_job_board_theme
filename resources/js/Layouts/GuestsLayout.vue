@@ -4,8 +4,18 @@ import Banner from "@/Components/Banners/Banner.vue";
 import GuestsNavbar from "@/Components/Navbars/GuestsNavbar.vue";
 import FooterUniversal from "@/Components/Footer/FooterUniversal.vue";
 import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
-
+import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import { ref } from "vue";
+
+// DOM is loaded
+const isDOMLoaded = ref(false);
+
+router.on("start", () => {
+    isDOMLoaded.value = true;
+});
+router.on("finish", () => {
+    isDOMLoaded.value = false;
+});
 
 defineProps({
     title: {
@@ -19,8 +29,10 @@ defineProps({
         <!-- head-key makes sure to only add on meta key -->
         <!-- <Head>
             <title>{{ title }}</title>
-            <meta type="description" content="MYISSUE" head-key="description" />
+            <meta type="description" content="myself" head-key="description" />
         </Head> -->
+
+        <FullScreenSpinner v-if="isDOMLoaded"></FullScreenSpinner>
 
         <Banner />
         <!-- Topbar - start -->

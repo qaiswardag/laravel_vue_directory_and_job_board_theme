@@ -28,6 +28,7 @@ use App\Http\Controllers\Guests\User\UserController;
 use App\Http\Controllers\LoggedIn\Job\JobController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
+use App\Http\Controllers\LoggedIn\User\PaymentMethodsController as UserPaymentMethodsController;
 use App\Http\Controllers\LoggedIn\User\SubscriptionController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
 use App\Http\Controllers\Superadmin\PageBuilder\PageBuilderController;
@@ -354,10 +355,15 @@ Route::middleware([
 
     // STORE CREATE SUBSCRIPTION
     // STORE CREATE SUBSCRIPTION
-    Route::get("/stripe/payment/methods/{user}", [
+    Route::get("/stripe/api/internal/payment/methods/{user}", [
         PaymentMethodsController::class,
         "index",
-    ])->name("stripe.payment.methods.index");
+    ])->name("stripe.api.internal.payment.methods.index");
+    //
+    Route::post("/stripe/payment/methods/store", [
+        UserPaymentMethodsController::class,
+        "store",
+    ])->name("stripe.payment.methods.store");
     //
     //
     //

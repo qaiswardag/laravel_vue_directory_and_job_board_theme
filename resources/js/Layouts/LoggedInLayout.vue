@@ -72,11 +72,14 @@ const sidebarOpen = ref(false);
 </script>
 
 <template>
+    <FullScreenSpinner v-if="isDOMLoaded"></FullScreenSpinner>
+
     <Flash
         v-show="shouldShowFlash"
         :showCloseButton="false"
         :flash="$page.props.flash"
     ></Flash>
+
     <!-- Static sidebar for mobile - start -->
     <TransitionRoot as="template" :show="sidebarOpen">
         <Dialog

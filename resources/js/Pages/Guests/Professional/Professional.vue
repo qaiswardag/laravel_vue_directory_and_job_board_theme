@@ -89,7 +89,7 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                         </p>
 
                         <Link
-                            v-if="$page.props?.user?.current_team?.id"
+                            v-if="$page.props?.user"
                             :class="[
                                 product.mostPopular
                                     ? 'bg-myPrimaryLinkColor text-white shadow-sm hover:bg-myPrimaryLinkColor'
@@ -105,7 +105,7 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                             >{{ product.name }}
                         </Link>
                         <Link
-                            v-if="!$page.props?.user?.current_team?.id"
+                            v-if="!$page.props?.user"
                             :class="[
                                 product.mostPopular
                                     ? 'bg-myPrimaryLinkColor text-white shadow-sm hover:bg-myPrimaryLinkColor'

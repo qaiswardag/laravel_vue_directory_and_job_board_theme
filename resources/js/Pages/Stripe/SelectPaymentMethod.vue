@@ -43,7 +43,7 @@ const {
 
 const fetchPaymentMethods = function () {
     handleGetPaymentMethods(
-        route("stripe.payment.methods.index", {
+        route("stripe.api.internal.payment.methods.index", {
             user: props.user,
         })
     );
@@ -135,16 +135,16 @@ onMounted(() => {
                 }}
             </p>
 
-            <div
-                v-if="
-                    fetchedPaymentMethods &&
-                    fetchedPaymentMethods.paymentMethods &&
-                    Array.isArray(fetchedPaymentMethods.paymentMethods) &&
-                    fetchedPaymentMethods.paymentMethods.length !== 0
-                "
-                class="p-2 border border-myPrimaryLightGrayColor"
-            >
-                <div>
+            <div>
+                <div
+                    v-if="
+                        fetchedPaymentMethods &&
+                        fetchedPaymentMethods.paymentMethods &&
+                        Array.isArray(fetchedPaymentMethods.paymentMethods) &&
+                        fetchedPaymentMethods.paymentMethods.length !== 0
+                    "
+                    class="p-2 border border-myPrimaryLightGrayColor"
+                >
                     <div
                         class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
                     >
@@ -234,7 +234,7 @@ onMounted(() => {
                 >
                     <p
                         @click="handleCreatePaymentMethod"
-                        class="myPrimaryParagraph text-xs italic cursor-pointer"
+                        class="myPrimaryParagraph text-xs italic cursor-pointer mb-2"
                     >
                         New Payment Method?
                     </p>

@@ -11,6 +11,8 @@ use Inertia\Inertia;
 use Laravel\Cashier\Cashier;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Laravel\Cashier\Exceptions\IncompletePayment;
+use Stripe\Customer;
 
 class SubscriptionController extends Controller
 {
@@ -30,21 +32,54 @@ class SubscriptionController extends Controller
      */
     public function create(User $user)
     {
+        $name = $user->first_name . " " . $user->last_name;
+        $email = $user->email;
+
+        $intent = null;
+        $paymentMethods = null;
+
         $stripeId = $user->stripe_id;
 
-        $stripeCustomer = Cashier::findBillable($stripeId);
-
-        if (!$stripeCustomer) {
-            // dd("IS NOT CUSTOMER", $stripeCustomer);
-            $stripeCustomer = $user->createAsStripeCustomer();
+        if (!$stripeId) {
+            $user->createAsStripeCustomer();
         }
 
-        $paymentMethods = $stripeCustomer->paymentMethods();
+        $stripeCustomer = $user->asStripeCustomer();
+
+        // if user is deleted at Stripe
+        if ($stripeCustomer->isDeleted()) {
+            $user
+                ->forceFill([
+                    "stripe_id" => null,
+                ])
+                ->save();
+
+            $user->createAsStripeCustomer();
+        }
+
+        try {
+            $intent = $user->createSetupIntent();
+            $paymentMethods = $user->paymentMethods();
+
+            $user->updateStripeCustomer([
+                "name" => $name,
+                "email" => $email,
+            ]);
+        } catch (Exception $exception) {
+            Log::error(
+                "Something went wrong loading the subscription form. {$exception}"
+            );
+
+            return Inertia::render("Error", [
+                "customError" => self::TRY_CATCH_LOAD_FORM_ERROR,
+                "status" => 422,
+            ]);
+        }
 
         return Inertia::render(
             "Stripe/CreateStoreSubscription/CreateStoreSubscription",
             [
-                "intent" => $stripeCustomer->createSetupIntent(),
+                "intent" => $intent,
                 "paymentMethods" => $paymentMethods,
             ]
         );

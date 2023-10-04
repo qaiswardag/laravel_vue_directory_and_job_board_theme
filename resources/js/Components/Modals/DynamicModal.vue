@@ -80,7 +80,7 @@ const thirdButton = function () {
         <slot name="content" />
 
         <div
-            class="px-4 relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full"
+            class="mb-24 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
             <div class="flex items-center border-b border-gray-200 pb-2 mb-2">
                 <div class="flex-1">
@@ -174,7 +174,7 @@ const thirdButton = function () {
         </div>
 
         <div
-            class="bg-red-50 px-2 py-2 mt-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
+            class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
         >
             <slot name="footer" />
             <div

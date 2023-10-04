@@ -29,16 +29,6 @@ import {
     ArrowRightIcon,
 } from "@heroicons/vue/24/outline";
 
-// loading status for props and view
-const isLoaded = ref(false);
-
-router.on("start", () => {
-    isLoaded.value = true;
-});
-router.on("finish", () => {
-    isLoaded.value = false;
-});
-
 const breadcrumbsLinks = [
     {
         label: "Admin Dashboard",
@@ -359,9 +349,6 @@ onMounted(() => {
 </script>
 
 <template>
-    <template v-if="isLoaded">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
     <LoggedInLayout>
         <Head title="Manage Users" />
         <DynamicModal

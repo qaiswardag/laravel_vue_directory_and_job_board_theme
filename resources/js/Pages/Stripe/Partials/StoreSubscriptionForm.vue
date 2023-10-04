@@ -13,17 +13,6 @@ import { useStore } from "vuex";
 import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
-import {
-    Listbox,
-    ListboxButton,
-    ListboxLabel,
-    ListboxOption,
-    ListboxOptions,
-} from "@headlessui/vue";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
-
-import { vueFetch } from "use-lightweight-fetch";
-
 const store = useStore();
 
 const props = defineProps({
@@ -92,15 +81,9 @@ onBeforeMount(() => {
         formType.value = "update";
     }
 });
-
-onMounted(() => {});
 </script>
 
 <template>
-    <template v-if="formSubscription.processing">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
-
     <FormSection @submitted="handleSubmit">
         <template #title> Subscription Form </template>
         <template #main>

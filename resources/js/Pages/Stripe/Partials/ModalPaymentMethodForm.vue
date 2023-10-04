@@ -32,8 +32,8 @@ const elementsStylesCard = {
             },
         },
         invalid: {
-            iconColor: "#FFC7EE",
-            color: "#FFC7EE",
+            iconColor: "#0000",
+            color: "myPrimaryErrorColor",
         },
     },
 };
@@ -65,11 +65,11 @@ const props = defineProps({
 
 const form = useForm({
     user_id: props.user.id,
-    //
     name: props.user.first_name + " " + props.user.last_name,
     email: props.user.email,
-    product_id: null,
-    payment_method: null,
+    country: "",
+    city: "",
+    postal_code: "",
 });
 
 const emit = defineEmits([
@@ -77,7 +77,6 @@ const emit = defineEmits([
     "secondModalPaymentMethodFunctionForm",
 ]);
 
-const cardHolderName = ref("");
 const responseStripeCreateSubscription = ref(null);
 
 const publishableKey =
@@ -96,17 +95,42 @@ const firstButton = function () {
 };
 const secondButton = function () {
     createOrUpdatePayment();
-    emit("secondModalPaymentMethodFunctionForm");
 };
 
 const createOrUpdatePayment = async function () {
+    console.log(`skal kooooom he`);
+    form.post(route("stripe.payment.methods.store"), {
+        preserveScroll: true,
+        onSuccess: () => {
+            console.log(`success`);
+        },
+        onError: () => {},
+        onFinish: () => {},
+    });
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     try {
         responseStripeCreateSubscription.value = await stripe.confirmCardSetup(
             props.intent.client_secret,
             {
                 payment_method: {
                     card: cardElement.value,
-                    billing_details: { name: cardHolderName.value },
+                    billing_details: {
+                        name: form.name,
+                        email: form.email,
+                        address: {
+                            country: form.country,
+                            city: form.city,
+                            postal_code: form.postal_code,
+                        },
+                    },
                 },
             }
         );
@@ -114,18 +138,17 @@ const createOrUpdatePayment = async function () {
 
         if (responseStripeCreateSubscription.value?.setupIntent?.status) {
             firstButton();
+            emit("secondModalPaymentMethodFunctionForm");
         }
     } catch (err) {
-        console.log(
+        console.error(
             `Encountered an error while trying to create a subscription.`,
             err
         );
-        return false;
     }
 };
 onMounted(async () => {
     await nextTick();
-    console.log(`SKAL KOMME HER..`);
     elements.value = stripe.elements({
         clientSecret: props.intent.client_secret,
     });
@@ -136,7 +159,7 @@ onMounted(async () => {
 
 <template>
     <Modal
-        maxWidth="2xl"
+        maxWidth="xl"
         :show="show"
         @close="firstButton"
         minHeight="min-h-[30rem]"
@@ -194,31 +217,26 @@ onMounted(async () => {
                         <InputError :message="form.errors.email" />
                     </div>
 
-                    <div class="py-4" id="card-element"></div>
-                    <p
-                        v-if="
-                            responseStripeCreateSubscription?.setupIntent
-                                ?.status
-                        "
-                        class="text-myPrimarySuccesColor mt-2 mb-0 py-0 self-start"
-                    >
-                        {{
-                            responseStripeCreateSubscription?.setupIntent
-                                ?.status
-                        }}
-                    </p>
-                    <p
-                        class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
-                        v-if="responseStripeCreateSubscription?.error"
-                    >
-                        {{ responseStripeCreateSubscription.error.message }}
-                    </p>
+                    <div class="myInputGroup myPrimaryInput py-4 px-4">
+                        <div class="pt-6 pb-4" id="card-element"></div>
+                        <div
+                            class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
+                            v-if="responseStripeCreateSubscription?.error"
+                        >
+                            {{ responseStripeCreateSubscription.error.message }}
+                        </div>
+                    </div>
+
+                    <div class="myInputGroup">
+                        <InputLabel for="country" value="Country" />
+                        <InputError :message="form.errors.country" />
+                    </div>
                 </div>
             </main>
             <!-- content end -->
         </div>
         <div
-            class="bg-red-50 px-2 py-2 mt-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
+            class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
         >
             <div class="sm:w-3/6 w-full px-2 my-2 flex gap-2 justify-end">
                 <button
@@ -235,7 +253,7 @@ onMounted(async () => {
                     type="button"
                     @click="secondButton"
                 >
-                    Save
+                    Submit
                 </button>
             </div>
         </div>

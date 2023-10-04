@@ -12,13 +12,10 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { Switch } from "@headlessui/vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 const props = defineProps({
     user: Object,
 });
-
-const isLoading = ref(false);
 
 const form = useForm({
     _method: "PUT",
@@ -136,9 +133,6 @@ watch(photoPreview, (newValue) => {
 </script>
 
 <template>
-    <template v-if="isLoading || form.processing">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
     <FormSection @submitted="updateProfileInformation">
         <template #title> Profile Details </template>
 

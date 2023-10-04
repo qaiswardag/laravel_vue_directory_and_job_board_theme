@@ -10,7 +10,6 @@ import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
@@ -33,9 +32,6 @@ import {
     PencilIcon,
 } from "@heroicons/vue/20/solid";
 
-// loading status for props and view
-const isLoaded = ref(false);
-
 // get images
 const {
     handleData: handleGetSubscriptions,
@@ -57,13 +53,6 @@ const getSubscriptions = function () {
 
 onMounted(() => {
     getSubscriptions();
-});
-
-router.on("start", () => {
-    isLoaded.value = true;
-});
-router.on("finish", () => {
-    isLoaded.value = false;
 });
 
 const breadcrumbsLinks = [
@@ -162,9 +151,6 @@ const deletePostForm = useForm({});
 </script>
 
 <template>
-    <template v-if="isLoaded">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
     <LoggedInLayout>
         <Head title="Stores" />
         <DynamicModal
@@ -198,7 +184,20 @@ const deletePostForm = useForm({});
             <p class="myPrimaryParagraph">Looks like there are no stores!</p>
         </template>
 
-        <!-- table start -->
+        <template
+            v-if="
+                fetchedSubscriptions &&
+                fetchedSubscriptions.subscriptions &&
+                Array.isArray(fetchedSubscriptions.subscriptions) &&
+                fetchedSubscriptions.subscriptions.length === 0
+            "
+        >
+            <h1 class="myPrimaryHeaderMessage">No Subscriptions</h1>
+            <p class="myPrimaryParagraph">
+                Looks like there are no subscriptions!
+            </p>
+        </template>
+
         <p class="my-12">
             fetchedSubscriptions: {{ JSON.stringify(fetchedSubscriptions) }}
         </p>

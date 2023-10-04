@@ -14,7 +14,6 @@ import { useStore } from "vuex";
 import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 import {
     Listbox,
@@ -74,7 +73,6 @@ const thirdModalButtonFunction = ref(null);
 
 // // store
 const store = useStore();
-const isLoading = ref(false);
 
 const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
@@ -449,9 +447,6 @@ const categoriesSorted = computed(() => {
 </script>
 
 <template>
-    <template v-if="isLoading || postForm.processing">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
     <FormSection @submitted="handleCreatePost">
         <template #title>Component details</template>
         <template #description> Create a new Component. </template>

@@ -113,7 +113,6 @@ const userTeamsWithoutReaderRole = props.user.all_teams.filter((team) => {
 
 // store
 const store = useStore();
-const isLoading = ref(false);
 
 const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
@@ -921,10 +920,6 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <template v-if="isLoading || postForm.processing">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
-
     <FormSection @submitted="handleCreatePost">
         <template #title>Job details</template>
         <template #description> Create a new Job. </template>

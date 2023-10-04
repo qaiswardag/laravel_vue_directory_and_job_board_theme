@@ -73,9 +73,6 @@ const handleAddImage = function () {
 };
 </script>
 <template>
-    <template v-if="isLoading">
-        <FullScreenSpinner></FullScreenSpinner>
-    </template>
     <div v-if="getBasePrimaryImage !== null">
         <img
             class="object-cover object-center w-full cursor-pointer"
