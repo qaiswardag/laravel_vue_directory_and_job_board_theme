@@ -24,9 +24,9 @@ class StorePaymentMethodsRequest extends FormRequest
         $rules = [
             "name" => ["required", "string", "min:2", "max:255"],
             "email" => ["required", "email", "max:255"],
-            "country" => ["required", "email", "max:255"],
-            "city" => ["required", "email", "max:255"],
-            "postal_code" => ["required", "email", "max:255"],
+            "country" => ["string", "max:255", "nullable"],
+            "city" => ["string", "max:255", "nullable"],
+            "postal_code" => ["string", "max:255", "nullable"],
         ];
 
         return $rules;

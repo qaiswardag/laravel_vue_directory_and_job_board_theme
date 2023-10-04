@@ -231,6 +231,14 @@ onMounted(async () => {
                         <InputLabel for="country" value="Country" />
                         <InputError :message="form.errors.country" />
                     </div>
+                    <div class="myInputGroup">
+                        <InputLabel for="city" value="City" />
+                        <InputError :message="form.errors.city" />
+                    </div>
+                    <div class="myInputGroup">
+                        <InputLabel for="postal_code" value="Postal code" />
+                        <InputError :message="form.errors.postal_code" />
+                    </div>
                 </div>
             </main>
             <!-- content end -->
