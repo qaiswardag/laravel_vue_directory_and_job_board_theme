@@ -18,7 +18,7 @@ const props = defineProps({
     title: {
         required: true,
     },
-    firstButtonTextCardForm: {
+    firstButtonTextModalPaymentMethodForm: {
         required: true,
     },
     show: {
@@ -26,12 +26,20 @@ const props = defineProps({
         default: false,
         required: true,
     },
+
+    // props.intent.client_secret
+    // Exactly, the client_secret is intended for the app or service handling the payment processing
+    // rather than for the end-user. It's a confidential key used for secure communication
+    // between your application and Stripe's servers.
     intent: {
         required: true,
     },
 });
 
-const emit = defineEmits(["firstCardFormFunction"]);
+const emit = defineEmits([
+    "firstModalPaymentMethodFunctionForm",
+    "secondModalPaymentMethodFunctionForm",
+]);
 
 const cardHolderName = ref("");
 const responseStripe = ref(null);
@@ -44,6 +52,16 @@ const stripe = Stripe(publishableKey);
 const elements = ref(null);
 const cardElement = ref(null);
 const appearance = ref(null);
+
+//
+// first button function
+const firstButton = function () {
+    emit("firstModalPaymentMethodFunctionForm");
+};
+const secondButton = function () {
+    createOrUpdatePayment();
+    emit("secondModalPaymentMethodFunctionForm");
+};
 
 const createOrUpdatePayment = async function () {
     try {
@@ -65,35 +83,6 @@ const createOrUpdatePayment = async function () {
         return false;
     }
 };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// first button function
-const firstButton = function () {
-    emit("firstCardFormFunction");
-};
-
 onMounted(async () => {
     await nextTick();
     console.log(`kom her`);
@@ -107,10 +96,10 @@ onMounted(async () => {
 
 <template>
     <Modal
-        maxWidth="5xl"
+        maxWidth="2xl"
         :show="show"
         @close="firstButton"
-        minHeight="min-h-[50rem]"
+        minHeight="min-h-[30rem]"
         maxHeight="max-h-[30rem]"
     >
         <Spinner v-if="false"></Spinner>
@@ -171,18 +160,17 @@ onMounted(async () => {
         >
             <div class="sm:w-3/6 w-full px-2 my-2 flex gap-2 justify-end">
                 <button
-                    v-if="firstButtonTextCardForm"
+                    v-if="firstButtonTextModalPaymentMethodForm"
                     ref="firstButtonRef"
                     class="mySecondaryButton"
                     type="button"
-                    @click="firstButton"
                 >
-                    {{ firstButtonTextCardForm }}
+                    {{ firstButtonTextModalPaymentMethodForm }}
                 </button>
                 <button
-                    @click="createOrUpdatePayment"
                     class="myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor"
                     type="button"
+                    @click="secondButton"
                 >
                     Save
                 </button>

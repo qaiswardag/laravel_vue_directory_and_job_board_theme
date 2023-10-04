@@ -716,7 +716,7 @@ onMounted(() => {
                                                         user.last_name
                                                     )
                                                 "
-                                                class="myPrimaryTag flex items-center gap-1 text-xs"
+                                                class="mySecondaryButton flex items-center gap-1 text-xs"
                                             >
                                                 <PlusIcon
                                                     class="w-4 h-4"

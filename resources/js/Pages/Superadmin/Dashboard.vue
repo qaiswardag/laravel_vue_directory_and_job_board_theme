@@ -33,7 +33,7 @@ const actions = [
         iconBackground: "bg-gray-50",
     },
     {
-        title: "Page BuilderComponents",
+        title: "Page Builder Components",
         href: "admin.components",
         icon: Square3Stack3DIcon,
         iconForeground: "text-myPrimaryBrandColor",

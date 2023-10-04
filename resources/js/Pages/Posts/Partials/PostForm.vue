@@ -17,6 +17,8 @@ import config from "@/utils/config";
 import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
+
 import {
     Listbox,
     ListboxButton,
@@ -95,6 +97,7 @@ const userTeamsWithoutReaderRole = props.user.all_teams.filter((team) => {
 
 // store
 const store = useStore();
+const isLoading = ref(false);
 
 const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
@@ -635,6 +638,10 @@ onBeforeMount(() => {
 </script>
 
 <template>
+    <template v-if="isLoading || postForm.processing">
+        <FullScreenSpinner></FullScreenSpinner>
+    </template>
+
     <FormSection @submitted="handleCreatePost">
         <template #title> Post details</template>
         <template #description> Create a new Post. </template>
@@ -857,7 +864,7 @@ onBeforeMount(() => {
                             postForm.cover_image &&
                             postForm.cover_image?.length !== 0
                         "
-                        class="myPrimaryParagraph italic text-xs py-4"
+                        class="py-4"
                     >
                         Added
                         {{
@@ -954,7 +961,7 @@ onBeforeMount(() => {
                                 postForm.cover_image &&
                                 postForm.cover_image?.length >= 1
                             "
-                            class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
                         >
                             <p
                                 @click="handleUploadCoverImage"
@@ -1021,7 +1028,7 @@ onBeforeMount(() => {
                             postForm.categories &&
                             postForm.categories?.length !== 0
                         "
-                        class="myPrimaryParagraph italic text-xs py-4"
+                        class="py-4"
                     >
                         Added
                         {{ postForm.categories && postForm.categories?.length }}
@@ -1224,7 +1231,7 @@ onBeforeMount(() => {
                             v-if="
                                 postForm.author && postForm.author?.length !== 0
                             "
-                            class="myPrimaryParagraph italic text-xs py-4"
+                            class="py-4"
                         >
                             Added
                             {{ postForm.author && postForm.author?.length }}

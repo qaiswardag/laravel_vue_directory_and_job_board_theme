@@ -3,21 +3,43 @@
 namespace App\Http\Controllers\Api\Internal\LoggedIn\Stripe;
 
 use App\Http\Controllers\Controller;
-use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Laravel\Cashier\Cashier;
+use App\Models\Subscription; // Assuming your Subscription model is in the "Models" namespace inside the "app" directory.
 
-class PaymentMethodsController extends Controller
+class SubscriptionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(User $user)
     {
-        $paymentMethods = $user->paymentMethods();
+        $subscriptionsActive = $user
+            ->subscriptions()
+            ->active()
+            ->get();
+
+        $subscriptionsIncomplete = $user
+            ->subscriptions()
+            ->incomplete()
+            ->get();
+
+        $subscriptionsEnded = $user
+            ->subscriptions()
+            ->ended()
+            ->get();
+
+        $subscriptionsCanceled = $user
+            ->subscriptions()
+            ->canceled()
+            ->get();
 
         return [
-            "paymentMethods" => $paymentMethods,
+            "subscriptionsActive" => $subscriptionsActive,
+            "subscriptionsIncomplete" => $subscriptionsIncomplete,
+            "subscriptionsEnded" => $subscriptionsEnded,
+            "subscriptionsCanceled" => $subscriptionsCanceled,
         ];
     }
 

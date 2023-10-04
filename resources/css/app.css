@@ -191,13 +191,13 @@
     }
 
     .myPrimaryButton {
-        @apply sm:text-base text-sm whitespace-nowrap break-keep font-medium inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor px-5 py-2  text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
+        @apply sm:text-base text-sm whitespace-nowrap break-keep font-medium inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor px-5 py-3  text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2
         focus-visible:ring-2 focus-visible:ring-myPrimaryLinkColor;
     }
 
     .mySecondaryButton {
-        @apply myPrimaryButton bg-gray-300 hover:bg-opacity-90 focus:ring-myPrimaryLightGrayColor text-myPrimaryDarkGrayColor hover:text-white shadow-sm;
+        @apply myPrimaryButton bg-myPrimaryLightGrayColor hover:bg-myPrimaryLightGrayColor hover:bg-opacity-90 focus:ring-myPrimaryLightGrayColor text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor shadow-sm;
     }
 
     .myPrimaryDeleteButton {
@@ -339,7 +339,7 @@
         @apply mb-6;
     }
     .myPrimaryFormOrganizationHeader {
-        @apply myFourthHeader m-0;
+        @apply myFourthHeader m-0 py-4;
     }
 
     .myInputsFamily {
@@ -357,8 +357,11 @@
         @apply my-0 block text-sm font-normal text-myPrimaryDarkGrayColor text-left;
     }
 
+    .myPrimaryFormFocus {
+        @apply focus:ring-4 focus:ring-myPrimaryLinkColor focus:ring-opacity-30 focus:border-transparent;
+    }
     .myPrimaryInput {
-        @apply block text-left bg-white w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3  border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryMediumGrayColor focus:border-transparent;
+        @apply block text-left bg-white w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3  border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none myPrimaryFormFocus;
     }
     .myPrimaryInputReadonly {
         @apply myPrimaryInput bg-gray-50 focus:ring-0 focus:bg-gray-100 focus:border-myPrimaryMediumGrayColor;
@@ -388,7 +391,7 @@
         @apply relative myPrimaryInput w-full;
     }
     .myPrimaryFakeSelect {
-        @apply flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-2 hover:ring-myPrimaryBrandColor focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
+        @apply flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-4 hover:ring-myPrimaryLinkColor hover:ring-opacity-30 focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor;
     }
     .myPrimaryFakeSelectNoHover {
         @apply myPrimaryFakeSelect focus:outline-none focus:border-transparent hover:border-transparent;

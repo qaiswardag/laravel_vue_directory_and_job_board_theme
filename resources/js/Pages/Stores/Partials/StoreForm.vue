@@ -923,7 +923,7 @@ onMounted(() => {
 const pageBuilder = new PageBuilder(store);
 </script>
 <template>
-    <template v-if="isLoading">
+    <template v-if="isLoading || postForm.processing">
         <FullScreenSpinner></FullScreenSpinner>
     </template>
     <PageBuilderModal
@@ -1207,7 +1207,7 @@ const pageBuilder = new PageBuilder(store);
                             postForm.cover_image &&
                             postForm.cover_image?.length !== 0
                         "
-                        class="myPrimaryParagraph italic text-xs py-4"
+                        class="py-4"
                     >
                         Added
                         {{
@@ -1304,7 +1304,7 @@ const pageBuilder = new PageBuilder(store);
                                 postForm.cover_image &&
                                 postForm.cover_image?.length >= 1
                             "
-                            class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
                         >
                             <p
                                 @click="handleUploadCoverImage"
@@ -1363,7 +1363,7 @@ const pageBuilder = new PageBuilder(store);
                 <div>
                     <p
                         v-if="postForm.states && postForm.states?.length !== 0"
-                        class="myPrimaryParagraph italic text-xs py-4"
+                        class="py-4"
                     >
                         Added
                         {{ postForm.states && postForm.states?.length }}
@@ -1464,7 +1464,7 @@ const pageBuilder = new PageBuilder(store);
                             postForm.categories &&
                             postForm.categories?.length !== 0
                         "
-                        class="myPrimaryParagraph italic text-xs py-4"
+                        class="py-4"
                     >
                         Added
                         {{ postForm.categories && postForm.categories?.length }}
@@ -1666,7 +1666,7 @@ const pageBuilder = new PageBuilder(store);
                             v-if="
                                 postForm.author && postForm.author.length !== 0
                             "
-                            class="myPrimaryParagraph italic text-xs py-4"
+                            class="py-4"
                         >
                             Added
                             {{ postForm.author && postForm.author.length }}

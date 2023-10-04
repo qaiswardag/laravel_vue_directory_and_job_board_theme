@@ -2,12 +2,9 @@
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import PostForm from "@/Pages/Posts/Partials/PostForm.vue";
-import PaymentForm from "@/Pages/Profile/Partials/PaymentForm.vue";
+import StoreSubscriptionForm from "@/Pages/Stripe/Partials/StoreSubscriptionForm.vue";
 
 const props = defineProps({
-    team: {
-        required: true,
-    },
     user: {
         required: true,
     },
@@ -21,13 +18,13 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Stores",
+        label: "All Subscriptions",
         route: {
-            name: "team.stores.index",
-            parameters: [props.team.id],
+            name: "stripe.payment.subscription.index",
+            parameters: [props.user.id],
         },
     },
-    { label: "Create Payment" },
+    { label: "Create Subscriptions" },
 ];
 </script>
 
@@ -35,12 +32,15 @@ const breadcrumbsLinks = [
     <LoggedInLayout>
         <Head title="Create Payment" />
         <template #header>
-            <h2 class="myPrimaryMainPageHeader">Create Payment</h2>
+            <h2 class="myPrimaryMainPageHeader">Create Subscriptions</h2>
         </template>
 
         <template #breadcrumbs>
             <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
-        <PaymentForm :team="team" :user="user" :intent="intent"></PaymentForm>
+        <StoreSubscriptionForm
+            :user="user"
+            :intent="intent"
+        ></StoreSubscriptionForm>
     </LoggedInLayout>
 </template>

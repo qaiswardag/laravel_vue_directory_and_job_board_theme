@@ -91,7 +91,7 @@ const navigation = [
         <TransitionRoot as="template" :show="open">
             <Dialog
                 as="div"
-                class="relative z-10"
+                class="relative z-40"
                 @click="$emit('primaryMenuSlideOverButton')"
             >
                 <div class="fixed inset-0" />

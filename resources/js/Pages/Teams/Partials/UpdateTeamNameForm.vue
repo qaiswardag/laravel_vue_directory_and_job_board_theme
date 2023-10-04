@@ -13,6 +13,8 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
+import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
+
 import {
     CheckIcon,
     ChevronUpDownIcon,
@@ -34,6 +36,7 @@ import { onBeforeMount, onMounted } from "vue";
 
 // store
 const store = useStore();
+const isLoading = ref(false);
 
 const props = defineProps({
     team: Object,
@@ -263,6 +266,9 @@ onBeforeMount(() => {
 </script>
 
 <template>
+    <template v-if="isLoading || postForm.processing">
+        <FullScreenSpinner></FullScreenSpinner>
+    </template>
     <FormSection @submitted="handleUpdateTeam" :sidebarArea="true">
         <template #title>
             {{ $page.props.team && $page.props.team.name }}
@@ -398,7 +404,7 @@ onBeforeMount(() => {
                 <div>
                     <p
                         v-if="postForm.logo && postForm.logo?.length !== 0"
-                        class="myPrimaryParagraph italic text-xs py-4"
+                        class="py-4"
                     >
                         Added
                         {{ postForm.logo && postForm.logo?.length }}
@@ -485,7 +491,7 @@ onBeforeMount(() => {
 
                         <div
                             v-if="postForm.logo && postForm.logo?.length >= 1"
-                            class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
                         >
                             <p
                                 @click="handleUploadLogo"
@@ -556,7 +562,7 @@ onBeforeMount(() => {
                             postForm.cover_image &&
                             postForm.cover_image?.length !== 0
                         "
-                        class="myPrimaryParagraph italic text-xs py-4"
+                        class="py-4"
                     >
                         Added
                         {{
@@ -653,7 +659,7 @@ onBeforeMount(() => {
                                 postForm.cover_image &&
                                 postForm.cover_image?.length >= 1
                             "
-                            class="flex items-center justify-between border-t border-gray-200 pt-2 overflow-y-scroll"
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
                         >
                             <p
                                 @click="handleUploadCoverImage"

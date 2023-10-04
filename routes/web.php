@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Internal\LoggedIn\DashboardStatsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
 use App\Http\Controllers\Api\Internal\LoggedIn\PageBuilderComponentsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\PaymentMethodsController;
+use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\SubscriptionController as StripeSubscriptionController;
 use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
@@ -353,7 +354,7 @@ Route::middleware([
 
     // STORE CREATE SUBSCRIPTION
     // STORE CREATE SUBSCRIPTION
-    Route::get("/stripe/payment/methods/{user}/{team}", [
+    Route::get("/stripe/payment/methods/{user}", [
         PaymentMethodsController::class,
         "index",
     ])->name("stripe.payment.methods.index");
@@ -361,22 +362,42 @@ Route::middleware([
     //
     //
 
-    Route::get(
-        // "/team/stores/create/subscription/{user}/{team}/product={product}",
-        "/team/stores/create/subscription/{user}/{team}",
-        [SubscriptionController::class, "create"]
-    )->name("team.stores.create.subscription");
+    Route::get("/stripe/stores/create/subscription/{user}", [
+        SubscriptionController::class,
+        "create",
+    ])->name("team.stores.create.subscription");
 
-    Route::post("/team/stores/store/subscription", [
+    Route::post("/stripe/stores/store/subscription", [
         SubscriptionController::class,
         "store",
     ])->name("team.stores.store.subscription");
+
+    Route::get("/stripe/payment/subscriptions/index/{user}", [
+        SubscriptionController::class,
+        "index",
+    ])->name("stripe.payment.subscription.index");
+
+    //
+    //
+    //
+    //
+    Route::get("/stripe/api/payment/subscriptions/index/{user}", [
+        StripeSubscriptionController::class,
+        "index",
+    ])->name("stripe.api.internal.subscriptions.index");
     // STORE CREATE SUBSCRIPTION
     // STORE CREATE SUBSCRIPTION
     // STORES #END
     // STORES #END
     // STORES #END
     // STORES #END
+
+    // SUBSCRIPTIONS #START
+    // SUBSCRIPTIONS #START
+    // SUBSCRIPTIONS #START
+    // SUBSCRIPTIONS #START
+    // SUBSCRIPTIONS #START
+    // SUBSCRIPTIONS #START
 
     // MEDIA #START
     // MEDIA #START

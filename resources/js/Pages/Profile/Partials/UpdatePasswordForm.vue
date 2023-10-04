@@ -8,9 +8,12 @@ import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
+import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
+
+const isLoading = ref(false);
 
 const form = useForm({
     current_password: "",
@@ -39,6 +42,9 @@ const updatePassword = () => {
 </script>
 
 <template>
+    <template v-if="isLoading || form.processing">
+        <FullScreenSpinner></FullScreenSpinner>
+    </template>
     <FormSection @submitted="updatePassword" :sidebarArea="false">
         <template #title> Update Password </template>
 
