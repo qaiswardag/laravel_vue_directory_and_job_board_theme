@@ -14,6 +14,7 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import { useStore } from "vuex";
 import ModalPaymentMethodForm from "@/Pages/Stripe/Partials/ModalPaymentMethodForm.vue";
+import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 
 import { vueFetch } from "use-lightweight-fetch";
 import { PlusIcon } from "@heroicons/vue/20/solid";
@@ -72,14 +73,11 @@ const handleCreatePaymentMethod = function () {
     showModalPaymentMethodForm.value = true;
 
     firstModalPaymentMethodFunctionForm.value = function () {
-        // handle show modal for unique content
         showModalPaymentMethodForm.value = false;
     };
 
     secondModalPaymentMethodFunctionForm.value = function () {
         fetchPaymentMethods();
-        // handle show modal for unique content
-        showModalPaymentMethodForm.value = false;
     };
 
     // end modal
@@ -91,6 +89,13 @@ onMounted(() => {
 </script>
 
 <template>
+    <template v-if="isLoadingPaymentMethods && !isErrorPaymentMethods">
+        <div class="flex flex-col w-full">
+            <SmallUniversalSpinner
+                class="flex justify-center items-center"
+            ></SmallUniversalSpinner>
+        </div>
+    </template>
     <div>
         <p
             v-if="errorPaymentMethods && !isLoadingPaymentMethods"
@@ -121,9 +126,15 @@ onMounted(() => {
                     fetchedPaymentMethods.paymentMethods.length !== 0
                 "
             >
-                {{ fetchedPaymentMethods.paymentMethods.length }}
-                payment methods
+                {{ fetchedPaymentMethods.paymentMethods.length }} available
+                payment
+                {{
+                    fetchedPaymentMethods.paymentMethods.length === 1
+                        ? "method"
+                        : "methods"
+                }}
             </p>
+
             <div
                 v-if="
                     fetchedPaymentMethods &&
@@ -241,9 +252,10 @@ onMounted(() => {
         </div>
     </div>
     <ModalPaymentMethodForm
-        v-if="firstModalPaymentMethodFunctionForm"
+        v-if="showModalPaymentMethodForm"
         :show="showModalPaymentMethodForm"
         :title="titleModalPaymentMethodForm"
+        :user="user"
         :intent="intent"
         :firstButtonTextModalPaymentMethodForm="
             firstButtonTextModalPaymentMethodForm

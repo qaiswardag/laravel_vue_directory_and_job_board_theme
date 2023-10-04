@@ -23,7 +23,7 @@ class StoreSubscriptionRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            // "payment_method" => ["required", "string", "min:2", "max:255"],
+            "payment_method" => ["required", "string", "min:2", "max:255"],
             "first_name" => ["required", "string", "max:255"],
             "last_name" => ["required", "string", "max:255"],
             "email" => ["required", "email", "max:255"],
@@ -41,7 +41,9 @@ class StoreSubscriptionRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $validator->after(function ($validator) {});
+        $validator->after(function ($validator) {
+            //
+        });
 
         // if validator fails
         if ($validator->fails()) {

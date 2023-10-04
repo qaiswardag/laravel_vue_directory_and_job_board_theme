@@ -15,31 +15,54 @@ class SubscriptionController extends Controller
      */
     public function index(User $user)
     {
-        $subscriptionsActive = $user
-            ->subscriptions()
-            ->active()
-            ->get();
+        $subscriptionsActive = null;
+        $subscriptionsIncomplete = null;
+        $subscriptionsEnded = null;
+        $subscriptionsCanceled = null;
 
-        $subscriptionsIncomplete = $user
-            ->subscriptions()
-            ->incomplete()
-            ->get();
+        $stripeId = $user->stripe_id;
 
-        $subscriptionsEnded = $user
-            ->subscriptions()
-            ->ended()
-            ->get();
+        $stripeCustomer = Cashier::findBillable($stripeId);
 
-        $subscriptionsCanceled = $user
-            ->subscriptions()
-            ->canceled()
-            ->get();
+        $subscriptions = [];
+
+        // TODO: Check for Stripe if user have customer id there.
+        // And set stripe_id to null if it is null in Stripe
+        if (!$stripeCustomer) {
+            $user->update([
+                "stripe_id" => null,
+            ]);
+        } else {
+            $subscriptionsActive = $stripeCustomer
+                ->subscriptions()
+                ->active()
+                ->get();
+
+            $subscriptionsIncomplete = $stripeCustomer
+                ->subscriptions()
+                ->incomplete()
+                ->get();
+
+            $subscriptionsEnded = $stripeCustomer
+                ->subscriptions()
+                ->ended()
+                ->get();
+
+            $subscriptionsCanceled = $stripeCustomer
+                ->subscriptions()
+                ->canceled()
+                ->get();
+
+            $subscriptions = [
+                "subscriptionsActive" => $subscriptionsActive,
+                "subscriptionsIncomplete" => $subscriptionsIncomplete,
+                "subscriptionsEnded" => $subscriptionsEnded,
+                "subscriptionsCanceled" => $subscriptionsCanceled,
+            ];
+        }
 
         return [
-            "subscriptionsActive" => $subscriptionsActive,
-            "subscriptionsIncomplete" => $subscriptionsIncomplete,
-            "subscriptionsEnded" => $subscriptionsEnded,
-            "subscriptionsCanceled" => $subscriptionsCanceled,
+            "subscriptions" => $subscriptions,
         ];
     }
 

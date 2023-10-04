@@ -232,7 +232,7 @@ onMounted(() => {
         maxHeight="max-h-[50rem]"
     >
         <div
-            class="px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
+            class="mb-24 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
             <div
                 class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
@@ -824,7 +824,7 @@ onMounted(() => {
         <!-- content end -->
 
         <div
-            class="bg-gray-100 px-6 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
+            class="bg-red-50 px-2 py-2 mt-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
         >
             <div class="sm:w-3/6 w-full px-2 my-2 flex gap-2 justify-end">
                 <button

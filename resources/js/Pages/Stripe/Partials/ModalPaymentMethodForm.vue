@@ -11,8 +11,32 @@ import Spinner from "@/Components/PageBuilder/Loaders/Spinner.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import { useStore } from "vuex";
+import { Link, router, useForm } from "@inertiajs/vue3";
+import InputError from "@/Components/Forms/InputError.vue";
 
 const store = useStore();
+
+const elementsStylesCard = {
+    style: {
+        base: {
+            color: "#000",
+            fontWeight: "500",
+            fontFamily: "Jost",
+            fontSize: "16px",
+            fontSmoothing: "antialiased",
+            ":-webkit-autofill": {
+                color: "#fce883",
+            },
+            "::placeholder": {
+                color: "#aaa",
+            },
+        },
+        invalid: {
+            iconColor: "#FFC7EE",
+            color: "#FFC7EE",
+        },
+    },
+};
 
 const props = defineProps({
     title: {
@@ -31,9 +55,21 @@ const props = defineProps({
     // Exactly, the client_secret is intended for the app or service handling the payment processing
     // rather than for the end-user. It's a confidential key used for secure communication
     // between your application and Stripe's servers.
+    user: {
+        required: true,
+    },
     intent: {
         required: true,
     },
+});
+
+const form = useForm({
+    user_id: props.user.id,
+    //
+    name: props.user.first_name + " " + props.user.last_name,
+    email: props.user.email,
+    product_id: null,
+    payment_method: null,
 });
 
 const emit = defineEmits([
@@ -42,7 +78,7 @@ const emit = defineEmits([
 ]);
 
 const cardHolderName = ref("");
-const responseStripe = ref(null);
+const responseStripeCreateSubscription = ref(null);
 
 const publishableKey =
     "pk_test_51DBlO9EuESfVmAWo1jIDgROLHxxxCIP7gQhETpMgPvi6qftjbE11vtIMa1EDBbBQww23KmnzueGYsRBfV6BsX3pD00rMtwtsBJ";
@@ -65,7 +101,7 @@ const secondButton = function () {
 
 const createOrUpdatePayment = async function () {
     try {
-        responseStripe.value = await stripe.confirmCardSetup(
+        responseStripeCreateSubscription.value = await stripe.confirmCardSetup(
             props.intent.client_secret,
             {
                 payment_method: {
@@ -74,22 +110,26 @@ const createOrUpdatePayment = async function () {
                 },
             }
         );
+        console.log(`data er:`, responseStripeCreateSubscription.value);
 
-        console.log(`data er:`, responseStripe.value);
-
-        // firstButton();
+        if (responseStripeCreateSubscription.value?.setupIntent?.status) {
+            firstButton();
+        }
     } catch (err) {
-        console.log(`Unable to create:`, err);
+        console.log(
+            `Encountered an error while trying to create a subscription.`,
+            err
+        );
         return false;
     }
 };
 onMounted(async () => {
     await nextTick();
-    console.log(`kom her`);
+    console.log(`SKAL KOMME HER..`);
     elements.value = stripe.elements({
         clientSecret: props.intent.client_secret,
     });
-    cardElement.value = elements.value.create("card");
+    cardElement.value = elements.value.create("card", elementsStylesCard);
     cardElement.value.mount("#card-element");
 });
 </script>
@@ -100,11 +140,10 @@ onMounted(async () => {
         :show="show"
         @close="firstButton"
         minHeight="min-h-[30rem]"
-        maxHeight="max-h-[30rem]"
+        maxHeight="max-h-auto"
     >
-        <Spinner v-if="false"></Spinner>
         <div
-            class="px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
+            class="mb-24 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
             <div
                 class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
@@ -121,42 +160,65 @@ onMounted(async () => {
 
             <!-- content start -->
             <main>
-                <div class="myInputGroup">
-                    <p class="my-4">4000002080000001</p>
-                    <p class="my-4">12/34</p>
-                    <p class="my-4">567</p>
-                    <InputLabel
-                        for="card_holder_name"
-                        value="Cardholder name"
-                    />
-                    <TextInput
-                        placeholder="Cardholder name.."
-                        id="title"
-                        v-model="cardHolderName"
-                        type="text"
-                        class="block w-full mt-1"
-                        autocomplete="off"
-                    />
-                </div>
+                <div class="myInputsOrganization">
+                    <div class="myInputGroup">
+                        <p class="my-4">4000002080000001</p>
+                        <p class="my-4">12/34</p>
+                        <p class="my-4">567</p>
+                        <!-- Email -->
+                        <div class="myInputGroup">
+                            <InputLabel
+                                for="card_holder_name"
+                                value="Cardholder name"
+                            />
+                            <TextInput
+                                placeholder="Cardholder name.."
+                                id="card_holder_name"
+                                v-model="form.name"
+                                type="text"
+                                autocomplete="off"
+                                class="block w-full mt-1"
+                            />
+                            <InputError :message="form.errors.name" />
+                        </div>
+                    </div>
 
-                <div class="my-12" id="card-element"></div>
-                <p
-                    v-if="responseStripe?.setupIntent?.status"
-                    class="text-myPrimarySuccesColor mt-2 mb-0 py-0 self-start"
-                >
-                    {{ responseStripe?.setupIntent?.status }}
-                </p>
-                <p
-                    class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
-                    v-if="responseStripe?.error"
-                >
-                    {{ responseStripe.error.message }}
-                </p>
+                    <div class="myInputGroup">
+                        <InputLabel for="email" value="Email" />
+                        <TextInput
+                            id="email"
+                            v-model="form.email"
+                            type="email"
+                            class="block w-full mt-1"
+                        />
+                        <InputError :message="form.errors.email" />
+                    </div>
+
+                    <div class="py-4" id="card-element"></div>
+                    <p
+                        v-if="
+                            responseStripeCreateSubscription?.setupIntent
+                                ?.status
+                        "
+                        class="text-myPrimarySuccesColor mt-2 mb-0 py-0 self-start"
+                    >
+                        {{
+                            responseStripeCreateSubscription?.setupIntent
+                                ?.status
+                        }}
+                    </p>
+                    <p
+                        class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
+                        v-if="responseStripeCreateSubscription?.error"
+                    >
+                        {{ responseStripeCreateSubscription.error.message }}
+                    </p>
+                </div>
             </main>
             <!-- content end -->
         </div>
         <div
-            class="bg-gray-100 px-6 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
+            class="bg-red-50 px-2 py-2 mt-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
         >
             <div class="sm:w-3/6 w-full px-2 my-2 flex gap-2 justify-end">
                 <button
@@ -164,6 +226,7 @@ onMounted(async () => {
                     ref="firstButtonRef"
                     class="mySecondaryButton"
                     type="button"
+                    @click="firstButton"
                 >
                     {{ firstButtonTextModalPaymentMethodForm }}
                 </button>

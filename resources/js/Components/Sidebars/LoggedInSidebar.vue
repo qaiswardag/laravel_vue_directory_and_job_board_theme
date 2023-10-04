@@ -161,7 +161,8 @@ import {
                 route().current('profile.show') ||
                 route().current('user.profile.update') ||
                 route().current('user.profile.password') ||
-                route().current('user.profile.security')
+                route().current('user.profile.security') ||
+                route().current('stripe.payment.subscription.index')
             "
         >
             <UserIcon class="myMediumIcon"></UserIcon>

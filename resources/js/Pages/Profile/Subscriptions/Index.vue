@@ -66,15 +66,18 @@ router.on("finish", () => {
     isLoaded.value = false;
 });
 
-// const breadcrumbsLinks = [
-//     {
-//         label: "All Stores",
-//         route: {
-//             name: "team.stores.index",
-//             parameters: [props.currentUserTeam.id],
-//         },
-//     },
-// ];
+const breadcrumbsLinks = [
+    {
+        label: "Your Profile",
+        route: {
+            name: "profile.show",
+            parameters: null,
+        },
+    },
+    {
+        label: "Subscriptions",
+    },
+];
 
 // const routesArray = [
 //     {
@@ -187,7 +190,7 @@ const deletePostForm = useForm({});
             <h2 class="myPrimaryMainPageHeader">Subscriptions</h2>
         </template>
         <template #breadcrumbs>
-            <!-- <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs> -->
+            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
         </template>
 
         <template v-if="false && posts && posts.data.length <= 0">

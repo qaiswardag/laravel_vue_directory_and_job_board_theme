@@ -1,6 +1,6 @@
 import { usePage } from "@inertiajs/vue3";
 
-const storeProducts = function (user) {
+const storeSubscriptionPrices = function (user) {
     return [
         {
             name: "Single Store",
@@ -11,6 +11,7 @@ const storeProducts = function (user) {
             },
             price: "$15",
             frequencies: "monthly",
+            billed: "Billed every 3 months",
             title: "Most popular",
             description:
                 "The essentials to provide your best work for clients.",
@@ -30,6 +31,7 @@ const storeProducts = function (user) {
             },
             price: "$30",
             frequencies: "monthly",
+            billed: "Billed every 3 months",
             title: null,
             description:
                 "The essentials to provide your best work for clients.",
@@ -50,6 +52,7 @@ const storeProducts = function (user) {
             },
             price: "$60",
             frequencies: "monthly",
+            billed: "Billed every 3 months",
             title: null,
             description:
                 "A plan that scales with your rapidly growing business.",
@@ -71,6 +74,7 @@ const storeProducts = function (user) {
             },
             price: "$90",
             frequencies: "monthly",
+            billed: "Billed every 3 months",
             title: null,
             description:
                 "Dedicated support and infrastructure for your company.",
@@ -87,4 +91,4 @@ const storeProducts = function (user) {
     ];
 };
 
-export default storeProducts;
+export default storeSubscriptionPrices;

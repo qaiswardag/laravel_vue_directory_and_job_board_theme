@@ -30,12 +30,21 @@ class SubscriptionController extends Controller
      */
     public function create(User $user)
     {
-        $paymentMethods = $user->paymentMethods();
+        $stripeId = $user->stripe_id;
+
+        $stripeCustomer = Cashier::findBillable($stripeId);
+
+        if (!$stripeCustomer) {
+            // dd("IS NOT CUSTOMER", $stripeCustomer);
+            $stripeCustomer = $user->createAsStripeCustomer();
+        }
+
+        $paymentMethods = $stripeCustomer->paymentMethods();
 
         return Inertia::render(
             "Stripe/CreateStoreSubscription/CreateStoreSubscription",
             [
-                "intent" => $user->createSetupIntent(),
+                "intent" => $stripeCustomer->createSetupIntent(),
                 "paymentMethods" => $paymentMethods,
             ]
         );
@@ -69,11 +78,10 @@ class SubscriptionController extends Controller
         //
         //
         //
-        if (!$stripeId) {
+        if (!$stripeCustomer) {
             // dd("IS NOT CUSTOMER", $stripeCustomer);
             $stripeCustomer = $user->createAsStripeCustomer();
         }
-        // dd("IS A CUSTOMER", $stripeCustomer);
 
         try {
             $user->updateStripeCustomer([
@@ -81,7 +89,7 @@ class SubscriptionController extends Controller
                 "email" => $request->email,
             ]);
 
-            $user
+            $stripeCustomer
                 // The first argument passed to the newSubscription method
                 // should be the internal name of the subscription.
                 // This subscription name is only for internal application usage
@@ -104,10 +112,11 @@ class SubscriptionController extends Controller
             Log::error(
                 "Something went wrong creating the subscription. {$exception}"
             );
-            return back()->with(
-                "error",
-                "Something went wrong creating the subscription."
-            );
+
+            return Inertia::render("Error", [
+                "customError" => self::TRY_CATCH_FORM_SUBMISSION_ERROR,
+                "status" => 422,
+            ]);
         }
 
         return redirect()->route("stripe.payment.subscription.index", [

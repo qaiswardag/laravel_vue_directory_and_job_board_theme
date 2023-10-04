@@ -10,7 +10,7 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import SelectPaymentMethod from "@/Pages/Stripe/SelectPaymentMethod.vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import { useStore } from "vuex";
-import storeProducts from "@/utils/pricing/store-subscriptions";
+import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 import {
@@ -59,8 +59,6 @@ const handleSelectProduct = function (product) {
 
 const formSubscription = useForm({
     user_id: props.user.id,
-    //
-
     first_name: props.user.first_name,
     last_name: props.user.last_name,
     email: props.user.email,
@@ -104,8 +102,7 @@ onMounted(() => {});
     </template>
 
     <FormSection @submitted="handleSubmit">
-        <p class="my-12">form er: {{ formSubscription }}</p>
-        <template #title> Payment Form </template>
+        <template #title> Subscription Form </template>
         <template #main>
             <div class="myInputsOrganization">
                 <p class="my-12">intent: {{ intent }}</p>
@@ -188,7 +185,7 @@ onMounted(() => {});
                         <div class="space-y-4">
                             <div
                                 as="template"
-                                v-for="product in storeProducts(
+                                v-for="product in storeSubscriptionPrices(
                                     $page.props.user
                                 )"
                                 :key="product.id"
@@ -225,6 +222,11 @@ onMounted(() => {});
                                                             product.frequencies
                                                         }}</span
                                                     >
+                                                </p>
+                                                <p
+                                                    class="block text-[10px] leading-6 text-gray-600 italic mt-1"
+                                                >
+                                                    {{ product.billed }}
                                                 </p>
                                             </div>
                                         </div>
