@@ -52,7 +52,7 @@ const props = defineProps({
     },
 
     // props.intent.client_secret
-    // Exactly, the client_secret is intended for the app or service handling the payment processing
+    // The client_secret is intended for the app or service handling the payment processing
     // rather than for the end-user. It's a confidential key used for secure communication
     // between your application and Stripe's servers.
     user: {
@@ -94,10 +94,10 @@ const firstButton = function () {
     emit("firstModalPaymentMethodFunctionForm");
 };
 const secondButton = function () {
-    createOrUpdatePayment();
+    validateBillingDetails();
 };
 
-const createOrUpdatePayment = async function () {
+const validateBillingDetails = function () {
     console.log(`skal kooooom he`);
     form.post(route("stripe.payment.methods.store"), {
         preserveScroll: true,
@@ -105,17 +105,13 @@ const createOrUpdatePayment = async function () {
             console.log(`success`);
         },
         onError: () => {},
-        onFinish: () => {},
+        onFinish: () => {
+            // createOrUpdatePayment();
+        },
     });
+};
 
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
+const createOrUpdatePayment = async function () {
     try {
         responseStripeCreateSubscription.value = await stripe.confirmCardSetup(
             props.intent.client_secret,
@@ -185,6 +181,13 @@ onMounted(async () => {
             <main>
                 <div class="myInputsOrganization">
                     <div class="myInputGroup">
+                        <p class="my-4">
+                            <a
+                                href="https://stripe.com/docs/testing"
+                                target="blank"
+                                >Testing Cards</a
+                            >
+                        </p>
                         <p class="my-4">4000002080000001</p>
                         <p class="my-4">12/34</p>
                         <p class="my-4">567</p>
@@ -228,6 +231,9 @@ onMounted(async () => {
                     </div>
 
                     <div class="myInputGroup">
+                        <div class="myPrimaryFormOrganizationHeader">
+                            Billing address
+                        </div>
                         <InputLabel for="country" value="Country" />
                         <InputError :message="form.errors.country" />
                     </div>

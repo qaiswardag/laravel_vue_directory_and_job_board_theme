@@ -21,14 +21,12 @@ class StorePaymentMethodsRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        return [
             "name" => ["required", "string", "min:2", "max:255"],
             "email" => ["required", "email", "max:255"],
-            "country" => ["string", "max:255", "nullable"],
-            "city" => ["string", "max:255", "nullable"],
-            "postal_code" => ["string", "max:255", "nullable"],
+            "country" => ["required", "string", "max:255", "nullable"],
+            "city" => ["required", "string", "max:255", "nullable"],
+            "postal_code" => ["required", "string", "max:255", "nullable"],
         ];
-
-        return $rules;
     }
 }
