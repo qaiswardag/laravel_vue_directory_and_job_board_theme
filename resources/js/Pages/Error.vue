@@ -27,7 +27,7 @@ const title = computed(() => {
 
 const description = computed(() => {
     return {
-        503: "Sorry, we are doing some maintenance. Please check back soon.",
+        503: `Exciting news! We're currently upgrading to a new platform with amazing new features! Get ready for a whole new experience! We'll be back by November 1, 2023!`,
         500: "Whoops, something went wrong on our servers.",
         422: "Sorry, something went wrong with your request.",
         405: "Sorry, this method is not allowed",
@@ -39,41 +39,69 @@ const description = computed(() => {
 const handleBack = function () {
     window.history.back();
 };
+
+const maintains = true;
 </script>
 
 <template>
     <Head title="Error" />
     <div class="relative isolate min-h-screen">
         <img
-            src="https://images.unsplash.com/photo-1545972154-9bb223aac798?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3050&q=80&exp=8&con=-15&sat=-75"
+            src="/brand-images/pink-lady-high-resolution.jpg"
             alt=""
             class="absolute inset-0 -z-10 h-full w-full object-cover object-top"
         />
-        <div class="mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8">
-            <p class="text-base font-normal leading-8 text-white">
-                {{ props.status }}
-            </p>
-            <h1
-                class="mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl"
-            >
-                {{ title }}
-            </h1>
+        <div class="bg-black/20 absolute top-0 left-0 w-full h-full"></div>
+
+        <div
+            class="lg:max-w-3xl flex flex-col gap-2 justify-center items-center mx-auto"
+        >
             <div
-                class="lg:max-w-3xl mt-8 flex flex-col gap-2 justify-center items-center mx-auto"
+                class="mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8 z-20"
             >
-                <p class="myPrimaryParagraph text-white">
-                    {{ description }}
-                    <br />
-                    <br />
-                    {{ customError }}
-                </p>
-                <div class="mt-10 flex justify-center">
-                    <button
-                        @click="handleBack"
-                        class="myPrimaryLink text-white"
+                <div v-if="maintains">
+                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn text-white">
+                        myself fashion &amp; jobs <br />
+                    </h1>
+                    <p
+                        class="myPrimaryParagraph text-lg text-white drop-shadow font-medium mt-8 leading-6"
                     >
-                        <span aria-hidden="true">&larr;</span> Back
-                    </button>
+                        {{ description }}
+                        <br />
+                        Stay tuned and prepare to be amazed!
+                    </p>
+                </div>
+
+                <div v-if="!maintains">
+                    <p class="text-base font-normal leading-8 text-white">
+                        {{ props.status }}
+                    </p>
+                    <h1
+                        class="mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl"
+                    >
+                        {{ title }}
+                    </h1>
+                    <p
+                        class="myPrimaryParagraph text-lg text-white drop-shadow font-medium mt-8 leading-6"
+                    >
+                        {{ description }}
+                        <br />
+                        <br />
+                        Stay tuned and prepare to be amazed!
+                    </p>
+                    <p
+                        class="myPrimaryParagraph text-white drop-shadow font-medium mt-4 leading-6"
+                    >
+                        {{ customError }}
+                    </p>
+                    <div class="mt-10 flex justify-center">
+                        <button
+                            @click="handleBack"
+                            class="myPrimaryLink text-white"
+                        >
+                            <span aria-hidden="true">&larr;</span> Back
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

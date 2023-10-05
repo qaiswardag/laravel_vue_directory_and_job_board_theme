@@ -67,9 +67,9 @@ const form = useForm({
     user_id: props.user.id,
     name: props.user.first_name + " " + props.user.last_name,
     email: props.user.email,
-    country: "",
-    city: "",
-    postal_code: "",
+    country: null,
+    city: null,
+    postal_code: null,
 });
 
 const emit = defineEmits([
