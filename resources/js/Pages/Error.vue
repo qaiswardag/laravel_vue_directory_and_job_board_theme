@@ -85,9 +85,6 @@ const maintains = true;
                         class="myPrimaryParagraph text-lg text-white drop-shadow font-medium mt-8 leading-6"
                     >
                         {{ description }}
-                        <br />
-                        <br />
-                        Stay tuned and prepare to be amazed!
                     </p>
                     <p
                         class="myPrimaryParagraph text-white drop-shadow font-medium mt-4 leading-6"
