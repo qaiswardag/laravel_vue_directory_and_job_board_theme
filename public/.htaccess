@@ -20,6 +20,6 @@
     RewriteRule ^ index.php [L]
     
     # Redirect the request to www from non-www
-    RewriteCond %{HTTP_HOST} ^admin\.myissue\.io [NC]
+    RewriteCond %{HTTP_HOST} !^www\. [NC]
     RewriteRule ^(.*)$ https://www.myself.ae/$1 [L,R=301]
 </IfModule>
