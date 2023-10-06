@@ -49,9 +49,7 @@ return [
         ],
 
         "mailgun" => [
-            "domain" => env("MAILGUN_DOMAIN"),
-            "secret" => env("MAILGUN_SECRET"),
-            "endpoint" => env("MAILGUN_ENDPOINT", "api.eu.mailgun.net"),
+            "transport" => "mailgun",
         ],
 
         "postmark" => [
@@ -90,8 +88,8 @@ return [
     */
 
     "from" => [
-        "address" => env("MAIL_FROM_ADDRESS", "hello@example.com"),
-        "name" => env("MAIL_FROM_NAME", "Example"),
+        "address" => env("MAIL_FROM_ADDRESS", "hello@myself.ae"),
+        "name" => env("MAIL_FROM_NAME", "myself"),
     ],
 
     /*
