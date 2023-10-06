@@ -993,9 +993,7 @@ onBeforeMount(() => {
                                 </LockOpenIcon>
                             </div>
                         </div>
-                        <p
-                            class="myPrimaryParagraph italic py-2 px-2 bg-gray-100 text-xs my-1 rounded-md"
-                        >
+                        <p class="myPrimaryTag italic">
                             Slug: {{ postForm.slug }}
                         </p>
                     </div>
@@ -1124,14 +1122,14 @@ onBeforeMount(() => {
                     class="myPrimaryFakeSelect"
                 >
                     <div class="relative flex items-center w-full py-0 p-0">
-                        <p class="myPrimaryParagraph">
+                        <span>
                             {{
                                 postForm.cover_image &&
                                 postForm.cover_image?.length === 0
                                     ? "Select Cover image"
                                     : "Add Additional Cover Images"
                             }}
-                        </p>
+                        </span>
                     </div>
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
@@ -1264,7 +1262,7 @@ onBeforeMount(() => {
                             </p>
                             <button
                                 type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadCoverImage"
                             >
                                 <PlusIcon
@@ -1287,14 +1285,14 @@ onBeforeMount(() => {
                 <!-- select - start -->
                 <div @click="handleAddCountries" class="myPrimaryFakeSelect">
                     <div class="relative flex items-center w-full py-0 p-0">
-                        <p class="myPrimaryParagraph">
+                        <span>
                             {{
                                 postForm.countries &&
                                 postForm.countries?.length === 0
                                     ? "Select Country"
                                     : "Update Country"
                             }}
-                        </p>
+                        </span>
                     </div>
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
@@ -1352,7 +1350,7 @@ onBeforeMount(() => {
                                 >
                                     <button
                                         type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <GlobeAmericasIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -1392,13 +1390,13 @@ onBeforeMount(() => {
                 <!-- select - start -->
                 <div @click="handleAddStates" class="myPrimaryFakeSelect">
                     <div class="relative flex items-center w-full py-0 p-0">
-                        <p class="myPrimaryParagraph">
+                        <span>
                             {{
                                 postForm.states && postForm.states?.length === 0
                                     ? "Select State"
                                     : "Update State"
                             }}
-                        </p>
+                        </span>
                     </div>
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
@@ -1447,7 +1445,7 @@ onBeforeMount(() => {
                                 >
                                     <button
                                         type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <MapPinIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -1488,14 +1486,14 @@ onBeforeMount(() => {
                 <!-- select - start -->
                 <div @click="handleAddCategories" class="myPrimaryFakeSelect">
                     <div class="relative flex items-center w-full py-0 p-0">
-                        <p class="myPrimaryParagraph">
+                        <span>
                             {{
                                 postForm.categories &&
                                 postForm.categories?.length === 0
                                     ? "Select Category"
                                     : "Update Category"
                             }}
-                        </p>
+                        </span>
                     </div>
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
@@ -1554,7 +1552,7 @@ onBeforeMount(() => {
                                 >
                                     <button
                                         type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <Squares2X2Icon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -1594,14 +1592,14 @@ onBeforeMount(() => {
                 <!-- select - start -->
                 <div @click="handleAddJobTypes" class="myPrimaryFakeSelect">
                     <div class="relative flex items-center w-full py-0 p-0">
-                        <p class="myPrimaryParagraph">
+                        <span>
                             {{
                                 postForm.categories &&
                                 postForm.types?.length === 0
                                     ? "Select Job Type"
                                     : "Update Job Type"
                             }}
-                        </p>
+                        </span>
                     </div>
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
@@ -1650,7 +1648,7 @@ onBeforeMount(() => {
                                 >
                                     <button
                                         type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <NewspaperIcon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -1783,14 +1781,14 @@ onBeforeMount(() => {
                 <div v-if="postForm.show_author === true">
                     <div @click="handleAddAuthor" class="myPrimaryFakeSelect">
                         <div class="relative flex items-center w-full py-0 p-0">
-                            <p class="myPrimaryParagraph">
+                            <span>
                                 {{
                                     postForm.author &&
                                     postForm.author?.length === 0
                                         ? "Select Authors"
                                         : "Update Authors"
                                 }}
-                            </p>
+                            </span>
                         </div>
                         <div
                             class="border-none rounded flex items-center justify-center h-full w-8"

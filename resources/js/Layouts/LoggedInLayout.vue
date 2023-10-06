@@ -182,7 +182,7 @@ const sidebarOpen = ref(false);
         >
             <button
                 type="button"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white md:hidden ml-2"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-2 focus-visible:ring-red-400 md:hidden ml-2"
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>

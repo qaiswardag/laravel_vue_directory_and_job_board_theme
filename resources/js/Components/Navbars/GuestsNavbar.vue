@@ -133,7 +133,7 @@ const notificationsSlideOverButton = function () {
                 <Link :href="route('dashboard')">
                     <button
                         type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
                         <AdjustmentsVerticalIcon
                             class="myMediumIcon"
@@ -167,7 +167,7 @@ const notificationsSlideOverButton = function () {
                     "
                     type="button"
                     @click="handleMenuUserTeamModal"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                 >
                     <div
                         class="h-10 w-10 flex-shrink-0"
@@ -193,7 +193,7 @@ const notificationsSlideOverButton = function () {
                     "
                     @click="handleMenuUserTeamModal"
                     type="button"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                 >
                     <UserIcon class="myMediumIcon" aria-hidden="true" />
                 </button>
@@ -203,7 +203,7 @@ const notificationsSlideOverButton = function () {
                 <button
                     @click="handleNotificationsSlideOver"
                     type="button"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                 >
                     <span class="sr-only">View notifications</span>
                     <BellIcon class="myMediumIcon" aria-hidden="true" />
@@ -213,7 +213,7 @@ const notificationsSlideOverButton = function () {
             <button
                 @click="handlePrimaryMenuSlideOver"
                 type="button"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
                 <span class="sr-only">View Menu</span>
                 <Bars3Icon class="myMediumIcon" aria-hidden="true" />

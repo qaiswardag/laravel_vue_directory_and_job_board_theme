@@ -11,6 +11,7 @@ import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import { parseISO, format } from "date-fns";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
+import UserTag from "@/Components/Users/UserTag.vue";
 
 import {
     RadioGroup,
@@ -514,13 +515,13 @@ onMounted(() => {
             <div class="myScrollButtonContainer">
                 <button
                     @click="handleLeft"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                 >
                     <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
                 </button>
                 <button
                     @click="handleRight"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                 >
                     <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
                 </button>
@@ -535,9 +536,6 @@ onMounted(() => {
                                 </th>
                                 <th scope="col" class="myPrimaryTableTh">
                                     User ID
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Name
                                 </th>
                                 <th scope="col" class="myPrimaryTableTh">
                                     Status
@@ -567,67 +565,16 @@ onMounted(() => {
                                     :key="user.id"
                                 >
                                     <td class="myPrimaryTableTBodyTd">
-                                        <div class="flex items-center gap-2">
-                                            <div
-                                                v-if="
-                                                    user &&
-                                                    user.profile_photo_path
-                                                "
-                                            >
-                                                <div
-                                                    class="h-12 w-12 flex-shrink-0"
-                                                >
-                                                    <img
-                                                        class="object-cover h-12 w-12 rounded-full"
-                                                        :src="`/storage/${user.profile_photo_path}`"
-                                                        :alt="
-                                                            user.first_name +
-                                                            user.last_name
-                                                        "
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                v-if="
-                                                    user &&
-                                                    user.profile_photo_path ===
-                                                        null
-                                                "
-                                            >
-                                                <div
-                                                    class="h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                                >
-                                                    {{
-                                                        user.first_name
-                                                            .charAt(0)
-                                                            .toUpperCase()
-                                                    }}
-                                                    {{
-                                                        user.last_name
-                                                            .charAt(0)
-                                                            .toUpperCase()
-                                                    }}
-                                                </div>
-                                            </div>
-                                            <span
-                                                class="flex flex-col items-left gap-1 myPrimaryParagraph font-medium"
-                                            >
-                                                <span>
-                                                    {{ user.first_name }}
-                                                    {{ user.last_name }}
-                                                </span>
-                                            </span>
-                                        </div>
+                                        <UserTag
+                                            customClass="my-0"
+                                            :user="user"
+                                            :showTeamRole="true"
+                                            :clickable="true"
+                                        ></UserTag>
                                     </td>
 
                                     <td class="myPrimaryTableTBodyTd">
                                         {{ user.id }}
-                                    </td>
-
-                                    <td class="myPrimaryTableTBodyTd">
-                                        {{ user.first_name }}
-                                        {{ user.last_name }}
                                     </td>
 
                                     <td class="myPrimaryTableTBodyTd">
@@ -733,7 +680,7 @@ onMounted(() => {
                                         <button
                                             type="button"
                                             @click="handleEdit(user.id)"
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                         >
                                             <PencilIcon
                                                 class="shrink-0 w-4 h-4 m-2 stroke-2"

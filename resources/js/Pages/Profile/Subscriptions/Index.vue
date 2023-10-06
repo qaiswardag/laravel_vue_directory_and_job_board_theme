@@ -208,13 +208,13 @@ const deletePostForm = useForm({});
             <div class="myScrollButtonContainer">
                 <button
                     @click="handleLeft"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                 >
                     <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
                 </button>
                 <button
                     @click="handleRight"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                 >
                     <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
                 </button>
@@ -546,7 +546,7 @@ const deletePostForm = useForm({});
                                         >
                                             <div>
                                                 <MenuButton
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                 >
                                                     <EllipsisVerticalIcon
                                                         class="mySmallIcon"
@@ -591,7 +591,7 @@ const deletePostForm = useForm({});
                                         <button
                                             type="button"
                                             @click="handleEdit(post.id)"
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                         >
                                             <PencilIcon
                                                 class="shrink-0 w-4 h-4 m-2 stroke-2"

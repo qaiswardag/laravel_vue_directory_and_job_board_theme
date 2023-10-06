@@ -374,13 +374,13 @@ onBeforeMount(() => {
                 <!-- select - start -->
                 <div @click="handleUploadLogo" class="myPrimaryFakeSelect">
                     <div class="relative flex items-center w-full py-0 p-0">
-                        <p class="myPrimaryParagraph">
+                        <span>
                             {{
                                 postForm.logo && postForm.logo?.length === 0
                                     ? "Select Cover image"
                                     : "Add Additional Cover Images"
                             }}
-                        </p>
+                        </span>
                     </div>
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
@@ -497,7 +497,7 @@ onBeforeMount(() => {
                             </p>
                             <button
                                 type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadLogo"
                             >
                                 <PlusIcon
@@ -525,14 +525,14 @@ onBeforeMount(() => {
                     class="myPrimaryFakeSelect"
                 >
                     <div class="relative flex items-center w-full py-0 p-0">
-                        <p class="myPrimaryParagraph">
+                        <span>
                             {{
                                 postForm.cover_image &&
                                 postForm.cover_image?.length === 0
                                     ? "Select Cover image"
                                     : "Add Additional Cover Images"
                             }}
-                        </p>
+                        </span>
                     </div>
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
@@ -665,7 +665,7 @@ onBeforeMount(() => {
                             </p>
                             <button
                                 type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadCoverImage"
                             >
                                 <PlusIcon

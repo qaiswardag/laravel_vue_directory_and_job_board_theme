@@ -50,7 +50,7 @@ const breadcrumbsLinks = [
                 >
                     <div>
                         <span
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@ const breadcrumbsLinks = [
                 >
                     <div>
                         <span
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +168,7 @@ const breadcrumbsLinks = [
                 >
                     <div>
                         <span
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

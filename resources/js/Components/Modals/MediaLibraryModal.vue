@@ -554,7 +554,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                                 "
                                                             >
                                                                 <div
-                                                                    class="myInputsOrganization mt-2 mb-8 pt-4 pr-0 pb-4 pl-0 border-b border-myPrimaryMediumGrayColor rounded-none"
+                                                                    class="mt-2 mb-8 pt-4 pr-0 pb-4 pl-0 border-b border-myPrimaryMediumGrayColor rounded-none"
                                                                 >
                                                                     <InputLabel
                                                                         for="name"

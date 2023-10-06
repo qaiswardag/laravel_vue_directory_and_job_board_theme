@@ -591,14 +591,14 @@ const categoriesSorted = computed(() => {
                 <!-- select - start -->
                 <div @click="handleAddCategories" class="myPrimaryFakeSelect">
                     <div class="relative flex items-center w-full py-0 p-0">
-                        <p class="myPrimaryParagraph">
+                        <span>
                             {{
                                 postForm.categories &&
                                 postForm.categories.length === 0
                                     ? "Select Category"
                                     : "Update Category"
                             }}
-                        </p>
+                        </span>
                     </div>
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
@@ -657,7 +657,7 @@ const categoriesSorted = computed(() => {
                                 >
                                     <button
                                         type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <Squares2X2Icon
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
@@ -703,14 +703,14 @@ const categoriesSorted = computed(() => {
                     class="myPrimaryFakeSelect"
                 >
                     <div class="relative flex items-center w-full py-0 p-0">
-                        <p class="myPrimaryParagraph">
+                        <span>
                             {{
                                 postForm.cover_image &&
                                 postForm.cover_image?.length === 0
                                     ? "Select Cover image"
                                     : "Add Additional Cover Images"
                             }}
-                        </p>
+                        </span>
                     </div>
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
@@ -843,7 +843,7 @@ const categoriesSorted = computed(() => {
                             </p>
                             <button
                                 type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadCoverImage"
                             >
                                 <PlusIcon

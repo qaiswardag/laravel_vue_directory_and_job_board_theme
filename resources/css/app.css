@@ -239,7 +239,7 @@
         @apply relative p-2 border-gray-400 border rounded;
     }
     .myScrollButtonContainer {
-        @apply sticky h-12 top-16 left-0 right-0 flex items-center justify-center myPrimaryGap z-10 bg-gray-100;
+        @apply sticky h-12 top-16 left-0 right-0 flex items-center justify-center myPrimaryGap bg-gray-100;
     }
     .myTableContainer {
         @apply overflow-x-auto myPrimarySection py-0 px-0;
@@ -358,7 +358,7 @@
     }
 
     .myPrimaryFormFocus {
-        @apply focus:ring-4 focus:ring-myPrimaryLinkColor focus:ring-opacity-30 focus:border-transparent;
+        @apply focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:ring-offset-2 focus:border-transparent focus:border focus:border-myPrimaryMediumGrayColor;
     }
     .myPrimaryInput {
         @apply block text-left bg-white w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3  border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none myPrimaryFormFocus;
@@ -368,7 +368,7 @@
     }
 
     .myPrimarySearchInput {
-        @apply myPrimaryInput pl-10;
+        @apply myPrimaryInput pl-10 h-full;
     }
 
     .myPrimaryInputError {
@@ -391,7 +391,7 @@
         @apply relative myPrimaryInput w-full;
     }
     .myPrimaryFakeSelect {
-        @apply flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-4 hover:ring-myPrimaryLinkColor hover:ring-opacity-30 focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor;
+        @apply flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-4 hover:ring-stone-200 focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor;
     }
     .myPrimaryFakeSelectNoHover {
         @apply myPrimaryFakeSelect focus:outline-none focus:border-transparent hover:border-transparent;
@@ -400,9 +400,6 @@
     .myPrimaryColorPreview {
         @apply aspect-square  border border-gray-200 cursor-pointer  min-h-[1.5rem] rounded-sm;
     }
-    /* .compiledCSSS {
-        @apply h-60;
-    } */
 }
 
 /* CSS styles for VueQuill - start */

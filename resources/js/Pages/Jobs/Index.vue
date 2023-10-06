@@ -707,7 +707,7 @@ onMounted(() => {
                                         >
                                             <div>
                                                 <MenuButton
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                 >
                                                     <EllipsisVerticalIcon
                                                         class="shrink-0 h-4 w-4 m-2 stroke-2"
@@ -753,7 +753,7 @@ onMounted(() => {
                                         <button
                                             type="button"
                                             @click="handleEdit(post.id)"
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                         >
                                             <PencilIcon
                                                 class="shrink-0 w-4 h-4 m-2 stroke-2"

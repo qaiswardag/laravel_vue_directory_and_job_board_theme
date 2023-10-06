@@ -93,7 +93,7 @@ const selectedUpdated = function (chosen) {
                 />
             </div>
             <Listbox as="div" v-model="selected">
-                <div class="relative md:min-w-[9rem] min-w-[7rem] z-30">
+                <div class="relative md:min-w-[9rem] min-w-[7rem]">
                     <ListboxButton class="myPrimarySelect">
                         <span class="block truncate">{{ selected }}</span>
                         <span

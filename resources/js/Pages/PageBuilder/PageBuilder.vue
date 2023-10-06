@@ -17,6 +17,7 @@ import {
     XCircleIcon,
     BoltSlashIcon,
     FolderPlusIcon,
+    DevicePhoneMobileIcon,
 } from "@heroicons/vue/24/outline";
 import { useStore } from "vuex";
 import OptionsDropdown from "@/Components/PageBuilder/DropdownsPlusToggles/OptionsDropdown.vue";
@@ -122,6 +123,29 @@ const handleSelectComponent = function (componentObject) {
     store.commit("pageBuilderState/setComponent", componentObject);
 };
 
+const draggableZone = ref(null);
+const showingMobile = ref(false);
+
+const showMobile = function () {
+    showingMobile.value = !showingMobile.value;
+
+    if (showingMobile.value) {
+        draggableZone.value.classList.add("w-1/3");
+        draggableZone.value.classList.add("mx-auto");
+        draggableZone.value.classList.add("border-2");
+        draggableZone.value.classList.add("border-red-400");
+        draggableZone.value.classList.add("p-4");
+        draggableZone.value.classList.add("bg-white");
+    } else {
+        draggableZone.value.classList.remove("w-1/3");
+        draggableZone.value.classList.remove("mx-auto");
+        draggableZone.value.classList.remove("border-2");
+        draggableZone.value.classList.remove("border-red-400");
+        draggableZone.value.classList.remove("p-4");
+        draggableZone.value.classList.remove("bg-white");
+    }
+};
+
 onMounted(async () => {
     pageBuilder.setEventListenersForElements();
 });
@@ -187,7 +211,7 @@ onMounted(async () => {
                             <button
                                 type="button"
                                 @click="handleAddComponent"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <Square3Stack3DIcon
                                     class="mySmallIcon"
@@ -196,9 +220,24 @@ onMounted(async () => {
                             <button
                                 type="button"
                                 @click="handleDesignerPreview"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <EyeIcon class="mySmallIcon"></EyeIcon>
+                            </button>
+                            <button
+                                type="button"
+                                @click="showMobile"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                :class="{
+                                    'bg-myPrimaryLinkColor': showingMobile,
+                                }"
+                            >
+                                <DevicePhoneMobileIcon
+                                    class="mySmallIcon"
+                                    :class="{
+                                        'text-white': showingMobile,
+                                    }"
+                                ></DevicePhoneMobileIcon>
                             </button>
 
                             <button
@@ -210,7 +249,7 @@ onMounted(async () => {
                                         true
                                     )
                                 "
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <Squares2X2Icon
                                     class="mySmallIcon"
@@ -224,19 +263,22 @@ onMounted(async () => {
                     @click="store.commit('pageBuilderState/setComponent', null)"
                     class="p-2 bg-gray-800 overflow-y-auto h-screen"
                 >
-                    <div id="pagebuilder" class="">
-                        <!-- Added Components to DOM # start -->
-                        <div
-                            v-for="component in Array.isArray(getComponents) &&
-                            getComponents"
-                            :key="component"
-                            class="bg-white grow"
-                        >
+                    <div id="pagebuilder">
+                        <div ref="draggableZone">
+                            <!-- Added Components to DOM # start -->
                             <div
-                                @mouseup="handleSelectComponent(component)"
-                                class="relative group"
+                                v-for="component in Array.isArray(
+                                    getComponents
+                                ) && getComponents"
+                                :key="component"
+                                class="bg-white grow"
                             >
-                                <div v-html="component.html_code"></div>
+                                <div
+                                    @mouseup="handleSelectComponent(component)"
+                                    class="relative group"
+                                >
+                                    <div v-html="component.html_code"></div>
+                                </div>
                             </div>
                         </div>
                         <!-- Added Components to DOM # end -->
