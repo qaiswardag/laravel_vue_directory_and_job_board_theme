@@ -16,4 +16,5 @@ class Controller extends BaseController
     const TRY_ANOTHER_ROUTE = "Please try another route.";
     const TRY_CATCH_FORM_SUBMISSION_ERROR = "Oops! Something went wrong with your form submission. Please try again.";
     const TRY_CATCH_LOAD_FORM_ERROR = "Oops! Something went wrong with your form submission. Please try again.";
+    const TRY_CATCH_SENDING_EMAIL_ERROR = "Oops! Something went wrong while sending an email. Please try again.";
 }

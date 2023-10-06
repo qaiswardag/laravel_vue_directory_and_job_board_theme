@@ -22,6 +22,7 @@ const title = computed(() => {
         405: "405: Method Not Allowed",
         404: "404: Page Not Found.",
         403: "403: Forbidden",
+        401: "401: Unauthorized",
     }[props.status];
 });
 
@@ -33,6 +34,7 @@ const description = computed(() => {
         405: "Sorry, this method is not allowed",
         404: "Sorry, the page or content you are looking for could not be found.",
         403: "Sorry, you are forbidden from accessing this page or perform this action.",
+        401: "Sorry, request has not been completed because it lacks valid authentication credentials for the requested resource.",
     }[props.status];
 });
 

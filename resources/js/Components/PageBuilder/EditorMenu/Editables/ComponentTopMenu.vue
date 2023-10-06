@@ -80,7 +80,7 @@ const deleteComponent = function (e) {
         <div class="flex gap-2 items-center justify-center">
             <div
                 @click="deleteComponent()"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
             >
                 <TrashIcon class="mySmallIcon" />
             </div>

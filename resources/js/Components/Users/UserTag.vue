@@ -33,7 +33,7 @@ const props = defineProps({
         class="myPrimaryTag inline-block"
     >
         <div class="flex items-center gap-2">
-            <div v-if="user.profile_photo_path" class="flex-shrink-0">
+            <div v-if="user.profile_photo_path" class="flex-shrink-0 h-8 w-8">
                 <img
                     class="object-cover h-8 w-8 rounded-full"
                     :src="`/storage/${user.profile_photo_path}`"

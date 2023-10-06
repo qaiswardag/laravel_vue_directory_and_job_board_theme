@@ -70,7 +70,7 @@ import {
                 "
                 class="flex items-center justify-center px-2 py-2"
             >
-                <Link :href="route('user.teams.switch')">
+                <Link :href="route('profile.show')">
                     <p class="myPrimaryParagraph font-medium">
                         {{ $page.props.currentUserTeam?.name }}
                     </p>
@@ -80,7 +80,7 @@ import {
             <div
                 class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
             >
-                <Link :href="route('user.teams.switch')">
+                <Link :href="route('profile.show')">
                     <UserTag
                         :user="$page.props.user"
                         :showTeamRole="true"
@@ -95,7 +95,7 @@ import {
             v-if="!$page.props.user.current_team"
             class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
         >
-            <Link :href="route('user.teams.switch')">
+            <Link :href="route('user.show')">
                 <UserTag
                     :user="$page.props.user"
                     :showTeamRole="true"

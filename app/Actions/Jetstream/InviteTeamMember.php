@@ -43,9 +43,7 @@ class InviteTeamMember implements InvitesTeamMembers
         try {
             Mail::to($email)->send(new TeamInvitation($invitation));
         } catch (Exception $e) {
-            Log::error(
-                "Something went wrong while sending an email. {$e->getMessage()}"
-            );
+            Log::error("Something went wrong while sending an email. {$e}");
         }
     }
 
