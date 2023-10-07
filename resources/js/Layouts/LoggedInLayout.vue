@@ -72,7 +72,7 @@ const sidebarOpen = ref(false);
 </script>
 
 <template>
-    <FullScreenSpinner v-if="isDOMLoaded"></FullScreenSpinner>
+    <FullScreenSpinner v-if="true || isDOMLoaded"></FullScreenSpinner>
 
     <Flash
         v-show="shouldShowFlash"

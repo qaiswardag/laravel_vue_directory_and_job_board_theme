@@ -128,19 +128,24 @@ const showingMobile = ref(false);
 
 const showMobile = function () {
     showingMobile.value = !showingMobile.value;
-
-    if (showingMobile.value) {
+    if (
+        showingMobile.value &&
+        Array.isArray(getComponents.value) &&
+        getComponents.value.length !== 0
+    ) {
         draggableZone.value.classList.add("w-1/3");
         draggableZone.value.classList.add("mx-auto");
         draggableZone.value.classList.add("border-2");
-        draggableZone.value.classList.add("border-red-400");
+        draggableZone.value.classList.add("rounded-lg");
+        draggableZone.value.classList.add("border-gray-600");
         draggableZone.value.classList.add("p-4");
         draggableZone.value.classList.add("bg-white");
     } else {
         draggableZone.value.classList.remove("w-1/3");
         draggableZone.value.classList.remove("mx-auto");
         draggableZone.value.classList.remove("border-2");
-        draggableZone.value.classList.remove("border-red-400");
+        draggableZone.value.classList.remove("rounded-lg");
+        draggableZone.value.classList.remove("border-gray-600");
         draggableZone.value.classList.remove("p-4");
         draggableZone.value.classList.remove("bg-white");
     }
@@ -261,7 +266,7 @@ onMounted(async () => {
 
                 <div
                     @click="store.commit('pageBuilderState/setComponent', null)"
-                    class="p-2 bg-gray-800 overflow-y-auto h-screen"
+                    class="p-2 overflow-y-auto h-screen"
                 >
                     <div id="pagebuilder">
                         <div ref="draggableZone">
@@ -364,7 +369,7 @@ onMounted(async () => {
     height: 20px;
     background-color: rgb(185, 16, 16);
     border-radius: 50%;
-    z-index: 1000;
+    z-index: 10;
 }
 
 #pagebuilder [selected]::before {

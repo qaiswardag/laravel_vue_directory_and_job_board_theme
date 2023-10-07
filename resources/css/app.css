@@ -84,7 +84,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryTag {
-        @apply myPrimaryParagraph bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs font-medium shadow-sm;
+        @apply myPrimaryParagraph break-all	bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs font-medium shadow-sm;
     }
     /*
     |--------------------------------------------------------------------------

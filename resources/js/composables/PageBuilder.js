@@ -158,7 +158,7 @@ class PageBuilder {
         // Add padding to DIV
         if (element.tagName === "DIV") {
             if (element.classList.length === 0) {
-                element.classList.add("p-2");
+                // element.classList.add("p-2");
             }
         }
     }
@@ -182,23 +182,6 @@ class PageBuilder {
 
             divWrapper.appendChild(element);
         }
-
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        // if (element.tagName === "IMG") {
-        //     const divWrapper = document.createElement("div");
-
-        //     divWrapper.classList.add("p-2");
-
-        //     element.parentNode.insertBefore(divWrapper, element);
-
-        //     divWrapper.appendChild(element);
-        // }
     }
 
     #handleElementClick = (e, element) => {
