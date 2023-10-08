@@ -18,6 +18,7 @@ import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vu
 
 import { vueFetch } from "use-lightweight-fetch";
 import { PlusIcon } from "@heroicons/vue/20/solid";
+import { TrashIcon } from "@heroicons/vue/24/outline";
 
 const store = useStore();
 
@@ -86,6 +87,75 @@ const handleCreatePaymentMethod = function () {
     // end modal
 };
 
+const modalShowDeletePaymentMethod = ref(false);
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
+const handleDeletePaymentMethod = function (method) {
+    console.log(`delete this:`, method);
+
+    //
+    //
+    //
+    modalShowDeletePaymentMethod.value = true;
+
+    // set modal standards
+    typeModal.value = "delete";
+    gridColumnModal.value = 3;
+    titleModal.value = `Delete payment method?`;
+    descriptionModal.value = `Are you sure you want to delete this payment method?`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Delete";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowDeletePaymentMethod.value = false;
+    };
+    // handle click
+    // secondModalButtonFunction.value = function () {
+    //     // handle show modal for unique content
+    //     modalShowDeletePaymentMethod.value = false;
+    // };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        deletePost(method);
+    };
+    // end modal
+};
+
+const deletePaymentMethodForm = useForm({});
+
+//
+//
+//
+// form action
+const deletePost = (method) => {
+    deletePaymentMethodForm.delete(
+        route("stripe.payment.methods.destroy", [method.id]),
+        {
+            preserveScroll: true,
+            onSuccess: () => (modalShowDeletePaymentMethod.value = false),
+            onError: (err) => {},
+            onFinish: (log) => {
+                modalShowDeletePaymentMethod.value = false;
+                fetchPaymentMethods();
+            },
+        }
+    );
+};
 onMounted(() => {
     fetchPaymentMethods();
 });
@@ -99,6 +169,24 @@ onMounted(() => {
             ></SmallUniversalSpinner>
         </div>
     </template>
+    <DynamicModal
+        :show="modalShowDeletePaymentMethod"
+        :type="typeModal"
+        :disabled="deletePaymentMethodForm.processing"
+        disabledWhichButton="thirdButton"
+        :gridColumnAmount="gridColumnModal"
+        :title="titleModal"
+        :description="descriptionModal"
+        :firstButtonText="firstButtonModal"
+        :secondButtonText="secondButtonModal"
+        :thirdButtonText="thirdButtonModal"
+        @firstModalButtonFunction="firstModalButtonFunction"
+        @secondModalButtonFunction="secondModalButtonFunction"
+        @thirdModalButtonFunction="thirdModalButtonFunction"
+    >
+        <header></header>
+        <main></main>
+    </DynamicModal>
     <div>
         <p
             v-if="errorPaymentMethods && !isLoadingPaymentMethods"
@@ -157,74 +245,97 @@ onMounted(() => {
                             :key="paymentMethod.id"
                         >
                             <div
-                                class="border border-transparent hover:border-myPrimaryLinkColor border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-myPrimaryLinkColor bg-opacity-5"
+                                class="flex flex-col gap-2 border border-transparent hover:border-myPrimaryLinkColor border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-red-50"
                             >
-                                <div class="flex items-center">
-                                    <span class="flex flex-col text-sm">
-                                        <div
-                                            as="span"
-                                            class="font-medium text-gray-900 mb-4"
-                                        >
-                                            {{
-                                                paymentMethod.card?.brand?.toUpperCase()
-                                            }}
-                                        </div>
-                                        <div
-                                            as="span"
-                                            class="text-gray-500 flex flex-col gap-2"
-                                        >
-                                            <p>
-                                                **** **** ****
-                                                {{ paymentMethod.card?.last4 }}
-                                            </p>
-                                            <p class="block sm:inline">
-                                                Name:
-                                                {{
-                                                    paymentMethod
-                                                        .billing_details?.name
-                                                }}
-                                            </p>
-                                            <p class="block sm:inline">
-                                                Country:
-                                                {{
-                                                    paymentMethod.card?.country
-                                                }}
-                                            </p>
-                                        </div>
-                                    </span>
-                                </div>
-
                                 <div>
+                                    <div class="flex items-center">
+                                        <span class="flex flex-col text-sm">
+                                            <div
+                                                as="span"
+                                                class="font-medium text-gray-900 mb-4"
+                                            >
+                                                {{
+                                                    paymentMethod.card?.brand?.toUpperCase()
+                                                }}
+                                            </div>
+                                            <div
+                                                as="span"
+                                                class="text-gray-500 flex flex-col gap-2"
+                                            >
+                                                <p>
+                                                    **** **** ****
+                                                    {{
+                                                        paymentMethod.card
+                                                            ?.last4
+                                                    }}
+                                                </p>
+                                                <p class="block sm:inline">
+                                                    Name:
+                                                    {{
+                                                        paymentMethod
+                                                            .billing_details
+                                                            ?.name
+                                                    }}
+                                                </p>
+                                                <p class="block sm:inline">
+                                                    Country:
+                                                    {{
+                                                        paymentMethod.card
+                                                            ?.country
+                                                    }}
+                                                </p>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex gap-2 justify-between items-start border-t border-gray-200 pt-2"
+                                >
                                     <button
-                                        class="myPrimaryTag transition bg-white mt-0"
-                                        v-if="
-                                            selectedMethod?.id !==
-                                            paymentMethod.id
-                                        "
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                         type="button"
                                         @click="
-                                            handleSelectPaymentMethod(
+                                            handleDeletePaymentMethod(
                                                 paymentMethod
                                             )
                                         "
                                     >
-                                        <span> Select </span>
+                                        <TrashIcon
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        ></TrashIcon>
                                     </button>
-                                    <button
-                                        class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
-                                        v-if="
-                                            selectedMethod?.id ===
-                                            paymentMethod.id
-                                        "
-                                        type="button"
-                                        @click="
-                                            handleSelectPaymentMethod(
-                                                paymentMethod
-                                            )
-                                        "
-                                    >
-                                        <span> Selected</span>
-                                    </button>
+                                    <div>
+                                        <button
+                                            class="myPrimaryTag transition bg-white mt-0"
+                                            v-if="
+                                                selectedMethod?.id !==
+                                                paymentMethod.id
+                                            "
+                                            type="button"
+                                            @click="
+                                                handleSelectPaymentMethod(
+                                                    paymentMethod
+                                                )
+                                            "
+                                        >
+                                            <span> Select </span>
+                                        </button>
+                                        <button
+                                            class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
+                                            v-if="
+                                                selectedMethod?.id ===
+                                                paymentMethod.id
+                                            "
+                                            type="button"
+                                            @click="
+                                                handleSelectPaymentMethod(
+                                                    paymentMethod
+                                                )
+                                            "
+                                        >
+                                            <span> Selected</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

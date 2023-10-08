@@ -176,7 +176,7 @@ onBeforeMount(() => {
                                 :key="product.id"
                             >
                                 <div
-                                    class="border border-transparent hover:border-myPrimaryLinkColor border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-myPrimaryLinkColor bg-opacity-5"
+                                    class="border border-transparent hover:border-myPrimaryLinkColor border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-red-50"
                                 >
                                     <div class="flex items-center">
                                         <div class="flex flex-col text-sm">

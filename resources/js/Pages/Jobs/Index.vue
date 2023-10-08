@@ -227,7 +227,6 @@ onMounted(() => {
                 @thirdModalButtonFunction="thirdModalButtonFunction"
             >
                 <header></header>
-
                 <main></main>
             </DynamicModal>
             <template #header>

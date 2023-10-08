@@ -364,6 +364,11 @@ Route::middleware([
         UserPaymentMethodsController::class,
         "store",
     ])->name("stripe.payment.methods.store");
+
+    Route::delete("/stripe/payment/methods/destroy/{id}", [
+        UserPaymentMethodsController::class,
+        "destroy",
+    ])->name("stripe.payment.methods.destroy");
     //
     //
     //

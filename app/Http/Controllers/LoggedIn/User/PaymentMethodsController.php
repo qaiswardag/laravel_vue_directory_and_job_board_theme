@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\User\StorePaymentMethodsRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Cashier\Cashier;
 
 class PaymentMethodsController extends Controller
 {
@@ -60,8 +62,14 @@ class PaymentMethodsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($paymentMethodId)
     {
-        //
+        $user = Auth::user();
+
+        $stripeId = $user->stripe_id;
+
+        $stripeCustomer = Cashier::findBillable($stripeId);
+
+        $stripeCustomer->deletePaymentMethod($paymentMethodId);
     }
 }
