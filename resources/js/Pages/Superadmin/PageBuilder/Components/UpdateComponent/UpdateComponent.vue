@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import ComponentForm from "@/Pages/Superadmin/PageBuilder/Components/Partials/ComponentForm.vue";
@@ -34,21 +35,23 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Update Component" />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Update Component</h2>
-        </template>
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Update Component" />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Update Component</h2>
+            </template>
 
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
-        <ComponentForm
-            :user="user"
-            :currentUserTeam="currentUserTeam"
-            :post="post"
-            :categories="categories"
-            :coverImages="coverImages"
-        ></ComponentForm>
-    </LoggedInLayout>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
+            <ComponentForm
+                :user="user"
+                :currentUserTeam="currentUserTeam"
+                :post="post"
+                :categories="categories"
+                :coverImages="coverImages"
+            ></ComponentForm>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

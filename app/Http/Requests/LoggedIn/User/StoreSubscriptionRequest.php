@@ -41,9 +41,7 @@ class StoreSubscriptionRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $validator->after(function ($validator) {
-            //
-        });
+        $validator->after(function ($validator) {});
 
         // if validator fails
         if ($validator->fails()) {

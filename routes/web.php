@@ -368,17 +368,17 @@ Route::middleware([
     //
     //
 
-    Route::get("/stripe/stores/create/subscription/{user}", [
+    Route::get("/stripe/stores/create/subscription", [
         SubscriptionController::class,
         "create",
-    ])->name("team.stores.create.subscription");
+    ])->name("stripe.stores.create.subscription");
 
     Route::post("/stripe/stores/store/subscription", [
         SubscriptionController::class,
         "store",
-    ])->name("team.stores.store.subscription");
+    ])->name("stripe.stores.store.subscription");
 
-    Route::get("/stripe/payment/subscriptions/index/{user}", [
+    Route::get("/stripe/payment/subscriptions/index", [
         SubscriptionController::class,
         "index",
     ])->name("stripe.payment.subscription.index");

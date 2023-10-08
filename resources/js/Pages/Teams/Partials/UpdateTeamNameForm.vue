@@ -13,7 +13,6 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 import {
     CheckIcon,

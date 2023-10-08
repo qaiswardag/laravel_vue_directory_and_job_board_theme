@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import DeleteUserForm from "@/Pages/Profile/Partials/DeleteUserForm.vue";
 import LogoutOtherBrowserSessionsForm from "@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue";
@@ -31,23 +32,27 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Profile Security" />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Profile Security</h2>
-        </template>
-        <template #description> Profile Security </template>
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Profile Security" />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Profile Security</h2>
+            </template>
+            <template #description> Profile Security </template>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
 
-        <LogoutOtherBrowserSessionsForm
-            :sessions="sessions"
-            :confirmsTwoFactorAuthentication="confirmsTwoFactorAuthentication"
-        />
-        <SectionBorder />
-        <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
-            <DeleteUserForm />
-        </template>
-    </LoggedInLayout>
+            <LogoutOtherBrowserSessionsForm
+                :sessions="sessions"
+                :confirmsTwoFactorAuthentication="
+                    confirmsTwoFactorAuthentication
+                "
+            />
+            <SectionBorder />
+            <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
+                <DeleteUserForm />
+            </template>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

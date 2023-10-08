@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import PostForm from "@/Pages/Posts/Partials/PostForm.vue";
@@ -28,19 +29,21 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Create Post" />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Create a New Post</h2>
-        </template>
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Create Post" />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Create a New Post</h2>
+            </template>
 
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
-        <PostForm
-            :currentUserTeam="currentUserTeam"
-            :currentUserTeamRole="currentUserTeamRole"
-            :user="user"
-        ></PostForm>
-    </LoggedInLayout>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
+            <PostForm
+                :currentUserTeam="currentUserTeam"
+                :currentUserTeamRole="currentUserTeamRole"
+                :user="user"
+            ></PostForm>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

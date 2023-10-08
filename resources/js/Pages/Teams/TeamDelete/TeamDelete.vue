@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import DeleteTeamForm from "@/Pages/Teams/Partials/DeleteTeamForm.vue";
 import { router } from "@inertiajs/vue3";
@@ -25,18 +26,20 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Delete Team" />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Delete Team</h2>
-        </template>
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Delete Team" />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Delete Team</h2>
+            </template>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
 
-        <div v-if="team.owner !== null && team.owner !== undefined">
-            <DeleteTeamForm class="mt-10 sm:mt-0" :team="team">
-            </DeleteTeamForm>
-        </div>
-    </LoggedInLayout>
+            <div v-if="team.owner !== null && team.owner !== undefined">
+                <DeleteTeamForm class="mt-10 sm:mt-0" :team="team">
+                </DeleteTeamForm>
+            </div>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Laravel\Cashier\Cashier;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Exceptions\IncompletePayment;
 use Stripe\Customer;
@@ -30,10 +31,13 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(User $user)
+    public function create()
     {
+        $user = Auth::user();
+
         $name = $user->first_name . " " . $user->last_name;
         $email = $user->email;
+        $publishableKey = config("services.stripe.key");
 
         $intent = null;
         $paymentMethods = null;
@@ -81,6 +85,7 @@ class SubscriptionController extends Controller
             [
                 "intent" => $intent,
                 "paymentMethods" => $paymentMethods,
+                "publishableKey" => $publishableKey,
             ]
         );
     }

@@ -332,14 +332,14 @@
     }
 
     .myInputsOrganization {
-        @apply px-4 pt-8 pb-8 bg-white rounded border border-gray-100;
+        @apply px-4 pt-4 pb-4 bg-white rounded border border-gray-200;
     }
 
     .myPrimaryFormOrganizationHeaderDescriptionSection {
-        @apply mb-6;
+        @apply mb-4;
     }
     .myPrimaryFormOrganizationHeader {
-        @apply myFourthHeader m-0 py-4;
+        @apply myFourthHeader m-0 pt-4;
     }
 
     .myInputsFamily {
@@ -358,10 +358,10 @@
     }
 
     .myPrimaryFormFocus {
-        @apply focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:ring-offset-2 focus:border-transparent focus:border focus:border-myPrimaryMediumGrayColor;
+        @apply focus:ring-4 focus:ring-purple-500 focus:ring-opacity-20 focus:ring-offset-2  focus:border focus:border-gray-200;
     }
     .myPrimaryInput {
-        @apply block text-left bg-white w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3  border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none myPrimaryFormFocus;
+        @apply block pr-8 text-left bg-white w-full sm:text-sm font-normal text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3  border border-gray-200 shadow-sm focus:outline-none myPrimaryFormFocus;
     }
     .myPrimaryInputReadonly {
         @apply myPrimaryInput bg-gray-50 focus:ring-0 focus:bg-gray-100 focus:border-myPrimaryMediumGrayColor;
@@ -391,7 +391,7 @@
         @apply relative myPrimaryInput w-full;
     }
     .myPrimaryFakeSelect {
-        @apply flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-4 hover:ring-stone-200 focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor;
+        @apply hover:ring-opacity-20 hover:ring-purple-500 border border-gray-200 flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-4 rounded-md;
     }
     .myPrimaryFakeSelectNoHover {
         @apply myPrimaryFakeSelect focus:outline-none focus:border-transparent hover:border-transparent;

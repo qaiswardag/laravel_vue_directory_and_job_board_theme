@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import StoreForm from "@/Pages/Stores/Partials/StoreForm.vue";
@@ -40,22 +41,24 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Update Store" />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Update Store</h2>
-        </template>
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
-        <StoreForm
-            :currentUserTeam="currentUserTeam"
-            :user="user"
-            :post="post"
-            :postAuthor="postAuthor"
-            :categories="categories"
-            :states="states"
-            :coverImages="coverImages"
-        ></StoreForm>
-    </LoggedInLayout>
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Update Store" />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Update Store</h2>
+            </template>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
+            <StoreForm
+                :currentUserTeam="currentUserTeam"
+                :user="user"
+                :post="post"
+                :postAuthor="postAuthor"
+                :categories="categories"
+                :states="states"
+                :coverImages="coverImages"
+            ></StoreForm>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import JobForm from "@/Pages/Jobs/Partials/JobForm.vue";
@@ -28,19 +29,21 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Create Job" />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Create a New Job</h2>
-        </template>
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Create Job" />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Create a New Job</h2>
+            </template>
 
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
-        <JobForm
-            :currentUserTeam="currentUserTeam"
-            :currentUserTeamRole="currentUserTeamRole"
-            :user="user"
-        ></JobForm>
-    </LoggedInLayout>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
+            <JobForm
+                :currentUserTeam="currentUserTeam"
+                :currentUserTeamRole="currentUserTeamRole"
+                :user="user"
+            ></JobForm>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

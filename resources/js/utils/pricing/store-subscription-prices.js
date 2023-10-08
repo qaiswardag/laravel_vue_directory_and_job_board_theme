@@ -6,8 +6,8 @@ const storeSubscriptionPrices = function (user) {
             name: "Single Store",
             id: "single_store",
             route: {
-                name: "team.stores.create.subscription",
-                parameters: [user],
+                name: "stripe.stores.create.subscription",
+                parameters: null,
             },
             price: "$15",
             frequencies: "monthly",

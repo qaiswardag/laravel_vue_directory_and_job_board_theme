@@ -10,7 +10,6 @@ import AvatarCardCenterSmall from "@/Components/Avatars/AvatarCardCenterSmall.vu
 import ActionMessage from "@/Components/Actions/ActionMessage.vue";
 import { Switch } from "@headlessui/vue";
 import { ref } from "@vue/reactivity";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 const form = useForm({
     name: "",

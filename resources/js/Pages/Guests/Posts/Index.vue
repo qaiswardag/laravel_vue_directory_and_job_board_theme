@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
@@ -281,79 +282,83 @@ const posts = [
 //
 </script>
 <template>
-    <GuestsLayout>
-        <Head title="Blog" />
-        <template #header>
-            <div class="myPrimaryMainPageHeaderParagraph">
-                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Blog</h1>
-                <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Team Management capabilities, Blog, and a beautiful Media
-                    Library
-                </p>
-            </div>
-        </template>
-
-        <FullWidthElement :descriptionArea="true" class="bg-gray-50">
-            <template #title>Latest Articles</template>
-            <template #description>
-                Minimalist Admin Panel empowered with advanced Team Management
-                capabilities, Blog, and a beautiful Media Library. Offers
-                control and efficiency. Let users and teams elevate their
-                administrative abilities to new heights. Designed to streamline
-                operations and enhance productivity.
+    <MainLayout>
+        <GuestsLayout>
+            <Head title="Blog" />
+            <template #header>
+                <div class="myPrimaryMainPageHeaderParagraph">
+                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Blog</h1>
+                    <p class="myPrimaryMainPageParagraphNotLoggedIn">
+                        Team Management capabilities, Blog, and a beautiful
+                        Media Library
+                    </p>
+                </div>
             </template>
-            <template #content>
-                <ul
-                    role="list"
-                    class="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-y-12 gap-x-4"
-                >
-                    <li
-                        v-for="post in posts"
-                        :key="post.id"
-                        class="whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-12"
+
+            <FullWidthElement :descriptionArea="true" class="bg-gray-50">
+                <template #title>Latest Articles</template>
+                <template #description>
+                    Minimalist Admin Panel empowered with advanced Team
+                    Management capabilities, Blog, and a beautiful Media
+                    Library. Offers control and efficiency. Let users and teams
+                    elevate their administrative abilities to new heights.
+                    Designed to streamline operations and enhance productivity.
+                </template>
+                <template #content>
+                    <ul
+                        role="list"
+                        class="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-y-12 gap-x-4"
                     >
-                        <img
-                            v-if="post.cover_image !== null"
-                            :src="`/app-images/blog/${post.cover_image}`"
-                            :alt="post.title"
-                            class="pointer-events-none object-cover group-hover:opacity-75 cursor-pointer"
-                        />
+                        <li
+                            v-for="post in posts"
+                            :key="post.id"
+                            class="whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-12"
+                        >
+                            <img
+                                v-if="post.cover_image !== null"
+                                :src="`/app-images/blog/${post.cover_image}`"
+                                :alt="post.title"
+                                class="pointer-events-none object-cover group-hover:opacity-75 cursor-pointer"
+                            />
 
-                        <div class="px-2 pb-2 mt-2">
-                            <ul
-                                class="flex flex-wrap gap-y-0 gap-x-2 items-center"
-                            >
-                                <li
-                                    v-for="category in post.categories"
-                                    :key="category"
-                                    class="myPrimaryParagraph leading-4 font-medium cursor-pointer flex-none"
+                            <div class="px-2 pb-2 mt-2">
+                                <ul
+                                    class="flex flex-wrap gap-y-0 gap-x-2 items-center"
                                 >
-                                    <span class="text-[10px] uppercase">
-                                        {{ category }}
-                                    </span>
-                                </li>
-                            </ul>
-                            <p class="myPrimaryParagraph font-medium mt-2 mb-2">
-                                {{ post.title }}
-                            </p>
-                            <p class="myPrimaryParagraph text-xs">
-                                {{ post.description.slice(0, 55) }}..
-                            </p>
-                            <p
-                                class="myPrimaryParagraph font-medium mt-2 mb-2 text-[10px] text-myPrimaryMediumGrayColor"
-                            >
-                                Updated:
-                                {{
-                                    format(
-                                        parseISO("2023-06-03 21:10:29"),
-                                        "dd/MM/yyyy HH:mm"
-                                    )
-                                }}
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </template>
-        </FullWidthElement>
-    </GuestsLayout>
+                                    <li
+                                        v-for="category in post.categories"
+                                        :key="category"
+                                        class="myPrimaryParagraph leading-4 font-medium cursor-pointer flex-none"
+                                    >
+                                        <span class="text-[10px] uppercase">
+                                            {{ category }}
+                                        </span>
+                                    </li>
+                                </ul>
+                                <p
+                                    class="myPrimaryParagraph font-medium mt-2 mb-2"
+                                >
+                                    {{ post.title }}
+                                </p>
+                                <p class="myPrimaryParagraph text-xs">
+                                    {{ post.description.slice(0, 55) }}..
+                                </p>
+                                <p
+                                    class="myPrimaryParagraph font-medium mt-2 mb-2 text-[10px] text-myPrimaryMediumGrayColor"
+                                >
+                                    Updated:
+                                    {{
+                                        format(
+                                            parseISO("2023-06-03 21:10:29"),
+                                            "dd/MM/yyyy HH:mm"
+                                        )
+                                    }}
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </template>
+            </FullWidthElement>
+        </GuestsLayout>
+    </MainLayout>
 </template>

@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
@@ -187,502 +188,520 @@ onMounted(() => {
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Posts" />
-        <DynamicModal
-            :show="modalShowDeletePost"
-            :type="typeModal"
-            :disabled="deletePostForm.processing"
-            disabledWhichButton="thirdButton"
-            :gridColumnAmount="gridColumnModal"
-            :title="titleModal"
-            :description="descriptionModal"
-            :firstButtonText="firstButtonModal"
-            :secondButtonText="secondButtonModal"
-            :thirdButtonText="thirdButtonModal"
-            @firstModalButtonFunction="firstModalButtonFunction"
-            @secondModalButtonFunction="secondModalButtonFunction"
-            @thirdModalButtonFunction="thirdModalButtonFunction"
-        >
-            <header></header>
-            <main></main>
-        </DynamicModal>
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">
-                Posts for
-                {{ $page.props.user && $page.props.currentUserTeam.name }}
-            </h2>
-        </template>
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
-
-        <CardHeadings :routesArray="routesArray">
-            <template #title
-                >Posts for
-                {{ $page.props.user && $page.props.user.current_team.name }}
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Posts" />
+            <DynamicModal
+                :show="modalShowDeletePost"
+                :type="typeModal"
+                :disabled="deletePostForm.processing"
+                disabledWhichButton="thirdButton"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
+                <main></main>
+            </DynamicModal>
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">
+                    Posts for
+                    {{ $page.props.user && $page.props.currentUserTeam.name }}
+                </h2>
             </template>
-            <template #subTitle
-                >Lorem ipsum dolor sit amet consectetur adipisicing elit quam
-                corrupti consectetur.
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
-            <template #buttons>
-                <Link
-                    class="myPrimaryButton"
-                    type="button"
-                    :href="route('team.posts.create', currentUserTeam.id)"
-                >
-                    Create Post
-                </Link>
-            </template>
-        </CardHeadings>
 
-        <form @submit.prevent="handleSearch">
-            <div class="myPrimarySection">
-                <div class="mysearchBarWithOptions">
-                    <div class="relative w-full">
-                        <div
-                            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-                        >
-                            <svg
-                                aria-hidden="true"
-                                class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="1.5"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                ></path>
-                            </svg>
-                        </div>
-                        <input
-                            v-model="searchForm.search_query"
-                            type="search"
-                            id="search_query"
-                            class="myPrimarySearchInput"
-                            autocomplete="off"
-                            placeholder="Search..."
-                        />
-                    </div>
-
-                    <button
-                        @click="handleSearch"
-                        type="button"
+            <CardHeadings :routesArray="routesArray">
+                <template #title
+                    >Posts for
+                    {{ $page.props.user && $page.props.user.current_team.name }}
+                </template>
+                <template #subTitle
+                    >Lorem ipsum dolor sit amet consectetur adipisicing elit
+                    quam corrupti consectetur.
+                </template>
+                <template #buttons>
+                    <Link
                         class="myPrimaryButton"
+                        type="button"
+                        :href="route('team.posts.create', currentUserTeam.id)"
                     >
-                        Search
+                        Create Post
+                    </Link>
+                </template>
+            </CardHeadings>
+
+            <form @submit.prevent="handleSearch">
+                <div class="myPrimarySection">
+                    <div class="mysearchBarWithOptions">
+                        <div class="relative w-full">
+                            <div
+                                class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.5"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <input
+                                v-model="searchForm.search_query"
+                                type="search"
+                                id="search_query"
+                                class="myPrimarySearchInput"
+                                autocomplete="off"
+                                placeholder="Search..."
+                            />
+                        </div>
+
+                        <button
+                            @click="handleSearch"
+                            type="button"
+                            class="myPrimaryButton"
+                        >
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <template v-if="posts && posts.data.length <= 0">
+                <h1 class="myPrimaryHeaderMessage">No Posts</h1>
+                <p class="myPrimaryParagraph">Looks like there are no posts!</p>
+            </template>
+
+            <!-- table start -->
+            <div
+                v-if="posts && posts.data.length >= 1"
+                class="myTableContainerPlusScrollButton"
+            >
+                <div class="myScrollButtonContainer">
+                    <button
+                        @click="handleLeft"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
+                    </button>
+                    <button
+                        @click="handleRight"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
                     </button>
                 </div>
-            </div>
-        </form>
+                <div ref="scrolTableContainer" class="myTableContainer">
+                    <div class="myTableSubContainer">
+                        <table class="myPrimaryTable" aria-describedby="index">
+                            <thead class="myPrimaryTableTHead">
+                                <tr class="myPrimaryTableTr">
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Thumbnail
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Title
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Post ID
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Team Name
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Status
+                                    </th>
 
-        <template v-if="posts && posts.data.length <= 0">
-            <h1 class="myPrimaryHeaderMessage">No Posts</h1>
-            <p class="myPrimaryParagraph">Looks like there are no posts!</p>
-        </template>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Show Authors
+                                    </th>
 
-        <!-- table start -->
-        <div
-            v-if="posts && posts.data.length >= 1"
-            class="myTableContainerPlusScrollButton"
-        >
-            <div class="myScrollButtonContainer">
-                <button
-                    @click="handleLeft"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                >
-                    <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
-                </button>
-                <button
-                    @click="handleRight"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                >
-                    <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
-                </button>
-            </div>
-            <div ref="scrolTableContainer" class="myTableContainer">
-                <div class="myTableSubContainer">
-                    <table class="myPrimaryTable" aria-describedby="index">
-                        <thead class="myPrimaryTableTHead">
-                            <tr class="myPrimaryTableTr">
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Thumbnail
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Title
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Post ID
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Team Name
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Status
-                                </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Authors
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Categories
+                                    </th>
 
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Show Authors
-                                </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Tags
+                                    </th>
 
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Authors
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Categories
-                                </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Updated By
+                                    </th>
 
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Tags
-                                </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Updated Date
+                                    </th>
 
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Updated By
-                                </th>
-
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Updated Date
-                                </th>
-
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Created Date
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Options
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Edit
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Delete
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="myPrimaryTableTBody">
-                            <TransitionGroup name="table">
-                                <tr
-                                    class="myPrimaryTableTBodyTr"
-                                    v-for="post in posts && posts.data"
-                                    :key="post.id"
-                                >
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <div
-                                            v-if="
-                                                Array.isArray(
-                                                    post.cover_images
-                                                ) &&
-                                                post.cover_images.length !== 0
-                                            "
-                                        >
-                                            <ThumbnailSmallImageSlider
-                                                :images="post.cover_images"
-                                                imageSize="medium_path"
-                                                imageHeight="h-28"
-                                                imageWidth="w-28"
-                                                :roundedFull="true"
-                                            ></ThumbnailSmallImageSlider>
-                                        </div>
-                                    </td>
-
-                                    <td
-                                        class="myPrimaryTableTBodyTd myPrimaryResourceTableBodyTdTitle"
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Created Date
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Options
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Edit
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Delete
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="myPrimaryTableTBody">
+                                <TransitionGroup name="table">
+                                    <tr
+                                        class="myPrimaryTableTBodyTr"
+                                        v-for="post in posts && posts.data"
+                                        :key="post.id"
                                     >
-                                        <Link
-                                            :href="
-                                                route('team.posts.post.show', [
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.id,
-                                                    post.slug,
-                                                ])
-                                            "
-                                        >
-                                            <span
-                                                class="text-myPrimaryLinkColor"
-                                            >
-                                                {{ post.title }}
-                                            </span>
-                                        </Link>
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
-                                        {{ post.id }}
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
-                                        {{
-                                            $page.props.user &&
-                                            $page.props.user.current_team.name
-                                        }}
-                                    </td>
-
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <span
-                                            class="myPrimaryTag"
-                                            :class="
-                                                post.published
-                                                    ? 'bg-myPrimaryLinkColor text-white'
-                                                    : 'bg-myPrimaryErrorColor text-white'
-                                            "
-                                            >{{
-                                                post.published
-                                                    ? "Published"
-                                                    : "Unpublished"
-                                            }}</span
-                                        >
-                                    </td>
-
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <span
-                                            class="myPrimaryTag"
-                                            :class="
-                                                post.show_author
-                                                    ? 'bg-myPrimaryLinkColor text-white'
-                                                    : 'bg-myPrimaryErrorColor text-white'
-                                            "
-                                            >{{
-                                                post.show_author
-                                                    ? "Visible"
-                                                    : "Hidden"
-                                            }}</span
-                                        >
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <div
-                                            class="flex flex-wrap justify-start items-center gap-1"
-                                        >
+                                        <td class="myPrimaryTableTBodyTd">
                                             <div
-                                                v-for="author in post.authors &&
-                                                post.authors"
-                                                :key="author"
-                                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-0 px-1 flex justify-center items-center gap-1"
+                                                v-if="
+                                                    Array.isArray(
+                                                        post.cover_images
+                                                    ) &&
+                                                    post.cover_images.length !==
+                                                        0
+                                                "
+                                            >
+                                                <ThumbnailSmallImageSlider
+                                                    :images="post.cover_images"
+                                                    imageSize="medium_path"
+                                                    imageHeight="h-28"
+                                                    imageWidth="w-28"
+                                                    :roundedFull="true"
+                                                ></ThumbnailSmallImageSlider>
+                                            </div>
+                                        </td>
+
+                                        <td
+                                            class="myPrimaryTableTBodyTd myPrimaryResourceTableBodyTdTitle"
+                                        >
+                                            <Link
+                                                :href="
+                                                    route(
+                                                        'team.posts.post.show',
+                                                        [
+                                                            $page.props.user
+                                                                .current_team
+                                                                .id,
+                                                            post.id,
+                                                            post.slug,
+                                                        ]
+                                                    )
+                                                "
+                                            >
+                                                <span
+                                                    class="text-myPrimaryLinkColor"
+                                                >
+                                                    {{ post.title }}
+                                                </span>
+                                            </Link>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{ post.id }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{
+                                                $page.props.user &&
+                                                $page.props.user.current_team
+                                                    .name
+                                            }}
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
+                                                class="myPrimaryTag"
+                                                :class="
+                                                    post.published
+                                                        ? 'bg-myPrimaryLinkColor text-white'
+                                                        : 'bg-myPrimaryErrorColor text-white'
+                                                "
+                                                >{{
+                                                    post.published
+                                                        ? "Published"
+                                                        : "Unpublished"
+                                                }}</span
+                                            >
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
+                                                class="myPrimaryTag"
+                                                :class="
+                                                    post.show_author
+                                                        ? 'bg-myPrimaryLinkColor text-white'
+                                                        : 'bg-myPrimaryErrorColor text-white'
+                                                "
+                                                >{{
+                                                    post.show_author
+                                                        ? "Visible"
+                                                        : "Hidden"
+                                                }}</span
+                                            >
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <div
+                                                class="flex flex-wrap justify-start items-center gap-1"
                                             >
                                                 <div
-                                                    v-if="
-                                                        author.profile_photo_path !==
-                                                        null
-                                                    "
+                                                    v-for="author in post.authors &&
+                                                    post.authors"
+                                                    :key="author"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-0 px-1 flex justify-center items-center gap-1"
                                                 >
                                                     <div
-                                                        class="h-5 w-5 flex-shrink-0"
+                                                        v-if="
+                                                            author.profile_photo_path !==
+                                                            null
+                                                        "
                                                     >
-                                                        <img
-                                                            class="object-cover h-5 w-5 rounded-full"
-                                                            :src="`/storage/${author.profile_photo_path}`"
-                                                            alt="avatar"
-                                                        />
+                                                        <div
+                                                            class="h-5 w-5 flex-shrink-0"
+                                                        >
+                                                            <img
+                                                                class="object-cover h-5 w-5 rounded-full"
+                                                                :src="`/storage/${author.profile_photo_path}`"
+                                                                alt="avatar"
+                                                            />
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div
-                                                    style="
-                                                        font-size: 9px;
-                                                        gap: 2px;
-                                                    "
-                                                    v-if="
-                                                        author.profile_photo_path ===
-                                                        null
-                                                    "
-                                                    class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
-                                                >
-                                                    <span>
-                                                        {{
-                                                            author.first_name
-                                                                .charAt(0)
-                                                                .toUpperCase()
-                                                        }}
-                                                    </span>
-                                                    <span>
-                                                        {{
-                                                            author.last_name
-                                                                .charAt(0)
-                                                                .toUpperCase()
-                                                        }}
-                                                    </span>
-                                                </div>
-                                                <span
-                                                    class="flex flex-col items-left gap-1 myPrimaryParagraph"
-                                                >
-                                                    <p
-                                                        style="font-size: 10px"
-                                                        class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
+                                                    <div
+                                                        style="
+                                                            font-size: 9px;
+                                                            gap: 2px;
+                                                        "
+                                                        v-if="
+                                                            author.profile_photo_path ===
+                                                            null
+                                                        "
+                                                        class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
                                                     >
                                                         <span>
                                                             {{
                                                                 author.first_name
-                                                            }}
-                                                            {{
-                                                                author.last_name
+                                                                    .charAt(0)
+                                                                    .toUpperCase()
                                                             }}
                                                         </span>
-                                                    </p>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <div
-                                            class="flex flex-wrap justify-start items-center gap-2"
-                                        >
-                                            <p
-                                                v-for="category in post.categories &&
-                                                Array.isArray(
-                                                    post.categories
-                                                ) &&
-                                                post.categories.sort((a, b) => {
-                                                    const nameA = a.name;
-                                                    const nameB = b.name;
-
-                                                    if (nameA < nameB) {
-                                                        return -1;
-                                                    } else if (nameA > nameB) {
-                                                        return 1;
-                                                    } else {
-                                                        return 0;
-                                                    }
-                                                })"
-                                                :key="category"
-                                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
-                                            >
-                                                <Squares2X2Icon
-                                                    class="w-3 h-3 stroke-1"
-                                                ></Squares2X2Icon>
-
-                                                <span>
-                                                    {{ category.name }}
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <div
-                                            class="flex flex-wrap justify-start items-center gap-2"
-                                        >
-                                            <p
-                                                v-for="tag in post.tags &&
-                                                post.tags
-                                                    .split(',')
-                                                    .sort((a, b) =>
-                                                        a.localeCompare(b)
-                                                    )"
-                                                :key="tag"
-                                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
-                                            >
-                                                <TagIcon
-                                                    class="w-3 h-3 stroke-1"
-                                                ></TagIcon>
-                                                <span>
-                                                    {{ tag }}
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </td>
-
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <UserTag
-                                            :user="post.updatedBy"
-                                        ></UserTag>
-                                    </td>
-
-                                    <td class="myPrimaryTableTBodyTd">
-                                        {{
-                                            format(
-                                                parseISO(post.updated_at),
-                                                "dd/MM/yyyy HH:mm"
-                                            )
-                                        }}
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
-                                        {{
-                                            format(
-                                                parseISO(post.created_at),
-                                                "dd/MM/yyyy HH:mm"
-                                            )
-                                        }}
-                                    </td>
-
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <Menu
-                                            as="div"
-                                            class="relative inline-block text-left"
-                                        >
-                                            <div>
-                                                <MenuButton
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                >
-                                                    <EllipsisVerticalIcon
-                                                        class="mySmallIcon"
-                                                        aria-hidden="true"
-                                                    />
-                                                </MenuButton>
-                                            </div>
-                                            <transition
-                                                enter-active-class="transition ease-out duration-100"
-                                                enter-from-class="transform opacity-0 scale-95"
-                                                enter-to-class="transform opacity-100 scale-100"
-                                                leave-active-class="transition ease-in duration-75"
-                                                leave-from-class="transform opacity-100 scale-100"
-                                                leave-to-class="transform opacity-0 scale-95"
-                                            >
-                                                <MenuItems
-                                                    class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                                >
-                                                    <MenuItem
-                                                        class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
+                                                        <span>
+                                                            {{
+                                                                author.last_name
+                                                                    .charAt(0)
+                                                                    .toUpperCase()
+                                                            }}
+                                                        </span>
+                                                    </div>
+                                                    <span
+                                                        class="flex flex-col items-left gap-1 myPrimaryParagraph"
                                                     >
-                                                        <button
-                                                            class="flex gap-1 items-center"
-                                                            type="button"
-                                                            @click="
-                                                                handleDuplicate(
-                                                                    post.id
-                                                                )
+                                                        <p
+                                                            style="
+                                                                font-size: 10px;
                                                             "
+                                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
                                                         >
-                                                            <CheckIcon
-                                                                class="w-4 h-4"
-                                                            ></CheckIcon>
-                                                            Duplicate Post
-                                                        </button>
-                                                    </MenuItem>
-                                                </MenuItems>
-                                            </transition>
-                                        </Menu>
-                                    </td>
+                                                            <span>
+                                                                {{
+                                                                    author.first_name
+                                                                }}
+                                                                {{
+                                                                    author.last_name
+                                                                }}
+                                                            </span>
+                                                        </p>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <div
+                                                class="flex flex-wrap justify-start items-center gap-2"
+                                            >
+                                                <p
+                                                    v-for="category in post.categories &&
+                                                    Array.isArray(
+                                                        post.categories
+                                                    ) &&
+                                                    post.categories.sort(
+                                                        (a, b) => {
+                                                            const nameA =
+                                                                a.name;
+                                                            const nameB =
+                                                                b.name;
 
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <button
-                                            type="button"
-                                            @click="handleEdit(post.id)"
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                        >
-                                            <PencilIcon
-                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                            ></PencilIcon>
-                                        </button>
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <button
-                                            type="button"
-                                            @click="handleDelete(post.id, post)"
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                        >
-                                            <TrashIcon
-                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                            ></TrashIcon>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </TransitionGroup>
-                        </tbody>
-                    </table>
+                                                            if (nameA < nameB) {
+                                                                return -1;
+                                                            } else if (
+                                                                nameA > nameB
+                                                            ) {
+                                                                return 1;
+                                                            } else {
+                                                                return 0;
+                                                            }
+                                                        }
+                                                    )"
+                                                    :key="category"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                                >
+                                                    <Squares2X2Icon
+                                                        class="w-3 h-3 stroke-1"
+                                                    ></Squares2X2Icon>
+
+                                                    <span>
+                                                        {{ category.name }}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <div
+                                                class="flex flex-wrap justify-start items-center gap-2"
+                                            >
+                                                <p
+                                                    v-for="tag in post.tags &&
+                                                    post.tags
+                                                        .split(',')
+                                                        .sort((a, b) =>
+                                                            a.localeCompare(b)
+                                                        )"
+                                                    :key="tag"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                                >
+                                                    <TagIcon
+                                                        class="w-3 h-3 stroke-1"
+                                                    ></TagIcon>
+                                                    <span>
+                                                        {{ tag }}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <UserTag
+                                                :user="post.updatedBy"
+                                            ></UserTag>
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{
+                                                format(
+                                                    parseISO(post.updated_at),
+                                                    "dd/MM/yyyy HH:mm"
+                                                )
+                                            }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{
+                                                format(
+                                                    parseISO(post.created_at),
+                                                    "dd/MM/yyyy HH:mm"
+                                                )
+                                            }}
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <Menu
+                                                as="div"
+                                                class="relative inline-block text-left"
+                                            >
+                                                <div>
+                                                    <MenuButton
+                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                    >
+                                                        <EllipsisVerticalIcon
+                                                            class="mySmallIcon"
+                                                            aria-hidden="true"
+                                                        />
+                                                    </MenuButton>
+                                                </div>
+                                                <transition
+                                                    enter-active-class="transition ease-out duration-100"
+                                                    enter-from-class="transform opacity-0 scale-95"
+                                                    enter-to-class="transform opacity-100 scale-100"
+                                                    leave-active-class="transition ease-in duration-75"
+                                                    leave-from-class="transform opacity-100 scale-100"
+                                                    leave-to-class="transform opacity-0 scale-95"
+                                                >
+                                                    <MenuItems
+                                                        class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                                    >
+                                                        <MenuItem
+                                                            class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
+                                                        >
+                                                            <button
+                                                                class="flex gap-1 items-center"
+                                                                type="button"
+                                                                @click="
+                                                                    handleDuplicate(
+                                                                        post.id
+                                                                    )
+                                                                "
+                                                            >
+                                                                <CheckIcon
+                                                                    class="w-4 h-4"
+                                                                ></CheckIcon>
+                                                                Duplicate Post
+                                                            </button>
+                                                        </MenuItem>
+                                                    </MenuItems>
+                                                </transition>
+                                            </Menu>
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <button
+                                                type="button"
+                                                @click="handleEdit(post.id)"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                            >
+                                                <PencilIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                ></PencilIcon>
+                                            </button>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <button
+                                                type="button"
+                                                @click="
+                                                    handleDelete(post.id, post)
+                                                "
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                            >
+                                                <TrashIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                ></TrashIcon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </TransitionGroup>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- table end -->
-        <Pagination :links="posts?.links ? posts.links : []"></Pagination>
-    </LoggedInLayout>
+            <!-- table end -->
+            <Pagination :links="posts?.links ? posts.links : []"></Pagination>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

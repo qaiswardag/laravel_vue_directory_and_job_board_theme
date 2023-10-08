@@ -29,4 +29,26 @@ class StorePaymentMethodsRequest extends FormRequest
             "postal_code" => ["required", "string", "max:255", "nullable"],
         ];
     }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param \Illuminate\Validation\Validator $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if (strlen($this->country) >= 3) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "country",
+                        "Country code cannot be longer than 2 characters."
+                    );
+            }
+        });
+
+        // end of withValidator
+    }
 }

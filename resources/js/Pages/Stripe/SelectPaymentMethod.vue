@@ -28,6 +28,9 @@ const props = defineProps({
     intent: {
         required: true,
     },
+    publishableKey: {
+        publishableKey: true,
+    },
 });
 
 // get images
@@ -152,7 +155,6 @@ onMounted(() => {
                             as="template"
                             v-for="paymentMethod in fetchedPaymentMethods.paymentMethods"
                             :key="paymentMethod.id"
-                            :value="paymentMethod"
                         >
                             <div
                                 class="border border-transparent hover:border-myPrimaryLinkColor border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-myPrimaryLinkColor bg-opacity-5"
@@ -257,6 +259,7 @@ onMounted(() => {
         :title="titleModalPaymentMethodForm"
         :user="user"
         :intent="intent"
+        :publishableKey="publishableKey"
         :firstButtonTextModalPaymentMethodForm="
             firstButtonTextModalPaymentMethodForm
         "

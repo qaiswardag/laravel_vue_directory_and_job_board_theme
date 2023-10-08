@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import UserDashboardStats from "../../Components/Dashboard/UserDashboardStats.vue";
@@ -31,20 +32,22 @@ const currentUserDetails = ref(false);
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Dashboard" />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Dashboard</h2>
-        </template>
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Dashboard" />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Dashboard</h2>
+            </template>
 
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
 
-        <UserDashboardStats
-            :user="user"
-            :currentUserTeam="currentUserTeam"
-            :currentUserTeamRole="currentUserTeamRole"
-        ></UserDashboardStats>
-    </LoggedInLayout>
+            <UserDashboardStats
+                :user="user"
+                :currentUserTeam="currentUserTeam"
+                :currentUserTeamRole="currentUserTeamRole"
+            ></UserDashboardStats>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

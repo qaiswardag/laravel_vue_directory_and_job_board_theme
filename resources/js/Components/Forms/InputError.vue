@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="min-h-[2.5rem] flex items-center justify-start">
+    <div class="min-h-[1.5rem] flex items-center justify-start">
         <p class="myPrimaryInputError mt-2 mb-0 py-0 self-start">
             {{ message }}
         </p>

@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
@@ -10,7 +11,6 @@ import { onMounted, ref, watch } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import { parseISO, format } from "date-fns";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
 
 import {
@@ -350,361 +350,366 @@ onMounted(() => {
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Manage Users" />
-        <DynamicModal
-            :show="modalShowCreateUpdateSuperadmin"
-            :type="typeModal"
-            :disabled="superadminUserform.processing"
-            disabledWhichButton="thirdButton"
-            :gridColumnAmount="gridColumnModal"
-            :title="titleModal"
-            :description="descriptionModal"
-            :firstButtonText="firstButtonModal"
-            :secondButtonText="secondButtonModal"
-            :thirdButtonText="thirdButtonModal"
-            @firstModalButtonFunction="firstModalButtonFunction"
-            @secondModalButtonFunction="secondModalButtonFunction"
-            @thirdModalButtonFunction="thirdModalButtonFunction"
-        >
-            <header></header>
-            <main>
-                <RadioGroup v-model="selectedRole">
-                    <RadioGroupLabel class="sr-only"
-                        >Privacy setting</RadioGroupLabel
-                    >
-                    <div class="-space-y-px rounded-md bg-white">
-                        <RadioGroupOption
-                            as="template"
-                            v-for="(setting, settingIdx) in superadminRoles"
-                            :key="setting.name"
-                            :value="setting"
-                            v-slot="{ checked, active }"
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Manage Users" />
+            <DynamicModal
+                :show="modalShowCreateUpdateSuperadmin"
+                :type="typeModal"
+                :disabled="superadminUserform.processing"
+                disabledWhichButton="thirdButton"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
+                <main>
+                    <RadioGroup v-model="selectedRole">
+                        <RadioGroupLabel class="sr-only"
+                            >Privacy setting</RadioGroupLabel
                         >
-                            <div
-                                :class="[
-                                    settingIdx === 0
-                                        ? 'rounded-tl-md rounded-tr-md'
-                                        : '',
-                                    settingIdx === superadminRoles.length - 1
-                                        ? 'rounded-bl-md rounded-br-md'
-                                        : '',
-                                    checked
-                                        ? 'z-10 border-myPrimaryLinkColor bg-myPrimaryLightGrayColor'
-                                        : 'border-gray-200',
-                                    'relative flex cursor-pointer border p-4 focus:outline-none',
-                                ]"
+                        <div class="-space-y-px rounded-md bg-white">
+                            <RadioGroupOption
+                                as="template"
+                                v-for="(setting, settingIdx) in superadminRoles"
+                                :key="setting.name"
+                                :value="setting"
+                                v-slot="{ checked, active }"
                             >
-                                <span
+                                <div
                                     :class="[
-                                        checked
-                                            ? 'bg-myPrimaryLinkColor border-transparent'
-                                            : 'bg-white border-gray-300',
-                                        active
-                                            ? 'ring-2 ring-offset-2 ring-myPrimaryLinkColor'
+                                        settingIdx === 0
+                                            ? 'rounded-tl-md rounded-tr-md'
                                             : '',
-                                        'mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded-full border flex items-center justify-center',
+                                        settingIdx ===
+                                        superadminRoles.length - 1
+                                            ? 'rounded-bl-md rounded-br-md'
+                                            : '',
+                                        checked
+                                            ? 'z-10 border-myPrimaryLinkColor bg-myPrimaryLightGrayColor'
+                                            : 'border-gray-200',
+                                        'relative flex cursor-pointer border p-4 focus:outline-none',
                                     ]"
-                                    aria-hidden="true"
                                 >
                                     <span
-                                        class="rounded-full bg-white w-1.5 h-1.5"
-                                    />
-                                </span>
-                                <span class="ml-3 flex flex-col">
-                                    <RadioGroupLabel
-                                        as="span"
                                         :class="[
                                             checked
-                                                ? 'text-myPrimaryDarkGrayColor'
-                                                : 'text-myPrimaryDarkGrayColor',
-                                            'myPrimaryParagraph',
+                                                ? 'bg-myPrimaryLinkColor border-transparent'
+                                                : 'bg-white border-gray-300',
+                                            active
+                                                ? 'ring-2 ring-offset-2 ring-myPrimaryLinkColor'
+                                                : '',
+                                            'mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded-full border flex items-center justify-center',
                                         ]"
-                                        >{{ setting.name }}</RadioGroupLabel
+                                        aria-hidden="true"
                                     >
-                                    <RadioGroupDescription
-                                        as="span"
-                                        :class="[
-                                            checked
-                                                ? 'text-myPrimaryLinkColor'
-                                                : 'text-myPrimaryMediumGrayColor',
-                                            'block text-sm',
-                                        ]"
-                                        >{{
-                                            setting.description
-                                        }}</RadioGroupDescription
-                                    >
-                                </span>
-                            </div>
-                        </RadioGroupOption>
-                    </div>
-                </RadioGroup>
-                <InputError :message="superadminUserform.errors.role" />
-                <InputError :message="superadminUserform.errors.user_id" />
-            </main>
-        </DynamicModal>
-
-        <DynamicModal
-            :show="modalShowRemoveSuperadmin"
-            :type="typeModal"
-            :disabled="superadminUserform.processing"
-            disabledWhichButton="thirdButton"
-            :gridColumnAmount="gridColumnModal"
-            :title="titleModal"
-            :description="descriptionModal"
-            :firstButtonText="firstButtonModal"
-            :secondButtonText="secondButtonModal"
-            :thirdButtonText="thirdButtonModal"
-            @firstModalButtonFunction="firstModalButtonFunction"
-            @secondModalButtonFunction="secondModalButtonFunction"
-            @thirdModalButtonFunction="thirdModalButtonFunction"
-        >
-            <header></header>
-            <main></main>
-        </DynamicModal>
-        <DynamicModal
-            :show="modalShowDeleteUser"
-            :type="typeModal"
-            :disabled="deleteUserForm.processing"
-            disabledWhichButton="thirdButton"
-            :gridColumnAmount="gridColumnModal"
-            :title="titleModal"
-            :description="descriptionModal"
-            :firstButtonText="firstButtonModal"
-            :secondButtonText="secondButtonModal"
-            :thirdButtonText="thirdButtonModal"
-            @firstModalButtonFunction="firstModalButtonFunction"
-            @secondModalButtonFunction="secondModalButtonFunction"
-            @thirdModalButtonFunction="thirdModalButtonFunction"
-        >
-            <header></header>
-            <main></main>
-        </DynamicModal>
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Users</h2>
-        </template>
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
-
-        <template #description></template>
-        <form @submit.prevent="handleSearch">
-            <!-- search bar componenet - start -->
-            <SearchBarWithOptions
-                v-model="searchForm.search_query"
-                @selectedUpdated="selectedUpdated"
-                :currentSelect="searchForm.selected_category"
-                @firstButtonClick="handleSearch"
-                :categories="searchCategories"
-                placeholderButton="Search"
-                placeholderInput="Search.."
-            ></SearchBarWithOptions>
-            <!-- search bar componenet - ens -->
-        </form>
-
-        <!-- table start -->
-        <div
-            v-if="
-                user &&
-                users.data &&
-                Array.isArray(users.data) &&
-                users.data.length >= 1
-            "
-            class="myTableContainerPlusScrollButton"
-        >
-            <div class="myScrollButtonContainer">
-                <button
-                    @click="handleLeft"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                >
-                    <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
-                </button>
-                <button
-                    @click="handleRight"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                >
-                    <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
-                </button>
-            </div>
-            <div ref="scrolTableContainer" class="myTableContainer">
-                <div class="myTableSubContainer">
-                    <table class="myPrimaryTable" aria-describedby="index">
-                        <thead class="myPrimaryTableTHead">
-                            <tr class="myPrimaryTableTr">
-                                <th scope="col" class="myPrimaryTableTh">
-                                    User
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    User ID
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Status
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Superadmin role
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Updated Date
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Created at
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Edit
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Delete
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="myPrimaryTableTBody">
-                            <TransitionGroup name="table">
-                                <tr
-                                    class="myPrimaryTableTBodyTr"
-                                    v-for="user in users.data"
-                                    :key="user.id"
-                                >
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <UserTag
-                                            customClass="my-0"
-                                            :user="user"
-                                            :showTeamRole="true"
-                                            :clickable="true"
-                                        ></UserTag>
-                                    </td>
-
-                                    <td class="myPrimaryTableTBodyTd">
-                                        {{ user.id }}
-                                    </td>
-
-                                    <td class="myPrimaryTableTBodyTd">
                                         <span
-                                            class="myPrimaryTag"
-                                            :class="
-                                                user.public
-                                                    ? 'bg-myPrimaryLinkColor text-white'
-                                                    : 'bg-myPrimaryErrorColor text-white'
-                                            "
+                                            class="rounded-full bg-white w-1.5 h-1.5"
+                                        />
+                                    </span>
+                                    <span class="ml-3 flex flex-col">
+                                        <RadioGroupLabel
+                                            as="span"
+                                            :class="[
+                                                checked
+                                                    ? 'text-myPrimaryDarkGrayColor'
+                                                    : 'text-myPrimaryDarkGrayColor',
+                                                'myPrimaryParagraph',
+                                            ]"
+                                            >{{ setting.name }}</RadioGroupLabel
+                                        >
+                                        <RadioGroupDescription
+                                            as="span"
+                                            :class="[
+                                                checked
+                                                    ? 'text-myPrimaryLinkColor'
+                                                    : 'text-myPrimaryMediumGrayColor',
+                                                'block text-sm',
+                                            ]"
                                             >{{
-                                                user.public
-                                                    ? "Published"
-                                                    : "Unpublished"
-                                            }}</span
+                                                setting.description
+                                            }}</RadioGroupDescription
                                         >
-                                    </td>
+                                    </span>
+                                </div>
+                            </RadioGroupOption>
+                        </div>
+                    </RadioGroup>
+                    <InputError :message="superadminUserform.errors.role" />
+                    <InputError :message="superadminUserform.errors.user_id" />
+                </main>
+            </DynamicModal>
 
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <template
-                                            v-if="user.superadmin !== null"
-                                        >
-                                            <div class="flex gap-2">
-                                                <button
-                                                    @click="
-                                                        handleUpdateSuperadmin(
-                                                            user.id,
-                                                            user.first_name,
-                                                            user.last_name
-                                                        )
-                                                    "
-                                                    class="myPrimaryButton flex items-center gap-1 text-xs"
-                                                >
-                                                    <ArrowPathRoundedSquareIcon
-                                                        class="h-4 w-4"
-                                                    ></ArrowPathRoundedSquareIcon>
-                                                    <p>
-                                                        {{
-                                                            user.superadmin.role
-                                                                .charAt(0)
-                                                                .toUpperCase() +
-                                                            user.superadmin.role.slice(
-                                                                1
-                                                            )
-                                                        }}
-                                                    </p>
-                                                </button>
-                                                <button
-                                                    @click="
-                                                        handleRemoveSuperadmin(
-                                                            user.id,
-                                                            user.first_name,
-                                                            user.last_name
-                                                        )
-                                                    "
-                                                    class="myPrimaryDeleteButton flex items-center gap-1 text-xs"
-                                                >
-                                                    <MinusIcon
-                                                        class="w-4 h-4"
-                                                    ></MinusIcon>
-                                                    Remove
-                                                </button>
-                                            </div>
-                                        </template>
-                                        <template
-                                            v-if="user.superadmin === null"
-                                        >
-                                            <button
-                                                @click="
-                                                    handleCreateSuperadmin(
-                                                        user.id,
-                                                        user.first_name,
-                                                        user.last_name
-                                                    )
-                                                "
-                                                class="mySecondaryButton flex items-center gap-1 text-xs"
-                                            >
-                                                <PlusIcon
-                                                    class="w-4 h-4"
-                                                ></PlusIcon>
-                                                <p>Add Superadmin</p>
-                                            </button>
-                                        </template>
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
-                                        {{
-                                            format(
-                                                parseISO(user.updated_at),
-                                                "dd/MM/yyyy HH:mm"
-                                            )
-                                        }}
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
-                                        {{
-                                            format(
-                                                parseISO(user.created_at),
-                                                "dd/MM/yyyy HH:mm"
-                                            )
-                                        }}
-                                    </td>
+            <DynamicModal
+                :show="modalShowRemoveSuperadmin"
+                :type="typeModal"
+                :disabled="superadminUserform.processing"
+                disabledWhichButton="thirdButton"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
+                <main></main>
+            </DynamicModal>
+            <DynamicModal
+                :show="modalShowDeleteUser"
+                :type="typeModal"
+                :disabled="deleteUserForm.processing"
+                disabledWhichButton="thirdButton"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
+                <main></main>
+            </DynamicModal>
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Users</h2>
+            </template>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
 
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <button
-                                            type="button"
-                                            @click="handleEdit(user.id)"
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                        >
-                                            <PencilIcon
-                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                            ></PencilIcon>
-                                        </button>
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
-                                        <button
-                                            type="button"
-                                            @click="handleDelete(user.id, user)"
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                        >
-                                            <TrashIcon
-                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                            ></TrashIcon>
-                                        </button>
-                                    </td>
+            <template #description></template>
+            <form @submit.prevent="handleSearch">
+                <!-- search bar componenet - start -->
+                <SearchBarWithOptions
+                    v-model="searchForm.search_query"
+                    @selectedUpdated="selectedUpdated"
+                    :currentSelect="searchForm.selected_category"
+                    @firstButtonClick="handleSearch"
+                    :categories="searchCategories"
+                    placeholderButton="Search"
+                    placeholderInput="Search.."
+                ></SearchBarWithOptions>
+                <!-- search bar componenet - ens -->
+            </form>
+
+            <!-- table start -->
+            <div
+                v-if="
+                    user &&
+                    users.data &&
+                    Array.isArray(users.data) &&
+                    users.data.length >= 1
+                "
+                class="myTableContainerPlusScrollButton"
+            >
+                <div class="myScrollButtonContainer">
+                    <button
+                        @click="handleLeft"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
+                    </button>
+                    <button
+                        @click="handleRight"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
+                    </button>
+                </div>
+                <div ref="scrolTableContainer" class="myTableContainer">
+                    <div class="myTableSubContainer">
+                        <table class="myPrimaryTable" aria-describedby="index">
+                            <thead class="myPrimaryTableTHead">
+                                <tr class="myPrimaryTableTr">
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        User
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        User ID
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Status
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Superadmin role
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Updated Date
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Created at
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Edit
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Delete
+                                    </th>
                                 </tr>
-                            </TransitionGroup>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody class="myPrimaryTableTBody">
+                                <TransitionGroup name="table">
+                                    <tr
+                                        class="myPrimaryTableTBodyTr"
+                                        v-for="user in users.data"
+                                        :key="user.id"
+                                    >
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <UserTag
+                                                customClass="my-0"
+                                                :user="user"
+                                                :showTeamRole="true"
+                                                :clickable="true"
+                                            ></UserTag>
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{ user.id }}
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
+                                                class="myPrimaryTag"
+                                                :class="
+                                                    user.public
+                                                        ? 'bg-myPrimaryLinkColor text-white'
+                                                        : 'bg-myPrimaryErrorColor text-white'
+                                                "
+                                                >{{
+                                                    user.public
+                                                        ? "Published"
+                                                        : "Unpublished"
+                                                }}</span
+                                            >
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <template
+                                                v-if="user.superadmin !== null"
+                                            >
+                                                <div class="flex gap-2">
+                                                    <button
+                                                        @click="
+                                                            handleUpdateSuperadmin(
+                                                                user.id,
+                                                                user.first_name,
+                                                                user.last_name
+                                                            )
+                                                        "
+                                                        class="myPrimaryButton flex items-center gap-1 text-xs"
+                                                    >
+                                                        <ArrowPathRoundedSquareIcon
+                                                            class="h-4 w-4"
+                                                        ></ArrowPathRoundedSquareIcon>
+                                                        <p>
+                                                            {{
+                                                                user.superadmin.role
+                                                                    .charAt(0)
+                                                                    .toUpperCase() +
+                                                                user.superadmin.role.slice(
+                                                                    1
+                                                                )
+                                                            }}
+                                                        </p>
+                                                    </button>
+                                                    <button
+                                                        @click="
+                                                            handleRemoveSuperadmin(
+                                                                user.id,
+                                                                user.first_name,
+                                                                user.last_name
+                                                            )
+                                                        "
+                                                        class="myPrimaryDeleteButton flex items-center gap-1 text-xs"
+                                                    >
+                                                        <MinusIcon
+                                                            class="w-4 h-4"
+                                                        ></MinusIcon>
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                            </template>
+                                            <template
+                                                v-if="user.superadmin === null"
+                                            >
+                                                <button
+                                                    @click="
+                                                        handleCreateSuperadmin(
+                                                            user.id,
+                                                            user.first_name,
+                                                            user.last_name
+                                                        )
+                                                    "
+                                                    class="mySecondaryButton flex items-center gap-1 text-xs"
+                                                >
+                                                    <PlusIcon
+                                                        class="w-4 h-4"
+                                                    ></PlusIcon>
+                                                    <p>Add Superadmin</p>
+                                                </button>
+                                            </template>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{
+                                                format(
+                                                    parseISO(user.updated_at),
+                                                    "dd/MM/yyyy HH:mm"
+                                                )
+                                            }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{
+                                                format(
+                                                    parseISO(user.created_at),
+                                                    "dd/MM/yyyy HH:mm"
+                                                )
+                                            }}
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <button
+                                                type="button"
+                                                @click="handleEdit(user.id)"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                            >
+                                                <PencilIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                ></PencilIcon>
+                                            </button>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <button
+                                                type="button"
+                                                @click="
+                                                    handleDelete(user.id, user)
+                                                "
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                            >
+                                                <TrashIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                ></TrashIcon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </TransitionGroup>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <Pagination :links="users.links"></Pagination>
-    </LoggedInLayout>
+            <Pagination :links="users.links"></Pagination>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

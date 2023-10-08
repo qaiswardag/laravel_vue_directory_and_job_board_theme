@@ -1,5 +1,4 @@
 <script setup>
-import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { useForm } from "@inertiajs/vue3";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
@@ -20,7 +19,6 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import { delay } from "@/helpers/delay";
 
 import {
@@ -45,6 +43,7 @@ import {
     PhotoIcon,
     MapPinIcon,
     PlusIcon,
+    FolderPlusIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -941,9 +940,6 @@ const pageBuilder = new PageBuilder(store);
                     <div class="myPrimaryFormOrganizationHeader">
                         Title & description
                     </div>
-                    <p class="myPrimaryParagraph">
-                        Specify title & description.
-                    </p>
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
@@ -1030,40 +1026,38 @@ const pageBuilder = new PageBuilder(store);
 
             <!-- Builder #start -->
             <div class="myInputsOrganization">
-                <div
-                    class="myPrimaryFormOrganizationHeader text-center border-b border-myPrimaryLightGrayColor mb-6"
-                >
+                <div class="myPrimaryFormOrganizationHeader">
                     Manage Content
                 </div>
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div
-                        class="flex xl:gap-16 lg:gap-12 gap-4 items-center justify-center"
-                    >
-                        <div class="myInputGroup self-center">
-                            <div></div>
-                            <div class="mt-4">
-                                <button
-                                    @click="handlePageBuilder"
-                                    type="button"
-                                    class="myPrimaryButton"
-                                >
-                                    Open Page Builder
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <img
-                                @click="handlePageBuilder"
-                                class="w-auto object-cover cursor-pointer"
-                                src="/app-images/builder/drag-and-drop-to-build-content-example-one.webp"
-                                alt="Drag-and-drop-to-build-content-example-one"
-                            />
-                        </div>
+                <!-- Add Content # start -->
+                <div
+                    class="rounded-lg mt-4 border-2 border-dashed border-gray-300 p-8 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                    <FolderPlusIcon
+                        @click="handlePageBuilder"
+                        class="mx-auto h-12 w-12 text-gray-400 cursor-pointer"
+                    ></FolderPlusIcon>
+                    <h3 class="mt-2 text-sm font-semibold text-gray-900">
+                        Add Components
+                    </h3>
+                    <p class="mt-1 text-sm text-gray-500">
+                        Get started by adding components.
+                    </p>
+                    <div class="mt-6">
+                        <button
+                            @click="handlePageBuilder"
+                            type="button"
+                            class="myPrimaryButton"
+                        >
+                            <FolderPlusIcon
+                                class="-ml-0.5 mr-1.5 h-5 w-5"
+                            ></FolderPlusIcon>
+                            Add content
+                        </button>
                     </div>
                 </div>
-                <div class="flex justify-center">
-                    <InputError :message="postForm.errors.content" />
-                </div>
+                <!-- Add Content # end -->
+                <InputError :message="postForm.errors.content" />
             </div>
             <!-- Builder #end -->
         </template>

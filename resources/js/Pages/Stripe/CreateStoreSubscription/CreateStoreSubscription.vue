@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import PostForm from "@/Pages/Posts/Partials/PostForm.vue";
@@ -11,7 +12,7 @@ const props = defineProps({
     intent: {
         required: true,
     },
-    paymentMethods: {
+    publishableKey: {
         required: true,
     },
 });
@@ -21,7 +22,7 @@ const breadcrumbsLinks = [
         label: "All Subscriptions",
         route: {
             name: "stripe.payment.subscription.index",
-            parameters: [props.user.id],
+            parameters: null,
         },
     },
     { label: "Create Subscription" },
@@ -29,21 +30,24 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head
-            title="Create Subscription
+    <MainLayout>
+        <LoggedInLayout>
+            <Head
+                title="Create Subscription
 "
-        />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Create Subscription</h2>
-        </template>
+            />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Create Subscription</h2>
+            </template>
 
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
-        <StoreSubscriptionForm
-            :user="user"
-            :intent="intent"
-        ></StoreSubscriptionForm>
-    </LoggedInLayout>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
+            <StoreSubscriptionForm
+                :user="user"
+                :intent="intent"
+                :publishableKey="publishableKey"
+            ></StoreSubscriptionForm>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

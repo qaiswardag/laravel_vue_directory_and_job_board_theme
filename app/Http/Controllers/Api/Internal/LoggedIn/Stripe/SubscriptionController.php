@@ -6,15 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
-use App\Models\Subscription; // Assuming your Subscription model is in the "Models" namespace inside the "app" directory.
-
+use App\Models\Subscription;
+use Illuminate\Support\Facades\Auth;
 class SubscriptionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user)
+    public function index()
     {
+        $user = Auth::user();
+
         $subscriptionsActive = null;
         $subscriptionsIncomplete = null;
         $subscriptionsEnded = null;
@@ -26,8 +28,6 @@ class SubscriptionController extends Controller
 
         $subscriptions = [];
 
-        // TODO: Check for Stripe if user have customer id there.
-        // And set stripe_id to null if it is null in Stripe
         if (!$stripeCustomer) {
             $user->update([
                 "stripe_id" => null,

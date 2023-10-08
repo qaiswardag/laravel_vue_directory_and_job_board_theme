@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import TeamMemberManager from "@/Pages/Teams/Partials/TeamMemberManager.vue";
@@ -26,22 +27,24 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Team Memebers" />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Team Members</h2>
-        </template>
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Team Memebers" />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Team Members</h2>
+            </template>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
 
-        <div v-if="team.owner !== null && team.owner !== undefined">
-            <TeamMemberManager
-                class="mt-10 sm:mt-0"
-                :team="team"
-                :available-roles="availableRoles"
-                :user-permissions="permissions"
-            />
-        </div>
-    </LoggedInLayout>
+            <div v-if="team.owner !== null && team.owner !== undefined">
+                <TeamMemberManager
+                    class="mt-10 sm:mt-0"
+                    :team="team"
+                    :available-roles="availableRoles"
+                    :user-permissions="permissions"
+                />
+            </div>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

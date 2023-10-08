@@ -11,7 +11,6 @@ import SelectPaymentMethod from "@/Pages/Stripe/SelectPaymentMethod.vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import { useStore } from "vuex";
 import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 const store = useStore();
 
@@ -20,6 +19,9 @@ const props = defineProps({
         required: true,
     },
     intent: {
+        required: true,
+    },
+    publishableKey: {
         required: true,
     },
 });
@@ -61,7 +63,7 @@ const createOrUpdate = () => {
     console.log(`den er:`, formSubscription.payment_method);
     if (formType.value === "create") {
         console.log(`came here..`);
-        formSubscription.post(route("team.stores.store.subscription"), {
+        formSubscription.post(route("stripe.stores.store.subscription"), {
             preserveScroll: true,
             onSuccess: () => {},
             onError: () => {},
@@ -172,7 +174,6 @@ onBeforeMount(() => {
                                     $page.props.user
                                 )"
                                 :key="product.id"
-                                :value="product"
                             >
                                 <div
                                     class="border border-transparent hover:border-myPrimaryLinkColor border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-myPrimaryLinkColor bg-opacity-5"
@@ -259,6 +260,7 @@ onBeforeMount(() => {
                 <SelectPaymentMethod
                     :user="user"
                     :intent="intent"
+                    :publishableKey="publishableKey"
                 ></SelectPaymentMethod>
                 <InputError :message="formSubscription.errors.payment_method" />
             </div>

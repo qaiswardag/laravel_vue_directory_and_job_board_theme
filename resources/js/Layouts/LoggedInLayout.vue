@@ -3,15 +3,11 @@ import { computed, ref, watch } from "vue";
 import { router } from "@inertiajs/vue3";
 import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
 import Banner from "@/Components/Banners/Banner.vue";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import ResponsiveNavLink from "@/Components/Navbars/ResponsiveNavLink.vue";
 import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 import LoggedInSidebar from "@/Components/Sidebars/LoggedInSidebar.vue";
 import LoggedInNavbar from "@/Components/Navbars/LoggedInNavbar.vue";
-import Flash from "@/Components/Actions/Flash.vue";
-import FooterUniversal from "@/Components/Footer/FooterUniversal.vue";
 import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
-import { usePage } from "@inertiajs/vue3";
 
 import {
     Dialog,
@@ -37,49 +33,10 @@ import {
 import ApplicationMark from "@/Components/MarkComponents/ApplicationMark.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
-const props = defineProps({
-    title: {
-        required: false,
-    },
-});
-
-// DOM is loaded
-const isDOMLoaded = ref(false);
-
-router.on("start", () => {
-    isDOMLoaded.value = true;
-});
-router.on("finish", () => {
-    isDOMLoaded.value = false;
-});
-
-const shouldShowFlash = ref(false);
-
-const flashState = computed(() => {
-    return usePage().props.flash;
-});
-
-watch(flashState, (newValue) => {
-    if (newValue) {
-        shouldShowFlash.value = true;
-    }
-    setTimeout(() => {
-        shouldShowFlash.value = false;
-    }, 1000);
-});
-
 const sidebarOpen = ref(false);
 </script>
 
 <template>
-    <FullScreenSpinner v-if="true || isDOMLoaded"></FullScreenSpinner>
-
-    <Flash
-        v-show="shouldShowFlash"
-        :showCloseButton="false"
-        :flash="$page.props.flash"
-    ></Flash>
-
     <!-- Static sidebar for mobile - start -->
     <TransitionRoot as="template" :show="sidebarOpen">
         <Dialog
@@ -204,7 +161,5 @@ const sidebarOpen = ref(false);
                 </main>
             </div>
         </main>
-        <FooterUniversal></FooterUniversal>
     </div>
-    <!--Topbar - end -->
 </template>

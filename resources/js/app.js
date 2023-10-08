@@ -13,7 +13,7 @@ const appName =
 createInertiaApp({
     title: (title) => `${appName} | ${title}`,
     // Disable or enable Inertia's default loading indicato
-    progress: false,
+    progress: true,
     //
     resolve: (name) =>
         resolvePageComponent(

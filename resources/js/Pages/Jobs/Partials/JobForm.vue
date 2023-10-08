@@ -1,5 +1,4 @@
 <script setup>
-import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { useForm } from "@inertiajs/vue3";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
@@ -19,7 +18,6 @@ import config from "@/utils/config";
 import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 import {
     Listbox,
@@ -929,9 +927,6 @@ onBeforeMount(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Title & description
                     </div>
-                    <p class="myPrimaryParagraph">
-                        Specify title & description.
-                    </p>
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">

@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import DeleteUserForm from "@/Pages/Profile/Partials/DeleteUserForm.vue";
 import LogoutOtherBrowserSessionsForm from "@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue";
@@ -26,20 +27,22 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
-    <LoggedInLayout>
-        <Head title="Update Password" />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Update Password</h2>
-        </template>
-        <template #description>Update Update Password</template>
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
+    <MainLayout>
+        <LoggedInLayout>
+            <Head title="Update Password" />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Update Password</h2>
+            </template>
+            <template #description>Update Update Password</template>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
 
-        <div>
-            <div v-if="$page.props.jetstream.canUpdatePassword">
-                <UpdatePasswordForm />
+            <div>
+                <div v-if="$page.props.jetstream.canUpdatePassword">
+                    <UpdatePasswordForm />
+                </div>
             </div>
-        </div>
-    </LoggedInLayout>
+        </LoggedInLayout>
+    </MainLayout>
 </template>

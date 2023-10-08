@@ -5,7 +5,6 @@ import EditorAccordion from "@/Components/PageBuilder/EditorMenu/EditorAccordion
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { PhotoIcon } from "@heroicons/vue/24/outline";
 import PageBuilder from "@/composables/PageBuilder";
-import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 
 const props = defineProps({
     team: {

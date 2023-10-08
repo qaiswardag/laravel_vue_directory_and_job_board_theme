@@ -1,4 +1,5 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
@@ -15,14 +16,16 @@ defineProps({
 });
 </script>
 <template>
-    <GuestsLayout :title="`${user?.first_name} ${user?.last_name}`">
-        <template #header> </template>
-        <div class="myPrimarySection">
-            <p class="my-12">User: {{ JSON.stringify(user) }}</p>
-            <p class="text-3xl my-8">
-                {{ user.first_name }}
-                {{ user.last_name }}
-            </p>
-        </div>
-    </GuestsLayout>
+    <MainLayout>
+        <GuestsLayout>
+            <template #header> </template>
+            <div class="myPrimarySection">
+                <p class="my-12">User: {{ JSON.stringify(user) }}</p>
+                <p class="text-3xl my-8">
+                    {{ user.first_name }}
+                    {{ user.last_name }}
+                </p>
+            </div>
+        </GuestsLayout>
+    </MainLayout>
 </template>

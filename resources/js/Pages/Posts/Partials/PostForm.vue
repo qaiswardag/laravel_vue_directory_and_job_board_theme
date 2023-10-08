@@ -1,5 +1,4 @@
 <script setup>
-import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { useForm } from "@inertiajs/vue3";
 import FormSection from "@/Components/Forms/FormSection.vue";
 import InputError from "@/Components/Forms/InputError.vue";
@@ -645,9 +644,6 @@ onBeforeMount(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Title & description
                     </div>
-                    <p class="myPrimaryParagraph">
-                        Specify title & description.
-                    </p>
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">

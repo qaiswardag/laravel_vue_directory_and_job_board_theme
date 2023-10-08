@@ -1,21 +1,24 @@
 <script setup>
+import MainLayout from "@/Layouts/MainLayout.vue";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
 </script>
 
 <template>
-    <GuestsLayout>
-        <Head title="Jobs" />
-        <template #header>
-            <div class="myPrimaryMainPageHeaderParagraph">
-                <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Jobs</h1>
-                <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                    Discover the ultimate minimalist administration panel with
-                    robust and multiple security layers and advanced features
-                    like Team Management, Blog and Media Library.
-                </p>
-            </div>
-        </template>
-    </GuestsLayout>
+    <MainLayout>
+        <GuestsLayout>
+            <Head title="Jobs" />
+            <template #header>
+                <div class="myPrimaryMainPageHeaderParagraph">
+                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Jobs</h1>
+                    <p class="myPrimaryMainPageParagraphNotLoggedIn">
+                        Discover the ultimate minimalist administration panel
+                        with robust and multiple security layers and advanced
+                        features like Team Management, Blog and Media Library.
+                    </p>
+                </div>
+            </template>
+        </GuestsLayout>
+    </MainLayout>
 </template>
