@@ -724,7 +724,6 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
-                    <p class="myPrimaryParagraph">Specify post status.</p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
@@ -811,7 +810,6 @@ onBeforeMount(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div
@@ -979,7 +977,6 @@ onBeforeMount(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Categories
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div @click="handleAddCategories" class="myPrimaryFakeSelect">
@@ -1086,7 +1083,6 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Tags</div>
-                    <p class="myPrimaryParagraph">Enter tags for the post.</p>
                 </div>
                 <div class="myInputGroup">
                     <Tags
@@ -1105,7 +1101,6 @@ onBeforeMount(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Show Authors
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"

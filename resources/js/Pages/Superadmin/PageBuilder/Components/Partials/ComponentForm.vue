@@ -5,7 +5,6 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { ref, computed, onBeforeMount, watch } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
@@ -586,7 +585,6 @@ const categoriesSorted = computed(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Categories
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div @click="handleAddCategories" class="myPrimaryFakeSelect">
@@ -695,7 +693,6 @@ const categoriesSorted = computed(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div

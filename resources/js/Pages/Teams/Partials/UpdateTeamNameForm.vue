@@ -368,7 +368,6 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Logo</div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div @click="handleUploadLogo" class="myPrimaryFakeSelect">
@@ -516,7 +515,6 @@ onBeforeMount(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div

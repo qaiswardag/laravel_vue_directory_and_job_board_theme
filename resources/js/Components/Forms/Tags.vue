@@ -91,7 +91,7 @@ onMounted(() => {
         </div>
     </div>
 
-    <div class="flex mt-3">
+    <div class="flex">
         <div
             class="mt-1 relative flex items-center w-full border myPrimaryInput py-0 p-0"
         >

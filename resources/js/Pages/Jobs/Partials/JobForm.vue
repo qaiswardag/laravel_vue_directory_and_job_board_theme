@@ -5,8 +5,6 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import { QuillEditor } from "@vueup/vue-quill";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { ref, computed, onBeforeMount, watch } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
@@ -413,32 +411,6 @@ const showErrorNotifications = ref(false);
 const notificationsModalButton = function () {
     showErrorNotifications.value = false;
 };
-
-// start Quill Editor
-// define options
-const globalOptions = {
-    // debug: "info",
-    modules: {
-        toolbar: ["bold", "italic", "underline"],
-    },
-    placeholder: "Compose an epic...",
-    readOnly: false,
-    theme: "snow",
-
-    //
-    //
-    toolbar: [
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-        ["bold", "italic", "underline"], // toggled buttons
-
-        [{ list: "ordered" }, { list: "bullet" }],
-
-        [{ align: [] }],
-
-        ["clean"], // remove formatting button
-    ],
-};
-// end Quill Editor
 
 const isSlugEditable = ref(false);
 const slugValueTitle = ref("");
@@ -1003,14 +975,8 @@ onBeforeMount(() => {
                         value="Post description"
                         class="mb-1"
                     />
-                    <QuillEditor
-                        id="content"
-                        v-model:content="postForm.content"
-                        contentType="html"
-                        :options="globalOptions"
-                        class="rounded-b-md bg-white"
-                    >
-                    </QuillEditor>
+                    <p>post content here</p>
+                    <!-- post content end -->
                     <InputError :message="postForm.errors.content" />
                 </div>
                 <!-- post content end -->
@@ -1022,7 +988,6 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
-                    <p class="myPrimaryParagraph">Specify post status.</p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
@@ -1109,7 +1074,6 @@ onBeforeMount(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div
@@ -1380,7 +1344,6 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">State</div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div @click="handleAddStates" class="myPrimaryFakeSelect">
@@ -1476,7 +1439,6 @@ onBeforeMount(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Categories
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div @click="handleAddCategories" class="myPrimaryFakeSelect">
@@ -1582,7 +1544,6 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Job Types</div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div @click="handleAddJobTypes" class="myPrimaryFakeSelect">
@@ -1677,7 +1638,6 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Tags</div>
-                    <p class="myPrimaryParagraph">Enter tags for the post.</p>
                 </div>
                 <div class="myInputGroup">
                     <Tags
@@ -1695,7 +1655,6 @@ onBeforeMount(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Show Authors
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"

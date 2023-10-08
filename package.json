@@ -33,7 +33,6 @@
         "@tiptap/pm": "^2.1.10",
         "@tiptap/starter-kit": "^2.1.10",
         "@tiptap/vue-3": "^2.1.10",
-        "@vueup/vue-quill": "^1.2.0",
         "date-fns": "^2.30.0",
         "laravel-vue-pagination": "^4.1.0",
         "nprogress": "^0.2.0",

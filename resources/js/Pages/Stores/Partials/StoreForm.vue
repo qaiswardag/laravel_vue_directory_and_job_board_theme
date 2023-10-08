@@ -1067,7 +1067,6 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
-                    <p class="myPrimaryParagraph">Specify post status.</p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
@@ -1154,7 +1153,6 @@ const pageBuilder = new PageBuilder(store);
                     <div class="myPrimaryFormOrganizationHeader">
                         Cover image
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div
@@ -1320,7 +1318,6 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">State</div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div @click="handleAddStates" class="myPrimaryFakeSelect">
@@ -1415,7 +1412,6 @@ const pageBuilder = new PageBuilder(store);
                     <div class="myPrimaryFormOrganizationHeader">
                         Categories
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <!-- select - start -->
                 <div @click="handleAddCategories" class="myPrimaryFakeSelect">
@@ -1522,7 +1518,6 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Tags</div>
-                    <p class="myPrimaryParagraph">Enter tags for the post.</p>
                 </div>
                 <div class="myInputGroup">
                     <Tags
@@ -1540,7 +1535,6 @@ const pageBuilder = new PageBuilder(store);
                     <div class="myPrimaryFormOrganizationHeader">
                         Show Authors
                     </div>
-                    <p class="myPrimaryParagraph">Sit amet, adipiscing elit.</p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
