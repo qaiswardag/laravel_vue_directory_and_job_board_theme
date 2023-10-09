@@ -127,6 +127,10 @@ class SubscriptionController extends Controller
                 "email" => $request->email,
             ]);
 
+            // TODO: ability to add vat number
+            // $taxId = $user->createTaxId("eu_vat", "DK34329249");
+            $taxId = $user->createTaxId("ae_trn", "123456789012345");
+
             $stripeCustomer
                 // The first argument passed to the newSubscription method
                 // should be the internal name of the subscription.

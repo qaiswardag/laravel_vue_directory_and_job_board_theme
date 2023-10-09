@@ -169,8 +169,10 @@ const filteredCountries = computed(() =>
 );
 
 const selectedCountry = ref(countryListAllIsoData[0]);
+
 //
 const handleCountryDropdownFocus = function () {
+    return;
     if (selectedCountry.value?.name === "Search..") {
         // selectedCountry.value.name = "Search..";
     }

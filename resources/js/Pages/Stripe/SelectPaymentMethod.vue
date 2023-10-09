@@ -22,7 +22,6 @@ import { CheckIcon, TrashIcon } from "@heroicons/vue/24/outline";
 
 const store = useStore();
 
-console.log(`køre den???`);
 const props = defineProps({
     user: {
         required: true,
@@ -160,10 +159,11 @@ const handleSetDefaultPaymentMethod = function (method) {
     // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 3;
-    titleModal.value = `Update payment method?`;
-    descriptionModal.value = `Are you sure you want to update payment method?`;
+    titleModal.value = `Set default payment method`;
+    descriptionModal.value = `Are you sure you want to set this payment method as default?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
+    thirdButtonModal.value = "Set as default";
 
     // handle click
     firstModalButtonFunction.value = function () {
@@ -187,7 +187,6 @@ const updatePaymentMethodForm = useForm({
 
 const updateDefaultPaymentMethod = function (method) {
     updatePaymentMethodForm.payment_method_id = method.id;
-    console.log(`update this:`, updatePaymentMethodForm.payment_method_id);
 
     updatePaymentMethodForm.post(route("stripe.payment.methods.update"), {
         preserveScroll: true,
@@ -373,7 +372,7 @@ onMounted(() => {
                                                 fetchedPaymentMethods?.defaultPaymentMethodId !==
                                                 paymentMethod.id
                                             "
-                                            class="myPrimaryTag transition bg-white mt-0"
+                                            class="myPrimaryTag transition bg-white mt-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             type="button"
                                             @click="
                                                 handleSetDefaultPaymentMethod(
@@ -412,9 +411,7 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <div
-                    class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
-                >
+                <div class="flex items-center justify-between pt-2 mt-2">
                     <p
                         @click="handleCreatePaymentMethod"
                         class="myPrimaryParagraph text-xs italic cursor-pointer mb-2"

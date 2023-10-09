@@ -14,6 +14,7 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use Laravel\Cashier\Billable;
+use function Illuminate\Events\queueable;
 
 class User extends Authenticatable
 {
@@ -118,5 +119,41 @@ class User extends Authenticatable
             // assign the unique username to the user model
             $user->username = $username;
         });
+    }
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::updated(
+            queueable(function (User $customer) {
+                $name = $customer->first_name . " " . $customer->last_name;
+                $email = $customer->email;
+                $stripeCustomer = null;
+
+                if ($customer->hasStripeId()) {
+                    $stripeCustomer = $customer->asStripeCustomer() ?? null;
+                }
+
+                if ($stripeCustomer && $stripeCustomer->isDeleted()) {
+                    $customer
+                        ->forceFill([
+                            "stripe_id" => null,
+                            "trial_ends_at" => null,
+                            "pm_type" => null,
+                            "pm_last_four" => null,
+                        ])
+                        ->save();
+                }
+
+                if ($customer->hasStripeId()) {
+                    $customer->updateStripeCustomer([
+                        "name" => $name,
+                        "email" => $email,
+                    ]);
+                }
+            })
+        );
     }
 }
