@@ -22,6 +22,7 @@ import { CheckIcon, TrashIcon } from "@heroicons/vue/24/outline";
 
 const store = useStore();
 
+console.log(`køre den???`);
 const props = defineProps({
     user: {
         required: true,
@@ -163,7 +164,6 @@ const handleSetDefaultPaymentMethod = function (method) {
     descriptionModal.value = `Are you sure you want to update payment method?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
-    thirdButtonModal.value = "Update";
 
     // handle click
     firstModalButtonFunction.value = function () {
@@ -188,10 +188,6 @@ const updatePaymentMethodForm = useForm({
 const updateDefaultPaymentMethod = function (method) {
     updatePaymentMethodForm.payment_method_id = method.id;
     console.log(`update this:`, updatePaymentMethodForm.payment_method_id);
-
-    //
-    //
-    //
 
     updatePaymentMethodForm.post(route("stripe.payment.methods.update"), {
         preserveScroll: true,

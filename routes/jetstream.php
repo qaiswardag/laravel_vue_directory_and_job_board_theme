@@ -4,6 +4,7 @@ use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\LoggedIn\Team\TeamController as TeamTeamController;
 use App\Http\Controllers\LoggedIn\Team\TeamDeleteController;
 use App\Http\Controllers\LoggedIn\Team\TeamMemberController as TeamTeamMemberController;
+use App\Http\Controllers\LoggedIn\User\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
@@ -51,7 +52,7 @@ Route::group(
             function () {
                 // User & Profile...
                 Route::get("/user/profile", [
-                    UserProfileController::class,
+                    UserController::class,
                     "show",
                 ])->name("profile.show");
 

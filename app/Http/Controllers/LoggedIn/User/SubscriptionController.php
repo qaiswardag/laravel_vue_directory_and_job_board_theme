@@ -51,7 +51,7 @@ class SubscriptionController extends Controller
         $stripeCustomer = $user->asStripeCustomer();
 
         // if user is deleted at Stripe
-        if ($stripeCustomer->isDeleted()) {
+        if ($stripeCustomer && $stripeCustomer->isDeleted()) {
             $user
                 ->forceFill([
                     "stripe_id" => null,
