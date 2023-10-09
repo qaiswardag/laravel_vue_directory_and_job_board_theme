@@ -3,6 +3,9 @@
 namespace App\Http\Requests\LoggedIn\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Cashier\Cashier;
+
 use Validator;
 
 class StoreSubscriptionRequest extends FormRequest
@@ -23,7 +26,6 @@ class StoreSubscriptionRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            "payment_method" => ["required", "string", "min:2", "max:255"],
             "first_name" => ["required", "string", "max:255"],
             "last_name" => ["required", "string", "max:255"],
             "email" => ["required", "email", "max:255"],
@@ -41,7 +43,62 @@ class StoreSubscriptionRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $validator->after(function ($validator) {});
+        $noDefaultPaymentMethodError =
+            "Oops! No default payment method has been selected. Please select a default payment method.";
+
+        $user = Auth::user();
+
+        $stripeId = $user->stripe_id;
+        $stripeCustomer = Cashier::findBillable($stripeId);
+
+        $defaultPaymentMethodId =
+            $stripeCustomer->defaultPaymentMethod()->id ?? null;
+
+        $paymentMethods = $stripeCustomer->paymentMethods();
+
+        $validator->after(function ($validator) use (
+            $noDefaultPaymentMethodError,
+            $defaultPaymentMethodId,
+            $paymentMethods
+        ) {
+            if (!$defaultPaymentMethodId) {
+                $validator
+                    ->errors()
+                    ->add("payment_method_id", $noDefaultPaymentMethodError);
+            }
+            //
+            //
+            if (!$paymentMethods) {
+                $validator
+                    ->errors()
+                    ->add("payment_method_id", $noDefaultPaymentMethodError);
+            }
+
+            //
+            //
+            if ($paymentMethods) {
+                $validPaymentMethod = false;
+
+                foreach ($paymentMethods as $paymentMethod) {
+                    if ($paymentMethod->id === $defaultPaymentMethodId) {
+                        $validPaymentMethod = true;
+                        break;
+                    }
+                }
+
+                if (!$validPaymentMethod) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            "payment_method_id",
+                            $noDefaultPaymentMethodError
+                        );
+                }
+            }
+        });
+
+        //
+        //
 
         // if validator fails
         if ($validator->fails()) {

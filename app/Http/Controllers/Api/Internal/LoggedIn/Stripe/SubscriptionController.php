@@ -28,11 +28,7 @@ class SubscriptionController extends Controller
 
         $subscriptions = [];
 
-        if (!$stripeCustomer) {
-            $user->update([
-                "stripe_id" => null,
-            ]);
-        } else {
+        if ($stripeCustomer) {
             $subscriptionsActive = $stripeCustomer
                 ->subscriptions()
                 ->active()

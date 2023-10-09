@@ -191,7 +191,7 @@
     }
 
     .myPrimaryButton {
-        @apply sm:text-base text-sm whitespace-nowrap break-keep font-medium inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor px-5 py-3  text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
+        @apply sm:text-base text-sm whitespace-nowrap break-keep font-medium inline-flex gap-1 items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor px-5 py-3  text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2
         focus-visible:ring-2 focus-visible:ring-myPrimaryLinkColor;
     }
@@ -391,7 +391,7 @@
         @apply relative myPrimaryInput w-full;
     }
     .myPrimaryFakeSelect {
-        @apply hover:ring-opacity-20 hover:ring-purple-500 border border-gray-200 flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-4 rounded-md;
+        @apply hover:ring-opacity-20 hover:ring-purple-500 border border-gray-200 flex flex-row justify-between items-center myPrimaryGap py-2.5 pl-3 pr-1 cursor-pointer hover:border-transparent hover:ring-4 rounded-md;
     }
     .myPrimaryFakeSelectNoHover {
         @apply myPrimaryFakeSelect focus:outline-none focus:border-transparent hover:border-transparent;

@@ -20,6 +20,7 @@ import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import { delay } from "@/helpers/delay";
+import FullScreenPageSpinner from "@/Components/Loaders/FullScreenPageSpinner.vue";
 
 import {
     Listbox,
@@ -921,6 +922,7 @@ onMounted(() => {
 const pageBuilder = new PageBuilder(store);
 </script>
 <template>
+    <FullScreenPageSpinner v-if="isLoading"></FullScreenPageSpinner>
     <PageBuilderModal
         :show="openDesignerModal"
         :updateOrCreate="formType"

@@ -70,7 +70,7 @@ import {
                 "
                 class="flex items-center justify-center px-2 py-2"
             >
-                <Link :href="route('profile.show')">
+                <Link :href="route('user.teams.switch')">
                     <p class="myPrimaryParagraph font-medium">
                         {{ $page.props.currentUserTeam?.name }}
                     </p>
@@ -162,7 +162,9 @@ import {
                 route().current('user.profile.update') ||
                 route().current('user.profile.password') ||
                 route().current('user.profile.security') ||
-                route().current('stripe.payment.subscription.index')
+                route().current('user.profile.security') ||
+                route().current('stripe.payment.subscription.index') ||
+                route().current('stripe.payments.index')
             "
         >
             <UserIcon class="myMediumIcon"></UserIcon>

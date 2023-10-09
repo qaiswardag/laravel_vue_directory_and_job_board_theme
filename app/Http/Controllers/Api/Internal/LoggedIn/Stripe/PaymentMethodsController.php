@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Laravel\Cashier\Cashier;
 
 class PaymentMethodsController extends Controller
 {
@@ -14,10 +15,17 @@ class PaymentMethodsController extends Controller
      */
     public function index(User $user)
     {
-        $paymentMethods = $user->paymentMethods();
+        $stripeId = $user->stripe_id;
+        $stripeCustomer = Cashier::findBillable($stripeId);
+
+        $paymentMethods = $stripeCustomer->paymentMethods();
+
+        $defaultPaymentMethodId =
+            $stripeCustomer->defaultPaymentMethod()->id ?? null;
 
         return [
             "paymentMethods" => $paymentMethods,
+            "defaultPaymentMethodId" => $defaultPaymentMethodId,
         ];
     }
 

@@ -3,7 +3,6 @@ export default {
 
     // state
     state: {
-        paymentMethod: null,
         user: {
             id: 1,
             name: "Joe Doe",
@@ -17,18 +16,12 @@ export default {
         getCurrentUser(state) {
             return state.user;
         },
-        getPaymentMethod(state) {
-            return state.paymentMethod;
-        },
 
         // end getters
     },
 
     // mutations
     mutations: {
-        setPaymentMethod(state, payload) {
-            state.paymentMethod = payload;
-        },
         setCurrentUser(state, payload) {
             state.user = payload;
         },

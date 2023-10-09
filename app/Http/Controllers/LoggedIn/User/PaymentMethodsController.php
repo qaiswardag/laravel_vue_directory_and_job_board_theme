@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\LoggedIn\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoggedIn\User\StoreDestroyPaymentMethod;
 use App\Http\Requests\LoggedIn\User\StorePaymentMethodsRequest;
+use App\Http\Requests\LoggedIn\User\StoreUpdatePaymentMethod;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Cashier;
+use Illuminate\Support\Facades\Validator;
 
 class PaymentMethodsController extends Controller
 {
@@ -54,16 +57,25 @@ class PaymentMethodsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreUpdatePaymentMethod $request)
     {
-        //
+        $user = Auth::user();
+
+        $stripeId = $user->stripe_id;
+        $stripeCustomer = Cashier::findBillable($stripeId);
+
+        $stripeCustomer->updateDefaultPaymentMethod(
+            $request->payment_method_id
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($paymentMethodId)
+    public function destroy(StoreDestroyPaymentMethod $request)
     {
+        $paymentMethodId = $request->payment_method_id;
+
         $user = Auth::user();
 
         $stripeId = $user->stripe_id;

@@ -35,8 +35,8 @@ import {
 
 // get images
 const {
-    handleData: handleGetSubscriptions,
-    fetchedData: fetchedSubscriptions,
+    handleData: handleGetPayments,
+    fetchedData: fetchedPayments,
     isError: isErrorSubscriptions,
     error: errorSubscriptions,
     errors: errorsSubscriptions,
@@ -44,12 +44,12 @@ const {
     isSuccess: isSuccessSubscriptions,
 } = vueFetch();
 
-const getSubscriptions = function () {
-    handleGetSubscriptions(route("stripe.api.internal.subscriptions.index"));
+const getPayments = function () {
+    handleGetPayments(route("stripe.api.internal.payment.index"));
 };
 
 onMounted(() => {
-    getSubscriptions();
+    getPayments();
 });
 
 const breadcrumbsLinks = [
@@ -61,7 +61,7 @@ const breadcrumbsLinks = [
         },
     },
     {
-        label: "Subscriptions",
+        label: "Payments",
     },
 ];
 
@@ -169,20 +169,20 @@ const deletePostForm = useForm({});
 
             <template
                 v-if="
-                    fetchedSubscriptions &&
-                    fetchedSubscriptions.subscriptions &&
-                    Array.isArray(fetchedSubscriptions.subscriptions) &&
-                    fetchedSubscriptions.subscriptions.length === 0
+                    fetchedPayments &&
+                    fetchedPayments.payments &&
+                    Array.isArray(fetchedPayments.payments) &&
+                    fetchedPayments.payments.length === 0
                 "
             >
-                <h1 class="myPrimaryHeaderMessage">No Subscriptions</h1>
+                <h1 class="myPrimaryHeaderMessage">No Payments</h1>
                 <p class="myPrimaryParagraph">
-                    Looks like there are no subscriptions!
+                    Looks like there are no payments!
                 </p>
             </template>
 
             <p class="my-12">
-                fetchedSubscriptions: {{ JSON.stringify(fetchedSubscriptions) }}
+                fetchedPayments: {{ JSON.stringify(fetchedPayments) }}
             </p>
             <div
                 v-if="false && posts && posts.data.length >= 1"

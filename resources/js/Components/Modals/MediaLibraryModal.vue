@@ -364,7 +364,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                         class="hidden sm:block"
                                                     >
                                                         <div
-                                                            class="flex items-center border border-gray-200 py-1 px-2"
+                                                            class="flex items-center border border-gray-200 py-1 px-2 rounded"
                                                         >
                                                             <nav
                                                                 class="flex-1 -mb-px flex space-x-6 xl:space-x-8"

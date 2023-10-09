@@ -103,9 +103,6 @@ const createTeam = () => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Team Name</div>
-                    <p class="myPrimaryParagraph">
-                        Please specify a name for the team.
-                    </p>
                 </div>
                 <div class="myInputGroup">
                     <InputLabel for="name" value="Team Name" />
@@ -125,7 +122,6 @@ const createTeam = () => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
-                    <p class="myPrimaryParagraph">Specify Team status.</p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"

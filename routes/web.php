@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Internal\LoggedIn\DashboardStatsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\MediaLibraryController as LoggedInMediaLibraryController;
 use App\Http\Controllers\Api\Internal\LoggedIn\PageBuilderComponentsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\PaymentMethodsController;
+use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\PaymentsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\SubscriptionController as StripeSubscriptionController;
 use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\LoggedIn\Job\JobController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
 use App\Http\Controllers\LoggedIn\User\PaymentMethodsController as UserPaymentMethodsController;
+use App\Http\Controllers\LoggedIn\User\PaymentsController as UserPaymentsController;
 use App\Http\Controllers\LoggedIn\User\SubscriptionController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
 use App\Http\Controllers\Superadmin\PageBuilder\PageBuilderController;
@@ -365,7 +367,12 @@ Route::middleware([
         "store",
     ])->name("stripe.payment.methods.store");
 
-    Route::delete("/stripe/payment/methods/destroy/{id}", [
+    Route::post("/stripe/payment/methods/update", [
+        UserPaymentMethodsController::class,
+        "update",
+    ])->name("stripe.payment.methods.update");
+
+    Route::delete("/stripe/payment/methods/destroy", [
         UserPaymentMethodsController::class,
         "destroy",
     ])->name("stripe.payment.methods.destroy");
@@ -388,11 +395,21 @@ Route::middleware([
         "index",
     ])->name("stripe.payment.subscription.index");
 
+    Route::get("/stripe/payments/index", [
+        UserPaymentsController::class,
+        "index",
+    ])->name("stripe.payments.index");
     //
     //
     //
     //
-    Route::get("/stripe/api/payment/subscriptions/index/{user}", [
+    Route::get("/stripe/api/internal/payments/index", [
+        PaymentsController::class,
+        "index",
+    ])->name("stripe.api.internal.payment.index");
+    //
+    //
+    Route::get("/stripe/api/payment/subscriptions/index", [
         StripeSubscriptionController::class,
         "index",
     ])->name("stripe.api.internal.subscriptions.index");

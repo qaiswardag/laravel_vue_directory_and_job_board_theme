@@ -21,7 +21,7 @@ class SubscriptionController extends Controller
      * Display a listing of the resource.
      *
      */
-    public function index(User $user)
+    public function index()
     {
         return Inertia::render("Profile/Subscriptions/Index");
     }
@@ -55,6 +55,9 @@ class SubscriptionController extends Controller
             $user
                 ->forceFill([
                     "stripe_id" => null,
+                    "trial_ends_at" => null,
+                    "pm_type" => null,
+                    "pm_last_four" => null,
                 ])
                 ->save();
 
@@ -98,13 +101,6 @@ class SubscriptionController extends Controller
      */
     public function store(StoreSubscriptionRequest $request)
     {
-        //
-        //
-        //
-        //
-        //
-        $paymentMethod = $request->payment_method;
-
         $user = User::findOrFail($request->user_id);
 
         $productId = $request->product_id;
@@ -115,6 +111,8 @@ class SubscriptionController extends Controller
         $stripeCustomer = Cashier::findBillable($stripeId);
 
         //
+        $defaultPaymentMethodId =
+            $stripeCustomer->defaultPaymentMethod()->id ?? "";
         //
         //
         //
@@ -147,7 +145,7 @@ class SubscriptionController extends Controller
 
                 ->newSubscription($productId, "price_1NwSQ7EuESfVmAWoiDjlkbRQ") // signle store
                 ->quantity(1)
-                ->create($paymentMethod ? $paymentMethod : "");
+                ->create($defaultPaymentMethodId);
         } catch (Exception $exception) {
             Log::error(
                 "Something went wrong creating the subscription. {$exception}"

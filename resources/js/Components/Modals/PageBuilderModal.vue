@@ -1,6 +1,12 @@
 <script setup>
 import Modal from "@/Components/Modals/Modal.vue";
-import { CheckIcon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import {
+    CheckIcon,
+    BellIcon,
+    XMarkIcon,
+    BookmarkIcon,
+    PencilIcon,
+} from "@heroicons/vue/24/outline";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import { useStore } from "vuex";
@@ -203,6 +209,9 @@ onMounted(() => {
                                         @click="secondButton"
                                         type="button"
                                     >
+                                        <BookmarkIcon
+                                            class="mySmallIcon p-0 m-0"
+                                        ></BookmarkIcon>
                                         Save & Close
                                     </button>
                                     <button
@@ -214,6 +223,9 @@ onMounted(() => {
                                         @click="handleDraftForUpdate"
                                         type="button"
                                     >
+                                        <PencilIcon
+                                            class="mySmallIcon p-0 m-0"
+                                        ></PencilIcon>
                                         Draft
                                     </button>
                                 </div>

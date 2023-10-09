@@ -32,10 +32,6 @@ const handleSubmit = () => {
     createOrUpdate();
 };
 
-const getPaymentMethod = computed(() => {
-    return store.getters["user/getPaymentMethod"];
-});
-
 const selectedProduct = ref(null);
 
 const handleSelectProduct = function (product) {
@@ -54,13 +50,9 @@ const formSubscription = useForm({
     last_name: props.user.last_name,
     email: props.user.email,
     product_id: null,
-    payment_method: null,
 });
 
 const createOrUpdate = () => {
-    formSubscription.payment_method = getPaymentMethod.value?.id;
-
-    console.log(`den er:`, formSubscription.payment_method);
     if (formType.value === "create") {
         console.log(`came here..`);
         formSubscription.post(route("stripe.stores.store.subscription"), {
@@ -90,7 +82,6 @@ onBeforeMount(() => {
         <template #title> Subscription Form </template>
         <template #main>
             <div class="myInputsOrganization">
-                <p class="my-12">intent: {{ intent }}</p>
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Billing Information
@@ -176,72 +167,84 @@ onBeforeMount(() => {
                                 :key="product.id"
                             >
                                 <div
-                                    class="border border-transparent hover:border-myPrimaryLinkColor border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-red-50"
+                                    class="flex flex-col gap-2 border border-transparent hover:border-myPrimaryLinkColor border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-red-50"
                                 >
-                                    <div class="flex items-center">
-                                        <div class="flex flex-col text-sm">
-                                            <div
-                                                as="span"
-                                                class="font-medium text-gray-900"
-                                            >
-                                                <h3
-                                                    :id="product.id"
-                                                    class="text-gray-900 text-lg font-semibold leading-8"
+                                    <div>
+                                        <div class="flex items-center">
+                                            <div class="flex flex-col text-sm">
+                                                <div
+                                                    as="span"
+                                                    class="font-medium text-gray-900"
                                                 >
-                                                    {{ product.name }}
-                                                </h3>
+                                                    <h3
+                                                        :id="product.id"
+                                                        class="text-gray-900 text-lg font-semibold leading-8"
+                                                    >
+                                                        {{ product.name }}
+                                                    </h3>
 
-                                                <p
-                                                    class="mt-2 flex items-baseline gap-x-1"
-                                                >
-                                                    <span
-                                                        class="text-2xl font-bold tracking-tight text-gray-900"
-                                                        >{{
-                                                            product.price
-                                                        }}</span
+                                                    <p
+                                                        class="mt-2 flex items-baseline gap-x-1"
                                                     >
-                                                    <span
-                                                        class="text-sm font-semibold leading-6 text-gray-600"
-                                                        >{{
-                                                            product.frequencies
-                                                        }}</span
+                                                        <span
+                                                            class="text-2xl font-bold tracking-tight text-gray-900"
+                                                            >{{
+                                                                product.price
+                                                            }}</span
+                                                        >
+                                                        <span
+                                                            class="text-sm font-semibold leading-6 text-gray-600"
+                                                            >{{
+                                                                product.frequencies
+                                                            }}</span
+                                                        >
+                                                    </p>
+                                                    <p
+                                                        class="block text-[10px] leading-6 text-gray-600 italic mt-1"
                                                     >
-                                                </p>
-                                                <p
-                                                    class="block text-[10px] leading-6 text-gray-600 italic mt-1"
-                                                >
-                                                    {{ product.billed }}
-                                                </p>
+                                                        {{ product.billed }}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <button
-                                            class="myPrimaryTag transition bg-white mt-0"
-                                            v-if="
-                                                selectedProduct?.id !==
-                                                product.id
-                                            "
-                                            type="button"
-                                            @click="
-                                                handleSelectProduct(product)
-                                            "
+
+                                        <div
+                                            class="flex gap-2 justify-between items-start border-t border-gray-200 pt-2"
                                         >
-                                            <span> Select </span>
-                                        </button>
-                                        <button
-                                            class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
-                                            v-if="
-                                                selectedProduct?.id ===
-                                                product.id
-                                            "
-                                            type="button"
-                                            @click="
-                                                handleSelectProduct(product)
-                                            "
-                                        >
-                                            <span> Selected</span>
-                                        </button>
+                                            <div></div>
+                                            <div>
+                                                <button
+                                                    class="myPrimaryTag transition bg-white mt-0"
+                                                    v-if="
+                                                        selectedProduct?.id !==
+                                                        product.id
+                                                    "
+                                                    type="button"
+                                                    @click="
+                                                        handleSelectProduct(
+                                                            product
+                                                        )
+                                                    "
+                                                >
+                                                    <span> Select </span>
+                                                </button>
+                                                <button
+                                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
+                                                    v-if="
+                                                        selectedProduct?.id ===
+                                                        product.id
+                                                    "
+                                                    type="button"
+                                                    @click="
+                                                        handleSelectProduct(
+                                                            product
+                                                        )
+                                                    "
+                                                >
+                                                    <span> Selected</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -262,7 +265,9 @@ onBeforeMount(() => {
                     :intent="intent"
                     :publishableKey="publishableKey"
                 ></SelectPaymentMethod>
-                <InputError :message="formSubscription.errors.payment_method" />
+                <InputError
+                    :message="formSubscription.errors.payment_method_id"
+                />
             </div>
         </template>
         <template #actions>

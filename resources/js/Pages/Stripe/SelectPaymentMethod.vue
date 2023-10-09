@@ -18,7 +18,7 @@ import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vu
 
 import { vueFetch } from "use-lightweight-fetch";
 import { PlusIcon } from "@heroicons/vue/20/solid";
-import { TrashIcon } from "@heroicons/vue/24/outline";
+import { CheckIcon, TrashIcon } from "@heroicons/vue/24/outline";
 
 const store = useStore();
 
@@ -53,18 +53,6 @@ const fetchPaymentMethods = function () {
     );
 };
 
-const selectedMethod = ref(null);
-
-const handleSelectPaymentMethod = function (method) {
-    if (selectedMethod.value?.id === method.id) {
-        selectedMethod.value = null;
-        store.commit("user/setPaymentMethod", null);
-    } else {
-        selectedMethod.value = method;
-        store.commit("user/setPaymentMethod", selectedMethod.value);
-    }
-};
-
 const showModalPaymentMethodForm = ref(false);
 const firstButtonTextModalPaymentMethodForm = ref(null);
 const titleModalPaymentMethodForm = ref(null);
@@ -88,6 +76,7 @@ const handleCreatePaymentMethod = function () {
 };
 
 const modalShowDeletePaymentMethod = ref(false);
+const modalShowUpdatePaymentMethod = ref(false);
 
 // modal content
 const typeModal = ref("");
@@ -131,31 +120,90 @@ const handleDeletePaymentMethod = function (method) {
     // };
     // handle click
     thirdModalButtonFunction.value = function () {
-        deletePost(method);
+        deletePaymentMethod(method);
     };
     // end modal
 };
 
-const deletePaymentMethodForm = useForm({});
+const deletePaymentMethodForm = useForm({
+    payment_method_id: null,
+});
 
 //
 //
 //
 // form action
-const deletePost = (method) => {
-    deletePaymentMethodForm.delete(
-        route("stripe.payment.methods.destroy", [method.id]),
-        {
-            preserveScroll: true,
-            onSuccess: () => (modalShowDeletePaymentMethod.value = false),
-            onError: (err) => {},
-            onFinish: (log) => {
-                modalShowDeletePaymentMethod.value = false;
-                fetchPaymentMethods();
-            },
-        }
-    );
+const deletePaymentMethod = (method) => {
+    deletePaymentMethodForm.payment_method_id = method.id;
+    deletePaymentMethodForm.delete(route("stripe.payment.methods.destroy"), {
+        preserveScroll: true,
+        onSuccess: () => (modalShowDeletePaymentMethod.value = false),
+        onError: (err) => {},
+        onFinish: (log) => {
+            modalShowDeletePaymentMethod.value = false;
+            fetchPaymentMethods();
+        },
+    });
 };
+
+//
+//
+//
+//
+//
+//
+const handleSetDefaultPaymentMethod = function (method) {
+    //
+    modalShowUpdatePaymentMethod.value = true;
+
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 3;
+    titleModal.value = `Update payment method?`;
+    descriptionModal.value = `Are you sure you want to update payment method?`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Update";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowUpdatePaymentMethod.value = false;
+    };
+
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        updateDefaultPaymentMethod(method);
+    };
+    // end modal
+};
+//
+//
+//
+//
+const updatePaymentMethodForm = useForm({
+    payment_method_id: null,
+});
+
+const updateDefaultPaymentMethod = function (method) {
+    updatePaymentMethodForm.payment_method_id = method.id;
+    console.log(`update this:`, updatePaymentMethodForm.payment_method_id);
+
+    //
+    //
+    //
+
+    updatePaymentMethodForm.post(route("stripe.payment.methods.update"), {
+        preserveScroll: true,
+        onSuccess: () => {},
+        onError: () => {},
+        onFinish: () => {
+            modalShowUpdatePaymentMethod.value = false;
+            fetchPaymentMethods();
+        },
+    });
+};
+
 onMounted(() => {
     fetchPaymentMethods();
 });
@@ -171,6 +219,24 @@ onMounted(() => {
     </template>
     <DynamicModal
         :show="modalShowDeletePaymentMethod"
+        :type="typeModal"
+        :disabled="deletePaymentMethodForm.processing"
+        disabledWhichButton="thirdButton"
+        :gridColumnAmount="gridColumnModal"
+        :title="titleModal"
+        :description="descriptionModal"
+        :firstButtonText="firstButtonModal"
+        :secondButtonText="secondButtonModal"
+        :thirdButtonText="thirdButtonModal"
+        @firstModalButtonFunction="firstModalButtonFunction"
+        @secondModalButtonFunction="secondModalButtonFunction"
+        @thirdModalButtonFunction="thirdModalButtonFunction"
+    >
+        <header></header>
+        <main></main>
+    </DynamicModal>
+    <DynamicModal
+        :show="modalShowUpdatePaymentMethod"
         :type="typeModal"
         :disabled="deletePaymentMethodForm.processing"
         disabledWhichButton="thirdButton"
@@ -237,7 +303,7 @@ onMounted(() => {
                     class="p-2 border border-myPrimaryLightGrayColor"
                 >
                     <div
-                        class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                        class="min-h-[4rem] max-h-[32rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
                     >
                         <div
                             as="template"
@@ -304,36 +370,44 @@ onMounted(() => {
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></TrashIcon>
                                     </button>
+
                                     <div>
                                         <button
-                                            class="myPrimaryTag transition bg-white mt-0"
                                             v-if="
-                                                selectedMethod?.id !==
+                                                fetchedPaymentMethods?.defaultPaymentMethodId !==
                                                 paymentMethod.id
                                             "
+                                            class="myPrimaryTag transition bg-white mt-0"
                                             type="button"
                                             @click="
-                                                handleSelectPaymentMethod(
+                                                handleSetDefaultPaymentMethod(
                                                     paymentMethod
                                                 )
                                             "
                                         >
-                                            <span> Select </span>
+                                            <span> Set default </span>
                                         </button>
                                         <button
-                                            class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
                                             v-if="
-                                                selectedMethod?.id ===
+                                                fetchedPaymentMethods?.defaultPaymentMethodId ===
                                                 paymentMethod.id
                                             "
+                                            class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
                                             type="button"
                                             @click="
-                                                handleSelectPaymentMethod(
+                                                handleSetDefaultPaymentMethod(
                                                     paymentMethod
                                                 )
                                             "
                                         >
-                                            <span> Selected</span>
+                                            <div
+                                                class="flex items-center justify-center gap-2"
+                                            >
+                                                <span> Default</span>
+                                                <CheckIcon
+                                                    class="w-3 h-3 stroke-2"
+                                                ></CheckIcon>
+                                            </div>
                                         </button>
                                     </div>
                                 </div>
@@ -362,6 +436,21 @@ onMounted(() => {
                     </button>
                 </div>
             </div>
+
+            <InputError
+                v-if="
+                    deletePaymentMethodForm.errors &&
+                    deletePaymentMethodForm.errors.payment_method_id
+                "
+                :message="deletePaymentMethodForm.errors.payment_method_id"
+            />
+            <InputError
+                v-if="
+                    updatePaymentMethodForm.errors &&
+                    updatePaymentMethodForm.errors.payment_method_id
+                "
+                :message="updatePaymentMethodForm.errors.payment_method_id"
+            />
         </div>
     </div>
     <ModalPaymentMethodForm
