@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Exceptions\IncompletePayment;
 use Stripe\Customer;
+use Stripe\Error as Stripe;
 
 class SubscriptionController extends Controller
 {
@@ -117,9 +118,26 @@ class SubscriptionController extends Controller
         //
         //
         if (!$stripeCustomer) {
-            // dd("IS NOT CUSTOMER", $stripeCustomer);
             $stripeCustomer = $user->createAsStripeCustomer();
         }
+
+        try {
+            $taxId = $stripeCustomer->createTaxId("eu_vat", "DK1234");
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            switch ($e->getStripeCode()) {
+                case "tax_id_invalid":
+                    throw \Illuminate\Validation\ValidationException::withMessages(
+                        [
+                            "tax_id" => ["Invalid value for eu_vat."],
+                        ]
+                    );
+
+                default:
+                    throw $e; // Just re-throw original exception
+            }
+        }
+
+        dd("Should not come here");
 
         try {
             $user->updateStripeCustomer([
@@ -128,8 +146,18 @@ class SubscriptionController extends Controller
             ]);
 
             // TODO: ability to add vat number
-            // $taxId = $user->createTaxId("eu_vat", "DK34329249");
-            $taxId = $user->createTaxId("ae_trn", "123456789012345");
+            //    TAX # START
+            //    TAX # START
+            //    TAX # START
+            //    TAX # START
+
+            // $taxId = $customer->createTaxId("eu_vat", "DK1234");
+            // $taxId = $customer->createTaxId("eu_vat", "DK34329249");
+
+            //    TAX # END
+            //    TAX # END
+            //    TAX # END
+            //    TAX # END
 
             $stripeCustomer
                 // The first argument passed to the newSubscription method

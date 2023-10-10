@@ -61,7 +61,7 @@ const maintains = true;
             <div
                 class="mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8 z-20"
             >
-                <div v-if="maintains">
+                <div v-if="maintains && props.status === 503">
                     <h1 class="myPrimaryMainPageHeaderNotLoggedIn text-white">
                         myself fashion &amp; jobs <br />
                     </h1>
@@ -74,7 +74,7 @@ const maintains = true;
                     </p>
                 </div>
 
-                <div v-if="!maintains">
+                <div v-if="props.status !== 503">
                     <p class="text-base font-normal leading-8 text-white">
                         {{ props.status }}
                     </p>

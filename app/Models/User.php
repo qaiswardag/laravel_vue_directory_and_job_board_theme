@@ -151,6 +151,9 @@ class User extends Authenticatable
                     $customer->updateStripeCustomer([
                         "name" => $name,
                         "email" => $email,
+                        "address" => [
+                            "country" => "DK",
+                        ],
                     ]);
                 }
             })

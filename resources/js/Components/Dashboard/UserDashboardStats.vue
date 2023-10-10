@@ -113,9 +113,9 @@ onMounted(() => {
             <div
                 v-if="
                     getDashboardStats &&
-                    getDashboardStats.isSuccess === false &&
-                    getDashboardStats.isLoading === false &&
-                    getDashboardStats.isError === true
+                    !getDashboardStats.isSuccess &&
+                    !getDashboardStats.isLoading &&
+                    getDashboardStats.isError
                 "
                 class="myPrimaryParagraphError"
             >
@@ -126,8 +126,8 @@ onMounted(() => {
             <div
                 v-if="
                     getDashboardStats &&
-                    getDashboardStats.isLoading === true &&
-                    getDashboardStats.isError === false
+                    getDashboardStats.isLoading &&
+                    !getDashboardStats.isError === false
                 "
                 class="bordermx-auto block w-full rounded-sm object-cover object-center cursor-pointer"
             >
@@ -152,12 +152,12 @@ onMounted(() => {
             <div
                 v-if="
                     $page.props &&
-                    $page.props.currentUserTeam !== null &&
+                    $page.props.currentUserTeam &&
                     getDashboardStats &&
                     getDashboardStats.fetchedData &&
-                    getDashboardStats.isSuccess === true &&
-                    getDashboardStats.isLoading === false &&
-                    getDashboardStats.isError === false
+                    getDashboardStats.isSuccess &&
+                    !getDashboardStats.isLoading &&
+                    !getDashboardStats.isError
                 "
                 class="grid grid-cols-1 lg:gap-8 gap-12 lg:grid-cols-12"
             >

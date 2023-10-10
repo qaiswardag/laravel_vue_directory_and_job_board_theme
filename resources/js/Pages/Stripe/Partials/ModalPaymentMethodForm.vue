@@ -7,6 +7,7 @@ import {
     NewspaperIcon,
     XMarkIcon,
     ChevronUpDownIcon,
+    PlusIcon,
 } from "@heroicons/vue/24/outline";
 import Spinner from "@/Components/PageBuilder/Loaders/Spinner.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
@@ -109,7 +110,7 @@ const secondButton = function () {
 };
 
 const validateBillingDetails = function () {
-    form.country = selectedCountry.value.code;
+    form.country = selectedCountry.value?.code;
 
     form.post(route("stripe.payment.methods.store"), {
         preserveScroll: true,
@@ -161,21 +162,14 @@ const filteredCountries = computed(() =>
     query.value === ""
         ? countryListAllIsoData
         : countryListAllIsoData.filter((country) =>
-              country.name
-                  .toLowerCase()
-                  .replace(/\s+/g, "")
-                  .includes(query.value.toLowerCase().replace(/\s+/g, ""))
+              country.name?.toLowerCase().includes(query.value.toLowerCase())
           )
 );
 
-const selectedCountry = ref(countryListAllIsoData[0]);
+const selectedCountry = ref(null);
 
-//
-const handleCountryDropdownFocus = function () {
-    return;
-    if (selectedCountry.value?.name === "Search..") {
-        // selectedCountry.value.name = "Search..";
-    }
+const handleRemoveInput = function () {
+    selectedCountry.value = null;
 };
 //
 //
@@ -309,24 +303,43 @@ onMounted(async () => {
                                             <ComboboxInput
                                                 class="myPrimarySelect"
                                                 autocomplete="off"
+                                                placeholder="Search.."
                                                 :displayValue="
-                                                    (country) => country.name
+                                                    (country) => {
+                                                        return country?.name;
+                                                    }
                                                 "
                                                 @change="
                                                     query = $event.target.value
                                                 "
-                                                @focus="
-                                                    handleCountryDropdownFocus
-                                                "
                                             />
-                                            <ComboboxButton
+
+                                            <div
                                                 class="absolute inset-y-0 right-0 flex items-center pr-2"
                                             >
-                                                <ChevronUpDownIcon
-                                                    class="h-5 w-5 text-gray-400"
-                                                    aria-hidden="true"
-                                                />
-                                            </ComboboxButton>
+                                                <div
+                                                    class="flex items-center justify-center gap-2"
+                                                >
+                                                    <button
+                                                        @click="
+                                                            handleRemoveInput
+                                                        "
+                                                        class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                    >
+                                                        <XMarkIcon
+                                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        ></XMarkIcon>
+                                                    </button>
+                                                    <ComboboxButton
+                                                        class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                    >
+                                                        <ChevronUpDownIcon
+                                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                            aria-hidden="true"
+                                                        />
+                                                    </ComboboxButton>
+                                                </div>
+                                            </div>
                                         </div>
                                         <TransitionRoot
                                             leave="transition ease-in duration-100"
@@ -375,9 +388,28 @@ onMounted(async () => {
                                                                     !selected,
                                                             }"
                                                         >
-                                                            {{ country.name }}
+                                                            {{
+                                                                country.name
+                                                                    ? country.name
+                                                                    : "Select"
+                                                            }}
                                                         </span>
 
+                                                        <span
+                                                            v-if="!selected"
+                                                            class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                            :class="{
+                                                                'text-gray-200':
+                                                                    active,
+                                                                'text-gray-200':
+                                                                    !active,
+                                                            }"
+                                                        >
+                                                            <PlusIcon
+                                                                class="h-3 w-3"
+                                                                aria-hidden="true"
+                                                            />
+                                                        </span>
                                                         <span
                                                             v-if="selected"
                                                             class="absolute inset-y-0 left-0 flex items-center pl-3"

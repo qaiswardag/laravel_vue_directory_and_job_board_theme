@@ -11,6 +11,7 @@ import SelectPaymentMethod from "@/Pages/Stripe/SelectPaymentMethod.vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import { useStore } from "vuex";
 import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
+import countryListAllIsoData from "@/utils/country-list-all-iso-data";
 
 const store = useStore();
 
@@ -88,6 +89,9 @@ onBeforeMount(() => {
                     </div>
                 </div>
                 <div class="myInputGroup">
+                    <div class="my-24 p-4 border rounded border-red-300">
+                        <p>test</p>
+                    </div>
                     <InputLabel for="first_name" value="First name" />
                     <TextInput
                         id="first_name"

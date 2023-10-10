@@ -1,5 +1,5 @@
 const countryListAllIsoData = [
-    { code: null, name: "Search.." },
+    { code: null, name: null },
     { code: "AF", name: "Afghanistan" },
     { code: "AL", name: "Albania" },
     { code: "DZ", name: "Algeria" },

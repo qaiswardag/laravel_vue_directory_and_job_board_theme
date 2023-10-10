@@ -95,7 +95,7 @@ import {
             v-if="!$page.props.user.current_team"
             class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
         >
-            <Link :href="route('user.show')">
+            <Link :href="route('profile.show')">
                 <UserTag
                     :user="$page.props.user"
                     :showTeamRole="true"

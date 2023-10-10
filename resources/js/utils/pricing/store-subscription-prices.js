@@ -9,7 +9,7 @@ const storeSubscriptionPrices = function (user) {
                 name: "stripe.stores.create.subscription",
                 parameters: null,
             },
-            price: "$15",
+            price: "$20",
             frequencies: "monthly",
             billed: "Billed every 3 months",
             title: "Most popular",

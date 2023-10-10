@@ -47,7 +47,9 @@ const updateCurrentTab = function (tab) {
 
             <!-- Types - start -->
             <div>
-                <p class="my-4">er: {{ JSON.stringify(getElement) }}</p>
+                <p class="my-4">
+                    getElement is: {{ JSON.stringify(getElement) }}
+                </p>
                 <h4 class="myPrimaryParagraph text-sm pb-2">Types</h4>
                 <div class="text-white overflow-hidden bg-gray-900 max-w-2xl">
                     <div class="flex bg-gray-800/40 ring-1 ring-white/5">
