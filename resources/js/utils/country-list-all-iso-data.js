@@ -66,7 +66,7 @@ const countryListAllIsoData = [
     { code: "KM", name: "Comoros" },
     {
         code: "CD",
-        name: "Congo (the Democratic Republic of the)",
+        name: "Congo",
     },
     { code: "CG", name: "Congo" },
     { code: "CK", name: "Cook Islands" },
@@ -94,7 +94,7 @@ const countryListAllIsoData = [
     { code: "ET", name: "Ethiopia" },
     {
         code: "FK",
-        name: "Falkland Islands [Malvinas]",
+        name: "Falkland Islands",
     },
     { code: "FO", name: "Faroe Islands" },
     { code: "FJ", name: "Fiji" },
@@ -319,7 +319,7 @@ const countryListAllIsoData = [
     },
     {
         code: "GB",
-        name: "United Kingdom of Great Britain and Northern Ireland",
+        name: "United Kingdom of Great Britain",
     },
     {
         code: "UM",

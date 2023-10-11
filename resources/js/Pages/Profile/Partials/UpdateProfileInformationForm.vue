@@ -204,9 +204,8 @@ onMounted(() => {
                     <div class="myPrimaryFormOrganizationHeader">
                         Title & description
                     </div>
-                    <p class="myPrimaryParagraph">Update name and email.</p>
                 </div>
-                <div class="myInputGroup pb-8 mb-8 border-b border-gray-200">
+                <div class="myInputGroup">
                     <InputLabel for="user_name" value="Username" />
                     <div class="relative flex items-center">
                         <TextInput
@@ -237,7 +236,7 @@ onMounted(() => {
                             </svg>
                         </div>
                     </div>
-                    <p class="myPrimaryParagraph">
+                    <p class="myPrimaryParagraph text-xs italic">
                         Your username must be between 4-15 characters in length
                         and can only contain letters (A-Z) numbers (0-9) and
                         underscores. Special characters and spaces are not
@@ -245,6 +244,8 @@ onMounted(() => {
                     </p>
                     <InputError :message="form.errors.username" />
                 </div>
+
+                <SectionBorder></SectionBorder>
 
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
