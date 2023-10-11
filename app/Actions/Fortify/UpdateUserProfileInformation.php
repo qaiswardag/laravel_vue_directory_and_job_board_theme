@@ -90,9 +90,30 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 "max:255",
                 "nullable",
             ],
-            "phone" => ["required", "string", "min:2", "max:255", "nullable"],
+            "phone" => ["integer", "digits_between:4,16", "nullable"],
+            "phone_code" => ["regex:/^\d{1,8}(-\d{1,8})?$/", "nullable"],
             "job_title" => ["required", "string", "max:255", "nullable"],
         ]);
+
+        $validator->after(function ($validator) use ($input) {
+            if (isset($input["phone"]) && !isset($input["phone_code"])) {
+                $validator->errors()->add(
+                    "phone_code",
+                    "Phone country code is required when phone number is set.
+
+                "
+                );
+            }
+
+            if (isset($input["phone_code"]) && !isset($input["phone"])) {
+                $validator->errors()->add(
+                    "phone",
+                    "Phone number is required when phone_code country code is set.
+
+                "
+                );
+            }
+        });
 
         // if validator fails
         if ($validator->fails()) {
@@ -126,6 +147,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                     "city" => $input["city"] ?? null,
                     "postal_code" => $input["postal_code"] ?? null,
                     "phone" => $input["phone"] ?? null,
+                    "phone_code" => $input["phone_code"] ?? null,
                     "job_title" => $input["job_title"] ?? null,
                 ])
                 ->save();
@@ -151,6 +173,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 "city" => $input["city"] ?? null,
                 "postal_code" => $input["postal_code"] ?? null,
                 "phone" => $input["phone"] ?? null,
+                "phone_code" => $input["phone_code"] ?? null,
                 "job_title" => $input["job_title"] ?? null,
 
                 "email_verified_at" => null,

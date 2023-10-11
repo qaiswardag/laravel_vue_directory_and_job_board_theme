@@ -72,11 +72,14 @@ const formSubscription = useForm({
     city: props.user.city,
     postal_code: props.user.postal_code,
     phone: props.user.phone,
+    phone_code: props.user.phone_code,
 });
 
 const createOrUpdate = () => {
     if (formType.value === "create") {
         formSubscription.country = selectedCountry.value?.code;
+        formSubscription.phone_code = selectedPhoneCode.value?.phone_code;
+
         formSubscription.post(route("stripe.stores.store.subscription"), {
             preserveScroll: true,
             onSuccess: () => {},
@@ -107,6 +110,28 @@ const handleRemoveInput = function () {
     selectedCountry.value = null;
 };
 
+// phone country code # start
+const selectedPhoneCode = ref(null);
+const queryPhoneCode = ref("");
+
+const filteredPhoneCodes = computed(() =>
+    queryPhoneCode.value === ""
+        ? countryListAllIsoData
+        : countryListAllIsoData.filter((country) => {
+              return (
+                  country.phone_code.includes(queryPhoneCode.value) ||
+                  country.country
+                      ?.toLowerCase()
+                      .includes(queryPhoneCode.value.toLowerCase())
+              );
+          })
+);
+
+const handleRemoveInputPhoneCode = function () {
+    selectedPhoneCode.value = null;
+};
+// phone country code # end
+
 onBeforeMount(() => {
     if (props.post) {
         formType.value = "update";
@@ -118,6 +143,13 @@ onMounted(() => {
         selectedCountry.value =
             filteredCountries.value.find((country) => {
                 return country.code === props.user.country;
+            }) || null;
+    }
+
+    if (props.user.phone_code) {
+        selectedPhoneCode.value =
+            filteredPhoneCodes.value.find((country) => {
+                return country.phone_code === props.user.phone_code;
             }) || null;
     }
 });
@@ -134,26 +166,200 @@ onMounted(() => {
                     </div>
                 </div>
 
+                <div class="myInputGroup">
+                    <!-- Headless UI select # start -->
+                    <InputLabel for="country123" value="Country" />
+                    <!-- Headless UI select # start -->
+                    <Combobox v-model="selectedCountry">
+                        <div class="relative mt-1">
+                            <div class="relative">
+                                <ComboboxInput
+                                    name="country123"
+                                    id="country123"
+                                    class="myPrimarySelect"
+                                    autocomplete="country123"
+                                    placeholder="Search.."
+                                    :displayValue="
+                                        (country) => {
+                                            return country?.country;
+                                        }
+                                    "
+                                    @change="query = $event.target.value"
+                                />
+
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center pr-2"
+                                >
+                                    <div
+                                        class="flex items-center justify-center gap-2"
+                                    >
+                                        <button
+                                            @click="handleRemoveInput"
+                                            type="button"
+                                            class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        >
+                                            <XMarkIcon
+                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            ></XMarkIcon>
+                                        </button>
+                                        <ComboboxButton
+                                            class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        >
+                                            <ChevronUpDownIcon
+                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                aria-hidden="true"
+                                            />
+                                        </ComboboxButton>
+                                    </div>
+                                </div>
+                            </div>
+                            <TransitionRoot
+                                leave="transition ease-in duration-100"
+                                leaveFrom="opacity-100"
+                                leaveTo="opacity-0"
+                                @after-leave="query = ''"
+                            >
+                                <ComboboxOptions
+                                    class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                >
+                                    <div
+                                        v-if="
+                                            filteredCountries.length === 0 &&
+                                            query !== ''
+                                        "
+                                        class="relative cursor-default select-none py-2 px-4 text-gray-700"
+                                    >
+                                        Nothing found.
+                                    </div>
+
+                                    <ComboboxOption
+                                        v-for="country in filteredCountries"
+                                        as="template"
+                                        :key="country.id"
+                                        :value="country"
+                                        v-slot="{ selected, active }"
+                                    >
+                                        <li
+                                            class="relative cursor-default select-none py-2 pl-10 pr-4"
+                                            :class="{
+                                                'bg-gray-800 text-white':
+                                                    active,
+                                                'text-gray-900': !active,
+                                            }"
+                                        >
+                                            <span
+                                                class="block truncate"
+                                                :class="{
+                                                    'font-medium': selected,
+                                                    'font-normal': !selected,
+                                                }"
+                                            >
+                                                {{
+                                                    country.country
+                                                        ? country.country
+                                                        : ""
+                                                }}
+                                            </span>
+
+                                            <span
+                                                v-if="!selected"
+                                                class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                :class="{
+                                                    'text-gray-200': active,
+                                                    'text-gray-200': !active,
+                                                }"
+                                            >
+                                                <PlusIcon
+                                                    class="h-3 w-3"
+                                                    aria-hidden="true"
+                                                />
+                                            </span>
+                                            <span
+                                                v-if="selected"
+                                                class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                :class="{
+                                                    'text-white': active,
+                                                    'text-gray-800': !active,
+                                                }"
+                                            >
+                                                <CheckIcon
+                                                    class="h-5 w-5"
+                                                    aria-hidden="true"
+                                                />
+                                            </span>
+                                        </li>
+                                    </ComboboxOption>
+                                </ComboboxOptions>
+                            </TransitionRoot>
+                        </div>
+                    </Combobox>
+                    <InputError :message="formSubscription.errors.country" />
+                </div>
+
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
+                        <InputLabel for="city" value="City" />
+                        <TextInput
+                            id="city"
+                            v-model="formSubscription.city"
+                            placeholder="City.."
+                            type="text"
+                        />
+                        <InputError :message="formSubscription.errors.city" />
+                    </div>
+
+                    <!-- postal code and phone # start -->
+                    <div class="myInputGroup">
+                        <InputLabel
+                            for="postal_code"
+                            value="Postal code — optional"
+                        />
+                        <TextInput
+                            v-model="formSubscription.postal_code"
+                            type="text"
+                            id="postal_code"
+                            name="postal_code"
+                            placeholder="Postal code.."
+                            autocomplete="off"
+                        />
+                        <InputError
+                            :message="formSubscription.errors.postal_code"
+                        />
+                    </div>
+                </div>
+
+                <div class="md:flex items-center justify-center myPrimaryGap">
+                    <!-- phone code start -->
+                    <div class="myInputGroup">
                         <!-- Headless UI select # start -->
-                        <InputLabel for="country123" value="Country" />
+                        <InputLabel
+                            for="phone_code123"
+                            value="Phone country code"
+                        />
                         <!-- Headless UI select # start -->
-                        <Combobox v-model="selectedCountry">
+                        <Combobox v-model="selectedPhoneCode">
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="country123"
-                                        id="country123"
+                                        name="phone_code123"
+                                        id="phone_code123"
+                                        autocomplete="phone_code123"
                                         class="myPrimarySelect"
-                                        autocomplete="country123"
                                         placeholder="Search.."
                                         :displayValue="
                                             (country) => {
-                                                return country?.country;
+                                                return country?.phone_code
+                                                    ? country.phone_code +
+                                                          ' ' +
+                                                          '(' +
+                                                          country?.country +
+                                                          ')'
+                                                    : '';
                                             }
                                         "
-                                        @change="query = $event.target.value"
+                                        @change="
+                                            queryPhoneCode = $event.target.value
+                                        "
                                     />
 
                                     <div
@@ -163,7 +369,9 @@ onMounted(() => {
                                             class="flex items-center justify-center gap-2"
                                         >
                                             <button
-                                                @click="handleRemoveInput"
+                                                @click="
+                                                    handleRemoveInputPhoneCode
+                                                "
                                                 type="button"
                                                 class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
@@ -186,15 +394,15 @@ onMounted(() => {
                                     leave="transition ease-in duration-100"
                                     leaveFrom="opacity-100"
                                     leaveTo="opacity-0"
-                                    @after-leave="query = ''"
+                                    @after-leave="queryPhoneCode = ''"
                                 >
                                     <ComboboxOptions
                                         class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                                     >
                                         <div
                                             v-if="
-                                                filteredCountries.length ===
-                                                    0 && query !== ''
+                                                filteredPhoneCodes.length ===
+                                                    0 && queryPhoneCode !== ''
                                             "
                                             class="relative cursor-default select-none py-2 px-4 text-gray-700"
                                         >
@@ -202,9 +410,9 @@ onMounted(() => {
                                         </div>
 
                                         <ComboboxOption
-                                            v-for="country in filteredCountries"
+                                            v-for="country in filteredPhoneCodes"
                                             as="template"
-                                            :key="country.id"
+                                            :key="country.code"
                                             :value="country"
                                             v-slot="{ selected, active }"
                                         >
@@ -225,9 +433,13 @@ onMounted(() => {
                                                     }"
                                                 >
                                                     {{
-                                                        country.country
-                                                            ? country.country
-                                                            : "Select"
+                                                        country?.phone_code
+                                                            ? country.phone_code +
+                                                              " " +
+                                                              "(" +
+                                                              country?.country +
+                                                              ")"
+                                                            : ""
                                                     }}
                                                 </span>
 
@@ -266,36 +478,10 @@ onMounted(() => {
                             </div>
                         </Combobox>
                         <InputError
-                            :message="formSubscription.errors.country"
+                            :message="formSubscription.errors.phone_code"
                         />
                     </div>
-                    <div class="myInputGroup">
-                        <InputLabel for="city" value="City" />
-                        <TextInput
-                            id="city"
-                            v-model="formSubscription.city"
-                            placeholder="City.."
-                            type="text"
-                        />
-                        <InputError :message="formSubscription.errors.city" />
-                    </div>
-                </div>
-                <!-- Postal code and phone # end -->
-                <div class="md:flex items-center justify-center myPrimaryGap">
-                    <div class="myInputGroup">
-                        <InputLabel for="postal_code" value="Postal Code" />
-                        <TextInput
-                            v-model="formSubscription.postal_code"
-                            type="text"
-                            id="postal_code"
-                            name="postal_code"
-                            placeholder="Postal code.."
-                            autocomplete="off"
-                        />
-                        <InputError
-                            :message="formSubscription.errors.postal_code"
-                        />
-                    </div>
+                    <!-- phone code end -->
                     <div class="myInputGroup">
                         <InputLabel for="phone" value="Phone" />
                         <TextInput
@@ -309,7 +495,7 @@ onMounted(() => {
                         <InputError :message="formSubscription.errors.phone" />
                     </div>
                 </div>
-                <!-- Postal code and phone # end -->
+                <!-- postal code and phone # end -->
 
                 <!-- Vat ID and vat number # start -->
                 <!-- Vat ID and vat number # end -->

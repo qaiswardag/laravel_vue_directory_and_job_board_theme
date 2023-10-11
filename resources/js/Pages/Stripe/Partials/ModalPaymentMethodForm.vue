@@ -397,7 +397,7 @@ onMounted(async () => {
                                                         {{
                                                             country.country
                                                                 ? country.country
-                                                                : "Select"
+                                                                : ""
                                                         }}
                                                     </span>
 
@@ -459,7 +459,7 @@ onMounted(async () => {
                             <div class="myInputGroup">
                                 <InputLabel
                                     for="payment_postal_code"
-                                    value="Postal code"
+                                    value="Postal code  — optional"
                                 />
                                 <TextInput
                                     placeholder="Postal code.."

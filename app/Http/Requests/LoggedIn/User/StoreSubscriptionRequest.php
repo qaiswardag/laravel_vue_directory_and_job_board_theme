@@ -36,7 +36,8 @@ class StoreSubscriptionRequest extends FormRequest
                 "max:255",
                 "nullable",
             ],
-            "phone" => ["required", "string", "min:2", "max:255", "nullable"],
+            "phone" => ["integer", "digits_between:4,16", "nullable"],
+            "phone_code" => ["regex:/^\d{1,8}(-\d{1,8})?$/", "nullable"],
         ];
 
         return $rules;
@@ -101,6 +102,26 @@ class StoreSubscriptionRequest extends FormRequest
                             $noDefaultPaymentMethodError
                         );
                 }
+
+                // logic for phone and phone country code # start
+                if ($this->phone && !$this->phone_code) {
+                    $validator->errors()->add(
+                        "phone_code",
+                        "Phone country code is required when phone number is set.
+    
+                    "
+                    );
+                }
+
+                if ($this->phone_code && !$this->phone) {
+                    $validator->errors()->add(
+                        "phone",
+                        "Phone number is required when phone_code country code is set.
+    
+                    "
+                    );
+                }
+                // logic for phone and phone country code # end
             }
         });
 

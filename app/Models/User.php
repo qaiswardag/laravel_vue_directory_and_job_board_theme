@@ -139,7 +139,14 @@ class User extends Authenticatable
                 $country = $customer->country;
                 $city = $customer->city;
                 $postalCode = $customer->postal_code;
-                $phone = $customer->phone;
+
+                $phoneCode = $customer->phone_code ?? null;
+                $phone = $customer->phone ?? null;
+
+                if ($phoneCode && $phone) {
+                    $phoneCodePlusPhone = $phoneCode . $phone;
+                }
+
                 $stripeCustomer = null;
 
                 if ($customer->hasStripeId()) {

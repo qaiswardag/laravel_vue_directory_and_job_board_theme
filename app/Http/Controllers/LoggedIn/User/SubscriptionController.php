@@ -41,6 +41,7 @@ class SubscriptionController extends Controller
         $country = $user->country;
         $city = $user->city;
         $postalCode = $user->postal_code;
+        $phoneCode = $user->phone_code;
         $phone = $user->phone;
         $publishableKey = config("services.stripe.key");
 
@@ -115,17 +116,23 @@ class SubscriptionController extends Controller
         $user = User::findOrFail($request->user_id);
 
         $productId = $request->product_id;
-        $name = $request->first_name . " " . $request->last_name;
 
         $stripeId = $user->stripe_id;
 
         $stripeCustomer = Cashier::findBillable($stripeId);
 
+        $phoneCodePlusPhone = null;
+        $phoneCode = $request->phone_code ?? null;
+        $phone = $request->phone ?? null;
+
+        if ($phoneCode && $phone) {
+            $phoneCodePlusPhone = $phoneCode . $phone;
+        }
+
         //
         $defaultPaymentMethodId =
             $stripeCustomer->defaultPaymentMethod()->id ?? "";
-        //
-        //
+
         //
         if (!$stripeCustomer) {
             $stripeCustomer = $user->createAsStripeCustomer();
@@ -148,6 +155,7 @@ class SubscriptionController extends Controller
                     "country" => $request->country ?? null,
                     "city" => $request->city ?? null,
                     "postal_code" => $request->postal_code ?? null,
+                    "phone_code" => $request->phone_code ?? null,
                     "phone" => $request->phone ?? null,
                 ])
                 ->save();
