@@ -7,7 +7,7 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { v4 as uuidv4 } from "uuid";
 import { usePromise } from "@/helpers/use-promise";
 import { useStore } from "vuex";
-import { TrashIcon } from "@heroicons/vue/24/outline";
+import { PhotoIcon, TrashIcon } from "@heroicons/vue/24/outline";
 
 // store
 const store = useStore();
@@ -153,48 +153,33 @@ onMounted(() => {
     <form @submit.prevent="submit" enctype="multipart/form-data">
         <div class="myInputGroup">
             <div class="col-span-3 mb-4">
-                <label class="block text-sm font-normal text-gray-700"
-                    >Upload images</label
+                <label class="block text-sm font-normal text-gray-700 pt-4"
+                    >Upload multiple images</label
                 >
 
-                <div
-                    class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-2 pb-2"
-                >
-                    <div class="space-y-1 text-center">
-                        <svg
-                            class="mx-auto h-8 w-8 text-gray-400"
-                            stroke="currentColor"
-                            fill="none"
-                            viewBox="0 0 48 48"
-                            aria-hidden="true"
-                        >
-                            <path
-                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                        </svg>
-                        <div class="flex text-sm text-gray-600">
-                            <InputLabel
-                                class="text-myPrimaryBrandColor font-normal cursor-pointer"
-                                for="images"
-                                value="Upload images"
-                            />
+                <div class="relativeflex flex-col items-center justify-center">
+                    <InputLabel
+                        class="hover:bg-gray-50 myPrimaryParagraph rounded text-center w-full inset-0 block text-myPrimaryLinkColor font-medium text-base cursor-pointer pt-6 pb-6 px-4 border border-dashed border-gray-800"
+                        for="images"
+                        value="Click & Upload multiple images"
+                    >
+                        <template v-slot:header>
+                            <p
+                                class="myPrimaryParagraph text-sm pt-2 leading-5 text-gray-600"
+                            >
+                                PNG, JPG and more up to 3MB
+                            </p>
+                        </template>
+                    </InputLabel>
 
-                            <input
-                                @change="updateImagesPreview()"
-                                ref="imagesInput"
-                                id="images"
-                                type="file"
-                                multiple
-                                class="sr-only"
-                            />
-
-                            <p class="pl-1">or drag and drop</p>
-                        </div>
-                        <p class="text-xs text-gray-500">PNG or JPG</p>
-                    </div>
+                    <input
+                        @change="updateImagesPreview()"
+                        ref="imagesInput"
+                        id="images"
+                        type="file"
+                        multiple
+                        class="sr-only myPrimaryLinkColor"
+                    />
                 </div>
             </div>
 

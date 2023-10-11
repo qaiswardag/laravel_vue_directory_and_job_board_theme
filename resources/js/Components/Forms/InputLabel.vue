@@ -5,8 +5,10 @@ defineProps({
 </script>
 
 <template>
-    <label class="myPrimaryInputLabel">
-        <span v-if="value">{{ value }}</span>
-        <span v-else><slot /></span>
+    <label :value="value" class="myPrimaryInputLabel">
+        {{ value }}
+        <header>
+            <slot name="header"></slot>
+        </header>
     </label>
 </template>

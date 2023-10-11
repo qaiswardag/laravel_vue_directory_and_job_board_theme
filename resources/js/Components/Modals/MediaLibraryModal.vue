@@ -367,10 +367,10 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                             class="flex items-center border border-gray-200 py-1 px-2 rounded"
                                                         >
                                                             <nav
-                                                                class="flex-1 -mb-px flex space-x-6 xl:space-x-8"
+                                                                class="flex-1 -mb-px flex space-x-2 xl:space-x-4"
                                                                 aria-label="Tabs"
                                                             >
-                                                                <div
+                                                                <button
                                                                     @click="
                                                                         changeSelectedMenuTab(
                                                                             tab.name
@@ -385,19 +385,19 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                                             ? 'page'
                                                                             : undefined
                                                                     "
-                                                                    class="py-2 px-3 my-1 text-xs cursor-pointer"
+                                                                    class="py-2 px-3 my-1 text-xs cursor-pointer font-medium"
                                                                     :class="[
                                                                         tab.name ===
                                                                         selected
                                                                             ? 'myPrimaryButton'
-                                                                            : 'text-gray-500 hover:text-gray-700 ',
+                                                                            : 'mySecondaryButton',
                                                                         'whitespace-nowrap',
                                                                     ]"
                                                                 >
                                                                     {{
                                                                         tab.name
                                                                     }}
-                                                                </div>
+                                                                </button>
                                                             </nav>
                                                         </div>
                                                     </div>
