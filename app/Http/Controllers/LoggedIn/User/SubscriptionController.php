@@ -38,6 +38,10 @@ class SubscriptionController extends Controller
 
         $name = $user->first_name . " " . $user->last_name;
         $email = $user->email;
+        $country = $user->country;
+        $city = $user->city;
+        $postalCode = $user->postal_code;
+        $phone = $user->phone;
         $publishableKey = config("services.stripe.key");
 
         $intent = null;
@@ -72,6 +76,12 @@ class SubscriptionController extends Controller
             $user->updateStripeCustomer([
                 "name" => $name,
                 "email" => $email,
+                "phone" => $phone,
+                "address" => [
+                    "country" => $country,
+                    "city" => $city,
+                    "postal_code" => $postalCode,
+                ],
             ]);
         } catch (Exception $exception) {
             Log::error(
@@ -122,28 +132,25 @@ class SubscriptionController extends Controller
         }
 
         try {
-            $taxId = $stripeCustomer->createTaxId("eu_vat", "DK1234");
-        } catch (\Stripe\Exception\InvalidRequestException $e) {
-            switch ($e->getStripeCode()) {
-                case "tax_id_invalid":
-                    throw \Illuminate\Validation\ValidationException::withMessages(
-                        [
-                            "tax_id" => ["Invalid value for eu_vat."],
-                        ]
-                    );
-
-                default:
-                    throw $e; // Just re-throw original exception
-            }
-        }
-
-        dd("Should not come here");
-
-        try {
             $user->updateStripeCustomer([
-                "name" => $name,
-                "email" => $request->email,
+                "name" => $user->first_name . " " . $user->last_name,
+                "email" => $user->email,
+                "phone" => $request->phone ?? null,
+                "address" => [
+                    "country" => $request->country ?? null,
+                    "city" => $request->city ?? null,
+                    "postal_code" => $request->postal_code ?? null,
+                ],
             ]);
+
+            $user
+                ->forceFill([
+                    "country" => $request->country ?? null,
+                    "city" => $request->city ?? null,
+                    "postal_code" => $request->postal_code ?? null,
+                    "phone" => $request->phone ?? null,
+                ])
+                ->save();
 
             // TODO: ability to add vat number
             //    TAX # START

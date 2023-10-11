@@ -15,6 +15,10 @@ return new class extends Migration {
             $table->string("first_name");
             $table->string("last_name");
             $table->string("email")->unique();
+            $table->string("country")->nullable();
+            $table->string("city")->nullable();
+            $table->string("postal_code")->nullable();
+            $table->string("phone")->nullable();
             $table->string("job_title")->nullable();
             $table
                 ->string("username")

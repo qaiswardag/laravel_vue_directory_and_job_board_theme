@@ -79,7 +79,19 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             ],
 
             "public" => ["boolean"],
-            "photo" => ["nullable", "mimes:jpg,jpeg,png", "max:1024"],
+            "photo" => ["nullable", "mimes:jpg,jpeg,png", "max:2048"],
+
+            "country" => ["required", "string", "min:2", "max:255", "nullable"],
+            "city" => ["required", "string", "min:2", "max:255", "nullable"],
+            "postal_code" => [
+                "required",
+                "string",
+                "min:2",
+                "max:255",
+                "nullable",
+            ],
+            "phone" => ["required", "string", "min:2", "max:255", "nullable"],
+            "job_title" => ["required", "string", "max:255", "nullable"],
         ]);
 
         // if validator fails
@@ -109,6 +121,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                     "username" => $input["username"],
                     "email" => $input["email"],
                     "public" => $input["public"],
+
+                    "country" => $input["country"] ?? null,
+                    "city" => $input["city"] ?? null,
+                    "postal_code" => $input["postal_code"] ?? null,
+                    "phone" => $input["phone"] ?? null,
+                    "job_title" => $input["job_title"] ?? null,
                 ])
                 ->save();
         }
@@ -128,6 +146,13 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 "useranme" => $input["username"],
                 "email" => $input["email"],
                 "public" => $input["public"],
+
+                "country" => $input["country"] ?? null,
+                "city" => $input["city"] ?? null,
+                "postal_code" => $input["postal_code"] ?? null,
+                "phone" => $input["phone"] ?? null,
+                "job_title" => $input["job_title"] ?? null,
+
                 "email_verified_at" => null,
             ])
             ->save();

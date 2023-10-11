@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 import { Link, router, useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/Actions/ActionMessage.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
@@ -12,6 +12,25 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { Switch } from "@headlessui/vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
+import countryListAllIsoData from "@/utils/country-list-all-iso-data";
+import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
+
+import {
+    TrashIcon,
+    CheckIcon,
+    NewspaperIcon,
+    XMarkIcon,
+    ChevronUpDownIcon,
+    PlusIcon,
+} from "@heroicons/vue/24/outline";
+import {
+    Combobox,
+    ComboboxInput,
+    ComboboxButton,
+    ComboboxOptions,
+    ComboboxOption,
+    TransitionRoot,
+} from "@headlessui/vue";
 
 const props = defineProps({
     user: Object,
@@ -24,6 +43,13 @@ const form = useForm({
     username: props.user.username,
     email: props.user.email,
     public: props.user.public ? true : false,
+
+    country: null,
+    city: props.user.city,
+    postal_code: props.user.postal_code,
+    phone: props.user.phone,
+    job_title: props.user.job_title,
+
     photo: null,
 });
 
@@ -49,6 +75,8 @@ const photoInput = ref(null);
 const profilePhotoIsDirty = ref(false);
 
 const updateProfileInformation = () => {
+    form.country = selectedCountry.value?.code;
+
     if (photoInput.value) {
         form.photo = photoInput.value.files[0];
     }
@@ -127,8 +155,38 @@ const clearPhotoFileInput = () => {
     }
 };
 
+const showErrorNotifications = ref(false);
+
+const notificationsModalButton = function () {
+    showErrorNotifications.value = false;
+};
+
+const selectedCountry = ref(null);
+const query = ref("");
+
+const filteredCountries = computed(() =>
+    query.value === ""
+        ? countryListAllIsoData
+        : countryListAllIsoData.filter((country) =>
+              country.name?.toLowerCase().includes(query.value.toLowerCase())
+          )
+);
+
+const handleRemoveInput = function () {
+    selectedCountry.value = null;
+};
+
 watch(photoPreview, (newValue) => {
     profilePhotoIsDirty.value = true;
+});
+
+onMounted(() => {
+    if (props.user.country) {
+        selectedCountry.value =
+            filteredCountries.value.find((country) => {
+                return country.code === props.user.country;
+            }) || null;
+    }
 });
 </script>
 
@@ -148,7 +206,7 @@ watch(photoPreview, (newValue) => {
                     </div>
                     <p class="myPrimaryParagraph">Update name and email.</p>
                 </div>
-                <div class="myInputGroup">
+                <div class="myInputGroup pb-8 mb-8 border-b border-gray-200">
                     <InputLabel for="user_name" value="Username" />
                     <div class="relative flex items-center">
                         <TextInput
@@ -188,32 +246,42 @@ watch(photoPreview, (newValue) => {
                     <InputError :message="form.errors.username" />
                 </div>
 
-                <div class="myInputGroup">
-                    <InputLabel for="first_name" value="First name" />
-                    <TextInput
-                        id="first_name"
-                        v-model="form.first_name"
-                        type="text"
-                        autocomplete="first_name"
-                    />
-                    <InputError :message="form.errors.first_name" />
-                </div>
+                <div class="md:flex items-center justify-center myPrimaryGap">
+                    <div class="myInputGroup">
+                        <InputLabel for="first_name" value="First name" />
+                        <TextInput
+                            id="first_name"
+                            v-model="form.first_name"
+                            type="text"
+                            placeholder="First name.."
+                            autocomplete="first_name"
+                        />
+                        <InputError :message="form.errors.first_name" />
+                    </div>
 
-                <div class="myInputGroup">
-                    <InputLabel for="last_name" value="Last name" />
-                    <TextInput
-                        id="last_name"
-                        v-model="form.last_name"
-                        type="text"
-                        autocomplete="last_name"
-                    />
-                    <InputError :message="form.errors.last_name" />
+                    <div class="myInputGroup">
+                        <InputLabel for="last_name" value="Last name" />
+                        <TextInput
+                            id="last_name"
+                            v-model="form.last_name"
+                            type="text"
+                            placeholder="Last name.."
+                            autocomplete="last_name"
+                        />
+                        <InputError :message="form.errors.last_name" />
+                    </div>
                 </div>
 
                 <!-- Email -->
                 <div class="myInputGroup">
                     <InputLabel for="email" value="Email" />
-                    <TextInput id="email" v-model="form.email" type="email" />
+                    <TextInput
+                        id="email"
+                        type="email"
+                        v-model="form.email"
+                        placeholder="Email.."
+                        autocomplete="email"
+                    />
                     <InputError :message="form.errors.email" />
 
                     <div
@@ -244,6 +312,18 @@ watch(photoPreview, (newValue) => {
                             address.
                         </div>
                     </div>
+                </div>
+                <div class="myInputGroup">
+                    <InputLabel for="job_title" value="Job title" />
+                    <TextInput
+                        v-model="form.job_title"
+                        id="job_title"
+                        type="text"
+                        name="job_title"
+                        placeholder="Job title.."
+                        autocomplete="off"
+                    />
+                    <InputError :message="form.errors.job_title" />
                 </div>
             </div>
             <div class="myInputsOrganization">
@@ -373,7 +453,6 @@ watch(photoPreview, (newValue) => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
-                    <p class="myPrimaryParagraph">Specify Your status.</p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
@@ -448,6 +527,179 @@ watch(photoPreview, (newValue) => {
                 </div>
                 <InputError :message="form.errors.public" />
             </div>
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Information
+                    </div>
+                </div>
+
+                <div class="myInputGroup">
+                    <!-- Headless UI select # start -->
+                    <InputLabel for="payment_country123" value="Country" />
+                    <!-- Headless UI select # start -->
+                    <Combobox v-model="selectedCountry">
+                        <div class="relative mt-1">
+                            <div class="relative">
+                                <ComboboxInput
+                                    id="payment_country123"
+                                    name="payment_country123"
+                                    class="myPrimarySelect"
+                                    autocomplete="off"
+                                    placeholder="Search.."
+                                    :displayValue="
+                                        (country) => {
+                                            return country?.name;
+                                        }
+                                    "
+                                    @change="query = $event.target.value"
+                                />
+
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center pr-2"
+                                >
+                                    <div
+                                        class="flex items-center justify-center gap-2"
+                                    >
+                                        <button
+                                            @click="handleRemoveInput"
+                                            type="button"
+                                            class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        >
+                                            <XMarkIcon
+                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            ></XMarkIcon>
+                                        </button>
+                                        <ComboboxButton
+                                            class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        >
+                                            <ChevronUpDownIcon
+                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                aria-hidden="true"
+                                            />
+                                        </ComboboxButton>
+                                    </div>
+                                </div>
+                            </div>
+                            <TransitionRoot
+                                leave="transition ease-in duration-100"
+                                leaveFrom="opacity-100"
+                                leaveTo="opacity-0"
+                                @after-leave="query = ''"
+                            >
+                                <ComboboxOptions
+                                    class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                >
+                                    <div
+                                        v-if="
+                                            filteredCountries.length === 0 &&
+                                            query !== ''
+                                        "
+                                        class="relative cursor-default select-none py-2 px-4 text-gray-700"
+                                    >
+                                        Nothing found.
+                                    </div>
+
+                                    <ComboboxOption
+                                        v-for="country in filteredCountries"
+                                        as="template"
+                                        :key="country.id"
+                                        :value="country"
+                                        v-slot="{ selected, active }"
+                                    >
+                                        <li
+                                            class="relative cursor-default select-none py-2 pl-10 pr-4"
+                                            :class="{
+                                                'bg-gray-800 text-white':
+                                                    active,
+                                                'text-gray-900': !active,
+                                            }"
+                                        >
+                                            <span
+                                                class="block truncate"
+                                                :class="{
+                                                    'font-medium': selected,
+                                                    'font-normal': !selected,
+                                                }"
+                                            >
+                                                {{
+                                                    country.name
+                                                        ? country.name
+                                                        : "Select"
+                                                }}
+                                            </span>
+
+                                            <span
+                                                v-if="!selected"
+                                                class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                :class="{
+                                                    'text-gray-200': active,
+                                                    'text-gray-200': !active,
+                                                }"
+                                            >
+                                                <PlusIcon
+                                                    class="h-3 w-3"
+                                                    aria-hidden="true"
+                                                />
+                                            </span>
+                                            <span
+                                                v-if="selected"
+                                                class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                :class="{
+                                                    'text-white': active,
+                                                    'text-gray-800': !active,
+                                                }"
+                                            >
+                                                <CheckIcon
+                                                    class="h-5 w-5"
+                                                    aria-hidden="true"
+                                                />
+                                            </span>
+                                        </li>
+                                    </ComboboxOption>
+                                </ComboboxOptions>
+                            </TransitionRoot>
+                        </div>
+                    </Combobox>
+                    <InputError :message="form.errors.country" />
+                </div>
+                <div class="myInputGroup">
+                    <InputLabel for="city" value="City" />
+                    <TextInput
+                        v-model="form.city"
+                        type="text"
+                        id="city"
+                        name="city"
+                        placeholder="City.."
+                        autocomplete="off"
+                    />
+                    <InputError :message="form.errors.city" />
+                </div>
+                <div class="myInputGroup">
+                    <InputLabel for="postal_code" value="Postal Code" />
+                    <TextInput
+                        v-model="form.postal_code"
+                        type="text"
+                        id="postal_code"
+                        name="postal_code"
+                        placeholder="Postal code.."
+                        autocomplete="off"
+                    />
+                    <InputError :message="form.errors.postal_code" />
+                </div>
+                <div class="myInputGroup">
+                    <InputLabel for="phone" value="Phone" />
+                    <TextInput
+                        v-model="form.phone"
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        placeholder="Phone.."
+                        autocomplete="off"
+                    />
+                    <InputError :message="form.errors.phone" />
+                </div>
+            </div>
             <DynamicModal
                 :show="modalShowDeletePhoto"
                 :type="typeModal"
@@ -468,9 +720,57 @@ watch(photoPreview, (newValue) => {
         <template #actions>
             <SubmitButton :disabled="form.processing" buttonText="Update">
             </SubmitButton>
+            <div
+                class="flex justify-end mt-4"
+                v-if="Object.values(form.errors).length !== 0"
+            >
+                <div
+                    @click="showErrorNotifications = true"
+                    class="w-fit py-1 flex items-center gap-2 rounded-md px-2 cursor-pointer italic"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-4 h-4 text-myPrimaryErrorColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        />
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                    </svg>
+                    <p
+                        class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
+                    >
+                        Show
+                        {{ Object.values(form.errors).length }}
+                        errors
+                    </p>
+                </div>
+            </div>
             <ActionMessage :on="form.recentlySuccessful" type="success">
                 Successfully updated your Profile Information.
             </ActionMessage>
+            <NotificationsFixedBottom
+                :listOfMessages="Object.values(form.errors)"
+                :show="showErrorNotifications"
+                @notificationsModalButton="notificationsModalButton"
+            >
+                <div class="flex items-center justify-start gap-2">
+                    <p class="myPrimaryParagraphError">
+                        {{ Object.values(form.errors).length }}
+                        errors
+                    </p>
+                </div>
+            </NotificationsFixedBottom>
         </template>
     </FormSection>
 </template>

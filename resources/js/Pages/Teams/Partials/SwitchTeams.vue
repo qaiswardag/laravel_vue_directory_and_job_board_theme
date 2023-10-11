@@ -131,7 +131,7 @@ const switchTeam = function (team) {
                             v-if="
                                 $page.props.user.all_teams &&
                                 Array.isArray($page.props.user.all_teams) &&
-                                $page.props.user.all_teams.length > 1
+                                $page.props.user.all_teams.length > 0
                             "
                             class="myTableContainerPlusScrollButton"
                         >

@@ -83,9 +83,9 @@ const form = useForm({
     user_id: props.user.id,
     name: props.user.first_name + " " + props.user.last_name,
     email: props.user.email,
-    country: null,
-    city: null,
-    postal_code: null,
+    country: props.user.country,
+    city: props.user.city,
+    postal_code: props.user.postal_code,
 });
 
 const emit = defineEmits([
@@ -180,6 +180,14 @@ onMounted(async () => {
     });
     cardElement.value = elements.value.create("card", elementsStylesCard);
     cardElement.value.mount("#card-element");
+
+    //
+    if (props.user.country) {
+        selectedCountry.value =
+            filteredCountries.value.find((country) => {
+                return country.code === props.user.country;
+            }) || null;
+    }
 });
 </script>
 
@@ -296,146 +304,145 @@ onMounted(async () => {
 
                             <InputLabel for="payment_country" value="Country" />
                             <!-- Headless UI select # start -->
-                            <div>
-                                <Combobox v-model="selectedCountry">
-                                    <div class="relative mt-1">
-                                        <div class="relative">
-                                            <ComboboxInput
-                                                class="myPrimarySelect"
-                                                autocomplete="off"
-                                                placeholder="Search.."
-                                                :displayValue="
-                                                    (country) => {
-                                                        return country?.name;
-                                                    }
-                                                "
-                                                @change="
-                                                    query = $event.target.value
-                                                "
-                                            />
 
+                            <Combobox v-model="selectedCountry">
+                                <div class="relative mt-1">
+                                    <div class="relative">
+                                        <ComboboxInput
+                                            id="payment_country"
+                                            class="myPrimarySelect"
+                                            autocomplete="off"
+                                            placeholder="Search.."
+                                            :displayValue="
+                                                (country) => {
+                                                    return country?.name;
+                                                }
+                                            "
+                                            @change="
+                                                query = $event.target.value
+                                            "
+                                        />
+
+                                        <div
+                                            class="absolute inset-y-0 right-0 flex items-center pr-2"
+                                        >
                                             <div
-                                                class="absolute inset-y-0 right-0 flex items-center pr-2"
+                                                class="flex items-center justify-center gap-2"
                                             >
-                                                <div
-                                                    class="flex items-center justify-center gap-2"
+                                                <button
+                                                    type="button"
+                                                    @click="handleRemoveInput"
+                                                    class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                 >
-                                                    <button
-                                                        @click="
-                                                            handleRemoveInput
-                                                        "
-                                                        class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                    >
-                                                        <XMarkIcon
-                                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                        ></XMarkIcon>
-                                                    </button>
-                                                    <ComboboxButton
-                                                        class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                    >
-                                                        <ChevronUpDownIcon
-                                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                            aria-hidden="true"
-                                                        />
-                                                    </ComboboxButton>
-                                                </div>
+                                                    <XMarkIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    ></XMarkIcon>
+                                                </button>
+                                                <ComboboxButton
+                                                    class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                >
+                                                    <ChevronUpDownIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        aria-hidden="true"
+                                                    />
+                                                </ComboboxButton>
                                             </div>
                                         </div>
-                                        <TransitionRoot
-                                            leave="transition ease-in duration-100"
-                                            leaveFrom="opacity-100"
-                                            leaveTo="opacity-0"
-                                            @after-leave="query = ''"
+                                    </div>
+                                    <TransitionRoot
+                                        leave="transition ease-in duration-100"
+                                        leaveFrom="opacity-100"
+                                        leaveTo="opacity-0"
+                                        @after-leave="query = ''"
+                                    >
+                                        <ComboboxOptions
+                                            class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                                         >
-                                            <ComboboxOptions
-                                                class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                            <div
+                                                v-if="
+                                                    filteredCountries.length ===
+                                                        0 && query !== ''
+                                                "
+                                                class="relative cursor-default select-none py-2 px-4 text-gray-700"
                                             >
-                                                <div
-                                                    v-if="
-                                                        filteredCountries.length ===
-                                                            0 && query !== ''
-                                                    "
-                                                    class="relative cursor-default select-none py-2 px-4 text-gray-700"
-                                                >
-                                                    Nothing found.
-                                                </div>
+                                                Nothing found.
+                                            </div>
 
-                                                <ComboboxOption
-                                                    v-for="country in filteredCountries"
-                                                    as="template"
-                                                    :key="country.id"
-                                                    :value="country"
-                                                    v-slot="{
-                                                        selected,
-                                                        active,
+                                            <ComboboxOption
+                                                v-for="country in filteredCountries"
+                                                as="template"
+                                                :key="country.id"
+                                                :value="country"
+                                                v-slot="{ selected, active }"
+                                            >
+                                                <li
+                                                    class="relative cursor-default select-none py-2 pl-10 pr-4"
+                                                    :class="{
+                                                        'bg-gray-800 text-white':
+                                                            active,
+                                                        'text-gray-900':
+                                                            !active,
                                                     }"
                                                 >
-                                                    <li
-                                                        class="relative cursor-default select-none py-2 pl-10 pr-4"
+                                                    <span
+                                                        class="block truncate"
                                                         :class="{
-                                                            'bg-gray-800 text-white':
+                                                            'font-medium':
+                                                                selected,
+                                                            'font-normal':
+                                                                !selected,
+                                                        }"
+                                                    >
+                                                        {{
+                                                            country.name
+                                                                ? country.name
+                                                                : "Select"
+                                                        }}
+                                                    </span>
+
+                                                    <span
+                                                        v-if="!selected"
+                                                        class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                        :class="{
+                                                            'text-gray-200':
                                                                 active,
-                                                            'text-gray-900':
+                                                            'text-gray-200':
                                                                 !active,
                                                         }"
                                                     >
-                                                        <span
-                                                            class="block truncate"
-                                                            :class="{
-                                                                'font-medium':
-                                                                    selected,
-                                                                'font-normal':
-                                                                    !selected,
-                                                            }"
-                                                        >
-                                                            {{
-                                                                country.name
-                                                                    ? country.name
-                                                                    : "Select"
-                                                            }}
-                                                        </span>
+                                                        <PlusIcon
+                                                            class="h-3 w-3"
+                                                            aria-hidden="true"
+                                                        />
+                                                    </span>
+                                                    <span
+                                                        v-if="selected"
+                                                        class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                        :class="{
+                                                            'text-white':
+                                                                active,
+                                                            'text-gray-800':
+                                                                !active,
+                                                        }"
+                                                    >
+                                                        <CheckIcon
+                                                            class="h-5 w-5"
+                                                            aria-hidden="true"
+                                                        />
+                                                    </span>
+                                                </li>
+                                            </ComboboxOption>
+                                        </ComboboxOptions>
+                                    </TransitionRoot>
+                                </div>
+                            </Combobox>
 
-                                                        <span
-                                                            v-if="!selected"
-                                                            class="absolute inset-y-0 left-0 flex items-center pl-3"
-                                                            :class="{
-                                                                'text-gray-200':
-                                                                    active,
-                                                                'text-gray-200':
-                                                                    !active,
-                                                            }"
-                                                        >
-                                                            <PlusIcon
-                                                                class="h-3 w-3"
-                                                                aria-hidden="true"
-                                                            />
-                                                        </span>
-                                                        <span
-                                                            v-if="selected"
-                                                            class="absolute inset-y-0 left-0 flex items-center pl-3"
-                                                            :class="{
-                                                                'text-white':
-                                                                    active,
-                                                                'text-gray-800':
-                                                                    !active,
-                                                            }"
-                                                        >
-                                                            <CheckIcon
-                                                                class="h-5 w-5"
-                                                                aria-hidden="true"
-                                                            />
-                                                        </span>
-                                                    </li>
-                                                </ComboboxOption>
-                                            </ComboboxOptions>
-                                        </TransitionRoot>
-                                    </div>
-                                </Combobox>
-                            </div>
                             <!-- Headless UI select # end -->
                             <InputError :message="form.errors.country" />
                         </div>
-                        <div class="flex items-center justify-center gap-2">
+                        <div
+                            class="md:flex items-center justify-center myPrimaryGap"
+                        >
                             <div class="myInputGroup">
                                 <InputLabel for="payment_city" value="City" />
                                 <TextInput

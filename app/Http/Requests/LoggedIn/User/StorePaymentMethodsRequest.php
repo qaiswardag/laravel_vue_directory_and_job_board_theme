@@ -25,8 +25,8 @@ class StorePaymentMethodsRequest extends FormRequest
             "name" => ["required", "string", "min:2", "max:255"],
             "email" => ["required", "email", "max:255"],
             "country" => ["required", "string", "max:255", "nullable"],
-            "city" => ["required", "string", "max:255", "nullable"],
-            "postal_code" => ["required", "string", "max:255", "nullable"],
+            "city" => ["string", "max:255", "nullable"],
+            "postal_code" => ["string", "max:255", "nullable"],
         ];
     }
 

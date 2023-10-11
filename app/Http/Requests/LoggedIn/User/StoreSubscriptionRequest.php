@@ -26,10 +26,17 @@ class StoreSubscriptionRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            "first_name" => ["required", "string", "max:255"],
-            "last_name" => ["required", "string", "max:255"],
-            "email" => ["required", "email", "max:255"],
             "product_id" => ["required", "string", "min:2", "max:255"],
+            "country" => ["required", "string", "min:2", "max:255", "nullable"],
+            "city" => ["required", "string", "min:2", "max:255", "nullable"],
+            "postal_code" => [
+                "required",
+                "string",
+                "min:2",
+                "max:255",
+                "nullable",
+            ],
+            "phone" => ["required", "string", "min:2", "max:255", "nullable"],
         ];
 
         return $rules;

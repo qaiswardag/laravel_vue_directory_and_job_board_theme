@@ -38,6 +38,12 @@ class User extends Authenticatable
         "username",
         "password",
         "public",
+
+        "country",
+        "city",
+        "postal_code",
+        "phone",
+        "job_title",
     ];
 
     /**
@@ -130,6 +136,10 @@ class User extends Authenticatable
             queueable(function (User $customer) {
                 $name = $customer->first_name . " " . $customer->last_name;
                 $email = $customer->email;
+                $country = $customer->country;
+                $city = $customer->city;
+                $postalCode = $customer->postal_code;
+                $phone = $customer->phone;
                 $stripeCustomer = null;
 
                 if ($customer->hasStripeId()) {
@@ -151,8 +161,11 @@ class User extends Authenticatable
                     $customer->updateStripeCustomer([
                         "name" => $name,
                         "email" => $email,
+                        "phone" => $phone,
                         "address" => [
-                            "country" => "DK",
+                            "country" => $country,
+                            "city" => $city,
+                            "postal_code" => $postalCode,
                         ],
                     ]);
                 }

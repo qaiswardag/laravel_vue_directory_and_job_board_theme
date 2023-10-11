@@ -18,6 +18,7 @@ import {
     Cog8ToothIcon,
     Square3Stack3DIcon,
     FingerPrintIcon,
+    CheckIcon,
 } from "@heroicons/vue/24/outline";
 </script>
 
@@ -135,16 +136,15 @@ import {
                 $page.props.jetstream.hasTeamFeatures
             "
         >
-            <p
-                class="text-myPrimaryDarkGrayColor justify-between group flex items-center px-2 py-2 text-xs font-normal border-b border-gray-200"
+            <Link
+                :href="route('user.teams.create')"
+                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
             >
-                <Link
-                    :href="route('user.teams.create')"
-                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white"
-                >
-                    Create a Team
-                </Link>
-            </p>
+                <div class="flex items-center gap-2">
+                    <CheckIcon class="mySmallIcon p-0 m-0"></CheckIcon>
+                    <span> Create a Team </span>
+                </div>
+            </Link>
         </template>
 
         <SideBarLink

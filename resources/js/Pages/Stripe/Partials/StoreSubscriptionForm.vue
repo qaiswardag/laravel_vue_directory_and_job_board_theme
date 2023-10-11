@@ -13,6 +13,23 @@ import { useStore } from "vuex";
 import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
 import countryListAllIsoData from "@/utils/country-list-all-iso-data";
 
+import {
+    TrashIcon,
+    CheckIcon,
+    NewspaperIcon,
+    XMarkIcon,
+    ChevronUpDownIcon,
+    PlusIcon,
+} from "@heroicons/vue/24/outline";
+import {
+    Combobox,
+    ComboboxInput,
+    ComboboxButton,
+    ComboboxOptions,
+    ComboboxOption,
+    TransitionRoot,
+} from "@headlessui/vue";
+
 const store = useStore();
 
 const props = defineProps({
@@ -51,11 +68,15 @@ const formSubscription = useForm({
     last_name: props.user.last_name,
     email: props.user.email,
     product_id: null,
+    country: props.user.country,
+    city: props.user.city,
+    postal_code: props.user.postal_code,
+    phone: props.user.phone,
 });
 
 const createOrUpdate = () => {
     if (formType.value === "create") {
-        console.log(`came here..`);
+        formSubscription.country = selectedCountry.value?.code;
         formSubscription.post(route("stripe.stores.store.subscription"), {
             preserveScroll: true,
             onSuccess: () => {},
@@ -71,9 +92,33 @@ const notificationsModalButton = function () {
     showErrorNotifications.value = false;
 };
 
+const selectedCountry = ref(null);
+const query = ref("");
+
+const filteredCountries = computed(() =>
+    query.value === ""
+        ? countryListAllIsoData
+        : countryListAllIsoData.filter((country) =>
+              country.name?.toLowerCase().includes(query.value.toLowerCase())
+          )
+);
+
+const handleRemoveInput = function () {
+    selectedCountry.value = null;
+};
+
 onBeforeMount(() => {
     if (props.post) {
         formType.value = "update";
+    }
+});
+
+onMounted(() => {
+    if (props.user.country) {
+        selectedCountry.value =
+            filteredCountries.value.find((country) => {
+                return country.code === props.user.country;
+            }) || null;
     }
 });
 </script>
@@ -88,70 +133,185 @@ onBeforeMount(() => {
                         Billing Information
                     </div>
                 </div>
-                <div class="myInputGroup">
-                    <div class="my-24 p-4 border rounded border-red-300">
-                        <p>test</p>
+
+                <div class="md:flex items-center justify-center myPrimaryGap">
+                    <div class="myInputGroup">
+                        <!-- Headless UI select # start -->
+                        <InputLabel for="payment_country" value="Country" />
+                        <!-- Headless UI select # start -->
+                        <Combobox v-model="selectedCountry">
+                            <div class="relative mt-1">
+                                <div class="relative">
+                                    <ComboboxInput
+                                        id="payment_country"
+                                        class="myPrimarySelect"
+                                        autocomplete="off"
+                                        placeholder="Search.."
+                                        :displayValue="
+                                            (country) => {
+                                                return country?.name;
+                                            }
+                                        "
+                                        @change="query = $event.target.value"
+                                    />
+
+                                    <div
+                                        class="absolute inset-y-0 right-0 flex items-center pr-2"
+                                    >
+                                        <div
+                                            class="flex items-center justify-center gap-2"
+                                        >
+                                            <button
+                                                @click="handleRemoveInput"
+                                                type="button"
+                                                class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                            >
+                                                <XMarkIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                ></XMarkIcon>
+                                            </button>
+                                            <ComboboxButton
+                                                class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                            >
+                                                <ChevronUpDownIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    aria-hidden="true"
+                                                />
+                                            </ComboboxButton>
+                                        </div>
+                                    </div>
+                                </div>
+                                <TransitionRoot
+                                    leave="transition ease-in duration-100"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                    @after-leave="query = ''"
+                                >
+                                    <ComboboxOptions
+                                        class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                    >
+                                        <div
+                                            v-if="
+                                                filteredCountries.length ===
+                                                    0 && query !== ''
+                                            "
+                                            class="relative cursor-default select-none py-2 px-4 text-gray-700"
+                                        >
+                                            Nothing found.
+                                        </div>
+
+                                        <ComboboxOption
+                                            v-for="country in filteredCountries"
+                                            as="template"
+                                            :key="country.id"
+                                            :value="country"
+                                            v-slot="{ selected, active }"
+                                        >
+                                            <li
+                                                class="relative cursor-default select-none py-2 pl-10 pr-4"
+                                                :class="{
+                                                    'bg-gray-800 text-white':
+                                                        active,
+                                                    'text-gray-900': !active,
+                                                }"
+                                            >
+                                                <span
+                                                    class="block truncate"
+                                                    :class="{
+                                                        'font-medium': selected,
+                                                        'font-normal':
+                                                            !selected,
+                                                    }"
+                                                >
+                                                    {{
+                                                        country.name
+                                                            ? country.name
+                                                            : "Select"
+                                                    }}
+                                                </span>
+
+                                                <span
+                                                    v-if="!selected"
+                                                    class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                    :class="{
+                                                        'text-gray-200': active,
+                                                        'text-gray-200':
+                                                            !active,
+                                                    }"
+                                                >
+                                                    <PlusIcon
+                                                        class="h-3 w-3"
+                                                        aria-hidden="true"
+                                                    />
+                                                </span>
+                                                <span
+                                                    v-if="selected"
+                                                    class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                    :class="{
+                                                        'text-white': active,
+                                                        'text-gray-800':
+                                                            !active,
+                                                    }"
+                                                >
+                                                    <CheckIcon
+                                                        class="h-5 w-5"
+                                                        aria-hidden="true"
+                                                    />
+                                                </span>
+                                            </li>
+                                        </ComboboxOption>
+                                    </ComboboxOptions>
+                                </TransitionRoot>
+                            </div>
+                        </Combobox>
+                        <InputError
+                            :message="formSubscription.errors.country"
+                        />
                     </div>
-                    <InputLabel for="first_name" value="First name" />
-                    <TextInput
-                        id="first_name"
-                        v-model="formSubscription.first_name"
-                        type="text"
-                        autocomplete="first_name"
-                    />
-                    <InputError :message="formSubscription.errors.first_name" />
-                </div>
-
-                <div class="myInputGroup">
-                    <InputLabel for="last_name" value="Last name" />
-                    <TextInput
-                        id="last_name"
-                        v-model="formSubscription.last_name"
-                        type="text"
-                        autocomplete="last_name"
-                    />
-                    <InputError :message="formSubscription.errors.last_name" />
-                </div>
-
-                <!-- Email -->
-                <div class="myInputGroup">
-                    <InputLabel for="email" value="Email" />
-                    <TextInput
-                        id="email"
-                        v-model="formSubscription.email"
-                        type="email"
-                    />
-                    <InputError :message="formSubscription.errors.email" />
-
-                    <div
-                        v-if="
-                            $page.props.jetstream.hasEmailVerification &&
-                            user.email_verified_at === null
-                        "
-                    >
-                        <p class="text-sm mt-2">
-                            Your email address is unverified.
-
-                            <Link
-                                :href="route('verification.send')"
-                                method="post"
-                                as="button"
-                                class="underline text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
-                                @click.prevent="sendEmailVerification"
-                            >
-                                Click here to re-send the verification email.
-                            </Link>
-                        </p>
-
-                        <div
-                            v-show="verificationLinkSent"
-                            class="mt-2 font-normal text-sm text-myPrimaryLinkColor"
-                        >
-                            A new verification link has been sent to your email
-                            address.
-                        </div>
+                    <div class="myInputGroup">
+                        <InputLabel for="city" value="City" />
+                        <TextInput
+                            id="city"
+                            v-model="formSubscription.city"
+                            placeholder="City.."
+                            type="text"
+                        />
+                        <InputError :message="formSubscription.errors.city" />
                     </div>
                 </div>
+                <!-- Postal code and phone # end -->
+                <div class="md:flex items-center justify-center myPrimaryGap">
+                    <div class="myInputGroup">
+                        <InputLabel for="postal_code" value="Postal Code" />
+                        <TextInput
+                            v-model="formSubscription.postal_code"
+                            type="text"
+                            id="postal_code"
+                            name="postal_code"
+                            placeholder="Postal code.."
+                            autocomplete="off"
+                        />
+                        <InputError
+                            :message="formSubscription.errors.postal_code"
+                        />
+                    </div>
+                    <div class="myInputGroup">
+                        <InputLabel for="phone" value="Phone" />
+                        <TextInput
+                            v-model="formSubscription.phone"
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            placeholder="Phone.."
+                            autocomplete="off"
+                        />
+                        <InputError :message="formSubscription.errors.phone" />
+                    </div>
+                </div>
+                <!-- Postal code and phone # end -->
+
+                <!-- Vat ID and vat number # start -->
+                <!-- Vat ID and vat number # end -->
             </div>
         </template>
 
