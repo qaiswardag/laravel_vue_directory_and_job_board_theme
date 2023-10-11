@@ -59,7 +59,7 @@ const props = defineProps({
                 </p>
                 <template v-if="showJobTitle && user.job_title">
                     <p class="text-xs font-normal italic">
-                        title: {{ user.job_title }}
+                        {{ `title: ${user.job_title}` }}
                     </p>
                 </template>
 
