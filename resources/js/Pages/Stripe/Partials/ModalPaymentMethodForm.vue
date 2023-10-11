@@ -302,16 +302,17 @@ onMounted(async () => {
                                 </div>
                             </div>
 
-                            <InputLabel for="payment_country" value="Country" />
+                            <InputLabel for="country123" value="Country" />
                             <!-- Headless UI select # start -->
 
                             <Combobox v-model="selectedCountry">
                                 <div class="relative mt-1">
                                     <div class="relative">
                                         <ComboboxInput
-                                            id="payment_country"
+                                            name="country123"
+                                            id="country123"
                                             class="myPrimarySelect"
-                                            autocomplete="off"
+                                            autocomplete="country123"
                                             placeholder="Search.."
                                             :displayValue="
                                                 (country) => {

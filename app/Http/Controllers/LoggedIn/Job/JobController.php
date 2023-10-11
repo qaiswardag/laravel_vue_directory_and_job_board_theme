@@ -87,6 +87,7 @@ class JobController extends Controller
                 $job->updatedBy = [
                     "first_name" => $user->first_name,
                     "last_name" => $user->last_name,
+                    "job_title" => $user->job_title,
                     "profile_photo_path" => $user->profile_photo_path,
                 ];
             }

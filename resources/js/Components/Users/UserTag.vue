@@ -16,6 +16,10 @@ const props = defineProps({
         default: null,
         required: false,
     },
+    showJobTitle: {
+        default: null,
+        required: false,
+    },
 });
 </script>
 
@@ -48,15 +52,20 @@ const props = defineProps({
                 {{ user.first_name.charAt(0).toUpperCase() }}
                 {{ user.last_name.charAt(0).toUpperCase() }}
             </div>
-            <div>
+            <div class="flex flex-col items-start justify-start">
                 <p class="text-xs font-medium">
                     {{ user.first_name }}
                     {{ user.last_name }}
                 </p>
+                <template v-if="showJobTitle && user.job_title">
+                    <p class="text-xs font-normal italic">
+                        title: {{ user.job_title }}
+                    </p>
+                </template>
 
                 <template v-if="showTeamRole && currentUserTeamRole">
-                    <p class="text-xs font-normal">
-                        Role:
+                    <p class="text-xs font-normal italic">
+                        role:
                         {{
                             currentUserTeamRole?.key
                                 ? currentUserTeamRole.key

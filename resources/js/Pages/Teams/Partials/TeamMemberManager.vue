@@ -13,6 +13,7 @@ import TextInput from "@/Components/Forms/TextInput.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { PencilIcon } from "@heroicons/vue/24/outline";
+import UserTag from "@/Components/Users/UserTag.vue";
 
 const props = defineProps({
     team: Object,
@@ -538,35 +539,18 @@ const displayAbleRole = (role) => {
                 <template #description>
                     People that are part of
                     {{ $page.props.user && $page.props.user.current_team.name }}
-                    <div
-                        v-if="
-                            $page.props.team.owner &&
-                            $page.props.team.owner.id === $page.props.user.id
-                        "
-                    >
-                        <p class="myPrimaryParagraph">
-                            You are owner of this Team.
-                        </p>
-                    </div>
-
-                    <div
-                        v-if="
-                            $page.props.team.owner &&
-                            $page.props.team.owner.id !== $page.props.user.id
-                        "
-                    >
-                        <p class="myPrimaryParagraph">
-                            Team owner is
-
-                            {{
-                                $page.props.team.owner &&
-                                $page.props.team.owner.first_name
-                            }}
-                            {{
-                                $page.props.team.owner &&
-                                $page.props.team.owner.last_name
-                            }}
-                        </p>
+                    <div class="flex gap-2 justify-center items-center">
+                        <UserTag
+                            v-if="
+                                $page.props.team.owner.id !==
+                                $page.props.user.id
+                            "
+                            :user="$page.props.team.owner"
+                            :showTeamRole="true"
+                            :currentUserTeamRole="{ key: 'owner' }"
+                            :showJobTitle="true"
+                        >
+                        </UserTag>
                     </div>
                 </template>
 
@@ -619,66 +603,12 @@ const displayAbleRole = (role) => {
                                                 <td
                                                     class="myPrimaryTableTBodyTd"
                                                 >
-                                                    <div
-                                                        class="flex items-center gap-2"
+                                                    <UserTag
+                                                        :user="user"
+                                                        :showTeamRole="true"
+                                                        :showJobTitle="true"
                                                     >
-                                                        <div
-                                                            v-if="
-                                                                user &&
-                                                                user.profile_photo_path
-                                                            "
-                                                        >
-                                                            <div
-                                                                class="h-12 w-12 flex-shrink-0"
-                                                            >
-                                                                <img
-                                                                    class="object-cover h-12 w-12 rounded-full"
-                                                                    :src="`/storage/${user.profile_photo_path}`"
-                                                                    :alt="
-                                                                        user.first_name +
-                                                                        user.last_name
-                                                                    "
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                        <div
-                                                            v-if="
-                                                                user &&
-                                                                user.profile_photo_path ===
-                                                                    null
-                                                            "
-                                                            class="flex-shrink-0 h-12 w-12 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                                        >
-                                                            {{
-                                                                user.first_name
-                                                                    .charAt(0)
-                                                                    .toUpperCase()
-                                                            }}
-                                                            {{
-                                                                user.last_name
-                                                                    .charAt(0)
-                                                                    .toUpperCase()
-                                                            }}
-                                                        </div>
-                                                        <span
-                                                            class="flex flex-col items-left gap-1 myPrimaryParagraph"
-                                                        >
-                                                            <span
-                                                                class="font-medium"
-                                                            >
-                                                                {{
-                                                                    user.first_name
-                                                                }}
-                                                                {{
-                                                                    user.last_name
-                                                                }}
-                                                            </span>
-                                                            <span>
-                                                                {{ user.email }}
-                                                            </span>
-                                                        </span>
-                                                    </div>
+                                                    </UserTag>
                                                 </td>
                                                 <td
                                                     class="myPrimaryTableTBodyTd"
@@ -688,30 +618,41 @@ const displayAbleRole = (role) => {
                                                         v-if="
                                                             availableRoles.length
                                                         "
-                                                        class="flex items-center gap-2"
+                                                        class="myPrimaryTag inline-block"
                                                     >
-                                                        <span
-                                                            class="myPrimaryParagraph"
+                                                        <div
+                                                            class="flex items-center myPrimaryGap"
                                                         >
-                                                            {{
-                                                                displayAbleRole(
-                                                                    user
-                                                                        .membership
-                                                                        .role
-                                                                )
-                                                            }}
-                                                        </span>
-                                                        <button
-                                                            @click="
-                                                                manageRole(user)
-                                                            "
-                                                            type="button"
-                                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                        >
-                                                            <PencilIcon
-                                                                class="mySmallIcon"
-                                                            ></PencilIcon>
-                                                        </button>
+                                                            <span
+                                                                class="myPrimaryParagraph text-xs font-medium"
+                                                            >
+                                                                <p
+                                                                    class="font-normal text-xs"
+                                                                >
+                                                                    role:
+                                                                </p>
+                                                                {{
+                                                                    displayAbleRole(
+                                                                        user
+                                                                            .membership
+                                                                            .role
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                            <button
+                                                                @click="
+                                                                    manageRole(
+                                                                        user
+                                                                    )
+                                                                "
+                                                                type="button"
+                                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                            >
+                                                                <PencilIcon
+                                                                    class="mySmallIcon"
+                                                                ></PencilIcon>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </td>
 

@@ -536,16 +536,16 @@ onMounted(() => {
 
                 <div class="myInputGroup">
                     <!-- Headless UI select # start -->
-                    <InputLabel for="payment_country123" value="Country" />
+                    <InputLabel for="country123" value="Country" />
                     <!-- Headless UI select # start -->
                     <Combobox v-model="selectedCountry">
                         <div class="relative mt-1">
                             <div class="relative">
                                 <ComboboxInput
-                                    id="payment_country123"
-                                    name="payment_country123"
+                                    name="country123"
+                                    id="country123"
+                                    autocomplete="country123"
                                     class="myPrimarySelect"
-                                    autocomplete="off"
                                     placeholder="Search.."
                                     :displayValue="
                                         (country) => {

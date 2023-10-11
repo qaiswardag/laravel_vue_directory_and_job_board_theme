@@ -233,7 +233,7 @@ onMounted(() => {
     <DynamicModal
         :show="modalShowUpdatePaymentMethod"
         :type="typeModal"
-        :disabled="deletePaymentMethodForm.processing"
+        :disabled="updatePaymentMethodForm.processing"
         disabledWhichButton="thirdButton"
         :gridColumnAmount="gridColumnModal"
         :title="titleModal"

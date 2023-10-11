@@ -149,6 +149,7 @@ const sidebarOpen = ref(false);
         </div>
 
         <main class="flex-1 bg-gray-50">
+            <Banner />
             <header v-if="$slots.header">
                 <slot name="header" />
                 <slot name="breadcrumbs" />

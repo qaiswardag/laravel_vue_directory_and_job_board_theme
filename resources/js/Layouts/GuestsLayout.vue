@@ -3,6 +3,8 @@ import { router } from "@inertiajs/vue3";
 import FooterGuests from "@/Components/Footer/FooterGuests.vue";
 import GuestsNavbar from "@/Components/Navbars/GuestsNavbar.vue";
 import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
+import Banner from "@/Components/Banners/Banner.vue";
+
 import { ref } from "vue";
 </script>
 
@@ -20,6 +22,7 @@ import { ref } from "vue";
         <slot name="header" />
 
         <div class="mx-auto min-h-screen">
+            <Banner />
             <main>
                 <slot />
             </main>

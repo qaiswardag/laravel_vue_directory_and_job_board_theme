@@ -1,6 +1,5 @@
 <script setup>
 import { router } from "@inertiajs/vue3";
-import Banner from "@/Components/Banners/Banner.vue";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import Flash from "@/Components/Actions/Flash.vue";
 import { ref, computed, watch } from "vue";
@@ -51,6 +50,5 @@ defineProps({
     ></Flash>
 
     <FullScreenSpinner v-if="isDOMLoaded"></FullScreenSpinner>
-    <Banner />
     <slot />
 </template>

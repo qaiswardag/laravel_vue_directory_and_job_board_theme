@@ -600,6 +600,7 @@ onMounted(() => {
                                         <td class="myPrimaryTableTBodyTd">
                                             <UserTag
                                                 :user="post.updatedBy"
+                                                :showJobTitle="true"
                                             ></UserTag>
                                         </td>
 

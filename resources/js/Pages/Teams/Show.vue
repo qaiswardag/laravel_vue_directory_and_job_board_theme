@@ -39,6 +39,7 @@ const breadcrumbsLinks = [
                     :user="$page.props.team.owner"
                     :showTeamRole="true"
                     :currentUserTeamRole="{ key: 'owner' }"
+                    :showJobTitle="true"
                 >
                 </UserTag>
             </div>
