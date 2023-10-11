@@ -162,7 +162,7 @@ const filteredCountries = computed(() =>
     query.value === ""
         ? countryListAllIsoData
         : countryListAllIsoData.filter((country) =>
-              country.name?.toLowerCase().includes(query.value.toLowerCase())
+              country.country?.toLowerCase().includes(query.value.toLowerCase())
           )
 );
 
@@ -316,7 +316,7 @@ onMounted(async () => {
                                             placeholder="Search.."
                                             :displayValue="
                                                 (country) => {
-                                                    return country?.name;
+                                                    return country?.country;
                                                 }
                                             "
                                             @change="
@@ -372,7 +372,7 @@ onMounted(async () => {
                                             <ComboboxOption
                                                 v-for="country in filteredCountries"
                                                 as="template"
-                                                :key="country.id"
+                                                :key="country.country"
                                                 :value="country"
                                                 v-slot="{ selected, active }"
                                             >
@@ -395,8 +395,8 @@ onMounted(async () => {
                                                         }"
                                                     >
                                                         {{
-                                                            country.name
-                                                                ? country.name
+                                                            country.country
+                                                                ? country.country
                                                                 : "Select"
                                                         }}
                                                     </span>

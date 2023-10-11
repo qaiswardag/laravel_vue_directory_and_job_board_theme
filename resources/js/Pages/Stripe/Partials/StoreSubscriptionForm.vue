@@ -99,7 +99,7 @@ const filteredCountries = computed(() =>
     query.value === ""
         ? countryListAllIsoData
         : countryListAllIsoData.filter((country) =>
-              country.name?.toLowerCase().includes(query.value.toLowerCase())
+              country.country?.toLowerCase().includes(query.value.toLowerCase())
           )
 );
 
@@ -150,7 +150,7 @@ onMounted(() => {
                                         placeholder="Search.."
                                         :displayValue="
                                             (country) => {
-                                                return country?.name;
+                                                return country?.country;
                                             }
                                         "
                                         @change="query = $event.target.value"
@@ -225,8 +225,8 @@ onMounted(() => {
                                                     }"
                                                 >
                                                     {{
-                                                        country.name
-                                                            ? country.name
+                                                        country.country
+                                                            ? country.country
                                                             : "Select"
                                                     }}
                                                 </span>
