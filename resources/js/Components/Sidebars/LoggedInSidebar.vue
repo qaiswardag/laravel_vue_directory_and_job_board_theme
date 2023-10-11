@@ -119,12 +119,15 @@ import {
             >
                 <Link
                     :href="route('user.teams.switch')"
-                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white"
+                    class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                     :class="{
                         'shadow-md': route().current('user.teams.switch'),
                     }"
                 >
-                    Selected Team
+                    <div class="flex items-center gap-2">
+                        <CheckIcon class="mySmallIcon p-0 m-0"></CheckIcon>
+                        Selected Team
+                    </div>
                 </Link>
             </div>
         </template>

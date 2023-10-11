@@ -629,8 +629,11 @@ const handleDraftForUpdate = async function () {
     }
 };
 
-const handlePageBuilder = function () {
+const handlePageBuilder = async function () {
     // set modal standards
+    isLoading.value = true;
+    await delay();
+    await nextTick();
     openDesignerModal.value = true;
 
     if (formType.value === "create") {
@@ -646,10 +649,6 @@ const handlePageBuilder = function () {
                     })
                     .join("");
         }
-    }
-
-    if (formType.value === "update") {
-        // store.commit("pageBuilderState/setComponents", []);
     }
 
     // handle click
@@ -701,12 +700,13 @@ const handlePageBuilder = function () {
         }
 
         // set open modal
-        openDesignerModal.value = false;
 
+        openDesignerModal.value = false;
         await delay();
         isLoading.value = false;
     };
 
+    isLoading.value = false;
     // end modal
 };
 // Builder # End

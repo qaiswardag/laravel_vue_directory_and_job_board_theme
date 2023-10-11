@@ -171,9 +171,9 @@ const deletePostForm = useForm({});
                     v-if="
                         fetchedPayments &&
                         fetchedPayments.payments &&
-                        fetchedPayments.payments.invoices &&
-                        Array.isArray(fetchedPayments.payments.invoices) &&
-                        fetchedPayments.payments.invoices.length === 0
+                        fetchedPayments.payments &&
+                        Array.isArray(fetchedPayments.payments) &&
+                        fetchedPayments.payments.length === 0
                     "
                 >
                     <div
