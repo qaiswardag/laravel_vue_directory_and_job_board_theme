@@ -9,7 +9,11 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import AvatarCardCenterSmall from "@/Components/Avatars/AvatarCardCenterSmall.vue";
 import ActionMessage from "@/Components/Actions/ActionMessage.vue";
 import { Switch } from "@headlessui/vue";
-import { ref } from "@vue/reactivity";
+import { ref, computed } from "@vue/reactivity";
+import slugify from "slugify";
+import config from "@/utils/config";
+import SectionBorder from "@/Components/Sections/SectionBorder.vue";
+import { onBeforeMount, onMounted, watch } from "vue";
 
 const form = useForm({
     name: "",
@@ -54,6 +58,20 @@ const handleCreateTeam = function () {
     };
     // end modal
 };
+
+const teamUsername = computed(() => {
+    return form.name;
+});
+
+const teamSlugName = ref("");
+
+watch(
+    () => teamUsername.value,
+    (newValue) => {
+        teamSlugName.value = slugify(newValue, config.slugifyOptions);
+    },
+    { immediate: true }
+);
 
 const createTeam = () => {
     form.post(route("teams.store"), {
@@ -101,6 +119,48 @@ const createTeam = () => {
 
         <template #main>
             <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Team slug</div>
+                </div>
+                <div class="myInputGroup">
+                    <InputLabel for="team_slug" value="Team slug" />
+                    <div class="relative flex items-center">
+                        <TextInput
+                            id="team_slug"
+                            :value="teamSlugName"
+                            type="text"
+                            autocomplete="off"
+                            readonly
+                            class="myPrimaryInputReadonly"
+                        />
+                        <div
+                            class="absolute inset-y-0 right-0 pr-1.5 flex items-center cursor-pointer"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5 text-myPrimaryErrorColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="myPrimaryParagraph text-xs italic">
+                        Team slug name is based on the team name. Be aware that
+                        when updating the team name, it can affect search engine
+                        optimization for the team and resources related to the
+                        team.
+                    </p>
+                </div>
+
+                <SectionBorder></SectionBorder>
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Team Name</div>
                 </div>

@@ -201,9 +201,7 @@ onMounted(() => {
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Title & description
-                    </div>
+                    <div class="myPrimaryFormOrganizationHeader">Username</div>
                 </div>
                 <div class="myInputGroup">
                     <InputLabel for="user_name" value="Username" />
@@ -246,6 +244,12 @@ onMounted(() => {
                 </div>
 
                 <SectionBorder></SectionBorder>
+
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Profile details
+                    </div>
+                </div>
 
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">

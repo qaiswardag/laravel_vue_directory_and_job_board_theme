@@ -13,6 +13,9 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
+import slugify from "slugify";
+import config from "@/utils/config";
+import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 
 import {
     CheckIcon,
@@ -31,7 +34,7 @@ import {
     GlobeAmericasIcon,
     PlusIcon,
 } from "@heroicons/vue/24/outline";
-import { onBeforeMount, onMounted } from "vue";
+import { onBeforeMount, onMounted, watch } from "vue";
 
 // store
 const store = useStore();
@@ -251,6 +254,20 @@ const handleRemoveCoverImage = function (imageId) {
     );
 };
 
+const teamUsername = computed(() => {
+    return postForm.name;
+});
+
+const teamSlugName = ref("");
+
+watch(
+    () => teamUsername.value,
+    (newValue) => {
+        teamSlugName.value = slugify(newValue, config.slugifyOptions);
+    },
+    { immediate: true }
+);
+
 onBeforeMount(() => {
     // User is editing an existing Resource, rather than creating a new one from scratch.
     if (props.team !== null) {
@@ -274,6 +291,53 @@ onBeforeMount(() => {
         <template #main>
             <!-- Team Owner Information -->
             <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Team slug</div>
+                </div>
+                <div class="myInputGroup">
+                    <InputLabel for="team_slug" value="Team slug" />
+                    <div class="relative flex items-center">
+                        <TextInput
+                            id="team_slug"
+                            :value="teamSlugName"
+                            type="text"
+                            autocomplete="off"
+                            readonly
+                            class="myPrimaryInputReadonly"
+                        />
+                        <div
+                            class="absolute inset-y-0 right-0 pr-1.5 flex items-center cursor-pointer"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5 text-myPrimaryErrorColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="myPrimaryParagraph text-xs italic">
+                        Team slug name is based on the team name. Be aware that
+                        when updating the team name, it can affect search engine
+                        optimization for the team and resources related to the
+                        team.
+                    </p>
+                </div>
+
+                <SectionBorder></SectionBorder>
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Team details
+                    </div>
+                </div>
                 <div class="myInputGroup">
                     <InputLabel for="name" value="Update Team Name" />
                     <TextInput id="name" v-model="postForm.name" type="text" />

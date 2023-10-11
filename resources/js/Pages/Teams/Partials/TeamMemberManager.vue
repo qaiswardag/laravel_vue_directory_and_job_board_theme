@@ -295,6 +295,19 @@ const displayAbleRole = (role) => {
                 </template>
 
                 <template #main>
+                    <div class="flex gap-2 justify-center items-center">
+                        <UserTag
+                            v-if="
+                                $page.props.team.owner.id !==
+                                $page.props.user.id
+                            "
+                            :user="$page.props.team.owner"
+                            :showTeamRole="true"
+                            :currentUserTeamRole="{ key: 'owner' }"
+                            :showJobTitle="true"
+                        >
+                        </UserTag>
+                    </div>
                     <div class="myInputsOrganization">
                         <!-- Member Email -->
                         <div class="myInputGroup">
