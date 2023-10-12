@@ -85,7 +85,7 @@ function onSelect(item) {
         >
             <Dialog
                 as="div"
-                class="relative z-30"
+                class="relative z-40"
                 @close="searchAnythingModalButton"
             >
                 <TransitionChild

@@ -41,7 +41,7 @@ const notificationsSlideOverButton = function () {
         <TransitionRoot as="template" :show="open">
             <Dialog
                 as="div"
-                class="relative z-30"
+                class="relative z-40"
                 @click="$emit('notificationsSlideOverButton')"
             >
                 <div class="fixed inset-0" />
