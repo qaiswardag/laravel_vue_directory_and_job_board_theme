@@ -93,7 +93,7 @@ const selectedUpdated = function (chosen) {
                 />
             </div>
             <Listbox as="div" v-model="selected">
-                <div class="relative md:min-w-[9rem] min-w-[7rem]">
+                <div class="relative md:min-w-[9rem] min-w-[7rem] h-full">
                     <ListboxButton class="myPrimarySelect">
                         <span class="block truncate">{{ selected }}</span>
                         <span
@@ -112,7 +112,7 @@ const selectedUpdated = function (chosen) {
                         leave-to-class="opacity-0"
                     >
                         <ListboxOptions
-                            class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-2 ring-myPrimaryBrandColor ring-opacity-5 focus:outline-none sm:text-sm"
+                            class="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-2 ring-myPrimaryBrandColor ring-opacity-5 focus:outline-none sm:text-sm"
                         >
                             <ListboxOption
                                 as="template"
