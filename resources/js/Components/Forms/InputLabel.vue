@@ -8,7 +8,7 @@ defineProps({
     <label :value="value" class="myPrimaryInputLabel">
         {{ value }}
         <header>
-            <slot name="header"></slot>
+            <slot></slot>
         </header>
     </label>
 </template>
