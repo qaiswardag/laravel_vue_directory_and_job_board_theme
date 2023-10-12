@@ -83,6 +83,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
             "city" => ["required", "string", "min:2", "max:255", "nullable"],
+            "state" => ["required", "string", "min:2", "max:255", "nullable"],
+            "line1" => ["required", "string", "min:2", "max:255", "nullable"],
+            "line2" => ["required", "string", "min:2", "max:255", "nullable"],
             "postal_code" => [
                 "required",
                 "string",
@@ -145,6 +148,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
                     "country" => $input["country"] ?? null,
                     "city" => $input["city"] ?? null,
+                    "state" => $input["state"] ?? null,
+                    "line1" => $input["line1"] ?? null,
+                    "line2" => $input["line2"] ?? null,
                     "postal_code" => $input["postal_code"] ?? null,
                     "phone" => $input["phone"] ?? null,
                     "phone_code" => $input["phone_code"] ?? null,
@@ -171,6 +177,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
                 "country" => $input["country"] ?? null,
                 "city" => $input["city"] ?? null,
+                "state" => $input["state"] ?? null,
+                "line1" => $input["line1"] ?? null,
+                "line2" => $input["line2"] ?? null,
                 "postal_code" => $input["postal_code"] ?? null,
                 "phone" => $input["phone"] ?? null,
                 "phone_code" => $input["phone_code"] ?? null,

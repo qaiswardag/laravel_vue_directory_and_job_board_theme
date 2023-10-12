@@ -40,6 +40,11 @@ class SubscriptionController extends Controller
         $email = $user->email;
         $country = $user->country;
         $city = $user->city;
+
+        $state = $user->state;
+        $line1 = $user->line1;
+        $line2 = $user->line2;
+
         $postalCode = $user->postal_code;
         $phoneCode = $user->phone_code;
         $phone = $user->phone;
@@ -81,6 +86,9 @@ class SubscriptionController extends Controller
                 "address" => [
                     "country" => $country,
                     "city" => $city,
+                    "state" => $state,
+                    "line1" => $line1,
+                    "line2" => $line2,
                     "postal_code" => $postalCode,
                 ],
             ]);
@@ -146,6 +154,9 @@ class SubscriptionController extends Controller
                 "address" => [
                     "country" => $request->country ?? null,
                     "city" => $request->city ?? null,
+                    "state" => $request->state ?? null,
+                    "line1" => $request->line1 ?? null,
+                    "line2" => $request->line2 ?? null,
                     "postal_code" => $request->postal_code ?? null,
                 ],
             ]);
@@ -154,6 +165,9 @@ class SubscriptionController extends Controller
                 ->forceFill([
                     "country" => $request->country ?? null,
                     "city" => $request->city ?? null,
+                    "state" => $request->state ?? null,
+                    "line1" => $request->line1 ?? null,
+                    "line2" => $request->line2 ?? null,
                     "postal_code" => $request->postal_code ?? null,
                     "phone_code" => $request->phone_code ?? null,
                     "phone" => $request->phone ?? null,

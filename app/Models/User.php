@@ -41,7 +41,11 @@ class User extends Authenticatable
 
         "country",
         "city",
+        "state",
+        "line1",
+        "line2",
         "postal_code",
+        "phone_code",
         "phone",
         "job_title",
     ];
@@ -138,6 +142,9 @@ class User extends Authenticatable
                 $email = $customer->email;
                 $country = $customer->country;
                 $city = $customer->city;
+                $state = $customer->state;
+                $line1 = $customer->line1;
+                $line2 = $customer->line2;
                 $postalCode = $customer->postal_code;
 
                 $phoneCode = $customer->phone_code ?? null;
@@ -172,6 +179,9 @@ class User extends Authenticatable
                         "address" => [
                             "country" => $country,
                             "city" => $city,
+                            "state" => $state,
+                            "line1" => $line1,
+                            "line2" => $line2,
                             "postal_code" => $postalCode,
                         ],
                     ]);

@@ -46,6 +46,9 @@ const form = useForm({
 
     country: null,
     city: props.user.city,
+    state: props.user.state,
+    line1: props.user.line1,
+    line2: props.user.line2,
     postal_code: props.user.postal_code,
     phone_code: props.user.phone_code,
     phone: props.user.phone,
@@ -741,6 +744,35 @@ onMounted(() => {
                 </div>
 
                 <div class="myInputGroup">
+                    <InputLabel for="line1" value="Street address" />
+                    <TextInput
+                        v-model="form.line1"
+                        type="text"
+                        id="line1"
+                        name="line1"
+                        placeholder="Street address.."
+                        autocomplete="off"
+                    />
+                    <InputError :message="form.errors.line1" />
+                </div>
+
+                <div class="myInputGroup">
+                    <InputLabel
+                        for="line2"
+                        value="Apt, suite, building etc. — optional"
+                    />
+                    <TextInput
+                        v-model="form.line2"
+                        type="text"
+                        id="line2"
+                        name="line2"
+                        placeholder="Apt, suite, building.."
+                        autocomplete="off"
+                    />
+                    <InputError :message="form.errors.line2" />
+                </div>
+
+                <div class="myInputGroup">
                     <!-- Headless UI select # start -->
                     <InputLabel for="country123" value="Country" />
                     <!-- Headless UI select # start -->
@@ -880,6 +912,21 @@ onMounted(() => {
                         autocomplete="off"
                     />
                     <InputError :message="form.errors.city" />
+                </div>
+                <div class="myInputGroup">
+                    <InputLabel
+                        for="state"
+                        value="Province or region — optional"
+                    />
+                    <TextInput
+                        v-model="form.state"
+                        type="text"
+                        id="state"
+                        name="state"
+                        placeholder="Province or region.."
+                        autocomplete="off"
+                    />
+                    <InputError :message="form.errors.state" />
                 </div>
                 <div class="myInputGroup">
                     <InputLabel
