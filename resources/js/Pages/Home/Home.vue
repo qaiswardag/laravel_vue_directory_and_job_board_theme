@@ -183,7 +183,7 @@ const faqs = [
                         </dl>
                         <img
                             class="w-full object-cover lg:col-span-8"
-                            src="/app-images/blog/4.jpg"
+                            src="/app-images/pages/frequently_asked_questions.jpg"
                             alt="image"
                         />
                     </div>

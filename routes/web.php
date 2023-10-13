@@ -362,10 +362,16 @@ Route::middleware([
         "index",
     ])->name("stripe.api.internal.payment.methods.index");
     //
+
     Route::post("/stripe/payment/methods/store", [
         UserPaymentMethodsController::class,
         "store",
     ])->name("stripe.payment.methods.store");
+
+    Route::post("/stripe/payment/methods/store/if/single", [
+        UserPaymentMethodsController::class,
+        "updateIfSinglePatmentMethod",
+    ])->name("stripe.payment.methods.store.if.single");
 
     Route::post("/stripe/payment/methods/update", [
         UserPaymentMethodsController::class,

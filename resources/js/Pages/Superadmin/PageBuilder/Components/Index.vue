@@ -111,16 +111,11 @@ const duplicateForm = useForm({
 // handle action
 const handleDuplicate = function (componentId) {
     duplicateForm.componentId = componentId;
-    console.log("heeeer");
     //
     duplicateForm.post(route("admin.components.component.duplicate"), {
         preserveScroll: false,
-        onSuccess: (success) => {
-            console.log("success:", success);
-        },
-        onError: (error) => {
-            console.log("err:", error);
-        },
+        onSuccess: (success) => {},
+        onError: () => {},
         onFinish: () => {},
     });
 };

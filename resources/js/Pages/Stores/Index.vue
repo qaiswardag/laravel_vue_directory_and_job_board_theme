@@ -12,6 +12,7 @@ import { parseISO, format } from "date-fns";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
@@ -232,8 +233,9 @@ onMounted(() => {
                 {{ $page.props.user && $page.props.user.current_team.name }}
             </template>
             <template #subTitle
-                >Lorem ipsum dolor sit amet consectetur adipisicing elit quam
-                corrupti consectetur.
+                >Become competitive with a store profile on the largest fashion
+                directory in the United Arab Emirates, which will lead your
+                customers right to your door.
             </template>
             <template #buttons>
                 <Link

@@ -378,11 +378,7 @@ onMounted(() => {
                                         :displayValue="
                                             (country) => {
                                                 return country?.phone_code
-                                                    ? country.phone_code +
-                                                          ' ' +
-                                                          '(' +
-                                                          country?.country +
-                                                          ')'
+                                                    ? `+ ${country.phone_code} ${country?.country}`
                                                     : '';
                                             }
                                         "

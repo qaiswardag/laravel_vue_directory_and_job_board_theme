@@ -57,6 +57,25 @@ class PaymentMethodsController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    public function updateIfSinglePatmentMethod()
+    {
+        $user = Auth::user();
+
+        $stripeId = $user->stripe_id;
+        $stripeCustomer = Cashier::findBillable($stripeId);
+
+        $paymentMethods = $stripeCustomer->paymentMethods();
+
+        if (count($paymentMethods) === 1) {
+            $stripeCustomer->updateDefaultPaymentMethod(
+                $paymentMethods->first()->id
+            );
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(StoreUpdatePaymentMethod $request)
     {
         $user = Auth::user();

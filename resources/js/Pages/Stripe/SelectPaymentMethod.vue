@@ -92,11 +92,6 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 const handleDeletePaymentMethod = function (method) {
-    console.log(`delete this:`, method);
-
-    //
-    //
-    //
     modalShowDeletePaymentMethod.value = true;
 
     // set modal standards

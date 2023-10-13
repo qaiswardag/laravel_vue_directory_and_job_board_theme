@@ -23,8 +23,10 @@ defineProps({
 <template>
     <div class="myPrimarySection">
         <div class="bg-white px-4 py-5 sm:px-6">
-            <div class="flex items-center space-x-3 gap-2 md:flex-row sm:flex-">
-                <div class="min-w-0 flex-1">
+            <div
+                class="flex items-center justify-between space-x-3 gap-2 md:flex-row"
+            >
+                <div class="min-w-0 w-2/3">
                     <p class="mySecondaryHeader my-0">
                         <slot name="title" />
                     </p>
@@ -32,8 +34,10 @@ defineProps({
                         <slot name="subTitle" />
                     </p>
                 </div>
-                <slot name="buttons" />
-                <div class="flex flex-shrink-0 self-center">
+                <div
+                    class="flex flex-shrink-0 items-center self-center myPrimaryGap"
+                >
+                    <slot name="buttons" />
                     <Menu as="div" class="relative inline-block text-left">
                         <div>
                             <MenuButton

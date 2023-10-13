@@ -1,10 +1,6 @@
 <script setup>
-import { computed, ref, watch } from "vue";
-import { router } from "@inertiajs/vue3";
-import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
+import { ref } from "vue";
 import Banner from "@/Components/Banners/Banner.vue";
-import ResponsiveNavLink from "@/Components/Navbars/ResponsiveNavLink.vue";
-import SideBarLink from "@/Components/MenuLinks/SideBarLink.vue";
 import LoggedInSidebar from "@/Components/Sidebars/LoggedInSidebar.vue";
 import LoggedInNavbar from "@/Components/Navbars/LoggedInNavbar.vue";
 import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";

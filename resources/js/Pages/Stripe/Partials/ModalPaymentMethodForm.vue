@@ -17,6 +17,8 @@ import { Link, router, useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/Forms/InputError.vue";
 import countryListAllIsoData from "@/utils/country-list-all-iso-data";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
+import { delay } from "@/helpers/delay";
+import FullScreenPageSpinner from "@/Components/Loaders/FullScreenPageSpinner.vue";
 
 import {
     Combobox,
@@ -100,6 +102,8 @@ const stripe = Stripe(props.publishableKey);
 const elements = ref(null);
 const cardElement = ref(null);
 
+const isLoading = ref(false);
+
 //
 // first button function
 const firstButton = function () {
@@ -109,51 +113,66 @@ const secondButton = function () {
     validateBillingDetails();
 };
 
-const validateBillingDetails = function () {
+const validateBillingDetails = async function () {
+    isLoading.value = true;
+    await delay(2000);
+
     form.country = selectedCountry.value?.code;
 
     form.post(route("stripe.payment.methods.store"), {
         preserveScroll: true,
         onSuccess: () => {
-            console.log(`success`);
             createOrUpdatePayment();
         },
-        onError: () => {},
+        onError: () => {
+            isLoading.value = true;
+        },
         onFinish: () => {},
     });
 };
 
 const createOrUpdatePayment = async function () {
-    try {
-        responseStripeCreateSubscription.value = await stripe.confirmCardSetup(
-            props.intent.client_secret,
-            {
-                payment_method: {
-                    card: cardElement.value,
-                    billing_details: {
-                        name: form.name,
-                        email: form.email,
-                        address: {
-                            country: form.country,
-                            city: form.city,
-                            postal_code: form.postal_code,
-                        },
+    responseStripeCreateSubscription.value = await stripe.confirmCardSetup(
+        props.intent.client_secret,
+        {
+            payment_method: {
+                card: cardElement.value,
+                billing_details: {
+                    name: form.name,
+                    email: form.email,
+                    address: {
+                        country: form.country,
+                        city: form.city,
+                        postal_code: form.postal_code,
                     },
                 },
-            }
-        );
-        console.log(`data er:`, responseStripeCreateSubscription.value);
-
-        if (responseStripeCreateSubscription.value?.setupIntent?.status) {
-            firstButton();
-            emit("secondModalPaymentMethodFunctionForm");
+            },
         }
-    } catch (err) {
-        console.error(
-            `Encountered an error while trying to create a subscription.`,
-            err
-        );
+    );
+
+    if (responseStripeCreateSubscription.value?.setupIntent?.status) {
+        //
+        await updateDefaultPaymentMethod();
+        //
+        firstButton();
+        emit("secondModalPaymentMethodFunctionForm");
     }
+
+    isLoading.value = false;
+};
+
+const updatePaymentMethodForm = useForm({});
+
+const updateDefaultPaymentMethod = async function (method) {
+    updatePaymentMethodForm.post(
+        route("stripe.payment.methods.store.if.single"),
+        {
+            preserveScroll: true,
+            onSuccess: () => {},
+            onError: () => {},
+            onFinish: () => {},
+        }
+    );
 };
 
 const query = ref("");
@@ -199,6 +218,7 @@ onMounted(async () => {
         minHeight="min-h-[30rem]"
         maxHeight="max-h-auto"
     >
+        <FullScreenPageSpinner v-if="isLoading"></FullScreenPageSpinner>
         <div
             class="mb-24 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >

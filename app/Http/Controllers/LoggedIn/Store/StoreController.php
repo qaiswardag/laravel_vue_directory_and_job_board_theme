@@ -115,6 +115,7 @@ class StoreController extends Controller
         }
 
         $this->authorize("can-create-and-update", $team);
+
         return Inertia::render("Stores/CreateStore/CreateStore");
     }
 

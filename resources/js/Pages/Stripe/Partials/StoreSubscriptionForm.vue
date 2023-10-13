@@ -188,7 +188,6 @@ onMounted(() => {
     if (props.user.vat_id) {
         selectedVatId.value =
             filteredVatIds.value.find((country) => {
-                console.log(`er:`, country.code);
                 return country.code === props.user.vat_id;
             }) || null;
     }
@@ -456,11 +455,7 @@ onMounted(() => {
                                         :displayValue="
                                             (country) => {
                                                 return country?.phone_code
-                                                    ? country.phone_code +
-                                                          ' ' +
-                                                          '(' +
-                                                          country?.country +
-                                                          ')'
+                                                    ? `+ ${country.phone_code} ${country?.country}`
                                                     : '';
                                             }
                                         "
