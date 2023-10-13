@@ -21,7 +21,7 @@ import { ref } from "vue";
 
         <slot name="header" />
 
-        <div class="mx-auto min-h-screen">
+        <div class="mx-auto">
             <Banner />
             <main>
                 <slot />

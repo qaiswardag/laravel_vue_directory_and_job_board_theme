@@ -3,6 +3,13 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
+
+
+
+defineProps({
+    terms: String,
+});
+
 </script>
 
 <template>
@@ -14,11 +21,7 @@ import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
                     <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
                         Terms of Service
                     </h1>
-                    <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                        Discover the ultimate minimalist administration panel
-                        with robust and multiple security layers and advanced
-                        features like Team Management, Blog and Media Library.
-                    </p>
+                    <div class="myPrimaryContentSection" v-html="terms" />
                 </div>
             </template>
         </GuestsLayout>

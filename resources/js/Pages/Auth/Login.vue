@@ -39,21 +39,18 @@ const submit = () => {
 
 <template>
     <div
-        class="bg-[url('https://images.unsplash.com/photo-1490100667990-4fced8021649?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2946&q=80')] w-full min-h-screen bg-cover"
+        class="bg-[url('https://images.unsplash.com/photo-1521489871110-81dc5a61dbda?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3328&q=80')] w-full min-h-screen bg-cover"
     >
         <MainLayout>
             <GuestsLayout>
                 <Head title="Login" />
                 <template #header>
-                    <div class="myPrimaryMainPageHeaderParagraph">
+                    <div
+                        class="myPrimaryMainPageHeaderParagraph pb-8 text-center"
+                    >
                         <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
-                            Login
+                            Sign in
                         </h1>
-                        <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                            Dolor sit amet consectetur adipisicing elit. Culpa
-                            illo ipsa fugit quo ad, et, placeat minima assumenda
-                            soluta asperiores quaerat perspiciatis.
-                        </p>
                     </div>
                 </template>
 
@@ -70,7 +67,9 @@ const submit = () => {
 
                     <form @submit.prevent="submit">
                         <div class="mt-4 mb-8">
-                            <h1 class="mySecondaryHeader text-center">Login</h1>
+                            <h1 class="mySecondaryHeader text-center">
+                                Sign in
+                            </h1>
                         </div>
                         <div>
                             <InputLabel for="email" value="Email" />

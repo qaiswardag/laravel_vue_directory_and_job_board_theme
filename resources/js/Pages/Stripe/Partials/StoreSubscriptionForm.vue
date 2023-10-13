@@ -574,7 +574,7 @@ onMounted(() => {
                                 :key="product.id"
                             >
                                 <div
-                                    class="flex flex-col gap-2 border border-transparent hover:border-myPrimaryLinkColor border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-red-50"
+                                    class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag"
                                 >
                                     <div>
                                         <div class="flex items-center">

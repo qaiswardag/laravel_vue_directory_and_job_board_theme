@@ -306,7 +306,7 @@ onMounted(() => {
                             :key="paymentMethod.id"
                         >
                             <div
-                                class="flex flex-col gap-2 border border-transparent hover:border-myPrimaryLinkColor border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-red-50"
+                                class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag"
                             >
                                 <div>
                                     <div class="flex items-center">
@@ -409,25 +409,25 @@ onMounted(() => {
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="flex items-center justify-between pt-2 mt-2">
-                    <p
+                                        
+                    <div class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1">
+                        <p
                         @click="handleCreatePaymentMethod"
-                        class="myPrimaryParagraph text-xs italic cursor-pointer mb-2"
-                    >
-                        New Payment Method?
+                        class="myPrimaryParagraph text-xs cursor-pointer font-bold py-4"
+                        >
+                        Add Payment Method
                     </p>
                     <button
-                        type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        @click="handleCreatePaymentMethod"
+                    type="button"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    @click="handleCreatePaymentMethod"
                     >
-                        <PlusIcon
-                            class="shrink-0 w-4 h-4 m-2 stroke-2"
-                        ></PlusIcon>
-                    </button>
-                </div>
+                    <PlusIcon
+                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                    ></PlusIcon>
+                </button>
+            </div>
+        </div>
             </div>
 
             <InputError

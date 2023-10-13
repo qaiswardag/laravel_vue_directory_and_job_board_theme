@@ -1296,7 +1296,7 @@ const pageBuilder = new PageBuilder(store);
                         >
                             <p
                                 @click="handleUploadCoverImage"
-                                class="myPrimaryParagraph text-xs italic cursor-pointer"
+                                class="myPrimaryParagraph text-xs cursor-pointer font-medium"
                             >
                                 Add Additional Images
                             </p>

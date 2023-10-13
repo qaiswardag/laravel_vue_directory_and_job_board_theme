@@ -77,6 +77,7 @@ const updatePaymentMethod = function () {
     <DynamicModal
         v-if="modalShowUpdatePaymentMethod"
         :show="modalShowUpdatePaymentMethod"
+        maxWidth="lg"
         :type="typeModal"
         :gridColumnAmount="gridColumnModal"
         :title="titleModal"
