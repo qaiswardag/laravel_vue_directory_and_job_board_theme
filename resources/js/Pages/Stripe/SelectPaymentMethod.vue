@@ -350,7 +350,7 @@ onMounted(() => {
                                     </div>
                                 </div>
                                 <div
-                                    class="flex gap-2 justify-between items-start border-t border-gray-200 pt-2"
+                                    class="flex gap-2 justify-between items-start border-t border-gray-400 pt-2"
                                 >
                                     <button
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
