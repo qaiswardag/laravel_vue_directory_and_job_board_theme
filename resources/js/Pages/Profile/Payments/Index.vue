@@ -308,12 +308,6 @@ const deletePostForm = useForm({});
                                         >
                                             automatic_tax
                                         </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            customer_address
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody class="myPrimaryTableTBody">
@@ -387,17 +381,6 @@ const deletePostForm = useForm({});
                                                 — Status:
                                                 {{
                                                     payment.automatic_tax.status
-                                                }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    payment.customer_address
-                                                        .country
-                                                }}
-                                                —
-                                                {{
-                                                    payment.customer_address
-                                                        .city
                                                 }}
                                             </td>
                                         </tr>

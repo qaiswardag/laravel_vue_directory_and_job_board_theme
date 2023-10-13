@@ -461,15 +461,26 @@ onMounted(() => {
                                                             !selected,
                                                     }"
                                                 >
-                                                    {{
-                                                        country?.phone_code
-                                                            ? country.phone_code +
-                                                              " " +
-                                                              "(" +
-                                                              country?.country +
-                                                              ")"
-                                                            : ""
-                                                    }}
+                                                    <div
+                                                        class="flex items-center gap-2"
+                                                    >
+                                                        +
+                                                        {{
+                                                            country?.phone_code
+                                                                ? country.phone_code
+                                                                : ""
+                                                        }}
+                                                        <div
+                                                            class="flex-shrink-0 h-3 w-5"
+                                                        >
+                                                            <img
+                                                                :src="`/app-images/flags/${country.code.toLowerCase()}.svg`"
+                                                                class="object-cover object-center h-3 w-5 rounded-full drop-shadow-sm"
+                                                                loading="lazy"
+                                                                alt="flag"
+                                                            />
+                                                        </div>
+                                                    </div>
                                                 </span>
 
                                                 <span
@@ -860,11 +871,25 @@ onMounted(() => {
                                                     'font-normal': !selected,
                                                 }"
                                             >
-                                                {{
-                                                    country.country
-                                                        ? country.country
-                                                        : ""
-                                                }}
+                                                <div
+                                                    class="flex items-center gap-2"
+                                                >
+                                                    <div
+                                                        class="flex-shrink-0 h-3 w-5"
+                                                    >
+                                                        <img
+                                                            :src="`/app-images/flags/${country.code.toLowerCase()}.svg`"
+                                                            class="object-cover object-center h-3 w-5 rounded-full drop-shadow-sm"
+                                                            loading="lazy"
+                                                            alt="flag"
+                                                        />
+                                                    </div>
+                                                    {{
+                                                        country.country
+                                                            ? country.country
+                                                            : ""
+                                                    }}
+                                                </div>
                                             </span>
 
                                             <span

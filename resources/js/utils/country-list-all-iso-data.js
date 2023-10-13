@@ -171,7 +171,6 @@ const countryListAllcodeData = [
     { country: "Nauru", phone_code: "674", code: "NR" },
     { country: "Nepal", phone_code: "977", code: "NP" },
     { country: "Netherlands", phone_code: "31", code: "NL" },
-    { country: "Netherlands Antilles", phone_code: "599", code: "AN" },
     { country: "New Caledonia", phone_code: "687", code: "NC" },
     { country: "New Zealand", phone_code: "64", code: "NZ" },
     { country: "Nicaragua", phone_code: "505", code: "NI" },
