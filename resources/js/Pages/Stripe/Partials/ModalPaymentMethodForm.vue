@@ -247,7 +247,16 @@ onMounted(async () => {
                                     >Testing Cards</a
                                 >
                             </p>
-                            <p class="my-4">4000002080000001</p>
+                            <p class="my-4">
+                                Works:
+                                <br />
+                                4000002080000001
+                            </p>
+                            <p class="my-4">
+                                Can be added but insufficient funds:
+                                <br />
+                                4000008260003178
+                            </p>
                             <p class="my-4">12/34</p>
                             <p class="my-4">567</p>
                             <!-- Email -->
