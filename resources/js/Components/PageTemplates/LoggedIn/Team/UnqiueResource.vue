@@ -103,7 +103,7 @@ defineProps({
                         <p
                             v-for="jobCountry in countries && countries"
                             :key="jobCountry"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <GlobeAmericasIcon
                                 class="w-3 h-3 stroke-1"
@@ -129,7 +129,7 @@ defineProps({
                     >
                         <p
                             v-if="post.address"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <MapPinIcon class="w-3 h-3 stroke-1"></MapPinIcon>
                             <span>
@@ -139,7 +139,7 @@ defineProps({
                         <p
                             v-for="state in states"
                             :key="state"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <MapPinIcon class="w-3 h-3 stroke-1"></MapPinIcon>
                             <span>
@@ -166,7 +166,7 @@ defineProps({
                         <p
                             v-for="state in jobTypes && jobTypes"
                             :key="state"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <NewspaperIcon
                                 class="w-3 h-3 stroke-1"
@@ -195,7 +195,7 @@ defineProps({
                         <p
                             v-for="state in categories && categories"
                             :key="state"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <Squares2X2Icon
                                 class="w-3 h-3 stroke-1"
@@ -230,7 +230,7 @@ defineProps({
                                     .split(',')
                                     .sort((a, b) => a.localeCompare(b))"
                                 :key="tag"
-                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                             >
                                 <TagIcon class="w-3 h-3 stroke-1"></TagIcon>
                                 <span>
@@ -276,7 +276,7 @@ defineProps({
                         <div
                             v-for="author in authors"
                             :key="author"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-0 px-1 flex justify-center items-center gap-1"
+                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <div v-if="author.profile_photo_path !== null">
                                 <div class="h-5 w-5 flex-shrink-0">

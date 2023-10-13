@@ -361,7 +361,7 @@ const deletePostForm = useForm({});
                                                     v-for="author in post.authors &&
                                                     post.authors"
                                                     :key="author"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-0 px-1 flex justify-center items-center gap-1"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <div
                                                         v-if="
@@ -436,7 +436,7 @@ const deletePostForm = useForm({});
                                                     v-for="storeState in post.states &&
                                                     post.states"
                                                     :key="storeState"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <MapPinIcon
                                                         class="w-3 h-3 stroke-1"
@@ -475,7 +475,7 @@ const deletePostForm = useForm({});
                                                         }
                                                     )"
                                                     :key="category"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <Squares2X2Icon
                                                         class="w-3 h-3 stroke-1"
@@ -499,7 +499,7 @@ const deletePostForm = useForm({});
                                                             a.localeCompare(b)
                                                         )"
                                                     :key="tag"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 px-2 flex justify-center items-center gap-1"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <TagIcon
                                                         class="w-3 h-3 stroke-1"
