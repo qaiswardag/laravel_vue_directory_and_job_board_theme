@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\LoggedIn\User;
 
+use Exception;
+use Illuminate\Validation\ValidationException;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\User\StoreSubscriptionRequest;
 use App\Models\Team;
@@ -9,7 +12,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Laravel\Cashier\Cashier;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Exceptions\IncompletePayment;
@@ -146,6 +148,42 @@ class SubscriptionController extends Controller
             $stripeCustomer = $user->createAsStripeCustomer();
         }
 
+        // TODO: ability to add vat number
+        //    TAX # START
+        //    TAX # START
+        //    TAX # START
+        //    TAX # START
+
+        // $taxId = $customer->createTaxId("eu_vat", "DK1234");
+        // $taxId = $customer->createTaxId("eu_vat", "DK34329249");
+        //
+        //
+        //
+        //
+        //
+        //
+        // test
+        // test
+
+        try {
+            $stripeCustomer->createTaxId("eu_vat", "DK1234");
+        } catch (Exception $e) {
+            throw ValidationException::withMessages([
+                "line1" => "Hello Word",
+            ]);
+        }
+        //
+        //
+        //
+
+        // test
+        // test
+
+        //    TAX # END
+        //    TAX # END
+        //    TAX # END
+        //    TAX # END
+
         try {
             $user->updateStripeCustomer([
                 "name" => $user->first_name . " " . $user->last_name,
@@ -173,20 +211,6 @@ class SubscriptionController extends Controller
                     "phone" => $request->phone ?? null,
                 ])
                 ->save();
-
-            // TODO: ability to add vat number
-            //    TAX # START
-            //    TAX # START
-            //    TAX # START
-            //    TAX # START
-
-            // $taxId = $customer->createTaxId("eu_vat", "DK1234");
-            // $taxId = $customer->createTaxId("eu_vat", "DK34329249");
-
-            //    TAX # END
-            //    TAX # END
-            //    TAX # END
-            //    TAX # END
 
             $stripeCustomer
                 // The first argument passed to the newSubscription method
