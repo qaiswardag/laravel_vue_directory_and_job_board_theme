@@ -25,6 +25,7 @@ class StoreSubscriptionRequest extends FormRequest
      */
     public function rules(): array
     {
+        dd($this->vat_id);
         $rules = [
             "product_id" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
@@ -38,6 +39,15 @@ class StoreSubscriptionRequest extends FormRequest
             ],
             "phone" => ["integer", "digits_between:4,16", "nullable"],
             "phone_code" => ["regex:/^\d{1,8}(-\d{1,8})?$/", "nullable"],
+
+            "vat_id" => ["required", "string", "min:2", "max:255", "nullable"],
+            "vat_number" => [
+                "required",
+                "string",
+                "min:2",
+                "max:255",
+                "nullable",
+            ],
         ];
 
         return $rules;

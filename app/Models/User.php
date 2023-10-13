@@ -47,6 +47,8 @@ class User extends Authenticatable
         "postal_code",
         "phone_code",
         "phone",
+        "vat_id",
+        "vat_number ",
         "job_title",
     ];
 

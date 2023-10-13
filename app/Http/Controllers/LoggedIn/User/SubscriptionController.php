@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\LoggedIn\User;
 
 use Exception;
+use ErrorException;
 use Illuminate\Validation\ValidationException;
 
 use App\Http\Controllers\Controller;
@@ -148,41 +149,43 @@ class SubscriptionController extends Controller
             $stripeCustomer = $user->createAsStripeCustomer();
         }
 
-        // TODO: ability to add vat number
-        //    TAX # START
-        //    TAX # START
-        //    TAX # START
-        //    TAX # START
+        $vat_id = $request->vat_id ?? null;
+        $vat_number = $request->vat_number ?? null;
 
-        // $taxId = $customer->createTaxId("eu_vat", "DK1234");
-        // $taxId = $customer->createTaxId("eu_vat", "DK34329249");
-        //
-        //
-        //
-        //
-        //
-        //
-        // test
-        // test
+        //    TAX # START
+        if ($vat_id && $vat_number) {
+            try {
+                $stripeCustomer->createTaxId("eu_vat", "DK1234");
+            } catch (Exception $e) {
+                throw ValidationException::withMessages([
+                    "vat_id" => $e->getMessage(),
+                    "vat_number" => $e->getMessage(),
+                ]);
+            }
+            //
+            //
+            //
+            try {
+                throw new Exception("All fields for VAT are correct!");
+            } catch (Exception $e) {
+                throw ValidationException::withMessages([
+                    "line1" => $e->getMessage(),
+                ]);
+            }
 
+            //
+            //
+        }
+        //    TAX # END
+        //
+        //
         try {
-            $stripeCustomer->createTaxId("eu_vat", "DK1234");
+            throw new Exception("Came outside if statement!");
         } catch (Exception $e) {
             throw ValidationException::withMessages([
-                "line1" => "Hello Word",
+                "line1" => $e->getMessage(),
             ]);
         }
-        //
-        //
-        //
-
-        // test
-        // test
-
-        //    TAX # END
-        //    TAX # END
-        //    TAX # END
-        //    TAX # END
 
         try {
             $user->updateStripeCustomer([
