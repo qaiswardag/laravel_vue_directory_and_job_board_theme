@@ -78,15 +78,18 @@ const formSubscription = useForm({
     phone: props.user.phone,
     phone_code: props.user.phone_code,
 
-    vat_number: props.user.vat_number,
     vat_id: props.user.vat_id,
+    tax_id: props.user.tax_id,
+    vat_number: props.user.vat_number,
 });
 
 const createOrUpdate = () => {
     if (formType.value === "create") {
         formSubscription.country = selectedCountry.value?.code;
         formSubscription.phone_code = selectedPhoneCode.value?.phone_code;
-        formSubscription.vat_id = selectedVatId.value?.vat_id;
+
+        formSubscription.vat_id = selectedVatId.value?.code;
+        formSubscription.tax_id = selectedVatId.value?.tax_id;
 
         formSubscription.post(route("stripe.stores.store.subscription"), {
             preserveScroll: true,
@@ -179,6 +182,14 @@ onMounted(() => {
         selectedPhoneCode.value =
             filteredPhoneCodes.value.find((country) => {
                 return country.phone_code === props.user.phone_code;
+            }) || null;
+    }
+
+    if (props.user.vat_id) {
+        selectedVatId.value =
+            filteredVatIds.value.find((country) => {
+                console.log(`er:`, country.code);
+                return country.code === props.user.vat_id;
             }) || null;
     }
 });
@@ -581,175 +592,165 @@ onMounted(() => {
             <!-- postal code and phone # end -->
 
             <div class="myInputsOrganization">
-                <p class="my-12">ERR: {{ selectedVatId }}</p>
                 <!-- Vat ID and vat number # start -->
-                <div class="myInputsOrganization">
-                    <div
-                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
-                    >
-                        <div class="myPrimaryFormOrganizationHeader">Vat</div>
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Company vat
                     </div>
+                </div>
 
-                    <div
-                        class="md:flex items-center justify-center myPrimaryGap"
-                    >
-                        <div class="myInputGroup">
-                            <!-- Headless UI select # start -->
-                            <InputLabel for="vat_id123" value="Vat id" />
-                            <!-- Headless UI select # start -->
-                            <Combobox v-model="selectedVatId">
-                                <div class="relative mt-1">
-                                    <div class="relative">
-                                        <ComboboxInput
-                                            name="vat_id123"
-                                            id="vat_id123"
-                                            class="myPrimarySelect"
-                                            autocomplete="vat_id123"
-                                            placeholder="Search.."
-                                            :displayValue="
-                                                (country) => {
-                                                    return country?.country;
-                                                }
-                                            "
-                                            @change="
-                                                queryVatId = $event.target.value
-                                            "
-                                        />
+                <div class="md:flex items-center justify-center myPrimaryGap">
+                    <div class="myInputGroup">
+                        <!-- Headless UI select # start -->
+                        <InputLabel for="vat_id123" value="Vat id — optional" />
+                        <!-- Headless UI select # start -->
+                        <Combobox v-model="selectedVatId">
+                            <div class="relative mt-1">
+                                <div class="relative">
+                                    <ComboboxInput
+                                        name="vat_id123"
+                                        id="vat_id123"
+                                        class="myPrimarySelect"
+                                        autocomplete="vat_id123"
+                                        placeholder="Search.."
+                                        :displayValue="
+                                            (country) => {
+                                                return country?.country;
+                                            }
+                                        "
+                                        @change="
+                                            queryVatId = $event.target.value
+                                        "
+                                    />
 
+                                    <div
+                                        class="absolute inset-y-0 right-0 flex items-center pr-2"
+                                    >
                                         <div
-                                            class="absolute inset-y-0 right-0 flex items-center pr-2"
+                                            class="flex items-center justify-center gap-2"
                                         >
-                                            <div
-                                                class="flex items-center justify-center gap-2"
+                                            <button
+                                                @click="handleRemoveVatIdInput"
+                                                type="button"
+                                                class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <button
-                                                    @click="
-                                                        handleRemoveVatIdInput
-                                                    "
-                                                    type="button"
-                                                    class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                >
-                                                    <XMarkIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></XMarkIcon>
-                                                </button>
-                                                <ComboboxButton
-                                                    class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                >
-                                                    <ChevronUpDownIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                        aria-hidden="true"
-                                                    />
-                                                </ComboboxButton>
-                                            </div>
+                                                <XMarkIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                ></XMarkIcon>
+                                            </button>
+                                            <ComboboxButton
+                                                class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                            >
+                                                <ChevronUpDownIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    aria-hidden="true"
+                                                />
+                                            </ComboboxButton>
                                         </div>
                                     </div>
-                                    <TransitionRoot
-                                        leave="transition ease-in duration-100"
-                                        leaveFrom="opacity-100"
-                                        leaveTo="opacity-0"
-                                        @after-leave="queryVatId = ''"
+                                </div>
+                                <TransitionRoot
+                                    leave="transition ease-in duration-100"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                    @after-leave="queryVatId = ''"
+                                >
+                                    <ComboboxOptions
+                                        class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                                     >
-                                        <ComboboxOptions
-                                            class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                        <div
+                                            v-if="
+                                                filteredVatIds.length === 0 &&
+                                                queryVatId !== ''
+                                            "
+                                            class="relative cursor-default select-none py-2 px-4 text-gray-700"
                                         >
-                                            <div
-                                                v-if="
-                                                    filteredVatIds.length ===
-                                                        0 && queryVatId !== ''
-                                                "
-                                                class="relative cursor-default select-none py-2 px-4 text-gray-700"
-                                            >
-                                                Nothing found.
-                                            </div>
+                                            Nothing found.
+                                        </div>
 
-                                            <ComboboxOption
-                                                v-for="country in filteredVatIds"
-                                                as="template"
-                                                :key="country.id"
-                                                :value="country"
-                                                v-slot="{ selected, active }"
+                                        <ComboboxOption
+                                            v-for="country in filteredVatIds"
+                                            as="template"
+                                            :key="country.id"
+                                            :value="country"
+                                            v-slot="{ selected, active }"
+                                        >
+                                            <li
+                                                class="relative cursor-default select-none py-2 pl-10 pr-4"
+                                                :class="{
+                                                    'bg-gray-800 text-white':
+                                                        active,
+                                                    'text-gray-900': !active,
+                                                }"
                                             >
-                                                <li
-                                                    class="relative cursor-default select-none py-2 pl-10 pr-4"
+                                                <span
+                                                    class="block truncate"
                                                     :class="{
-                                                        'bg-gray-800 text-white':
-                                                            active,
-                                                        'text-gray-900':
+                                                        'font-medium': selected,
+                                                        'font-normal':
+                                                            !selected,
+                                                    }"
+                                                >
+                                                    {{
+                                                        country.country
+                                                            ? country.country
+                                                            : ""
+                                                    }}
+                                                </span>
+
+                                                <span
+                                                    v-if="!selected"
+                                                    class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                    :class="{
+                                                        'text-gray-200': active,
+                                                        'text-gray-200':
                                                             !active,
                                                     }"
                                                 >
-                                                    <span
-                                                        class="block truncate"
-                                                        :class="{
-                                                            'font-medium':
-                                                                selected,
-                                                            'font-normal':
-                                                                !selected,
-                                                        }"
-                                                    >
-                                                        {{
-                                                            country.country
-                                                                ? country.country
-                                                                : ""
-                                                        }}
-                                                    </span>
+                                                    <PlusIcon
+                                                        class="h-3 w-3"
+                                                        aria-hidden="true"
+                                                    />
+                                                </span>
+                                                <span
+                                                    v-if="selected"
+                                                    class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                    :class="{
+                                                        'text-white': active,
+                                                        'text-gray-800':
+                                                            !active,
+                                                    }"
+                                                >
+                                                    <CheckIcon
+                                                        class="h-5 w-5"
+                                                        aria-hidden="true"
+                                                    />
+                                                </span>
+                                            </li>
+                                        </ComboboxOption>
+                                    </ComboboxOptions>
+                                </TransitionRoot>
+                            </div>
+                        </Combobox>
+                        <InputError :message="formSubscription.errors.vat_id" />
+                    </div>
 
-                                                    <span
-                                                        v-if="!selected"
-                                                        class="absolute inset-y-0 left-0 flex items-center pl-3"
-                                                        :class="{
-                                                            'text-gray-200':
-                                                                active,
-                                                            'text-gray-200':
-                                                                !active,
-                                                        }"
-                                                    >
-                                                        <PlusIcon
-                                                            class="h-3 w-3"
-                                                            aria-hidden="true"
-                                                        />
-                                                    </span>
-                                                    <span
-                                                        v-if="selected"
-                                                        class="absolute inset-y-0 left-0 flex items-center pl-3"
-                                                        :class="{
-                                                            'text-white':
-                                                                active,
-                                                            'text-gray-800':
-                                                                !active,
-                                                        }"
-                                                    >
-                                                        <CheckIcon
-                                                            class="h-5 w-5"
-                                                            aria-hidden="true"
-                                                        />
-                                                    </span>
-                                                </li>
-                                            </ComboboxOption>
-                                        </ComboboxOptions>
-                                    </TransitionRoot>
-                                </div>
-                            </Combobox>
-                            <InputError
-                                :message="formSubscription.errors.vat_id"
-                            />
-                        </div>
-
-                        <div class="myInputGroup">
-                            <InputLabel for="vat_number" value="Vat number" />
-                            <TextInput
-                                v-model="formSubscription.vat_number"
-                                type="text"
-                                id="vat_number"
-                                name="vat_number"
-                                placeholder="Vat number.."
-                                autocomplete="off"
-                            />
-                            <InputError
-                                :message="formSubscription.errors.vat_number"
-                            />
-                        </div>
+                    <div class="myInputGroup">
+                        <InputLabel
+                            for="vat_number"
+                            value="Vat number — optional"
+                        />
+                        <TextInput
+                            v-model="formSubscription.vat_number"
+                            type="text"
+                            id="vat_number"
+                            name="vat_number"
+                            placeholder="Vat number.."
+                            autocomplete="off"
+                        />
+                        <InputError
+                            :message="formSubscription.errors.vat_number"
+                        />
                     </div>
                 </div>
                 <!-- Vat ID and vat number # end -->

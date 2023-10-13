@@ -289,15 +289,22 @@ onMounted(() => {
 
             <div>
                 <div
+                  
+      
+                    :class="{
+                        'p-2 border' : fetchedPaymentMethods &&
+                        fetchedPaymentMethods.paymentMethods &&
+                        Array.isArray(fetchedPaymentMethods.paymentMethods) &&
+                        fetchedPaymentMethods.paymentMethods.length !== 0
+                    }"
+                >
+                    <div
                     v-if="
                         fetchedPaymentMethods &&
                         fetchedPaymentMethods.paymentMethods &&
                         Array.isArray(fetchedPaymentMethods.paymentMethods) &&
                         fetchedPaymentMethods.paymentMethods.length !== 0
                     "
-                    class="p-2 border border-myPrimaryLightGrayColor"
-                >
-                    <div
                         class="min-h-[4rem] max-h-[32rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
                     >
                         <div
@@ -410,7 +417,14 @@ onMounted(() => {
                         </div>
                     </div>
                                         
-                    <div class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1">
+                    <div class="flex items-center justify-between  pt-2 mt-8"
+                    :class="{
+'border-t border-gray-200' : fetchedPaymentMethods &&
+                        fetchedPaymentMethods.paymentMethods &&
+                        Array.isArray(fetchedPaymentMethods.paymentMethods) &&
+                        fetchedPaymentMethods.paymentMethods.length !== 0
+                    }"
+                    >
                         <p
                         @click="handleCreatePaymentMethod"
                         class="myPrimaryParagraph text-xs cursor-pointer font-bold py-4"

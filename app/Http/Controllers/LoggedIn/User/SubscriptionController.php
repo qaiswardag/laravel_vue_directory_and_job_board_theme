@@ -150,42 +150,41 @@ class SubscriptionController extends Controller
         }
 
         $vat_id = $request->vat_id ?? null;
+        $tax_id = $request->tax_id ?? null;
         $vat_number = $request->vat_number ?? null;
 
         //    TAX # START
         if ($vat_id && $vat_number) {
             try {
-                $stripeCustomer->createTaxId("eu_vat", "DK1234");
-            } catch (Exception $e) {
-                throw ValidationException::withMessages([
-                    "vat_id" => $e->getMessage(),
-                    "vat_number" => $e->getMessage(),
-                ]);
-            }
-            //
-            //
-            //
-            try {
-                throw new Exception("All fields for VAT are correct!");
-            } catch (Exception $e) {
-                throw ValidationException::withMessages([
-                    "line1" => $e->getMessage(),
-                ]);
-            }
+                // tax id is not null
+                if ($tax_id) {
+                    $stripeCustomer->createTaxId(
+                        $tax_id,
+                        $tax_id === "eu_vat"
+                            ? $vat_id . $vat_number
+                            : $vat_number
+                    );
+                }
 
-            //
-            //
+                // tax id null
+                if (!$tax_id) {
+                    $stripeCustomer->createTaxId($vat_id, $vat_number);
+                }
+            } catch (Exception $e) {
+                throw ValidationException::withMessages([
+                    "vat_id" =>
+                        "Oops! We were unable to process the VAT number." .
+                        " " .
+                        $e->getMessage(),
+                    "vat_number" =>
+                        "Oops! We were unable to process the VAT number." .
+                        " " .
+                        $e->getMessage(),
+                ]);
+            }
         }
+
         //    TAX # END
-        //
-        //
-        try {
-            throw new Exception("Came outside if statement!");
-        } catch (Exception $e) {
-            throw ValidationException::withMessages([
-                "line1" => $e->getMessage(),
-            ]);
-        }
 
         try {
             $user->updateStripeCustomer([
@@ -212,6 +211,10 @@ class SubscriptionController extends Controller
                     "postal_code" => $request->postal_code ?? null,
                     "phone_code" => $request->phone_code ?? null,
                     "phone" => $request->phone ?? null,
+
+                    "vat_id" => $request->vat_id ?? null,
+                    "tax_id" => $request->tax_id ?? null,
+                    "vat_number" => $request->vat_number ?? null,
                 ])
                 ->save();
 

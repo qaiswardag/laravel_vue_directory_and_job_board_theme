@@ -26,6 +26,7 @@ return new class extends Migration {
             $table->string("phone_code")->nullable();
 
             $table->string("vat_id")->nullable();
+            $table->string("tax_id")->nullable();
             $table->string("vat_number")->nullable();
 
             $table->string("phone")->nullable();

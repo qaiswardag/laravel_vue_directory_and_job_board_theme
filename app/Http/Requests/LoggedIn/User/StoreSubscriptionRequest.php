@@ -25,7 +25,6 @@ class StoreSubscriptionRequest extends FormRequest
      */
     public function rules(): array
     {
-        dd($this->vat_id);
         $rules = [
             "product_id" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
@@ -40,14 +39,8 @@ class StoreSubscriptionRequest extends FormRequest
             "phone" => ["integer", "digits_between:4,16", "nullable"],
             "phone_code" => ["regex:/^\d{1,8}(-\d{1,8})?$/", "nullable"],
 
-            "vat_id" => ["required", "string", "min:2", "max:255", "nullable"],
-            "vat_number" => [
-                "required",
-                "string",
-                "min:2",
-                "max:255",
-                "nullable",
-            ],
+            "vat_id" => ["string", "min:2", "max:255", "nullable"],
+            "vat_number" => ["string", "min:2", "max:255", "nullable"],
         ];
 
         return $rules;
@@ -132,6 +125,25 @@ class StoreSubscriptionRequest extends FormRequest
                     );
                 }
                 // logic for phone and phone country code # end
+                // logic for vat id and vat number # start
+                if ($this->vat_id && !$this->vat_number) {
+                    $validator->errors()->add(
+                        "vat_number",
+                        "Vat number is required when vat id is set.
+    
+                    "
+                    );
+                }
+
+                if ($this->vat_number && !$this->vat_id) {
+                    $validator
+                        ->errors()
+                        ->add(
+                            "vat_id",
+                            "Vat id is required when vat number is set."
+                        );
+                }
+                // logic for vat id and vat number # end
             }
         });
 
