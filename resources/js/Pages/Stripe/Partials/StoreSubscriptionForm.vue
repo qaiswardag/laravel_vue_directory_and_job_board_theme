@@ -57,9 +57,12 @@ const handleSelectProduct = function (product) {
     if (selectedProduct.value?.id === product.id) {
         selectedProduct.value = null;
         formSubscription.product_id = null;
+        formSubscription.price_product_identifier_stripe = null;
     } else {
         selectedProduct.value = product;
         formSubscription.product_id = product.id;
+        formSubscription.price_product_identifier_stripe =
+            product.priceProductIdentifierStripe;
     }
 };
 
@@ -69,6 +72,7 @@ const formSubscription = useForm({
     last_name: props.user.last_name,
     email: props.user.email,
     product_id: null,
+    price_product_identifier_stripe: null,
     country: props.user.country,
     city: props.user.city,
     state: props.user.state,
@@ -912,9 +916,6 @@ onMounted(() => {
                     :intent="intent"
                     :publishableKey="publishableKey"
                 ></SelectPaymentMethod>
-                <InputError
-                    :message="formSubscription.errors.payment_method_id"
-                />
             </div>
         </template>
         <template #actions>
@@ -959,6 +960,10 @@ onMounted(() => {
                     </p>
                 </div>
             </div>
+            <InputError
+                class="justify-end"
+                :message="formSubscription.errors.error"
+            />
             <ActionMessage
                 :on="formSubscription.recentlySuccessful"
                 type="success"

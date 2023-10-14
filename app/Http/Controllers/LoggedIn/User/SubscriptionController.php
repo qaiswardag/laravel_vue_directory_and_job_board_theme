@@ -127,6 +127,8 @@ class SubscriptionController extends Controller
         $user = User::findOrFail($request->user_id);
 
         $productId = $request->product_id;
+        $priceProductIdentifierStripe =
+            $request->price_product_identifier_stripe;
 
         $stripeId = $user->stripe_id;
 
@@ -234,17 +236,17 @@ class SubscriptionController extends Controller
                 // Every 3 months / US$20.00 / Tax behaviour Inclusive
                 // API ID: price_1NwSQ7EuESfVmAWoiDjlkbRQ
 
-                ->newSubscription($productId, "price_1NwSQ7EuESfVmAWoiDjlkbRQ") // signle store
+                ->newSubscription($productId, $priceProductIdentifierStripe)
                 ->quantity(1)
                 ->create($defaultPaymentMethodId);
-        } catch (Exception $exception) {
-            Log::error(
-                "Something went wrong creating the subscription. {$exception}"
-            );
+        } catch (Exception $e) {
+            Log::error("Something went wrong creating the subscription. {$e}");
 
-            return Inertia::render("Error", [
-                "customError" => self::TRY_CATCH_FORM_SUBMISSION_ERROR,
-                "status" => 422,
+            throw ValidationException::withMessages([
+                "error" =>
+                    "Oops! Something went wrong creating the subscription." .
+                    " " .
+                    $e->getMessage(),
             ]);
         }
 

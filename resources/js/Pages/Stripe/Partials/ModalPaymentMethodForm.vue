@@ -18,7 +18,6 @@ import InputError from "@/Components/Forms/InputError.vue";
 import countryListAllIsoData from "@/utils/country-list-all-iso-data";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { delay } from "@/helpers/delay";
-import FullScreenPageSpinner from "@/Components/Loaders/FullScreenPageSpinner.vue";
 
 import {
     Combobox,
@@ -102,8 +101,6 @@ const stripe = Stripe(props.publishableKey);
 const elements = ref(null);
 const cardElement = ref(null);
 
-const isLoading = ref(false);
-
 //
 // first button function
 const firstButton = function () {
@@ -114,7 +111,6 @@ const secondButton = function () {
 };
 
 const validateBillingDetails = async function () {
-    isLoading.value = true;
     await delay(2000);
 
     form.country = selectedCountry.value?.code;
@@ -124,9 +120,7 @@ const validateBillingDetails = async function () {
         onSuccess: () => {
             createOrUpdatePayment();
         },
-        onError: () => {
-            isLoading.value = true;
-        },
+        onError: () => {},
         onFinish: () => {},
     });
 };
@@ -157,8 +151,6 @@ const createOrUpdatePayment = async function () {
         firstButton();
         emit("secondModalPaymentMethodFunctionForm");
     }
-
-    isLoading.value = false;
 };
 
 const updatePaymentMethodForm = useForm({});
@@ -218,7 +210,6 @@ onMounted(async () => {
         minHeight="min-h-[30rem]"
         maxHeight="max-h-auto"
     >
-        <FullScreenPageSpinner v-if="isLoading"></FullScreenPageSpinner>
         <div
             class="mb-24 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
