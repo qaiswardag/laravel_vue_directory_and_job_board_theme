@@ -167,6 +167,12 @@ const deletePostForm = useForm({});
 
             <div>
                 <h1 class="myPrimaryHeaderMessage">Payments</h1>
+                <div
+                    v-if="!isLoadingPayments && isErrorPayments"
+                    class="myPrimaryParagraphError"
+                >
+                    {{ errorPayments }}
+                </div>
                 <template
                     v-if="
                         fetchedPayments &&
@@ -176,12 +182,6 @@ const deletePostForm = useForm({});
                         fetchedPayments.payments.length === 0
                     "
                 >
-                    <div
-                        v-if="!isLoadingPayments && isErrorPayments"
-                        class="myPrimaryParagraphError"
-                    >
-                        {{ errorPayments }}
-                    </div>
                     <p class="myPrimaryParagraph">
                         Looks like there are no payments!
                     </p>

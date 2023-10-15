@@ -5,14 +5,14 @@ const storeSubscriptionPrices = function (user) {
         {
             name: "Single Store",
             id: "single_store",
-            priceProductIdentifierStripe: "price_1NwSQ7EuESfVmAWoiDjlkbRQ",
+            priceProductIdentifierStripe: "price_1O167uEuESfVmAWohyZDo7Ck",
             route: {
                 name: "stripe.stores.create.subscription",
                 parameters: null,
             },
             price: "$20",
             frequencies: "monthly",
-            billed: "Billed every 3 months",
+            billed: "Billed every month",
             title: "Most popular",
             description:
                 "The essentials to provide your best work for clients.",
@@ -26,13 +26,14 @@ const storeSubscriptionPrices = function (user) {
         {
             name: "Up to 3 Stores",
             id: "three_stores",
+            priceProductIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
             route: {
                 name: "stores.index",
-                parameters: [],
+                parameters: null,
             },
-            price: "$30",
+            price: "$50",
             frequencies: "monthly",
-            billed: "Billed every 3 months",
+            billed: "Billed every month",
             title: null,
             description:
                 "The essentials to provide your best work for clients.",
@@ -71,7 +72,7 @@ const storeSubscriptionPrices = function (user) {
             id: "two_hundred_stores",
             route: {
                 name: "stores.index",
-                parameters: [],
+                parameters: null,
             },
             price: "$90",
             frequencies: "monthly",

@@ -902,7 +902,11 @@ const categoriesSorted = computed(() => {
                     >
                         Show
                         {{ Object.values(postForm.errors).length }}
-                        errors
+                        {{
+                            Object.values(postForm.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
                     </p>
                 </div>
             </div>
@@ -973,7 +977,11 @@ const categoriesSorted = computed(() => {
                 <div class="flex items-center justify-start gap-2">
                     <p class="myPrimaryParagraphError">
                         {{ Object.values(postForm.errors).length }}
-                        errors
+                        {{
+                            Object.values(postForm.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
                     </p>
                 </div>
             </NotificationsFixedBottom>

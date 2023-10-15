@@ -16,6 +16,7 @@ use Laravel\Cashier\Cashier;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Exceptions\IncompletePayment;
+use Laravel\Cashier\Subscription;
 use Stripe\Customer;
 use Stripe\Error as Stripe;
 
@@ -234,7 +235,6 @@ class SubscriptionController extends Controller
                 // STRIPE:
                 // Price for Single Store
                 // Every 3 months / US$20.00 / Tax behaviour Inclusive
-                // API ID: price_1NwSQ7EuESfVmAWoiDjlkbRQ
 
                 ->newSubscription($productId, $priceProductIdentifierStripe)
                 ->quantity(1)
@@ -245,6 +245,162 @@ class SubscriptionController extends Controller
             throw ValidationException::withMessages([
                 "error" =>
                     "Oops! Something went wrong creating the subscription." .
+                    " " .
+                    $e->getMessage(),
+            ]);
+        }
+
+        return redirect()->route("stripe.payment.subscription.index", [
+            "user" => $user->id,
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($subscriptionId)
+    {
+        $user = Auth::user();
+
+        $subscription = Subscription::findOrFail($subscriptionId);
+
+        $name = $user->first_name . " " . $user->last_name;
+        $email = $user->email;
+        $country = $user->country;
+        $city = $user->city;
+
+        $state = $user->state;
+        $line1 = $user->line1;
+        $line2 = $user->line2;
+
+        $postalCode = $user->postal_code;
+        $phoneCode = $user->phone_code;
+        $phone = $user->phone;
+        $publishableKey = config("services.stripe.key");
+
+        $intent = null;
+        $paymentMethods = null;
+
+        $stripeId = $user->stripe_id;
+
+        if (!$stripeId) {
+            $user->createAsStripeCustomer();
+        }
+
+        $stripeCustomer = $user->asStripeCustomer();
+
+        // if user is deleted at Stripe
+        if ($stripeCustomer && $stripeCustomer->isDeleted()) {
+            $user
+                ->forceFill([
+                    "stripe_id" => null,
+                    "trial_ends_at" => null,
+                    "pm_type" => null,
+                    "pm_last_four" => null,
+                ])
+                ->save();
+
+            $user->createAsStripeCustomer();
+        }
+
+        try {
+            $intent = $user->createSetupIntent();
+            $paymentMethods = $user->paymentMethods();
+
+            $user->updateStripeCustomer([
+                "name" => $name,
+                "email" => $email,
+                "phone" => $phone,
+                "address" => [
+                    "country" => $country,
+                    "city" => $city,
+                    "state" => $state,
+                    "line1" => $line1,
+                    "line2" => $line2,
+                    "postal_code" => $postalCode,
+                ],
+            ]);
+        } catch (Exception $exception) {
+            Log::error(
+                "Something went wrong loading the subscription form. {$exception}"
+            );
+
+            return Inertia::render("Error", [
+                "customError" => self::TRY_CATCH_LOAD_FORM_ERROR,
+                "status" => 422,
+            ]);
+        }
+
+        return Inertia::render(
+            "Stripe/UpdateStoreSubscription/UpdateStoreSubscription",
+            [
+                "intent" => $intent,
+                "paymentMethods" => $paymentMethods,
+                "publishableKey" => $publishableKey,
+                "publishableKey" => $publishableKey,
+                "post" => $subscription,
+            ]
+        );
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(StoreSubscriptionRequest $request, $subscriptionId)
+    {
+        $user = Auth::user();
+        $newProductId = $request->product_id;
+
+        $newPriceProductIdentifierStripe =
+            $request->price_product_identifier_stripe;
+
+        $subscription = Subscription::findOrFail($subscriptionId);
+
+        try {
+            $user->updateStripeCustomer([
+                "name" => $user->first_name . " " . $user->last_name,
+                "email" => $user->email,
+                "phone" => $request->phone ?? null,
+                "address" => [
+                    "country" => $request->country ?? null,
+                    "city" => $request->city ?? null,
+                    "state" => $request->state ?? null,
+                    "line1" => $request->line1 ?? null,
+                    "line2" => $request->line2 ?? null,
+                    "postal_code" => $request->postal_code ?? null,
+                ],
+            ]);
+
+            $user
+                ->forceFill([
+                    "country" => $request->country ?? null,
+                    "city" => $request->city ?? null,
+                    "state" => $request->state ?? null,
+                    "line1" => $request->line1 ?? null,
+                    "line2" => $request->line2 ?? null,
+                    "postal_code" => $request->postal_code ?? null,
+                    "phone_code" => $request->phone_code ?? null,
+                    "phone" => $request->phone ?? null,
+
+                    "vat_id" => $request->vat_id ?? null,
+                    "tax_id" => $request->tax_id ?? null,
+                    "vat_number" => $request->vat_number ?? null,
+                ])
+                ->save();
+
+            $subscription->swap($newPriceProductIdentifierStripe);
+
+            // Update the product name, this won't affect Stripe
+            // it's only for internal database records
+            $subscription->update([
+                "name" => $newProductId,
+            ]);
+        } catch (Exception $e) {
+            Log::error("Something went wrong updating the subscription. {$e}");
+
+            throw ValidationException::withMessages([
+                "error" =>
+                    "Oops! Something went wrong updating the subscription." .
                     " " .
                     $e->getMessage(),
             ]);

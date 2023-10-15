@@ -21,6 +21,7 @@ import {
     XMarkIcon,
     ChevronUpDownIcon,
     PlusIcon,
+    InformationCircleIcon,
 } from "@heroicons/vue/24/outline";
 import {
     Combobox,
@@ -42,6 +43,9 @@ const props = defineProps({
     },
     publishableKey: {
         required: true,
+    },
+    post: {
+        required: false,
     },
 });
 
@@ -101,6 +105,24 @@ const createOrUpdate = () => {
             onError: () => {},
             onFinish: () => {},
         });
+    }
+
+    if (formType.value === "update") {
+        formSubscription.country = selectedCountry.value?.code;
+        formSubscription.phone_code = selectedPhoneCode.value?.phone_code;
+
+        formSubscription.vat_id = selectedVatId.value?.code;
+        formSubscription.tax_id = selectedVatId.value?.tax_id;
+
+        formSubscription.post(
+            route("stripe.stores.update.subscription", props.post.id),
+            {
+                preserveScroll: true,
+                onSuccess: () => {},
+                onError: () => {},
+                onFinish: () => {},
+            }
+        );
     }
 };
 
@@ -171,6 +193,14 @@ const handleRemoveInputPhoneCode = function () {
 onBeforeMount(() => {
     if (props.post) {
         formType.value = "update";
+
+        const product = storeSubscriptionPrices().find((product) => {
+            return (
+                product.priceProductIdentifierStripe === props.post.stripe_price
+            );
+        });
+
+        handleSelectProduct(product);
     }
 });
 
@@ -202,6 +232,14 @@ onMounted(() => {
     <FormSection @submitted="handleSubmit">
         <template #title> Subscription Form </template>
         <template #main>
+            <p class="my-12">
+                Form type er:
+                <strong>
+                    {{ formType }}
+                </strong>
+            </p>
+            <p class="my-12">Post er: {{ post }}</p>
+            <p class="my-12">form for submit er: {{ formSubscription }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -956,14 +994,15 @@ onMounted(() => {
                     >
                         Show
                         {{ Object.values(formSubscription.errors).length }}
-                        errors
+                        {{
+                            Object.values(formSubscription.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
                     </p>
                 </div>
             </div>
-            <InputError
-                class="justify-end"
-                :message="formSubscription.errors.error"
-            />
+
             <ActionMessage
                 :on="formSubscription.recentlySuccessful"
                 type="success"
@@ -978,7 +1017,11 @@ onMounted(() => {
                 <div class="flex items-center justify-start gap-2">
                     <p class="myPrimaryParagraphError">
                         {{ Object.values(formSubscription.errors).length }}
-                        errors
+                        {{
+                            Object.values(formSubscription.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
                     </p>
                 </div>
             </NotificationsFixedBottom>

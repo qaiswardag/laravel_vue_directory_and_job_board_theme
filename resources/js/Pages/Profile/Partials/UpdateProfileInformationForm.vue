@@ -1017,7 +1017,11 @@ onMounted(() => {
                     >
                         Show
                         {{ Object.values(form.errors).length }}
-                        errors
+                        {{
+                            Object.values(form.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
                     </p>
                 </div>
             </div>
@@ -1032,7 +1036,11 @@ onMounted(() => {
                 <div class="flex items-center justify-start gap-2">
                     <p class="myPrimaryParagraphError">
                         {{ Object.values(form.errors).length }}
-                        errors
+                        {{
+                            Object.values(form.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
                     </p>
                 </div>
             </NotificationsFixedBottom>

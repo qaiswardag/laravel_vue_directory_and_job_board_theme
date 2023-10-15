@@ -386,6 +386,16 @@ Route::middleware([
     //
     //
 
+    Route::get("/stripe/stores/edit/subscription/{subscriptionId}", [
+        SubscriptionController::class,
+        "edit",
+    ])->name("stripe.stores.edit.subscription");
+
+    Route::post("/stripe/stores/edit/subscription/{subscriptionId}", [
+        SubscriptionController::class,
+        "update",
+    ])->name("stripe.stores.update.subscription");
+
     Route::get("/stripe/stores/create/subscription", [
         SubscriptionController::class,
         "create",
