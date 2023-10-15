@@ -393,7 +393,7 @@ class SubscriptionController extends Controller
             // Update the product name, this won't affect Stripe
             // it's only for internal database records
             $subscription->update([
-                "name" => $newProductId,
+                "updated_subscription_name" => $newProductId,
             ]);
         } catch (Exception $e) {
             Log::error("Something went wrong updating the subscription. {$e}");

@@ -224,6 +224,8 @@ const handleEdit = function (postId) {
                                         name
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
+                                        updated_subscription_name                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
                                         stripe_id
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
@@ -265,6 +267,11 @@ const handleEdit = function (postId) {
                                             class="myPrimaryTableTBodyTd "
                                         >
                                        {{ post.name }}
+                                        </td>
+                                        <td
+                                            class="myPrimaryTableTBodyTd "
+                                        >
+                                       {{ post.updated_subscription_name }}
                                         </td>
                                         <td
                                             class="myPrimaryTableTBodyTd "
