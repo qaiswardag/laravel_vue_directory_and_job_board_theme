@@ -166,6 +166,8 @@ import {
                 route().current('user.profile.security') ||
                 route().current('user.profile.security') ||
                 route().current('stripe.payment.subscription.index') ||
+                route().current('stripe.stores.edit.subscription') ||
+                route().current('stripe.stores.create.subscription') ||
                 route().current('stripe.payments.index')
             "
         >
