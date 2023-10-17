@@ -15,8 +15,6 @@ import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import FullScreenPageSpinner from "@/Components/Loaders/FullScreenPageSpinner.vue";
 
-
-
 import { vueFetch } from "use-lightweight-fetch";
 
 import {
@@ -30,16 +28,11 @@ import {
     PlusIcon,
     MapPinIcon,
     TagIcon,
-
     Squares2X2Icon,
     UserIcon,
-
 } from "@heroicons/vue/20/solid";
 
-import {
-    TrashIcon,
-    PencilIcon,
-} from "@heroicons/vue/24/outline";
+import { TrashIcon, PencilIcon } from "@heroicons/vue/24/outline";
 
 // get images
 const {
@@ -128,13 +121,13 @@ const deletePost = (postId) => {
             },
         }
     );
+
+    getSubscriptions();
 };
 
 // handle action
 const handleEdit = function (postId) {
-    router.get(
-        route("stripe.stores.edit.subscription", [postId])
-    );
+    router.get(route("stripe.stores.edit.subscription", [postId]));
 };
 
 // handle action
@@ -174,15 +167,18 @@ const handleEdit = function (postId) {
                 v-if="isLoadingSubscriptions && !isErrorSubscriptions"
             ></FullScreenPageSpinner>
 
-           
-
             <h1 class="myPrimaryHeaderMessage">Subscriptions</h1>
 
             <template
-            v-if="fetchedSubscriptions &&
+                v-if="
+                    fetchedSubscriptions &&
                     fetchedSubscriptions.subscriptions &&
-                    Array.isArray(fetchedSubscriptions.subscriptions.subscriptionsActive) &&
-                    fetchedSubscriptions.subscriptions.subscriptionsActive.length === 0"
+                    Array.isArray(
+                        fetchedSubscriptions.subscriptions.subscriptionsActive
+                    ) &&
+                    fetchedSubscriptions.subscriptions.subscriptionsActive
+                        .length === 0
+                "
             >
                 <p class="myPrimaryParagraph">
                     Looks like there are no active subscriptions!
@@ -191,25 +187,53 @@ const handleEdit = function (postId) {
 
             <div class="my-20 p-8 px-4 border-2 border-red-300 rounded-lg">
                 <p class="my-4">
-                    fetchedSubscriptions subscriptionsActive: {{ JSON.stringify(fetchedSubscriptions?.subscriptions?.subscriptionsActive) }}
+                    fetchedSubscriptions subscriptionsActive:
+                    {{
+                        JSON.stringify(
+                            fetchedSubscriptions?.subscriptions
+                                ?.subscriptionsActive
+                        )
+                    }}
                 </p>
                 <p class="my-4">
-                    fetchedSubscriptions subscriptionsIncomplete: {{ JSON.stringify(fetchedSubscriptions?.subscriptions?.subscriptionsIncomplete) }}
+                    fetchedSubscriptions subscriptionsIncomplete:
+                    {{
+                        JSON.stringify(
+                            fetchedSubscriptions?.subscriptions
+                                ?.subscriptionsIncomplete
+                        )
+                    }}
                 </p>
                 <p class="my-4">
-                    fetchedSubscriptions subscriptionsEnded: {{ JSON.stringify(fetchedSubscriptions?.subscriptions?.subscriptionsEnded) }}
+                    fetchedSubscriptions subscriptionsEnded:
+                    {{
+                        JSON.stringify(
+                            fetchedSubscriptions?.subscriptions
+                                ?.subscriptionsEnded
+                        )
+                    }}
                 </p>
                 <p class="my-4">
-                    fetchedSubscriptions subscriptionsCanceled: {{ JSON.stringify(fetchedSubscriptions?.subscriptions?.subscriptionsCanceled) }}
+                    fetchedSubscriptions subscriptionsCanceled:
+                    {{
+                        JSON.stringify(
+                            fetchedSubscriptions?.subscriptions
+                                ?.subscriptionsCanceled
+                        )
+                    }}
                 </p>
             </div>
 
             <div
-            v-if="fetchedSubscriptions &&
+                v-if="
+                    fetchedSubscriptions &&
                     fetchedSubscriptions.subscriptions &&
-                    Array.isArray(fetchedSubscriptions.subscriptions.subscriptionsActive) &&
-                    fetchedSubscriptions.subscriptions.subscriptionsActive.length > 0"
-              
+                    Array.isArray(
+                        fetchedSubscriptions.subscriptions.subscriptionsActive
+                    ) &&
+                    fetchedSubscriptions.subscriptions.subscriptionsActive
+                        .length > 0
+                "
                 class="myTableContainerPlusScrollButton"
             >
                 <div ref="scrolTableContainer" class="myTableContainer">
@@ -227,7 +251,8 @@ const handleEdit = function (postId) {
                                         name
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        updated_subscription_name                                    </th>
+                                        updated_subscription_name
+                                    </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         stripe_id
                                     </th>
@@ -247,109 +272,90 @@ const handleEdit = function (postId) {
                                         updated_at
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                    Edit
-                                </th>
-                                <th scope="col" class="myPrimaryTableTh">
-                                    Cancel
-                                </th>
+                                        Edit
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Cancel
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="myPrimaryTableTBody">
                                 <TransitionGroup name="table">
                                     <tr
                                         class="myPrimaryTableTBodyTr"
-                                        v-for="post in fetchedSubscriptions.subscriptions.subscriptionsActive"
+                                        v-for="post in fetchedSubscriptions
+                                            .subscriptions.subscriptionsActive"
                                         :key="post.id"
                                     >
-                                        <td
-                                            class="myPrimaryTableTBodyTd "
-                                        >
-                                       {{ post.id }}
-                                        </td>
-                                        <td
-                                            class="myPrimaryTableTBodyTd "
-                                        >
-                                        <span v-if="post.ends_at">
-                                            {{
-                                                format(
-                                                    parseISO(post.ends_at),
-                                                    "dd/MM/yyyy"
-                                                    )
-                                                }}
-                                                </span>
-                                        </td>
-                                        <td
-                                            class="myPrimaryTableTBodyTd "
-                                        >
-                                       {{ post.name }}
-                                        </td>
-                                        <td
-                                            class="myPrimaryTableTBodyTd "
-                                        >
-                                       {{ post.updated_subscription_name }}
-                                        </td>
-                                        <td
-                                            class="myPrimaryTableTBodyTd "
-                                        >
-                                       {{ post.stripe_id }}
-                                        </td>
-                                        <td
-                                            class="myPrimaryTableTBodyTd "
-                                        >
-                                       {{ post.stripe_status }}
-                                        </td>
-                                        <td
-                                            class="myPrimaryTableTBodyTd "
-                                        >
-                                       {{ post.stripe_price }}
-                                        </td>
-                                        <td
-                                            class="myPrimaryTableTBodyTd "
-                                        >
-                                       {{ post.quantity }}
-                                        </td>
-                                        <td
-                                            class="myPrimaryTableTBodyTd "
-                                        >
-                                       {{
-                                            format(
-                                                parseISO(post.created_at),
-                                                "dd/MM/yyyy HH:mm"
-                                            )
-                                        }}
-                                        </td>
-                                        <td
-                                            class="myPrimaryTableTBodyTd "
-                                        >
-                                       {{
-                                            format(
-                                                parseISO(post.updated_at),
-                                                "dd/MM/yyyy HH:mm"
-                                            )
-                                        }}
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{ post.id }}
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
-                                        <button
-                                            type="button"
-                                            @click="handleEdit(post.id)"
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                        >
-                                            <PencilIcon
-                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                            ></PencilIcon>
-                                        </button>
-                                    </td>
-                                    <td class="myPrimaryTableTBodyTd">
+                                            <span v-if="post.ends_at">
+                                                {{
+                                                    format(
+                                                        parseISO(post.ends_at),
+                                                        "dd/MM/yyyy"
+                                                    )
+                                                }}
+                                            </span>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{ post.name }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{ post.updated_subscription_name }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{ post.stripe_id }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{ post.stripe_status }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{ post.stripe_price }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{ post.quantity }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{
+                                                format(
+                                                    parseISO(post.created_at),
+                                                    "dd/MM/yyyy HH:mm"
+                                                )
+                                            }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{
+                                                format(
+                                                    parseISO(post.updated_at),
+                                                    "dd/MM/yyyy HH:mm"
+                                                )
+                                            }}
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
                                             <button
-                                            type="button"
-                                            @click="handleDelete(post.id)"
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                                type="button"
+                                                @click="handleEdit(post.id)"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                            <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                            ></TrashIcon>
-                                        </button>
-                                    </td>
+                                                <PencilIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                ></PencilIcon>
+                                            </button>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <button
+                                                type="button"
+                                                @click="handleDelete(post.id)"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                            >
+                                                <TrashIcon
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                ></TrashIcon>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </TransitionGroup>
                             </tbody>
