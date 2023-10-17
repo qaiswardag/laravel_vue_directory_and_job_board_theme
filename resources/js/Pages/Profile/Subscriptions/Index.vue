@@ -102,7 +102,9 @@ const handleDelete = function (postId) {
 
     thirdModalButtonFunction.value = function () {
         deletePost(postId);
+        getSubscriptions();
     };
+
     // end modal
 };
 // form

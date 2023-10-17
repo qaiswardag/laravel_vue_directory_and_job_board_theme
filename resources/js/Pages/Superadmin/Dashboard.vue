@@ -73,7 +73,7 @@ const actions = [
                     ></UserTag>
                 </div>
                 <div
-                    class="divide-y divide-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
+                    class="divide-y divide-gray-200 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
                 >
                     <div
                         v-for="(action, actionIdx) in actions"

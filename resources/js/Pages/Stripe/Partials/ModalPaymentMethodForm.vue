@@ -30,6 +30,10 @@ import {
 
 const store = useStore();
 
+const getIsLoading = computed(() => {
+    return store.getters["user/getIsLoading"];
+});
+
 const elementsStylesCard = {
     style: {
         base: {
@@ -80,8 +84,6 @@ const props = defineProps({
     },
 });
 
-const isLoading = ref(false);
-
 const form = useForm({
     user_id: props.user.id,
     name: props.user.first_name + " " + props.user.last_name,
@@ -126,7 +128,8 @@ const validateBillingDetails = async function () {
 };
 
 const createOrUpdatePayment = async function () {
-    isLoading.value = true;
+    store.commit("user/setIsLoading", true);
+
     responseStripeCreateSubscription.value = await stripe.confirmCardSetup(
         props.intent.client_secret,
         {
@@ -144,15 +147,13 @@ const createOrUpdatePayment = async function () {
             },
         }
     );
+    store.commit("user/setIsLoading", false);
 
     if (responseStripeCreateSubscription.value?.setupIntent?.status) {
-        //
-        await updateDefaultPaymentMethod();
-        //
         firstButton();
         emit("secondModalPaymentMethodFunctionForm");
+        await updateDefaultPaymentMethod();
     }
-    isLoading.value = false;
 };
 
 const updatePaymentMethodForm = useForm({});
@@ -162,7 +163,9 @@ const updateDefaultPaymentMethod = async function (method) {
         route("stripe.payment.methods.store.if.single"),
         {
             preserveScroll: true,
-            onSuccess: () => {},
+            onSuccess: () => {
+                emit("secondModalPaymentMethodFunctionForm");
+            },
             onError: () => {},
             onFinish: () => {},
         }
@@ -249,6 +252,11 @@ onMounted(async () => {
                                 Can be added but insufficient funds:
                                 <br />
                                 4000008260003178
+                            </p>
+                            <p class="my-4">
+                                Declined:
+                                <br />
+                                4000000000000002
                             </p>
                             <p class="my-4">12/34</p>
                             <p class="my-4">567</p>
@@ -531,7 +539,7 @@ onMounted(async () => {
 
                 <SubmitButton
                     @firstButtonClick="secondButton"
-                    :disabled="form.processing || isLoading"
+                    :disabled="form.processing || getIsLoading"
                     buttonText="Submit"
                 >
                 </SubmitButton>

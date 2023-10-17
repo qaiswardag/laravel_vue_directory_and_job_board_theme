@@ -46,7 +46,7 @@ const breadcrumbsLinks = [
             <!-- Team owner box # end -->
             <div class="myPrimarySection">
                 <div
-                    class="divide-y divide-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
+                    class="divide-y divide-gray-200 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
                 >
                     <div
                         class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor cursor-pointer"
