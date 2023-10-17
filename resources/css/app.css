@@ -239,7 +239,7 @@
         @apply relative p-2 border-gray-400 border rounded;
     }
     .myScrollButtonContainer {
-        @apply sticky z-10 h-12 top-16 left-0 right-0 flex items-center justify-center myPrimaryGap bg-gray-100;
+        @apply sticky z-10 h-12 top-16 left-0 right-0 flex items-center justify-center myPrimaryGap bg-gray-100 bg-opacity-50;
     }
     .myTableContainer {
         @apply overflow-x-auto myPrimarySection py-0 px-0;
@@ -254,7 +254,7 @@
         @apply bg-white myPrimaryParagraph py-4;
     }
     .myPrimaryTableTHead {
-        @apply bg-gray-50 sticky;
+        @apply bg-gray-50;
     }
     .myPrimaryTableTr {
         @apply divide-x divide-gray-300;

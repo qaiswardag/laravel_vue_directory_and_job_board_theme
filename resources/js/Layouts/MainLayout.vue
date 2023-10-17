@@ -2,7 +2,7 @@
 import { router } from "@inertiajs/vue3";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import Flash from "@/Components/Actions/Flash.vue";
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
 // DOM is loaded

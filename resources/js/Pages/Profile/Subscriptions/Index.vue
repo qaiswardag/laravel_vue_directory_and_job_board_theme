@@ -117,10 +117,8 @@ const deletePostForm = useForm({});
 
 // form action
 const deletePost = (postId) => {
-    console.log(`Delete me with id:`, postId);
-    return;
     deletePostForm.delete(
-        route("team.stores.store.destroy", [postId, props.currentUserTeam.id]),
+        route("stripe.stores.destroy.subscription", [postId]),
         {
             preserveScroll: true,
             onSuccess: () => (modalShowDeletePost.value = false),
@@ -138,6 +136,8 @@ const handleEdit = function (postId) {
         route("stripe.stores.edit.subscription", [postId])
     );
 };
+
+// handle action
 </script>
 
 <template>
@@ -221,6 +221,9 @@ const handleEdit = function (postId) {
                                         ID
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
+                                        status — ends at
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
                                         name
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
@@ -247,7 +250,7 @@ const handleEdit = function (postId) {
                                     Edit
                                 </th>
                                 <th scope="col" class="myPrimaryTableTh">
-                                    Delete
+                                    Cancel
                                 </th>
                                 </tr>
                             </thead>
@@ -262,6 +265,18 @@ const handleEdit = function (postId) {
                                             class="myPrimaryTableTBodyTd "
                                         >
                                        {{ post.id }}
+                                        </td>
+                                        <td
+                                            class="myPrimaryTableTBodyTd "
+                                        >
+                                        <span v-if="post.ends_at">
+                                            {{
+                                                format(
+                                                    parseISO(post.ends_at),
+                                                    "dd/MM/yyyy"
+                                                    )
+                                                }}
+                                                </span>
                                         </td>
                                         <td
                                             class="myPrimaryTableTBodyTd "
@@ -325,15 +340,14 @@ const handleEdit = function (postId) {
                                         </button>
                                     </td>
                                     <td class="myPrimaryTableTBodyTd">
-                                        <button
+                                            <button
                                             type="button"
                                             @click="handleDelete(post.id)"
                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                        >
+                                            >
                                             <TrashIcon
-                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
                                             ></TrashIcon>
-                      
                                         </button>
                                     </td>
                                     </tr>

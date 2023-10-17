@@ -410,4 +410,27 @@ class SubscriptionController extends Controller
             "user" => $user->id,
         ]);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($subscriptionId)
+    {
+        $user = Auth::user();
+
+        $subscription = Subscription::findOrFail($subscriptionId);
+
+        $stripeSubscription = $subscription->asStripeSubscription();
+        $stripeStatus = $stripeSubscription->status;
+
+        $subscription = Subscription::findOrFail($subscriptionId);
+
+        // $subscription->cancel(); // stripe_status after ends_at date should be: canceled
+
+        $subscription->cancelAt(now()->addMinutes(3));
+
+        return redirect()->route("stripe.payment.subscription.index", [
+            "user" => $user->id,
+        ]);
+    }
 }

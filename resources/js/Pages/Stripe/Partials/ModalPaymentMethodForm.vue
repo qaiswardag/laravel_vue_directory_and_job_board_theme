@@ -80,6 +80,8 @@ const props = defineProps({
     },
 });
 
+const isLoading = ref(false);
+
 const form = useForm({
     user_id: props.user.id,
     name: props.user.first_name + " " + props.user.last_name,
@@ -111,8 +113,6 @@ const secondButton = function () {
 };
 
 const validateBillingDetails = async function () {
-    await delay(2000);
-
     form.country = selectedCountry.value?.code;
 
     form.post(route("stripe.payment.methods.store"), {
@@ -126,6 +126,7 @@ const validateBillingDetails = async function () {
 };
 
 const createOrUpdatePayment = async function () {
+    isLoading.value = true;
     responseStripeCreateSubscription.value = await stripe.confirmCardSetup(
         props.intent.client_secret,
         {
@@ -151,6 +152,7 @@ const createOrUpdatePayment = async function () {
         firstButton();
         emit("secondModalPaymentMethodFunctionForm");
     }
+    isLoading.value = false;
 };
 
 const updatePaymentMethodForm = useForm({});
@@ -529,7 +531,7 @@ onMounted(async () => {
 
                 <SubmitButton
                     @firstButtonClick="secondButton"
-                    :disabled="form.processing"
+                    :disabled="form.processing || isLoading"
                     buttonText="Submit"
                 >
                 </SubmitButton>

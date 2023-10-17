@@ -7,13 +7,16 @@ import { createInertiaApp, Link } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
+import NProgress from "nprogress";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "myself";
 createInertiaApp({
     title: (title) => `${appName} | ${title}`,
     // Disable or enable Inertia's default loading indicato
-    progress: false,
+
+    progress: true,
+
     //
     resolve: (name) =>
         resolvePageComponent(

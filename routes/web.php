@@ -396,6 +396,11 @@ Route::middleware([
         "update",
     ])->name("stripe.stores.update.subscription");
 
+    Route::delete("/stripe/stores/destroy/subscription/{subscriptionId}", [
+        SubscriptionController::class,
+        "destroy",
+    ])->name("stripe.stores.destroy.subscription");
+
     Route::get("/stripe/stores/create/subscription", [
         SubscriptionController::class,
         "create",
@@ -429,6 +434,8 @@ Route::middleware([
         StripeSubscriptionController::class,
         "index",
     ])->name("stripe.api.internal.subscriptions.index");
+
+    // STRIPE WEBHOOK # END
     // STORE CREATE SUBSCRIPTION
     // STORE CREATE SUBSCRIPTION
     // STORES #END

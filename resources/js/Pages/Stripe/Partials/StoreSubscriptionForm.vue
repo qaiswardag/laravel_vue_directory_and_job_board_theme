@@ -838,110 +838,103 @@ onMounted(() => {
                 <div class="myPrimaryFormOrganizationHeader">
                     Select subscription type
                 </div>
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div>
-                        <div class="space-y-4">
-                            <div
-                                as="template"
-                                v-for="product in storeSubscriptionPrices(
-                                    $page.props.user
-                                )"
-                                :key="product.id"
-                            >
-                                <div
-                                    class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag"
-                                >
-                                    <div>
-                                        <div class="flex items-center">
-                                            <div class="flex flex-col text-sm">
-                                                <div
-                                                    as="span"
-                                                    class="font-medium text-gray-900"
-                                                >
-                                                    <h3
-                                                        :id="product.id"
-                                                        class="text-gray-900 text-lg font-semibold leading-8"
-                                                    >
-                                                        {{ product.name }}
-                                                    </h3>
 
-                                                    <p
-                                                        class="mt-2 flex items-baseline gap-x-1"
+                <div>
+                    <div class="space-y-4">
+                        <div
+                            as="template"
+                            v-for="product in storeSubscriptionPrices(
+                                $page.props.user
+                            )"
+                            :key="product.id"
+                        >
+                            <div
+                                class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag"
+                            >
+                                <div>
+                                    <div class="flex items-center">
+                                        <div class="flex flex-col text-sm">
+                                            <div
+                                                as="span"
+                                                class="font-medium text-gray-900"
+                                            >
+                                                <h3
+                                                    :id="product.id"
+                                                    class="text-gray-900 text-lg font-semibold leading-8"
+                                                >
+                                                    {{ product.name }}
+                                                </h3>
+
+                                                <p
+                                                    class="mt-2 flex items-baseline gap-x-1"
+                                                >
+                                                    <span
+                                                        class="text-2xl font-bold tracking-tight text-gray-900"
+                                                        >{{
+                                                            product.price
+                                                        }}</span
                                                     >
-                                                        <span
-                                                            class="text-2xl font-bold tracking-tight text-gray-900"
-                                                            >{{
-                                                                product.price
-                                                            }}</span
-                                                        >
-                                                        <span
-                                                            class="text-sm font-semibold leading-6 text-gray-600"
-                                                            >{{
-                                                                product.frequencies
-                                                            }}</span
-                                                        >
-                                                    </p>
-                                                    <p
-                                                        class="block text-[10px] leading-6 text-gray-600 italic mt-1"
+                                                    <span
+                                                        class="text-sm font-semibold leading-6 text-gray-600"
+                                                        >{{
+                                                            product.frequencies
+                                                        }}</span
                                                     >
-                                                        {{ product.billed }}
-                                                    </p>
-                                                </div>
+                                                </p>
+                                                <p
+                                                    class="block text-[10px] leading-6 text-gray-600 italic mt-1"
+                                                >
+                                                    {{ product.billed }}
+                                                </p>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div
-                                            class="flex gap-2 justify-between items-start border-t border-gray-400 pt-2"
-                                        >
-                                            <div></div>
-                                            <div>
-                                                <button
-                                                    class="myPrimaryTag transition bg-white mt-0"
-                                                    v-if="
-                                                        selectedProduct?.id !==
-                                                        product.id
-                                                    "
-                                                    type="button"
-                                                    @click="
-                                                        handleSelectProduct(
-                                                            product
-                                                        )
-                                                    "
+                                    <div
+                                        class="flex gap-2 justify-between items-start border-t border-gray-400 pt-2"
+                                    >
+                                        <div></div>
+                                        <div>
+                                            <button
+                                                class="myPrimaryTag transition bg-white mt-0"
+                                                v-if="
+                                                    selectedProduct?.id !==
+                                                    product.id
+                                                "
+                                                type="button"
+                                                @click="
+                                                    handleSelectProduct(product)
+                                                "
+                                            >
+                                                <span> Select </span>
+                                            </button>
+                                            <button
+                                                class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
+                                                v-if="
+                                                    selectedProduct?.id ===
+                                                    product.id
+                                                "
+                                                type="button"
+                                                @click="
+                                                    handleSelectProduct(product)
+                                                "
+                                            >
+                                                <div
+                                                    class="flex items-center justify-center gap-2"
                                                 >
-                                                    <span> Select </span>
-                                                </button>
-                                                <button
-                                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
-                                                    v-if="
-                                                        selectedProduct?.id ===
-                                                        product.id
-                                                    "
-                                                    type="button"
-                                                    @click="
-                                                        handleSelectProduct(
-                                                            product
-                                                        )
-                                                    "
-                                                >
-                                                    <div
-                                                        class="flex items-center justify-center gap-2"
-                                                    >
-                                                        <span> Selected</span>
-                                                        <CheckIcon
-                                                            class="w-3 h-3 stroke-2"
-                                                        ></CheckIcon>
-                                                    </div>
-                                                </button>
-                                            </div>
+                                                    <span> Selected</span>
+                                                    <CheckIcon
+                                                        class="w-3 h-3 stroke-2"
+                                                    ></CheckIcon>
+                                                </div>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <InputError
-                            :message="formSubscription.errors.product_id"
-                        />
                     </div>
+                    <InputError :message="formSubscription.errors.product_id" />
                 </div>
             </div>
 
@@ -954,6 +947,9 @@ onMounted(() => {
                     :intent="intent"
                     :publishableKey="publishableKey"
                 ></SelectPaymentMethod>
+                <InputError
+                    :message="formSubscription.errors.payment_method_id"
+                />
             </div>
         </template>
         <template #actions>
