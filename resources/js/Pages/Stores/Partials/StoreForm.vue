@@ -20,7 +20,6 @@ import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import { delay } from "@/helpers/delay";
-import FullScreenPageSpinner from "@/Components/Loaders/FullScreenPageSpinner.vue";
 
 import {
     Listbox,
@@ -105,7 +104,6 @@ const userTeamsWithoutReaderRole = props.user.all_teams.filter((team) => {
 
 // store
 const store = useStore();
-const isLoading = ref(false);
 
 const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
@@ -517,7 +515,7 @@ const storeDirtyFormInLocalStorage = function () {
 router.on = async () => {
     storeDirtyFormInLocalStorage();
 
-    isLoading.value = true;
+    store.commit("user/setIsLoading", true);
 
     if (formType.value === "update") {
         if (
@@ -534,14 +532,14 @@ router.on = async () => {
     openDesignerModal.value = false;
 
     await delay();
-    isLoading.value = false;
+    store.commit("user/setIsLoading", false);
 };
 
 // Will be executed when the user clicks refresh or closes the tab/window
 window.addEventListener("beforeunload", async function () {
     storeDirtyFormInLocalStorage();
 
-    isLoading.value = true;
+    store.commit("user/setIsLoading", true);
 
     if (formType.value === "update") {
         if (
@@ -558,7 +556,7 @@ window.addEventListener("beforeunload", async function () {
     openDesignerModal.value = false;
 
     await delay();
-    isLoading.value = false;
+    store.commit("user/setIsLoading", false);
 });
 
 const authorSorted = computed(() => {
@@ -617,7 +615,8 @@ const openDesignerModal = ref(false);
 const firstDesignerModalButtonFunction = ref(null);
 const secondDesignerModalButtonFunction = ref(null);
 const handleDraftForUpdate = async function () {
-    isLoading.value = true;
+    store.commit("user/setIsLoading", true);
+
     if (formType.value === "update") {
         await nextTick();
         pageBuilder.areComponentsStoredInLocalStorageUpdate();
@@ -625,13 +624,14 @@ const handleDraftForUpdate = async function () {
         pageBuilder.setEventListenersForElements();
 
         await delay();
-        isLoading.value = false;
+        store.commit("user/setIsLoading", false);
     }
 };
 
 const handlePageBuilder = async function () {
     // set modal standards
-    isLoading.value = true;
+    store.commit("user/setIsLoading", true);
+
     await delay();
     await nextTick();
     openDesignerModal.value = true;
@@ -653,7 +653,7 @@ const handlePageBuilder = async function () {
 
     // handle click
     firstDesignerModalButtonFunction.value = async function () {
-        isLoading.value = true;
+        store.commit("user/setIsLoading", true);
 
         if (formType.value === "update") {
             await nextTick();
@@ -663,12 +663,12 @@ const handlePageBuilder = async function () {
 
         // set open modal
         openDesignerModal.value = false;
-        isLoading.value = false;
+        store.commit("user/setIsLoading", false);
     };
 
     // handle click
     secondDesignerModalButtonFunction.value = async function () {
-        isLoading.value = true;
+        store.commit("user/setIsLoading", true);
 
         // save to local storage if new resource
         if (formType.value === "create") {
@@ -703,10 +703,11 @@ const handlePageBuilder = async function () {
 
         openDesignerModal.value = false;
         await delay();
-        isLoading.value = false;
+        store.commit("user/setIsLoading", false);
     };
 
-    isLoading.value = false;
+    store.commit("user/setIsLoading", false);
+
     // end modal
 };
 // Builder # End
@@ -922,7 +923,6 @@ onMounted(() => {
 const pageBuilder = new PageBuilder(store);
 </script>
 <template>
-    <FullScreenPageSpinner v-if="isLoading"></FullScreenPageSpinner>
     <PageBuilderModal
         :show="openDesignerModal"
         :updateOrCreate="formType"
