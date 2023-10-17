@@ -88,11 +88,11 @@ const handleDelete = function (postId) {
     // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 3;
-    titleModal.value = `Delete Subscription`;
-    descriptionModal.value = `Are you sure you want to delete this subscription?`;
+    titleModal.value = `Cancel Subscription`;
+    descriptionModal.value = `Are you sure you want to cancel this subscription?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
-    thirdButtonModal.value = "Delete Store";
+    thirdButtonModal.value = "Cancel";
 
     // handle click
     firstModalButtonFunction.value = function () {
