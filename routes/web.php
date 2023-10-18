@@ -408,12 +408,12 @@ Route::middleware([
         "store",
     ])->name("stripe.stores.store.subscription");
 
-    Route::get("/stripe/payment/subscriptions/index", [
+    Route::get("/user/subscriptions", [
         SubscriptionController::class,
         "index",
     ])->name("stripe.payment.subscription.index");
 
-    Route::get("/stripe/payments/index", [
+    Route::get("/user/payments", [
         UserPaymentsController::class,
         "index",
     ])->name("stripe.payments.index");
