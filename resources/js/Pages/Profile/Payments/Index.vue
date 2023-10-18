@@ -13,7 +13,7 @@ import { parseISO, format } from "date-fns";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import FullScreenPageSpinner from "@/Components/Loaders/FullScreenPageSpinner.vue";
+import { useStore } from "vuex";
 
 import { vueFetch } from "use-lightweight-fetch";
 
@@ -34,6 +34,8 @@ import {
     PencilIcon,
 } from "@heroicons/vue/20/solid";
 
+const store = useStore();
+
 // get images
 const {
     handleData: handleGetPayments,
@@ -45,8 +47,12 @@ const {
     isSuccess: isSuccessPayments,
 } = vueFetch();
 
-const getPayments = function () {
-    handleGetPayments(route("stripe.api.internal.payment.index"));
+const getPayments = async function () {
+    store.commit("user/setIsLoading", true);
+
+    await handleGetPayments(route("stripe.api.internal.payment.index"));
+
+    store.commit("user/setIsLoading", false);
 };
 
 onMounted(() => {
@@ -160,10 +166,6 @@ const deletePostForm = useForm({});
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
-
-            <FullScreenPageSpinner
-                v-if="isLoadingPayments && !isErrorPayments"
-            ></FullScreenPageSpinner>
 
             <div>
                 <h1 class="myPrimaryHeaderMessage">Payments</h1>

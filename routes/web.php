@@ -382,9 +382,6 @@ Route::middleware([
         UserPaymentMethodsController::class,
         "destroy",
     ])->name("stripe.payment.methods.destroy");
-    //
-    //
-    //
 
     Route::get("/stripe/stores/edit/subscription/{subscriptionId}", [
         SubscriptionController::class,
@@ -434,8 +431,6 @@ Route::middleware([
         StripeSubscriptionController::class,
         "index",
     ])->name("stripe.api.internal.subscriptions.index");
-
-    // STRIPE WEBHOOK # END
     // STORE CREATE SUBSCRIPTION
     // STORE CREATE SUBSCRIPTION
     // STORES #END
