@@ -3,6 +3,7 @@ import { onMounted, ref, computed } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { TailwindPagination } from "laravel-vue-pagination";
 import { useStore } from "vuex";
+import { CheckIcon, XMarkIcon } from "@heroicons/vue/20/solid";
 
 // store
 const store = useStore();
@@ -51,6 +52,9 @@ const getResultsForPage = (page = 1) => {
 //
 // handle image click
 const handleImageClick = function (mediaLibraryId) {
+    store.commit("mediaLibrary/setCurrentImage", null);
+    store.commit("mediaLibrary/setCurrentPreviewImage", null);
+
     // dispatch
     store.dispatch("mediaLibrary/loadImage", {
         mediaLibraryId: mediaLibraryId,
@@ -181,102 +185,131 @@ onMounted(() => {
         <div
             v-if="
                 getCurrentMedia &&
-                getCurrentMedia.isLoading === true &&
-                getCurrentMedia.isError === false
+                !getCurrentMedia.isLoading &&
+                (!getCurrentMedia?.fetchedMedia?.total_results ||
+                    getCurrentMedia?.fetchedMedia?.total_results === 0)
             "
         >
-            <div class="flex items-center justify-center">
+            <p class="myPrimaryParagraph">
+                It looks like there are no images..
+            </p>
+        </div>
+
+        <!-- Not loading # start -->
+        <div
+            v-if="
+                getCurrentMedia &&
+                getCurrentMedia.isLoading &&
+                !getCurrentMedia.isError
+            "
+        >
+            <div
+                class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 myPrimaryGap"
+            >
                 <div
-                    class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                    role="status"
+                    v-for="(image, index) in Array.from({ length: 24 })"
+                    :key="index"
                 >
-                    <span
-                        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                        >Loading...</span
-                    >
+                    <div
+                        class="animate-pulse bg-red-200 h-72 px-0 pb-2 cursor-pointer rounded-sm"
+                    ></div>
                 </div>
             </div>
         </div>
+        <!-- Not loading # end -->
+
+        <!-- Done loading # start -->
         <div
             v-if="
                 getCurrentMedia &&
                 getCurrentMedia.fetchedMedia &&
                 getCurrentMedia.fetchedMedia.media &&
                 getCurrentMedia.fetchedMedia.media.data &&
-                getCurrentMedia.isLoading === false &&
-                getCurrentMedia.isError === false &&
-                getCurrentMedia.isSuccess === true
+                !getCurrentMedia.isLoading &&
+                !getCurrentMedia.isError
             "
         >
-            <div v-if="getCurrentMedia.fetchedMedia.total_results === 0">
-                <p class="myPrimaryParagraph">
-                    It looks like there are no images..
-                </p>
-            </div>
-
             <div
                 class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 myPrimaryGap"
             >
-                <template
-                    v-for="image in getCurrentMedia &&
-                    getCurrentMedia.fetchedMedia &&
-                    getCurrentMedia.fetchedMedia.media.data"
-                    :key="image.id"
-                >
-                    <div
-                        @click="handleImageClick(image.id)"
-                        class="px-0 pb-2 cursor-pointer bg-gray-50 rounded-sm"
+                <transition-group name="fade">
+                    <template
+                        v-for="image in Array.isArray(
+                            getCurrentMedia.fetchedMedia.media.data
+                        ) && getCurrentMedia.fetchedMedia.media.data"
+                        :key="image.id"
                     >
-                        <img
-                            class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
-                            :class="{
-                                '':
-                                    image.id ===
-                                    getCurrentImage?.currentImage?.mediaLibrary
-                                        ?.id,
-                            }"
-                            :src="`/storage/uploads/${image.medium_path}`"
-                            alt="image"
-                        />
-
-                        <dl
-                            class="myPrimaryParagraph text-xs mt-2 px-1 border-gray-200 divide-y divide-gray-200"
+                        <div
+                            @click="handleImageClick(image.id)"
+                            class="bg:animate-pulse bg-red-200 px-0 pb-2 cursor-pointer rounded-sm"
                         >
-                            <div class="py-3 flex justify-between items-center">
-                                <dt class="">Selected</dt>
+                            <img
+                                class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
+                                :class="{
+                                    '':
+                                        image.id ===
+                                        getCurrentImage?.currentImage
+                                            ?.mediaLibrary?.id,
+                                }"
+                                :src="`/storage/uploads/${image?.medium_path}`"
+                                alt="image"
+                            />
+
+                            <dl
+                                class="myPrimaryParagraph text-xs mt-2 px-1 border-gray-200 divide-y divide-gray-200"
+                            >
+                                <dd
+                                    v-if="
+                                        image.id !==
+                                        getCurrentImage?.currentImage
+                                            ?.mediaLibrary?.id
+                                    "
+                                >
+                                    <div
+                                        class="py-3 flex justify-between items-center"
+                                    >
+                                        <dt></dt>
+                                    </div>
+                                </dd>
                                 <dd
                                     v-if="
                                         image.id ===
                                         getCurrentImage?.currentImage
                                             ?.mediaLibrary?.id
                                     "
-                                    class=""
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-4 h-4 text-myPrimaryLinkColor"
+                                    <div
+                                        class="py-3 flex justify-between items-center"
                                     >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M4.5 12.75l6 6 9-13.5"
-                                        />
-                                    </svg>
+                                        <dt class="">Selected</dt>
+                                        <CheckIcon
+                                            class="w-4 h-4 text-myPrimaryLinkColor"
+                                        >
+                                        </CheckIcon>
+                                    </div>
                                 </dd>
-                            </div>
-                            <div class="py-2 flex justify-between gap-2">
-                                <dd class="text-right">
-                                    {{ image.name ? image.name : "–" }}
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </template>
+                                <div class="py-2 flex justify-between gap-2">
+                                    <dd class="text-right">
+                                        {{ image?.name ? image?.name : "—" }}
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </template>
+                </transition-group>
             </div>
         </div>
+        <!-- Done loading # end -->
     </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+</style>

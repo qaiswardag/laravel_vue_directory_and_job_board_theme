@@ -1,6 +1,7 @@
 <script setup>
 import { router } from "@inertiajs/vue3";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
+import LoadingButton from "@/Components/Loaders/LoadingButton.vue";
 import Flash from "@/Components/Actions/Flash.vue";
 import { ref, computed, watch, onMounted } from "vue";
 import { usePage } from "@inertiajs/vue3";
@@ -57,6 +58,6 @@ defineProps({
         :flash="$page.props.flash"
     ></Flash>
 
-    <FullScreenSpinner v-if="isDOMLoaded || getIsLoading"></FullScreenSpinner>
+    <LoadingButton v-if="isDOMLoaded || getIsLoading"></LoadingButton>
     <slot />
 </template>
