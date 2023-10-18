@@ -9,6 +9,7 @@ import { parseISO, format } from "date-fns";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
+import SmallUniversalSpinner from "../Loaders/SmallUniversalSpinner.vue";
 
 // store
 const store = useStore();
@@ -127,20 +128,16 @@ onMounted(() => {
                 v-if="
                     getDashboardStats &&
                     getDashboardStats.isLoading &&
-                    !getDashboardStats.isError === false
+                    !getDashboardStats.isError
                 "
                 class="bordermx-auto block w-full rounded-sm object-cover object-center cursor-pointer"
             >
                 <div class="flex items-center justify-center pt-12">
-                    <div
-                        class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                        role="status"
-                    >
-                        <span
-                            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                            >Loading...</span
-                        >
-                    </div>
+                    <SmallUniversalSpinner
+                        width="w-8"
+                        height="h-8"
+                        border="border-4"
+                    ></SmallUniversalSpinner>
                 </div>
             </div>
             <!-- Loading - end -->

@@ -182,14 +182,7 @@ onMounted(() => {
     <div
         class="border overflow-y-scroll md:min-h-[33rem] md:max-h-[33rem] min-h-[15rem] max-h-[15rem] p-2 rounded"
     >
-        <div
-            v-if="
-                getCurrentMedia &&
-                !getCurrentMedia.isLoading &&
-                (!getCurrentMedia?.fetchedMedia?.total_results ||
-                    getCurrentMedia?.fetchedMedia?.total_results === 0)
-            "
-        >
+        <div v-if="getCurrentMedia?.fetchedMedia?.total_results === 0">
             <p class="myPrimaryParagraph">
                 It looks like there are no images..
             </p>
@@ -211,7 +204,7 @@ onMounted(() => {
                     :key="index"
                 >
                     <div
-                        class="animate-pulse bg-red-200 h-72 px-0 pb-2 cursor-pointer rounded-sm"
+                        class="animate-pulse bg-red-200 h-52 lg:max-h-56 sm:max-h-48 max-h-44 px-0 pb-2 cursor-pointer rounded-sm"
                     ></div>
                 </div>
             </div>

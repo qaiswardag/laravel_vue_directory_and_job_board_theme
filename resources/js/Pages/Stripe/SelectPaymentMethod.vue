@@ -203,7 +203,10 @@ onMounted(() => {
     <template v-if="isLoadingPaymentMethods && !isErrorPaymentMethods">
         <div class="flex flex-col w-full">
             <SmallUniversalSpinner
-                class="flex justify-center items-center"
+                class="h-40"
+                width="w-6"
+                height="h-6"
+                border="border-4"
             ></SmallUniversalSpinner>
         </div>
     </template>

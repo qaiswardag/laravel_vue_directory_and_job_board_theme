@@ -15,6 +15,7 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
+        sleep(2);
         $user = Auth::user();
 
         $subscriptionsActive = null;

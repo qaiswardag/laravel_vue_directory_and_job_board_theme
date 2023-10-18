@@ -14,6 +14,7 @@ class PaymentsController extends Controller
      */
     public function index()
     {
+        sleep(2);
         $user = Auth::user();
 
         $stripeId = $user->stripe_id;

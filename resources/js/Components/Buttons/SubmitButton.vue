@@ -62,7 +62,7 @@ const firstButtonClick = function () {
                     <slot />
                 </span>
                 <span class="flex gap-2 items-center justify-center">
-                    {{ disabled ? "Loading" : buttonText }}
+                    {{ disabled ? "Loading.." : buttonText }}
                     <template v-if="disabled && !TableStyle">
                         <SmallUniversalSpinner></SmallUniversalSpinner>
                     </template>
