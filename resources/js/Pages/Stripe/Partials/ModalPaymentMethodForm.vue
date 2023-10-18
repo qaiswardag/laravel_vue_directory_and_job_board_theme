@@ -150,9 +150,9 @@ const createOrUpdatePayment = async function () {
     store.commit("user/setIsLoading", false);
 
     if (responseStripeCreateSubscription.value?.setupIntent?.status) {
+        await updateDefaultPaymentMethod();
         firstButton();
         emit("secondModalPaymentMethodFunctionForm");
-        await updateDefaultPaymentMethod();
     }
 };
 

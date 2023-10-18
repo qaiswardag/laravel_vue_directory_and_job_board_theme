@@ -284,22 +284,25 @@ onMounted(() => {
 
             <div>
                 <div
-                  
-      
                     :class="{
-                        'p-2 border' : fetchedPaymentMethods &&
-                        fetchedPaymentMethods.paymentMethods &&
-                        Array.isArray(fetchedPaymentMethods.paymentMethods) &&
-                        fetchedPaymentMethods.paymentMethods.length !== 0
+                        'p-2 border':
+                            fetchedPaymentMethods &&
+                            fetchedPaymentMethods.paymentMethods &&
+                            Array.isArray(
+                                fetchedPaymentMethods.paymentMethods
+                            ) &&
+                            fetchedPaymentMethods.paymentMethods.length !== 0,
                     }"
                 >
                     <div
-                    v-if="
-                        fetchedPaymentMethods &&
-                        fetchedPaymentMethods.paymentMethods &&
-                        Array.isArray(fetchedPaymentMethods.paymentMethods) &&
-                        fetchedPaymentMethods.paymentMethods.length !== 0
-                    "
+                        v-if="
+                            fetchedPaymentMethods &&
+                            fetchedPaymentMethods.paymentMethods &&
+                            Array.isArray(
+                                fetchedPaymentMethods.paymentMethods
+                            ) &&
+                            fetchedPaymentMethods.paymentMethods.length !== 0
+                        "
                         class="min-h-[4rem] max-h-[32rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
                     >
                         <div
@@ -411,32 +414,37 @@ onMounted(() => {
                             </div>
                         </div>
                     </div>
-                                        
-                    <div class="flex items-center justify-between  pt-2 mt-8"
-                    :class="{
-'border-t border-gray-200' : fetchedPaymentMethods &&
-                        fetchedPaymentMethods.paymentMethods &&
-                        Array.isArray(fetchedPaymentMethods.paymentMethods) &&
-                        fetchedPaymentMethods.paymentMethods.length !== 0
-                    }"
+
+                    <div
+                        class="flex items-center justify-between pt-2 mt-8"
+                        :class="{
+                            'border-t border-gray-200':
+                                fetchedPaymentMethods &&
+                                fetchedPaymentMethods.paymentMethods &&
+                                Array.isArray(
+                                    fetchedPaymentMethods.paymentMethods
+                                ) &&
+                                fetchedPaymentMethods.paymentMethods.length !==
+                                    0,
+                        }"
                     >
                         <p
-                        @click="handleCreatePaymentMethod"
-                        class="myPrimaryParagraph text-xs cursor-pointer font-bold py-4"
+                            @click="handleCreatePaymentMethod"
+                            class="myPrimaryParagraph text-xs cursor-pointer font-bold py-4"
                         >
-                        Add Payment Method
-                    </p>
-                    <button
-                    type="button"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                    @click="handleCreatePaymentMethod"
-                    >
-                    <PlusIcon
-                    class="shrink-0 w-4 h-4 m-2 stroke-2"
-                    ></PlusIcon>
-                </button>
-            </div>
-        </div>
+                            Add Payment Method
+                        </p>
+                        <button
+                            type="button"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                            @click="handleCreatePaymentMethod"
+                        >
+                            <PlusIcon
+                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                            ></PlusIcon>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <InputError
