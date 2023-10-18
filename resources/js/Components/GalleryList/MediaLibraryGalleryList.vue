@@ -4,6 +4,7 @@ import { useForm } from "@inertiajs/vue3";
 import { TailwindPagination } from "laravel-vue-pagination";
 import { useStore } from "vuex";
 import { CheckIcon, XMarkIcon } from "@heroicons/vue/20/solid";
+import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 
 // store
 const store = useStore();
@@ -196,18 +197,12 @@ onMounted(() => {
                 !getCurrentMedia.isError
             "
         >
-            <div
-                class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 myPrimaryGap"
-            >
-                <div
-                    v-for="(image, index) in Array.from({ length: 24 })"
-                    :key="index"
-                >
-                    <div
-                        class="animate-pulse bg-red-200 h-52 lg:max-h-56 sm:max-h-48 max-h-44 px-0 pb-2 cursor-pointer rounded-sm"
-                    ></div>
-                </div>
-            </div>
+            <SmallUniversalSpinner
+                class="h-40"
+                width="w-6"
+                height="h-6"
+                border="border-4"
+            ></SmallUniversalSpinner>
         </div>
         <!-- Not loading # end -->
 
@@ -234,7 +229,7 @@ onMounted(() => {
                     >
                         <div
                             @click="handleImageClick(image.id)"
-                            class="bg:animate-pulse bg-red-200 px-0 pb-2 cursor-pointer rounded-sm"
+                            class="bg-gray-50 px-0 pb-2 cursor-pointer rounded-sm"
                         >
                             <img
                                 class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"

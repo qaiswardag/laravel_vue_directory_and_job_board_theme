@@ -76,6 +76,7 @@ class MediaLibraryController extends Controller
      */
     public function show(MediaLibrary $mediaLibrary, Team $team)
     {
+        //
     }
 
     /**

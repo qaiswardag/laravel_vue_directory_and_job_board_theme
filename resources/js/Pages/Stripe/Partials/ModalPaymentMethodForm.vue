@@ -9,7 +9,6 @@ import {
     ChevronUpDownIcon,
     PlusIcon,
 } from "@heroicons/vue/24/outline";
-import Spinner from "@/Components/PageBuilder/Loaders/Spinner.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import { useStore } from "vuex";

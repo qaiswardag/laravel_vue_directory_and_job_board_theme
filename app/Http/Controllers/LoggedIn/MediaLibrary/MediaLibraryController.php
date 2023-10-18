@@ -348,7 +348,7 @@ class MediaLibraryController extends Controller
         $this->authorize("can-create-and-update", $team);
 
         $request->validate([
-            "name" => ["required", "min:1", "max:255"],
+            "name" => ["string", "min:2", "max:255", "nullable"],
         ]);
 
         $image = MediaLibrary::findOrFail($request->image_id);

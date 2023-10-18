@@ -3,6 +3,8 @@ import Modal from "@/Components/Modals/Modal.vue";
 import { ref, computed, onMounted } from "vue";
 import { TailwindPagination } from "laravel-vue-pagination";
 import { useStore } from "vuex";
+import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
+
 import {
     Squares2X2Icon,
     TrashIcon,
@@ -394,15 +396,12 @@ onMounted(() => {
                             <div
                                 class="flex items-center justify-center min-h-[20rem] mb-12"
                             >
-                                <div
-                                    class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                                    role="status"
-                                >
-                                    <span
-                                        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                                        >Loading...</span
-                                    >
-                                </div>
+                                <SmallUniversalSpinner
+                                    class="h-40"
+                                    width="w-6"
+                                    height="h-6"
+                                    border="border-4"
+                                ></SmallUniversalSpinner>
                             </div>
                         </div>
                         <!-- loading - end -->
