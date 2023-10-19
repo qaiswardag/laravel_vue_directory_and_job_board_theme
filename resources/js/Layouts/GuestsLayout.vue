@@ -4,7 +4,6 @@ import FooterGuests from "@/Components/Footer/FooterGuests.vue";
 import GuestsNavbar from "@/Components/Navbars/GuestsNavbar.vue";
 import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
 import Banner from "@/Components/Banners/Banner.vue";
-
 import { ref } from "vue";
 </script>
 
@@ -16,7 +15,8 @@ import { ref } from "vue";
             <div class="flex flex-shrink-0 items-center px-4 justify-between">
                 <ApplicationLogo></ApplicationLogo>
             </div>
-            <GuestsNavbar></GuestsNavbar>
+            "<!-- TODO: Remove maintenance for signed-in user: `$page.props.user` -->"
+            <GuestsNavbar v-if="$page.props.user"></GuestsNavbar>
         </nav>
 
         <slot name="header" />

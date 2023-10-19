@@ -28,7 +28,7 @@ const title = computed(() => {
 
 const description = computed(() => {
     return {
-        503: `Exciting news! We're currently upgrading to a new platform with amazing new features! Get ready for a whole new experience! We'll be back by November 1, 2023!`,
+        503: `Whoops, Server error response code indicates that the server is not ready to handle the request.`,
         500: "Whoops, something went wrong on our servers.",
         422: "Sorry, something went wrong with your request.",
         405: "Sorry, this method is not allowed",
@@ -41,8 +41,6 @@ const description = computed(() => {
 const handleBack = function () {
     window.history.back();
 };
-
-const maintains = true;
 </script>
 
 <template>
@@ -61,20 +59,7 @@ const maintains = true;
             <div
                 class="mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8 z-20"
             >
-                <div v-if="maintains && props.status === 503">
-                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn text-white">
-                        myself fashion &amp; jobs <br />
-                    </h1>
-                    <p
-                        class="myPrimaryParagraph text-lg text-white drop-shadow font-medium mt-8 leading-6"
-                    >
-                        {{ description }}
-                        <br />
-                        Stay tuned and prepare to be amazed!
-                    </p>
-                </div>
-
-                <div v-if="props.status !== 503">
+                <div>
                     <p class="text-base font-normal leading-8 text-white">
                         {{ props.status }}
                     </p>

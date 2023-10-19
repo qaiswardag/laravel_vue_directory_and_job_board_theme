@@ -8,6 +8,12 @@ import { usePage } from "@inertiajs/vue3";
 
 import { useStore } from "vuex";
 
+defineProps({
+    title: {
+        required: false,
+    },
+});
+
 const store = useStore();
 
 // DOM is loaded
@@ -39,11 +45,7 @@ watch(flashState, (newValue) => {
     }, 1000);
 });
 
-defineProps({
-    title: {
-        required: false,
-    },
-});
+const maintenance = true;
 </script>
 
 <template>

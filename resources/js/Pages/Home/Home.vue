@@ -98,97 +98,139 @@ const faqs = [
 
 <template>
     <MainLayout>
-        <GuestsLayout>
-            <Head title="Home" />
-            <template #header>
-                <div class="w-full relative h-[32rem]">
-                    <img
-                        class="top-0 left-0 w-full object-cover h-[32rem]"
-                        src="/brand-images/pink-lady-high-resolution.jpg"
-                        alt="/"
-                    />
+        "<!-- TODO: Remove maintenance for signed-in user: `$page.props.user` -->"
+        <template v-if="!$page.props.user">
+            <div class="relative isolate min-h-screen">
+                <img
+                    src="/brand-images/pink-lady-high-resolution.jpg"
+                    alt=""
+                    class="absolute inset-0 -z-10 h-full w-full object-cover object-top"
+                />
+                <div
+                    class="bg-black/20 absolute top-0 left-0 w-full h-full"
+                ></div>
+                <div
+                    class="lg:max-w-3xl flex flex-col gap-2 justify-center items-center mx-auto"
+                >
                     <div
-                        class="bg-black/10 absolute top-0 left-0 w-full h-[32rem]"
-                    ></div>
-                    <div
-                        class="absolute text-2xl text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                        class="mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8 z-20"
                     >
-                        <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
-                            myself fashion & jobs
-                            <br />
-                        </h1>
-
-                        <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                            Discover Fashion in the United Arab Emirates.
-                        </p>
+                        <div>
+                            <h1
+                                class="myPrimaryMainPageHeaderNotLoggedIn text-white"
+                            >
+                                myself fashion &amp; jobs <br />
+                            </h1>
+                            <p
+                                class="myPrimaryParagraph text-lg text-white drop-shadow font-medium mt-8 leading-6"
+                            >
+                                Exciting news! We're currently upgrading to a
+                                new platform with amazing new features! Get
+                                ready for a whole new experience! We'll be back
+                                by November 1, 2023! <br />
+                                Stay tuned and prepare to be amazed!
+                            </p>
+                        </div>
+                        <!---->
                     </div>
                 </div>
-            </template>
-
-            <FullWidthElement :descriptionArea="true" class="bg-red-50">
-                <template #title>Frequently asked questions</template>
-                <template #description>
-                    Minimalist Admin Panel empowered with advanced Team
-                    Management capabilities, Blog, and a beautiful Media
-                    Library. Offers control and efficiency. Let users and teams
-                    elevate their administrative abilities to new heights.
-                    Designed to streamline operations and enhance productivity.
-                </template>
-                <template #content>
-                    <div
-                        class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-12"
-                    >
-                        <dl
-                            class="divide-y divide-myPrimaryMediumGrayColor lg:col-span-4"
-                        >
-                            <Disclosure
-                                as="div"
-                                v-for="faq in faqs"
-                                :key="faq.question"
-                                v-slot="{ open }"
-                            >
-                                <dt>
-                                    <DisclosureButton
-                                        class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
-                                    >
-                                        <span
-                                            class="myPrimaryParagraph font-medium"
-                                            >{{ faq.question }}
-                                        </span>
-                                        <span
-                                            class="ml-6 flex h-7 items-center"
-                                        >
-                                            <PlusSmallIcon
-                                                v-if="!open"
-                                                class="h-5 w-5"
-                                                aria-hidden="true"
-                                            />
-                                            <MinusSmallIcon
-                                                v-else
-                                                class="h-5 w-5"
-                                                aria-hidden="true"
-                                            />
-                                        </span>
-                                    </DisclosureButton>
-                                </dt>
-                                <DisclosurePanel
-                                    as="dd"
-                                    class="mt-2 pr-12 pb-16"
-                                >
-                                    <p class="myPrimaryParagraph">
-                                        {{ faq.answer }}
-                                    </p>
-                                </DisclosurePanel>
-                            </Disclosure>
-                        </dl>
+            </div>
+        </template>
+        "<!-- TODO: Remove maintenance for signed-in user: `$page.props.user` -->"
+        <template v-if="$page.props.user">
+            <GuestsLayout>
+                <Head title="Home" />
+                <template #header>
+                    <div class="w-full relative h-[32rem]">
                         <img
-                            class="w-full object-cover lg:col-span-8"
-                            src="/app-images/pages/frequently_asked_questions.jpg"
-                            alt="image"
+                            class="top-0 left-0 w-full object-cover h-[32rem]"
+                            src="/brand-images/pink-lady-high-resolution.jpg"
+                            alt="/"
                         />
+                        <div
+                            class="bg-black/10 absolute top-0 left-0 w-full h-[32rem]"
+                        ></div>
+                        <div
+                            class="absolute text-2xl text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                        >
+                            <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
+                                myself fashion & jobs
+                                <br />
+                            </h1>
+
+                            <p class="myPrimaryMainPageParagraphNotLoggedIn">
+                                Discover Fashion in the United Arab Emirates.
+                            </p>
+                        </div>
                     </div>
                 </template>
-            </FullWidthElement>
-        </GuestsLayout>
+
+                <FullWidthElement :descriptionArea="true" class="bg-red-50">
+                    <template #title>Frequently asked questions</template>
+                    <template #description>
+                        Minimalist Admin Panel empowered with advanced Team
+                        Management capabilities, Blog, and a beautiful Media
+                        Library. Offers control and efficiency. Let users and
+                        teams elevate their administrative abilities to new
+                        heights. Designed to streamline operations and enhance
+                        productivity.
+                    </template>
+                    <template #content>
+                        <div
+                            class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-12"
+                        >
+                            <dl
+                                class="divide-y divide-myPrimaryMediumGrayColor lg:col-span-4"
+                            >
+                                <Disclosure
+                                    as="div"
+                                    v-for="faq in faqs"
+                                    :key="faq.question"
+                                    v-slot="{ open }"
+                                >
+                                    <dt>
+                                        <DisclosureButton
+                                            class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
+                                        >
+                                            <span
+                                                class="myPrimaryParagraph font-medium"
+                                                >{{ faq.question }}
+                                            </span>
+                                            <span
+                                                class="ml-6 flex h-7 items-center"
+                                            >
+                                                <PlusSmallIcon
+                                                    v-if="!open"
+                                                    class="h-5 w-5"
+                                                    aria-hidden="true"
+                                                />
+                                                <MinusSmallIcon
+                                                    v-else
+                                                    class="h-5 w-5"
+                                                    aria-hidden="true"
+                                                />
+                                            </span>
+                                        </DisclosureButton>
+                                    </dt>
+                                    <DisclosurePanel
+                                        as="dd"
+                                        class="mt-2 pr-12 pb-16"
+                                    >
+                                        <p class="myPrimaryParagraph">
+                                            {{ faq.answer }}
+                                        </p>
+                                    </DisclosurePanel>
+                                </Disclosure>
+                            </dl>
+                            <img
+                                class="w-full object-cover lg:col-span-8"
+                                src="/app-images/pages/frequently_asked_questions.jpg"
+                                alt="image"
+                            />
+                        </div>
+                    </template>
+                </FullWidthElement>
+            </GuestsLayout>
+        </template>
     </MainLayout>
 </template>
