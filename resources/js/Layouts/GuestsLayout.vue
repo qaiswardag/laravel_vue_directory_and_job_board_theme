@@ -15,7 +15,7 @@ import { ref } from "vue";
             <div class="flex flex-shrink-0 items-center px-4 justify-between">
                 <ApplicationLogo></ApplicationLogo>
             </div>
-            "<!-- TODO: Remove maintenance for signed-in user: `$page.props.user` -->"
+            <!-- TODO: Remove maintenance for signed-in user: `$page.props.user` -->
             <GuestsNavbar v-if="$page.props.user"></GuestsNavbar>
         </nav>
 

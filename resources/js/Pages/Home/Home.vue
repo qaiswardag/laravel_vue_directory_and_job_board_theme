@@ -98,7 +98,7 @@ const faqs = [
 
 <template>
     <MainLayout>
-        "<!-- TODO: Remove maintenance for signed-in user: `$page.props.user` -->"
+        <!-- TODO: Remove maintenance for signed-in user: `$page.props.user` -->
         <template v-if="!$page.props.user">
             <div class="relative isolate min-h-screen">
                 <img
@@ -136,7 +136,7 @@ const faqs = [
                 </div>
             </div>
         </template>
-        "<!-- TODO: Remove maintenance for signed-in user: `$page.props.user` -->"
+        <!-- TODO: Remove maintenance for signed-in user: `$page.props.user` -->
         <template v-if="$page.props.user">
             <GuestsLayout>
                 <Head title="Home" />
