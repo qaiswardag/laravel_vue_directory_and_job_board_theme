@@ -223,7 +223,7 @@ const notificationsModalButton = function () {
 
             <h1 class="myPrimaryHeaderMessage">Subscriptions</h1>
 
-            <!-- Cctive subcriptions # start -->
+            <!-- Active subcriptions # start -->
             <div class="mb-24">
                 <div class="mb-4">
                     <h2 class="mySecondaryHeader">Active Subscriptions</h2>
@@ -441,7 +441,7 @@ const notificationsModalButton = function () {
                     </div>
                 </div>
             </div>
-            <!-- Cctive subcriptions # end -->
+            <!-- Active subcriptions # end -->
             <!-- Canceled subcriptions # start -->
             <div class="mb-24">
                 <div class="mb-4">

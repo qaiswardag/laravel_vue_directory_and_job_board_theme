@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoggedIn\User\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -148,7 +149,7 @@ Route::group(
         // Profile Information...
         if (Features::enabled(Features::updateProfileInformation())) {
             Route::put("/user/profile-information", [
-                ProfileInformationController::class,
+                UserController::class,
                 "update",
             ])
                 ->middleware([

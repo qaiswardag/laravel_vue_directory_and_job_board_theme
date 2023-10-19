@@ -14,53 +14,41 @@ use Laravel\Jetstream\Http\Controllers\Inertia\Concerns\ConfirmsTwoFactorAuthent
 use Laravel\Jetstream\Jetstream;
 use Laravel\Cashier\Cashier;
 
+use Illuminate\Support\Str;
+use Laravel\Fortify\Contracts\ProfileInformationUpdatedResponse;
+use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use Laravel\Fortify\Fortify;
+
 class UserController extends Controller
 {
     use ConfirmsTwoFactorAuthentication;
 
     /**
-     * Show the general profile settings screen.
+     * Update the user's profile information.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Inertia\Response
+     * @param  \Laravel\Fortify\Contracts\UpdatesUserProfileInformation  $updater
+     * @return \Laravel\Fortify\Contracts\ProfileInformationUpdatedResponse
      */
-    public function show(Request $request)
-    {
+    public function update(
+        Request $request,
+        UpdatesUserProfileInformation $updater
+    ) {
+        if (config("fortify.lowercase_usernames")) {
+            $request->merge([
+                Fortify::username() => Str::lower(
+                    $request->{Fortify::username()}
+                ),
+            ]);
+        }
+
+        $updater->update($request->user(), $request->all());
+
         $this->validateTwoFactorAuthenticationState($request);
 
-        // stripe # start
-        $user = Auth::user();
-
-        $intent = null;
-        $publishableKey = null;
-        $stripeCustomer = null;
-
-        $stripeId = $user->stripe_id;
-
-        if ($stripeId) {
-            $stripeCustomer = $user->asStripeCustomer() ?? null;
-        }
-
-        // if user is deleted at Stripe
-
-        if ($stripeCustomer && $stripeCustomer->isDeleted()) {
-            $user
-                ->forceFill([
-                    "stripe_id" => null,
-                    "trial_ends_at" => null,
-                    "pm_type" => null,
-                    "pm_last_four" => null,
-                ])
-                ->save();
-        }
-
-        $stripeId = $user->stripe_id;
-
-        // if user is deleted at Stripe
-        if ($stripeId) {
-            $publishableKey = config("services.stripe.key");
-            $intent = $user->createSetupIntent();
-        }
+        list($intent, $publishableKey) = $this->handleStripeIntegration(
+            Auth::user()
+        );
 
         // stripe # end
 
@@ -77,6 +65,70 @@ class UserController extends Controller
             "intent" => $intent,
             "publishableKey" => $publishableKey,
         ]);
+    }
+
+    /**
+     * Show the general profile settings screen.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Inertia\Response
+     */
+    public function show(Request $request)
+    {
+        $this->validateTwoFactorAuthenticationState($request);
+
+        list($intent, $publishableKey) = $this->handleStripeIntegration(
+            Auth::user()
+        );
+
+        return Jetstream::inertia()->render($request, "Profile/Show", [
+            "confirmsTwoFactorAuthentication" => Features::optionEnabled(
+                Features::twoFactorAuthentication(),
+                "confirm"
+            ),
+            "sessions" => $this->sessions($request)->all(),
+            //
+            //
+            //
+            //
+            "intent" => $intent,
+            "publishableKey" => $publishableKey,
+        ]);
+    }
+
+    /**
+     * Handle Stripe Integration.
+     *
+     */
+    private function handleStripeIntegration($user)
+    {
+        $intent = null;
+        $publishableKey = null;
+        $stripeCustomer = null;
+        $stripeId = $user->stripe_id;
+
+        if ($stripeId) {
+            $stripeCustomer = $user->asStripeCustomer() ?? null;
+        }
+
+        // if user is deleted at Stripe
+        if ($stripeCustomer && $stripeCustomer->isDeleted()) {
+            $user
+                ->forceFill([
+                    "stripe_id" => null,
+                    "trial_ends_at" => null,
+                    "pm_type" => null,
+                    "pm_last_four" => null,
+                ])
+                ->save();
+        }
+
+        if ($stripeId) {
+            $publishableKey = config("services.stripe.key");
+            $intent = $user->createSetupIntent();
+        }
+
+        return [$intent, $publishableKey];
     }
 
     /**
