@@ -425,12 +425,26 @@ class SubscriptionController extends Controller
 
         $subscription = Subscription::findOrFail($subscriptionId);
 
-        // $subscription->cancel(); // stripe_status after ends_at date should be: canceled
+        try {
+            // $subscription->cancel(); // stripe_status after ends_at date should be: canceled
+            $subscription->cancelAt(now()->addMinutes(10));
+        } catch (Exception $e) {
+            Log::error("Something went wrong. {$e}");
 
-        $subscription->cancelAt(now()->addMinutes(3));
+            throw ValidationException::withMessages([
+                "error" =>
+                    "Oops! Something went wrong." . " " . $e->getMessage(),
+            ]);
+        }
 
-        return redirect()->route("stripe.payment.subscription.index", [
-            "user" => $user->id,
+        // return redirect()->route("stripe.payment.subscription.index", [
+        //     "user" => $user->id,
+        // ]);
+
+        // "user" => $user->id,
+
+        return back()->with([
+            "message" => "The form has been submitted successfully.",
         ]);
     }
 }

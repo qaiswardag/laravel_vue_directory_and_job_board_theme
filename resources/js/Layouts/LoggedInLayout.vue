@@ -144,7 +144,7 @@ const sidebarOpen = ref(false);
             <LoggedInNavbar></LoggedInNavbar>
         </div>
 
-        <main class="flex-1 bg-gray-50">
+        <main class="flex-1 bg-gray-50 relative">
             <Banner />
             <header v-if="$slots.header">
                 <slot name="header" />

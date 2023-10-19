@@ -60,8 +60,10 @@ const maintenance = true;
         :flash="$page.props.flash"
     ></Flash>
 
-    <LoadingSqureFullScreen
+    <!-- <LoadingSqureFullScreen
         v-if="isDOMLoaded || getIsLoading"
-    ></LoadingSqureFullScreen>
+    ></LoadingSqureFullScreen> -->
+
+    <FullScreenSpinner v-if="isDOMLoaded || getIsLoading"></FullScreenSpinner>
     <slot />
 </template>

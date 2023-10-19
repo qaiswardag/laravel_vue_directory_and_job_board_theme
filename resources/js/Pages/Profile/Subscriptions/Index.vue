@@ -14,6 +14,8 @@ import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallI
 import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { useStore } from "vuex";
+import { delay } from "@/helpers/delay";
+import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 
 import { vueFetch } from "use-lightweight-fetch";
 
@@ -89,7 +91,7 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 // handle action
-const handleDelete = function (postId) {
+const handleCancelSubscription = function (postId) {
     modalShowDeletePost.value = true;
 
     // set modal standards
@@ -108,8 +110,7 @@ const handleDelete = function (postId) {
     };
 
     thirdModalButtonFunction.value = function () {
-        deletePost(postId);
-        getSubscriptions();
+        cancelSubscriptionForm(postId);
     };
 
     // end modal
@@ -118,25 +119,32 @@ const handleDelete = function (postId) {
 const deletePostForm = useForm({});
 
 // form action
-const deletePost = (postId) => {
+const cancelSubscriptionForm = async (postId) => {
     deletePostForm.delete(
-        route("stripe.stores.destroy.subscription", [postId]),
+        await route("stripe.stores.destroy.subscription", [postId]),
         {
             preserveScroll: true,
-            onSuccess: () => (modalShowDeletePost.value = false),
-            onError: (err) => {},
-            onFinish: (log) => {
+            onSuccess: () => {
                 modalShowDeletePost.value = false;
+                getSubscriptions();
             },
+            onError: (err) => {
+                console.error("Unable canceling subscription", err);
+            },
+            onFinish: () => {},
         }
     );
-
-    getSubscriptions();
 };
 
 // handle action
 const handleEdit = function (postId) {
     router.get(route("stripe.stores.edit.subscription", [postId]));
+};
+
+const showErrorNotifications = ref(false);
+
+const notificationsModalButton = function () {
+    showErrorNotifications.value = false;
 };
 
 // handle action
@@ -215,7 +223,7 @@ const handleEdit = function (postId) {
 
             <h1 class="myPrimaryHeaderMessage">Subscriptions</h1>
 
-            <!-- active subcriptions # start -->
+            <!-- Cctive subcriptions # start -->
             <div class="mb-24">
                 <div class="mb-4">
                     <h2 class="mySecondaryHeader">Active Subscriptions</h2>
@@ -268,55 +276,55 @@ const handleEdit = function (postId) {
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            status — ends at
+                                            Ends at
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            name
+                                            Status
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            updated_subscription_name
+                                            Name
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            stripe_id
+                                            Updated name
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            stripe_status
+                                            Stripe ID
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            stripe_price
+                                            Stripe price
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            quantity
+                                            Quantity
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            created_at
+                                            Created at
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            updated_at
+                                            Updated at
                                         </th>
                                         <th
                                             scope="col"
@@ -355,6 +363,12 @@ const handleEdit = function (postId) {
                                                         )
                                                     }}
                                                 </span>
+                                                <span v-if="!post.ends_at">
+                                                    Newer
+                                                </span>
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.stripe_status }}
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
                                                 {{ post.name }}
@@ -366,9 +380,6 @@ const handleEdit = function (postId) {
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
                                                 {{ post.stripe_id }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_status }}
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
                                                 {{ post.stripe_price }}
@@ -411,7 +422,9 @@ const handleEdit = function (postId) {
                                                 <button
                                                     type="button"
                                                     @click="
-                                                        handleDelete(post.id)
+                                                        handleCancelSubscription(
+                                                            post.id
+                                                        )
                                                     "
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                                 >
@@ -428,8 +441,8 @@ const handleEdit = function (postId) {
                     </div>
                 </div>
             </div>
-            <!-- active subcriptions # end -->
-            <!-- canceled subcriptions # start -->
+            <!-- Cctive subcriptions # end -->
+            <!-- Canceled subcriptions # start -->
             <div class="mb-24">
                 <div class="mb-4">
                     <h2 class="mySecondaryHeader">Canceled Subscriptions</h2>
@@ -447,7 +460,7 @@ const handleEdit = function (postId) {
                     "
                 >
                     <p class="myPrimaryParagraph">
-                        None canceled subscriptions!
+                        Looks like there are no canceled subscriptions!
                     </p>
                 </template>
 
@@ -482,55 +495,55 @@ const handleEdit = function (postId) {
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            status — ends at
+                                            Ends at
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            name
+                                            Status
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            updated_subscription_name
+                                            Name
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            stripe_id
+                                            Updated name
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            stripe_status
+                                            Stripe ID
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            stripe_price
+                                            Stripe price
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            quantity
+                                            Quantity
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            created_at
+                                            Created at
                                         </th>
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            updated_at
+                                            Updated at
                                         </th>
                                         <th
                                             scope="col"
@@ -569,6 +582,12 @@ const handleEdit = function (postId) {
                                                         )
                                                     }}
                                                 </span>
+                                                <span v-if="!post.ends_at">
+                                                    Newer
+                                                </span>
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.stripe_status }}
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
                                                 {{ post.name }}
@@ -581,9 +600,7 @@ const handleEdit = function (postId) {
                                             <td class="myPrimaryTableTBodyTd">
                                                 {{ post.stripe_id }}
                                             </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_status }}
-                                            </td>
+
                                             <td class="myPrimaryTableTBodyTd">
                                                 {{ post.stripe_price }}
                                             </td>
@@ -625,7 +642,9 @@ const handleEdit = function (postId) {
                                                 <button
                                                     type="button"
                                                     @click="
-                                                        handleDelete(post.id)
+                                                        handleCancelSubscription(
+                                                            post.id
+                                                        )
                                                     "
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                                 >
@@ -642,7 +661,283 @@ const handleEdit = function (postId) {
                     </div>
                 </div>
             </div>
-            <!-- canceled subcriptions # end -->
+            <!-- Canceled subcriptions # end -->
+            <!-- Ended subcriptions # start -->
+            <div class="mb-24">
+                <div class="mb-4">
+                    <h2 class="mySecondaryHeader">Ended Subscriptions</h2>
+                </div>
+                <template
+                    v-if="
+                        !fetchedSubscriptions?.subscriptions
+                            ?.subscriptionsEnded ||
+                        (Array.isArray(
+                            fetchedSubscriptions.subscriptions
+                                .subscriptionsEnded
+                        ) &&
+                            fetchedSubscriptions.subscriptions
+                                .subscriptionsEnded.length === 0)
+                    "
+                >
+                    <p class="myPrimaryParagraph">
+                        Looks like there are no ended subscriptions!
+                    </p>
+                </template>
+
+                <div
+                    v-if="
+                        fetchedSubscriptions &&
+                        fetchedSubscriptions.subscriptions &&
+                        Array.isArray(
+                            fetchedSubscriptions.subscriptions
+                                .subscriptionsEnded
+                        ) &&
+                        fetchedSubscriptions.subscriptions.subscriptionsEnded
+                            .length > 0
+                    "
+                    class="myTableContainerPlusScrollButton"
+                >
+                    <div ref="scrolTableContainer" class="myTableContainer">
+                        <div class="myTableSubContainer">
+                            <table
+                                class="myPrimaryTable"
+                                aria-describedby="index"
+                            >
+                                <thead class="myPrimaryTableTHead">
+                                    <tr class="myPrimaryTableTr">
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            ID
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Ends at
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Status
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Name
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Updated name
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Stripe ID
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Stripe price
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Quantity
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Created at
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Updated at
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Edit
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Cancel
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="myPrimaryTableTBody">
+                                    <TransitionGroup name="table">
+                                        <tr
+                                            class="myPrimaryTableTBodyTr"
+                                            v-for="post in fetchedSubscriptions
+                                                .subscriptions
+                                                .subscriptionsEnded"
+                                            :key="post.id"
+                                        >
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.id }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <span v-if="post.ends_at">
+                                                    {{
+                                                        format(
+                                                            parseISO(
+                                                                post.ends_at
+                                                            ),
+                                                            "dd/MM/yyyy"
+                                                        )
+                                                    }}
+                                                </span>
+                                                <span v-if="!post.ends_at">
+                                                    Newer
+                                                </span>
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.stripe_status }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.name }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    post.updated_subscription_name
+                                                }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.stripe_id }}
+                                            </td>
+
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.stripe_price }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.quantity }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.created_at
+                                                        ),
+                                                        "dd/MM/yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.updated_at
+                                                        ),
+                                                        "dd/MM/yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <button
+                                                    type="button"
+                                                    @click="handleEdit(post.id)"
+                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                >
+                                                    <PencilIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    ></PencilIcon>
+                                                </button>
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <button
+                                                    type="button"
+                                                    @click="
+                                                        handleCancelSubscription(
+                                                            post.id
+                                                        )
+                                                    "
+                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                                >
+                                                    <TrashIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    ></TrashIcon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </TransitionGroup>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="flex justify-end mt-4 pb-8 bottom-0 right-0 sticky"
+                v-if="Object.values(deletePostForm.errors).length !== 0"
+            >
+                <div
+                    @click="showErrorNotifications = true"
+                    class="w-fit py-1 flex items-center gap-2 rounded-md px-2 cursor-pointer italic"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-4 h-4 text-myPrimaryErrorColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        />
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                    </svg>
+                    <p
+                        class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
+                    >
+                        Show
+                        {{ Object.values(deletePostForm.errors).length }}
+                        {{
+                            Object.values(deletePostForm.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
+                    </p>
+                </div>
+            </div>
+            <!-- Ended subcriptions # end -->
+            <NotificationsFixedBottom
+                :listOfMessages="Object.values(deletePostForm.errors)"
+                :show="showErrorNotifications"
+                @notificationsModalButton="notificationsModalButton"
+            >
+                <div class="flex items-center justify-start gap-2">
+                    <p class="myPrimaryParagraphError">
+                        {{ Object.values(deletePostForm.errors).length }}
+                        {{
+                            Object.values(deletePostForm.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
+                    </p>
+                </div>
+            </NotificationsFixedBottom>
         </LoggedInLayout>
     </MainLayout>
 </template>

@@ -150,8 +150,6 @@ const createOrUpdatePayment = async function () {
 
     if (responseStripeCreateSubscription.value?.setupIntent?.status) {
         await updateDefaultPaymentMethod();
-        firstButton();
-        emit("secondModalPaymentMethodFunctionForm");
     }
 };
 
@@ -164,6 +162,7 @@ const updateDefaultPaymentMethod = async function (method) {
             preserveScroll: true,
             onSuccess: () => {
                 emit("secondModalPaymentMethodFunctionForm");
+                firstButton();
             },
             onError: () => {},
             onFinish: () => {},
