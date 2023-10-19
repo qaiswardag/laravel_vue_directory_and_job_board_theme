@@ -232,14 +232,6 @@ onMounted(() => {
     <FormSection @submitted="handleSubmit">
         <template #title> Subscription Form </template>
         <template #main>
-            <p class="my-12">
-                Form type er:
-                <strong>
-                    {{ formType }}
-                </strong>
-            </p>
-            <p class="my-12">Post er: {{ post }}</p>
-            <p class="my-12">form for submit er: {{ formSubscription }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">

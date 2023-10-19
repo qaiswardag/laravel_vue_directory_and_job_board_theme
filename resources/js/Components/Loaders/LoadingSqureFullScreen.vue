@@ -25,8 +25,8 @@ button {
     border: none;
     background: transparent;
     font-size: 1rem;
-    line-height: 1.2rem;
-    padding: 1rem 2rem;
+    line-height: 1.5rem;
+    padding: 1rem 1.4rem;
 }
 
 button > svg {
@@ -41,7 +41,7 @@ button > svg > rect {
     stroke-width: 2px;
     stroke-dasharray: 240 160 240 160;
     stroke-dashoffset: 0;
-    animation: pathRect 1.5s linear infinite;
+    animation: pathRect 1.2s linear infinite;
     width: calc(100% - 2px);
     height: calc(100% - 2px);
 }

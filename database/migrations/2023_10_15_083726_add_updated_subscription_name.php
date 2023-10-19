@@ -11,7 +11,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table("subscriptions", function (Blueprint $table) {
-            $table->string("updated_subscription_name")->nullable();
+            $table
+                ->string("updated_subscription_name")
+                ->nullable()
+                ->after("name");
         });
     }
 

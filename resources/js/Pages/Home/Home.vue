@@ -100,6 +100,7 @@ const faqs = [
     <MainLayout>
         <!-- TODO: Remove maintenance for signed-in user: `$page.props.user` -->
         <template v-if="!$page.props.user">
+            <Head title="Home" />
             <div class="relative isolate min-h-screen">
                 <img
                     src="/brand-images/pink-lady-high-resolution.jpg"
