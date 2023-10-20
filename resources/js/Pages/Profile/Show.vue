@@ -369,7 +369,7 @@ const updatePaymentMethod = function () {
                                         class="absolute inset-0"
                                         aria-hidden="true"
                                     />
-                                    Payments
+                                    Payments and invoices
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
