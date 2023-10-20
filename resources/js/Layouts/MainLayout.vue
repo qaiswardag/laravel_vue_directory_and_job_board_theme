@@ -1,7 +1,6 @@
 <script setup>
 import { router } from "@inertiajs/vue3";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
-import LoadingSqureFullScreen from "@/Components/Loaders/LoadingSqureFullScreen.vue";
 import Flash from "@/Components/Actions/Flash.vue";
 import { ref, computed, watch, onMounted } from "vue";
 import { usePage } from "@inertiajs/vue3";
@@ -59,11 +58,6 @@ const maintenance = true;
         :showCloseButton="false"
         :flash="$page.props.flash"
     ></Flash>
-
-    <!-- <LoadingSqureFullScreen
-        v-if="isDOMLoaded || getIsLoading"
-    ></LoadingSqureFullScreen> -->
-
     <FullScreenSpinner v-if="isDOMLoaded || getIsLoading"></FullScreenSpinner>
     <slot />
 </template>
