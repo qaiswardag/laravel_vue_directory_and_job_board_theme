@@ -427,7 +427,7 @@ const updatePaymentMethod = function () {
                                         class="absolute inset-0"
                                         aria-hidden="true"
                                     />
-                                    Update Payment Method
+                                    Update Payment Methods
                                 </button>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">

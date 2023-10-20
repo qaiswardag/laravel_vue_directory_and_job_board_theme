@@ -176,7 +176,7 @@ const scrolTableContainer = ref("scrolTableContainer");
 const handleLeft = function () {
     if (scrolTableContainer.value) {
         scrolTableContainer.value.scrollBy({
-            left: -600,
+            left: -800,
             behavior: "smooth",
         });
     }
@@ -184,10 +184,8 @@ const handleLeft = function () {
 const handleRight = function () {
     if (scrolTableContainer.value) {
         scrolTableContainer.value.scrollBy({
-            left: +600,
+            left: +800,
             behavior: "smooth",
-            block: "start",
-            inline: "start",
         });
     }
 };
