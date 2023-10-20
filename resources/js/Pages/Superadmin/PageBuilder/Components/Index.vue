@@ -114,7 +114,7 @@ const handleDuplicate = function (componentId) {
     //
     duplicateForm.post(route("admin.components.component.duplicate"), {
         preserveScroll: false,
-        onSuccess: (success) => {},
+        onSuccess: () => {},
         onError: () => {},
         onFinish: () => {},
     });
@@ -211,12 +211,18 @@ const scrolTableContainer = ref("scrolTableContainer");
 
 const handleLeft = function () {
     if (scrolTableContainer.value) {
-        scrolTableContainer.value.scrollLeft -= 500;
+        scrolTableContainer.value.scrollBy({
+            left: -800,
+            behavior: "smooth",
+        });
     }
 };
 const handleRight = function () {
     if (scrolTableContainer.value) {
-        scrolTableContainer.value.scrollLeft += 500;
+        scrolTableContainer.value.scrollBy({
+            left: +800,
+            behavior: "smooth",
+        });
     }
 };
 
@@ -312,7 +318,6 @@ const routesArray = [
                     </Link>
                 </template>
             </CardHeadings>
-            <p class="my-12">errors: {{ $page.props.errors }}</p>
             <form @submit.prevent="handleSearch">
                 <!-- search bar component - start -->
                 <SearchBarWithOptions
@@ -347,12 +352,7 @@ const routesArray = [
                 </div>
                 <div ref="scrolTableContainer" class="myTableContainer">
                     <div class="myTableSubContainer">
-                        <table class="myPrimaryTable">
-                            <caption class="myPrimaryTableCaption">
-                                <p class="myPrimaryParagraph">
-                                    Result {{ results }}
-                                </p>
-                            </caption>
+                        <table class="myPrimaryTable" aria-describedby="index">
                             <thead class="myPrimaryTableTHead">
                                 <tr class="myPrimaryTableTr">
                                     <th scope="col" class="myPrimaryTableTh">

@@ -65,7 +65,7 @@ class PageBuilderController extends Controller
             }
         });
 
-        $components = $query->paginate(4);
+        $components = $query->paginate(12);
 
         $components->appends($request->all());
 
@@ -272,7 +272,6 @@ class PageBuilderController extends Controller
      */
     public function duplicate(Request $request)
     {
-        dd("kom til controller");
         // Authorize superadmin
         $this->authorize("superadmin-can-create-and-update");
 

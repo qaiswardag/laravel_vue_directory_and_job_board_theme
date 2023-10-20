@@ -285,7 +285,7 @@ Route::middleware([
         "store",
     ])->name("team.posts.store");
 
-    Route::post("/team/posts/post/duplicate", [
+    Route::post("/team/posts/duplicate", [
         PostController::class,
         "duplicate",
     ])->name("team.posts.duplicate");
@@ -316,7 +316,7 @@ Route::middleware([
     Route::post("/team/jobs/job/store", [JobController::class, "store"])->name(
         "team.jobs.store"
     );
-    Route::post("/team/jobs/jobs/duplicate", [
+    Route::post("/team/jobs/duplicate", [
         JobController::class,
         "duplicate",
     ])->name("team.jobs.duplicate");
@@ -350,7 +350,7 @@ Route::middleware([
         "store",
     ])->name("team.stores.store");
 
-    Route::post("/team/stores/store/duplicate", [
+    Route::post("/team/stores/duplicate", [
         StoreController::class,
         "duplicate",
     ])->name("team.stores.duplicate");
@@ -670,7 +670,7 @@ Route::middleware([
         "update",
     ])->name("admin.components.component.update");
 
-    Route::post("/admin/components/component/duplicate", [
+    Route::post("/admin/components/duplicate", [
         PageBuilderController::class,
         "duplicate",
     ])->name("admin.components.component.duplicate");
