@@ -452,38 +452,6 @@ const switchTeam = function (team) {
                                                 <td
                                                     class="myPrimaryTableTBodyTd"
                                                 >
-                                                    <form
-                                                        v-if="
-                                                            $page.props.user
-                                                                .all_teams
-                                                                .length > 0 &&
-                                                            team.id !==
-                                                                $page.props.user
-                                                                    .current_team_id
-                                                        "
-                                                        @submit.prevent="
-                                                            handleSwitchToTeam(
-                                                                team,
-                                                                $page.props.user
-                                                                    .current_team_id
-                                                            )
-                                                        "
-                                                    >
-                                                        <div
-                                                            class="flex items-center myPrimaryGap justify-start"
-                                                        >
-                                                            <button
-                                                                type="button"
-                                                                class="myPrimaryButtonNoBackground text-myPrimaryDarkGrayColor flex items-center gap-2"
-                                                            >
-                                                                <div>
-                                                                    Switch to
-                                                                    Team for
-                                                                    Edit
-                                                                </div>
-                                                            </button>
-                                                        </div>
-                                                    </form>
                                                     <Link
                                                         v-if="
                                                             $page.props.user
