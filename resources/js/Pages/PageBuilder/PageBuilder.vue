@@ -347,50 +347,19 @@ onMounted(async () => {
 }
 
 #pagebuilder [element] {
-    outline: rgba(255, 255, 255, 0) solid 2px !important;
-    outline-offset: -2px !important;
+    outline: rgba(255, 255, 255, 0) dashed 3px !important;
+    outline-offset: -3px !important;
 }
 #pagebuilder [hovered] {
-    outline: rgb(0, 140, 14, 1) solid 2px !important;
-    outline-offset: -2px !important;
+    outline: rgb(0, 140, 14, 1) dashed 3px !important;
+    outline-offset: -3px !important;
 }
 
 #pagebuilder [selected] {
     position: relative;
 
-    outline: rgb(185, 16, 16) solid 2px !important;
-    outline-offset: -2px !important;
-}
-
-#pagebuilder [selected]::before,
-#pagebuilder [selected]::after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: rgb(185, 16, 16);
-    border-radius: 50%;
-    z-index: 10;
-}
-
-#pagebuilder [selected]::before {
-    top: -10px;
-    left: -10px;
-}
-
-#pagebuilder [selected]::after {
-    top: -10px;
-    right: -10px;
-}
-
-#pagebuilder [selected]::nth-child(2)::before {
-    bottom: -10px;
-    left: -10px;
-}
-
-#pagebuilder [selected]::nth-child(2)::after {
-    bottom: -10px;
-    right: -10px;
+    outline: rgb(185, 16, 16) dashed 3px !important;
+    outline-offset: -3px !important;
 }
 
 /* sortable */
