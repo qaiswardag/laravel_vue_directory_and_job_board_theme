@@ -441,7 +441,7 @@ onMounted(async () => {
                         class="md:w-2/6 overflow-scroll min-h-[30rem] max-h-[30rem] w-full"
                     >
                         <div
-                            class="p-2 flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                            class="grid grid-cols-2 gap-2 w-full overflow-y-scroll"
                         >
                             <!-- Unique HTML Component # start -->
                             <div
@@ -450,26 +450,19 @@ onMounted(async () => {
                                 "
                                 v-for="helperComponent in componentHelpers"
                                 :key="helperComponent.title"
-                                class="flex justify-between items-center gap-4 text-xs font-medium py-4 hover:bg-gray-50 cursor-pointer px-2"
+                                class="myPrimaryTag m-0 p-2 rounded cursor-pointer"
                             >
-                                <button
-                                    type="button"
-                                    class="flex items-left gap-2 my-2 cursor-pointer"
+                                <p class="text-5xl flex justify-center">H</p>
+                                <div
+                                    class="flex justify-center items-center gap-4 text-xs font-medium"
                                 >
-                                    {{ helperComponent.title }}
-                                </button>
-                                <button
-                                    @click="
-                                        handleAddHelperComponent(
-                                            helperComponent
-                                        )
-                                    "
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                >
-                                    <PlusIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                    ></PlusIcon>
-                                </button>
+                                    <button
+                                        type="button"
+                                        class="flex items-center justify-center gap-2 my-2 cursor-pointer"
+                                    >
+                                        {{ helperComponent.title }}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </aside>
