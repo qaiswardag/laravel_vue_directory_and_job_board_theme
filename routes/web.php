@@ -112,7 +112,7 @@ Route::middleware([
             "index",
         ])->name("team.posts.index");
         // unique post
-        Route::get("/team/posts/{teamId}/post/{post}/{slug}", [
+        Route::get("/team/{teamId}/posts/post/{post}/{slug}", [
             PostController::class,
             "show",
         ])->name("team.posts.post.show");
@@ -130,7 +130,7 @@ Route::middleware([
             "index",
         ])->name("team.jobs.index");
         // unique job
-        Route::get("/team/jobs/{teamId}/job/{job}/{slug}", [
+        Route::get("/team/{teamId}/jobs/job/{job}/{slug}", [
             JobController::class,
             "show",
         ])->name("team.jobs.job.show");
@@ -148,7 +148,7 @@ Route::middleware([
             "index",
         ])->name("team.stores.index");
         // unique store
-        Route::get("/team/stores/{teamId}/store/{store}/{slug}", [
+        Route::get("/team/{teamId}/stores/store/{store}/{slug}", [
             StoreController::class,
             "show",
         ])->name("team.stores.store.show");
