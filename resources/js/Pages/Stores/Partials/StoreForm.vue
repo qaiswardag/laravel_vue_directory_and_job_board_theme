@@ -122,6 +122,7 @@ const getCurrentAttachedStoreCategories = computed(() => {
 });
 
 const formType = ref("create");
+
 const pathLocalStorage = `store-form-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
@@ -491,6 +492,7 @@ const clearForm = function () {
     localStorage.removeItem(pathPageBuilderLocalStorageCreate);
     store.commit("pageBuilderState/setComponents", []);
 };
+
 const clearPageBuilderOnSuccessUpdate = function () {
     pageBuilder.removeItemComponentsLocalStorageUpdate();
     store.commit("pageBuilderState/setComponents", []);
@@ -511,6 +513,7 @@ const storeDirtyFormInLocalStorage = function () {
         localStorage.setItem(pathLocalStorage, formDataJson);
     }
 };
+
 // Will be executed when the user switch current route
 router.on = async () => {
     storeDirtyFormInLocalStorage();
