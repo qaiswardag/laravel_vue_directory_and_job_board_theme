@@ -540,7 +540,7 @@ const notificationsModalButton = function () {
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            Resume Subscription
+                                            Resume subscription
                                         </th>
                                     </tr>
                                 </thead>
@@ -813,7 +813,7 @@ const notificationsModalButton = function () {
                     "
                 >
                     <p class="myPrimaryParagraph">
-                        Looks like there are no ended incomplete subscriptions!
+                        Looks like there are no incomplete subscriptions!
                     </p>
                 </template>
 
