@@ -278,11 +278,13 @@ class PageBuilderController extends Controller
         $team = Team::findOrFail($request->teamId);
         $component = PageBuilderComponent::findOrFail($request->componentId);
 
-        if ($team === null) {
+        // Conponents can only be managed when a Team is selected, as Team Media Library is needed
+        if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
-                // Error message
-                self::FORBIDDEN_ADMIN_TEAM_ACTION,
-                "status" => 404, // HTTP status code for the response.
+                "customError" =>
+                    // Error message for the user.
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
+                "status" => 403, // HTTP status code for the response.
             ]);
         }
 
