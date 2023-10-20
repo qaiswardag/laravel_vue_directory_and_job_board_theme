@@ -393,6 +393,11 @@ Route::middleware([
         "update",
     ])->name("stripe.stores.update.subscription");
 
+    Route::post("/stripe/stores/resume/subscription/{subscriptionId}", [
+        SubscriptionController::class,
+        "resume",
+    ])->name("stripe.stores.resume.subscription");
+
     Route::delete("/stripe/stores/destroy/subscription/{subscriptionId}", [
         SubscriptionController::class,
         "destroy",

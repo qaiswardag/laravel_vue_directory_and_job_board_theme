@@ -20,6 +20,8 @@ import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBott
 import { vueFetch } from "use-lightweight-fetch";
 
 import {
+    TrashIcon,
+    PencilIcon,
     ArrowLeftIcon,
     ArrowRightIcon,
     CheckIcon,
@@ -32,9 +34,8 @@ import {
     TagIcon,
     Squares2X2Icon,
     UserIcon,
-} from "@heroicons/vue/20/solid";
-
-import { TrashIcon, PencilIcon } from "@heroicons/vue/24/outline";
+    EyeIcon,
+} from "@heroicons/vue/24/outline";
 
 const store = useStore();
 
@@ -76,6 +77,7 @@ const breadcrumbsLinks = [
 ];
 
 const modalShowDeletePost = ref(false);
+const modalShowResumePost = ref(false);
 
 // modal content
 const typeModal = ref("");
@@ -90,6 +92,50 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
+// resume subscription
+// handle action
+const handleResumeSubscription = function (postId) {
+    modalShowResumePost.value = true;
+
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 3;
+    titleModal.value = `Resume Subscription`;
+    descriptionModal.value = `Are you sure you want to resume this subscription?`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Resume";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowResumePost.value = false;
+    };
+
+    thirdModalButtonFunction.value = function () {
+        resumeSubscription(postId);
+    };
+
+    // end modal
+};
+
+const resumePostForm = useForm({});
+
+// form action
+const resumeSubscription = (postId) => {
+    resumePostForm.post(route("stripe.stores.resume.subscription", [postId]), {
+        preserveScroll: true,
+        onSuccess: () => {
+            getSubscriptions();
+        },
+        onError: (err) => {},
+        onFinish: () => {
+            modalShowResumePost.value = false;
+        },
+    });
+};
+
+// delete post
 // handle action
 const handleCancelSubscription = function (postId) {
     modalShowDeletePost.value = true;
@@ -119,18 +165,16 @@ const handleCancelSubscription = function (postId) {
 const deletePostForm = useForm({});
 
 // form action
-const cancelSubscriptionForm = async (postId) => {
+const cancelSubscriptionForm = (postId) => {
     deletePostForm.delete(
-        await route("stripe.stores.destroy.subscription", [postId]),
+        route("stripe.stores.destroy.subscription", [postId]),
         {
             preserveScroll: true,
             onSuccess: () => {
                 modalShowDeletePost.value = false;
                 getSubscriptions();
             },
-            onError: (err) => {
-                console.error("Unable canceling subscription", err);
-            },
+            onError: (err) => {},
             onFinish: () => {},
         }
     );
@@ -158,7 +202,6 @@ const notificationsModalButton = function () {
                 :show="modalShowDeletePost"
                 :type="typeModal"
                 :disabled="deletePostForm.processing"
-                disabledWhichButton="thirdButton"
                 :gridColumnAmount="gridColumnModal"
                 :title="titleModal"
                 :description="descriptionModal"
@@ -170,7 +213,23 @@ const notificationsModalButton = function () {
                 @thirdModalButtonFunction="thirdModalButtonFunction"
             >
                 <header></header>
-
+                <main></main>
+            </DynamicModal>
+            <DynamicModal
+                :show="modalShowResumePost"
+                :type="typeModal"
+                :disabled="resumePostForm.processing"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
                 <main></main>
             </DynamicModal>
             <template #header>
@@ -481,13 +540,7 @@ const notificationsModalButton = function () {
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            Reactivate Subscription
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Cancel
+                                            Resume Subscription
                                         </th>
                                     </tr>
                                 </thead>
@@ -556,27 +609,16 @@ const notificationsModalButton = function () {
                                             <td class="myPrimaryTableTBodyTd">
                                                 <button
                                                     type="button"
-                                                    @click="handleEdit(post.id)"
+                                                    @click="
+                                                        handleResumeSubscription(
+                                                            post.id
+                                                        )
+                                                    "
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                 >
                                                     <CheckIcon
                                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
                                                     ></CheckIcon>
-                                                </button>
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <button
-                                                    type="button"
-                                                    @click="
-                                                        handleCancelSubscription(
-                                                            post.id
-                                                        )
-                                                    "
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                                >
-                                                    <TrashIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></TrashIcon>
                                                 </button>
                                             </td>
                                         </tr>
@@ -641,7 +683,7 @@ const notificationsModalButton = function () {
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            Ends at
+                                            Ended at
                                         </th>
                                         <th
                                             scope="col"
@@ -679,18 +721,6 @@ const notificationsModalButton = function () {
                                             class="myPrimaryTableTh"
                                         >
                                             Updated at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Reactivate Subscription
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Cancel
                                         </th>
                                     </tr>
                                 </thead>
@@ -756,78 +786,12 @@ const notificationsModalButton = function () {
                                                     )
                                                 }}
                                             </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <button
-                                                    type="button"
-                                                    @click="handleEdit(post.id)"
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                >
-                                                    <CheckIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></CheckIcon>
-                                                </button>
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <button
-                                                    type="button"
-                                                    @click="
-                                                        handleCancelSubscription(
-                                                            post.id
-                                                        )
-                                                    "
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                                >
-                                                    <TrashIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></TrashIcon>
-                                                </button>
-                                            </td>
                                         </tr>
                                     </TransitionGroup>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div
-                class="flex justify-end mt-4 pb-8 bottom-0 right-0 sticky"
-                v-if="Object.values(deletePostForm.errors).length !== 0"
-            >
-                <div
-                    @click="showErrorNotifications = true"
-                    class="w-fit py-1 flex items-center gap-2 rounded-md px-2 cursor-pointer italic"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-4 h-4 text-myPrimaryErrorColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                        />
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                    </svg>
-                    <p
-                        class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
-                    >
-                        Show
-                        {{ Object.values(deletePostForm.errors).length }}
-                        {{
-                            Object.values(deletePostForm.errors).length === 1
-                                ? "error"
-                                : "errors"
-                        }}
-                    </p>
                 </div>
             </div>
             <!-- Ended subcriptions # end -->
@@ -927,7 +891,7 @@ const notificationsModalButton = function () {
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            Reactivate Subscription
+                                            Edit and Complete
                                         </th>
                                         <th
                                             scope="col"
@@ -1005,9 +969,9 @@ const notificationsModalButton = function () {
                                                     @click="handleEdit(post.id)"
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                 >
-                                                    <CheckIcon
+                                                    <PencilIcon
                                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></CheckIcon>
+                                                    ></PencilIcon>
                                                 </button>
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
@@ -1033,61 +997,38 @@ const notificationsModalButton = function () {
                     </div>
                 </div>
             </div>
+
             <div
                 class="flex justify-end mt-4 pb-8 bottom-0 right-0 sticky"
-                v-if="Object.values(deletePostForm.errors).length !== 0"
+                v-if="
+                    Object.values(deletePostForm.errors).length !== 0 ||
+                    Object.values(resumePostForm.errors).length !== 0
+                "
             >
                 <div
                     @click="showErrorNotifications = true"
                     class="w-fit py-1 flex items-center gap-2 rounded-md px-2 cursor-pointer italic"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-4 h-4 text-myPrimaryErrorColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                        />
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                    </svg>
+                    <EyeIcon class="w-4 h-4 text-myPrimaryErrorColor"></EyeIcon>
                     <p
                         class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
                     >
-                        Show
-                        {{ Object.values(deletePostForm.errors).length }}
-                        {{
-                            Object.values(deletePostForm.errors).length === 1
-                                ? "error"
-                                : "errors"
-                        }}
+                        Show errors
                     </p>
                 </div>
             </div>
             <!-- Incomplete subcriptions # end -->
+
             <NotificationsFixedBottom
-                :listOfMessages="Object.values(deletePostForm.errors)"
+                :listOfMessages="
+                    Object.values(deletePostForm.errors) &&
+                    Object.values(resumePostForm.errors)
+                "
                 :show="showErrorNotifications"
                 @notificationsModalButton="notificationsModalButton"
             >
                 <div class="flex items-center justify-start gap-2">
-                    <p class="myPrimaryParagraphError">
-                        {{ Object.values(deletePostForm.errors).length }}
-                        {{
-                            Object.values(deletePostForm.errors).length === 1
-                                ? "error"
-                                : "errors"
-                        }}
-                    </p>
+                    <p class="myPrimaryParagraphError">Errors</p>
                 </div>
             </NotificationsFixedBottom>
         </LoggedInLayout>

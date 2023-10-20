@@ -414,6 +414,36 @@ class SubscriptionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    public function resume($subscriptionId)
+    {
+        $user = Auth::user();
+
+        $subscription = Subscription::findOrFail($subscriptionId);
+
+        $stripeSubscription = $subscription->asStripeSubscription();
+        $stripeStatus = $stripeSubscription->status;
+
+        $subscription = Subscription::findOrFail($subscriptionId);
+
+        try {
+            $subscription->resume();
+        } catch (Exception $e) {
+            Log::error("Something went wrong. {$e}");
+
+            throw ValidationException::withMessages([
+                "error" =>
+                    "Oops! Something went wrong." . " " . $e->getMessage(),
+            ]);
+        }
+
+        return back()->with([
+            "message" => "The form has been submitted successfully.",
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy($subscriptionId)
     {
         $user = Auth::user();
@@ -436,12 +466,6 @@ class SubscriptionController extends Controller
                     "Oops! Something went wrong." . " " . $e->getMessage(),
             ]);
         }
-
-        // return redirect()->route("stripe.payment.subscription.index", [
-        //     "user" => $user->id,
-        // ]);
-
-        // "user" => $user->id,
 
         return back()->with([
             "message" => "The form has been submitted successfully.",
