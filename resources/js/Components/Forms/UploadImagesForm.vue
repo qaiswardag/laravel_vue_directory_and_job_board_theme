@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { usePromise } from "@/helpers/use-promise";
 import { useStore } from "vuex";
 import { PhotoIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 
 // store
 const store = useStore();
@@ -210,15 +211,12 @@ onMounted(() => {
         >
             <div v-if="isLoading === true">
                 <div class="flex items-center justify-center">
-                    <div
-                        class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                        role="status"
-                    >
-                        <span
-                            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                            >Loading...</span
-                        >
-                    </div>
+                    <SmallUniversalSpinner
+                        class="h-40"
+                        width="w-6"
+                        height="h-6"
+                        border="border-4"
+                    ></SmallUniversalSpinner>
                 </div>
             </div>
 
