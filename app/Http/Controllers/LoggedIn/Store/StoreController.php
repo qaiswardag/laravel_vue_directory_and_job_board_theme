@@ -105,7 +105,6 @@ class StoreController extends Controller
      */
     public function create($teamId)
     {
-        sleep(2);
         $team = Team::find($teamId);
 
         if ($team === null) {
