@@ -30,6 +30,24 @@ class UserController extends Controller
      * @param  \Laravel\Fortify\Contracts\UpdatesUserProfileInformation  $updater
      * @return \Laravel\Fortify\Contracts\ProfileInformationUpdatedResponse
      */
+
+    // public function update(
+    //     Request $request,
+    //     UpdatesUserProfileInformation $updater
+    // ) {
+    //     if (config("fortify.lowercase_usernames")) {
+    //         $request->merge([
+    //             Fortify::username() => Str::lower(
+    //                 $request->{Fortify::username()}
+    //             ),
+    //         ]);
+    //     }
+
+    //     $updater->update($request->user(), $request->all());
+
+    //     return app(ProfileInformationUpdatedResponse::class);
+    // }
+
     public function update(
         Request $request,
         UpdatesUserProfileInformation $updater
@@ -43,28 +61,7 @@ class UserController extends Controller
         }
 
         $updater->update($request->user(), $request->all());
-
-        $this->validateTwoFactorAuthenticationState($request);
-
-        list($intent, $publishableKey) = $this->handleStripeIntegration(
-            Auth::user()
-        );
-
-        // stripe # end
-
-        return Jetstream::inertia()->render($request, "Profile/Show", [
-            "confirmsTwoFactorAuthentication" => Features::optionEnabled(
-                Features::twoFactorAuthentication(),
-                "confirm"
-            ),
-            "sessions" => $this->sessions($request)->all(),
-            //
-            //
-            //
-            //
-            "intent" => $intent,
-            "publishableKey" => $publishableKey,
-        ]);
+        return app(ProfileInformationUpdatedResponse::class);
     }
 
     /**
