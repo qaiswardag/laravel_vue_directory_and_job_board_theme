@@ -174,47 +174,6 @@ const notificationsModalButton = function () {
                 <main></main>
             </DynamicModal>
             <template #header>
-                <div
-                    class="my-20 mx-12 p-8 px-4 border-2 border-red-400 rounded-lg bg-red-50 whitespace-pre-line"
-                >
-                    <p class="my-4 whitespace-pre-line">
-                        fetchedSubscriptions subscriptionsActive:
-                        {{
-                            JSON.stringify(
-                                fetchedSubscriptions?.subscriptions
-                                    ?.subscriptionsActive
-                            )
-                        }}
-                    </p>
-                    <p class="my-4 whitespace-pre-line">
-                        fetchedSubscriptions subscriptionsIncomplete:
-                        {{
-                            JSON.stringify(
-                                fetchedSubscriptions?.subscriptions
-                                    ?.subscriptionsIncomplete
-                            )
-                        }}
-                    </p>
-                    <p class="my-4 whitespace-pre-line">
-                        fetchedSubscriptions subscriptionsEnded:
-                        {{
-                            JSON.stringify(
-                                fetchedSubscriptions?.subscriptions
-                                    ?.subscriptionsEnded
-                            )
-                        }}
-                    </p>
-                    <p class="my-4 whitespace-pre-line">
-                        fetchedSubscriptions subscriptionsCanceled:
-                        {{
-                            JSON.stringify(
-                                fetchedSubscriptions?.subscriptions
-                                    ?.subscriptionsCanceled
-                            )
-                        }}
-                    </p>
-                </div>
-
                 <h2 class="myPrimaryMainPageHeader">Subscriptions</h2>
             </template>
             <template #breadcrumbs>
@@ -296,18 +255,7 @@ const notificationsModalButton = function () {
                                         >
                                             Updated name
                                         </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Stripe ID
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Stripe price
-                                        </th>
+
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
@@ -378,12 +326,7 @@ const notificationsModalButton = function () {
                                                     post.updated_subscription_name
                                                 }}
                                             </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_id }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_price }}
-                                            </td>
+
                                             <td class="myPrimaryTableTBodyTd">
                                                 {{ post.quantity }}
                                             </td>
@@ -515,18 +458,7 @@ const notificationsModalButton = function () {
                                         >
                                             Updated name
                                         </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Stripe ID
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Stripe price
-                                        </th>
+
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
@@ -549,7 +481,7 @@ const notificationsModalButton = function () {
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            Edit
+                                            Reactivate Subscription
                                         </th>
                                         <th
                                             scope="col"
@@ -597,13 +529,7 @@ const notificationsModalButton = function () {
                                                     post.updated_subscription_name
                                                 }}
                                             </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_id }}
-                                            </td>
 
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_price }}
-                                            </td>
                                             <td class="myPrimaryTableTBodyTd">
                                                 {{ post.quantity }}
                                             </td>
@@ -633,9 +559,9 @@ const notificationsModalButton = function () {
                                                     @click="handleEdit(post.id)"
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                 >
-                                                    <PencilIcon
+                                                    <CheckIcon
                                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></PencilIcon>
+                                                    ></CheckIcon>
                                                 </button>
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
@@ -735,18 +661,7 @@ const notificationsModalButton = function () {
                                         >
                                             Updated name
                                         </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Stripe ID
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Stripe price
-                                        </th>
+
                                         <th
                                             scope="col"
                                             class="myPrimaryTableTh"
@@ -769,7 +684,7 @@ const notificationsModalButton = function () {
                                             scope="col"
                                             class="myPrimaryTableTh"
                                         >
-                                            Edit
+                                            Reactivate Subscription
                                         </th>
                                         <th
                                             scope="col"
@@ -817,13 +732,7 @@ const notificationsModalButton = function () {
                                                     post.updated_subscription_name
                                                 }}
                                             </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_id }}
-                                            </td>
 
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_price }}
-                                            </td>
                                             <td class="myPrimaryTableTBodyTd">
                                                 {{ post.quantity }}
                                             </td>
@@ -853,9 +762,9 @@ const notificationsModalButton = function () {
                                                     @click="handleEdit(post.id)"
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                 >
-                                                    <PencilIcon
+                                                    <CheckIcon
                                                         class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></PencilIcon>
+                                                    ></CheckIcon>
                                                 </button>
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
@@ -922,6 +831,249 @@ const notificationsModalButton = function () {
                 </div>
             </div>
             <!-- Ended subcriptions # end -->
+            <!-- Incomplete subcriptions # start -->
+            <div class="mb-24">
+                <div class="mb-4">
+                    <h2 class="mySecondaryHeader">Incomplete Subscriptions</h2>
+                </div>
+                <template
+                    v-if="
+                        !fetchedSubscriptions?.subscriptions
+                            ?.subscriptionsIncomplete ||
+                        (Array.isArray(
+                            fetchedSubscriptions.subscriptions
+                                .subscriptionsIncomplete
+                        ) &&
+                            fetchedSubscriptions.subscriptions
+                                .subscriptionsIncomplete.length === 0)
+                    "
+                >
+                    <p class="myPrimaryParagraph">
+                        Looks like there are no ended incomplete subscriptions!
+                    </p>
+                </template>
+
+                <div
+                    v-if="
+                        fetchedSubscriptions &&
+                        fetchedSubscriptions.subscriptions &&
+                        Array.isArray(
+                            fetchedSubscriptions.subscriptions
+                                .subscriptionsIncomplete
+                        ) &&
+                        fetchedSubscriptions.subscriptions
+                            .subscriptionsIncomplete.length > 0
+                    "
+                    class="myTableContainerPlusScrollButton"
+                >
+                    <div ref="scrolTableContainer" class="myTableContainer">
+                        <div class="myTableSubContainer">
+                            <table
+                                class="myPrimaryTable"
+                                aria-describedby="index"
+                            >
+                                <thead class="myPrimaryTableTHead">
+                                    <tr class="myPrimaryTableTr">
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            ID
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Ends at
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Status
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Name
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Updated name
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Quantity
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Created at
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Updated at
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Reactivate Subscription
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Cancel
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="myPrimaryTableTBody">
+                                    <TransitionGroup name="table">
+                                        <tr
+                                            class="myPrimaryTableTBodyTr"
+                                            v-for="post in fetchedSubscriptions
+                                                .subscriptions
+                                                .subscriptionsIncomplete"
+                                            :key="post.id"
+                                        >
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.id }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <span v-if="post.ends_at">
+                                                    {{
+                                                        format(
+                                                            parseISO(
+                                                                post.ends_at
+                                                            ),
+                                                            "dd/MM/yyyy"
+                                                        )
+                                                    }}
+                                                </span>
+                                                <span v-if="!post.ends_at">
+                                                    Newer
+                                                </span>
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.stripe_status }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.name }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    post.updated_subscription_name
+                                                }}
+                                            </td>
+
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.quantity }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.created_at
+                                                        ),
+                                                        "dd/MM/yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.updated_at
+                                                        ),
+                                                        "dd/MM/yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <button
+                                                    type="button"
+                                                    @click="handleEdit(post.id)"
+                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                >
+                                                    <CheckIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    ></CheckIcon>
+                                                </button>
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <button
+                                                    type="button"
+                                                    @click="
+                                                        handleCancelSubscription(
+                                                            post.id
+                                                        )
+                                                    "
+                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                                >
+                                                    <TrashIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    ></TrashIcon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </TransitionGroup>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="flex justify-end mt-4 pb-8 bottom-0 right-0 sticky"
+                v-if="Object.values(deletePostForm.errors).length !== 0"
+            >
+                <div
+                    @click="showErrorNotifications = true"
+                    class="w-fit py-1 flex items-center gap-2 rounded-md px-2 cursor-pointer italic"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-4 h-4 text-myPrimaryErrorColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        />
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                    </svg>
+                    <p
+                        class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
+                    >
+                        Show
+                        {{ Object.values(deletePostForm.errors).length }}
+                        {{
+                            Object.values(deletePostForm.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
+                    </p>
+                </div>
+            </div>
+            <!-- Incomplete subcriptions # end -->
             <NotificationsFixedBottom
                 :listOfMessages="Object.values(deletePostForm.errors)"
                 :show="showErrorNotifications"

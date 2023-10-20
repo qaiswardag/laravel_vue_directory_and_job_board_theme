@@ -426,8 +426,8 @@ class SubscriptionController extends Controller
         $subscription = Subscription::findOrFail($subscriptionId);
 
         try {
-            // $subscription->cancel(); // stripe_status after ends_at date should be: canceled
-            $subscription->cancelAt(now()->addMinutes(10));
+            $subscription->cancel();
+            // $subscription->cancelAt(now()->addMinutes(3));
         } catch (Exception $e) {
             Log::error("Something went wrong. {$e}");
 

@@ -58,13 +58,13 @@ const props = defineProps({
                     {{ user.last_name }}
                 </p>
                 <template v-if="showJobTitle && user.job_title">
-                    <p class="text-xs font-normal italic">
+                    <p class="text-xs font-normal">
                         {{ `title: ${user.job_title}` }}
                     </p>
                 </template>
 
                 <template v-if="showTeamRole && currentUserTeamRole">
-                    <p class="text-xs font-normal italic">
+                    <p class="text-xs font-normal">
                         role:
                         {{
                             currentUserTeamRole?.key
