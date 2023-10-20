@@ -5,7 +5,7 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import { ref, computed, onBeforeMount, watch, onMounted } from "vue";
+import { ref, computed, onBeforeMount, watch, onMounted, nextTick } from "vue";
 import { Switch } from "@headlessui/vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import Tags from "@/Components/Forms/Tags.vue";
@@ -16,6 +16,10 @@ import config from "@/utils/config";
 import SearchUsersOrItems from "@/Components/Search/SearchUsersOrItems.vue";
 import { router } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
+import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
+import PageBuilder from "@/composables/PageBuilder";
+import { delay } from "@/helpers/delay";
 
 import {
     Listbox,
@@ -39,6 +43,7 @@ import {
     PhotoIcon,
     PlusCircleIcon,
     PlusIcon,
+    FolderPlusIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -113,6 +118,12 @@ const formType = ref("create");
 const pathLocalStorage = `post-form-${
     props.currentUserTeam ? props.currentUserTeam.id : null
 }`;
+
+const pathPageBuilderLocalStorageCreate = `page-builder-create-post-team-${
+    props.currentUserTeam ? props.currentUserTeam.id : null
+}`;
+
+const pathPageBuilderLocalStorageUpdateDraft = ref(null);
 
 // use media library
 const showMediaLibraryModal = ref(false);
@@ -360,6 +371,8 @@ const handleCreatePost = function () {
     createPost();
 };
 
+const submittedOnUpdate = ref(true);
+
 const createPost = () => {
     if (formType.value === "create") {
         postForm.post(route("team.posts.store"), {
@@ -374,7 +387,10 @@ const createPost = () => {
     if (formType.value === "update") {
         postForm.post(route("team.posts.update", props.post.id), {
             preserveScroll: true,
-            onSuccess: () => {},
+            onSuccess: () => {
+                submittedOnUpdate.value = false;
+                clearPageBuilderOnSuccessUpdate();
+            },
             onError: () => {},
             onFinish: () => {},
         });
@@ -434,6 +450,13 @@ const clearForm = function () {
     postForm.cover_image = [];
 
     localStorage.removeItem(pathLocalStorage);
+    localStorage.removeItem(pathPageBuilderLocalStorageCreate);
+    store.commit("pageBuilderState/setComponents", []);
+};
+
+const clearPageBuilderOnSuccessUpdate = function () {
+    pageBuilder.removeItemComponentsLocalStorageUpdate();
+    store.commit("pageBuilderState/setComponents", []);
 };
 
 // is form dirty? returns true or false
@@ -451,12 +474,52 @@ const storeDirtyFormInLocalStorage = function () {
     }
 };
 // Will be executed when the user switch current route
-router.on = () => {
+// Will be executed when the user switch current route
+router.on = async () => {
     storeDirtyFormInLocalStorage();
+
+    store.commit("user/setIsLoading", true);
+
+    if (formType.value === "update") {
+        if (
+            submittedOnUpdate.value &&
+            Array.isArray(getComponents.value) &&
+            getComponents.value.length !== 0
+        ) {
+            await nextTick();
+            pageBuilder.saveComponentsLocalStorageUpdate();
+        }
+    }
+
+    // set open modal
+    openDesignerModal.value = false;
+
+    await delay();
+    store.commit("user/setIsLoading", false);
 };
-// This function will be executed when the user clicks refresh or closes the tab/window
-window.addEventListener("beforeunload", function () {
+
+// Will be executed when the user clicks refresh or closes the tab/window
+window.addEventListener("beforeunload", async function () {
     storeDirtyFormInLocalStorage();
+
+    store.commit("user/setIsLoading", true);
+
+    if (formType.value === "update") {
+        if (
+            submittedOnUpdate.value &&
+            Array.isArray(getComponents.value) &&
+            getComponents.value.length !== 0
+        ) {
+            await nextTick();
+            pageBuilder.saveComponentsLocalStorageUpdate();
+        }
+    }
+
+    // set open modal
+    openDesignerModal.value = false;
+
+    await delay();
+    store.commit("user/setIsLoading", false);
 });
 
 const authorSorted = computed(() => {
@@ -488,16 +551,129 @@ const categoriesSorted = computed(() => {
     });
 });
 //
+// Builder # Start
+const getComponents = computed(() => {
+    return store.getters["pageBuilderState/getComponents"];
+});
+
+const openDesignerModal = ref(false);
 //
+// use designer model
+const firstDesignerModalButtonFunction = ref(null);
+const secondDesignerModalButtonFunction = ref(null);
+const handleDraftForUpdate = async function () {
+    store.commit("user/setIsLoading", true);
+
+    if (formType.value === "update") {
+        await nextTick();
+        pageBuilder.areComponentsStoredInLocalStorageUpdate();
+        await nextTick();
+        pageBuilder.setEventListenersForElements();
+
+        await delay();
+        store.commit("user/setIsLoading", false);
+    }
+};
+
 //
-//
+const handlePageBuilder = async function () {
+    // set modal standards
+    store.commit("user/setIsLoading", true);
+
+    await delay();
+    await nextTick();
+    openDesignerModal.value = true;
+
+    if (formType.value === "create") {
+        store.commit("pageBuilderState/setComponents", []);
+
+        // local storage for page builder
+        if (pageBuilder.areComponentsStoredInLocalStorage()) {
+            postForm.content =
+                Array.isArray(getComponents.value) &&
+                getComponents.value
+                    .map((component) => {
+                        return component.html_code;
+                    })
+                    .join("");
+        }
+    }
+
+    // handle click
+    firstDesignerModalButtonFunction.value = async function () {
+        store.commit("user/setIsLoading", true);
+
+        if (formType.value === "update") {
+            await nextTick();
+            pageBuilder.saveComponentsLocalStorageUpdate();
+            await delay();
+        }
+
+        // set open modal
+        openDesignerModal.value = false;
+        store.commit("user/setIsLoading", false);
+    };
+
+    // handle click
+    secondDesignerModalButtonFunction.value = async function () {
+        store.commit("user/setIsLoading", true);
+
+        // save to local storage if new resource
+        if (formType.value === "create") {
+            await nextTick();
+            pageBuilder.saveComponentsLocalStorage();
+
+            await nextTick();
+            postForm.content =
+                Array.isArray(getComponents.value) &&
+                getComponents.value
+                    .map((component) => {
+                        return component.html_code;
+                    })
+                    .join("");
+        }
+        // save to local storage if update
+        if (formType.value === "update") {
+            await nextTick();
+            pageBuilder.synchronizeDOMAndComponents();
+
+            await nextTick();
+            postForm.content =
+                Array.isArray(getComponents.value) &&
+                getComponents.value
+                    .map((component) => {
+                        return component.html_code;
+                    })
+                    .join("");
+        }
+
+        // set open modal
+
+        openDesignerModal.value = false;
+        await delay();
+        store.commit("user/setIsLoading", false);
+    };
+
+    store.commit("user/setIsLoading", false);
+
+    // end modal
+};
+// Builder # End
 //
 //
 // get unique post if needs to be updated
 onBeforeMount(() => {
-    // User is creating a new Resource from scratch, rather than editing an existing one
-    // Check local storage
     if (!props.post) {
+        if (pageBuilder.areComponentsStoredInLocalStorage()) {
+            postForm.content =
+                Array.isArray(getComponents.value) &&
+                getComponents.value
+                    .map((component) => {
+                        return component.html_code;
+                    })
+                    .join("");
+        }
+
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
             const formDataJson = localStorage.getItem(pathLocalStorage);
@@ -608,6 +784,30 @@ onBeforeMount(() => {
     if (props.post) {
         formType.value = "update";
 
+        pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-draft-update-store-${
+            props.post.id ? props.post.id : null
+        }-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
+
+        // Parse the HTML content using DOMParser
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(props.post.content, "text/html");
+
+        // Select all <section> elements with data-componentid attribute
+        const sectionElements = doc.querySelectorAll(
+            "section[data-componentid]"
+        );
+
+        const extractedSections = [];
+        // Loop through the selected elements and extract outerHTML
+        sectionElements.forEach((section) => {
+            extractedSections.push({
+                html_code: section.outerHTML,
+                id: section.dataset.componentid,
+            });
+        });
+
+        store.commit("pageBuilderState/setComponents", extractedSections);
+
         postForm.title = props.post.title;
         // slug logic
         // slug is editable when editing an existing post
@@ -631,10 +831,35 @@ onBeforeMount(() => {
         postForm.categories = props.categories;
         postForm.cover_image = props.coverImages;
     }
+
+    store.commit(
+        "pageBuilderState/setLocalStorageItemName",
+        pathPageBuilderLocalStorageCreate
+    );
+
+    store.commit(
+        "pageBuilderState/setLocalStorageItemNameUpdate",
+        pathPageBuilderLocalStorageUpdateDraft.value
+    );
 });
+
+onMounted(() => {
+    submittedOnUpdate.value = true;
+});
+
+const pageBuilder = new PageBuilder(store);
 </script>
 
 <template>
+    <PageBuilderModal
+        :show="openDesignerModal"
+        :updateOrCreate="formType"
+        @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
+        @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"
+        @handleDraftForUpdate="handleDraftForUpdate"
+    >
+        <PageBuilderView :user="user" :team="postForm.team"></PageBuilderView>
+    </PageBuilderModal>
     <FormSection @submitted="handleCreatePost">
         <template #title> Post details</template>
         <template #description> Create a new Post. </template>
@@ -712,11 +937,44 @@ onBeforeMount(() => {
                     <InputError :message="postForm.errors.slug" />
                 </div>
                 <!-- post slug end -->
-
-                <!-- post content start -->
-                <p>post content here</p>
-                <!-- post content end -->
             </div>
+
+            <!-- Builder #start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeader">
+                    Manage Content
+                </div>
+                <!-- Add Content # start -->
+                <div
+                    class="rounded-lg mt-4 border-2 border-dashed border-gray-300 p-8 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                    <FolderPlusIcon
+                        @click="handlePageBuilder"
+                        class="mx-auto h-12 w-12 text-gray-400 cursor-pointer"
+                    ></FolderPlusIcon>
+                    <h3 class="mt-2 text-sm font-semibold text-gray-900">
+                        Add Components
+                    </h3>
+                    <p class="mt-1 text-sm text-gray-500">
+                        Get started by adding components.
+                    </p>
+                    <div class="mt-6">
+                        <button
+                            @click="handlePageBuilder"
+                            type="button"
+                            class="myPrimaryButton"
+                        >
+                            <FolderPlusIcon
+                                class="-ml-0.5 mr-1.5 h-5 w-5"
+                            ></FolderPlusIcon>
+                            Add content
+                        </button>
+                    </div>
+                </div>
+                <!-- Add Content # end -->
+                <InputError :message="postForm.errors.content" />
+            </div>
+            <!-- Builder #end -->
         </template>
 
         <template #sidebar>
@@ -1361,7 +1619,7 @@ onBeforeMount(() => {
                     >
                         Show
                         {{ Object.values(postForm.errors).length }}
-                      
+
                         {{
                             Object.values(postForm.errors).length === 1
                                 ? "error"
