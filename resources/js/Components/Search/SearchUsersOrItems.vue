@@ -312,7 +312,7 @@ onMounted(() => {
                         <div
                             v-if="
                                 getCurrentItems &&
-                                getCurrentItems.isError === false &&
+                                !getCurrentItems.isError &&
                                 getCurrentItems.fetchedData &&
                                 getCurrentItems.fetchedData.items &&
                                 getCurrentItems.fetchedData.items.data &&
@@ -335,8 +335,8 @@ onMounted(() => {
                         <div
                             v-if="
                                 getCurrentItems &&
-                                getCurrentItems.isLoading === false &&
-                                getCurrentItems.isError === true
+                                !getCurrentItems.isLoading &&
+                                getCurrentItems.isError
                             "
                             class="myPrimaryParagraphError"
                         >
@@ -389,28 +389,24 @@ onMounted(() => {
                         <div
                             v-if="
                                 getCurrentItems &&
-                                getCurrentItems.isLoading === true &&
-                                getCurrentItems.isError === false
+                                getCurrentItems.isLoading &&
+                                !getCurrentItems.isError
                             "
                         >
-                            <div
-                                class="flex items-center justify-center min-h-[20rem] mb-12"
-                            >
-                                <SmallUniversalSpinner
-                                    class="h-40"
-                                    width="w-6"
-                                    height="h-6"
-                                    border="border-4"
-                                ></SmallUniversalSpinner>
-                            </div>
+                            <SmallUniversalSpinner
+                                class="h-40"
+                                width="w-6"
+                                height="h-6"
+                                border="border-4"
+                            ></SmallUniversalSpinner>
                         </div>
                         <!-- loading - end -->
                         <template
                             v-if="
                                 getCurrentItems &&
-                                getCurrentItems.isLoading === false &&
-                                getCurrentItems.isError === false &&
-                                getCurrentItems.isSuccess === true &&
+                                !getCurrentItems.isLoading &&
+                                !getCurrentItems.isError &&
+                                getCurrentItems.isSuccess &&
                                 getCurrentItems.fetchedData &&
                                 getCurrentItems.fetchedData.items &&
                                 getCurrentItems.fetchedData.items.data
@@ -479,14 +475,14 @@ onMounted(() => {
                                                 >
                                                     <span>
                                                         {{
-                                                            item.first_name
+                                                            item?.first_name
                                                                 .charAt(0)
                                                                 .toUpperCase()
                                                         }}
                                                     </span>
                                                     <span>
                                                         {{
-                                                            item.last_name
+                                                            item?.last_name
                                                                 .charAt(0)
                                                                 .toUpperCase()
                                                         }}
@@ -697,20 +693,22 @@ onMounted(() => {
                                     <div
                                         v-if="
                                             item &&
-                                            item.profile_photo_path === null
+                                            item.first_name &&
+                                            item.last_name &&
+                                            !item.profile_photo_path
                                         "
                                         class="flex-shrink-0 myPrimaryParagraph h-12 w-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
                                     >
                                         <span>
                                             {{
-                                                item.first_name
+                                                item?.first_name
                                                     .charAt(0)
                                                     .toUpperCase()
                                             }}
                                         </span>
                                         <span>
                                             {{
-                                                item.last_name
+                                                item?.last_name
                                                     .charAt(0)
                                                     .toUpperCase()
                                             }}

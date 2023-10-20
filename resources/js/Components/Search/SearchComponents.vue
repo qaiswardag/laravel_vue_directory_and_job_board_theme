@@ -17,7 +17,7 @@ import {
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import PageBuilder from "@/composables/PageBuilder";
-import Spinner from "@/Components/PageBuilder/Loaders/Spinner.vue";
+import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 
 import { useStore } from "vuex";
 
@@ -152,11 +152,6 @@ onMounted(async () => {
         minHeight="min-h-[50rem]"
         maxHeight="max-h-[50rem]"
     >
-        <Spinner
-            v-if="
-                getFetchedComponents.isLoading && !getFetchedComponents.isError
-            "
-        ></Spinner>
         <div
             class="mb-24 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
@@ -182,6 +177,18 @@ onMounted(async () => {
                     {{ getFetchedComponents.error }}
                 </p>
             </div>
+
+            <SmallUniversalSpinner
+                v-if="
+                    getFetchedComponents.isLoading &&
+                    !getFetchedComponents.isError
+                "
+                class="h-40"
+                width="w-6"
+                height="h-6"
+                border="border-4"
+            ></SmallUniversalSpinner>
+
             <main
                 v-if="
                     !getFetchedComponents.isError &&
@@ -282,7 +289,6 @@ onMounted(async () => {
                     </template>
                 </div>
                 <!-- Categories # End -->
-
                 <div
                     v-if="
                         getFetchedComponents &&
