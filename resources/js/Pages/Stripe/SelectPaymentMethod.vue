@@ -200,16 +200,6 @@ onMounted(() => {
 </script>
 
 <template>
-    <template v-if="isLoadingPaymentMethods && !isErrorPaymentMethods">
-        <div class="flex flex-col w-full">
-            <SmallUniversalSpinner
-                class="h-40"
-                width="w-6"
-                height="h-6"
-                border="border-4"
-            ></SmallUniversalSpinner>
-        </div>
-    </template>
     <DynamicModal
         :show="modalShowDeletePaymentMethod"
         :type="typeModal"
@@ -246,226 +236,214 @@ onMounted(() => {
         <header></header>
         <main></main>
     </DynamicModal>
-    <div>
+
+    <template v-if="isLoadingPaymentMethods">
+        <SmallUniversalSpinner
+            class="h-40"
+            width="w-6"
+            height="h-6"
+            border="border-4"
+        ></SmallUniversalSpinner>
+    </template>
+
+    <p
+        v-if="isErrorPaymentMethods && !isLoadingPaymentMethods"
+        class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
+    >
+        {{ errorPaymentMethods }}
+    </p>
+
+    <p
+        class="myPrimaryParagraph"
+        v-if="
+            fetchedPaymentMethods &&
+            fetchedPaymentMethods.paymentMethods &&
+            Array.isArray(fetchedPaymentMethods.paymentMethods) &&
+            fetchedPaymentMethods.paymentMethods.length === 0
+        "
+    >
+        No payment methods are connected to your account.
+    </p>
+
+    <template v-if="!isLoadingPaymentMethods && !isErrorPaymentMethods">
         <p
-            v-if="errorPaymentMethods && !isLoadingPaymentMethods"
-            class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
+            class="py-4"
+            v-if="
+                fetchedPaymentMethods &&
+                fetchedPaymentMethods.paymentMethods &&
+                Array.isArray(fetchedPaymentMethods.paymentMethods) &&
+                fetchedPaymentMethods.paymentMethods.length !== 0
+            "
         >
-            {{ errorPaymentMethods }}
+            {{ fetchedPaymentMethods.paymentMethods.length }} available payment
+            {{
+                fetchedPaymentMethods.paymentMethods.length === 1
+                    ? "method"
+                    : "methods"
+            }}
         </p>
 
-        <div v-if="!isLoadingPaymentMethods">
-            <p
-                class="myPrimaryParagraph"
-                v-if="
+        <div
+            :class="{
+                'p-2 border':
                     fetchedPaymentMethods &&
                     fetchedPaymentMethods.paymentMethods &&
                     Array.isArray(fetchedPaymentMethods.paymentMethods) &&
-                    fetchedPaymentMethods.paymentMethods.length === 0
-                "
-            >
-                No payment methods are connected to your account.
-            </p>
-
-            <p
-                class="py-4"
+                    fetchedPaymentMethods.paymentMethods.length !== 0,
+            }"
+        >
+            <div
                 v-if="
                     fetchedPaymentMethods &&
                     fetchedPaymentMethods.paymentMethods &&
                     Array.isArray(fetchedPaymentMethods.paymentMethods) &&
                     fetchedPaymentMethods.paymentMethods.length !== 0
                 "
+                class="min-h-[4rem] max-h-[32rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
             >
-                {{ fetchedPaymentMethods.paymentMethods.length }} available
-                payment
-                {{
-                    fetchedPaymentMethods.paymentMethods.length === 1
-                        ? "method"
-                        : "methods"
-                }}
-            </p>
-
-            <div>
                 <div
-                    :class="{
-                        'p-2 border':
-                            fetchedPaymentMethods &&
-                            fetchedPaymentMethods.paymentMethods &&
-                            Array.isArray(
-                                fetchedPaymentMethods.paymentMethods
-                            ) &&
-                            fetchedPaymentMethods.paymentMethods.length !== 0,
-                    }"
+                    as="template"
+                    v-for="paymentMethod in fetchedPaymentMethods.paymentMethods"
+                    :key="paymentMethod.id"
                 >
                     <div
-                        v-if="
-                            fetchedPaymentMethods &&
-                            fetchedPaymentMethods.paymentMethods &&
-                            Array.isArray(
-                                fetchedPaymentMethods.paymentMethods
-                            ) &&
-                            fetchedPaymentMethods.paymentMethods.length !== 0
-                        "
-                        class="min-h-[4rem] max-h-[32rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                        class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag"
                     >
-                        <div
-                            as="template"
-                            v-for="paymentMethod in fetchedPaymentMethods.paymentMethods"
-                            :key="paymentMethod.id"
-                        >
-                            <div
-                                class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag"
-                            >
-                                <div>
-                                    <div class="flex items-center">
-                                        <span class="flex flex-col text-sm">
-                                            <div
-                                                as="span"
-                                                class="font-medium text-gray-900 mb-4"
-                                            >
-                                                {{
-                                                    paymentMethod.card?.brand?.toUpperCase()
-                                                }}
-                                            </div>
-                                            <div
-                                                as="span"
-                                                class="text-gray-500 flex flex-col gap-2"
-                                            >
-                                                <p>
-                                                    **** **** ****
-                                                    {{
-                                                        paymentMethod.card
-                                                            ?.last4
-                                                    }}
-                                                </p>
-                                                <p class="block sm:inline">
-                                                    Name:
-                                                    {{
-                                                        paymentMethod
-                                                            .billing_details
-                                                            ?.name
-                                                    }}
-                                                </p>
-                                                <p class="block sm:inline">
-                                                    Country:
-                                                    {{
-                                                        paymentMethod.card
-                                                            ?.country
-                                                    }}
-                                                </p>
-                                            </div>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex gap-2 justify-between items-start border-t border-gray-400 pt-2"
-                                >
-                                    <button
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                        type="button"
-                                        @click="
-                                            handleDeletePaymentMethod(
-                                                paymentMethod
-                                            )
-                                        "
+                        <div>
+                            <div class="flex items-center">
+                                <span class="flex flex-col text-sm">
+                                    <div
+                                        as="span"
+                                        class="font-medium text-gray-900 mb-4"
                                     >
-                                        <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                        ></TrashIcon>
-                                    </button>
-
-                                    <div>
-                                        <button
-                                            v-if="
-                                                fetchedPaymentMethods?.defaultPaymentMethodId !==
-                                                paymentMethod.id
-                                            "
-                                            class="myPrimaryTag transition bg-white mt-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                            type="button"
-                                            @click="
-                                                handleSetDefaultPaymentMethod(
-                                                    paymentMethod
-                                                )
-                                            "
-                                        >
-                                            <span> Set default </span>
-                                        </button>
-                                        <button
-                                            v-if="
-                                                fetchedPaymentMethods?.defaultPaymentMethodId ===
-                                                paymentMethod.id
-                                            "
-                                            class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
-                                            type="button"
-                                            @click="
-                                                handleSetDefaultPaymentMethod(
-                                                    paymentMethod
-                                                )
-                                            "
-                                        >
-                                            <div
-                                                class="flex items-center justify-center gap-2"
-                                            >
-                                                <span> Default</span>
-                                                <CheckIcon
-                                                    class="w-3 h-3 stroke-2"
-                                                ></CheckIcon>
-                                            </div>
-                                        </button>
+                                        {{
+                                            paymentMethod.card?.brand?.toUpperCase()
+                                        }}
                                     </div>
-                                </div>
+                                    <div
+                                        as="span"
+                                        class="text-gray-500 flex flex-col gap-2"
+                                    >
+                                        <p>
+                                            **** **** ****
+                                            {{ paymentMethod.card?.last4 }}
+                                        </p>
+                                        <p class="block sm:inline">
+                                            Name:
+                                            {{
+                                                paymentMethod.billing_details
+                                                    ?.name
+                                            }}
+                                        </p>
+                                        <p class="block sm:inline">
+                                            Country:
+                                            {{ paymentMethod.card?.country }}
+                                        </p>
+                                    </div>
+                                </span>
                             </div>
                         </div>
-                    </div>
+                        <div
+                            class="flex gap-2 justify-between items-start border-t border-gray-400 pt-2"
+                        >
+                            <button
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                type="button"
+                                @click="
+                                    handleDeletePaymentMethod(paymentMethod)
+                                "
+                            >
+                                <TrashIcon
+                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                ></TrashIcon>
+                            </button>
 
-                    <div
-                        class="flex items-center justify-between pt-2 mt-8"
-                        :class="{
-                            'border-t border-gray-200':
-                                fetchedPaymentMethods &&
-                                fetchedPaymentMethods.paymentMethods &&
-                                Array.isArray(
-                                    fetchedPaymentMethods.paymentMethods
-                                ) &&
-                                fetchedPaymentMethods.paymentMethods.length !==
-                                    0,
-                        }"
-                    >
-                        <p
-                            @click="handleCreatePaymentMethod"
-                            class="myPrimaryParagraph text-xs cursor-pointer font-bold py-4"
-                        >
-                            Add Payment Method
-                        </p>
-                        <button
-                            type="button"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                            @click="handleCreatePaymentMethod"
-                        >
-                            <PlusIcon
-                                class="shrink-0 w-4 h-4 m-2 stroke-2"
-                            ></PlusIcon>
-                        </button>
+                            <div>
+                                <button
+                                    v-if="
+                                        fetchedPaymentMethods?.defaultPaymentMethodId !==
+                                        paymentMethod.id
+                                    "
+                                    class="myPrimaryTag transition bg-white mt-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    type="button"
+                                    @click="
+                                        handleSetDefaultPaymentMethod(
+                                            paymentMethod
+                                        )
+                                    "
+                                >
+                                    <span> Set default </span>
+                                </button>
+                                <button
+                                    v-if="
+                                        fetchedPaymentMethods?.defaultPaymentMethodId ===
+                                        paymentMethod.id
+                                    "
+                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
+                                    type="button"
+                                    @click="
+                                        handleSetDefaultPaymentMethod(
+                                            paymentMethod
+                                        )
+                                    "
+                                >
+                                    <div
+                                        class="flex items-center justify-center gap-2"
+                                    >
+                                        <span> Default</span>
+                                        <CheckIcon
+                                            class="w-3 h-3 stroke-2"
+                                        ></CheckIcon>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <InputError
-                v-if="
-                    deletePaymentMethodForm.errors &&
-                    deletePaymentMethodForm.errors.payment_method_id
-                "
-                :message="deletePaymentMethodForm.errors.payment_method_id"
-            />
-            <InputError
-                v-if="
-                    updatePaymentMethodForm.errors &&
-                    updatePaymentMethodForm.errors.payment_method_id
-                "
-                :message="updatePaymentMethodForm.errors.payment_method_id"
-            />
+            <div
+                class="flex items-center justify-between pt-2 mt-8"
+                :class="{
+                    'border-t border-gray-200':
+                        fetchedPaymentMethods &&
+                        fetchedPaymentMethods.paymentMethods &&
+                        Array.isArray(fetchedPaymentMethods.paymentMethods) &&
+                        fetchedPaymentMethods.paymentMethods.length !== 0,
+                }"
+            >
+                <p
+                    @click="handleCreatePaymentMethod"
+                    class="myPrimaryParagraph text-xs cursor-pointer font-bold py-4"
+                >
+                    Add Payment Method
+                </p>
+                <button
+                    type="button"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    @click="handleCreatePaymentMethod"
+                >
+                    <PlusIcon class="shrink-0 w-4 h-4 m-2 stroke-2"></PlusIcon>
+                </button>
+            </div>
         </div>
-    </div>
+
+        <InputError
+            v-if="
+                deletePaymentMethodForm.errors &&
+                deletePaymentMethodForm.errors.payment_method_id
+            "
+            :message="deletePaymentMethodForm.errors.payment_method_id"
+        />
+        <InputError
+            v-if="
+                updatePaymentMethodForm.errors &&
+                updatePaymentMethodForm.errors.payment_method_id
+            "
+            :message="updatePaymentMethodForm.errors.payment_method_id"
+        />
+    </template>
+
     <ModalPaymentMethodForm
         v-if="showModalPaymentMethodForm"
         :show="showModalPaymentMethodForm"

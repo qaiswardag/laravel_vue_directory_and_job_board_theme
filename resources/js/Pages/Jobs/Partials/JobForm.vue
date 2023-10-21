@@ -266,8 +266,8 @@ const handleAddAuthor = function () {
     // handle show modal for unique content
     showSearchUserModal.value = true;
     // set modal standards
-    titleModalSearchItems.value = "Add author";
-    descriptionModalSearchItems.value = "Add Job author";
+    titleModalSearchItems.value = "Assign contributor";
+    descriptionModalSearchItems.value = "Assign contributor to this job.";
     firstButtonModalSearchItems.value = "Close";
     secondButtonModalSearchItems.value = "Save";
     // handle click

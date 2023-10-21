@@ -48,13 +48,26 @@ const {
 } = vueFetch();
 
 const getPayments = async function () {
-    store.commit("user/setIsLoading", true);
+    handleGetPayments(route("stripe.api.internal.payment.index"));
+};
 
-    try {
-        await handleGetPayments(route("stripe.api.internal.payment.index"));
-    } catch (err) {}
+const scrolTableContainer = ref("scrolTableContainer");
 
-    store.commit("user/setIsLoading", false);
+const handleLeft = function () {
+    if (scrolTableContainer.value) {
+        scrolTableContainer.value.scrollBy({
+            left: -800,
+            behavior: "smooth",
+        });
+    }
+};
+const handleRight = function () {
+    if (scrolTableContainer.value) {
+        scrolTableContainer.value.scrollBy({
+            left: +800,
+            behavior: "smooth",
+        });
+    }
 };
 
 onMounted(() => {
@@ -70,141 +83,77 @@ const breadcrumbsLinks = [
         },
     },
     {
-        label: "Payments",
+        label: "Payments and invoices",
     },
 ];
-
-const modalShowDeletePost = ref(false);
-
-// modal content
-const typeModal = ref("");
-const gridColumnModal = ref(Number(1));
-const titleModal = ref("");
-const descriptionModal = ref("");
-const firstButtonModal = ref("");
-const secondButtonModal = ref(null);
-const thirdButtonModal = ref(null);
-// set dynamic modal handle functions
-const firstModalButtonFunction = ref(null);
-const secondModalButtonFunction = ref(null);
-const thirdModalButtonFunction = ref(null);
-
-// handle action
-const handleDelete = function (postId, post) {
-    modalShowDeletePost.value = true;
-
-    // set modal standards
-    typeModal.value = "delete";
-    gridColumnModal.value = 3;
-    titleModal.value = `Delete ${post.title}?`;
-    descriptionModal.value = `Are you sure you want to delete store with title ${post.title}?`;
-    firstButtonModal.value = "Close";
-    secondButtonModal.value = null;
-    thirdButtonModal.value = "Delete Store";
-
-    // handle click
-    firstModalButtonFunction.value = function () {
-        // handle show modal for unique content
-        modalShowDeletePost.value = false;
-    };
-
-    thirdModalButtonFunction.value = function () {
-        deletePost(postId);
-    };
-    // end modal
-};
-// form
-const deletePostForm = useForm({});
-
-// form action
-// const deletePost = (postId) => {
-//     deletePostForm.delete(
-//         route("team.stores.store.destroy", [postId, props.currentUserTeam.id]),
-//         {
-//             preserveScroll: true,
-//             onSuccess: () => (modalShowDeletePost.value = false),
-//             onError: (err) => {},
-//             onFinish: (log) => {
-//                 modalShowDeletePost.value = false;
-//             },
-//         }
-//     );
-// };
-
-// handle action
-// const handleEdit = function (postId) {
-//     router.get(
-//         route("team.stores.store.edit", [props.currentUserTeam.id, postId])
-//     );
-// };
 </script>
 
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Stores" />
-            <DynamicModal
-                :show="modalShowDeletePost"
-                :type="typeModal"
-                :disabled="deletePostForm.processing"
-                disabledWhichButton="thirdButton"
-                :gridColumnAmount="gridColumnModal"
-                :title="titleModal"
-                :description="descriptionModal"
-                :firstButtonText="firstButtonModal"
-                :secondButtonText="secondButtonModal"
-                :thirdButtonText="thirdButtonModal"
-                @firstModalButtonFunction="firstModalButtonFunction"
-                @secondModalButtonFunction="secondModalButtonFunction"
-                @thirdModalButtonFunction="thirdModalButtonFunction"
-            >
-                <header></header>
-                <main></main>
-            </DynamicModal>
+            <Head title="Payments and invoices" />
 
             <template #header>
-                <h2 class="myPrimaryMainPageHeader">Payments</h2>
+                <h2 class="myPrimaryMainPageHeader">Payments and invoices</h2>
             </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
             <div>
-                <h1 class="myPrimaryHeaderMessage">Payments</h1>
-                <div
-                    v-if="!isLoadingPayments && isErrorPayments"
-                    class="myPrimaryParagraphError"
-                >
+                <h1 class="myPrimaryHeaderMessage">Payments and invoices</h1>
+            </div>
+
+            <!-- error # start -->
+            <template
+                v-if="
+                    !isLoadingPayments && isErrorPayments && !isSuccessPayments
+                "
+            >
+                <p class="myPrimaryParagraphError">
                     {{ errorPayments }}
-                </div>
-                <template
+                </p>
+            </template>
+            <!-- error # end -->
+
+            <!-- Loading # start -->
+            <template v-if="isLoadingPayments">
+                <SmallUniversalSpinner
+                    width="w-8"
+                    height="h-8"
+                    border="border-4"
+                ></SmallUniversalSpinner>
+            </template>
+            <!-- Loading # end -->
+
+            <template
+                v-if="
+                    fetchedPayments &&
+                    fetchedPayments.payments &&
+                    Array.isArray(fetchedPayments.payments) &&
+                    fetchedPayments.payments.length === 0
+                "
+            >
+                <p class="myPrimaryParagraph">
+                    Looks like there are no payments and invoices!
+                </p>
+            </template>
+
+            <!-- <p class="my-12">
+                fetchedPayments: {{ JSON.stringify(fetchedPayments) }}
+            </p> -->
+
+            <template v-if="!isLoadingPayments && !isErrorPayments">
+                <div
                     v-if="
                         fetchedPayments &&
                         fetchedPayments.payments &&
                         fetchedPayments.payments.invoices &&
                         Array.isArray(fetchedPayments.payments.invoices) &&
-                        fetchedPayments.payments.invoices.length === 0
+                        fetchedPayments.payments.invoices.length >= 1
                     "
                 >
-                    <p class="myPrimaryParagraph">
-                        Looks like there are no payments!
-                    </p>
-                </template>
-
-                <p class="my-12">
-                    fetchedPayments: {{ JSON.stringify(fetchedPayments) }}
-                </p>
-                <div v-if="!isLoadingPayments && !isErrorPayments">
-                    <div
-                        v-if="
-                            fetchedPayments &&
-                            fetchedPayments.payments &&
-                            fetchedPayments.payments.invoices &&
-                            Array.isArray(fetchedPayments.payments.invoices) &&
-                            fetchedPayments.payments.invoices.length >= 1
-                        "
-                        class="myTableContainerPlusScrollButton"
-                    >
+                    <div class="myTableContainerPlusScrollButton">
                         <div class="myScrollButtonContainer">
                             <button
                                 @click="handleLeft"
@@ -437,7 +386,7 @@ const deletePostForm = useForm({});
                         </div>
                     </div>
                 </div>
-            </div>
+            </template>
         </LoggedInLayout>
     </MainLayout>
 </template>

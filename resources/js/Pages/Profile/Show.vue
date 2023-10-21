@@ -58,7 +58,7 @@ const updatePaymentMethod = function () {
     // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 3;
-    titleModal.value = `Update payment method`;
+    titleModal.value = `Update payment methods`;
     descriptionModal.value = null;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
