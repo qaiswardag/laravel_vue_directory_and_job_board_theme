@@ -473,28 +473,29 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                     {{ getCurrentImage.error }}
                                                 </div>
 
-                                                <!--  -->
-                                                <div
+                                                <!-- Loading # start -->
+                                                <template
                                                     v-if="
                                                         getCurrentImage &&
-                                                        getCurrentImage.isLoading ===
-                                                            true &&
-                                                        getCurrentImage.isError ===
-                                                            false
+                                                        getCurrentImage.isLoading
                                                     "
-                                                    class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer"
                                                 >
                                                     <div
-                                                        class="flex items-center justify-center pt-12"
+                                                        class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer"
                                                     >
-                                                        <SmallUniversalSpinner
-                                                            class="h-40"
-                                                            width="w-6"
-                                                            height="h-6"
-                                                            border="border-4"
-                                                        ></SmallUniversalSpinner>
+                                                        <div
+                                                            class="flex items-center justify-center pt-12"
+                                                        >
+                                                            <SmallUniversalSpinner
+                                                                class="h-40"
+                                                                width="w-6"
+                                                                height="h-6"
+                                                                border="border-4"
+                                                            ></SmallUniversalSpinner>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </template>
+                                                <!-- Loading # end -->
 
                                                 <div
                                                     v-if="
