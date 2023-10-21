@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\Internal\LoggedIn;
 
 use App\Http\Controllers\Controller;
+use App\Models\Job\Job;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\Post;
+use App\Models\Store\Store;
 use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\User;
@@ -45,6 +47,8 @@ class DashboardStatsController extends Controller
 
         $latestMedia = null;
         $latestPosts = null;
+        $latestJobs = null;
+        $latestStores = null;
         $latestTeamMembers = null;
 
         if ($team !== null) {
@@ -53,12 +57,24 @@ class DashboardStatsController extends Controller
 
             $latestMedia = MediaLibrary::where("team_id", $team->id)
                 ->latest()
-                ->take(16)
+                ->take(12)
                 ->get();
             $latestPosts = Post::where("team_id", $team->id)
                 ->latest()
                 ->with("coverImages")
-                ->take(16)
+                ->take(10)
+                ->get();
+
+            $latestJobs = Job::where("team_id", $team->id)
+                ->latest()
+                ->with("coverImages")
+                ->take(10)
+                ->get();
+
+            $latestStores = Store::where("team_id", $team->id)
+                ->latest()
+                ->with("coverImages")
+                ->take(10)
                 ->get();
 
             $latestUserIdsWithRoles = TeamUser::where("team_id", $team->id)
@@ -81,6 +97,8 @@ class DashboardStatsController extends Controller
         return [
             "latestMedia" => $latestMedia,
             "latestPosts" => $latestPosts,
+            "latestJobs" => $latestJobs,
+            "latestStores" => $latestStores,
             "latestTeamMembers" => $latestTeamMembers,
         ];
     }
