@@ -365,6 +365,10 @@ onMounted(async () => {
                                             imageWidth="w-full object-cover"
                                             :roundedFull="false"
                                             :squareButtons="true"
+                                            @firstButtonClick="
+                                                handleDropComponent(component)
+                                            "
+                                            :imageClickable="true"
                                         ></ThumbnailSmallImageSlider>
                                     </template>
                                 </div>

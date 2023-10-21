@@ -32,7 +32,16 @@ const props = defineProps({
         required: false,
         type: Boolean,
     },
+    imageClickable: {
+        required: false,
+        type: Boolean,
+    },
 });
+
+const emit = defineEmits(["firstButtonClick"]);
+const firstButtonClick = function () {
+    emit("firstButtonClick");
+};
 
 const currentImageIndex = ref(0);
 
@@ -93,6 +102,7 @@ const sortedImages = computed(() => {
                         ]"
                     >
                         <img
+                            @click="firstButtonClick"
                             :src="`/storage/uploads/${image[imageSize]}`"
                             alt="image"
                             class="object-cover"
@@ -100,6 +110,7 @@ const sortedImages = computed(() => {
                                 `${imageHeight}`,
                                 `${imageWidth}`,
                                 { 'rounded-full': roundedFull === true },
+                                { 'cursor-pointer': imageClickable === true },
                             ]"
                         />
                     </div>

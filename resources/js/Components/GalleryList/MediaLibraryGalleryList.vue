@@ -218,7 +218,7 @@ onMounted(() => {
             "
         >
             <div
-                class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 myPrimaryGap"
+                class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 myPrimaryGap"
             >
                 <transition-group name="fade">
                     <template

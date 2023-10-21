@@ -1235,7 +1235,7 @@ const pageBuilder = new PageBuilder(store);
                                     >
                                         <img
                                             @click="handleUploadCoverImage"
-                                            :src="`/storage/uploads/${image?.medium_path}`"
+                                            :src="`/storage/uploads/${image?.thumbnail_path}`"
                                             alt="image"
                                             class="myPrimarythumbnailInsertPreview"
                                         />

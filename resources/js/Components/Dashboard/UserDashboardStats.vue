@@ -11,6 +11,8 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
 import SmallUniversalSpinner from "../Loaders/SmallUniversalSpinner.vue";
 
+import { router } from "@inertiajs/vue3";
+
 // store
 const store = useStore();
 
@@ -93,6 +95,12 @@ const stats = [
     { id: 3, name: "Uptime guarantee", value: "99.9%" },
     { id: 4, name: "Paid out to creators", value: "$70M" },
 ];
+
+const goToSinglePost = function (current_teamId, postId, postSlug) {
+    router.get(
+        route("team.posts.post.show", [current_teamId, postId, postSlug])
+    );
+};
 
 onMounted(() => {
     store.dispatch("userDashboard/loadDashboardStats", {
@@ -357,6 +365,15 @@ onMounted(() => {
                                         imageWidth="w-full object-cover"
                                         :roundedFull="false"
                                         :squareButtons="true"
+                                        @firstButtonClick="
+                                            goToSinglePost(
+                                                $page.props.user.current_team
+                                                    .id,
+                                                post.id,
+                                                post.slug
+                                            )
+                                        "
+                                        :imageClickable="true"
                                     ></ThumbnailSmallImageSlider>
                                 </template>
 
@@ -388,22 +405,6 @@ onMounted(() => {
                                         "
                                         class="myPrimaryParagraph text-xs"
                                     ></p>
-
-                                    <Link
-                                        class="mt-4 inline-block"
-                                        :href="
-                                            route('team.posts.post.show', [
-                                                $page.props.user.current_team
-                                                    .id,
-                                                post.id,
-                                                post.slug,
-                                            ])
-                                        "
-                                    >
-                                        <span class="myPrimaryButton text-xs">
-                                            Read more
-                                        </span>
-                                    </Link>
                                 </div>
                             </li>
                         </ul>

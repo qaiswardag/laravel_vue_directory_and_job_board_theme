@@ -495,7 +495,7 @@ onBeforeMount(() => {
                                     >
                                         <img
                                             @click="handleUploadLogo"
-                                            :src="`/storage/uploads/${image?.medium_path}`"
+                                            :src="`/storage/uploads/${image?.thumbnail_path}`"
                                             alt="image"
                                             class="myPrimarythumbnailInsertPreview"
                                         />
@@ -655,7 +655,7 @@ onBeforeMount(() => {
                                     >
                                         <img
                                             @click="handleUploadCoverImage"
-                                            :src="`/storage/uploads/${image?.medium_path}`"
+                                            :src="`/storage/uploads/${image?.thumbnail_path}`"
                                             alt="image"
                                             class="myPrimarythumbnailInsertPreview"
                                         />
