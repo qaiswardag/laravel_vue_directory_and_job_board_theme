@@ -267,49 +267,54 @@ onMounted(() => {
             >
                 <main class="overflow-y-auto relativ w-full">
                     <div>
-                        <form @submit.prevent="handleSearch(1)">
-                            <div class="mysearchBarWithOptions">
-                                <div class="relative w-full">
-                                    <div
-                                        class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-                                    >
-                                        <svg
-                                            aria-hidden="true"
-                                            class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
+                        <template
+                            v-if="getCurrentItems && !getCurrentItems.isError"
+                        >
+                            <form @submit.prevent="handleSearch(1)">
+                                <div class="mysearchBarWithOptions">
+                                    <div class="relative w-full">
+                                        <div
+                                            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
                                         >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="1.5"
-                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                            ></path>
-                                        </svg>
+                                            <svg
+                                                aria-hidden="true"
+                                                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="1.5"
+                                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                                ></path>
+                                            </svg>
+                                        </div>
+                                        <input
+                                            type="search"
+                                            id="search_query"
+                                            v-model="search_query"
+                                            class="myPrimarySearchInput"
+                                            autocomplete="off"
+                                            placeholder="Search..."
+                                        />
                                     </div>
-                                    <input
-                                        type="search"
-                                        id="search_query"
-                                        v-model="search_query"
-                                        class="myPrimarySearchInput"
-                                        autocomplete="off"
-                                        placeholder="Search..."
-                                    />
+
+                                    <button
+                                        @click="handleSearch(1)"
+                                        type="button"
+                                        class="myPrimaryButton"
+                                    >
+                                        Search
+                                    </button>
                                 </div>
+                            </form>
+                        </template>
 
-                                <button
-                                    @click="handleSearch(1)"
-                                    type="button"
-                                    class="myPrimaryButton"
-                                >
-                                    Search
-                                </button>
-                            </div>
-                        </form>
-
-                        <div
+                        <!-- Results # start -->
+                        <template
                             v-if="
                                 getCurrentItems &&
                                 !getCurrentItems.isError &&
@@ -318,80 +323,88 @@ onMounted(() => {
                                 getCurrentItems.fetchedData.items.data &&
                                 getCurrentItems.fetchedData.total_results !== 0
                             "
-                            class="flex justify-start items-center"
                         >
-                            <p class="myPrimaryTag">
-                                Total
-                                {{ getCurrentItems.fetchedData.count }}
-                                {{
-                                    getCurrentItems.fetchedData.count.length ===
-                                    1
-                                        ? "item"
-                                        : "items"
-                                }}
-                            </p>
-                        </div>
+                            <div class="flex justify-start items-center">
+                                <p class="myPrimaryTag">
+                                    Total
+                                    {{ getCurrentItems.fetchedData.count }}
+                                    {{
+                                        getCurrentItems.fetchedData.count
+                                            .length === 1
+                                            ? "item"
+                                            : "items"
+                                    }}
+                                </p>
+                            </div>
+                        </template>
+                        <!-- Results # end -->
 
-                        <div
+                        <!-- Pagination # start -->
+                        <template
+                            v-if="
+                                getCurrentItems &&
+                                getCurrentItems.fetchedData &&
+                                getCurrentItems.fetchedData.items &&
+                                !getCurrentItems.isError &&
+                                getCurrentItems.fetchedData.total_results !== 0
+                            "
+                        >
+                            <div
+                                class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4 gap-2 flex-wrap-reverse"
+                            >
+                                <TailwindPagination
+                                    :limit="1"
+                                    :keepLength="true"
+                                    :class="[
+                                        'space-x-1',
+                                        'shadow-none',
+                                        'tailwind-pagination-package',
+                                    ]"
+                                    :active-classes="[
+                                        'bg-myPrimaryLinkColor',
+                                        'text-white',
+                                        'rounded-full',
+                                    ]"
+                                    :item-classes="[
+                                        'p-0',
+                                        'm-0',
+                                        'border-none',
+                                        'bg-myPrimaryLightGrayColor',
+                                        'shadow-sm',
+                                        'text-myPrimaryDarkGrayColor',
+                                        'rounded-full',
+                                    ]"
+                                    :data="getCurrentItems.fetchedData.items"
+                                    @pagination-change-page="getResultsForPage"
+                                >
+                                    <template #prev-nav>
+                                        <span> Prev </span>
+                                    </template>
+                                    <template #next-nav>
+                                        <span>Next</span>
+                                    </template>
+                                </TailwindPagination>
+                            </div>
+                        </template>
+                        <!-- Pagination # end -->
+
+                        <!-- Errors # start -->
+                        <template
                             v-if="
                                 getCurrentItems &&
                                 !getCurrentItems.isLoading &&
                                 getCurrentItems.isError
                             "
-                            class="myPrimaryParagraphError"
                         >
-                            {{ getCurrentItems.error }}
-                        </div>
+                            <p class="myPrimaryParagraphError">
+                                {{ getCurrentItems.error }}
+                            </p>
+                        </template>
+                        <!-- Errors # end -->
 
-                        <div
-                            v-if="
-                                getCurrentItems &&
-                                getCurrentItems.fetchedData &&
-                                getCurrentItems.fetchedData.items &&
-                                getCurrentItems.fetchedData.total_results !== 0
-                            "
-                            class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4 gap-2 flex-wrap-reverse"
-                        >
-                            <TailwindPagination
-                                :limit="1"
-                                :keepLength="true"
-                                :class="[
-                                    'space-x-1',
-                                    'shadow-none',
-                                    'tailwind-pagination-package',
-                                ]"
-                                :active-classes="[
-                                    'bg-myPrimaryLinkColor',
-                                    'text-white',
-                                    'rounded-full',
-                                ]"
-                                :item-classes="[
-                                    'p-0',
-                                    'm-0',
-                                    'border-none',
-                                    'bg-myPrimaryLightGrayColor',
-                                    'shadow-sm',
-                                    'text-myPrimaryDarkGrayColor',
-                                    'rounded-full',
-                                ]"
-                                :data="getCurrentItems.fetchedData.items"
-                                @pagination-change-page="getResultsForPage"
-                            >
-                                <template #prev-nav>
-                                    <span> Prev </span>
-                                </template>
-                                <template #next-nav>
-                                    <span>Next</span>
-                                </template>
-                            </TailwindPagination>
-                        </div>
-
-                        <div
-                            v-if="
-                                getCurrentItems &&
-                                getCurrentItems.isLoading &&
-                                !getCurrentItems.isError
-                            "
+                        <!-- Loading # start -->
+                        <template
+                            v-if="getCurrentItems && getCurrentItems.isLoading"
                         >
                             <SmallUniversalSpinner
                                 class="h-40"
@@ -399,20 +412,24 @@ onMounted(() => {
                                 height="h-6"
                                 border="border-4"
                             ></SmallUniversalSpinner>
-                        </div>
-                        <!-- loading - end -->
+                        </template>
+                        <!-- Loading # end -->
+
+                        <!-- Actual data # start -->
                         <template
                             v-if="
                                 getCurrentItems &&
                                 !getCurrentItems.isLoading &&
-                                !getCurrentItems.isError &&
-                                getCurrentItems.isSuccess &&
-                                getCurrentItems.fetchedData &&
-                                getCurrentItems.fetchedData.items &&
-                                getCurrentItems.fetchedData.items.data
+                                !getCurrentItems.isError
                             "
                         >
                             <div
+                                v-if="
+                                    getCurrentItems.isSuccess &&
+                                    getCurrentItems.fetchedData &&
+                                    getCurrentItems.fetchedData.items &&
+                                    getCurrentItems.fetchedData.items.data
+                                "
                                 class="h-full md:max-h-[26.3rem] max-h-[13rem] overflow-y-scroll p-2"
                             >
                                 <div
@@ -431,7 +448,7 @@ onMounted(() => {
                                         getCurrentItems.fetchedData.items.data
                                             .length !== 0
                                     "
-                                    class="divide-y divide-gray-200 flex flex-col w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor"
+                                    class="rounded divide-y divide-gray-200 flex flex-col w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor"
                                 >
                                     <div
                                         v-for="item in getCurrentItems
@@ -633,9 +650,11 @@ onMounted(() => {
                                 </div>
                             </div>
                         </template>
+                        <!-- Actual data # end -->
                     </div>
                 </main>
                 <aside
+                    v-if="getCurrentItems && !getCurrentItems.isError"
                     aria-label="sidebar"
                     class="h-full md:max-h-[38.5rem] max-h-[12rem] md:w-3/5 w-full pl-2 border border-gray-200 overflow-y-scroll"
                 >

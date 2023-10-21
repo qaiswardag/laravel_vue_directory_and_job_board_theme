@@ -9,8 +9,7 @@ import { parseISO, format } from "date-fns";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
-import SmallUniversalSpinner from "../Loaders/SmallUniversalSpinner.vue";
-
+import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 import { router } from "@inertiajs/vue3";
 
 // store
@@ -126,573 +125,608 @@ onMounted(() => {
             displayed first.
         </template>
         <template #content>
-            <!-- Error - start -->
-            <div
+            <!-- No team # start -->
+            <div v-if="$page.props && !$page.props.currentUserTeam">
+                <p class="myPrimaryParagraph">
+                    Looks like no Team is Selected!
+                </p>
+            </div>
+            <!-- No team # end -->
+
+            <!-- Error # start -->
+            <template
                 v-if="
                     getDashboardStats &&
                     !getDashboardStats.isSuccess &&
                     !getDashboardStats.isLoading &&
                     getDashboardStats.isError
                 "
-                class="myPrimaryParagraphError"
             >
-                {{ getDashboardStats.error }}
-            </div>
-            <!-- Error - end -->
-            <!-- Loading - end -->
-            <div
-                v-if="
-                    getDashboardStats &&
-                    getDashboardStats.isLoading &&
-                    !getDashboardStats.isError
-                "
-                class="bordermx-auto block w-full rounded-sm object-cover object-center cursor-pointer"
-            >
-                <div class="flex items-center justify-center pt-12">
-                    <SmallUniversalSpinner
-                        width="w-8"
-                        height="h-8"
-                        border="border-4"
-                    ></SmallUniversalSpinner>
-                </div>
-            </div>
-            <!-- Loading - end -->
-            <div v-if="$page.props && $page.props.currentUserTeam === null">
-                <p class="myPrimaryParagraph">
-                    Looks like no Team is Selected!
+                <p class="myPrimaryParagraphError">
+                    {{ getDashboardStats.error }}
                 </p>
-            </div>
-            <div
+            </template>
+            <!-- Error # end -->
+
+            <!-- Loading # start -->
+            <template v-if="getDashboardStats && getDashboardStats.isLoading">
+                <SmallUniversalSpinner
+                    width="w-8"
+                    height="h-8"
+                    border="border-4"
+                ></SmallUniversalSpinner>
+            </template>
+            <!-- Loading # end -->
+
+            <!-- Actualt data # Start -->
+            <template
                 v-if="
                     $page.props &&
                     $page.props.currentUserTeam &&
-                    getDashboardStats &&
-                    getDashboardStats.fetchedData &&
-                    getDashboardStats.isSuccess &&
-                    !getDashboardStats.isLoading &&
-                    !getDashboardStats.isError
+                    getDashboardStats
                 "
-                class="grid grid-cols-1 lg:gap-8 gap-12 lg:grid-cols-12"
             >
-                <!-- column start -->
                 <div
-                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    v-if="
+                        getDashboardStats.fetchedData &&
+                        !getDashboardStats.isLoading &&
+                        !getDashboardStats.isError &&
+                        getDashboardStats.isSuccess
+                    "
+                    class="grid grid-cols-1 lg:gap-8 gap-12 lg:grid-cols-12"
                 >
-                    <div class="border-b border-gray-200 mb-8 pb-2">
-                        <Link
-                            :href="
-                                route(
-                                    'team.members',
-                                    $page.props.user.current_team.id
-                                )
-                            "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                        >
-                            Latest Team Members
-                        </Link>
-                    </div>
+                    <!-- column start -->
+                    <div
+                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    >
+                        <div class="border-b border-gray-200 mb-8 pb-2">
+                            <Link
+                                :href="
+                                    route(
+                                        'team.members',
+                                        $page.props.user.current_team.id
+                                    )
+                                "
+                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            >
+                                Latest Team Members
+                            </Link>
+                        </div>
 
-                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div
-                            v-if="
-                                Array.isArray(
+                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
+                        >
+                            <div
+                                v-if="
+                                    Array.isArray(
+                                        getDashboardStats.fetchedData
+                                            .latestTeamMembers
+                                    ) &&
                                     getDashboardStats.fetchedData
-                                        .latestTeamMembers
-                                ) &&
-                                getDashboardStats.fetchedData.latestTeamMembers
-                                    .length === 0
-                            "
-                        >
-                            <p class="myPrimaryParagraph">
-                                Looks like there are no Team Members.
-                            </p>
+                                        .latestTeamMembers.length === 0
+                                "
+                            >
+                                <p class="myPrimaryParagraph">
+                                    Looks like there are no Team Members.
+                                </p>
+                            </div>
+
+                            <ul role="list" class="flex flex-wrap myPrimaryGap">
+                                <li
+                                    v-for="member in getDashboardStats
+                                        .fetchedData.latestTeamMembers"
+                                    :key="member.id"
+                                >
+                                    <Link
+                                        :href="
+                                            route(
+                                                'team.members',
+                                                $page.props.user.current_team.id
+                                            )
+                                        "
+                                    >
+                                        <UserTag
+                                            customClass="my-0"
+                                            :user="member"
+                                            :showTeamRole="true"
+                                            :clickable="true"
+                                            :currentUserTeamRole="member"
+                                        ></UserTag>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- column end -->
+
+                    <!-- column images # start -->
+                    <div
+                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    >
+                        <div class="border-b border-gray-200 mb-8 pb-2">
+                            <Link
+                                :href="
+                                    route(
+                                        'media.index',
+                                        $page.props.user.current_team.id
+                                    )
+                                "
+                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            >
+                                Latest Team Images
+                            </Link>
                         </div>
 
-                        <ul role="list" class="flex flex-wrap myPrimaryGap">
-                            <li
-                                v-for="member in getDashboardStats.fetchedData
-                                    .latestTeamMembers"
-                                :key="member.id"
-                            >
-                                <Link
-                                    :href="
-                                        route(
-                                            'team.members',
-                                            $page.props.user.current_team.id
-                                        )
-                                    "
-                                >
-                                    <UserTag
-                                        customClass="my-0"
-                                        :user="member"
-                                        :showTeamRole="true"
-                                        :clickable="true"
-                                        :currentUserTeamRole="member"
-                                    ></UserTag>
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- column end -->
-
-                <!-- column images # start -->
-                <div
-                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                >
-                    <div class="border-b border-gray-200 mb-8 pb-2">
-                        <Link
-                            :href="
-                                route(
-                                    'media.index',
-                                    $page.props.user.current_team.id
-                                )
-                            "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                        >
-                            Latest Team Images
-                        </Link>
-                    </div>
-
-                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
                         <div
-                            v-if="
-                                Array.isArray(
+                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
+                        >
+                            <div
+                                v-if="
+                                    Array.isArray(
+                                        getDashboardStats.fetchedData
+                                            .latestMedia
+                                    ) &&
                                     getDashboardStats.fetchedData.latestMedia
-                                ) &&
-                                getDashboardStats.fetchedData.latestMedia
-                                    .length === 0
-                            "
-                        >
-                            <p class="myPrimaryParagraph">
-                                Looks like there are no Images.
-                            </p>
-                        </div>
-                        <ul
-                            role="list"
-                            class="grid myPrimaryGap md:grid-cols-3 grid-cols-2"
-                        >
-                            <li
-                                v-for="file in getDashboardStats.fetchedData
-                                    .latestMedia"
-                                :key="file.id"
-                                @click="handleMediaLibrary(file.id)"
-                                class="rounded px-0 pb-2 cursor-pointer bg-gray-50"
+                                        .length === 0
+                                "
                             >
-                                <div
-                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-gray-100"
+                                <p class="myPrimaryParagraph">
+                                    Looks like there are no Images.
+                                </p>
+                            </div>
+                            <ul
+                                role="list"
+                                class="grid myPrimaryGap md:grid-cols-3 grid-cols-2"
+                            >
+                                <li
+                                    v-for="file in getDashboardStats.fetchedData
+                                        .latestMedia"
+                                    :key="file.id"
+                                    @click="handleMediaLibrary(file.id)"
+                                    class="rounded px-0 pb-2 cursor-pointer bg-gray-50"
                                 >
-                                    <img
-                                        :src="`/storage/uploads/${file.medium_path}`"
-                                        alt=""
-                                        class="w-full pointer-events-none object-cover group-hover:opacity-75"
-                                    />
-                                </div>
+                                    <div
+                                        class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-gray-100"
+                                    >
+                                        <img
+                                            :src="`/storage/uploads/${file.medium_path}`"
+                                            alt=""
+                                            class="w-full pointer-events-none object-cover group-hover:opacity-75"
+                                        />
+                                    </div>
 
+                                    <dl
+                                        class="px-2 myPrimaryParagraph text-xs border-b border-myPrimaryLightGrayColor divide-y"
+                                    >
+                                        <div
+                                            class="py-3 flex justify-between items-center"
+                                        >
+                                            <dt class="">Dimensions</dt>
+                                            <dd class="">
+                                                {{ file.width }} x
+                                                {{ file.height }}
+                                            </dd>
+                                        </div>
+                                        <div
+                                            class="py-3 flex justify-between items-center"
+                                        >
+                                            <dd class="">
+                                                {{
+                                                    file.name ? file.name : "–"
+                                                }}
+                                            </dd>
+                                        </div>
+                                        <div
+                                            class="py-3 flex justify-between items-center"
+                                        >
+                                            <dt class="">Size</dt>
+                                            <dd class="">{{ file.size }} KB</dd>
+                                        </div>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- column images # end -->
+                    <!-- column stats # start -->
+                    <div
+                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    >
+                        <div class="border-b border-gray-200 mb-8 pb-2">
+                            <div
+                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            >
+                                Latest Team Stats
+                            </div>
+                        </div>
+
+                        <div
+                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
+                        >
+                            <div class="mx-auto">
+                                <h3 class="myFourthHeader">
+                                    Trusted by thousands of
+                                    creators&nbsp;worldwide
+                                </h3>
+                                <p class="myPrimaryParagrph">
+                                    Lorem ipsum, dolor sit amet consectetur
+                                    adipisicing elit. Maiores impedit
+                                    perferendis suscipit eaque, iste dolor
+                                    cupiditate blanditiis ratione.
+                                </p>
                                 <dl
-                                    class="px-2 myPrimaryParagraph text-xs border-b border-myPrimaryLightGrayColor divide-y"
+                                    class="mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 xl:mt-16"
                                 >
                                     <div
-                                        class="py-3 flex justify-between items-center"
+                                        v-for="stat in stats"
+                                        :key="stat.id"
+                                        class="flex flex-col gap-y-3 border-l border-gray-900/10 pl-6"
                                     >
-                                        <dt class="">Dimensions</dt>
-                                        <dd class="">
-                                            {{ file.width }} x {{ file.height }}
+                                        <dt class="myPrimaryParagraph">
+                                            {{ stat.name }}
+                                        </dt>
+                                        <dd
+                                            class="order-first text-3xl font-semibold tracking-tight text-gray-900"
+                                        >
+                                            {{ stat.value }}
                                         </dd>
-                                    </div>
-                                    <div
-                                        class="py-3 flex justify-between items-center"
-                                    >
-                                        <dd class="">
-                                            {{ file.name ? file.name : "–" }}
-                                        </dd>
-                                    </div>
-                                    <div
-                                        class="py-3 flex justify-between items-center"
-                                    >
-                                        <dt class="">Size</dt>
-                                        <dd class="">{{ file.size }} KB</dd>
                                     </div>
                                 </dl>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- column images # end -->
-                <!-- column stats # start -->
-                <div
-                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                >
-                    <div class="border-b border-gray-200 mb-8 pb-2">
-                        <div
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                        >
-                            Latest Team Stats
+                            </div>
                         </div>
                     </div>
-
-                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
-                        <div class="mx-auto">
-                            <h3 class="myFourthHeader">
-                                Trusted by thousands of creators&nbsp;worldwide
-                            </h3>
-                            <p class="myPrimaryParagrph">
-                                Lorem ipsum, dolor sit amet consectetur
-                                adipisicing elit. Maiores impedit perferendis
-                                suscipit eaque, iste dolor cupiditate blanditiis
-                                ratione.
-                            </p>
-                            <dl
-                                class="mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 xl:mt-16"
+                    <!-- column stats # end -->
+                    <!-- column stats # start -->
+                    <div
+                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    >
+                        <div class="border-b border-gray-200 mb-8 pb-2">
+                            <div
+                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                             >
-                                <div
-                                    v-for="stat in stats"
-                                    :key="stat.id"
-                                    class="flex flex-col gap-y-3 border-l border-gray-900/10 pl-6"
-                                >
-                                    <dt class="myPrimaryParagraph">
-                                        {{ stat.name }}
-                                    </dt>
-                                    <dd
-                                        class="order-first text-3xl font-semibold tracking-tight text-gray-900"
-                                    >
-                                        {{ stat.value }}
-                                    </dd>
-                                </div>
-                            </dl>
+                                Latest Team Stats
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <!-- column stats # end -->
-                <!-- column stats # start -->
-                <div
-                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                >
-                    <div class="border-b border-gray-200 mb-8 pb-2">
+
                         <div
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
                         >
-                            Latest Team Stats
-                        </div>
-                    </div>
-
-                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
-                        <div class="mx-auto">
-                            <h3 class="myFourthHeader">
-                                Trusted by thousands of creators&nbsp;worldwide
-                            </h3>
-                            <p class="myPrimaryParagrph">
-                                Lorem ipsum, dolor sit amet consectetur
-                                adipisicing elit. Maiores impedit perferendis
-                                suscipit eaque, iste dolor cupiditate blanditiis
-                                ratione.
-                            </p>
-                            <dl
-                                class="mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 xl:mt-16"
-                            >
-                                <div
-                                    v-for="stat in stats"
-                                    :key="stat.id"
-                                    class="flex flex-col gap-y-3 border-l border-gray-900/10 pl-6"
+                            <div class="mx-auto">
+                                <h3 class="myFourthHeader">
+                                    Trusted by thousands of
+                                    creators&nbsp;worldwide
+                                </h3>
+                                <p class="myPrimaryParagrph">
+                                    Lorem ipsum, dolor sit amet consectetur
+                                    adipisicing elit. Maiores impedit
+                                    perferendis suscipit eaque, iste dolor
+                                    cupiditate blanditiis ratione.
+                                </p>
+                                <dl
+                                    class="mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 xl:mt-16"
                                 >
-                                    <dt class="myPrimaryParagraph">
-                                        {{ stat.name }}
-                                    </dt>
-                                    <dd
-                                        class="order-first text-3xl font-semibold tracking-tight text-gray-900"
+                                    <div
+                                        v-for="stat in stats"
+                                        :key="stat.id"
+                                        class="flex flex-col gap-y-3 border-l border-gray-900/10 pl-6"
                                     >
-                                        {{ stat.value }}
-                                    </dd>
-                                </div>
-                            </dl>
+                                        <dt class="myPrimaryParagraph">
+                                            {{ stat.name }}
+                                        </dt>
+                                        <dd
+                                            class="order-first text-3xl font-semibold tracking-tight text-gray-900"
+                                        >
+                                            {{ stat.value }}
+                                        </dd>
+                                    </div>
+                                </dl>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- column stats # end -->
+                    <!-- column stats # end -->
 
-                <!-- column post # start -->
-                <div
-                    class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                >
-                    <div class="border-b border-gray-200 mb-8 pb-2">
-                        <Link
-                            :href="
-                                route(
-                                    'team.posts.index',
-                                    $page.props.user.current_team.id
-                                )
-                            "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                    <!-- column post # start -->
+                    <div
+                        class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    >
+                        <div class="border-b border-gray-200 mb-8 pb-2">
+                            <Link
+                                :href="
+                                    route(
+                                        'team.posts.index',
+                                        $page.props.user.current_team.id
+                                    )
+                                "
+                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            >
+                                Latest Posts
+                            </Link>
+                        </div>
+
+                        <div
+                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
                         >
-                            Latest Posts
-                        </Link>
-                    </div>
-
-                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
-                        <template
-                            v-if="
-                                Array.isArray(
+                            <template
+                                v-if="
+                                    Array.isArray(
+                                        getDashboardStats.fetchedData
+                                            .latestPosts
+                                    ) &&
                                     getDashboardStats.fetchedData.latestPosts
-                                ) &&
-                                getDashboardStats.fetchedData.latestPosts
-                                    .length === 0
-                            "
-                        >
-                            <p class="myPrimaryParagraph">
-                                Looks like there are no Posts.
-                            </p>
-                        </template>
-                        <ul
-                            role="list"
-                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
-                        >
-                            <li
-                                v-for="post in getDashboardStats.fetchedData
-                                    .latestPosts"
-                                :key="post.id"
-                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                                        .length === 0
+                                "
                             >
-                                <!-- start photo -->
-
-                                <template
-                                    v-if="post && post.cover_images !== null"
+                                <p class="myPrimaryParagraph">
+                                    Looks like there are no Posts.
+                                </p>
+                            </template>
+                            <ul
+                                role="list"
+                                class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
+                            >
+                                <li
+                                    v-for="post in getDashboardStats.fetchedData
+                                        .latestPosts"
+                                    :key="post.id"
+                                    class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
                                 >
-                                    <ThumbnailSmallImageSlider
-                                        :images="post.cover_images"
-                                        imageSize="medium_path"
-                                        imageHeight="max-h-96"
-                                        imageWidth="w-full object-cover"
-                                        :roundedFull="false"
-                                        :squareButtons="true"
-                                        @firstButtonClick="
-                                            goToSinglePost(
-                                                $page.props.user.current_team
-                                                    .id,
-                                                post.id,
-                                                post.slug
-                                            )
-                                        "
-                                        :imageClickable="true"
-                                    ></ThumbnailSmallImageSlider>
-                                </template>
+                                    <!-- start photo -->
 
-                                <div class="px-2 pt-4 pb-2">
-                                    <Link
-                                        :href="
-                                            route('team.posts.post.show', [
-                                                $page.props.user.current_team
-                                                    .id,
-                                                post.id,
-                                                post.slug,
-                                            ])
+                                    <template
+                                        v-if="
+                                            post && post.cover_images !== null
                                         "
                                     >
-                                        <p
-                                            class="text-sm font-medium mt-2 mb-2"
-                                        >
-                                            {{ post.title.slice(0, 25)
-                                            }}{{
-                                                post.title.length > 25
-                                                    ? ".."
-                                                    : ""
-                                            }}
-                                        </p>
-                                    </Link>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- column post # end -->
-                <!-- column jobs # start -->
-                <div
-                    class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                >
-                    <div class="border-b border-gray-200 mb-8 pb-2">
-                        <Link
-                            :href="
-                                route(
-                                    'team.jobs.index',
-                                    $page.props.user.current_team.id
-                                )
-                            "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                        >
-                            Latest Jobs
-                        </Link>
-                    </div>
+                                        <ThumbnailSmallImageSlider
+                                            :images="post.cover_images"
+                                            imageSize="medium_path"
+                                            imageHeight="max-h-96"
+                                            imageWidth="w-full object-cover"
+                                            :roundedFull="false"
+                                            :squareButtons="true"
+                                            @firstButtonClick="
+                                                goToSinglePost(
+                                                    $page.props.user
+                                                        .current_team.id,
+                                                    post.id,
+                                                    post.slug
+                                                )
+                                            "
+                                            :imageClickable="true"
+                                        ></ThumbnailSmallImageSlider>
+                                    </template>
 
-                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
-                        <template
-                            v-if="
-                                Array.isArray(
+                                    <div class="px-2 pt-4 pb-2">
+                                        <Link
+                                            :href="
+                                                route('team.posts.post.show', [
+                                                    $page.props.user
+                                                        .current_team.id,
+                                                    post.id,
+                                                    post.slug,
+                                                ])
+                                            "
+                                        >
+                                            <p
+                                                class="text-sm font-medium mt-2 mb-2"
+                                            >
+                                                {{ post.title.slice(0, 25)
+                                                }}{{
+                                                    post.title.length > 25
+                                                        ? ".."
+                                                        : ""
+                                                }}
+                                            </p>
+                                        </Link>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- column post # end -->
+                    <!-- column jobs # start -->
+                    <div
+                        class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    >
+                        <div class="border-b border-gray-200 mb-8 pb-2">
+                            <Link
+                                :href="
+                                    route(
+                                        'team.jobs.index',
+                                        $page.props.user.current_team.id
+                                    )
+                                "
+                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            >
+                                Latest Jobs
+                            </Link>
+                        </div>
+
+                        <div
+                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
+                        >
+                            <template
+                                v-if="
+                                    Array.isArray(
+                                        getDashboardStats.fetchedData.latestJobs
+                                    ) &&
                                     getDashboardStats.fetchedData.latestJobs
-                                ) &&
-                                getDashboardStats.fetchedData.latestJobs
-                                    .length === 0
-                            "
-                        >
-                            <p class="myPrimaryParagraph">
-                                Looks like there are no Jobs.
-                            </p>
-                        </template>
-                        <ul
-                            role="list"
-                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
-                        >
-                            <li
-                                v-for="post in getDashboardStats.fetchedData
-                                    .latestJobs"
-                                :key="post.id"
-                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                                        .length === 0
+                                "
                             >
-                                <!-- start photo -->
-
-                                <template
-                                    v-if="post && post.cover_images !== null"
+                                <p class="myPrimaryParagraph">
+                                    Looks like there are no Jobs.
+                                </p>
+                            </template>
+                            <ul
+                                role="list"
+                                class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
+                            >
+                                <li
+                                    v-for="post in getDashboardStats.fetchedData
+                                        .latestJobs"
+                                    :key="post.id"
+                                    class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
                                 >
-                                    <ThumbnailSmallImageSlider
-                                        :images="post.cover_images"
-                                        imageSize="medium_path"
-                                        imageHeight="max-h-96"
-                                        imageWidth="w-full object-cover"
-                                        :roundedFull="false"
-                                        :squareButtons="true"
-                                        @firstButtonClick="
-                                            goToSingleJob(
-                                                $page.props.user.current_team
-                                                    .id,
-                                                post.id,
-                                                post.slug
-                                            )
-                                        "
-                                        :imageClickable="true"
-                                    ></ThumbnailSmallImageSlider>
-                                </template>
+                                    <!-- start photo -->
 
-                                <div class="px-2 pt-4 pb-2">
-                                    <Link
-                                        :href="
-                                            route('team.jobs.job.show', [
-                                                $page.props.user.current_team
-                                                    .id,
-                                                post.id,
-                                                post.slug,
-                                            ])
+                                    <template
+                                        v-if="
+                                            post && post.cover_images !== null
                                         "
                                     >
-                                        <p
-                                            class="text-sm font-medium mt-2 mb-2"
-                                        >
-                                            {{ post.title.slice(0, 25)
-                                            }}{{
-                                                post.title.length > 25
-                                                    ? ".."
-                                                    : ""
-                                            }}
-                                        </p>
-                                    </Link>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- column jobs # end -->
-                <!-- column stores # start -->
-                <div
-                    class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                >
-                    <div class="border-b border-gray-200 mb-8 pb-2">
-                        <Link
-                            :href="
-                                route(
-                                    'team.stores.index',
-                                    $page.props.user.current_team.id
-                                )
-                            "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                        >
-                            Latest Stores
-                        </Link>
-                    </div>
+                                        <ThumbnailSmallImageSlider
+                                            :images="post.cover_images"
+                                            imageSize="medium_path"
+                                            imageHeight="max-h-96"
+                                            imageWidth="w-full object-cover"
+                                            :roundedFull="false"
+                                            :squareButtons="true"
+                                            @firstButtonClick="
+                                                goToSingleJob(
+                                                    $page.props.user
+                                                        .current_team.id,
+                                                    post.id,
+                                                    post.slug
+                                                )
+                                            "
+                                            :imageClickable="true"
+                                        ></ThumbnailSmallImageSlider>
+                                    </template>
 
-                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
-                        <template
-                            v-if="
-                                Array.isArray(
+                                    <div class="px-2 pt-4 pb-2">
+                                        <Link
+                                            :href="
+                                                route('team.jobs.job.show', [
+                                                    $page.props.user
+                                                        .current_team.id,
+                                                    post.id,
+                                                    post.slug,
+                                                ])
+                                            "
+                                        >
+                                            <p
+                                                class="text-sm font-medium mt-2 mb-2"
+                                            >
+                                                {{ post.title.slice(0, 25)
+                                                }}{{
+                                                    post.title.length > 25
+                                                        ? ".."
+                                                        : ""
+                                                }}
+                                            </p>
+                                        </Link>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- column jobs # end -->
+                    <!-- column stores # start -->
+                    <div
+                        class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    >
+                        <div class="border-b border-gray-200 mb-8 pb-2">
+                            <Link
+                                :href="
+                                    route(
+                                        'team.stores.index',
+                                        $page.props.user.current_team.id
+                                    )
+                                "
+                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            >
+                                Latest Stores
+                            </Link>
+                        </div>
+
+                        <div
+                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
+                        >
+                            <template
+                                v-if="
+                                    Array.isArray(
+                                        getDashboardStats.fetchedData
+                                            .latestStores
+                                    ) &&
                                     getDashboardStats.fetchedData.latestStores
-                                ) &&
-                                getDashboardStats.fetchedData.latestStores
-                                    .length === 0
-                            "
-                        >
-                            <p class="myPrimaryParagraph">
-                                Looks like there are no Stores.
-                            </p>
-                        </template>
-                        <ul
-                            role="list"
-                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
-                        >
-                            <li
-                                v-for="post in getDashboardStats.fetchedData
-                                    .latestStores"
-                                :key="post.id"
-                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                                        .length === 0
+                                "
                             >
-                                <!-- start photo -->
-
-                                <template
-                                    v-if="post && post.cover_images !== null"
+                                <p class="myPrimaryParagraph">
+                                    Looks like there are no Stores.
+                                </p>
+                            </template>
+                            <ul
+                                role="list"
+                                class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
+                            >
+                                <li
+                                    v-for="post in getDashboardStats.fetchedData
+                                        .latestStores"
+                                    :key="post.id"
+                                    class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
                                 >
-                                    <ThumbnailSmallImageSlider
-                                        :images="post.cover_images"
-                                        imageSize="medium_path"
-                                        imageHeight="max-h-96"
-                                        imageWidth="w-full object-cover"
-                                        :roundedFull="false"
-                                        :squareButtons="true"
-                                        @firstButtonClick="
-                                            goToSingleStore(
-                                                $page.props.user.current_team
-                                                    .id,
-                                                post.id,
-                                                post.slug
-                                            )
-                                        "
-                                        :imageClickable="true"
-                                    ></ThumbnailSmallImageSlider>
-                                </template>
+                                    <!-- start photo -->
 
-                                <div class="px-2 pt-4 pb-2">
-                                    <Link
-                                        :href="
-                                            route('team.stores.store.show', [
-                                                $page.props.user.current_team
-                                                    .id,
-                                                post.id,
-                                                post.slug,
-                                            ])
+                                    <template
+                                        v-if="
+                                            post && post.cover_images !== null
                                         "
                                     >
-                                        <p
-                                            class="text-sm font-medium mt-2 mb-2"
+                                        <ThumbnailSmallImageSlider
+                                            :images="post.cover_images"
+                                            imageSize="medium_path"
+                                            imageHeight="max-h-96"
+                                            imageWidth="w-full object-cover"
+                                            :roundedFull="false"
+                                            :squareButtons="true"
+                                            @firstButtonClick="
+                                                goToSingleStore(
+                                                    $page.props.user
+                                                        .current_team.id,
+                                                    post.id,
+                                                    post.slug
+                                                )
+                                            "
+                                            :imageClickable="true"
+                                        ></ThumbnailSmallImageSlider>
+                                    </template>
+
+                                    <div class="px-2 pt-4 pb-2">
+                                        <Link
+                                            :href="
+                                                route(
+                                                    'team.stores.store.show',
+                                                    [
+                                                        $page.props.user
+                                                            .current_team.id,
+                                                        post.id,
+                                                        post.slug,
+                                                    ]
+                                                )
+                                            "
                                         >
-                                            {{ post.title.slice(0, 25)
-                                            }}{{
-                                                post.title.length > 25
-                                                    ? ".."
-                                                    : ""
-                                            }}
-                                        </p>
-                                    </Link>
-                                </div>
-                            </li>
-                        </ul>
+                                            <p
+                                                class="text-sm font-medium mt-2 mb-2"
+                                            >
+                                                {{ post.title.slice(0, 25)
+                                                }}{{
+                                                    post.title.length > 25
+                                                        ? ".."
+                                                        : ""
+                                                }}
+                                            </p>
+                                        </Link>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+                    <!-- column stores # end -->
                 </div>
-                <!-- column stores # end -->
-            </div>
+            </template>
+            <!-- Actualt data # Start -->
         </template>
     </FullWidthElement>
 

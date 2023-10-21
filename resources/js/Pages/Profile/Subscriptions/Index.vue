@@ -16,7 +16,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { useStore } from "vuex";
 import { delay } from "@/helpers/delay";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
-
+import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 import { vueFetch } from "use-lightweight-fetch";
 
 import {
@@ -50,16 +50,8 @@ const {
     isSuccess: isSuccessSubscriptions,
 } = vueFetch();
 
-const getSubscriptions = async function () {
-    store.commit("user/setIsLoading", true);
-
-    try {
-        await handleGetSubscriptions(
-            route("stripe.api.internal.subscriptions.index")
-        );
-    } catch (err) {}
-
-    store.commit("user/setIsLoading", false);
+const getSubscriptions = function () {
+    handleGetSubscriptions(route("stripe.api.internal.subscriptions.index"));
 };
 
 onMounted(() => {
@@ -244,15 +236,39 @@ const notificationsModalButton = function () {
 
             <div>
                 <h1 class="myPrimaryHeaderMessage">Subscriptions</h1>
-                <div
-                    v-if="!isLoadingSubscriptions && isErrorSubscriptions"
-                    class="myPrimaryParagraphError"
-                >
-                    {{ errorSubscriptions }}
-                </div>
             </div>
 
-            <div v-if="!isLoadingSubscriptions && !isErrorSubscriptions">
+            <!-- error # start -->
+            <template
+                v-if="
+                    !isLoadingSubscriptions &&
+                    isErrorSubscriptions &&
+                    !isSuccessSubscriptions
+                "
+            >
+                <p class="myPrimaryParagraphError">
+                    {{ errorSubscriptions }}
+                </p>
+            </template>
+            <!-- error # end -->
+
+            <!-- Loading # start -->
+            <template v-if="isLoadingSubscriptions">
+                <SmallUniversalSpinner
+                    width="w-8"
+                    height="h-8"
+                    border="border-4"
+                ></SmallUniversalSpinner>
+            </template>
+            <!-- Loading # end -->
+
+            <template
+                v-if="
+                    !isLoadingSubscriptions &&
+                    !isErrorSubscriptions &&
+                    isSuccessSubscriptions
+                "
+            >
                 <!-- Active subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
@@ -278,17 +294,22 @@ const notificationsModalButton = function () {
                     <div
                         v-if="
                             fetchedSubscriptions &&
-                            fetchedSubscriptions.subscriptions &&
-                            Array.isArray(
-                                fetchedSubscriptions.subscriptions
-                                    .subscriptionsActive
-                            ) &&
                             fetchedSubscriptions.subscriptions
-                                .subscriptionsActive.length > 0
                         "
                         class="myTableContainerPlusScrollButton"
                     >
-                        <div ref="scrolTableContainer" class="myTableContainer">
+                        <div
+                            v-if="
+                                Array.isArray(
+                                    fetchedSubscriptions.subscriptions
+                                        .subscriptionsActive
+                                ) &&
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsActive.length > 0
+                            "
+                            ref="scrolTableContainer"
+                            class="myTableContainer"
+                        >
                             <div class="myTableSubContainer">
                                 <table
                                     class="myPrimaryTable"
@@ -478,6 +499,7 @@ const notificationsModalButton = function () {
                     </div>
                 </div>
                 <!-- Active subcriptions # end -->
+
                 <!-- Canceled subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
@@ -505,17 +527,22 @@ const notificationsModalButton = function () {
                     <div
                         v-if="
                             fetchedSubscriptions &&
-                            fetchedSubscriptions.subscriptions &&
-                            Array.isArray(
-                                fetchedSubscriptions.subscriptions
-                                    .subscriptionsCanceled
-                            ) &&
                             fetchedSubscriptions.subscriptions
-                                .subscriptionsCanceled.length > 0
                         "
                         class="myTableContainerPlusScrollButton"
                     >
-                        <div ref="scrolTableContainer" class="myTableContainer">
+                        <div
+                            v-if="
+                                Array.isArray(
+                                    fetchedSubscriptions.subscriptions
+                                        .subscriptionsCanceled
+                                ) &&
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsCanceled.length > 0
+                            "
+                            ref="scrolTableContainer"
+                            class="myTableContainer"
+                        >
                             <div class="myTableSubContainer">
                                 <table
                                     class="myPrimaryTable"
@@ -709,17 +736,22 @@ const notificationsModalButton = function () {
                     <div
                         v-if="
                             fetchedSubscriptions &&
-                            fetchedSubscriptions.subscriptions &&
-                            Array.isArray(
-                                fetchedSubscriptions.subscriptions
-                                    .subscriptionsEnded
-                            ) &&
                             fetchedSubscriptions.subscriptions
-                                .subscriptionsEnded.length > 0
                         "
                         class="myTableContainerPlusScrollButton"
                     >
-                        <div ref="scrolTableContainer" class="myTableContainer">
+                        <div
+                            v-if="
+                                Array.isArray(
+                                    fetchedSubscriptions.subscriptions
+                                        .subscriptionsEnded
+                                ) &&
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsEnded.length > 0
+                            "
+                            ref="scrolTableContainer"
+                            class="myTableContainer"
+                        >
                             <div class="myTableSubContainer">
                                 <table
                                     class="myPrimaryTable"
@@ -892,17 +924,22 @@ const notificationsModalButton = function () {
                     <div
                         v-if="
                             fetchedSubscriptions &&
-                            fetchedSubscriptions.subscriptions &&
-                            Array.isArray(
-                                fetchedSubscriptions.subscriptions
-                                    .subscriptionsIncomplete
-                            ) &&
                             fetchedSubscriptions.subscriptions
-                                .subscriptionsIncomplete.length > 0
                         "
                         class="myTableContainerPlusScrollButton"
                     >
-                        <div ref="scrolTableContainer" class="myTableContainer">
+                        <div
+                            v-if="
+                                Array.isArray(
+                                    fetchedSubscriptions.subscriptions
+                                        .subscriptionsIncomplete
+                                ) &&
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsIncomplete.length > 0
+                            "
+                            ref="scrolTableContainer"
+                            class="myTableContainer"
+                        >
                             <div class="myTableSubContainer">
                                 <table
                                     class="myPrimaryTable"
@@ -1091,7 +1128,7 @@ const notificationsModalButton = function () {
                         </div>
                     </div>
                 </div>
-            </div>
+            </template>
 
             <div
                 class="flex justify-end mt-4 pb-8 bottom-0 right-0 sticky"

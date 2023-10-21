@@ -52,7 +52,6 @@ class DashboardStatsController extends Controller
         $latestTeamMembers = null;
 
         if ($team !== null) {
-            // Authorize user permissions for the specified team (if the team exists)
             $this->authorize("can-read", $team);
 
             $latestMedia = MediaLibrary::where("team_id", $team->id)

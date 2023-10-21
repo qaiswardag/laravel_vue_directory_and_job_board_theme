@@ -169,27 +169,31 @@ onMounted(async () => {
             </div>
 
             <!-- content start -->
-            <div
-                v-if="getFetchedComponents.isError"
-                class="min-h-[2.5rem] flex items-center justify-start"
+            <template
+                v-if="
+                    !getFetchedComponents.isLoading &&
+                    getFetchedComponents.isError
+                "
             >
-                <p class="myPrimaryInputError mt-2 mb-0 py-0 self-start">
+                <p class="myPrimaryInputError">
                     {{ getFetchedComponents.error }}
                 </p>
-            </div>
+            </template>
 
-            <SmallUniversalSpinner
-                v-if="
-                    getFetchedComponents.isLoading &&
-                    !getFetchedComponents.isError
-                "
-                class="h-40"
-                width="w-6"
-                height="h-6"
-                border="border-4"
-            ></SmallUniversalSpinner>
+            <!--  -->
 
-            <main
+            <!-- Loading # start -->
+            <template v-if="getFetchedComponents.isLoading">
+                <SmallUniversalSpinner
+                    class="h-40"
+                    width="w-6"
+                    height="h-6"
+                    border="border-4"
+                ></SmallUniversalSpinner>
+            </template>
+
+            <!-- Actual data # start -->
+            <template
                 v-if="
                     !getFetchedComponents.isError &&
                     !getFetchedComponents.isLoading
@@ -454,7 +458,7 @@ onMounted(async () => {
                                 "
                                 v-for="helperComponent in componentHelpers"
                                 :key="helperComponent.title"
-                                class="myPrimaryTag m-0 p-2 rounded cursor-pointer"
+                                class="myPrimaryTag m-0 pt-10 pb-4 px-2 rounded cursor-pointer"
                             >
                                 <p class="text-5xl flex justify-center">H</p>
                                 <div
@@ -471,8 +475,8 @@ onMounted(async () => {
                         </div>
                     </aside>
                 </div>
-            </main>
-            <!-- content end -->
+            </template>
+            <!-- Actual data # start -->
         </div>
         <div
             v-if="!getFetchedComponents.isError"

@@ -14,8 +14,6 @@ class AttachComponentCategoriesController extends Controller
      */
     public function index(Request $request, Team $team)
     {
-        $this->authorize("can-read", $team);
-
         $searchQuery = $request->input("search_query");
 
         if (is_array($searchQuery)) {
