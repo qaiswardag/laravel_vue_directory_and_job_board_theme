@@ -50,7 +50,9 @@ const {
 const getPayments = async function () {
     store.commit("user/setIsLoading", true);
 
-    await handleGetPayments(route("stripe.api.internal.payment.index"));
+    try {
+        await handleGetPayments(route("stripe.api.internal.payment.index"));
+    } catch (err) {}
 
     store.commit("user/setIsLoading", false);
 };
@@ -192,203 +194,246 @@ const deletePostForm = useForm({});
                 <p class="my-12">
                     fetchedPayments: {{ JSON.stringify(fetchedPayments) }}
                 </p>
-                <div
-                    v-if="
-                        fetchedPayments &&
-                        fetchedPayments.payments &&
-                        fetchedPayments.payments.invoices &&
-                        Array.isArray(fetchedPayments.payments.invoices) &&
-                        fetchedPayments.payments.invoices.length >= 1
-                    "
-                    class="myTableContainerPlusScrollButton"
-                >
-                    <div class="myScrollButtonContainer">
-                        <button
-                            @click="handleLeft"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        >
-                            <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
-                        </button>
-                        <button
-                            @click="handleRight"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        >
-                            <ArrowRightIcon
-                                class="mySmallIcon"
-                            ></ArrowRightIcon>
-                        </button>
-                    </div>
-                    <div ref="scrolTableContainer" class="myTableContainer">
-                        <div class="myTableSubContainer">
-                            <table
-                                class="myPrimaryTable"
-                                aria-describedby="index"
+                <div v-if="!isLoadingPayments && !isErrorPayments">
+                    <div
+                        v-if="
+                            fetchedPayments &&
+                            fetchedPayments.payments &&
+                            fetchedPayments.payments.invoices &&
+                            Array.isArray(fetchedPayments.payments.invoices) &&
+                            fetchedPayments.payments.invoices.length >= 1
+                        "
+                        class="myTableContainerPlusScrollButton"
+                    >
+                        <div class="myScrollButtonContainer">
+                            <button
+                                @click="handleLeft"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <thead class="myPrimaryTableTHead">
-                                    <tr class="myPrimaryTableTr">
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            ID
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Downlaod PDF
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            customer_name
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            customer_email
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            subtotal
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            subtotal_excluding_tax
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            tax
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            account_tax_ids
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            account_country & name
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            attempt_count
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            collection_method
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            billing_reason
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            currency
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            automatic_tax
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="myPrimaryTableTBody">
-                                    <TransitionGroup name="table">
-                                        <tr
-                                            class="myPrimaryTableTBodyTr"
-                                            v-for="payment in fetchedPayments
-                                                .payments.invoices"
-                                            :key="payment.id"
-                                        >
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ payment.id }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <a
-                                                    :href="payment.invoice_pdf"
-                                                    target="_blank"
-                                                    class="myPrimaryLink"
-                                                    >Invoice PDF</a
-                                                >
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ payment.customer_name }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ payment.customer_email }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                $ {{ payment.subtotal / 100 }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                $
-                                                {{
-                                                    payment.subtotal_excluding_tax /
-                                                    100
-                                                }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                $ {{ payment.tax / 100 }}
-                                            </td>
-
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ payment.account_tax_ids }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                Country:
-                                                {{ payment.account_country }} —
-                                                Name: {{ payment.account_name }}
-                                            </td>
-
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ payment.attempt_count }}
-                                            </td>
-
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ payment.collection_method }}
-                                            </td>
-
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ payment.billing_reason }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ payment.currency }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                Enabled:
-                                                {{
-                                                    payment.automatic_tax
-                                                        .enabled
-                                                }}
-                                                — Status:
-                                                {{
-                                                    payment.automatic_tax.status
-                                                }}
-                                            </td>
+                                <ArrowLeftIcon
+                                    class="mySmallIcon"
+                                ></ArrowLeftIcon>
+                            </button>
+                            <button
+                                @click="handleRight"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                            >
+                                <ArrowRightIcon
+                                    class="mySmallIcon"
+                                ></ArrowRightIcon>
+                            </button>
+                        </div>
+                        <div ref="scrolTableContainer" class="myTableContainer">
+                            <div class="myTableSubContainer">
+                                <table
+                                    class="myPrimaryTable"
+                                    aria-describedby="index"
+                                >
+                                    <thead class="myPrimaryTableTHead">
+                                        <tr class="myPrimaryTableTr">
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                ID
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Downlaod PDF
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                customer_name
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                customer_email
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                subtotal
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                subtotal_excluding_tax
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                tax
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                account_tax_ids
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                account_country & name
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                attempt_count
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                collection_method
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                billing_reason
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                currency
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                automatic_tax
+                                            </th>
                                         </tr>
-                                    </TransitionGroup>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody class="myPrimaryTableTBody">
+                                        <TransitionGroup name="table">
+                                            <tr
+                                                class="myPrimaryTableTBodyTr"
+                                                v-for="payment in fetchedPayments
+                                                    .payments.invoices"
+                                                :key="payment.id"
+                                            >
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ payment.id }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <a
+                                                        :href="
+                                                            payment.invoice_pdf
+                                                        "
+                                                        target="_blank"
+                                                        class="myPrimaryLink"
+                                                        >Invoice PDF</a
+                                                    >
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ payment.customer_name }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ payment.customer_email }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    $
+                                                    {{ payment.subtotal / 100 }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    $
+                                                    {{
+                                                        payment.subtotal_excluding_tax /
+                                                        100
+                                                    }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    $ {{ payment.tax / 100 }}
+                                                </td>
+
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{
+                                                        payment.account_tax_ids
+                                                    }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    Country:
+                                                    {{
+                                                        payment.account_country
+                                                    }}
+                                                    — Name:
+                                                    {{ payment.account_name }}
+                                                </td>
+
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ payment.attempt_count }}
+                                                </td>
+
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{
+                                                        payment.collection_method
+                                                    }}
+                                                </td>
+
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ payment.billing_reason }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ payment.currency }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    Enabled:
+                                                    {{
+                                                        payment.automatic_tax
+                                                            .enabled
+                                                    }}
+                                                    — Status:
+                                                    {{
+                                                        payment.automatic_tax
+                                                            .status
+                                                    }}
+                                                </td>
+                                            </tr>
+                                        </TransitionGroup>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

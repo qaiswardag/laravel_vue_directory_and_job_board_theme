@@ -1,0 +1,1 @@
+<template>TemplateListResources..... component</template>

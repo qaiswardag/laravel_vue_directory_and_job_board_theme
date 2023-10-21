@@ -53,9 +53,12 @@ const {
 const getSubscriptions = async function () {
     store.commit("user/setIsLoading", true);
 
-    await handleGetSubscriptions(
-        route("stripe.api.internal.subscriptions.index")
-    );
+    try {
+        await handleGetSubscriptions(
+            route("stripe.api.internal.subscriptions.index")
+        );
+    } catch (err) {}
+
     store.commit("user/setIsLoading", false);
 };
 
@@ -239,760 +242,852 @@ const notificationsModalButton = function () {
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
-            <h1 class="myPrimaryHeaderMessage">Subscriptions</h1>
-
-            <!-- Active subcriptions # start -->
-            <div class="mb-24">
-                <div class="mb-4">
-                    <h2 class="mySecondaryHeader">Active Subscriptions</h2>
-                </div>
-                <template
-                    v-if="
-                        !fetchedSubscriptions?.subscriptions
-                            ?.subscriptionsActive ||
-                        (Array.isArray(
-                            fetchedSubscriptions.subscriptions
-                                .subscriptionsActive
-                        ) &&
-                            fetchedSubscriptions.subscriptions
-                                .subscriptionsActive.length === 0)
-                    "
-                >
-                    <p class="myPrimaryParagraph">
-                        Looks like there are no active subscriptions!
-                    </p>
-                </template>
-
+            <div>
+                <h1 class="myPrimaryHeaderMessage">Subscriptions</h1>
                 <div
-                    v-if="
-                        fetchedSubscriptions &&
-                        fetchedSubscriptions.subscriptions &&
-                        Array.isArray(
-                            fetchedSubscriptions.subscriptions
-                                .subscriptionsActive
-                        ) &&
-                        fetchedSubscriptions.subscriptions.subscriptionsActive
-                            .length > 0
-                    "
-                    class="myTableContainerPlusScrollButton"
+                    v-if="!isLoadingSubscriptions && isErrorSubscriptions"
+                    class="myPrimaryParagraphError"
                 >
-                    <div ref="scrolTableContainer" class="myTableContainer">
-                        <div class="myTableSubContainer">
-                            <table
-                                class="myPrimaryTable"
-                                aria-describedby="index"
-                            >
-                                <thead class="myPrimaryTableTHead">
-                                    <tr class="myPrimaryTableTr">
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            ID
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Ends at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Status
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Name
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Updated name
-                                        </th>
+                    {{ errorSubscriptions }}
+                </div>
+            </div>
 
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Quantity
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Created at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Updated at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Edit
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Cancel
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="myPrimaryTableTBody">
-                                    <TransitionGroup name="table">
-                                        <tr
-                                            class="myPrimaryTableTBodyTr"
-                                            v-for="post in fetchedSubscriptions
-                                                .subscriptions
-                                                .subscriptionsActive"
-                                            :key="post.id"
-                                        >
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.id }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <span v-if="post.ends_at">
+            <div v-if="!isLoadingSubscriptions && !isErrorSubscriptions">
+                <!-- Active subcriptions # start -->
+                <div class="mb-24">
+                    <div class="mb-4">
+                        <h2 class="mySecondaryHeader">Active Subscriptions</h2>
+                    </div>
+                    <template
+                        v-if="
+                            !fetchedSubscriptions?.subscriptions
+                                ?.subscriptionsActive ||
+                            (Array.isArray(
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsActive
+                            ) &&
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsActive.length === 0)
+                        "
+                    >
+                        <p class="myPrimaryParagraph">
+                            Looks like there are no active subscriptions!
+                        </p>
+                    </template>
+
+                    <div
+                        v-if="
+                            fetchedSubscriptions &&
+                            fetchedSubscriptions.subscriptions &&
+                            Array.isArray(
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsActive
+                            ) &&
+                            fetchedSubscriptions.subscriptions
+                                .subscriptionsActive.length > 0
+                        "
+                        class="myTableContainerPlusScrollButton"
+                    >
+                        <div ref="scrolTableContainer" class="myTableContainer">
+                            <div class="myTableSubContainer">
+                                <table
+                                    class="myPrimaryTable"
+                                    aria-describedby="index"
+                                >
+                                    <thead class="myPrimaryTableTHead">
+                                        <tr class="myPrimaryTableTr">
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                ID
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Ends at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Status
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Name
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Updated name
+                                            </th>
+
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Quantity
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Created at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Updated at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Edit
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Cancel
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="myPrimaryTableTBody">
+                                        <TransitionGroup name="table">
+                                            <tr
+                                                class="myPrimaryTableTBodyTr"
+                                                v-for="post in fetchedSubscriptions
+                                                    .subscriptions
+                                                    .subscriptionsActive"
+                                                :key="post.id"
+                                            >
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.id }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <span v-if="post.ends_at">
+                                                        {{
+                                                            format(
+                                                                parseISO(
+                                                                    post.ends_at
+                                                                ),
+                                                                "dd/MM/yyyy"
+                                                            )
+                                                        }}
+                                                    </span>
+                                                    <span v-if="!post.ends_at">
+                                                        Newer
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.stripe_status }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.name }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{
+                                                        post.updated_subscription_name
+                                                    }}
+                                                </td>
+
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.quantity }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
                                                     {{
                                                         format(
                                                             parseISO(
-                                                                post.ends_at
+                                                                post.created_at
                                                             ),
-                                                            "dd/MM/yyyy"
+                                                            "dd/MM/yyyy HH:mm"
                                                         )
                                                     }}
-                                                </span>
-                                                <span v-if="!post.ends_at">
-                                                    Newer
-                                                </span>
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_status }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.name }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    post.updated_subscription_name
-                                                }}
-                                            </td>
-
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.quantity }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.created_at
-                                                        ),
-                                                        "dd/MM/yyyy HH:mm"
-                                                    )
-                                                }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.updated_at
-                                                        ),
-                                                        "dd/MM/yyyy HH:mm"
-                                                    )
-                                                }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <button
-                                                    type="button"
-                                                    @click="handleEdit(post.id)"
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
                                                 >
-                                                    <PencilIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></PencilIcon>
-                                                </button>
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <button
-                                                    type="button"
-                                                    @click="
-                                                        handleCancelSubscription(
-                                                            post.id
+                                                    {{
+                                                        format(
+                                                            parseISO(
+                                                                post.updated_at
+                                                            ),
+                                                            "dd/MM/yyyy HH:mm"
                                                         )
-                                                    "
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                                    }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
                                                 >
-                                                    <TrashIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></TrashIcon>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </TransitionGroup>
-                                </tbody>
-                            </table>
+                                                    <button
+                                                        type="button"
+                                                        @click="
+                                                            handleEdit(post.id)
+                                                        "
+                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                    >
+                                                        <PencilIcon
+                                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        ></PencilIcon>
+                                                    </button>
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        @click="
+                                                            handleCancelSubscription(
+                                                                post.id
+                                                            )
+                                                        "
+                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                                    >
+                                                        <TrashIcon
+                                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        ></TrashIcon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </TransitionGroup>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Active subcriptions # end -->
-            <!-- Canceled subcriptions # start -->
-            <div class="mb-24">
-                <div class="mb-4">
-                    <h2 class="mySecondaryHeader">Canceled Subscriptions</h2>
-                </div>
-                <template
-                    v-if="
-                        !fetchedSubscriptions?.subscriptions
-                            ?.subscriptionsCanceled ||
-                        (Array.isArray(
-                            fetchedSubscriptions.subscriptions
-                                .subscriptionsCanceled
-                        ) &&
-                            fetchedSubscriptions.subscriptions
-                                .subscriptionsCanceled.length === 0)
-                    "
-                >
-                    <p class="myPrimaryParagraph">
-                        Looks like there are no canceled subscriptions!
-                    </p>
-                </template>
+                <!-- Active subcriptions # end -->
+                <!-- Canceled subcriptions # start -->
+                <div class="mb-24">
+                    <div class="mb-4">
+                        <h2 class="mySecondaryHeader">
+                            Canceled Subscriptions
+                        </h2>
+                    </div>
+                    <template
+                        v-if="
+                            !fetchedSubscriptions?.subscriptions
+                                ?.subscriptionsCanceled ||
+                            (Array.isArray(
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsCanceled
+                            ) &&
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsCanceled.length === 0)
+                        "
+                    >
+                        <p class="myPrimaryParagraph">
+                            Looks like there are no canceled subscriptions!
+                        </p>
+                    </template>
 
-                <div
-                    v-if="
-                        fetchedSubscriptions &&
-                        fetchedSubscriptions.subscriptions &&
-                        Array.isArray(
+                    <div
+                        v-if="
+                            fetchedSubscriptions &&
+                            fetchedSubscriptions.subscriptions &&
+                            Array.isArray(
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsCanceled
+                            ) &&
                             fetchedSubscriptions.subscriptions
-                                .subscriptionsCanceled
-                        ) &&
-                        fetchedSubscriptions.subscriptions.subscriptionsCanceled
-                            .length > 0
-                    "
-                    class="myTableContainerPlusScrollButton"
-                >
-                    <div ref="scrolTableContainer" class="myTableContainer">
-                        <div class="myTableSubContainer">
-                            <table
-                                class="myPrimaryTable"
-                                aria-describedby="index"
-                            >
-                                <thead class="myPrimaryTableTHead">
-                                    <tr class="myPrimaryTableTr">
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            ID
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Ends at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Status
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Name
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Updated name
-                                        </th>
+                                .subscriptionsCanceled.length > 0
+                        "
+                        class="myTableContainerPlusScrollButton"
+                    >
+                        <div ref="scrolTableContainer" class="myTableContainer">
+                            <div class="myTableSubContainer">
+                                <table
+                                    class="myPrimaryTable"
+                                    aria-describedby="index"
+                                >
+                                    <thead class="myPrimaryTableTHead">
+                                        <tr class="myPrimaryTableTr">
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                ID
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Ends at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Status
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Name
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Updated name
+                                            </th>
 
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Quantity
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Created at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Updated at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Resume subscription
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="myPrimaryTableTBody">
-                                    <TransitionGroup name="table">
-                                        <tr
-                                            class="myPrimaryTableTBodyTr"
-                                            v-for="post in fetchedSubscriptions
-                                                .subscriptions
-                                                .subscriptionsCanceled"
-                                            :key="post.id"
-                                        >
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.id }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <span v-if="post.ends_at">
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Quantity
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Created at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Updated at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Resume subscription
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="myPrimaryTableTBody">
+                                        <TransitionGroup name="table">
+                                            <tr
+                                                class="myPrimaryTableTBodyTr"
+                                                v-for="post in fetchedSubscriptions
+                                                    .subscriptions
+                                                    .subscriptionsCanceled"
+                                                :key="post.id"
+                                            >
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.id }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <span v-if="post.ends_at">
+                                                        {{
+                                                            format(
+                                                                parseISO(
+                                                                    post.ends_at
+                                                                ),
+                                                                "dd/MM/yyyy"
+                                                            )
+                                                        }}
+                                                    </span>
+                                                    <span v-if="!post.ends_at">
+                                                        Newer
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.stripe_status }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.name }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{
+                                                        post.updated_subscription_name
+                                                    }}
+                                                </td>
+
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.quantity }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
                                                     {{
                                                         format(
                                                             parseISO(
-                                                                post.ends_at
+                                                                post.created_at
                                                             ),
-                                                            "dd/MM/yyyy"
+                                                            "dd/MM/yyyy HH:mm"
                                                         )
                                                     }}
-                                                </span>
-                                                <span v-if="!post.ends_at">
-                                                    Newer
-                                                </span>
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_status }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.name }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    post.updated_subscription_name
-                                                }}
-                                            </td>
-
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.quantity }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.created_at
-                                                        ),
-                                                        "dd/MM/yyyy HH:mm"
-                                                    )
-                                                }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.updated_at
-                                                        ),
-                                                        "dd/MM/yyyy HH:mm"
-                                                    )
-                                                }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <button
-                                                    type="button"
-                                                    @click="
-                                                        handleResumeSubscription(
-                                                            post.id
-                                                        )
-                                                    "
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
                                                 >
-                                                    <CheckIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></CheckIcon>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </TransitionGroup>
-                                </tbody>
-                            </table>
+                                                    {{
+                                                        format(
+                                                            parseISO(
+                                                                post.updated_at
+                                                            ),
+                                                            "dd/MM/yyyy HH:mm"
+                                                        )
+                                                    }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        @click="
+                                                            handleResumeSubscription(
+                                                                post.id
+                                                            )
+                                                        "
+                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                    >
+                                                        <CheckIcon
+                                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        ></CheckIcon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </TransitionGroup>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Canceled subcriptions # end -->
-            <!-- Ended subcriptions # start -->
-            <div class="mb-24">
-                <div class="mb-4">
-                    <h2 class="mySecondaryHeader">Ended Subscriptions</h2>
-                </div>
-                <template
-                    v-if="
-                        !fetchedSubscriptions?.subscriptions
-                            ?.subscriptionsEnded ||
-                        (Array.isArray(
-                            fetchedSubscriptions.subscriptions
-                                .subscriptionsEnded
-                        ) &&
-                            fetchedSubscriptions.subscriptions
-                                .subscriptionsEnded.length === 0)
-                    "
-                >
-                    <p class="myPrimaryParagraph">
-                        Looks like there are no ended subscriptions!
-                    </p>
-                </template>
+                <!-- Canceled subcriptions # end -->
+                <!-- Ended subcriptions # start -->
+                <div class="mb-24">
+                    <div class="mb-4">
+                        <h2 class="mySecondaryHeader">Ended Subscriptions</h2>
+                    </div>
+                    <template
+                        v-if="
+                            !fetchedSubscriptions?.subscriptions
+                                ?.subscriptionsEnded ||
+                            (Array.isArray(
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsEnded
+                            ) &&
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsEnded.length === 0)
+                        "
+                    >
+                        <p class="myPrimaryParagraph">
+                            Looks like there are no ended subscriptions!
+                        </p>
+                    </template>
 
-                <div
-                    v-if="
-                        fetchedSubscriptions &&
-                        fetchedSubscriptions.subscriptions &&
-                        Array.isArray(
+                    <div
+                        v-if="
+                            fetchedSubscriptions &&
+                            fetchedSubscriptions.subscriptions &&
+                            Array.isArray(
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsEnded
+                            ) &&
                             fetchedSubscriptions.subscriptions
-                                .subscriptionsEnded
-                        ) &&
-                        fetchedSubscriptions.subscriptions.subscriptionsEnded
-                            .length > 0
-                    "
-                    class="myTableContainerPlusScrollButton"
-                >
-                    <div ref="scrolTableContainer" class="myTableContainer">
-                        <div class="myTableSubContainer">
-                            <table
-                                class="myPrimaryTable"
-                                aria-describedby="index"
-                            >
-                                <thead class="myPrimaryTableTHead">
-                                    <tr class="myPrimaryTableTr">
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            ID
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Ended at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Status
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Name
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Updated name
-                                        </th>
+                                .subscriptionsEnded.length > 0
+                        "
+                        class="myTableContainerPlusScrollButton"
+                    >
+                        <div ref="scrolTableContainer" class="myTableContainer">
+                            <div class="myTableSubContainer">
+                                <table
+                                    class="myPrimaryTable"
+                                    aria-describedby="index"
+                                >
+                                    <thead class="myPrimaryTableTHead">
+                                        <tr class="myPrimaryTableTr">
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                ID
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Ended at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Status
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Name
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Updated name
+                                            </th>
 
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Quantity
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Created at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Updated at
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="myPrimaryTableTBody">
-                                    <TransitionGroup name="table">
-                                        <tr
-                                            class="myPrimaryTableTBodyTr"
-                                            v-for="post in fetchedSubscriptions
-                                                .subscriptions
-                                                .subscriptionsEnded"
-                                            :key="post.id"
-                                        >
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.id }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <span v-if="post.ends_at">
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Quantity
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Created at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Updated at
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="myPrimaryTableTBody">
+                                        <TransitionGroup name="table">
+                                            <tr
+                                                class="myPrimaryTableTBodyTr"
+                                                v-for="post in fetchedSubscriptions
+                                                    .subscriptions
+                                                    .subscriptionsEnded"
+                                                :key="post.id"
+                                            >
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.id }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <span v-if="post.ends_at">
+                                                        {{
+                                                            format(
+                                                                parseISO(
+                                                                    post.ends_at
+                                                                ),
+                                                                "dd/MM/yyyy"
+                                                            )
+                                                        }}
+                                                    </span>
+                                                    <span v-if="!post.ends_at">
+                                                        Newer
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.stripe_status }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.name }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{
+                                                        post.updated_subscription_name
+                                                    }}
+                                                </td>
+
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.quantity }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
                                                     {{
                                                         format(
                                                             parseISO(
-                                                                post.ends_at
+                                                                post.created_at
                                                             ),
-                                                            "dd/MM/yyyy"
+                                                            "dd/MM/yyyy HH:mm"
                                                         )
                                                     }}
-                                                </span>
-                                                <span v-if="!post.ends_at">
-                                                    Newer
-                                                </span>
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_status }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.name }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    post.updated_subscription_name
-                                                }}
-                                            </td>
-
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.quantity }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.created_at
-                                                        ),
-                                                        "dd/MM/yyyy HH:mm"
-                                                    )
-                                                }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.updated_at
-                                                        ),
-                                                        "dd/MM/yyyy HH:mm"
-                                                    )
-                                                }}
-                                            </td>
-                                        </tr>
-                                    </TransitionGroup>
-                                </tbody>
-                            </table>
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{
+                                                        format(
+                                                            parseISO(
+                                                                post.updated_at
+                                                            ),
+                                                            "dd/MM/yyyy HH:mm"
+                                                        )
+                                                    }}
+                                                </td>
+                                            </tr>
+                                        </TransitionGroup>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Ended subcriptions # end -->
-            <!-- Incomplete subcriptions # start -->
-            <div class="mb-24">
-                <div class="mb-4">
-                    <h2 class="mySecondaryHeader">Incomplete Subscriptions</h2>
-                </div>
-                <template
-                    v-if="
-                        !fetchedSubscriptions?.subscriptions
-                            ?.subscriptionsIncomplete ||
-                        (Array.isArray(
-                            fetchedSubscriptions.subscriptions
-                                .subscriptionsIncomplete
-                        ) &&
-                            fetchedSubscriptions.subscriptions
-                                .subscriptionsIncomplete.length === 0)
-                    "
-                >
-                    <p class="myPrimaryParagraph">
-                        Looks like there are no incomplete subscriptions!
-                    </p>
-                </template>
+                <!-- Ended subcriptions # end -->
+                <!-- Incomplete subcriptions # start -->
+                <div class="mb-24">
+                    <div class="mb-4">
+                        <h2 class="mySecondaryHeader">
+                            Incomplete Subscriptions
+                        </h2>
+                    </div>
+                    <template
+                        v-if="
+                            !fetchedSubscriptions?.subscriptions
+                                ?.subscriptionsIncomplete ||
+                            (Array.isArray(
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsIncomplete
+                            ) &&
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsIncomplete.length === 0)
+                        "
+                    >
+                        <p class="myPrimaryParagraph">
+                            Looks like there are no incomplete subscriptions!
+                        </p>
+                    </template>
 
-                <div
-                    v-if="
-                        fetchedSubscriptions &&
-                        fetchedSubscriptions.subscriptions &&
-                        Array.isArray(
+                    <div
+                        v-if="
+                            fetchedSubscriptions &&
+                            fetchedSubscriptions.subscriptions &&
+                            Array.isArray(
+                                fetchedSubscriptions.subscriptions
+                                    .subscriptionsIncomplete
+                            ) &&
                             fetchedSubscriptions.subscriptions
-                                .subscriptionsIncomplete
-                        ) &&
-                        fetchedSubscriptions.subscriptions
-                            .subscriptionsIncomplete.length > 0
-                    "
-                    class="myTableContainerPlusScrollButton"
-                >
-                    <div ref="scrolTableContainer" class="myTableContainer">
-                        <div class="myTableSubContainer">
-                            <table
-                                class="myPrimaryTable"
-                                aria-describedby="index"
-                            >
-                                <thead class="myPrimaryTableTHead">
-                                    <tr class="myPrimaryTableTr">
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            ID
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Ends at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Status
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Name
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Updated name
-                                        </th>
+                                .subscriptionsIncomplete.length > 0
+                        "
+                        class="myTableContainerPlusScrollButton"
+                    >
+                        <div ref="scrolTableContainer" class="myTableContainer">
+                            <div class="myTableSubContainer">
+                                <table
+                                    class="myPrimaryTable"
+                                    aria-describedby="index"
+                                >
+                                    <thead class="myPrimaryTableTHead">
+                                        <tr class="myPrimaryTableTr">
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                ID
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Ends at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Status
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Name
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Updated name
+                                            </th>
 
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Quantity
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Created at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Updated at
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Edit and Complete
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            class="myPrimaryTableTh"
-                                        >
-                                            Cancel
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="myPrimaryTableTBody">
-                                    <TransitionGroup name="table">
-                                        <tr
-                                            class="myPrimaryTableTBodyTr"
-                                            v-for="post in fetchedSubscriptions
-                                                .subscriptions
-                                                .subscriptionsIncomplete"
-                                            :key="post.id"
-                                        >
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.id }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <span v-if="post.ends_at">
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Quantity
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Created at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Updated at
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Edit and Complete
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                class="myPrimaryTableTh"
+                                            >
+                                                Cancel
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="myPrimaryTableTBody">
+                                        <TransitionGroup name="table">
+                                            <tr
+                                                class="myPrimaryTableTBodyTr"
+                                                v-for="post in fetchedSubscriptions
+                                                    .subscriptions
+                                                    .subscriptionsIncomplete"
+                                                :key="post.id"
+                                            >
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.id }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <span v-if="post.ends_at">
+                                                        {{
+                                                            format(
+                                                                parseISO(
+                                                                    post.ends_at
+                                                                ),
+                                                                "dd/MM/yyyy"
+                                                            )
+                                                        }}
+                                                    </span>
+                                                    <span v-if="!post.ends_at">
+                                                        Newer
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.stripe_status }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.name }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{
+                                                        post.updated_subscription_name
+                                                    }}
+                                                </td>
+
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{ post.quantity }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
                                                     {{
                                                         format(
                                                             parseISO(
-                                                                post.ends_at
+                                                                post.created_at
                                                             ),
-                                                            "dd/MM/yyyy"
+                                                            "dd/MM/yyyy HH:mm"
                                                         )
                                                     }}
-                                                </span>
-                                                <span v-if="!post.ends_at">
-                                                    Newer
-                                                </span>
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.stripe_status }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.name }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    post.updated_subscription_name
-                                                }}
-                                            </td>
-
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{ post.quantity }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.created_at
-                                                        ),
-                                                        "dd/MM/yyyy HH:mm"
-                                                    )
-                                                }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.updated_at
-                                                        ),
-                                                        "dd/MM/yyyy HH:mm"
-                                                    )
-                                                }}
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <button
-                                                    type="button"
-                                                    @click="handleEdit(post.id)"
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
                                                 >
-                                                    <PencilIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></PencilIcon>
-                                                </button>
-                                            </td>
-                                            <td class="myPrimaryTableTBodyTd">
-                                                <button
-                                                    type="button"
-                                                    @click="
-                                                        handleCancelSubscription(
-                                                            post.id
+                                                    {{
+                                                        format(
+                                                            parseISO(
+                                                                post.updated_at
+                                                            ),
+                                                            "dd/MM/yyyy HH:mm"
                                                         )
-                                                    "
-                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                                    }}
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
                                                 >
-                                                    <TrashIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                    ></TrashIcon>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </TransitionGroup>
-                                </tbody>
-                            </table>
+                                                    <button
+                                                        type="button"
+                                                        @click="
+                                                            handleEdit(post.id)
+                                                        "
+                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                    >
+                                                        <PencilIcon
+                                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        ></PencilIcon>
+                                                    </button>
+                                                </td>
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        @click="
+                                                            handleCancelSubscription(
+                                                                post.id
+                                                            )
+                                                        "
+                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                                    >
+                                                        <TrashIcon
+                                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        ></TrashIcon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </TransitionGroup>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

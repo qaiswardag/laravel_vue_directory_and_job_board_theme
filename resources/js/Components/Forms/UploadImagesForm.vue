@@ -83,12 +83,7 @@ const updateImagesPreview = async () => {
         );
 
         try {
-            // use timeout promise
-            const promise = usePromise(1000);
-            // wait for timeout
-            await promise;
-            // wait for all images to be loaded
-            const imagesData = await Promise.all(imagesPromise);
+            await Promise.all(imagesPromise);
             isLoading.value = false;
         } catch (error) {
             isLoading.value = false;
@@ -100,7 +95,6 @@ const updateImagesPreview = async () => {
 // submit
 const submit = () => {
     form.post(route("media.store", [props.team]), {
-        // errorBag: "updateProfileInformation",
         preserveScroll: true,
         onSuccess: () => {
             uploadOnSuccess();
