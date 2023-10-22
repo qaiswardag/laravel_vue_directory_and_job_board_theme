@@ -134,17 +134,6 @@ defineProps({
                             class="flex flex-wrap justify-start items-center gap-2"
                         >
                             <p
-                                v-if="post.address"
-                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
-                            >
-                                <MapPinIcon
-                                    class="w-3 h-3 stroke-1"
-                                ></MapPinIcon>
-                                <span>
-                                    {{ post.address }}
-                                </span>
-                            </p>
-                            <p
                                 v-for="state in states"
                                 :key="state"
                                 class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
@@ -154,6 +143,17 @@ defineProps({
                                 ></MapPinIcon>
                                 <span>
                                     {{ state.name }}
+                                </span>
+                            </p>
+                            <p
+                                v-if="post.address"
+                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            >
+                                <MapPinIcon
+                                    class="w-3 h-3 stroke-1"
+                                ></MapPinIcon>
+                                <span>
+                                    {{ post.address }}
                                 </span>
                             </p>
                         </div>

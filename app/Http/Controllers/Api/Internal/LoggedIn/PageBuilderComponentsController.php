@@ -45,7 +45,7 @@ class PageBuilderComponentsController extends Controller
             $query->where("published", true);
         }
 
-        $components = $query->paginate(2);
+        $components = $query->paginate(8);
 
         return [
             "component_categories" => $componentsCategories,
