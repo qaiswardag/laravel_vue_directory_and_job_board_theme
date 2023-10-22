@@ -1830,7 +1830,11 @@ const compiledCSS = {
         "sm:pl-96",
     ],
     grid: [
-        "grid ",
+        "grid",
+        "grid-auto-columns",
+        "auto-cols-min",
+        "auto-cols-max",
+        "auto-cols-fr",
         "grid-flow-row-dense",
         "grid-cols-3 ",
         "grid-rows-3",
@@ -1841,7 +1845,9 @@ const compiledCSS = {
         "grid-cols-[minmax(10rem,1fr)]",
         "grid-cols-[minmax(14rem,1fr)]",
         "grid-cols-[minmax(50px,100px)]",
+        "auto-cols-[minmax(100px,_1fr)]",
     ],
+    gridLg: ["lg:auto-cols-[minmax(100px,_4fr)]"],
     image: ["aspect-square", "aspect-[4/3]", "aspect-[9/16]", "aspect-[16/9]"],
 };
 

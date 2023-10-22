@@ -28,7 +28,7 @@ const storeSubscriptionPrices = function (user) {
             id: "three_stores",
             priceProductIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
             route: {
-                name: "stores.index",
+                name: "stripe.stores.create.subscription",
                 parameters: null,
             },
             price: "$50",
@@ -52,7 +52,7 @@ const storeSubscriptionPrices = function (user) {
                 name: "stores.index",
                 parameters: [],
             },
-            price: "$60",
+            price: "$100",
             frequencies: "monthly",
             billed: "Billed every 3 months",
             title: null,
@@ -68,15 +68,15 @@ const storeSubscriptionPrices = function (user) {
             mostPopular: false,
         },
         {
-            name: "Two Hundred Stores",
+            name: "Entreprice",
             id: "two_hundred_stores",
             route: {
                 name: "stores.index",
                 parameters: null,
             },
-            price: "$90",
-            frequencies: "monthly",
-            billed: "Billed every 3 months",
+            price: "",
+            frequencies: "",
+            billed: "",
             title: null,
             description:
                 "Dedicated support and infrastructure for your company.",

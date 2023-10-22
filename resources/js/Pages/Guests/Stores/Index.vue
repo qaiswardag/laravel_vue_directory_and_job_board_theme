@@ -4,6 +4,7 @@ import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
 import TemplateListResources from "@/Pages/Guests/TemplateListResources/TemplateListResources.vue";
+import { vueFetch } from "use-lightweight-fetch";
 </script>
 
 <template>

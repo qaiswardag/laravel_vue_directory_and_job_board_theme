@@ -1,1 +1,5 @@
-<template>TemplateListResources..... component</template>
+<template>
+    <div>
+        <p>TemplateListResources..... component</p>
+    </div>
+</template>

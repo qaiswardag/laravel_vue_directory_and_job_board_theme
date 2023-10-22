@@ -114,7 +114,11 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryParagraph {
-        @apply font-normal text-gray-700 text-base;
+        @apply font-normal text-gray-700 lg:text-base text-sm;
+    }
+
+    p {
+        @apply font-normal lg:text-base text-sm;
     }
 
     .myPrimaryParagraphError {
