@@ -1,6 +1,7 @@
 <?php
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Http\Controllers\Api\Internal\Guest\Features\StoresGuestIndexController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachComponentCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobCountriesController;
@@ -535,6 +536,17 @@ Route::middleware([
     });
 
 // Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
+// Pages for quests that are accessible to everyone
 Route::middleware([])
     // group of pages
     ->group(function () {
@@ -585,10 +597,11 @@ Route::middleware([])
         Route::get("/stores", [StoreStoreController::class, "index"])->name(
             "stores.index"
         );
-        // PROFESSIONAL #END
-        // PROFESSIONAL #END
-        // PROFESSIONAL #END
-        // PROFESSIONAL #END
+
+        Route::get("/api/guest/stores/index", [
+            StoresGuestIndexController::class,
+            "index",
+        ])->name("api.guest.stores.index");
 
         // PROFESSIONAL #START
         // PROFESSIONAL #START

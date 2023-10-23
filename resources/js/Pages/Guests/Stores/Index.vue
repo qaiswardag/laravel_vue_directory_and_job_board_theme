@@ -17,14 +17,20 @@ import { vueFetch } from "use-lightweight-fetch";
                     <p class="myPrimaryMainPageParagraphNotLoggedIn">
                         Discover the ultimate minimalist administration panel
                         with robust and multiple security layers and advanced
-                        features like Team Management, Blog and Media Library.
+                        features
+
+                        <Link :href="route('stores.index')" class="">
+                            stores.
+                        </Link>
                     </p>
                 </div>
             </template>
 
             <!-- Searchbar # start -->
             <!-- Searchbar # end -->
-            <TemplateListResources></TemplateListResources>
+            <TemplateListResources
+                pathList="api.guest.stores.index"
+            ></TemplateListResources>
         </GuestsLayout>
     </MainLayout>
 </template>
