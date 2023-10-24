@@ -2,6 +2,7 @@
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import UnqiueResource from "@/Components/PageTemplates/LoggedIn/Team/UnqiueResource.vue";
+import MainLayout from "@/Layouts/MainLayout.vue";
 
 const props = defineProps({
     post: {
@@ -35,23 +36,25 @@ const breadcrumbsLinks = [
 ];
 </script>
 <template>
-    <LoggedInLayout>
-        <Head title="Post" />
-        <template #header>
-            <h2 class="myPrimaryMainPageHeader">Store</h2>
-        </template>
-        <template #breadcrumbs>
-            <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
-        </template>
+    <MainLayout>
+        <LoggedInLayout>
+            <Head :title="post.title" />
+            <template #header>
+                <h2 class="myPrimaryMainPageHeader">Store</h2>
+            </template>
+            <template #breadcrumbs>
+                <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
+            </template>
 
-        <!-- Show Unique Resorce - start -->
-        <UnqiueResource
-            :post="post"
-            :authors="authors"
-            :categories="categories"
-            :states="states"
-            :coverImages="coverImages"
-        ></UnqiueResource>
-        <!-- sShow Unique Post - end -->
-    </LoggedInLayout>
+            <!-- Show Unique Resorce - start -->
+            <UnqiueResource
+                :post="post"
+                :authors="authors"
+                :categories="categories"
+                :states="states"
+                :coverImages="coverImages"
+            ></UnqiueResource>
+            <!-- sShow Unique Post - end -->
+        </LoggedInLayout>
+    </MainLayout>
 </template>

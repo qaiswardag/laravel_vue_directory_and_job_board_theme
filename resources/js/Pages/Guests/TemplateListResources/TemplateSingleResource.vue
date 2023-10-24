@@ -1,52 +1,58 @@
 <script setup>
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
-import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import UnqiueResource from "@/Components/PageTemplates/LoggedIn/Team/UnqiueResource.vue";
+import MainLayout from "@/Layouts/MainLayout.vue";
 
+// const props = defineProps({
+//     post: {
+//         required: true,
+//     },
+//     authors: {
+//         required: true,
+//     },
+//     currentUserTeam: {
+//         required: true,
+//     },
+//     categories: {
+//         required: true,
+//     },
+//     states: {
+//         required: true,
+//     },
+//     coverImages: {
+//         required: true,
+//     },
+// });
 const props = defineProps({
     post: {
-        required: true,
+        required: false,
     },
     authors: {
-        required: true,
+        required: false,
     },
     currentUserTeam: {
-        required: true,
-    },
-    countries: {
-        required: true,
-    },
-    states: {
-        required: true,
-    },
-    jobTypes: {
-        required: true,
+        required: false,
     },
     categories: {
-        required: true,
+        required: false,
+    },
+    states: {
+        required: false,
     },
     coverImages: {
-        required: true,
+        required: false,
     },
 });
-
-const breadcrumbsLinks = [
-    {
-        label: "All Jobs",
-        route: {
-            name: "team.jobs.index",
-            parameters: [props.currentUserTeam.id],
-        },
-    },
-];
 </script>
 <template>
     <MainLayout>
         <LoggedInLayout>
             <Head :title="post.title" />
             <template #header>
-                <h2 class="myPrimaryMainPageHeader">Job</h2>
+                <h2 class="myPrimaryMainPageHeader">
+                    ØØØØØØØØØØØØØØØØØØØØØØØØØØØØØØØØ
+                </h2>
             </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
@@ -56,9 +62,8 @@ const breadcrumbsLinks = [
             <UnqiueResource
                 :post="post"
                 :authors="authors"
-                :countries="countries"
-                :jobTypes="jobTypes"
                 :categories="categories"
+                :states="states"
                 :coverImages="coverImages"
             ></UnqiueResource>
             <!-- sShow Unique Post - end -->

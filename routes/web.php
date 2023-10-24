@@ -1,6 +1,8 @@
 <?php
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Http\Controllers\Api\Internal\Guest\Features\JobsGuestIndexController;
+use App\Http\Controllers\Api\Internal\Guest\Features\PostsGuestIndexController;
 use App\Http\Controllers\Api\Internal\Guest\Features\StoresGuestIndexController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachComponentCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobCategoriesController;
@@ -66,195 +68,657 @@ Route::get("/", function () {
     ]);
 })->name("home");
 
-// Pages that are accessible to everyone who is authenticated
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+// GUESTS ONLY # START
+Route::middleware([])->group(function () {
+    // USERS #START
+    // USERS #START
+    // USERS #START
+    // USERS #START
+    Route::get("/users", [UserController::class, "index"])->name(
+        "users.guest.index"
+    );
+    // unique user
+    Route::get("/users/{user}", [UserController::class, "show"])->name(
+        "users.guest.show"
+    );
+    // USERS #END
+    // USERS #END
+    // USERS #END
+    // USERS #END
+
+    // POSTS #START
+    // POSTS #START
+    // POSTS #START
+    // POSTS #START
+    Route::get("/blog", [PostPostController::class, "index"])->name(
+        "posts.guest.index"
+    );
+
+    Route::get("/api/guest/posts/index", [
+        PostsGuestIndexController::class,
+        "index",
+    ])->name("api.guest.posts.index");
+    // POSTS #END
+    // POSTS #END
+    // POSTS #END
+    // POSTS #END
+
+    // JOBS #START
+    // JOBS #START
+    // JOBS #START
+    // JOBS #START
+    Route::get("/jobs", [JobJobController::class, "index"])->name(
+        "jobs.guest.index"
+    );
+
+    Route::get("/api/guest/jobs/index", [
+        JobsGuestIndexController::class,
+        "index",
+    ])->name("api.guest.jobs.index");
+    // JOBS #END
+    // JOBS #END
+    // JOBS #END
+    // JOBS #END
+
+    // STORES #START
+    // STORES #START
+    // STORES #START
+    // STORES #START
+    Route::get("/stores", [StoreStoreController::class, "index"])->name(
+        "stores.guest.index"
+    );
+    Route::get("/ooo/{teamId}/stores/store/{store}/{slug}", [
+        StoreStoreController::class,
+        "show",
+    ])->name("stores.guest.show");
+
+    Route::get("/api/guest/stores/index", [
+        StoresGuestIndexController::class,
+        "index",
+    ])->name("api.guest.stores.index");
+
+    // PROFESSIONAL # START
+    // PROFESSIONAL # START
+    // PROFESSIONAL # START
+    // PROFESSIONAL # START
+    Route::get("/professional", [ProfessionalController::class, "index"])->name(
+        "professional.index"
+    );
+});
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+// GUESTS ONLY # END
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+// AUTH ONLY # START
+Route::middleware([
+    "auth:sanctum",
+    config("jetstream.auth_session"),
+    "verified",
+])->group(function () {
+    Route::get("/stripe/api/internal/payment/methods/{user}", [
+        PaymentMethodsController::class,
+        "index",
+    ])->name("stripe.api.internal.payment.methods.index");
+    //
+
+    Route::post("/stripe/payment/methods/store", [
+        UserPaymentMethodsController::class,
+        "store",
+    ])->name("stripe.payment.methods.store");
+
+    Route::post("/stripe/payment/methods/store/if/single", [
+        UserPaymentMethodsController::class,
+        "updateIfSinglePatmentMethod",
+    ])->name("stripe.payment.methods.store.if.single");
+
+    Route::post("/stripe/payment/methods/update", [
+        UserPaymentMethodsController::class,
+        "update",
+    ])->name("stripe.payment.methods.update");
+
+    Route::delete("/stripe/payment/methods/destroy", [
+        UserPaymentMethodsController::class,
+        "destroy",
+    ])->name("stripe.payment.methods.destroy");
+
+    Route::get("/stripe/stores/edit/subscription/{subscriptionId}", [
+        SubscriptionController::class,
+        "edit",
+    ])->name("stripe.stores.edit.subscription");
+
+    Route::post("/stripe/stores/edit/subscription/{subscriptionId}", [
+        SubscriptionController::class,
+        "update",
+    ])->name("stripe.stores.update.subscription");
+
+    Route::post("/stripe/stores/resume/subscription/{subscriptionId}", [
+        SubscriptionController::class,
+        "resume",
+    ])->name("stripe.stores.resume.subscription");
+
+    Route::delete("/stripe/stores/destroy/subscription/{subscriptionId}", [
+        SubscriptionController::class,
+        "destroy",
+    ])->name("stripe.stores.destroy.subscription");
+
+    Route::get("/stripe/stores/create/subscription", [
+        SubscriptionController::class,
+        "create",
+    ])->name("stripe.stores.create.subscription");
+
+    Route::post("/stripe/stores/store/subscription", [
+        SubscriptionController::class,
+        "store",
+    ])->name("stripe.stores.store.subscription");
+
+    Route::get("/user/subscriptions", [
+        SubscriptionController::class,
+        "index",
+    ])->name("stripe.payment.subscription.index");
+
+    Route::get("/user/payments", [
+        UserPaymentsController::class,
+        "index",
+    ])->name("stripe.payments.index");
+    //
+    //
+    Route::get("/stripe/api/internal/payments/index", [
+        PaymentsController::class,
+        "index",
+    ])->name("stripe.api.internal.payment.index");
+    //
+    //
+    Route::get("/stripe/api/payment/subscriptions/index", [
+        StripeSubscriptionController::class,
+        "index",
+    ])->name("stripe.api.internal.subscriptions.index");
+});
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+// AUTH ONLY # END
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
+// AUTH & THIER TEAM -> CAN READ ONLY # START
 Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
     "verified",
     // "ensure.can.read", // reader, editor, owner, administrator
-])
-    // group of pages
-    ->group(function () {
-        // USER & DASHBOARD #START
-        // USER & DASHBOARD #START
-        // USER & DASHBOARD #START
-        // USER & DASHBOARD #START
-        Route::get("/dashboard/stats/{teamId?}", [
-            DashboardStatsController::class,
-            "show",
-        ])->name("user.dashboard.stats");
-        Route::get("/dashboard", [
-            DashboardDashboardController::class,
-            "show",
-        ])->name("dashboard");
+])->group(function () {
+    // USER & DASHBOARD #START
+    // USER & DASHBOARD #START
+    // USER & DASHBOARD #START
+    // USER & DASHBOARD #START
+    Route::get("/dashboard/stats/{teamId?}", [
+        DashboardStatsController::class,
+        "show",
+    ])->name("user.dashboard.stats");
+    Route::get("/dashboard", [
+        DashboardDashboardController::class,
+        "show",
+    ])->name("dashboard");
 
-        Route::get("/user/profile/update", function () {
-            return Inertia::render("Profile/ProfileUpdate/ProfileUpdate");
-        })->name("user.profile.update");
-        Route::get("/user/profile/password", function () {
-            return Inertia::render("Profile/ProfilePassword/ProfilePassword");
-        })->name("user.profile.password");
+    Route::get("/user/profile/update", function () {
+        return Inertia::render("Profile/ProfileUpdate/ProfileUpdate");
+    })->name("user.profile.update");
+    Route::get("/user/profile/password", function () {
+        return Inertia::render("Profile/ProfilePassword/ProfilePassword");
+    })->name("user.profile.password");
 
-        Route::get("/user/profile/security", [
-            UserSessionsController::class,
-            "show",
-        ])->name("user.profile.security");
-        // USER & DASHBOARD #END
-        // USER & DASHBOARD #END
-        // USER & DASHBOARD #END
-        // USER & DASHBOARD #END
+    Route::get("/user/profile/security", [
+        UserSessionsController::class,
+        "show",
+    ])->name("user.profile.security");
+    // USER & DASHBOARD #END
+    // USER & DASHBOARD #END
+    // USER & DASHBOARD #END
+    // USER & DASHBOARD #END
 
-        // POSTS #START
-        // POSTS #START
-        // POSTS #START
-        // POSTS #START
-        Route::get("/team/posts/{teamId}", [
-            PostController::class,
-            "index",
-        ])->name("team.posts.index");
-        // unique post
-        Route::get("/team/{teamId}/posts/post/{post}/{slug}", [
-            PostController::class,
-            "show",
-        ])->name("team.posts.post.show");
-        // POSTS #END
-        // POSTS #END
-        // POSTS #END
-        // POSTS #END
+    // POSTS #START
+    // POSTS #START
+    // POSTS #START
+    // POSTS #START
+    Route::get("/team/posts/{teamId}", [PostController::class, "index"])->name(
+        "team.posts.index"
+    );
+    // unique post
+    Route::get("/team/{teamId}/posts/post/{post}/{slug}", [
+        PostController::class,
+        "show",
+    ])->name("team.posts.post.show");
+    // POSTS #END
+    // POSTS #END
+    // POSTS #END
+    // POSTS #END
 
-        // JOBS #START
-        // JOBS #START
-        // JOBS #START
-        // JOBS #START
-        Route::get("/team/jobs/{teamId}", [
-            JobController::class,
-            "index",
-        ])->name("team.jobs.index");
-        // unique job
-        Route::get("/team/{teamId}/jobs/job/{job}/{slug}", [
-            JobController::class,
-            "show",
-        ])->name("team.jobs.job.show");
-        // JOBS #END
-        // JOBS #END
-        // JOBS #END
-        // JOBS #END
+    // JOBS #START
+    // JOBS #START
+    // JOBS #START
+    // JOBS #START
+    Route::get("/team/jobs/{teamId}", [JobController::class, "index"])->name(
+        "team.jobs.index"
+    );
+    // unique job
+    Route::get("/team/{teamId}/jobs/job/{job}/{slug}", [
+        JobController::class,
+        "show",
+    ])->name("team.jobs.job.show");
+    // JOBS #END
+    // JOBS #END
+    // JOBS #END
+    // JOBS #END
 
-        // STORE #START
-        // STORE #START
-        // STORE #START
-        // STORE #START
-        Route::get("/team/stores/{teamId}", [
-            StoreController::class,
-            "index",
-        ])->name("team.stores.index");
-        // unique store
-        Route::get("/team/{teamId}/stores/store/{store}/{slug}", [
-            StoreController::class,
-            "show",
-        ])->name("team.stores.store.show");
-        // STORE #END
-        // STORE #END
-        // STORE #END
-        // STORE #END
+    // STORE #START
+    // STORE #START
+    // STORE #START
+    // STORE #START
+    Route::get("/team/stores/{teamId}", [
+        StoreController::class,
+        "index",
+    ])->name("team.stores.index");
+    // unique store
+    Route::get("/team/{teamId}/stores/store/{store}/{slug}", [
+        StoreController::class,
+        "show",
+    ])->name("team.stores.store.show");
+    // STORE #END
+    // STORE #END
+    // STORE #END
+    // STORE #END
 
-        // MEDIA #START
-        // MEDIA #START
-        // MEDIA #START
-        // MEDIA #START
-        Route::get("/team/media/index/{team}", [
-            LoggedInMediaLibraryController::class,
-            "index",
-        ])->name("team.media.index");
-        // media
-        Route::get("/team/media/{teamId}", [
-            MediaLibraryController::class,
-            "index",
-        ])->name("media.index");
-        // MEDIA #END
-        // MEDIA #END
-        // MEDIA #END
-        // MEDIA #END
+    // MEDIA #START
+    // MEDIA #START
+    // MEDIA #START
+    // MEDIA #START
+    Route::get("/team/media/index/{team}", [
+        LoggedInMediaLibraryController::class,
+        "index",
+    ])->name("team.media.index");
+    // media
+    Route::get("/team/media/{teamId}", [
+        MediaLibraryController::class,
+        "index",
+    ])->name("media.index");
+    // MEDIA #END
+    // MEDIA #END
+    // MEDIA #END
+    // MEDIA #END
 
-        // ATTACH USER, POST CATEGORIES, POST TYPES, JOB CATEGORIES, STORE CATEGORIES #START
-        // ATTACH USER #START
-        // ATTACH USER #START
-        // ATTACH USER #START
-        // USERS
-        Route::get("/team/attach/users/index/{team}", [
-            AttachUserController::class,
-            "index",
-        ])->name("attach.user.index");
+    // ATTACH USER, POST CATEGORIES, POST TYPES, JOB CATEGORIES, STORE CATEGORIES #START
+    // ATTACH USER #START
+    // ATTACH USER #START
+    // ATTACH USER #START
+    // USERS
+    Route::get("/team/attach/users/index/{team}", [
+        AttachUserController::class,
+        "index",
+    ])->name("attach.user.index");
 
-        // COMPONENT CATEGORIES
-        Route::get("/team/attach/component/categories/index/{team}", [
-            AttachComponentCategoriesController::class,
-            "index",
-        ])->name("attach.component.categories.index");
+    // COMPONENT CATEGORIES
+    Route::get("/team/attach/component/categories/index/{team}", [
+        AttachComponentCategoriesController::class,
+        "index",
+    ])->name("attach.component.categories.index");
 
-        // POST CATEGORIES
-        Route::get("/team/attach/post/categories/index/{team}", [
-            AttachPostCategoriesController::class,
-            "index",
-        ])->name("attach.post.categories.index");
+    // POST CATEGORIES
+    Route::get("/team/attach/post/categories/index/{team}", [
+        AttachPostCategoriesController::class,
+        "index",
+    ])->name("attach.post.categories.index");
 
-        // JOB COUNTRIES
-        Route::get("/team/attach/job/countries/index/{team}", [
-            AttachJobCountriesController::class,
-            "index",
-        ])->name("attach.job.countries.index");
-        // JOB STATES
-        Route::get("/team/attach/job/states/index/{team}", [
-            AttachJobStatesController::class,
-            "index",
-        ])->name("attach.job.states.index");
-        // JOB STATES
-        Route::get("/team/attach/job/categories/index/{team}", [
-            AttachJobCategoriesController::class,
-            "index",
-        ])->name("attach.job.categories.index");
-        // JOB CATEGORIES
-        Route::get("/team/attach/job/categories/index/{team}", [
-            AttachJobCategoriesController::class,
-            "index",
-        ])->name("attach.job.categories.index");
+    // JOB COUNTRIES
+    Route::get("/team/attach/job/countries/index/{team}", [
+        AttachJobCountriesController::class,
+        "index",
+    ])->name("attach.job.countries.index");
+    // JOB STATES
+    Route::get("/team/attach/job/states/index/{team}", [
+        AttachJobStatesController::class,
+        "index",
+    ])->name("attach.job.states.index");
+    // JOB STATES
+    Route::get("/team/attach/job/categories/index/{team}", [
+        AttachJobCategoriesController::class,
+        "index",
+    ])->name("attach.job.categories.index");
+    // JOB CATEGORIES
+    Route::get("/team/attach/job/categories/index/{team}", [
+        AttachJobCategoriesController::class,
+        "index",
+    ])->name("attach.job.categories.index");
 
-        // JOB TYPES
-        Route::get("/team/attach/job/types/index/{team}", [
-            AttachJobTypesController::class,
-            "index",
-        ])->name("attach.job.types.index");
+    // JOB TYPES
+    Route::get("/team/attach/job/types/index/{team}", [
+        AttachJobTypesController::class,
+        "index",
+    ])->name("attach.job.types.index");
 
-        // STORE STATES
-        Route::get("/team/attach/store/states/index/{team}", [
-            AttachStoreStatesController::class,
-            "index",
-        ])->name("attach.store.states.index");
-        // STORE CATEGORES
-        Route::get("/team/attach/store/categories/index/{team}", [
-            AttachStoreCategoriesController::class,
-            "index",
-        ])->name("attach.store.categories.index");
-        // ATTACH USER #END
-        // ATTACH USER #END
-        // ATTACH USER #END
-        // ATTACH USER #END
+    // STORE STATES
+    Route::get("/team/attach/store/states/index/{team}", [
+        AttachStoreStatesController::class,
+        "index",
+    ])->name("attach.store.states.index");
+    // STORE CATEGORES
+    Route::get("/team/attach/store/categories/index/{team}", [
+        AttachStoreCategoriesController::class,
+        "index",
+    ])->name("attach.store.categories.index");
+    // ATTACH USER #END
+    // ATTACH USER #END
+    // ATTACH USER #END
+    // ATTACH USER #END
 
-        // PAGE BUILDER #START
-        // PAGE BUILDER #START
-        // PAGE BUILDER #START
-        // PAGE BUILDER #START
-        Route::get("/team/components/index/{team}", [
-            PageBuilderComponentsController::class,
-            "index",
-        ])->name("components.index");
-        // PAGE BUILDER #END
-        // PAGE BUILDER #END
-        // PAGE BUILDER #END
-        // PAGE BUILDER #END
-    });
-
-// Pages that require can store, create and update authentication
+    // PAGE BUILDER #START
+    // PAGE BUILDER #START
+    // PAGE BUILDER #START
+    // PAGE BUILDER #START
+    Route::get("/team/components/index/{team}", [
+        PageBuilderComponentsController::class,
+        "index",
+    ])->name("components.index");
+    // PAGE BUILDER #END
+    // PAGE BUILDER #END
+    // PAGE BUILDER #END
+    // PAGE BUILDER #END
+});
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+// AUTH & THIER TEAM -> CAN READ ONLY # END
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # START
 Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
@@ -356,101 +820,6 @@ Route::middleware([
         "duplicate",
     ])->name("team.stores.duplicate");
 
-    // STORE CREATE SUBSCRIPTION
-    // STORE CREATE SUBSCRIPTION
-    Route::get("/stripe/api/internal/payment/methods/{user}", [
-        PaymentMethodsController::class,
-        "index",
-    ])->name("stripe.api.internal.payment.methods.index");
-    //
-
-    Route::post("/stripe/payment/methods/store", [
-        UserPaymentMethodsController::class,
-        "store",
-    ])->name("stripe.payment.methods.store");
-
-    Route::post("/stripe/payment/methods/store/if/single", [
-        UserPaymentMethodsController::class,
-        "updateIfSinglePatmentMethod",
-    ])->name("stripe.payment.methods.store.if.single");
-
-    Route::post("/stripe/payment/methods/update", [
-        UserPaymentMethodsController::class,
-        "update",
-    ])->name("stripe.payment.methods.update");
-
-    Route::delete("/stripe/payment/methods/destroy", [
-        UserPaymentMethodsController::class,
-        "destroy",
-    ])->name("stripe.payment.methods.destroy");
-
-    Route::get("/stripe/stores/edit/subscription/{subscriptionId}", [
-        SubscriptionController::class,
-        "edit",
-    ])->name("stripe.stores.edit.subscription");
-
-    Route::post("/stripe/stores/edit/subscription/{subscriptionId}", [
-        SubscriptionController::class,
-        "update",
-    ])->name("stripe.stores.update.subscription");
-
-    Route::post("/stripe/stores/resume/subscription/{subscriptionId}", [
-        SubscriptionController::class,
-        "resume",
-    ])->name("stripe.stores.resume.subscription");
-
-    Route::delete("/stripe/stores/destroy/subscription/{subscriptionId}", [
-        SubscriptionController::class,
-        "destroy",
-    ])->name("stripe.stores.destroy.subscription");
-
-    Route::get("/stripe/stores/create/subscription", [
-        SubscriptionController::class,
-        "create",
-    ])->name("stripe.stores.create.subscription");
-
-    Route::post("/stripe/stores/store/subscription", [
-        SubscriptionController::class,
-        "store",
-    ])->name("stripe.stores.store.subscription");
-
-    Route::get("/user/subscriptions", [
-        SubscriptionController::class,
-        "index",
-    ])->name("stripe.payment.subscription.index");
-
-    Route::get("/user/payments", [
-        UserPaymentsController::class,
-        "index",
-    ])->name("stripe.payments.index");
-    //
-    //
-    //
-    //
-    Route::get("/stripe/api/internal/payments/index", [
-        PaymentsController::class,
-        "index",
-    ])->name("stripe.api.internal.payment.index");
-    //
-    //
-    Route::get("/stripe/api/payment/subscriptions/index", [
-        StripeSubscriptionController::class,
-        "index",
-    ])->name("stripe.api.internal.subscriptions.index");
-    // STORE CREATE SUBSCRIPTION
-    // STORE CREATE SUBSCRIPTION
-    // STORES #END
-    // STORES #END
-    // STORES #END
-    // STORES #END
-
-    // SUBSCRIPTIONS #START
-    // SUBSCRIPTIONS #START
-    // SUBSCRIPTIONS #START
-    // SUBSCRIPTIONS #START
-    // SUBSCRIPTIONS #START
-    // SUBSCRIPTIONS #START
-
     // MEDIA #START
     // MEDIA #START
     // MEDIA #START
@@ -472,155 +841,217 @@ Route::middleware([
     // MEDIA #END
     // MEDIA #END
 });
-
-// Pages that require can destroy authentication
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+// AUTH & THIER TEAM -> CAN CREATE & UPDATE ONLY # END
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # START
 Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
     "verified",
     // "ensure.can.destroy", // owner, administrator
-])
-    // group of pages
-    ->group(function () {
-        // POSTS #START
-        // POSTS #START
-        // POSTS #START
-        // POSTS #START
-        Route::delete("/team/posts/post/{post}/{team}", [
-            PostController::class,
-            "destroy",
-        ])->name("team.posts.post.destroy");
-        // POSTS #END
-        // POSTS #END
-        // POSTS #END
-        // POSTS #END
+])->group(function () {
+    // POSTS #START
+    // POSTS #START
+    // POSTS #START
+    // POSTS #START
+    Route::delete("/team/posts/post/{post}/{team}", [
+        PostController::class,
+        "destroy",
+    ])->name("team.posts.post.destroy");
+    // POSTS #END
+    // POSTS #END
+    // POSTS #END
+    // POSTS #END
 
-        // JOBS #START
-        // JOBS #START
-        // JOBS #START
-        // JOBS #START
-        Route::delete("/team/jobs/job/{job}/{team}", [
-            JobController::class,
-            "destroy",
-        ])->name("team.jobs.job.destroy");
-        // JOBS #END
-        // JOBS #END
-        // JOBS #END
-        // JOBS #END
+    // JOBS #START
+    // JOBS #START
+    // JOBS #START
+    // JOBS #START
+    Route::delete("/team/jobs/job/{job}/{team}", [
+        JobController::class,
+        "destroy",
+    ])->name("team.jobs.job.destroy");
+    // JOBS #END
+    // JOBS #END
+    // JOBS #END
+    // JOBS #END
 
-        // STORES #START
-        // STORES #START
-        // STORES #START
-        // STORES #START
-        Route::delete("/team/stores/store/{store}/{team}", [
-            StoreController::class,
-            "destroy",
-        ])->name("team.stores.store.destroy");
-        // STORES #END
-        // STORES #END
-        // STORES #END
-        // STORES #END
+    // STORES #START
+    // STORES #START
+    // STORES #START
+    // STORES #START
+    Route::delete("/team/stores/store/{store}/{team}", [
+        StoreController::class,
+        "destroy",
+    ])->name("team.stores.store.destroy");
+    // STORES #END
+    // STORES #END
+    // STORES #END
+    // STORES #END
 
-        // MEDIA #START
-        // MEDIA #START
-        // MEDIA #START
-        // MEDIA #START
-        Route::post("/team/media/image/destroy/{team}", [
-            MediaLibraryController::class,
-            "destroy",
-        ])->name("media.destroy");
-        // MEDIA #END
-        // MEDIA #END
-        // MEDIA #END
-        // MEDIA #END
-    });
-
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-// Pages for quests that are accessible to everyone
-Route::middleware([])
-    // group of pages
-    ->group(function () {
-        // USERS #START
-        // USERS #START
-        // USERS #START
-        // USERS #START
-        Route::get("/users", [UserController::class, "index"])->name(
-            "users.index"
-        );
-        // unique user
-        Route::get("/users/{user}", [UserController::class, "show"])->name(
-            "users.show"
-        );
-        // USERS #END
-        // USERS #END
-        // USERS #END
-        // USERS #END
-
-        // POSTS #START
-        // POSTS #START
-        // POSTS #START
-        // POSTS #START
-        Route::get("/blog", [PostPostController::class, "index"])->name(
-            "blog.index"
-        );
-        // POSTS #END
-        // POSTS #END
-        // POSTS #END
-        // POSTS #END
-
-        // JOBS #START
-        // JOBS #START
-        // JOBS #START
-        // JOBS #START
-        Route::get("/jobs", [JobJobController::class, "index"])->name(
-            "jobs.index"
-        );
-        // JOBS #END
-        // JOBS #END
-        // JOBS #END
-        // JOBS #END
-
-        // STORES #START
-        // STORES #START
-        // STORES #START
-        // STORES #START
-        Route::get("/stores", [StoreStoreController::class, "index"])->name(
-            "stores.index"
-        );
-
-        Route::get("/api/guest/stores/index", [
-            StoresGuestIndexController::class,
-            "index",
-        ])->name("api.guest.stores.index");
-
-        // PROFESSIONAL #START
-        // PROFESSIONAL #START
-        // PROFESSIONAL #START
-        // PROFESSIONAL #START
-        Route::get("/professional", [
-            ProfessionalController::class,
-            "index",
-        ])->name("professional.index");
-        // PROFESSIONAL #END
-        // PROFESSIONAL #END
-        // PROFESSIONAL #END
-        // PROFESSIONAL #END
-    });
-
-// ADMIN ONLY #START
-// ADMIN ONLY #START
-// ADMIN ONLY #START
-// ADMIN ONLY #START
+    // MEDIA #START
+    // MEDIA #START
+    // MEDIA #START
+    // MEDIA #START
+    Route::post("/team/media/image/destroy/{team}", [
+        MediaLibraryController::class,
+        "destroy",
+    ])->name("media.destroy");
+    // MEDIA #END
+    // MEDIA #END
+    // MEDIA #END
+    // MEDIA #END
+});
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+// AUTH & THIER TEAM -> CAN DESTROY ONLY # END
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
+// ADMIN ONLY -> # START
 Route::middleware([
     "auth:sanctum",
     config("jetstream.auth_session"),
@@ -671,7 +1102,6 @@ Route::middleware([
     ])->name("admin.components.component.edit");
 
     //
-    //
     Route::post("/admin/components/component/store", [
         PageBuilderController::class,
         "store",
@@ -693,13 +1123,24 @@ Route::middleware([
         PageBuilderController::class,
         "destroy",
     ])->name("admin.components.component.destroy");
-    // ADMIN ONLY #PAGE BUILDER #END
-    // ADMIN ONLY #PAGE BUILDER #END
-    // ADMIN ONLY #PAGE BUILDER #END
-    // ADMIN ONLY #PAGE BUILDER #END
-
-    // ADMIN ONLY #END
-    // ADMIN ONLY #END
-    // ADMIN ONLY #END
-    // ADMIN ONLY #END
+    // ADMIN ONLY #PAGE BUILDER # END
+    // ADMIN ONLY #PAGE BUILDER # END
+    // ADMIN ONLY #PAGE BUILDER # END
+    // ADMIN ONLY #PAGE BUILDER # END
 });
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END
+// ADMIN ONLY -> # END

@@ -28,28 +28,28 @@ const navigation = [
     {
         label: "Stores",
         route: {
-            name: "stores.index",
+            name: "stores.guest.index",
             parameters: [],
         },
     },
     {
         label: "Jobs",
         route: {
-            name: "jobs.index",
+            name: "jobs.guest.index",
             parameters: [],
         },
     },
     {
         label: "Blog",
         route: {
-            name: "blog.index",
+            name: "posts.guest.index",
             parameters: [],
         },
     },
     {
         label: "Users",
         route: {
-            name: "users.index",
+            name: "users.guest.index",
             parameters: [],
         },
     },

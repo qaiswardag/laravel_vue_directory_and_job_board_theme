@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api\Internal\Guest\Features;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store\Store;
+use App\Models\Job\Job;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class StoresGuestIndexController extends Controller
+class JobsGuestIndexController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,7 @@ class StoresGuestIndexController extends Controller
     public function index(Request $request)
     {
         sleep(1);
-
-        $currentClickedPage = "";
-
-        $query = Store::latest()
+        $query = Job::latest()
             ->with("categories")
             ->with("coverImages")
             ->with("states")
@@ -29,18 +26,8 @@ class StoresGuestIndexController extends Controller
 
         $posts = $query->paginate(10);
 
-        // check for search_query
-        if ($request->search_query !== null) {
-            $searchQuery = $request->search_query;
-        }
-        // check for current page
-        if ($request->page !== null) {
-            $currentClickedPage = $request->page;
-        }
-
         return [
             "posts" => $posts,
-            "current_clicked_page" => $currentClickedPage,
         ];
     }
 
@@ -65,19 +52,7 @@ class StoresGuestIndexController extends Controller
      */
     public function show(string $id)
     {
-        dd("heeer");
-        // $postRenderView = "Stores/Show/ShowTeamStore";
-        $postRenderView =
-            "Guests/TemplateListResources/TemplateSingleResource.vue";
-
-        // Render the store
-        return Inertia::render($postRenderView, [
-            "post" => null,
-            "authors" => null,
-            "states" => null,
-            "categories" => null,
-            "coverImages" => null,
-        ]);
+        //
     }
 
     /**
