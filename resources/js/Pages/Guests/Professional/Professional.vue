@@ -56,12 +56,6 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                                 'rounded-3xl p-8 hover:border-2 hover:border-myPrimaryLinkColor relative',
                             ]"
                         >
-                            <p
-                                v-if="product.title"
-                                class="myPrimaryParagraph text-xs italic absolute top-1 left-0 right-0 text-center"
-                            >
-                                {{ product.title }}
-                            </p>
                             <h3
                                 :id="product.id"
                                 :class="[
@@ -72,6 +66,12 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                                 ]"
                             >
                                 {{ product.name }}
+                                <span
+                                    v-if="product.title"
+                                    class="text-xs italic font-medium"
+                                >
+                                    {{ product.title }}
+                                </span>
                             </h3>
                             <p class="mt-4 text-sm leading-6 text-gray-600">
                                 {{ product.description }}
