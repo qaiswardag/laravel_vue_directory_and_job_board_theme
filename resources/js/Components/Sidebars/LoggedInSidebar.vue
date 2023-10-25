@@ -45,7 +45,7 @@ import {
                     <template
                         v-if="
                             $page.props.user.current_team.coverImagesWithLogos
-                                ?.logos
+                                ?.logos.length !== 0
                         "
                     >
                         <Link :href="route('user.teams.switch')">
@@ -59,6 +59,11 @@ import {
                                 imageWidth="w-16"
                                 :roundedFull="true"
                             ></ThumbnailSmallImageSlider>
+                        </Link>
+                        <Link :href="route('user.teams.switch')">
+                            <p class="myPrimaryParagraph font-medium mt-2">
+                                {{ $page.props.currentUserTeam?.name }}
+                            </p>
                         </Link>
                     </template>
                 </div>

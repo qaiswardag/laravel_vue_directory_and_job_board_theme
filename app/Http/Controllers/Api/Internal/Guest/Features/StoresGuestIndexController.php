@@ -15,10 +15,10 @@ class StoresGuestIndexController extends Controller
     public function index(Request $request)
     {
         sleep(1);
-
         $currentClickedPage = "";
 
         $query = Store::latest()
+            ->with("team")
             ->with("categories")
             ->with("coverImages")
             ->with("states")
@@ -63,16 +63,15 @@ class StoresGuestIndexController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($teamSlug, $teamId, $postId, $postSlug)
     {
-        dd("heeer");
-        // $postRenderView = "Stores/Show/ShowTeamStore";
-        $postRenderView =
-            "Guests/TemplateListResources/TemplateSingleResource.vue";
+        $post = Store::findOrFail($postId);
+
+        $postRenderView = "Guests/TemplateListResources/TemplateSingleResource";
 
         // Render the store
         return Inertia::render($postRenderView, [
-            "post" => null,
+            "post" => $post,
             "authors" => null,
             "states" => null,
             "categories" => null,

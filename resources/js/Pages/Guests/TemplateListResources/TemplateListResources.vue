@@ -6,6 +6,9 @@ import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import { onMounted, ref } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import slugify from "slugify";
+import config from "@/utils/config";
+import { TailwindPagination } from "laravel-vue-pagination";
 
 const props = defineProps({
     nameList: {
@@ -34,8 +37,12 @@ const {
     isSuccess: isSuccessList,
 } = vueFetch();
 
-const getList = function () {
-    handleGetList(route(props.pathList));
+const getList = function (page) {
+    handleGetList(
+        route(props.pathList, {
+            page: page,
+        })
+    );
 };
 
 // form
@@ -69,18 +76,25 @@ const handleCategory = function (category) {
     });
 };
 
-const goToSinglePost = function (current_teamId, postId, postSlug) {
+const goToSinglePost = function (teamName, teamId, postId, postSlug) {
+    const teamSlug = slugify(teamName, config.slugifyOptions);
     router.get(
         route(props.nameList + "." + "guest.show", [
-            current_teamId,
+            teamSlug,
+            teamId,
             postId,
             postSlug,
         ])
     );
 };
 
+// get result for "laravel pagination" package
+const getResultsForPage = (page = 1) => {
+    getList(page);
+};
+
 onMounted(() => {
-    getList();
+    getList(1);
 
     if (props.oldInput?.search_query) {
         searchForm.search_query = props.oldInput.search_query;
@@ -190,8 +204,8 @@ onMounted(() => {
                                             :squareButtons="true"
                                             @firstButtonClick="
                                                 goToSinglePost(
-                                                    $page.props.user
-                                                        .current_team.id,
+                                                    post.team.name,
+                                                    post.team.id,
                                                     post.id,
                                                     post.slug
                                                 )
@@ -203,8 +217,8 @@ onMounted(() => {
                                     <button
                                         @click="
                                             goToSinglePost(
-                                                $page.props.user.current_team
-                                                    .id,
+                                                post.team.name,
+                                                post.team.id,
                                                 post.id,
                                                 post.slug
                                             )
@@ -259,6 +273,47 @@ onMounted(() => {
                         </ul>
                     </div>
                     <!-- List Grid # end -->
+
+                    <!-- Pagination # start -->
+                    <div
+                        v-if="fetchedDataList && fetchedDataList.posts"
+                        class="flex items-center justify-center border-t border-gray-200 bg-white py-3 mt-4 gap-2"
+                    >
+                        <TailwindPagination
+                            :limit="1"
+                            :keepLength="true"
+                            :class="[
+                                'space-x-1',
+                                'shadow-none',
+                                'tailwind-pagination-package',
+                            ]"
+                            :active-classes="[
+                                'bg-myPrimaryLinkColor',
+                                'text-white',
+                                'rounded-full',
+                            ]"
+                            :item-classes="[
+                                'p-0',
+                                'm-0',
+                                'border-none',
+                                'bg-myPrimaryLightGrayColor',
+                                'shadow-sm',
+                                'hover:bg-gray-300',
+                                'text-myPrimaryDarkGrayColor',
+                                'rounded-full',
+                            ]"
+                            :data="fetchedDataList.posts"
+                            @pagination-change-page="getResultsForPage"
+                        >
+                            <template #prev-nav>
+                                <span> Prev </span>
+                            </template>
+                            <template #next-nav>
+                                <span>Next</span>
+                            </template>
+                        </TailwindPagination>
+                    </div>
+                    <!-- Pagination # end -->
 
                     <p class="my-12">
                         List er:

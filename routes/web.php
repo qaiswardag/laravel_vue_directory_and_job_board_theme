@@ -192,8 +192,9 @@ Route::middleware([])->group(function () {
     Route::get("/stores", [StoreStoreController::class, "index"])->name(
         "stores.guest.index"
     );
-    Route::get("/ooo/{teamId}/stores/store/{store}/{slug}", [
-        StoreStoreController::class,
+
+    Route::get("/stores/{teamSlug}/{teamId}/{postId}/{postSlug}/", [
+        StoresGuestIndexController::class,
         "show",
     ])->name("stores.guest.show");
 
