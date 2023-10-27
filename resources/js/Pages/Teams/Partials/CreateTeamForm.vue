@@ -177,8 +177,6 @@ onBeforeMount(() => {});
 
         <template #main>
             <div class="myInputsOrganization">
-                <p class="my-12">post form is: {{ postForm }}</p>
-
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Team Information

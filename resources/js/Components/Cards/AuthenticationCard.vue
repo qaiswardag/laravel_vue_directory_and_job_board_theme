@@ -17,7 +17,7 @@ defineProps({
         </div>
 
         <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white mx.32 border border-gray-100 overflow-hidden rounded opacity-90"
+            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white mx.32 border border-gray-100 overflow-hidden rounded opacity-95"
         >
             <slot />
         </div>

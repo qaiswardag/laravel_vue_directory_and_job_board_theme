@@ -26,6 +26,7 @@ return new class extends Migration {
             $table->string("title");
             $table->string("slug");
             $table->string("address");
+            $table->string("floor");
             $table->longText("content");
             $table->boolean("published");
 

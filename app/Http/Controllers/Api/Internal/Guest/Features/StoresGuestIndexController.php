@@ -67,7 +67,7 @@ class StoresGuestIndexController extends Controller
     {
         $post = Store::findOrFail($postId);
 
-        $postRenderView = "Guests/TemplateListResources/TemplateSingleResource";
+        $postRenderView = "Guests/Items/SingleItem";
 
         // Render the store
         return Inertia::render($postRenderView, [

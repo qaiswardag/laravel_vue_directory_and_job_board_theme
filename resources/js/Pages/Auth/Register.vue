@@ -38,144 +38,165 @@ const submit = () => {
 
 <template>
     <MainLayout>
-        <GuestsLayout>
-            <Head title="Sign up" />
-            <template #header>
-                <div class="myPrimaryMainPageHeaderParagraph pb-8 text-center">
-                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Sign up</h1>
-                </div>
-            </template>
+        <div
+            class="bg-[url('https://images.unsplash.com/photo-1543728069-a3f97c5a2f32?auto=format&fit=crop&q=80&w=3269&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] w-full min-h-screen bg-cover"
+        >
+            <GuestsLayout>
+                <Head title="Sign up" />
+                <template #header>
+                    <div
+                        class="myPrimaryMainPageHeaderParagraph pb-8 text-center"
+                    >
+                        <h1
+                            class="myPrimaryMainPageHeaderNotLoggedIn text-white"
+                        >
+                            Sign up
+                        </h1>
+                    </div>
+                </template>
 
-            <div>
-                <AuthenticationCard :css="'opacity-100'">
-                    <template #logo>
-                        <AuthenticationCardLogo />
-                    </template>
-                    <form @submit.prevent="submit">
-                        <div class="mt-4 mb-8">
-                            <h1 class="mySecondaryHeader text-center">
-                                Sign up and get started today
-                            </h1>
-                            <p class="myPrimaryParagraph text-center">
-                                Join a community of thousands of daily shoppers.
-                            </p>
-                        </div>
-                        <div class="myInputsFamily">
+                <div>
+                    <AuthenticationCard :css="'opacity-100'">
+                        <template #logo>
+                            <AuthenticationCardLogo />
+                        </template>
+                        <form @submit.prevent="submit">
+                            <div class="mt-4 mb-8">
+                                <h1 class="mySecondaryHeader text-center">
+                                    Sign up and get started today
+                                </h1>
+                                <p class="myPrimaryParagraph text-center">
+                                    Join a community of thousands of daily
+                                    shoppers.
+                                </p>
+                            </div>
+                            <div class="myInputsFamily">
+                                <div class="myInputGroup">
+                                    <InputLabel
+                                        for="first_name"
+                                        value="First name"
+                                    />
+                                    <TextInput
+                                        id="first_name"
+                                        v-model="form.first_name"
+                                        autofocus
+                                        type="text"
+                                        autocomplete="off"
+                                    />
+                                    <InputError
+                                        :message="form.errors.first_name"
+                                    />
+                                </div>
+                                <div class="myInputGroup">
+                                    <InputLabel
+                                        for="last_name"
+                                        value="Last name"
+                                    />
+                                    <TextInput
+                                        id="last_name"
+                                        v-model="form.last_name"
+                                        type="text"
+                                        autocomplete="off"
+                                    />
+                                    <InputError
+                                        :message="form.errors.last_name"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="myInputGroup">
+                                <InputLabel for="email" value="Email" />
+                                <TextInput
+                                    id="email"
+                                    v-model="form.email"
+                                    type="email"
+                                    autocomplete="email"
+                                />
+                                <InputError :message="form.errors.email" />
+                            </div>
+
+                            <div class="myInputGroup">
+                                <InputLabel for="password" value="Password" />
+                                <TextInput
+                                    id="password"
+                                    v-model="form.password"
+                                    type="password"
+                                    autocomplete="new-password"
+                                />
+                                <InputError :message="form.errors.password" />
+                            </div>
+
                             <div class="myInputGroup">
                                 <InputLabel
-                                    for="first_name"
-                                    value="First name"
+                                    for="password_confirmation"
+                                    value="Confirm Password"
                                 />
                                 <TextInput
-                                    id="first_name"
-                                    v-model="form.first_name"
-                                    autofocus
-                                    type="text"
-                                    autocomplete="off"
+                                    id="password_confirmation"
+                                    v-model="form.password_confirmation"
+                                    type="password"
+                                    autocomplete="new-password"
                                 />
-                                <InputError :message="form.errors.first_name" />
-                            </div>
-                            <div class="myInputGroup">
-                                <InputLabel for="last_name" value="Last name" />
-                                <TextInput
-                                    id="last_name"
-                                    v-model="form.last_name"
-                                    type="text"
-                                    autocomplete="off"
+                                <InputError
+                                    :message="form.errors.password_confirmation"
                                 />
-                                <InputError :message="form.errors.last_name" />
                             </div>
-                        </div>
 
-                        <div class="myInputGroup">
-                            <InputLabel for="email" value="Email" />
-                            <TextInput
-                                id="email"
-                                v-model="form.email"
-                                type="email"
-                                autocomplete="email"
-                            />
-                            <InputError :message="form.errors.email" />
-                        </div>
-
-                        <div class="myInputGroup">
-                            <InputLabel for="password" value="Password" />
-                            <TextInput
-                                id="password"
-                                v-model="form.password"
-                                type="password"
-                                autocomplete="new-password"
-                            />
-                            <InputError :message="form.errors.password" />
-                        </div>
-
-                        <div class="myInputGroup">
-                            <InputLabel
-                                for="password_confirmation"
-                                value="Confirm Password"
-                            />
-                            <TextInput
-                                id="password_confirmation"
-                                v-model="form.password_confirmation"
-                                type="password"
-                                autocomplete="new-password"
-                            />
-                            <InputError
-                                :message="form.errors.password_confirmation"
-                            />
-                        </div>
-
-                        <div
-                            v-if="
-                                $page.props.jetstream
-                                    .hasTermsAndPrivacyPolicyFeature
-                            "
-                            class="mt-4"
-                        >
-                            <InputLabel for="terms">
-                                <div class="flex items-center">
-                                    <Checkbox
-                                        id="terms"
-                                        v-model:checked="form.terms"
-                                        name="terms"
-                                    />
-
-                                    <div class="ml-2">
-                                        I agree to the
-                                        <a
-                                            target="_blank"
-                                            :href="route('terms.show')"
-                                            class="underline text-sm text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
-                                            >Terms of Service</a
-                                        >
-                                        and
-                                        <a
-                                            target="_blank"
-                                            :href="route('policy.show')"
-                                            class="underline text-sm text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
-                                            >Privacy Policy</a
-                                        >
-                                    </div>
-                                </div>
-                                <InputError :message="form.errors.terms" />
-                            </InputLabel>
-                        </div>
-
-                        <div class="flex items-center justify-between mt-4">
-                            <Link :href="route('login')" class="myPrimaryLink">
-                                Already registered?
-                            </Link>
-
-                            <SubmitButton
-                                :disabled="form.processing"
-                                buttonText="Register"
+                            <div
+                                v-if="
+                                    $page.props.jetstream
+                                        .hasTermsAndPrivacyPolicyFeature
+                                "
+                                class="mt-4"
                             >
-                            </SubmitButton>
-                        </div>
-                    </form>
-                </AuthenticationCard>
-            </div>
-            <EmptySectionBorder></EmptySectionBorder>
-        </GuestsLayout>
+                                <InputLabel for="terms">
+                                    <div class="flex items-center">
+                                        <Checkbox
+                                            id="terms"
+                                            v-model:checked="form.terms"
+                                            name="terms"
+                                        />
+
+                                        <div class="ml-2">
+                                            I agree to the
+                                            <a
+                                                target="_blank"
+                                                :href="route('terms.show')"
+                                                class="underline text-sm text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
+                                                >Terms of Service</a
+                                            >
+                                            and
+                                            <a
+                                                target="_blank"
+                                                :href="route('policy.show')"
+                                                class="underline text-sm text-myPrimaryDarkGrayColor hover:text-myPrimaryDarkGrayColor"
+                                                >Privacy Policy</a
+                                            >
+                                        </div>
+                                    </div>
+                                    <InputError :message="form.errors.terms" />
+                                </InputLabel>
+                            </div>
+
+                            <div class="flex items-center justify-between mt-4">
+                                <Link
+                                    :href="route('login')"
+                                    class="myPrimaryLink"
+                                >
+                                    Already registered?
+                                </Link>
+
+                                <SubmitButton
+                                    :disabled="form.processing"
+                                    buttonText="Register"
+                                >
+                                </SubmitButton>
+                            </div>
+                        </form>
+                    </AuthenticationCard>
+                </div>
+                <EmptySectionBorder></EmptySectionBorder>
+            </GuestsLayout>
+        </div>
     </MainLayout>
 </template>

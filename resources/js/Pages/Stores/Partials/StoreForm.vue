@@ -347,6 +347,7 @@ const postForm = useForm({
     title: "",
     slug: "",
     address: "",
+    floor: "",
     content: "",
     published: true,
     team: props.currentUserTeam,
@@ -471,6 +472,7 @@ const clearForm = function () {
     // slug
     postForm.slug = "";
     postForm.address = "";
+    postForm.floor = "";
     isSlugEditable.value = false;
     slugValueTitle.value = "";
     slugValueCustom.value = "";
@@ -746,6 +748,7 @@ onBeforeMount(async () => {
 
             postForm.title = formLocalStorage.title;
             postForm.address = formLocalStorage.address;
+            postForm.floor = formLocalStorage.floor;
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
 
@@ -886,6 +889,7 @@ onBeforeMount(async () => {
 
         postForm.title = props.post.title;
         postForm.address = props.post.address;
+        postForm.floor = props.post.floor;
         // slug logic
         // slug is editable when editing an existing post
         isSlugEditable.value = true;
@@ -1013,20 +1017,34 @@ const pageBuilder = new PageBuilder(store);
                     <InputError :message="postForm.errors.slug" />
                 </div>
                 <!-- post slug end -->
-                <!-- post address start -->
-                <div class="myInputGroup">
-                    <InputLabel for="address" value="Store address" />
-                    <TextInput
-                        placeholder="Enter store address.."
-                        id="address"
-                        v-model="postForm.address"
-                        type="text"
-                        class="block w-full mt-1"
-                        autocomplete="off"
-                    />
-                    <InputError :message="postForm.errors.address" />
+                <!-- post address and floor start -->
+                <div class="md:flex items-center justify-center myPrimaryGap">
+                    <div class="myInputGroup md:w-2/3">
+                        <InputLabel for="address" value="Store address" />
+                        <TextInput
+                            placeholder="Enter store address.."
+                            id="address"
+                            v-model="postForm.address"
+                            type="text"
+                            class="block w-full mt-1"
+                            autocomplete="off"
+                        />
+                        <InputError :message="postForm.errors.address" />
+                    </div>
+                    <div class="myInputGroup md:w-1/3">
+                        <InputLabel for="floor" value="Store floor" />
+                        <TextInput
+                            placeholder="Enter store floor.."
+                            type="number"
+                            id="floor"
+                            v-model="postForm.floor"
+                            class="block w-full mt-1"
+                            autocomplete="off"
+                        />
+                        <InputError :message="postForm.errors.floor" />
+                    </div>
                 </div>
-                <!-- post address end -->
+                <!-- post address and floor end -->
             </div>
 
             <!-- Builder #start -->
