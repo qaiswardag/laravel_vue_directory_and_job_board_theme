@@ -52,7 +52,8 @@ class TeamsUsers extends Command
             Team::factory()->create([
                 "id" => 1,
                 "user_id" => User::find(1)->id,
-                "name" => "myself",
+                "name" => "Dubai Mall",
+                "name" => "Dubai Mall",
                 "public" => true,
                 "personal_team" => false,
             ]);

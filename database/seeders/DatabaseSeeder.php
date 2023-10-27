@@ -59,7 +59,8 @@ class DatabaseSeeder extends Seeder
             Team::factory()->create([
                 "id" => 1,
                 "user_id" => User::find(1)->id,
-                "name" => "myself",
+                "name" => "Dubai Mall",
+                "slug" => "Dubai Mall",
                 "public" => true,
                 "personal_team" => false,
             ]);
@@ -86,6 +87,7 @@ class DatabaseSeeder extends Seeder
             "id" => 2,
             "user_id" => User::find(2)->id,
             "name" => "Lacoste",
+            "slug" => "Lacoste",
             "public" => true,
             "personal_team" => false,
         ]);
@@ -106,6 +108,7 @@ class DatabaseSeeder extends Seeder
             "id" => 3,
             "user_id" => User::find(3)->id,
             "name" => "adidas",
+            "slug" => "adidas",
             "public" => true,
             "personal_team" => false,
         ]);
@@ -140,6 +143,7 @@ class DatabaseSeeder extends Seeder
             "id" => 5,
             "user_id" => User::find(5)->id,
             "name" => "Harpo Productions Oprah",
+            "slug" => "Harpo Productions Oprah",
             "public" => true,
             "personal_team" => false,
         ]);
@@ -157,6 +161,7 @@ class DatabaseSeeder extends Seeder
             "id" => 6,
             "user_id" => User::find(6)->id,
             "name" => "IBI Interiors",
+            "slug" => "IBI Interiors",
             "public" => true,
             "personal_team" => false,
         ]);

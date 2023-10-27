@@ -138,8 +138,8 @@ class Team extends JetstreamTeam
             $number = 1; // set a default number
             $teamSlug = $team->slug;
 
-            // generate a new username using the first name and last name
-            $slug = Str::lower(Str::slug($teamSlug));
+            // generate a new slug using the first name and last name
+            $slug = Str::lower(Str::slug($teamSlug, "_"));
 
             // check if the username already exists in the database
             while (static::where("slug", $slug)->exists()) {

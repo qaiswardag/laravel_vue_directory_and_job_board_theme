@@ -21,6 +21,7 @@ class Store extends Model
         "title",
         "slug",
         "address",
+        "floor",
         "content",
         "published",
         "tags",

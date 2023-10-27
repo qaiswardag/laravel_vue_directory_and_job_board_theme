@@ -133,6 +133,7 @@ class StoreController extends Controller
 
         $title = $request->title;
         $address = $request->address;
+        $floor = $request->floor;
         $content = $request->content;
         $userId = $request->user_id;
 
@@ -146,6 +147,7 @@ class StoreController extends Controller
             "title" => $title,
             "slug" => $slug,
             "address" => $address,
+            "floor" => $floor,
             "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,
@@ -426,6 +428,7 @@ class StoreController extends Controller
 
         $title = $request->title;
         $address = $request->address;
+        $floor = $request->floor;
         $content = $request->content;
         $teamId = $request->team["id"];
         $userId = $request->user_id;
@@ -440,6 +443,7 @@ class StoreController extends Controller
             "title" => $title,
             "slug" => $slug,
             "address" => $address,
+            "floor" => $floor,
             "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,

@@ -3,26 +3,6 @@ import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import UnqiueResource from "@/Components/PageTemplates/LoggedIn/Team/UnqiueResource.vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
 
-// const props = defineProps({
-//     post: {
-//         required: true,
-//     },
-//     authors: {
-//         required: true,
-//     },
-//     currentUserTeam: {
-//         required: true,
-//     },
-//     categories: {
-//         required: true,
-//     },
-//     states: {
-//         required: true,
-//     },
-//     coverImages: {
-//         required: true,
-//     },
-// });
 const props = defineProps({
     post: {
         required: false,

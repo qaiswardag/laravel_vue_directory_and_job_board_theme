@@ -76,8 +76,8 @@ const handleCategory = function (category) {
     });
 };
 
-const goToSinglePost = function (teamName, teamId, postId, postSlug) {
-    const teamSlug = slugify(teamName, config.slugifyOptions);
+const goToSinglePost = function (teamSlug, teamId, postId, postSlug) {
+    // Item URL example: /dubai_mall/stores/dior/view/1
     router.get(
         route(props.nameList + "." + "guest.show", [
             teamSlug,
@@ -204,7 +204,7 @@ onMounted(() => {
                                             :squareButtons="true"
                                             @firstButtonClick="
                                                 goToSinglePost(
-                                                    post.team.name,
+                                                    post.team.slug,
                                                     post.team.id,
                                                     post.id,
                                                     post.slug
@@ -217,7 +217,7 @@ onMounted(() => {
                                     <button
                                         @click="
                                             goToSinglePost(
-                                                post.team.name,
+                                                post.team.slug,
                                                 post.team.id,
                                                 post.id,
                                                 post.slug

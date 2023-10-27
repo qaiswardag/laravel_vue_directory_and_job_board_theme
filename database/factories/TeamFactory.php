@@ -22,9 +22,11 @@ class TeamFactory extends Factory
      */
     public function definition(): array
     {
+        $name = $this->faker->unique()->company();
         return [
             "id" => 1,
-            "name" => $this->faker->unique()->company(),
+            "name" => $name,
+            "slug" => $name,
             "user_id" => 1,
             "public" => true,
             "personal_team" => false,
