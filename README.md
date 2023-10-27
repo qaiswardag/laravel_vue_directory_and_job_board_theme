@@ -1,70 +1,67 @@
+<p></p>
 <p align="center" dir="auto">
-<img width="100" style="max-width: 100%;" src="public/logo/logo.png" alt="Logo">
+<img width="150" style="max-width: 100%;" src="public/logo/logo.png" alt="Logo">
 </p>
 
 # Intro
 
-myself.ae brings fashion to where the consumers are.
+myself fashion & jobs الموضة ووظائف | All rights reserved.
 
-## Technologies and Frameworks
+# Technologies and Frameworks
 
 Cutting-Edge Technologies and Frameworks. Developed with Laravel, Vue 3, Vite, Vuex, Inertia and Tailwind CSS.
 
 # Installation
 
-## Getting started
-
-1. Clone the repository locally:
-
-2. Install PHP dependencies using Composer:
+-   Clone the repository and install PHP dependencies using Composer:
 
 ```
 composer install
 ```
 
-3. Install NPM dependencies:
+-   Install NPM dependencies:
 
 ```
 npm install
 ```
 
-4. Build assets:
+-   Build assets:
 
 ```
 npm run dev
 ```
 
-5. Setup configuration:
+-   Setup configuration:
 
 ```
 cp .env.example .env
 ```
 
-6. Generate an application key:
+-   Generate an application key:
 
 ```
 php artisan key:generate
 ```
 
-7. Create an database and run the database migrations:
+-   Create an database and run the database migrations:
 
 ```
 php artisan migrate
 ```
 
-9. Run the database seeder:
+-   Run the database seeder:
 
 ```
 php artisan db:seed
 ```
 
-10. Start the project:
+-   Start the project:
 
 ```
  php artisan serve
 ```
 
-11. Additionally, if you want to rebuild your assets during development, you can run the following command separately:
+-   Additionally, if you want to rebuild your assets during development, you can run the following command separately:
 
 ```
  npm run dev
