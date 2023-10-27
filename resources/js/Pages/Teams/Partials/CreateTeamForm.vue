@@ -14,11 +14,81 @@ import slugify from "slugify";
 import config from "@/utils/config";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import { onBeforeMount, onMounted, watch } from "vue";
+import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 
-const form = useForm({
+import {
+    CheckIcon,
+    ChevronUpDownIcon,
+    LockClosedIcon,
+    LockOpenIcon,
+    SquaresPlusIcon,
+    TrashIcon,
+    UserIcon,
+    UserPlusIcon,
+    XMarkIcon,
+    Squares2X2Icon,
+    NewspaperIcon,
+    PhotoIcon,
+    MapPinIcon,
+    GlobeAmericasIcon,
+    PlusIcon,
+} from "@heroicons/vue/24/outline";
+
+const isSlugEditable = ref(false);
+const slugValueTeamName = ref("");
+const slugValueCustom = ref("");
+
+const postForm = useForm({
     name: "",
+    slug: "",
     public: true,
 });
+
+// The code uses the watch function from Vue 3 to watch for changes to the
+// slugValueCustom property and update the postForm.slug field with the new value
+const watchSlugInputChanges = function () {
+    watch(
+        () => slugValueCustom.value,
+        (newValue) => {
+            if (isSlugEditable.value === true) {
+                postForm.slug = slugify(
+                    slugValueCustom.value,
+                    config.slugifyOptions
+                );
+            }
+        },
+        { immediate: true }
+    );
+    watch(
+        () => postForm.name,
+        (newValue) => {
+            if (isSlugEditable.value === false) {
+                postForm.slug = slugify(postForm.name, config.slugifyOptions);
+
+                slugValueTeamName.value = slugify(
+                    postForm.name,
+                    config.slugifyOptions
+                );
+            }
+        },
+        { immediate: true }
+    );
+};
+
+watch(
+    () => isSlugEditable.value,
+    (newValue) => {
+        watchSlugInputChanges();
+    },
+    { immediate: true }
+);
+
+const handleCloseLock = function () {
+    isSlugEditable.value = false;
+};
+const handleOpenLock = function () {
+    isSlugEditable.value = true;
+};
 
 // modal content
 const typeModal = ref("");
@@ -34,13 +104,14 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 const modalShowCreateTeam = ref(false);
+
 const handleCreateTeam = function () {
     // handle show modal for unique content
     modalShowCreateTeam.value = true;
     // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 2;
-    titleModal.value = `Create a new team ${form.name}`;
+    titleModal.value = `Create a new team ${postForm.name}`;
     descriptionModal.value = `Please confirm creating a new team.`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
@@ -59,34 +130,27 @@ const handleCreateTeam = function () {
     // end modal
 };
 
-const teamUsername = computed(() => {
-    return form.name;
-});
+const showErrorNotifications = ref(false);
 
-const teamSlugName = ref("");
-
-watch(
-    () => teamUsername.value,
-    (newValue) => {
-        teamSlugName.value = slugify(newValue, config.slugifyOptions);
-    },
-    { immediate: true }
-);
+const notificationsModalButton = function () {
+    showErrorNotifications.value = false;
+};
 
 const createTeam = () => {
-    form.post(route("teams.store"), {
-        // error bag validation
-        errorBag: "createTeam",
+    postForm.post(route("teams.store"), {
         preserveScroll: true,
         onSuccess: (log) => {
-            form.reset();
+            postForm.reset();
         },
         onError: (err) => {
-            form.reset();
+            postForm.reset();
         },
         onFinish: () => {},
     });
 };
+
+// get unique post if needs to be updated
+onBeforeMount(() => {});
 </script>
 
 <template>
@@ -113,68 +177,85 @@ const createTeam = () => {
     >
         <template #title> Create Team </template>
 
-        <template #description>
-            Create a new team to collaborate with others on projects.
-        </template>
+        <template #description> Create a new team. </template>
 
         <template #main>
             <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Team slug</div>
-                </div>
-                <div class="myInputGroup">
-                    <InputLabel for="team_slug" value="Team slug" />
-                    <div class="relative flex items-center">
-                        <TextInput
-                            id="team_slug"
-                            :value="teamSlugName"
-                            type="text"
-                            autocomplete="off"
-                            readonly
-                            class="myPrimaryInputReadonly"
-                        />
-                        <div
-                            class="absolute inset-y-0 right-0 pr-1.5 flex items-center cursor-pointer"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5 text-myPrimaryErrorColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                                />
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="myPrimaryParagraph text-xs italic">
-                        Team slug name is based on the team name. Be aware that
-                        when updating the team name, it can affect search engine
-                        optimization for the team and resources related to the
-                        team.
-                    </p>
-                </div>
+                <p class="my-12">post form is: {{ postForm }}</p>
 
-                <SectionBorder></SectionBorder>
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Team Name</div>
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Team Information
+                    </div>
                 </div>
                 <div class="myInputGroup">
                     <InputLabel for="name" value="Team Name" />
                     <TextInput
+                        placeholder="Name.."
                         id="name"
-                        v-model="form.name"
+                        v-model="postForm.name"
                         type="text"
                         autofocus
                         autocomplete="off"
                     />
-                    <InputError :message="form.errors.name" />
+                    <InputError :message="postForm.errors.name" />
                 </div>
+
+                <SectionBorder></SectionBorder>
+
+                <!-- post slug start -->
+                <div class="myInputGroup">
+                    <div v-show="isSlugEditable === false">
+                        <InputLabel for="slug" value="Slug" />
+                        <div class="relative flex items-center">
+                            <TextInput
+                                placeholder="Slug.."
+                                id="slug"
+                                v-model="slugValueTeamName"
+                                type="text"
+                                class="block w-full mt-1 myPrimaryInputReadonly"
+                                readonly
+                                autocomplete="off"
+                            />
+                            <div
+                                @click="handleOpenLock"
+                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
+                            >
+                                <LockClosedIcon
+                                    class="w-5 h-5 text-myPrimaryErrorColor"
+                                >
+                                </LockClosedIcon>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-show="isSlugEditable === true">
+                        <InputLabel for="slug" value="Slug" />
+                        <div class="relative flex items-center cursor-pointer">
+                            <TextInput
+                                placeholder="Slug.."
+                                id="slug"
+                                v-model="slugValueCustom"
+                                type="text"
+                                class="block w-full mt-1"
+                                autocomplete="off"
+                            />
+                            <div
+                                @click="handleCloseLock"
+                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
+                            >
+                                <LockOpenIcon
+                                    class="w-5 h-5 text-myPrimaryLinkColor"
+                                >
+                                </LockOpenIcon>
+                            </div>
+                        </div>
+                        <p class="myPrimaryTag italic">
+                            Slug: {{ postForm.slug }}
+                        </p>
+                    </div>
+                    <InputError :message="postForm.errors.slug" />
+                </div>
+                <!-- post slug end -->
             </div>
         </template>
         <template #sidebar>
@@ -187,16 +268,16 @@ const createTeam = () => {
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
                 >
                     <InputLabel
-                        :value="form.public ? 'Public' : 'Private'"
+                        :value="postForm.public ? 'Public' : 'Private'"
                         :class="{
-                            'text-myPrimaryLinkColor': form.public,
-                            'text-myPrimaryErrorColor': !form.public,
+                            'text-myPrimaryLinkColor': postForm.public,
+                            'text-myPrimaryErrorColor': !postForm.public,
                         }"
                     />
                     <Switch
-                        v-model="form.public"
+                        v-model="postForm.public"
                         :class="[
-                            form.public
+                            postForm.public
                                 ? 'bg-myPrimaryLinkColor'
                                 : 'bg-gray-200',
                             'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
@@ -205,13 +286,15 @@ const createTeam = () => {
                         <span class="sr-only">Use setting</span>
                         <span
                             :class="[
-                                form.public ? 'translate-x-5' : 'translate-x-0',
+                                postForm.public
+                                    ? 'translate-x-5'
+                                    : 'translate-x-0',
                                 'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
                             ]"
                         >
                             <span
                                 :class="[
-                                    form.public
+                                    postForm.public
                                         ? 'opacity-0 ease-out duration-100'
                                         : 'opacity-100 ease-in duration-200',
                                     'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
@@ -234,7 +317,7 @@ const createTeam = () => {
                             </span>
                             <span
                                 :class="[
-                                    form.public
+                                    postForm.public
                                         ? 'opacity-100 ease-in duration-200'
                                         : 'opacity-0 ease-out duration-100',
                                     'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
@@ -254,16 +337,77 @@ const createTeam = () => {
                         </span>
                     </Switch>
                 </div>
-                <InputError :message="form.errors.public" />
+                <InputError :message="postForm.errors.public" />
             </div>
             <!-- resoruce status # end -->
         </template>
         <template #actions>
-            <SubmitButton :disabled="form.processing" buttonText="Create Team">
+            <SubmitButton
+                :disabled="postForm.processing"
+                buttonText="Create Team"
+            >
             </SubmitButton>
-            <ActionMessage :on="form.recentlySuccessful" type="success">
+            <div
+                class="flex justify-end mt-4"
+                v-if="Object.values(postForm.errors).length !== 0"
+            >
+                <div
+                    @click="showErrorNotifications = true"
+                    class="w-fit py-1 flex items-center gap-2 rounded-md px-2 cursor-pointer italic"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-4 h-4 text-myPrimaryErrorColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                        />
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                    </svg>
+                    <p
+                        class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
+                    >
+                        Show
+                        {{ Object.values(postForm.errors).length }}
+
+                        {{
+                            Object.values(postForm.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
+                    </p>
+                </div>
+            </div>
+            <ActionMessage :on="postForm.recentlySuccessful" type="success">
                 Successfully Created your Team.
             </ActionMessage>
+
+            <NotificationsFixedBottom
+                :listOfMessages="Object.values(postForm.errors)"
+                :show="showErrorNotifications"
+                @notificationsModalButton="notificationsModalButton"
+            >
+                <div class="flex items-center justify-start gap-2">
+                    <p class="myPrimaryParagraphError">
+                        {{ Object.values(postForm.errors).length }}
+                        {{
+                            Object.values(postForm.errors).length === 1
+                                ? "error"
+                                : "errors"
+                        }}
+                    </p>
+                </div>
+            </NotificationsFixedBottom>
         </template>
     </FormSection>
 </template>

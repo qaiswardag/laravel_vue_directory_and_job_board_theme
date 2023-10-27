@@ -156,11 +156,10 @@ Route::group(
                             );
                         })->name("user.teams.switch");
 
-                        Route::get("/user/teams/create", function () {
-                            return Inertia::render(
-                                "Teams/CreateTeam/CreateTeam"
-                            );
-                        })->name("user.teams.create");
+                        Route::get("/user/teams/create", [
+                            TeamTeamController::class,
+                            "create",
+                        ])->name("user.teams.create");
 
                         Route::get("/team/update/{teamId}", [
                             TeamTeamController::class,

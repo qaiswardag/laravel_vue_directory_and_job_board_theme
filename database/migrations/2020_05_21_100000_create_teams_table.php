@@ -22,6 +22,12 @@ return new class extends Migration {
                 ->constrained();
             //
             $table->string("name");
+
+            $table
+                ->string("slug")
+                ->unique()
+                ->index();
+
             $table->longText("content")->nullable();
 
             $table->boolean("public");

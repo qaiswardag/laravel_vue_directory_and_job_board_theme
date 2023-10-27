@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Contracts\UpdatesTeamNames;
+use Illuminate\Support\Str;
 
 class UpdateTeamName implements UpdatesTeamNames
 {
@@ -22,6 +23,8 @@ class UpdateTeamName implements UpdatesTeamNames
     public function update(User $user, Team $team, array $input)
     {
         Gate::forUser($user)->authorize("update", $team);
+
+        $slug = Str::lower(Str::slug($input["slug"], "_"));
 
         $coverImages = $input["cover_image"];
         $logos = $input["logo"];
@@ -133,6 +136,7 @@ class UpdateTeamName implements UpdatesTeamNames
         $team
             ->forceFill([
                 "name" => $input["name"],
+                "slug" => $slug,
                 "public" => $input["public"],
             ])
             ->save();

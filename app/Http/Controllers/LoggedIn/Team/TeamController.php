@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\LoggedIn\Team;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoggedIn\Team\StoreNewTeamRequest;
 use App\Http\Requests\LoggedIn\Team\StoreTeamUpdateRequest;
 use App\Http\Requests\Teams\StoreTeamControllerRequest;
 use App\Models\Team;
@@ -36,7 +37,7 @@ class TeamController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("Teams/CreateTeam/CreateTeam");
     }
 
     /**
@@ -45,7 +46,7 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreNewTeamRequest $request)
     {
         $creator = app(CreatesTeams::class);
 

@@ -34,6 +34,7 @@ class Team extends JetstreamTeam
     protected $fillable = [
         "user_id",
         "name",
+        "slug",
         "personal_team",
         "public",
         "logo_original",
@@ -117,5 +118,38 @@ class Team extends JetstreamTeam
             "cover_images" => $this->coverImagesRelationship,
             "logos" => $this->logosRelationship,
         ];
+    }
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    protected static function boot()
+    {
+        parent::boot();
+
+        // create a team
+        static::creating(function ($team) {
+            $number = 1; // set a default number
+            $teamSlug = $team->slug;
+
+            // generate a new username using the first name and last name
+            $slug = Str::lower(Str::slug($teamSlug));
+
+            // check if the username already exists in the database
+            while (static::where("slug", $slug)->exists()) {
+                // If  slug exists, add the number suffix and check again
+                $slug = Str::lower(Str::slug($teamSlug . "_" . $number, "_"));
+                $number++; // increment the number
+            }
+
+            // assign the unique username to the user model
+            $team->slug = $slug;
+        });
     }
 }

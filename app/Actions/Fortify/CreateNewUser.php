@@ -21,7 +21,6 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
-        sleep(1);
         Validator::make($input, [
             "first_name" => ["required", "string", "max:255"],
             "last_name" => ["required", "string", "max:255"],
@@ -40,32 +39,13 @@ class CreateNewUser implements CreatesNewUsers
         ])->validateWithBag("createUser");
 
         return DB::transaction(function () use ($input) {
-            return User::create(
-                [
-                    "first_name" => $input["first_name"],
-                    "last_name" => $input["last_name"],
-                    "email" => $input["email"],
-                    "public" => true,
-                    "password" => Hash::make($input["password"]),
-                ]
-                // function (User $user) {
-                //     $this->createTeam($user);
-                // }
-            );
+            return User::create([
+                "first_name" => $input["first_name"],
+                "last_name" => $input["last_name"],
+                "email" => $input["email"],
+                "public" => true,
+                "password" => Hash::make($input["password"]),
+            ]);
         });
-    }
-
-    /**
-     * Create a personal team for the user.
-     */
-    protected function createTeam(User $user): void
-    {
-        $user->ownedTeams()->save(
-            Team::forceCreate([
-                "user_id" => $user->id,
-                "name" => explode(" ", $user->first_name, 2)[0] . "'s Team",
-                "personal_team" => true,
-            ])
-        );
     }
 }

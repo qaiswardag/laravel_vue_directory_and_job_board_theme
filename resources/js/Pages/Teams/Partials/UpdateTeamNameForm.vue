@@ -34,6 +34,7 @@ import {
     GlobeAmericasIcon,
     PlusIcon,
 } from "@heroicons/vue/24/outline";
+
 import { onBeforeMount, onMounted, watch } from "vue";
 
 // store
@@ -52,17 +53,67 @@ const handleUpdateTeam = function () {
     // end modal
 };
 
+const isSlugEditable = ref(false);
+const slugValueTeamName = ref("");
+const slugValueCustom = ref("");
+
 const postForm = useForm({
     name: "",
+    slug: "",
+    team_id: props.team.id,
     public: true,
     cover_image: [],
     logo: [],
 });
 
+// The above code uses the watch function from Vue 3 to watch for changes to the
+// slugValueCustom property and update the postForm.slug field with the new value
+
+const watchSlugInputChanges = function () {
+    watch(
+        () => slugValueCustom.value,
+        (newValue) => {
+            if (isSlugEditable.value === true) {
+                postForm.slug = slugify(
+                    slugValueCustom.value,
+                    config.slugifyOptions
+                );
+            }
+        },
+        { immediate: true }
+    );
+    watch(
+        () => postForm.name,
+        (newValue) => {
+            if (isSlugEditable.value === false) {
+                postForm.slug = slugify(postForm.name, config.slugifyOptions);
+                slugValueTeamName.value = slugify(
+                    postForm.name,
+                    config.slugifyOptions
+                );
+            }
+        },
+        { immediate: true }
+    );
+};
+
+watch(
+    () => isSlugEditable.value,
+    (newValue) => {
+        watchSlugInputChanges();
+    },
+    { immediate: true }
+);
+
+const handleCloseLock = function () {
+    isSlugEditable.value = false;
+};
+const handleOpenLock = function () {
+    isSlugEditable.value = true;
+};
+
 const updateTeam = () => {
     postForm.put(route("teams.update", props.team), {
-        // error bag validation
-        errorBag: "updateTeam",
         preserveScroll: true,
         onSuccess: (log) => {},
         onError: (err) => {},
@@ -254,24 +305,16 @@ const handleRemoveCoverImage = function (imageId) {
     );
 };
 
-const teamUsername = computed(() => {
-    return postForm.name;
-});
-
-const teamSlugName = ref("");
-
-watch(
-    () => teamUsername.value,
-    (newValue) => {
-        teamSlugName.value = slugify(newValue, config.slugifyOptions);
-    },
-    { immediate: true }
-);
-
 onBeforeMount(() => {
     // User is editing an existing Resource, rather than creating a new one from scratch.
     if (props.team !== null) {
         postForm.name = props.team.name;
+
+        // slug logic
+        // slug is editable when editing an existing post
+        isSlugEditable.value = true;
+        slugValueCustom.value = props.team.slug;
+
         postForm.public = props.team.public ? true : false;
 
         postForm.cover_image = props.team.coverImagesWithLogos.cover_images;
@@ -286,7 +329,7 @@ onBeforeMount(() => {
             {{ $page.props.team && $page.props.team.name }}
         </template>
 
-        <template #description> </template>
+        <template #description> Update team. </template>
 
         <template #main>
             <!-- Team Owner Information -->
@@ -294,45 +337,7 @@ onBeforeMount(() => {
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Team slug</div>
                 </div>
-                <div class="myInputGroup">
-                    <InputLabel for="team_slug" value="Team slug" />
-                    <div class="relative flex items-center">
-                        <TextInput
-                            id="team_slug"
-                            :value="teamSlugName"
-                            type="text"
-                            autocomplete="off"
-                            readonly
-                            class="myPrimaryInputReadonly"
-                        />
-                        <div
-                            class="absolute inset-y-0 right-0 pr-1.5 flex items-center cursor-pointer"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5 text-myPrimaryErrorColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                                />
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="myPrimaryParagraph text-xs italic">
-                        Team slug name is based on the team name. Be aware that
-                        when updating the team name, it can affect search engine
-                        optimization for the team and resources related to the
-                        team.
-                    </p>
-                </div>
 
-                <SectionBorder></SectionBorder>
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Team details
@@ -340,10 +345,67 @@ onBeforeMount(() => {
                 </div>
                 <div class="myInputGroup">
                     <InputLabel for="name" value="Update Team Name" />
-                    <TextInput id="name" v-model="postForm.name" type="text" />
+                    <TextInput
+                        placeholder="Slug.."
+                        id="name"
+                        v-model="postForm.name"
+                        type="text"
+                    />
                     <InputError :message="postForm.errors.name" />
                 </div>
             </div>
+            <SectionBorder></SectionBorder>
+            <!-- post slug start -->
+            <div class="myInputGroup">
+                <div v-show="isSlugEditable === false">
+                    <InputLabel for="slug" value="Slug" />
+                    <div class="relative flex items-center">
+                        <TextInput
+                            placeholder="Slug.."
+                            id="slug"
+                            v-model="slugValueTeamName"
+                            type="text"
+                            class="block w-full mt-1 myPrimaryInputReadonly"
+                            readonly
+                            autocomplete="off"
+                        />
+                        <div
+                            @click="handleOpenLock"
+                            class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
+                        >
+                            <LockClosedIcon
+                                class="w-5 h-5 text-myPrimaryErrorColor"
+                            >
+                            </LockClosedIcon>
+                        </div>
+                    </div>
+                </div>
+                <div v-show="isSlugEditable === true">
+                    <InputLabel for="slug" value="Slug" />
+                    <div class="relative flex items-center cursor-pointer">
+                        <TextInput
+                            placeholder="Slug.."
+                            id="slug"
+                            v-model="slugValueCustom"
+                            type="text"
+                            class="block w-full mt-1"
+                            autocomplete="off"
+                        />
+                        <div
+                            @click="handleCloseLock"
+                            class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
+                        >
+                            <LockOpenIcon
+                                class="w-5 h-5 text-myPrimaryLinkColor"
+                            >
+                            </LockOpenIcon>
+                        </div>
+                    </div>
+                    <p class="myPrimaryTag italic">Slug: {{ postForm.slug }}</p>
+                </div>
+                <InputError :message="postForm.errors.slug" />
+            </div>
+            <!-- post slug end -->
         </template>
         <template #sidebar>
             <!-- post status - start -->

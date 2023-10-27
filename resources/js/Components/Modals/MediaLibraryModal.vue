@@ -572,7 +572,6 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                                                         form.name
                                                                                     "
                                                                                     type="text"
-                                                                                    autofocus
                                                                                     autocomplete="off"
                                                                                     class="myPrimaryInput border-none rounded-r-none ml-0 w-full"
                                                                                     @keydown.enter.tab.prevent="

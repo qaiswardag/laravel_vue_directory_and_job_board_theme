@@ -89,15 +89,6 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-// Check if the user has a role other than 'reader' for this team
-const userTeamsWithoutReaderRole = props.user.all_teams.filter((team) => {
-    if (team.membership !== undefined && team.membership.role === "reader") {
-        return team.membership.role !== "reader";
-    }
-
-    return team;
-});
-
 // store
 const store = useStore();
 
