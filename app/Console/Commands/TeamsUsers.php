@@ -53,7 +53,7 @@ class TeamsUsers extends Command
                 "id" => 1,
                 "user_id" => User::find(1)->id,
                 "name" => "Dubai Mall",
-                "name" => "Dubai Mall",
+                "slug" => "Dubai Mall",
                 "public" => true,
                 "personal_team" => false,
             ]);
