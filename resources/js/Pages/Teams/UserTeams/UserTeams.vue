@@ -118,7 +118,7 @@ const breadcrumbsLinks = [
                         <div class="mt-8">
                             <h3 class="text-lg font-normal">
                                 <Link
-                                    :href="route('user.teams.create')"
+                                    :href="route('teams.create.team')"
                                     class="focus:outline-none"
                                 >
                                     <span

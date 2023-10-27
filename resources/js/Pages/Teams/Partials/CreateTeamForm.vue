@@ -137,14 +137,10 @@ const notificationsModalButton = function () {
 };
 
 const createTeam = () => {
-    postForm.post(route("teams.store"), {
+    postForm.post(route("teams.store.team"), {
         preserveScroll: true,
-        onSuccess: (log) => {
-            postForm.reset();
-        },
-        onError: (err) => {
-            postForm.reset();
-        },
+        onSuccess: (log) => {},
+        onError: (err) => {},
         onFinish: () => {},
     });
 };
@@ -195,7 +191,6 @@ onBeforeMount(() => {});
                         id="name"
                         v-model="postForm.name"
                         type="text"
-                        autofocus
                         autocomplete="off"
                     />
                     <InputError :message="postForm.errors.name" />

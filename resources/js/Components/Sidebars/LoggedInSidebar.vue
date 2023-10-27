@@ -146,7 +146,7 @@ import {
             "
         >
             <Link
-                :href="route('user.teams.create')"
+                :href="route('teams.create.team')"
                 class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
             >
                 <div class="flex items-center gap-2">
@@ -299,7 +299,7 @@ import {
             :active="
                 route().current('user.teams') ||
                 route().current('user.teams.switch') ||
-                route().current('user.teams.create')
+                route().current('teams.create.team')
             "
         >
             <Square3Stack3DIcon class="myMediumIcon"></Square3Stack3DIcon>

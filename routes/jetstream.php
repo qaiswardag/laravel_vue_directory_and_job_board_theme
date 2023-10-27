@@ -20,7 +20,6 @@ use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
 use Laravel\Jetstream\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Jetstream;
 
-// TODO: routes for inertia
 Route::group(
     ["middleware" => config("jetstream.middleware", ["web"])],
     function () {
@@ -96,18 +95,11 @@ Route::group(
 
                     // Teams...
                     if (Jetstream::hasTeamFeatures()) {
-                        Route::get("/teams/create", [
-                            TeamController::class,
-                            "create",
-                        ])->name("teams.create");
-                        Route::post("/teams", [
-                            TeamTeamController::class,
-                            "store",
-                        ])->name("teams.store");
                         Route::get("/team/{teamId}", [
                             TeamTeamController::class,
                             "show",
                         ])->name("teams.show");
+
                         Route::put("/teams/{team}", [
                             TeamTeamController::class,
                             "update",
@@ -117,10 +109,12 @@ Route::group(
                             TeamDeleteController::class,
                             "destroy",
                         ])->name("teams.destroy");
+
                         Route::put("/current-team", [
                             CurrentTeamController::class,
                             "update",
                         ])->name("current-team.update");
+
                         Route::post("/teams/{team}/members", [
                             TeamMemberController::class,
                             "store",
@@ -155,11 +149,6 @@ Route::group(
                                 "Teams/SwitchTeams/SwitchTeams"
                             );
                         })->name("user.teams.switch");
-
-                        Route::get("/user/teams/create", [
-                            TeamTeamController::class,
-                            "create",
-                        ])->name("user.teams.create");
 
                         Route::get("/team/update/{teamId}", [
                             TeamTeamController::class,

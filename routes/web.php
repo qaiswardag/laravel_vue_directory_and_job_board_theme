@@ -32,6 +32,7 @@ use App\Http\Controllers\Guests\User\UserController;
 use App\Http\Controllers\LoggedIn\Job\JobController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
+use App\Http\Controllers\LoggedIn\Team\TeamController as TeamTeamController;
 use App\Http\Controllers\LoggedIn\User\PaymentMethodsController as UserPaymentMethodsController;
 use App\Http\Controllers\LoggedIn\User\PaymentsController as UserPaymentsController;
 use App\Http\Controllers\LoggedIn\User\SubscriptionController;
@@ -210,6 +211,22 @@ Route::middleware([])->group(function () {
     Route::get("/professional", [ProfessionalController::class, "index"])->name(
         "professional.index"
     );
+
+    // CREATE NEW TEAM # START
+    // CREATE NEW TEAM # START
+    if (Jetstream::hasTeamFeatures()) {
+        Route::get("/teams/team/create", [
+            TeamTeamController::class,
+            "create",
+        ])->name("teams.create.team");
+
+        Route::post("/teams/store/team", [
+            TeamTeamController::class,
+            "store",
+        ])->name("teams.store.team");
+    }
+    // CREATE NEW TEAM # END
+    // CREATE NEW TEAM # END
 });
 // GUESTS ONLY # END
 // GUESTS ONLY # END
