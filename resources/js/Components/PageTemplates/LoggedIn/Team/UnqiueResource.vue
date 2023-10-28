@@ -25,6 +25,9 @@ import {
 } from "@heroicons/vue/24/outline";
 
 defineProps({
+    onlyForCurrentTeam: {
+        required: true,
+    },
     post: {
         required: true,
     },
@@ -59,31 +62,36 @@ defineProps({
         </template>
         <template #sidebar>
             <aside class="flex gap-8 flex-col">
-                <!-- updated by - end -->
                 <!-- Post updated by - start -->
-                <div class="myPrimaryWidget">
-                    <h4 class="myFourthHeader">Updated By</h4>
-                    <WidgetSectionBorder></WidgetSectionBorder>
-                    <UserTag :user="post.updatedBy"></UserTag>
-                </div>
-                <!-- updated by - end -->
+                <template v-if="onlyForCurrentTeam">
+                    <div class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">Updated By</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <UserTag :user="post.updatedBy"></UserTag>
+                    </div>
+                </template>
+                <!-- Post updated by - end -->
 
-                <!-- published # start -->
-                <div v-if="post.published" class="myPrimaryWidget">
-                    <h4 class="myFourthHeader">Published</h4>
-                    <WidgetSectionBorder></WidgetSectionBorder>
-                    <span class="myPrimaryTag bg-myPrimaryLinkColor text-white"
-                        >Published</span
-                    >
-                </div>
-                <div v-if="!post.published" class="myPrimaryWidget">
-                    <h4 class="myFourthHeader">Published</h4>
-                    <WidgetSectionBorder></WidgetSectionBorder>
-                    <span class="myPrimaryTag bg-myPrimaryErrorColor text-white"
-                        >Unpublished</span
-                    >
-                </div>
-                <!-- published # end -->
+                <template v-if="onlyForCurrentTeam">
+                    <!-- published # start -->
+                    <div v-if="post.published" class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">Published</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <span
+                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                            >Published</span
+                        >
+                    </div>
+                    <div v-if="!post.published" class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">Published</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <span
+                            class="myPrimaryTag bg-myPrimaryErrorColor text-white"
+                            >Unpublished</span
+                        >
+                    </div>
+                    <!-- published # end -->
+                </template>
 
                 <!-- countries # start -->
                 <div
@@ -242,21 +250,25 @@ defineProps({
                 <!-- tags # end -->
 
                 <!-- show authors # start -->
-                <div v-if="post.show_author" class="myPrimaryWidget">
-                    <h4 class="myFourthHeader">People visibility</h4>
-                    <WidgetSectionBorder></WidgetSectionBorder>
-                    <span class="myPrimaryTag bg-myPrimaryLinkColor text-white"
-                        >Visible</span
-                    >
-                </div>
-                <div v-if="!post.show_author" class="myPrimaryWidget">
-                    <h4 class="myFourthHeader">People visibility</h4>
-                    <WidgetSectionBorder></WidgetSectionBorder>
-                    <span class="myPrimaryTag bg-myPrimaryErrorColor text-white"
-                        >Hidden</span
-                    >
-                </div>
-                <!-- show authors # end -->
+                <template v-if="onlyForCurrentTeam">
+                    <div v-if="post.show_author" class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">People visibility</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <span
+                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                            >Visible</span
+                        >
+                    </div>
+                    <div v-if="!post.show_author" class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">People visibility</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <span
+                            class="myPrimaryTag bg-myPrimaryErrorColor text-white"
+                            >Hidden</span
+                        >
+                    </div>
+                    <!-- show authors # end -->
+                </template>
 
                 <!-- authors # start -->
                 <div

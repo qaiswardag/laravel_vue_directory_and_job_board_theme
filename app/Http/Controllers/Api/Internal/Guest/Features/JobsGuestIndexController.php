@@ -18,6 +18,7 @@ class JobsGuestIndexController extends Controller
             ->with("team")
             ->with("categories")
             ->with("coverImages")
+            ->with("countries")
             ->with("states")
             ->with("authors")
             ->when($request->query("search_query"), function ($query, $term) {

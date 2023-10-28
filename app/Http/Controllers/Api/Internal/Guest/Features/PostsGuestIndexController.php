@@ -14,6 +14,9 @@ class PostsGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
+        $searchQuery = "";
+        $currentClickedPage = "";
+
         $query = Post::latest()
             ->with("team")
             ->with("categories")
@@ -25,8 +28,19 @@ class PostsGuestIndexController extends Controller
 
         $posts = $query->paginate(10);
 
+        // check for search_query
+        if ($request->search_query) {
+            $searchQuery = $request->search_query;
+        }
+        // check for current page
+        if (!$request->page) {
+            $currentClickedPage = $request->page;
+        }
+
         return [
             "posts" => $posts,
+            "search_query" => $searchQuery,
+            "current_clicked_page" => $currentClickedPage,
         ];
     }
 

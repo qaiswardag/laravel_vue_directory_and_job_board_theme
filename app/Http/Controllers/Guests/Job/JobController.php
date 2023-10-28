@@ -42,14 +42,22 @@ class JobController extends Controller
 
         $postRenderView = "Guests/Items/SingleItem";
 
+        $authors = $post->authors;
+        $categories = $post->categories;
+        $countries = $post->countries;
+        $jobTypes = $post->types;
+        $states = $post->states;
+        $coverImages = $post->coverImages;
+
         // Render the store
         return Inertia::render($postRenderView, [
             "post" => $post,
-            "authors" => null,
-            "countries" => null,
-            "states" => null,
-            "categories" => null,
-            "coverImages" => null,
+            "authors" => $authors,
+            "countries" => $countries,
+            "jobTypes" => $jobTypes,
+            "states" => $states,
+            "categories" => $categories,
+            "coverImages" => $coverImages,
         ]);
     }
 

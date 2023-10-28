@@ -54,6 +54,7 @@ const breadcrumbsLinks = [
 
             <!-- Show Unique Resorce - start -->
             <UnqiueResource
+                :onlyForCurrentTeam="true"
                 :post="post"
                 :authors="authors"
                 :countries="countries"

@@ -42,16 +42,20 @@ class StoreController extends Controller
     public function show($teamSlug, $postSlug, $postId)
     {
         $post = Store::findOrFail($postId);
-
         $postRenderView = "Guests/Items/SingleItem";
 
-        // Render the store
+        $authors = $post->authors;
+        $categories = $post->categories;
+        $states = $post->states;
+        $coverImages = $post->coverImages;
+
+        // Render
         return Inertia::render($postRenderView, [
             "post" => $post,
-            "authors" => null,
-            "states" => null,
-            "categories" => null,
-            "coverImages" => null,
+            "authors" => $authors,
+            "states" => $states,
+            "categories" => $categories,
+            "coverImages" => $coverImages,
         ]);
     }
 

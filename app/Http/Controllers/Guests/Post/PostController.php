@@ -59,12 +59,18 @@ class PostController extends Controller
 
         $postRenderView = "Guests/Items/SingleItem";
 
-        // Render the store
+        $authors = $post->authors;
+        $categories = $post->categories;
+        $states = $post->states;
+        $coverImages = $post->coverImages;
+
+        // Render
         return Inertia::render($postRenderView, [
             "post" => $post,
-            "authors" => null,
-            "categories" => null,
-            "coverImages" => null,
+            "authors" => $authors,
+            "states" => $states,
+            "categories" => $categories,
+            "coverImages" => $coverImages,
         ]);
     }
 

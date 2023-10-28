@@ -10,13 +10,16 @@ const props = defineProps({
     authors: {
         required: false,
     },
-    currentUserTeam: {
-        required: false,
-    },
-    categories: {
+    countries: {
         required: false,
     },
     states: {
+        required: false,
+    },
+    jobTypes: {
+        required: false,
+    },
+    categories: {
         required: false,
     },
     coverImages: {
@@ -31,10 +34,13 @@ const props = defineProps({
             <!-- Show Unique Resorce - start -->
             <main class="myPrimaryContentSection">
                 <UnqiueResource
+                    :onlyForCurrentTeam="false"
                     :post="post"
                     :authors="authors"
-                    :categories="categories"
+                    :countries="countries"
                     :states="states"
+                    :jobTypes="jobTypes"
+                    :categories="categories"
                     :coverImages="coverImages"
                 ></UnqiueResource>
             </main>

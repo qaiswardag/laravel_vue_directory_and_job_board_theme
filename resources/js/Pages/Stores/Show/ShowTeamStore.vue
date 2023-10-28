@@ -53,6 +53,7 @@ const breadcrumbsLinks = [
                 :categories="categories"
                 :states="states"
                 :coverImages="coverImages"
+                :onlyForCurrentTeam="true"
             ></UnqiueResource>
             <!-- sShow Unique Post - end -->
         </LoggedInLayout>

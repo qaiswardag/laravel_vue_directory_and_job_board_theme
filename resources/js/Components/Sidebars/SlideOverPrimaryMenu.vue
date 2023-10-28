@@ -31,6 +31,9 @@ const navigation = [
             name: "stores.guest.index",
             parameters: [],
         },
+        active:
+            route().current("stores.guest.index") ||
+            route().current("stores.guest.show"),
     },
     {
         label: "Jobs",
@@ -38,6 +41,9 @@ const navigation = [
             name: "jobs.guest.index",
             parameters: [],
         },
+        active:
+            route().current("jobs.guest.index") ||
+            route().current("jobs.guest.show"),
     },
     {
         label: "Blog",
@@ -45,6 +51,9 @@ const navigation = [
             name: "posts.guest.index",
             parameters: [],
         },
+        active:
+            route().current("posts.guest.index") ||
+            route().current("posts.guest.show"),
     },
     {
         label: "Users",
@@ -52,6 +61,9 @@ const navigation = [
             name: "users.guest.index",
             parameters: [],
         },
+        active:
+            route().current("users.guest.index") ||
+            route().current("users.guest.show"),
     },
     {
         label: "Professional",
@@ -59,6 +71,7 @@ const navigation = [
             name: "professional.index",
             parameters: [],
         },
+        active: route().current("professional.index"),
     },
     {
         label: "Resources",
@@ -66,6 +79,7 @@ const navigation = [
             name: null,
             parameters: [],
         },
+        active: route().current("terms.show") || route().current("policy.show"),
         children: [
             {
                 label: "Terms of Service",
@@ -73,6 +87,7 @@ const navigation = [
                     name: "terms.show",
                     parameters: [],
                 },
+                active: route().current("terms.show"),
             },
             {
                 label: "Privacy Policy",
@@ -80,6 +95,7 @@ const navigation = [
                     name: "policy.show",
                     parameters: [],
                 },
+                active: route().current("policy.show"),
             },
         ],
     },
@@ -167,11 +183,7 @@ const navigation = [
                                                                 <Link
                                                                     class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md"
                                                                     :class="[
-                                                                        route().current(
-                                                                            item
-                                                                                .route
-                                                                                ?.name
-                                                                        )
+                                                                        item.active
                                                                             ? 'bg-myPrimaryLightGrayColor rounded-md'
                                                                             : '',
                                                                     ]"
@@ -204,11 +216,7 @@ const navigation = [
                                                                 >
                                                                     <DisclosureButton
                                                                         :class="[
-                                                                            route().current(
-                                                                                item
-                                                                                    .route
-                                                                                    ?.name
-                                                                            )
+                                                                            item.active
                                                                                 ? 'hover:bg-myPrimaryLightGrayColor'
                                                                                 : '',
                                                                             'flex items-center justify-between w-full text-left gap-x-3 py-3 pl-3 pr-1 rounded-md',
@@ -244,11 +252,7 @@ const navigation = [
                                                                             <DisclosureButton
                                                                                 class="block w-full hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                                                 :class="[
-                                                                                    route().current(
-                                                                                        subItem
-                                                                                            .route
-                                                                                            ?.name
-                                                                                    )
+                                                                                    subItem.active
                                                                                         ? 'bg-myPrimaryLightGrayColor rounded-md'
                                                                                         : '',
                                                                                 ]"
