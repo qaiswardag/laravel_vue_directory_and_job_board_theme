@@ -66,15 +66,6 @@ class Job extends Model
             "type_id"
         );
     }
-    public function states()
-    {
-        return $this->belongsToMany(
-            JobState::class,
-            "job_state_relations",
-            "job_id",
-            "state_id"
-        );
-    }
 
     public function countries()
     {
@@ -83,6 +74,16 @@ class Job extends Model
             "job_country_relations",
             "job_id",
             "country_id"
+        );
+    }
+
+    public function states()
+    {
+        return $this->belongsToMany(
+            JobState::class,
+            "job_state_relations",
+            "job_id",
+            "state_id"
         );
     }
 

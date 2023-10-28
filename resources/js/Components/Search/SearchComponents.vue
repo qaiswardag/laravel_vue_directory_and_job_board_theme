@@ -105,9 +105,14 @@ const handleSearch = function (page) {
         category: categorySelected.value,
     });
 };
-//
-// get media
+
 const fetchComponents = function (page) {
+    //remember old search value while paginating
+    if (getFetchedComponents.value?.fetchedData?.oldInput?.search_query) {
+        search_query.value =
+            getFetchedComponents.value?.fetchedData?.oldInput?.search_query;
+    }
+    //
     // dispatch
     store.dispatch("pageBuilderState/loadComponents", {
         team: props.team,
@@ -119,17 +124,12 @@ const fetchComponents = function (page) {
 
 // get result for "laravel pagination" package
 const getResultsForPage = (page = 1) => {
-    search_query.value = getFetchedComponents.value?.fetchedData?.search_query;
     fetchComponents(page);
 };
-//
-//
-//
+
 const handleCategory = function (category) {
     categorySelected.value = category;
 
-    //
-    //
     // dispatch
     store.dispatch("pageBuilderState/loadComponents", {
         team: props.team,

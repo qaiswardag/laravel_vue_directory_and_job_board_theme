@@ -154,7 +154,7 @@ onMounted(() => {
 
                 <div class="relativeflex flex-col items-center justify-center">
                     <InputLabel
-                        class="hover:bg-gray-50 myPrimaryParagraph rounded text-center w-full inset-0 block text-myPrimaryLinkColor font-medium text-base cursor-pointer pt-6 pb-6 px-4 border border-dashed border-gray-800"
+                        class="myPrimaryParagraph rounded text-center w-full inset-0 block text-myPrimaryLinkColor font-medium text-base cursor-pointer pt-6 pb-6 px-4 border border-dashed border-gray-400"
                         for="images"
                         value="Click & Upload multiple images"
                     >

@@ -287,7 +287,7 @@ class DatabaseSeeder extends Seeder
         // Post
         // Post
         // Post
-        Post::factory(400)->create();
+        Post::factory(2000)->create();
         $totalPost = Post::count();
 
         $postCategories = [
@@ -341,7 +341,7 @@ class DatabaseSeeder extends Seeder
         // Jobs
         // Jobs
         // Jobs
-        Job::factory(400)->create();
+        Job::factory(2000)->create();
         $totalJobs = Job::count();
 
         $jobCountries = [
@@ -488,7 +488,7 @@ class DatabaseSeeder extends Seeder
         // Stores
         // Stores
         // Stores
-        Store::factory(400)->create();
+        Store::factory(2000)->create();
         $totalStores = Store::count();
         $states = [
             "Abu Dhabi",

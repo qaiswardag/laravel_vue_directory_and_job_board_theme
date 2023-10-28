@@ -127,7 +127,7 @@ const handleMediaLibrary = function (imageID) {
                             >Manage or upload new images
                         </label>
                         <div
-                            class="mt-2 mb-6 flex justify-center rounded-lg border border-dashed border-gray-900 px-6 py-10"
+                            class="mt-2 mb-6 flex justify-center rounded-lg border border-dashed border-gray-400 px-6 py-10"
                         >
                             <div class="text-center">
                                 <svg

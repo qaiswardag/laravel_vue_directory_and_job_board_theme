@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Internal\Guest\Features;
 
 use App\Http\Controllers\Controller;
 use App\Models\Store\Store;
+use App\Models\Store\StoreCategory;
+use App\Models\Store\StoreState;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,8 +16,27 @@ class StoresGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
-        $searchQuery = "";
-        $currentClickedPage = "";
+        $categoryID = null;
+        $stateID = null;
+
+        if (isset($request->category["id"])) {
+            $categoryID = $request->category["id"];
+        }
+
+        if (isset($request->state["id"])) {
+            $stateID = $request->state["id"];
+        }
+
+        $searchQuery = $request->input("search_query");
+
+        // Check $searchQuery is an array
+        // If it is, the implode function joins the elements of the array into a comma-separated string
+        if (is_array($searchQuery)) {
+            $searchQuery = implode(",", $searchQuery);
+        }
+
+        $categories = StoreCategory::all();
+        $states = StoreState::all();
 
         $query = Store::latest()
             ->with("team")
@@ -27,21 +48,29 @@ class StoresGuestIndexController extends Controller
                 $query->where("title", "LIKE", "%" . $term . "%");
             });
 
-        $posts = $query->paginate(20);
+        // logic for filtereing based on categories, startes etc.
+        if ($categoryID) {
+            $query->whereHas("categories", function ($query) use ($categoryID) {
+                $query->where("store_categories.id", $categoryID);
+            });
+        }
+        if ($stateID) {
+            $query->whereHas("states", function ($query) use ($stateID) {
+                $query->where("store_states.id", $stateID);
+            });
+        }
 
-        // check for search_query
-        if ($request->search_query) {
-            $searchQuery = $request->search_query;
-        }
-        // check for current page
-        if (!$request->page) {
-            $currentClickedPage = $request->page;
-        }
+        $posts = $query->paginate(10);
+
+        $posts->appends($request->all());
 
         return [
+            "categories" => $categories,
+            "states" => $states,
             "posts" => $posts,
-            "search_query" => $searchQuery,
-            "current_clicked_page" => $currentClickedPage,
+            "oldInput" => [
+                "search_query" => $request->input("search_query"),
+            ],
         ];
     }
 

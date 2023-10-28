@@ -21,6 +21,14 @@ class PageBuilderComponentsController extends Controller
             $categoryID = $request->category["id"];
         }
 
+        $searchQuery = $request->input("search_query");
+
+        // Check $searchQuery is an array
+        // If it is, the implode function joins the elements of the array into a comma-separated string
+        if (is_array($searchQuery)) {
+            $searchQuery = implode(",", $searchQuery);
+        }
+
         $this->authorize("can-read", $team);
 
         $componentsCategories = PageBuilderComponentCategory::all();
@@ -47,9 +55,14 @@ class PageBuilderComponentsController extends Controller
 
         $components = $query->paginate(8);
 
+        $components->appends($request->all());
+
         return [
             "component_categories" => $componentsCategories,
             "components" => $components,
+            "oldInput" => [
+                "search_query" => $request->input("search_query"),
+            ],
         ];
     }
 
