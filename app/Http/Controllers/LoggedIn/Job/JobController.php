@@ -316,7 +316,7 @@ class JobController extends Controller
      * @param  \App\Models\Job\Job $job
      * @return \Illuminate\Http\Response
      */
-    public function show($teamId, Job $job, $slug)
+    public function show($teamId, $slug, Job $jobId)
     {
         $jobRenderView = "Jobs/Show/ShowTeamJob";
 
@@ -335,35 +335,35 @@ class JobController extends Controller
         $slug = urldecode($slug);
 
         // Retrieve the user associated with the job
-        $user = User::find($job->user_id);
+        $user = User::find($jobId->user_id);
 
-        // Update the $job array with updatedBy information
+        // Update the $jobId array with updatedBy information
         if ($user !== null) {
-            $job->updatedBy = [
+            $jobId->updatedBy = [
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
             ];
         }
         if ($user === null) {
-            $job->updatedBy = null;
+            $jobId->updatedBy = null;
         }
 
         $authors = [];
 
-        if ($job->show_author) {
-            $authors = $job->authors()->get();
+        if ($jobId->show_author) {
+            $authors = $jobId->authors()->get();
         }
 
-        $categories = $job->categories;
-        $countries = $job->countries;
-        $states = $job->states;
-        $jobTypes = $job->types;
-        $coverImages = $job->coverImages;
+        $categories = $jobId->categories;
+        $countries = $jobId->countries;
+        $states = $jobId->states;
+        $jobTypes = $jobId->types;
+        $coverImages = $jobId->coverImages;
 
         // Render the job
         return Inertia::render($jobRenderView, [
-            "post" => $job,
+            "post" => $jobId,
             "authors" => $authors,
             "countries" => $countries,
             "states" => $states,

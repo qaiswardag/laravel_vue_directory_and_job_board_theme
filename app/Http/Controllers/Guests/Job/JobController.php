@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Guests\Job;
 
 use App\Http\Controllers\Controller;
+use App\Models\Job\Job;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -35,9 +36,21 @@ class JobController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($teamSlug, $postSlug, $postId)
     {
-        //
+        $post = Job::findOrFail($postId);
+
+        $postRenderView = "Guests/Items/SingleItem";
+
+        // Render the store
+        return Inertia::render($postRenderView, [
+            "post" => $post,
+            "authors" => null,
+            "countries" => null,
+            "states" => null,
+            "categories" => null,
+            "coverImages" => null,
+        ]);
     }
 
     /**

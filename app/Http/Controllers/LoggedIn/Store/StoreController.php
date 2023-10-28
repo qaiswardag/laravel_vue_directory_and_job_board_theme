@@ -274,7 +274,7 @@ class StoreController extends Controller
      * @param  \App\Models\Store\Store $store
      * @return \Illuminate\Http\Response
      */
-    public function show($teamId, Store $store, $slug)
+    public function show($teamId, $slug, Store $storeId)
     {
         $storeRenderView = "Stores/Show/ShowTeamStore";
 
@@ -289,37 +289,34 @@ class StoreController extends Controller
 
         $this->authorize("can-read", $team);
 
-        // Decode the slug parameter
-        $slug = urldecode($slug);
-
         // Retrieve the user associated with the store
-        $user = User::find($store->user_id);
+        $user = User::find($storeId->user_id);
 
-        // Update the $store array with updatedBy information
+        // Update the $storeId array with updatedBy information
         if ($user !== null) {
-            $store->updatedBy = [
+            $storeId->updatedBy = [
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
             ];
         }
         if ($user === null) {
-            $store->updatedBy = null;
+            $storeId->updatedBy = null;
         }
 
         $authors = [];
 
-        if ($store->show_author) {
-            $authors = $store->authors()->get();
+        if ($storeId->show_author) {
+            $authors = $storeId->authors()->get();
         }
 
-        $categories = $store->categories;
-        $states = $store->states;
-        $coverImages = $store->coverImages;
+        $categories = $storeId->categories;
+        $states = $storeId->states;
+        $coverImages = $storeId->coverImages;
 
         // Render the store
         return Inertia::render($storeRenderView, [
-            "post" => $store,
+            "post" => $storeId,
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,

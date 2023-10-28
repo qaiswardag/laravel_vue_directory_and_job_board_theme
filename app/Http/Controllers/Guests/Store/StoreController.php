@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Guests\Store;
 
 use App\Http\Controllers\Controller;
+use App\Models\Store\Store;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -38,9 +39,20 @@ class StoreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($teamSlug, $postSlug, $postId)
     {
-        //
+        $post = Store::findOrFail($postId);
+
+        $postRenderView = "Guests/Items/SingleItem";
+
+        // Render the store
+        return Inertia::render($postRenderView, [
+            "post" => $post,
+            "authors" => null,
+            "states" => null,
+            "categories" => null,
+            "coverImages" => null,
+        ]);
     }
 
     /**

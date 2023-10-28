@@ -14,8 +14,8 @@ class JobsGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
-        sleep(1);
         $query = Job::latest()
+            ->with("team")
             ->with("categories")
             ->with("coverImages")
             ->with("states")

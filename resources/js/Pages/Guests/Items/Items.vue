@@ -76,15 +76,11 @@ const handleCategory = function (category) {
     });
 };
 
-const goToSinglePost = function (teamSlug, teamId, postId, postSlug) {
+const goToSinglePost = function (teamSlug, postSlug, postId) {
     // Item URL example: /dubai_mall/stores/dior/view/1
+    // /dubai_mall/stores/1/1/view/and_other_stories
     router.get(
-        route(props.nameList + "." + "guest.show", [
-            teamSlug,
-            teamId,
-            postId,
-            postSlug,
-        ])
+        route(props.nameList + "." + "guest.show", [teamSlug, postSlug, postId])
     );
 };
 
@@ -186,7 +182,7 @@ onMounted(() => {
                                 <li
                                     v-for="post in fetchedDataList.posts.data"
                                     :key="post.id"
-                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded pb-2"
+                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded bg-gray-100"
                                 >
                                     <!-- start photo -->
 
@@ -205,68 +201,68 @@ onMounted(() => {
                                             @firstButtonClick="
                                                 goToSinglePost(
                                                     post.team.slug,
-                                                    post.team.id,
-                                                    post.id,
-                                                    post.slug
+                                                    post.slug,
+                                                    post.id
                                                 )
                                             "
                                             :imageClickable="true"
                                         ></ThumbnailSmallImageSlider>
                                     </template>
 
-                                    <button
-                                        @click="
-                                            goToSinglePost(
-                                                post.team.slug,
-                                                post.team.id,
-                                                post.id,
-                                                post.slug
-                                            )
-                                        "
-                                        type="button"
-                                    >
-                                        <p
-                                            class="text-sm font-medium mt-2 mb-2"
-                                        >
-                                            {{ post.title }}
-                                        </p>
-                                    </button>
-
-                                    <!-- Category # start -->
-                                    <div
-                                        class="flex flex-wrap gap-2 items-center justify-left"
-                                    >
+                                    <section class="pt-4 pb-4 px-4">
                                         <button
                                             @click="
-                                                handleCategory({
-                                                    name: category.name,
-                                                    id: category.id,
-                                                })
+                                                goToSinglePost(
+                                                    post.team.slug,
+                                                    post.slug,
+                                                    post.id
+                                                )
                                             "
-                                            v-for="category in post.categories &&
-                                            post.categories"
-                                            :key="category.id"
-                                            class="myPrimaryTag text-[10px] py-2 px-2"
-                                            :class="[
-                                                {
-                                                    'bg-myPrimaryLinkColor text-white':
-                                                        categorySelected.name ===
-                                                        category.name,
-                                                },
-                                                {
-                                                    'bg-myPrimaryLinkColor text-white':
-                                                        categorySelected.name ===
-                                                        category.name,
-                                                },
-                                            ]"
-                                            :disabled="
-                                                categorySelected.name ===
-                                                category.name
-                                            "
+                                            type="button"
                                         >
-                                            {{ category.name }}
+                                            <p
+                                                class="text-sm font-medium mt-2 mb-2"
+                                            >
+                                                {{ post.title }}
+                                            </p>
                                         </button>
-                                    </div>
+
+                                        <!-- Category # start -->
+                                        <div
+                                            class="flex flex-wrap gap-2 items-center justify-left"
+                                        >
+                                            <button
+                                                @click="
+                                                    handleCategory({
+                                                        name: category.name,
+                                                        id: category.id,
+                                                    })
+                                                "
+                                                v-for="category in post.categories &&
+                                                post.categories"
+                                                :key="category.id"
+                                                class="myPrimaryTag text-[10px] py-2 px-2"
+                                                :class="[
+                                                    {
+                                                        'bg-myPrimaryLinkColor text-white':
+                                                            categorySelected.name ===
+                                                            category.name,
+                                                    },
+                                                    {
+                                                        'bg-myPrimaryLinkColor text-white':
+                                                            categorySelected.name ===
+                                                            category.name,
+                                                    },
+                                                ]"
+                                                :disabled="
+                                                    categorySelected.name ===
+                                                    category.name
+                                                "
+                                            >
+                                                {{ category.name }}
+                                            </button>
+                                        </div>
+                                    </section>
                                     <!-- Category # end -->
                                 </li>
                             </transition-group>

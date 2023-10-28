@@ -160,10 +160,17 @@ Route::middleware([])->group(function () {
         "posts.guest.index"
     );
 
+    Route::get("{teamSlug}/posts/{postSlug}/view/{postId}/", [
+        PostPostController::class,
+        "show",
+    ])->name("posts.guest.show");
+    //
+    //
     Route::get("/api/guest/posts/index", [
         PostsGuestIndexController::class,
         "index",
     ])->name("api.guest.posts.index");
+
     // POSTS #END
     // POSTS #END
     // POSTS #END
@@ -177,10 +184,17 @@ Route::middleware([])->group(function () {
         "jobs.guest.index"
     );
 
+    Route::get("{teamSlug}/jobs/{postSlug}/view/{postId}/", [
+        JobJobController::class,
+        "show",
+    ])->name("jobs.guest.show");
+    //
+    //
     Route::get("/api/guest/jobs/index", [
         JobsGuestIndexController::class,
         "index",
     ])->name("api.guest.jobs.index");
+
     // JOBS #END
     // JOBS #END
     // JOBS #END
@@ -194,11 +208,13 @@ Route::middleware([])->group(function () {
         "stores.guest.index"
     );
 
-    Route::get("/stores/{teamSlug}/{teamId}/{postId}/{postSlug}/", [
-        StoresGuestIndexController::class,
+    Route::get("{teamSlug}/stores/{postSlug}/view/{postId}/", [
+        StoreStoreController::class,
         "show",
     ])->name("stores.guest.show");
 
+    //
+    //
     Route::get("/api/guest/stores/index", [
         StoresGuestIndexController::class,
         "index",
@@ -518,7 +534,7 @@ Route::middleware([
         "team.posts.index"
     );
     // unique post
-    Route::get("/team/{teamId}/posts/post/{post}/{slug}", [
+    Route::get("/team/{teamId}/posts/{slug}/view{postId}/", [
         PostController::class,
         "show",
     ])->name("team.posts.post.show");
@@ -535,7 +551,7 @@ Route::middleware([
         "team.jobs.index"
     );
     // unique job
-    Route::get("/team/{teamId}/jobs/job/{job}/{slug}", [
+    Route::get("/team/{teamId}/jobs/{slug}/view/{jobId}/", [
         JobController::class,
         "show",
     ])->name("team.jobs.job.show");
@@ -552,8 +568,9 @@ Route::middleware([
         StoreController::class,
         "index",
     ])->name("team.stores.index");
+
     // unique store
-    Route::get("/team/{teamId}/stores/store/{store}/{slug}", [
+    Route::get("/team/{teamId}/stores/{slug}/view/{storeId}", [
         StoreController::class,
         "show",
     ])->name("team.stores.store.show");

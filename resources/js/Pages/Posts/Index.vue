@@ -409,8 +409,8 @@ onMounted(() => {
                                                             $page.props.user
                                                                 .current_team
                                                                 .id,
-                                                            post.id,
                                                             post.slug,
+                                                            post.id,
                                                         ]
                                                     )
                                                 "

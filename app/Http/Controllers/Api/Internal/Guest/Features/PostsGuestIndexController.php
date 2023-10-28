@@ -14,8 +14,8 @@ class PostsGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
-        sleep(1);
         $query = Post::latest()
+            ->with("team")
             ->with("categories")
             ->with("coverImages")
             ->with("authors")

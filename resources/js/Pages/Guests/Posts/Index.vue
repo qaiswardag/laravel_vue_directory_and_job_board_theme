@@ -13,9 +13,6 @@ import Items from "@/Pages/Guests/Items/Items.vue";
             <template #header>
                 <div class="myPrimaryMainPageHeaderParagraph">
                     <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Posts</h1>
-                    <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                        <Link :href="route('posts.guest.index')"> posts. </Link>
-                    </p>
                 </div>
             </template>
 

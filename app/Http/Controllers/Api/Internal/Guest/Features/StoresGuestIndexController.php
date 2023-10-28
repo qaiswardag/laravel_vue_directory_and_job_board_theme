@@ -14,7 +14,6 @@ class StoresGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
-        sleep(1);
         $currentClickedPage = "";
 
         $query = Store::latest()
@@ -63,20 +62,9 @@ class StoresGuestIndexController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($teamSlug, $teamId, $postId, $postSlug)
+    public function show()
     {
-        $post = Store::findOrFail($postId);
-
-        $postRenderView = "Guests/Items/SingleItem";
-
-        // Render the store
-        return Inertia::render($postRenderView, [
-            "post" => $post,
-            "authors" => null,
-            "states" => null,
-            "categories" => null,
-            "coverImages" => null,
-        ]);
+        //
     }
 
     /**

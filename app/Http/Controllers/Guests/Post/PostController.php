@@ -53,9 +53,19 @@ class PostController extends Controller
      * @param  string  $slug The slug of the post.
      * @return \Inertia\Response A rendered view with post data or an error view if needed.
      */
-    public function show(Post $post, $slug)
+    public function show($teamSlug, $postSlug, $postId)
     {
-        //
+        $post = Post::findOrFail($postId);
+
+        $postRenderView = "Guests/Items/SingleItem";
+
+        // Render the store
+        return Inertia::render($postRenderView, [
+            "post" => $post,
+            "authors" => null,
+            "categories" => null,
+            "coverImages" => null,
+        ]);
     }
 
     /**

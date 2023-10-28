@@ -242,7 +242,7 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($teamId, Post $post, $slug)
+    public function show($teamId, $slug, Post $postId)
     {
         $postRenderView = "Posts/Show/ShowTeamPost";
 
@@ -261,32 +261,32 @@ class PostController extends Controller
         $slug = urldecode($slug);
 
         // Retrieve the user associated with the post
-        $user = User::find($post->user_id);
+        $user = User::find($postId->user_id);
 
-        // Update the $post array with updatedBy information
+        // Update the $postId array with updatedBy information
         if ($user !== null) {
-            $post->updatedBy = [
+            $postId->updatedBy = [
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
             ];
         }
         if ($user === null) {
-            $post->updatedBy = null;
+            $postId->updatedBy = null;
         }
 
         $authors = [];
 
-        if ($post->show_author) {
-            $authors = $post->authors()->get();
+        if ($postId->show_author) {
+            $authors = $postId->authors()->get();
         }
 
-        $categories = $post->categories;
-        $coverImages = $post->coverImages;
+        $categories = $postId->categories;
+        $coverImages = $postId->coverImages;
 
         // Render the post
         return Inertia::render($postRenderView, [
-            "post" => $post,
+            "post" => $postId,
             "authors" => $authors,
             "categories" => $categories,
             "coverImages" => $coverImages,
