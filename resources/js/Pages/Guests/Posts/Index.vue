@@ -10,14 +10,6 @@ import Items from "@/Pages/Guests/Items/Items.vue";
     <MainLayout>
         <GuestsLayout>
             <Head title="Posts" />
-            <template #header>
-                <div class="myPrimaryMainPageHeaderParagraph">
-                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Posts</h1>
-                </div>
-            </template>
-
-            <!-- Searchbar # start -->
-            <!-- Searchbar # end -->
             <Items pathList="api.guest.posts.index" nameList="posts"></Items>
         </GuestsLayout>
     </MainLayout>

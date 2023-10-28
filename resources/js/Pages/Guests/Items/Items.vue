@@ -100,12 +100,7 @@ onMounted(() => {
 
 <template>
     <div>
-        <FullWidthElement
-            :descriptionArea="true"
-            class="bg-red-50 min-h-screen ease-in duration-300"
-        >
-            <template #description></template>
-
+        <FullWidthElement :descriptionArea="true" :headerArea="false">
             <template #content>
                 <!-- Search # start -->
                 <div>
@@ -178,94 +173,90 @@ onMounted(() => {
                             role="list"
                             class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
                         >
-                            <transition-group name="fade">
-                                <li
-                                    v-for="post in fetchedDataList.posts.data"
-                                    :key="post.id"
-                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded bg-gray-100"
+                            <li
+                                v-for="post in fetchedDataList.posts.data"
+                                :key="post.id"
+                                class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded bg-gray-100"
+                            >
+                                <!-- start photo -->
+
+                                <template
+                                    v-if="post && post.cover_images !== null"
                                 >
-                                    <!-- start photo -->
-
-                                    <template
-                                        v-if="
-                                            post && post.cover_images !== null
+                                    <ThumbnailSmallImageSlider
+                                        :images="post.cover_images"
+                                        imageSize="large_path"
+                                        imageHeight="max-h-96"
+                                        imageWidth="w-full object-cover"
+                                        :roundedFull="false"
+                                        :squareButtons="true"
+                                        @firstButtonClick="
+                                            goToSinglePost(
+                                                post.team.slug,
+                                                post.slug,
+                                                post.id
+                                            )
                                         "
-                                    >
-                                        <ThumbnailSmallImageSlider
-                                            :images="post.cover_images"
-                                            imageSize="large_path"
-                                            imageHeight="max-h-96"
-                                            imageWidth="w-full object-cover"
-                                            :roundedFull="false"
-                                            :squareButtons="true"
-                                            @firstButtonClick="
-                                                goToSinglePost(
-                                                    post.team.slug,
-                                                    post.slug,
-                                                    post.id
-                                                )
-                                            "
-                                            :imageClickable="true"
-                                        ></ThumbnailSmallImageSlider>
-                                    </template>
+                                        :imageClickable="true"
+                                    ></ThumbnailSmallImageSlider>
+                                </template>
 
-                                    <section class="pt-4 pb-4 px-4">
+                                <section class="pt-4 pb-4 px-4">
+                                    <button
+                                        @click="
+                                            goToSinglePost(
+                                                post.team.slug,
+                                                post.slug,
+                                                post.id
+                                            )
+                                        "
+                                        type="button"
+                                    >
+                                        <p
+                                            class="text-sm font-medium mt-2 mb-2"
+                                        >
+                                            {{ post.title }}
+                                        </p>
+                                    </button>
+
+                                    <!-- Category # start -->
+                                    <div
+                                        class="flex flex-wrap gap-2 items-center justify-left"
+                                    >
                                         <button
                                             @click="
-                                                goToSinglePost(
-                                                    post.team.slug,
-                                                    post.slug,
-                                                    post.id
-                                                )
+                                                handleCategory({
+                                                    name: category.name,
+                                                    id: category.id,
+                                                })
                                             "
-                                            type="button"
+                                            v-for="category in post.categories &&
+                                            post.categories"
+                                            :key="category.id"
+                                            class="myPrimaryTag text-[10px] py-2 px-2"
+                                            :class="[
+                                                {
+                                                    'bg-myPrimaryLinkColor text-white':
+                                                        categorySelected.name ===
+                                                        category.name,
+                                                },
+                                                {
+                                                    'bg-myPrimaryLinkColor text-white':
+                                                        categorySelected.name ===
+                                                        category.name,
+                                                },
+                                            ]"
+                                            :disabled="
+                                                categorySelected.name ===
+                                                category.name
+                                            "
                                         >
-                                            <p
-                                                class="text-sm font-medium mt-2 mb-2"
-                                            >
-                                                {{ post.title }}
-                                            </p>
+                                            {{ category.name }}
                                         </button>
-
-                                        <!-- Category # start -->
-                                        <div
-                                            class="flex flex-wrap gap-2 items-center justify-left"
-                                        >
-                                            <button
-                                                @click="
-                                                    handleCategory({
-                                                        name: category.name,
-                                                        id: category.id,
-                                                    })
-                                                "
-                                                v-for="category in post.categories &&
-                                                post.categories"
-                                                :key="category.id"
-                                                class="myPrimaryTag text-[10px] py-2 px-2"
-                                                :class="[
-                                                    {
-                                                        'bg-myPrimaryLinkColor text-white':
-                                                            categorySelected.name ===
-                                                            category.name,
-                                                    },
-                                                    {
-                                                        'bg-myPrimaryLinkColor text-white':
-                                                            categorySelected.name ===
-                                                            category.name,
-                                                    },
-                                                ]"
-                                                :disabled="
-                                                    categorySelected.name ===
-                                                    category.name
-                                                "
-                                            >
-                                                {{ category.name }}
-                                            </button>
-                                        </div>
-                                    </section>
-                                    <!-- Category # end -->
-                                </li>
-                            </transition-group>
+                                    </div>
+                                </section>
+                                <!-- Category # end -->
+                            </li>
                         </ul>
                     </div>
                     <!-- List Grid # end -->
@@ -320,14 +311,3 @@ onMounted(() => {
         </FullWidthElement>
     </div>
 </template>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s;
-}
-.fade-enter,
-.fade-leave-to {
-    opacity: 0;
-}
-</style>

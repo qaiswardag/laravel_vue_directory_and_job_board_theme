@@ -10,11 +10,6 @@ import Items from "@/Pages/Guests/Items/Items.vue";
     <MainLayout>
         <GuestsLayout>
             <Head title="Stores" />
-            <template #header>
-                <div class="myPrimaryMainPageHeaderParagraph">
-                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn">Stores</h1>
-                </div>
-            </template>
             <Items pathList="api.guest.stores.index" nameList="stores"></Items>
         </GuestsLayout>
     </MainLayout>

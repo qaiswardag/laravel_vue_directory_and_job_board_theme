@@ -14,6 +14,7 @@ class StoresGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
+        $searchQuery = "";
         $currentClickedPage = "";
 
         $query = Store::latest()
@@ -29,16 +30,17 @@ class StoresGuestIndexController extends Controller
         $posts = $query->paginate(10);
 
         // check for search_query
-        if ($request->search_query !== null) {
+        if ($request->search_query) {
             $searchQuery = $request->search_query;
         }
         // check for current page
-        if ($request->page !== null) {
+        if (!$request->page) {
             $currentClickedPage = $request->page;
         }
 
         return [
             "posts" => $posts,
+            "search_query" => $searchQuery,
             "current_clicked_page" => $currentClickedPage,
         ];
     }

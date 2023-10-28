@@ -4,12 +4,9 @@ import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
 
-
-
 defineProps({
     terms: String,
 });
-
 </script>
 
 <template>
@@ -21,8 +18,8 @@ defineProps({
                     <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
                         Terms of Service
                     </h1>
-                    <div class="myPrimaryContentSection" v-html="terms" />
                 </div>
+                <div class="myPrimaryContentSection" v-html="terms" />
             </template>
         </GuestsLayout>
     </MainLayout>

@@ -7,7 +7,6 @@ import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
 defineProps({
     policy: String,
 });
-
 </script>
 
 <template>
@@ -19,8 +18,8 @@ defineProps({
                     <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
                         Privacy Policy
                     </h1>
-                    <div class="myPrimaryContentSection" v-html="policy" />
                 </div>
+                <div class="myPrimaryContentSection" v-html="policy" />
             </template>
         </GuestsLayout>
     </MainLayout>
