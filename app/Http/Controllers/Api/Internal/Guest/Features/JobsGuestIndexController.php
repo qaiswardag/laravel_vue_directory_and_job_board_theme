@@ -25,7 +25,7 @@ class JobsGuestIndexController extends Controller
                 $query->where("title", "LIKE", "%" . $term . "%");
             });
 
-        $posts = $query->paginate(10);
+        $posts = $query->paginate(20);
 
         return [
             "posts" => $posts,

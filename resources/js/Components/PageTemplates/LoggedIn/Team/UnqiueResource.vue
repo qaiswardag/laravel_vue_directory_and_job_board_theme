@@ -17,6 +17,7 @@ import {
     MapPinIcon,
     NewspaperIcon,
     PencilIcon,
+    Square3Stack3DIcon,
     Squares2X2Icon,
     SquaresPlusIcon,
     TagIcon,
@@ -151,6 +152,21 @@ defineProps({
                             <MapPinIcon class="w-3 h-3 stroke-1"></MapPinIcon>
                             <span>
                                 {{ post.address }}
+                            </span>
+                        </p>
+                        <p
+                            v-if="post.floor"
+                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                        >
+                            <Square3Stack3DIcon
+                                class="w-3 h-3 stroke-1"
+                            ></Square3Stack3DIcon>
+                            <span>
+                                {{
+                                    post.floor === 0 || post.floor === "0"
+                                        ? "Ground floor"
+                                        : `Floor ${post.floor}`
+                                }}
                             </span>
                         </p>
                     </div>

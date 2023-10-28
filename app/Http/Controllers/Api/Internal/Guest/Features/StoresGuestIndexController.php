@@ -27,7 +27,7 @@ class StoresGuestIndexController extends Controller
                 $query->where("title", "LIKE", "%" . $term . "%");
             });
 
-        $posts = $query->paginate(10);
+        $posts = $query->paginate(20);
 
         // check for search_query
         if ($request->search_query) {
