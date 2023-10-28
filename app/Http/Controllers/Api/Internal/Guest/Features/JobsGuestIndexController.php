@@ -89,7 +89,7 @@ class JobsGuestIndexController extends Controller
             });
         }
 
-        $posts = $query->paginate(2);
+        $posts = $query->paginate(20);
 
         $posts->appends($request->all());
 

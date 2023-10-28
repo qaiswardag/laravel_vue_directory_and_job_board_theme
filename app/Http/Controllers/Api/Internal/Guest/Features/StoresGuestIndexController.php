@@ -60,7 +60,7 @@ class StoresGuestIndexController extends Controller
             });
         }
 
-        $posts = $query->paginate(10);
+        $posts = $query->paginate(20);
 
         $posts->appends($request->all());
 
