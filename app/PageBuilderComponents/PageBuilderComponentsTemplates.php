@@ -8,6 +8,7 @@ class PageBuilderComponentsTemplates
     {
         return [
             [
+                "id" => 1,
                 "user_id" => 1,
                 "title" =>
                     "Showcase Content with 4 Stunning Images and Descriptions",
@@ -16,6 +17,7 @@ class PageBuilderComponentsTemplates
                 "published" => 1,
             ],
             [
+                "id" => 2,
                 "user_id" => 1,
                 "title" => "Showcase 3 Captivating Images and Their Narratives",
                 "html_code" =>
@@ -23,6 +25,7 @@ class PageBuilderComponentsTemplates
                 "published" => 1,
             ],
             [
+                "id" => 3,
                 "user_id" => 1,
                 "title" =>
                     "Captivating Showcase 2 Striking Images and Their Stories",

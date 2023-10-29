@@ -642,16 +642,13 @@ class DatabaseSeeder extends Seeder
 
         $imagesFileCountComponents = count($filteredFiles);
 
-        for (
-            $number = MediaLibrary::count() + 1;
-            $number <= $imagesFileCountComponents;
-            $number++
-        ) {
-            $path = "fake-images/components/{$number}.jpg";
+        foreach ($filteredFiles as $file) {
+            $filenameWithoutExtension = pathinfo($file, PATHINFO_FILENAME);
+            $path = "fake-images/components/{$filenameWithoutExtension}.jpg";
 
             MediaLibrary::factory()->create([
                 "user_id" => 1,
-                "team_id" => 2,
+                "team_id" => 1,
                 "path" => $path,
                 "thumbnail_path" => $path,
                 "medium_path" => $path,
