@@ -22,11 +22,7 @@ yarn-error.log
 /public/js/app.js
 
 /public/uploads/
-
-/storage/uploads/*
-!/storage/uploads/components/
-!/storage/uploads/fake-images/
-
+/storage/uploads
 
 /storage/app/public
 
