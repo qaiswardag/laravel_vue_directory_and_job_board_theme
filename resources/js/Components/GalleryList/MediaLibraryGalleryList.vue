@@ -235,95 +235,78 @@ onMounted(() => {
                 <div
                     class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 myPrimaryGap"
                 >
-                    <transition-group name="fade">
-                        <template
-                            v-for="image in Array.isArray(
-                                getCurrentMedia.fetchedMedia.media.data
-                            ) && getCurrentMedia.fetchedMedia.media.data"
-                            :key="image.id"
+                    <template
+                        v-for="image in Array.isArray(
+                            getCurrentMedia.fetchedMedia.media.data
+                        ) && getCurrentMedia.fetchedMedia.media.data"
+                        :key="image.id"
+                    >
+                        <div
+                            @click="handleImageClick(image.id)"
+                            class="bg-gray-50 min-h-[15rem] px-0 pb-2 cursor-pointer rounded-sm"
                         >
-                            <div
-                                @click="handleImageClick(image.id)"
-                                class="bg-gray-50 min-h-[15rem] px-0 pb-2 cursor-pointer rounded-sm"
-                            >
-                                <img
-                                    class="group min-h-[4rem] aspect-w-10 aspect-h-7 block w-full overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
-                                    :src="`/storage/uploads/${image?.medium_path}`"
-                                    alt="image"
-                                />
+                            <img
+                                class="group min-h-[4rem] aspect-w-10 aspect-h-7 block w-full overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
+                                :src="`/storage/uploads/${image?.medium_path}`"
+                                alt="image"
+                            />
 
-                                <dl
-                                    class="myPrimaryParagraph text-xs mt-2 px-1 border-gray-200 divide-y divide-gray-200"
+                            <dl
+                                class="myPrimaryParagraph text-xs mt-2 px-1 border-gray-200 divide-y divide-gray-200"
+                            >
+                                <dd
+                                    v-if="
+                                        image.id !==
+                                        getCurrentImage?.currentImage
+                                            ?.mediaLibrary?.id
+                                    "
                                 >
-                                    <dd
-                                        v-if="
-                                            image.id !==
-                                            getCurrentImage?.currentImage
-                                                ?.mediaLibrary?.id
-                                        "
-                                    >
-                                        <div
-                                            class="pb-2 flex justify-between items-center text-xs"
-                                        >
-                                            <dt></dt>
-                                            <div
-                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                            >
-                                                <EllipsisVerticalIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                >
-                                                </EllipsisVerticalIcon>
-                                            </div>
-                                        </div>
-                                    </dd>
-                                    <dd
-                                        v-if="
-                                            image.id ===
-                                            getCurrentImage?.currentImage
-                                                ?.mediaLibrary?.id
-                                        "
-                                    >
-                                        <div
-                                            class="pb-2 flex justify-between items-center text-xs"
-                                        >
-                                            <dt></dt>
-                                            <div
-                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                            >
-                                                <CheckIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                >
-                                                </CheckIcon>
-                                            </div>
-                                        </div>
-                                    </dd>
                                     <div
-                                        class="py-2 flex justify-between gap-2"
+                                        class="pb-2 flex justify-between items-center text-xs"
                                     >
-                                        <dd class="text-right min-h-[2rem]">
-                                            {{
-                                                image?.name ? image?.name : "—"
-                                            }}
-                                        </dd>
+                                        <dt></dt>
+                                        <div
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        >
+                                            <EllipsisVerticalIcon
+                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            >
+                                            </EllipsisVerticalIcon>
+                                        </div>
                                     </div>
-                                </dl>
-                            </div>
-                        </template>
-                    </transition-group>
+                                </dd>
+                                <dd
+                                    v-if="
+                                        image.id ===
+                                        getCurrentImage?.currentImage
+                                            ?.mediaLibrary?.id
+                                    "
+                                >
+                                    <div
+                                        class="pb-2 flex justify-between items-center text-xs"
+                                    >
+                                        <dt></dt>
+                                        <div
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        >
+                                            <CheckIcon
+                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            >
+                                            </CheckIcon>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <div class="py-2 flex justify-between gap-2">
+                                    <dd class="text-right min-h-[2rem]">
+                                        {{ image?.name ? image?.name : "—" }}
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </template>
                 </div>
             </div>
             <!-- Done loading # end -->
         </div>
     </template>
 </template>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s;
-}
-.fade-enter,
-.fade-leave-to {
-    opacity: 0;
-}
-</style>
