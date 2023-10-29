@@ -21,6 +21,9 @@ yarn-error.log
 /public/css/app.css
 /public/js/app.js
 /public/uploads/
-/storage/uploads
+!/public/uploads/components/
+!/public/uploads/fake-images/
+
+/storage/uploads/
 /storage/app/public
 
