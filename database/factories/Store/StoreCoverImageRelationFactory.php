@@ -1,14 +1,13 @@
 <?php
 
-namespace Database\Factories\MediaLibrary;
+namespace Database\Factories\Store;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MediaLibrary>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Store\StoreCoverImageRelation>
  */
-class MediaLibraryFactory extends Factory
+class StoreCoverImageRelationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +17,7 @@ class MediaLibraryFactory extends Factory
     public function definition(): array
     {
         return [
-                //
-            ];
+            //
+        ];
     }
 }

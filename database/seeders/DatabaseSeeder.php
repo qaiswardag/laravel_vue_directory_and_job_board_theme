@@ -5,16 +5,20 @@ namespace Database\Seeders;
 use App\Models\Job\Job;
 use App\Models\Job\JobCategory;
 use App\Models\Job\JobCountry;
+use App\Models\Job\JobCoverImageRelation;
 use App\Models\Job\JobState;
 use App\Models\Job\JobType;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\Post;
 use App\Models\Post\PostCategory;
+use App\Models\Post\PostCoverImageRelation;
 use App\Models\Store\Store;
 use App\Models\Store\StoreCategory;
+use App\Models\Store\StoreCoverImageRelation;
 use App\Models\Store\StoreState;
 use App\Models\Superadmin\PageBuilder\PageBuilderComponent;
 use App\Models\Superadmin\PageBuilder\PageBuilderComponentCategory;
+use App\Models\Superadmin\PageBuilder\PageBuilderCoverImageRelation;
 use App\Models\Superadmin\Superadmin;
 use App\Models\Team;
 use App\Models\TeamInvitation;
@@ -547,14 +551,20 @@ class DatabaseSeeder extends Seeder
         );
         //
         //
-        // Page Builder
-        // Page Builder
-        // Page Builder
-        // Page Builder
-        //
-        //
 
         //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        // Page Builder
+        // Page Builder
+        // Page Builder
+        // Page Builder
+
         // Create an instance of PageBuilderComponentsTemplates
         $pageBuilderTemplates = new PageBuilderComponentsTemplates();
 
@@ -602,8 +612,212 @@ class DatabaseSeeder extends Seeder
             PageBuilderComponentCategory::class,
             "categories"
         );
+
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        // fakse images for components, posts, jobs & stores # start
+        // fakse images for components, posts, jobs & stores # start
+        //
+        //
+        //
+        // fake images for components # start
+        // number of images in fake-images & stores folder
+
+        $directory = storage_path("app/public/uploads/fake-images/components");
+        $files = scandir($directory);
+
+        // Remove unwanted files like . and ..
+        $filteredFiles = array_filter($files, function ($file) {
+            return !in_array($file, [".", "..", ".DS_Store"]);
+        });
+
+        $imagesFileCountComponents = count($filteredFiles);
+
+        for (
+            $number = MediaLibrary::count() + 1;
+            $number <= $imagesFileCountComponents;
+            $number++
+        ) {
+            $path = "fake-images/components/{$number}.jpg";
+
+            MediaLibrary::factory()->create([
+                "user_id" => 1,
+                "team_id" => 2,
+                "path" => $path,
+                "thumbnail_path" => $path,
+                "medium_path" => $path,
+                "large_path" => $path,
+                "size" => 1000,
+                "width" => 1000,
+                "height" => 1000,
+                "extension" => "jpg",
+            ]);
+        }
+        // fake images for components # start
+        for ($number = 1; $number <= PageBuilderComponent::count(); $number++) {
+            $randomMediaLibraryId = rand(1, MediaLibrary::count());
+
+            PageBuilderCoverImageRelation::factory()->create([
+                "media_library_id" => $randomMediaLibraryId,
+                "component_id" => $number,
+            ]);
+        }
+
+        //
+        //
+        //
+        // fake images for posts # start
+        // number of images in fake-images & stores folder
+
+        $directory = storage_path("app/public/uploads/fake-images/posts");
+        $files = scandir($directory);
+
+        // Remove unwanted files like . and ..
+        $filteredFiles = array_filter($files, function ($file) {
+            return !in_array($file, [".", "..", ".DS_Store"]);
+        });
+
+        $imagesFileCountPosts = count($filteredFiles);
+
+        foreach ($filteredFiles as $file) {
+            $filenameWithoutExtension = pathinfo($file, PATHINFO_FILENAME);
+            $path = "fake-images/posts/{$filenameWithoutExtension}.jpg";
+
+            MediaLibrary::factory()->create([
+                "user_id" => 1,
+                "team_id" => 2,
+                "path" => $path,
+                "thumbnail_path" => $path,
+                "medium_path" => $path,
+                "large_path" => $path,
+                "size" => 1000,
+                "width" => 1000,
+                "height" => 1000,
+                "extension" => "jpg",
+            ]);
+        }
+        // fake images for stores # start
+        for ($number = 1; $number <= Post::count(); $number++) {
+            $randomMediaLibraryId = rand(
+                $imagesFileCountComponents + 1,
+                MediaLibrary::count()
+            );
+
+            PostCoverImageRelation::factory()->create([
+                "media_library_id" => $randomMediaLibraryId,
+                "post_id" => $number,
+            ]);
+        }
+
+        // fake images for jobs # start
+        // number of images in fake-images & stores folder
+
+        $directory = storage_path("app/public/uploads/fake-images/jobs");
+        $files = scandir($directory);
+
+        // Remove unwanted files like . and ..
+        $filteredFiles = array_filter($files, function ($file) {
+            return !in_array($file, [".", "..", ".DS_Store"]);
+        });
+
+        $imagesFileCountJobs = count($filteredFiles);
+
+        foreach ($filteredFiles as $file) {
+            $filenameWithoutExtension = pathinfo($file, PATHINFO_FILENAME);
+            $path = "fake-images/jobs/{$filenameWithoutExtension}.jpg";
+
+            MediaLibrary::factory()->create([
+                "user_id" => 1,
+                "team_id" => 2,
+                "path" => $path,
+                "thumbnail_path" => $path,
+                "medium_path" => $path,
+                "large_path" => $path,
+                "size" => 1000,
+                "width" => 1000,
+                "height" => 1000,
+                "extension" => "jpg",
+            ]);
+        }
+        // fake images for stores # start
+        for ($number = 1; $number <= Job::count(); $number++) {
+            $randomMediaLibraryId = rand(
+                $imagesFileCountComponents + $imagesFileCountPosts + 1,
+                MediaLibrary::count()
+            );
+
+            JobCoverImageRelation::factory()->create([
+                "media_library_id" => $randomMediaLibraryId,
+                "job_id" => $number,
+            ]);
+        }
+
+        // fake images for stores # start
+        // number of images in fake-images & stores folder
+
+        $directory = storage_path("app/public/uploads/fake-images/stores");
+        $files = scandir($directory);
+
+        // Remove unwanted files like . and ..
+        $filteredFiles = array_filter($files, function ($file) {
+            return !in_array($file, [".", "..", ".DS_Store"]);
+        });
+
+        $imagesFileCountStores = count($filteredFiles);
+
+        foreach ($filteredFiles as $file) {
+            $filenameWithoutExtension = pathinfo($file, PATHINFO_FILENAME);
+            $path = "fake-images/stores/{$filenameWithoutExtension}.jpg";
+
+            MediaLibrary::factory()->create([
+                "user_id" => 1,
+                "team_id" => 2,
+                "path" => $path,
+                "thumbnail_path" => $path,
+                "medium_path" => $path,
+                "large_path" => $path,
+                "size" => 1000,
+                "width" => 1000,
+                "height" => 1000,
+                "extension" => "jpg",
+            ]);
+        }
+        // fake images for stores # start
+        for ($number = 1; $number <= Store::count(); $number++) {
+            $randomMediaLibraryId = rand(
+                $imagesFileCountComponents +
+                    $imagesFileCountPosts +
+                    $imagesFileCountJobs +
+                    1,
+                MediaLibrary::count()
+            );
+
+            StoreCoverImageRelation::factory()->create([
+                "media_library_id" => $randomMediaLibraryId,
+                "store_id" => $number,
+            ]);
+        }
+
+        //
+        //
+        // fakse images for components, posts, jobs & stores # end
+        // fakse images for components, posts, jobs & stores # end
+        //
+        //
+        //
+        //
+        //
+        //
     }
-    //
     //
     //
     //

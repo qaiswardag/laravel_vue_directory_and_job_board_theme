@@ -296,7 +296,7 @@ class StoreTeamUpdateRequest extends FormRequest
                         ->errors()
                         ->add(
                             "cover_image",
-                            "The 'primary' attribute is missing for this image, even though the image is set as primary.  To resolve this issue, please click the 'Clear form' button and then try again."
+                            "The 'primary' attribute is missing for this image, even though the image is set as primary.  To resolve this issue, please delete all images and then try again."
                         );
                 }
             }
