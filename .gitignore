@@ -24,6 +24,6 @@ yarn-error.log
 !/public/uploads/components/
 !/public/uploads/fake-images/
 
-/storage/uploads/
+/storage/uploads
 /storage/app/public
 
