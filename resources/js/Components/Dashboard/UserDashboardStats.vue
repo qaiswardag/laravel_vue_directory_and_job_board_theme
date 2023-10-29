@@ -97,13 +97,13 @@ const stats = [
 
 const goToSinglePost = function (current_teamId, postId, postSlug) {
     router.get(
-        route("team.posts.post.show", [current_teamId, postId, postSlug])
+        route("team.posts.post.show", [current_teamId, postSlug, postId])
     );
 };
 const goToSingleJob = function (current_teamId, postId, postSlug) {
-    router.get(route("team.jobs.job.show", [current_teamId, postId, postSlug]));
+    router.get(route("team.jobs.job.show", [current_teamId, postSlug, postId]));
 };
-const goToSingleStore = function (current_teamId, postId, postSlug) {
+const goToSingleStore = function (current_teamId, postSlug, postId) {
     router.get(
         route("team.stores.store.show", [current_teamId, postId, postSlug])
     );
@@ -502,8 +502,8 @@ onMounted(() => {
                                                 route('team.posts.post.show', [
                                                     $page.props.user
                                                         .current_team.id,
-                                                    post.id,
                                                     post.slug,
+                                                    post.id,
                                                 ])
                                             "
                                         >
@@ -600,8 +600,8 @@ onMounted(() => {
                                                 route('team.jobs.job.show', [
                                                     $page.props.user
                                                         .current_team.id,
-                                                    post.id,
                                                     post.slug,
+                                                    post.id,
                                                 ])
                                             "
                                         >
@@ -701,8 +701,8 @@ onMounted(() => {
                                                     [
                                                         $page.props.user
                                                             .current_team.id,
-                                                        post.id,
                                                         post.slug,
+                                                        post.id,
                                                     ]
                                                 )
                                             "
