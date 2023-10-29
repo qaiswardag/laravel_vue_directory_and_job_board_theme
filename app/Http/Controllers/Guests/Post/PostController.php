@@ -69,6 +69,7 @@ class PostController extends Controller
         // Render
         return Inertia::render($postRenderView, [
             "post" => $post,
+            "postType" => "Post",
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,

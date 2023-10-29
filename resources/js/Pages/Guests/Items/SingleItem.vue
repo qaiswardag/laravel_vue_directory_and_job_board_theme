@@ -7,6 +7,9 @@ const props = defineProps({
     post: {
         required: false,
     },
+    postType: {
+        required: false,
+    },
     authors: {
         required: false,
     },
@@ -30,7 +33,7 @@ const props = defineProps({
 <template>
     <MainLayout>
         <GuestsLayout>
-            <Head :title="post.title" />
+            <Head :title="`${props.postType} | ${post.title}`" />
             <!-- Show Unique Resorce - start -->
             <main class="myPrimaryContentSection">
                 <UnqiueResource

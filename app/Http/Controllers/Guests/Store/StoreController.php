@@ -54,6 +54,7 @@ class StoreController extends Controller
 
         // Render
         return Inertia::render($postRenderView, [
+            "postType" => "Store",
             "post" => $post,
             "authors" => $authors,
             "states" => $states,

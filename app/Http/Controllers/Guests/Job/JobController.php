@@ -53,6 +53,7 @@ class JobController extends Controller
 
         // Render the store
         return Inertia::render($postRenderView, [
+            "postType" => "Job",
             "post" => $post,
             "authors" => $authors,
             "countries" => $countries,
