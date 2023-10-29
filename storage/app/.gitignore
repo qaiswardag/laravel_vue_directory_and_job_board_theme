@@ -1,7 +1,7 @@
 
 !public/*
-!public/uploads/components/
-!public/uploads/fake-images/
+!public/uploads/components/*
+!public/uploads/fake-images/*
 
 .DS_Store
 !.gitignore

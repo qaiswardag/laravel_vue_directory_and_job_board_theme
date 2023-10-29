@@ -11,6 +11,7 @@ import config from "@/utils/config";
 import { TailwindPagination } from "laravel-vue-pagination";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
+
 import {
     GlobeAmericasIcon,
     MapIcon,
@@ -88,9 +89,18 @@ const fetchComponents = function (page) {
     );
 };
 
+// Scroll to the top of the page
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
+}
+
 // get result for "laravel pagination" package
 const getResultsForPage = (page = 1) => {
     fetchComponents(page);
+    scrollToTop();
 };
 
 // handle type
@@ -578,6 +588,7 @@ onMounted(() => {
                                             )
                                         "
                                         type="button"
+                                        class="w-full text-left"
                                     >
                                         <p
                                             class="text-sm font-medium mt-2 mb-2"
@@ -585,6 +596,45 @@ onMounted(() => {
                                             {{ post.title }}
                                         </p>
                                     </button>
+
+                                    <template
+                                        v-if="
+                                            Array.isArray(
+                                                post.team?.coverImagesWithLogos
+                                                    ?.logos
+                                            ) &&
+                                            post.team?.coverImagesWithLogos
+                                                ?.logos.length !== 0
+                                        "
+                                    >
+                                        <ThumbnailSmallImageSlider
+                                            :images="
+                                                post.team?.coverImagesWithLogos
+                                                    ?.logos
+                                            "
+                                            imageSize="medium_path"
+                                            imageHeight="h-16"
+                                            imageWidth="w-16"
+                                            :roundedFull="true"
+                                        ></ThumbnailSmallImageSlider>
+                                    </template>
+
+                                    <template
+                                        v-if="
+                                            Array.isArray(
+                                                post.team?.coverImagesWithLogos
+                                                    ?.logos
+                                            ) &&
+                                            post.team?.coverImagesWithLogos
+                                                ?.logos.length === 0
+                                        "
+                                    >
+                                        <div
+                                            class="text-xs h-16 flex items-center justify-center font-medium"
+                                        >
+                                            {{ post.team.name }}
+                                        </div>
+                                    </template>
 
                                     <!-- Country # start -->
                                     <template v-if="post.countries">
