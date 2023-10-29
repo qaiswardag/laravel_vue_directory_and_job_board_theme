@@ -89,8 +89,6 @@ class SuperadminManageRoles extends Controller
             "user_id" => ["required", "integer"],
         ])->validateWithBag("createSuperadmin");
 
-        sleep(1);
-
         Superadmin::where("user_id", $user->id)->update([
             "role" => $request->role,
         ]);

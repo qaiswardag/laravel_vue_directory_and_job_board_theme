@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Superadmin\Superadmin;
 use App\Models\Team;
+use App\Models\TeamUser;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
@@ -37,7 +38,7 @@ class TeamsUsers extends Command
                 "last_name" => "Wardag",
                 "email" => "qw@myself.ae",
                 "public" => true,
-                "current_team_id" => 1,
+                "current_team_id" => 2,
                 "password" => Hash::make("123456"),
             ]);
 
@@ -46,18 +47,59 @@ class TeamsUsers extends Command
                 "role" => "admin", // reader, editor, or admin
             ]);
         }
+        // Check if the user with ID 1 exists
+        if (!User::where("id", 2)->exists()) {
+            User::factory()->create([
+                "id" => 2,
+                "first_name" => "Mie",
+                "last_name" => "Mortensen",
+                "email" => "mm@myself.ae",
+
+                "public" => true,
+                "current_team_id" => 2,
+                "password" => Hash::make("123456"),
+            ]);
+
+            Superadmin::factory()->create([
+                "user_id" => 2,
+                "role" => "reader", // reader, editor or admin
+            ]);
+        }
 
         // Check if the team with ID 1 exists
         if (!Team::where("id", 1)->exists()) {
             Team::factory()->create([
                 "id" => 1,
                 "user_id" => User::find(1)->id,
+                "name" => "myself",
+                "slug" => "myself",
+                "public" => true,
+                "personal_team" => false,
+            ]);
+        }
+        // Check if the team with ID 2 exists
+        if (!Team::where("id", 2)->exists()) {
+            Team::factory()->create([
+                "id" => 2,
+                "user_id" => User::find(2)->id,
                 "name" => "Dubai Mall",
                 "slug" => "Dubai Mall",
                 "public" => true,
                 "personal_team" => false,
             ]);
         }
+
+        TeamUser::factory()->create([
+            "team_id" => Team::find(2)->id,
+            "user_id" => User::find(1)->id,
+            "role" => "admin",
+        ]);
+
+        TeamUser::factory()->create([
+            "team_id" => Team::find(1)->id,
+            "user_id" => User::find(2)->id,
+            "role" => "editor",
+        ]);
 
         $this->info("Seeded successfully, new Teams and Users for production");
     }

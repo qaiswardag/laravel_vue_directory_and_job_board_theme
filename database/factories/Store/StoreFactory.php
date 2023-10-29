@@ -67,7 +67,7 @@ class StoreFactory extends Factory
             "</div></div></section>";
 
         return [
-            "team_id" => 1,
+            "team_id" => 2,
             "user_id" => 1,
             "show_author" => rand(0, 1),
             "deleted_at" => null,
