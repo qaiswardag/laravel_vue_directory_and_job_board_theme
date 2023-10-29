@@ -632,7 +632,9 @@ class DatabaseSeeder extends Seeder
         // fake images for components # start
         // number of images in fake-images & stores folder
 
-        $directory = storage_path("app/public/uploads/fake-images/components");
+        $directory = storage_path(
+            "app/public/uploads/components/single_component_cover_image"
+        );
         $files = scandir($directory);
 
         // Remove unwanted files like . and ..
@@ -644,7 +646,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($filteredFiles as $file) {
             $filenameWithoutExtension = pathinfo($file, PATHINFO_FILENAME);
-            $path = "fake-images/components/{$filenameWithoutExtension}.jpg";
+            $path = "components/single_component_cover_image/{$filenameWithoutExtension}.jpg";
 
             MediaLibrary::factory()->create([
                 "user_id" => 1,
