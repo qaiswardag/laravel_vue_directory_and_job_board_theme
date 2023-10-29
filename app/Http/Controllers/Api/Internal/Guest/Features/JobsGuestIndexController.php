@@ -48,10 +48,10 @@ class JobsGuestIndexController extends Controller
             $searchQuery = implode(",", $searchQuery);
         }
 
-        $countries = JobCountry::all();
-        $states = JobState::all();
-        $types = JobType::all();
-        $categories = JobCategory::all();
+        $countries = JobCountry::orderBy("name")->get();
+        $states = JobState::orderBy("name")->get();
+        $types = JobType::orderBy("name")->get();
+        $categories = JobCategory::orderBy("name")->get();
 
         $query = Job::latest()
             ->with("team")
@@ -61,6 +61,7 @@ class JobsGuestIndexController extends Controller
             ->with("countries")
             ->with("states")
             ->with("authors")
+            ->where("published", true)
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("title", "LIKE", "%" . $term . "%");
             });

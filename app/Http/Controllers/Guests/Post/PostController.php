@@ -55,7 +55,9 @@ class PostController extends Controller
      */
     public function show($teamSlug, $postSlug, $postId)
     {
-        $post = Post::findOrFail($postId);
+        $post = Post::where("id", $postId)
+            ->where("published", true)
+            ->firstOrFail();
 
         $postRenderView = "Guests/Items/SingleItem";
 

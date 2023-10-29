@@ -35,8 +35,8 @@ class StoresGuestIndexController extends Controller
             $searchQuery = implode(",", $searchQuery);
         }
 
-        $categories = StoreCategory::all();
-        $states = StoreState::all();
+        $categories = StoreCategory::orderBy("name")->get();
+        $states = StoreState::orderBy("name")->get();
 
         $query = Store::latest()
             ->with("team")
@@ -44,6 +44,7 @@ class StoresGuestIndexController extends Controller
             ->with("coverImages")
             ->with("states")
             ->with("authors")
+            ->where("published", true)
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("title", "LIKE", "%" . $term . "%");
             });

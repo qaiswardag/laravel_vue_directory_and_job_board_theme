@@ -390,7 +390,7 @@ onMounted(() => {
                         "
                     >
                         <div class="my-12 myPrimaryDarkGrayColor">
-                            <p class="text-xs">Job type</p>
+                            <p class="text-xs">Job types</p>
                             <div
                                 class="flex gap-2 flex-wrap py-4 border-t border-b border-gray-200"
                             >

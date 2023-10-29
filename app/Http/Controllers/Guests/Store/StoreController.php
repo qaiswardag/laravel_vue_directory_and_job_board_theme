@@ -41,7 +41,10 @@ class StoreController extends Controller
      */
     public function show($teamSlug, $postSlug, $postId)
     {
-        $post = Store::findOrFail($postId);
+        $post = Store::where("id", $postId)
+            ->where("published", true)
+            ->firstOrFail();
+
         $postRenderView = "Guests/Items/SingleItem";
 
         $authors = $post->authors;

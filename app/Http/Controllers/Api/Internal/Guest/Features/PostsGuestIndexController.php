@@ -29,13 +29,14 @@ class PostsGuestIndexController extends Controller
             $searchQuery = implode(",", $searchQuery);
         }
 
-        $categories = PostCategory::all();
+        $categories = PostCategory::orderBy("name")->get();
 
         $query = Post::latest()
             ->with("team")
             ->with("categories")
             ->with("coverImages")
             ->with("authors")
+            ->where("published", true)
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("title", "LIKE", "%" . $term . "%");
             });

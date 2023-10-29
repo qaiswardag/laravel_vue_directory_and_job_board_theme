@@ -38,7 +38,9 @@ class JobController extends Controller
      */
     public function show($teamSlug, $postSlug, $postId)
     {
-        $post = Job::findOrFail($postId);
+        $post = Job::where("id", $postId)
+            ->where("published", true)
+            ->firstOrFail();
 
         $postRenderView = "Guests/Items/SingleItem";
 
