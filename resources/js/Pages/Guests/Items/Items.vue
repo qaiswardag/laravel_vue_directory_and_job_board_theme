@@ -845,11 +845,6 @@ onMounted(() => {
                         </TailwindPagination>
                     </div>
                     <!-- Pagination # end -->
-
-                    <p class="my-12">
-                        List er:
-                        {{ JSON.stringify(fetchedDataPosts?.posts?.data) }}
-                    </p>
                 </template>
             </template>
         </FullWidthElement>
