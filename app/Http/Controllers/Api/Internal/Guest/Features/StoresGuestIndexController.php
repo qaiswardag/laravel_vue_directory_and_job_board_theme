@@ -16,6 +16,7 @@ class StoresGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
+        // dd($request->category);
         $categoryID = null;
         $stateID = null;
 

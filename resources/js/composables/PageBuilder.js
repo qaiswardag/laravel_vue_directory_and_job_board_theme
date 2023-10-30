@@ -348,8 +348,6 @@ class PageBuilder {
 
         elements.forEach((element) => {
             this.#applyHelperCSSToElements(element);
-
-            element.setAttribute("element", "");
         });
 
         // Add the component id to the section element

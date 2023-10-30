@@ -53,8 +53,8 @@ const {
     isSuccess: isSuccessPosts,
 } = vueFetch();
 
+const categorySelected = ref([{ name: "All", id: null }]);
 const typeSelected = ref({ name: "All", id: null });
-const categorySelected = ref({ name: "All", id: null });
 const countrySelected = ref({ name: "All", id: null });
 const stateSelected = ref({ name: "All", id: null });
 
@@ -120,7 +120,9 @@ const handleJobType = function (type) {
 };
 // handle categroy
 const handleCategory = function (category) {
-    categorySelected.value = category;
+    categorySelected.value.push(category);
+    console.log(`category:`, categorySelected);
+    return;
 
     handleGetPosts(
         route(props.pathList, {
@@ -465,6 +467,35 @@ onMounted(() => {
                     </template>
                     <!-- Types # End -->
 
+                    <!-- Selected Categories # Start -->
+                    <div class="bg-red-100 max-w-full">
+                        <div class="overflow-x-scroll flex gap-2">
+                            <template
+                                v-for="selctedCategory in Array.isArray(
+                                    categorySelected
+                                ) && categorySelected"
+                                :key="selctedCategory.id"
+                            >
+                                <button
+                                    @click="
+                                        handleCategory({
+                                            name: selctedCategory.name,
+                                            id: selctedCategory.id,
+                                        })
+                                    "
+                                    class="myPrimaryTag flex"
+                                >
+                                    <Squares2X2Icon
+                                        class="mySmallIcon py-0 m-0"
+                                    ></Squares2X2Icon>
+                                    <p>
+                                        {{ selctedCategory.name }}
+                                    </p>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+                    <!-- Selected Categories # End -->
                     <!-- Categories # Start -->
                     <template
                         v-if="

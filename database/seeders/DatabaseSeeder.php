@@ -624,8 +624,8 @@ class DatabaseSeeder extends Seeder
         //
         //
         //
-        // fakse images for components, posts, jobs & stores # start
-        // fakse images for components, posts, jobs & stores # start
+        // fake images for components, posts, jobs & stores # start
+        // fake images for components, posts, jobs & stores # start
         //
         //
         //
@@ -808,12 +808,43 @@ class DatabaseSeeder extends Seeder
 
         //
         //
-        // fakse images for components, posts, jobs & stores # end
-        // fakse images for components, posts, jobs & stores # end
+        // fake images for components & Elements # start
+        // fake images for components & Elements # start
         //
+        $directory = storage_path(
+            "app/public/uploads/components/component_html_element_images"
+        );
+        $files = scandir($directory);
+
+        // Remove unwanted files like . and ..
+        $filteredFiles = array_filter($files, function ($file) {
+            return !in_array($file, [".", "..", ".DS_Store"]);
+        });
+
+        $imagesFileCountImagesElements = count($filteredFiles);
+
+        foreach ($filteredFiles as $file) {
+            $filenameWithoutExtension = pathinfo($file, PATHINFO_FILENAME);
+            $path = "components/component_html_element_images/{$filenameWithoutExtension}.jpg";
+
+            MediaLibrary::factory()->create([
+                "user_id" => 1,
+                "team_id" => 1,
+                "name" => "For HTLM element",
+                "path" => $path,
+                "thumbnail_path" => $path,
+                "medium_path" => $path,
+                "large_path" => $path,
+                "size" => 1000,
+                "width" => 1000,
+                "height" => 1000,
+                "extension" => "jpg",
+            ]);
+        }
+
         //
-        //
-        //
+        // fake HTML images for components & Elements # end
+        // fake HTML images for components & Elements # end
         //
         //
     }
