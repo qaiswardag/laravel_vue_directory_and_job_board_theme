@@ -661,9 +661,9 @@ const categoriesSorted = computed(() => {
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></Squares2X2Icon>
                                     </button>
-                                    <p>
+                                    <div>
                                         {{ category.name }}
-                                    </p>
+                                    </div>
                                 </div>
 
                                 <button

@@ -324,21 +324,21 @@ onMounted(() => {
                                         as="span"
                                         class="text-gray-500 flex flex-col gap-2"
                                     >
-                                        <p>
+                                        <div>
                                             **** **** ****
                                             {{ paymentMethod.card?.last4 }}
-                                        </p>
-                                        <p class="block sm:inline">
+                                        </div>
+                                        <div class="block sm:inline">
                                             Name:
                                             {{
                                                 paymentMethod.billing_details
                                                     ?.name
                                             }}
-                                        </p>
-                                        <p class="block sm:inline">
+                                        </div>
+                                        <div class="block sm:inline">
                                             Country:
                                             {{ paymentMethod.card?.country }}
-                                        </p>
+                                        </div>
                                     </div>
                                 </span>
                             </div>

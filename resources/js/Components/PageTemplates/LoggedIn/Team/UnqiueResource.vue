@@ -78,18 +78,20 @@ defineProps({
                     <div v-if="post.published" class="myPrimaryWidget">
                         <h4 class="myFourthHeader">Published</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
-                        <span
+                        <div
                             class="myPrimaryTag bg-myPrimaryLinkColor text-white"
-                            >Published</span
                         >
+                            Published
+                        </div>
                     </div>
                     <div v-if="!post.published" class="myPrimaryWidget">
                         <h4 class="myFourthHeader">Published</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
-                        <span
+                        <div
                             class="myPrimaryTag bg-myPrimaryErrorColor text-white"
-                            >Unpublished</span
                         >
+                            Unpublished
+                        </div>
                     </div>
                     <!-- published # end -->
                 </template>
@@ -270,18 +272,20 @@ defineProps({
                     <div v-if="post.show_author" class="myPrimaryWidget">
                         <h4 class="myFourthHeader">People visibility</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
-                        <span
+                        <div
                             class="myPrimaryTag bg-myPrimaryLinkColor text-white"
-                            >Visible</span
                         >
+                            Visible
+                        </div>
                     </div>
                     <div v-if="!post.show_author" class="myPrimaryWidget">
                         <h4 class="myFourthHeader">People visibility</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
-                        <span
+                        <div
                             class="myPrimaryTag bg-myPrimaryErrorColor text-white"
-                            >Hidden</span
                         >
+                            Hidden
+                        </div>
                     </div>
                     <!-- show authors # end -->
                 </template>

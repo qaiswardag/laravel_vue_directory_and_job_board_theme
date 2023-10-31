@@ -416,7 +416,7 @@ const notificationsModalButton = function () {
                                                     <td
                                                         class="myPrimaryTableTBodyTd"
                                                     >
-                                                        <span
+                                                        <div
                                                             class="myPrimaryTag"
                                                             :class="
                                                                 post.stripe_status ===
@@ -424,10 +424,11 @@ const notificationsModalButton = function () {
                                                                     ? 'bg-myPrimaryLinkColor text-white'
                                                                     : 'bg-myPrimaryErrorColor text-white'
                                                             "
-                                                            >{{
-                                                                post.stripe_status
-                                                            }}</span
                                                         >
+                                                            {{
+                                                                post.stripe_status
+                                                            }}
+                                                        </div>
                                                     </td>
                                                     <td
                                                         class="myPrimaryTableTBodyTd"
@@ -659,7 +660,7 @@ const notificationsModalButton = function () {
                                                     <td
                                                         class="myPrimaryTableTBodyTd"
                                                     >
-                                                        <span
+                                                        <div
                                                             class="myPrimaryTag"
                                                             :class="
                                                                 post.stripe_status ===
@@ -667,10 +668,11 @@ const notificationsModalButton = function () {
                                                                     ? 'bg-myPrimaryLinkColor text-white'
                                                                     : 'bg-myPrimaryErrorColor text-white'
                                                             "
-                                                            >{{
-                                                                post.stripe_status
-                                                            }}</span
                                                         >
+                                                            {{
+                                                                post.stripe_status
+                                                            }}
+                                                        </div>
                                                     </td>
                                                     <td
                                                         class="myPrimaryTableTBodyTd"
@@ -876,7 +878,7 @@ const notificationsModalButton = function () {
                                                     <td
                                                         class="myPrimaryTableTBodyTd"
                                                     >
-                                                        <span
+                                                        <div
                                                             class="myPrimaryTag"
                                                             :class="
                                                                 post.stripe_status ===
@@ -884,10 +886,11 @@ const notificationsModalButton = function () {
                                                                     ? 'bg-myPrimaryLinkColor text-white'
                                                                     : 'bg-myPrimaryErrorColor text-white'
                                                             "
-                                                            >{{
-                                                                post.stripe_status
-                                                            }}</span
                                                         >
+                                                            {{
+                                                                post.stripe_status
+                                                            }}
+                                                        </div>
                                                     </td>
                                                     <td
                                                         class="myPrimaryTableTBodyTd"
@@ -1090,7 +1093,7 @@ const notificationsModalButton = function () {
                                                     <td
                                                         class="myPrimaryTableTBodyTd"
                                                     >
-                                                        <span
+                                                        <div
                                                             class="myPrimaryTag"
                                                             :class="
                                                                 post.stripe_status ===
@@ -1098,10 +1101,11 @@ const notificationsModalButton = function () {
                                                                     ? 'bg-myPrimaryLinkColor text-white'
                                                                     : 'bg-myPrimaryErrorColor text-white'
                                                             "
-                                                            >{{
-                                                                post.stripe_status
-                                                            }}</span
                                                         >
+                                                            {{
+                                                                post.stripe_status
+                                                            }}
+                                                        </div>
                                                     </td>
                                                     <td
                                                         class="myPrimaryTableTBodyTd"

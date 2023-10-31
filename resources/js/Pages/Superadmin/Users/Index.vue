@@ -586,19 +586,20 @@ onMounted(() => {
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            <span
+                                            <div
                                                 class="myPrimaryTag"
                                                 :class="
                                                     user.public
                                                         ? 'bg-myPrimaryLinkColor text-white'
                                                         : 'bg-myPrimaryErrorColor text-white'
                                                 "
-                                                >{{
+                                            >
+                                                {{
                                                     user.public
                                                         ? "Published"
                                                         : "Unpublished"
-                                                }}</span
-                                            >
+                                                }}
+                                            </div>
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">

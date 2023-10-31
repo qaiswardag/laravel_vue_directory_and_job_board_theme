@@ -434,35 +434,37 @@ onMounted(() => {
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            <span
+                                            <div
                                                 class="myPrimaryTag"
                                                 :class="
                                                     post.published
                                                         ? 'bg-myPrimaryLinkColor text-white'
                                                         : 'bg-myPrimaryErrorColor text-white'
                                                 "
-                                                >{{
+                                            >
+                                                {{
                                                     post.published
                                                         ? "Published"
                                                         : "Unpublished"
-                                                }}</span
-                                            >
+                                                }}
+                                            </div>
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            <span
+                                            <div
                                                 class="myPrimaryTag"
                                                 :class="
                                                     post.show_author
                                                         ? 'bg-myPrimaryLinkColor text-white'
                                                         : 'bg-myPrimaryErrorColor text-white'
                                                 "
-                                                >{{
+                                            >
+                                                {{
                                                     post.show_author
                                                         ? "Visible"
                                                         : "Hidden"
-                                                }}</span
-                                            >
+                                                }}
+                                            </div>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <div

@@ -1010,9 +1010,9 @@ const pageBuilder = new PageBuilder(store);
                                 </LockOpenIcon>
                             </div>
                         </div>
-                        <p class="myPrimaryTag italic">
+                        <div class="myPrimaryTag italic">
                             Slug: {{ postForm.slug }}
-                        </p>
+                        </div>
                     </div>
                     <InputError :message="postForm.errors.slug" />
                 </div>
@@ -1406,9 +1406,9 @@ const pageBuilder = new PageBuilder(store);
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></MapPinIcon>
                                     </button>
-                                    <p>
+                                    <div>
                                         {{ state?.name }}
-                                    </p>
+                                    </div>
                                 </div>
 
                                 <button
@@ -1511,9 +1511,9 @@ const pageBuilder = new PageBuilder(store);
                                             class="shrink-0 w-4 h-4 m-2 stroke-2"
                                         ></Squares2X2Icon>
                                     </button>
-                                    <p>
+                                    <div>
                                         {{ category?.name }}
-                                    </p>
+                                    </div>
                                 </div>
 
                                 <button

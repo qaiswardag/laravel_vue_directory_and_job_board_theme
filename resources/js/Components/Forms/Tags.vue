@@ -81,10 +81,10 @@ onMounted(() => {
                         @click="deleteTag"
                         class="hover:text-white flex flex-wrap justify-center items-center gap-2 myPrimaryTag hover:bg-red-500 cursor-pointer"
                     >
-                        <p :data-tag="tag">
+                        <div :data-tag="tag">
                             {{ tag }}
                             <span :data-tag="tag">×</span>
-                        </p>
+                        </div>
                     </div>
                 </template>
             </TransitionGroup>

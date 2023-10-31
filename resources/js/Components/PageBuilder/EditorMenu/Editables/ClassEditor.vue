@@ -34,7 +34,7 @@ const handleAddClasses = function () {
         <template #title>Generated CSS</template>
         <template #content>
             <div class="flex flex-row flex-wrap gap-2 mt-2 mb-4">
-                <p
+                <div
                     v-for="className in currentClasses"
                     :key="className"
                     class="myPrimaryTag cursor-pointer hover:bg-myPrimaryErrorColor hover:text-white"
@@ -43,7 +43,7 @@ const handleAddClasses = function () {
                     <span class="mr-1">
                         {{ className }}
                     </span>
-                </p>
+                </div>
             </div>
 
             <div class="flex gap-2 item-center flex-col">

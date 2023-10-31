@@ -325,7 +325,7 @@ onMounted(() => {
                             "
                         >
                             <div class="flex justify-start items-center">
-                                <p class="myPrimaryTag">
+                                <div class="myPrimaryTag">
                                     Total
                                     {{ getCurrentItems.fetchedData.count }}
                                     {{
@@ -334,7 +334,7 @@ onMounted(() => {
                                             ? "item"
                                             : "items"
                                     }}
-                                </p>
+                                </div>
                             </div>
                         </template>
                         <!-- Results # end -->
@@ -678,7 +678,7 @@ onMounted(() => {
                         class="flex flex-col w-full divide-y divide-gray-200 p-2"
                     >
                         <div class="flex justify-start items-center mb-4">
-                            <p class="myPrimaryTag">
+                            <div class="myPrimaryTag">
                                 Added
                                 {{ getCurrentAttachedItems.length }}
                                 {{
@@ -686,7 +686,7 @@ onMounted(() => {
                                         ? "item"
                                         : "items"
                                 }}
-                            </p>
+                            </div>
                         </div>
                         <div
                             v-for="item in getCurrentAttachedItems"

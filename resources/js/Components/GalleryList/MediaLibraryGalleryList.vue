@@ -130,10 +130,10 @@ onMounted(() => {
             >
                 <div class="flex items-center min-h-[2.5rem]">
                     <div class="flex justify-start items-center">
-                        <p class="myPrimaryTag">
+                        <div class="myPrimaryTag">
                             Images
                             {{ getCurrentMedia.fetchedMedia.total_results }}
-                        </p>
+                        </div>
                     </div>
                 </div>
             </template>

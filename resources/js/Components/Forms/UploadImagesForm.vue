@@ -188,16 +188,14 @@ onMounted(() => {
             >
                 <span> Images 0 </span>
             </p>
-            <p
+            <div
                 v-if="
                     Array.isArray(imagesPreview) && imagesPreview.length !== 0
                 "
                 class="myPrimaryTag"
             >
-                <span>
-                    Images {{ imagesPreview && imagesPreview.length }}
-                </span>
-            </p>
+                <div>Images {{ imagesPreview && imagesPreview.length }}</div>
+            </div>
         </div>
 
         <div

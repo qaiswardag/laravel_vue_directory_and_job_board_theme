@@ -353,19 +353,20 @@ const switchTeam = function (team) {
                                                 <td
                                                     class="myPrimaryTableTBodyTd"
                                                 >
-                                                    <span
+                                                    <div
                                                         class="myPrimaryTag"
                                                         :class="
                                                             team.public
                                                                 ? 'bg-myPrimaryLinkColor text-white'
                                                                 : 'bg-myPrimaryErrorColor text-white'
                                                         "
-                                                        >{{
+                                                    >
+                                                        {{
                                                             team.public
                                                                 ? "Public"
                                                                 : "Private"
-                                                        }}</span
-                                                    >
+                                                        }}
+                                                    </div>
                                                 </td>
 
                                                 <td

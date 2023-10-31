@@ -401,7 +401,9 @@ onBeforeMount(() => {
                             </LockOpenIcon>
                         </div>
                     </div>
-                    <p class="myPrimaryTag italic">Slug: {{ postForm.slug }}</p>
+                    <div class="myPrimaryTag italic">
+                        Slug: {{ postForm.slug }}
+                    </div>
                 </div>
                 <InputError :message="postForm.errors.slug" />
             </div>

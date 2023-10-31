@@ -636,14 +636,14 @@ const displayAbleRole = (role) => {
                                                         <div
                                                             class="flex items-center myPrimaryGap"
                                                         >
-                                                            <span
-                                                                class="myPrimaryParagraph text-xs font-medium"
+                                                            <div
+                                                                class="text-xs font-medium"
                                                             >
-                                                                <p
+                                                                <div
                                                                     class="font-normal text-xs"
                                                                 >
                                                                     role:
-                                                                </p>
+                                                                </div>
                                                                 {{
                                                                     displayAbleRole(
                                                                         user
@@ -651,7 +651,7 @@ const displayAbleRole = (role) => {
                                                                             .role
                                                                     )
                                                                 }}
-                                                            </span>
+                                                            </div>
                                                             <button
                                                                 @click="
                                                                     manageRole(

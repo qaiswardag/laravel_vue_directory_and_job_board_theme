@@ -11,6 +11,7 @@ import config from "@/utils/config";
 import { TailwindPagination } from "laravel-vue-pagination";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
+import ItemsFilterSelection from "@/Pages/Guests/Items/ItemsFilterSelection/ItemsFilterSelection.vue";
 
 import {
     GlobeAmericasIcon,
@@ -53,10 +54,10 @@ const {
     isSuccess: isSuccessPosts,
 } = vueFetch();
 
-const categorySelected = ref([{ name: "All", id: null }]);
-const typeSelected = ref({ name: "All", id: null });
-const countrySelected = ref({ name: "All", id: null });
-const stateSelected = ref({ name: "All", id: null });
+const categorySelected = ref([]);
+const typeSelected = ref([]);
+const countrySelected = ref([]);
+const stateSelected = ref([]);
 
 const handleSearch = function () {
     handleGetPosts(
@@ -104,8 +105,12 @@ const getResultsForPage = (page = 1) => {
 };
 
 // handle type
-const handleJobType = function (type) {
-    typeSelected.value = type;
+const handleJobType = function (selectedItem) {
+    if (!selectedItem) {
+        return;
+    }
+
+    typeSelected.value = selectedItem;
 
     handleGetPosts(
         route(props.pathList, {
@@ -118,18 +123,51 @@ const handleJobType = function (type) {
         })
     );
 };
-// handle categroy
-const handleCategory = function (category) {
-    categorySelected.value.push(category);
-    console.log(`category:`, categorySelected);
-    return;
+// handle category
+const handleRemoveCategory = function (selectedItem) {
+    if (!selectedItem) {
+        return;
+    }
+
+    // Find the index of the selected item in categorySelected.value
+    const index = categorySelected.value.findIndex(
+        (item) => item.id === selectedItem.id
+    );
+
+    // If the item is found, remove it from the array
+    if (index !== -1) {
+        categorySelected.value.splice(index, 1);
+    }
 
     handleGetPosts(
         route(props.pathList, {
             page: 1,
             search_query: searchForm.search_query,
             type: typeSelected.value,
-            category: category,
+            category: categorySelected.value,
+            country: countrySelected.value,
+            state: stateSelected.value,
+        })
+    );
+};
+// handle category
+const handleSelectCategory = function (selectedItem) {
+    if (!selectedItem) {
+        return;
+    }
+    // Check if there is no object with the same id
+    if (categorySelected.value.some((item) => item.id === selectedItem.id)) {
+        return;
+    }
+
+    categorySelected.value.push(selectedItem);
+
+    handleGetPosts(
+        route(props.pathList, {
+            page: 1,
+            search_query: searchForm.search_query,
+            type: typeSelected.value,
+            category: categorySelected.value,
             country: countrySelected.value,
             state: stateSelected.value,
         })
@@ -137,8 +175,12 @@ const handleCategory = function (category) {
 };
 
 // handle country
-const handleCountry = function (country) {
-    countrySelected.value = country;
+const handleCountry = function (selectedItem) {
+    if (!selectedItem) {
+        return;
+    }
+
+    countrySelected.value = selectedItem;
 
     handleGetPosts(
         route(props.pathList, {
@@ -153,8 +195,12 @@ const handleCountry = function (country) {
 };
 
 // handle state
-const handleState = function (state) {
-    stateSelected.value = state;
+const handleState = function (selectedItem) {
+    if (!selectedItem) {
+        return;
+    }
+
+    stateSelected.value = selectedItem;
 
     handleGetPosts(
         route(props.pathList, {
@@ -180,7 +226,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
+    <div class="min-h-screen">
         <FullWidthElement :descriptionArea="true" :headerArea="false">
             <template #content>
                 <!-- Search # start -->
@@ -467,110 +513,20 @@ onMounted(() => {
                     </template>
                     <!-- Types # End -->
 
-                    <!-- Selected Categories # Start -->
-                    <div class="bg-red-100 max-w-full">
-                        <div class="overflow-x-scroll flex gap-2">
-                            <template
-                                v-for="selctedCategory in Array.isArray(
-                                    categorySelected
-                                ) && categorySelected"
-                                :key="selctedCategory.id"
-                            >
-                                <button
-                                    @click="
-                                        handleCategory({
-                                            name: selctedCategory.name,
-                                            id: selctedCategory.id,
-                                        })
-                                    "
-                                    class="myPrimaryTag flex"
-                                >
-                                    <Squares2X2Icon
-                                        class="mySmallIcon py-0 m-0"
-                                    ></Squares2X2Icon>
-                                    <p>
-                                        {{ selctedCategory.name }}
-                                    </p>
-                                </button>
-                            </template>
-                        </div>
-                    </div>
-                    <!-- Selected Categories # End -->
-                    <!-- Categories # Start -->
-                    <template
+                    <ItemsFilterSelection
                         v-if="
-                            fetchedDataPosts &&
+                            categorySelected &&
+                            Array.isArray(categorySelected) &&
                             fetchedDataPosts &&
                             Array.isArray(fetchedDataPosts.categories)
                         "
-                    >
-                        <div class="my-12 myPrimaryDarkGrayColor">
-                            <p class="text-xs">Categories</p>
-                            <div
-                                class="flex gap-2 flex-wrap py-4 border-t border-b border-gray-200"
-                            >
-                                <button
-                                    @click="
-                                        handleCategory({
-                                            name: 'All',
-                                            id: null,
-                                        })
-                                    "
-                                    class="myPrimaryTag"
-                                    :class="[
-                                        {
-                                            'bg-myPrimaryLinkColor text-white':
-                                                categorySelected.name === 'All',
-                                        },
-                                    ]"
-                                    :disabled="categorySelected.name === 'All'"
-                                >
-                                    All
-                                </button>
-                                <template
-                                    v-for="category in fetchedDataPosts.categories"
-                                    :key="category.id"
-                                >
-                                    <button
-                                        @click="
-                                            handleCategory({
-                                                name: category.name,
-                                                id: category.id,
-                                            })
-                                        "
-                                        class="myPrimaryTag"
-                                        :class="[
-                                            {
-                                                'bg-myPrimaryLinkColor text-white':
-                                                    categorySelected.name ===
-                                                    category.name,
-                                            },
-                                            {
-                                                'bg-myPrimaryLinkColor text-white':
-                                                    categorySelected.name ===
-                                                    category.name,
-                                            },
-                                        ]"
-                                        :disabled="
-                                            categorySelected.name ===
-                                            category.name
-                                        "
-                                    >
-                                        <div
-                                            class="flex justify-center items-center gap-1"
-                                        >
-                                            <Squares2X2Icon
-                                                class="mySmallIcon py-0 m-0"
-                                            ></Squares2X2Icon>
-                                            {{ category.name }}
-                                        </div>
-                                    </button>
-                                </template>
-                            </div>
-                        </div>
-                    </template>
-                    <!-- Categories # End -->
-
+                        nameOfList="Categories"
+                        :list="fetchedDataPosts.categories"
+                        :listSelected="categorySelected"
+                        icon="Squares2X2Icon"
+                        @removeItem="handleRemoveCategory"
+                        @selectItem="handleSelectCategory"
+                    ></ItemsFilterSelection>
                     <!-- List Grid # start -->
                     <div v-if="fetchedDataPosts && fetchedDataPosts.posts">
                         <ul
@@ -797,7 +753,7 @@ onMounted(() => {
                                         >
                                             <button
                                                 @click="
-                                                    handleCategory({
+                                                    handleSelectCategory({
                                                         name: category.name,
                                                         id: category.id,
                                                     })
@@ -808,13 +764,11 @@ onMounted(() => {
                                                 :class="[
                                                     {
                                                         'bg-myPrimaryLinkColor text-white':
-                                                            categorySelected.name ===
-                                                            category.name,
-                                                    },
-                                                    {
-                                                        'bg-myPrimaryLinkColor text-white':
-                                                            categorySelected.name ===
-                                                            category.name,
+                                                            categorySelected.some(
+                                                                (cat) =>
+                                                                    cat.id ===
+                                                                    category.id
+                                                            ),
                                                     },
                                                 ]"
                                                 :disabled="

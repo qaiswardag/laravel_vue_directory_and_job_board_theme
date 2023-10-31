@@ -857,7 +857,7 @@ onMounted(() => {
                                                     {{ product.name }}
                                                 </h3>
 
-                                                <p
+                                                <div
                                                     class="mt-2 flex items-baseline gap-x-1"
                                                 >
                                                     <span
@@ -872,12 +872,12 @@ onMounted(() => {
                                                             product.frequencies
                                                         }}</span
                                                     >
-                                                </p>
-                                                <p
+                                                </div>
+                                                <div
                                                     class="block text-[10px] leading-6 text-gray-600 italic mt-1"
                                                 >
                                                     {{ product.billed }}
-                                                </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

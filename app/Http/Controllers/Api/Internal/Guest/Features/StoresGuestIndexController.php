@@ -16,13 +16,7 @@ class StoresGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
-        // dd($request->category);
-        $categoryID = null;
         $stateID = null;
-
-        if (isset($request->category["id"])) {
-            $categoryID = $request->category["id"];
-        }
 
         if (isset($request->state["id"])) {
             $stateID = $request->state["id"];
@@ -50,12 +44,37 @@ class StoresGuestIndexController extends Controller
                 $query->where("title", "LIKE", "%" . $term . "%");
             });
 
-        // logic for filtereing based on categories, startes etc.
-        if ($categoryID) {
-            $query->whereHas("categories", function ($query) use ($categoryID) {
-                $query->where("store_categories.id", $categoryID);
+        // categories filter logic # start
+        $categoryIDs = [];
+
+        if (isset($request->category) && is_array($request->category)) {
+            foreach ($request->category as $category) {
+                $categoryIDs[] = $category["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array (optional, based on your requirement)
+        $categoryIDs = array_filter($categoryIDs, function ($value) {
+            return $value !== null;
+        });
+
+        if (!empty($categoryIDs)) {
+            $query->whereHas("categories", function ($query) use (
+                $categoryIDs
+            ) {
+                $query->whereIn("store_categories.id", $categoryIDs);
             });
         }
+        // categories filter logic # start
+
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
         if ($stateID) {
             $query->whereHas("states", function ($query) use ($stateID) {
                 $query->where("store_states.id", $stateID);

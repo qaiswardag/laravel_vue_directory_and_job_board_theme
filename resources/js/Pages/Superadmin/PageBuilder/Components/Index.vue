@@ -432,19 +432,20 @@ const routesArray = [
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            <span
+                                            <div
                                                 class="myPrimaryTag"
                                                 :class="
                                                     component.published
                                                         ? 'bg-myPrimaryLinkColor text-white'
                                                         : 'bg-myPrimaryErrorColor text-white'
                                                 "
-                                                >{{
+                                            >
+                                                {{
                                                     component.published
                                                         ? "Published"
                                                         : "Unpublished"
-                                                }}</span
-                                            >
+                                                }}
+                                            </div>
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
