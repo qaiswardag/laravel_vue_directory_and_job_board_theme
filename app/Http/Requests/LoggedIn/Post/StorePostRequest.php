@@ -80,7 +80,7 @@ class StorePostRequest extends FormRequest
     public function withValidator($validator)
     {
         $maxAuthors = 18;
-        $maxCategories = 4;
+        $maxCategories = 2;
         $minCoverImages = 1;
         $maxCoverImages = 6;
 
@@ -135,7 +135,7 @@ class StorePostRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "The field is limited to a maximum of {$maxCoverImages} selection(s)."
+                        "Cover image field is limited to a maximum of {$maxCoverImages} selection(s)."
                     );
             }
             // Check if the "primary" key exists, or provide a default value of false
@@ -222,7 +222,7 @@ class StorePostRequest extends FormRequest
                     ->errors()
                     ->add(
                         "categories",
-                        "The field is limited to a maximum of {$maxCategories} selection(s)."
+                        "Categories field is limited to a maximum of {$maxCategories} selection(s)."
                     );
             }
             // validation for categories # end
@@ -256,7 +256,7 @@ class StorePostRequest extends FormRequest
                     ->errors()
                     ->add(
                         "author",
-                        "      Limited to a maximum of {$maxAuthors} people."
+                        "Author is limited to a maximum of {$maxAuthors} people."
                     );
             }
             // validation for author # end

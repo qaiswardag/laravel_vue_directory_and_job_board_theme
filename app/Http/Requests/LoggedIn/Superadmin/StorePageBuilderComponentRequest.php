@@ -78,7 +78,7 @@ class StorePageBuilderComponentRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "The field is limited to a maximum of {$maxCoverImages} selection(s)."
+                        "Cover image field is limited to a maximum of {$maxCoverImages} selection(s)."
                     );
             }
             // Check if the "primary" key exists, or provide a default value of false
@@ -165,7 +165,7 @@ class StorePageBuilderComponentRequest extends FormRequest
                     ->errors()
                     ->add(
                         "categories",
-                        "Limited to a maximum of {$maxCategories} categories."
+                        "Categories is limited to a maximum of {$maxCategories} categories."
                     );
             }
             // validation for categories # end

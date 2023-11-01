@@ -77,8 +77,8 @@ class StoreJobRequest extends FormRequest
     public function withValidator($validator)
     {
         $maxAuthors = 18;
-        $maxJobCountries = 1;
-        $maxJobStates = 1;
+        $maxJobCountries = 2;
+        $maxJobStates = 2;
         $maxCategories = 2;
         $maxJobTypes = 2;
         $minCoverImages = 1;
@@ -138,7 +138,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "The field is limited to a maximum of {$maxCoverImages} selection(s)."
+                        "Cover image field is limited to a maximum of {$maxCoverImages} selection(s)."
                     );
             }
             // Check if the "primary" key exists, or provide a default value of false
@@ -225,7 +225,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "countries",
-                        "The field is limited to a maximum of {$maxJobCountries} selection(s)."
+                        "Countries field is limited to a maximum of {$maxJobCountries} selection(s)."
                     );
             }
             // validation for countries # end
@@ -254,7 +254,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "states",
-                        "The field is limited to a maximum of {$maxJobStates} selection(s)."
+                        "States field is limited to a maximum of {$maxJobStates} selection(s)."
                     );
             }
             // validation for states # end
@@ -287,7 +287,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "author",
-                        "The field is limited to a maximum of {$maxAuthors} selection(s)."
+                        "Author field is limited to a maximum of {$maxAuthors} selection(s)."
                     );
             }
             // validation for author # end
@@ -316,7 +316,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "categories",
-                        "The field is limited to a maximum of {$maxCategories} selection(s)."
+                        "Categories field is limited to a maximum of {$maxCategories} selection(s)."
                     );
             }
             // validation for categories # end
@@ -344,7 +344,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "types",
-                        "The field is limited to a maximum of {$maxJobTypes} selection(s)."
+                        "Job types field is limited to a maximum of {$maxJobTypes} selection(s)."
                     );
             }
             // validation for types # end
