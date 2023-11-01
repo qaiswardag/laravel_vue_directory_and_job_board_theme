@@ -12,6 +12,7 @@ import { TailwindPagination } from "laravel-vue-pagination";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
 import ItemsFilterSelection from "@/Pages/Guests/Items/ItemsFilterSelection/ItemsFilterSelection.vue";
+import ItemDisplaySelection from "@/Pages/Guests/Items/ItemsFilterSelection/ItemDisplaySelection.vue";
 
 import {
     GlobeAmericasIcon,
@@ -104,26 +105,58 @@ const getResultsForPage = (page = 1) => {
     scrollToTop();
 };
 
-// handle type
-const handleJobType = function (selectedItem) {
+// handle type # start
+const handleRemoveType = function (selectedItem) {
     if (!selectedItem) {
         return;
     }
 
-    typeSelected.value = selectedItem;
+    // Find the index of the selected item in categorySelected.value
+    const index = typeSelected.value.findIndex(
+        (item) => item.id === selectedItem.id
+    );
+
+    // If the item is found, remove it from the array
+    if (index !== -1) {
+        typeSelected.value.splice(index, 1);
+    }
 
     handleGetPosts(
         route(props.pathList, {
             page: 1,
             search_query: searchForm.search_query,
-            type: type,
+            type: typeSelected.value,
             category: categorySelected.value,
             country: countrySelected.value,
             state: stateSelected.value,
         })
     );
 };
-// handle category
+const handleSelectType = function (selectedItem) {
+    if (!selectedItem) {
+        return;
+    }
+    // Check if there is no object with the same id
+    if (typeSelected.value.some((item) => item.id === selectedItem.id)) {
+        return;
+    }
+
+    typeSelected.value.push(selectedItem);
+
+    handleGetPosts(
+        route(props.pathList, {
+            page: 1,
+            search_query: searchForm.search_query,
+            type: typeSelected.value,
+            category: categorySelected.value,
+            country: countrySelected.value,
+            state: stateSelected.value,
+        })
+    );
+};
+// handle type # end
+
+// handle category # start
 const handleRemoveCategory = function (selectedItem) {
     if (!selectedItem) {
         return;
@@ -150,7 +183,6 @@ const handleRemoveCategory = function (selectedItem) {
         })
     );
 };
-// handle category
 const handleSelectCategory = function (selectedItem) {
     if (!selectedItem) {
         return;
@@ -173,34 +205,23 @@ const handleSelectCategory = function (selectedItem) {
         })
     );
 };
+// handle category # end
 
-// handle country
-const handleCountry = function (selectedItem) {
+// handle country # start
+const handleRemoveCountry = function (selectedItem) {
     if (!selectedItem) {
         return;
     }
 
-    countrySelected.value = selectedItem;
-
-    handleGetPosts(
-        route(props.pathList, {
-            page: 1,
-            search_query: searchForm.search_query,
-            type: typeSelected.value,
-            category: categorySelected.value,
-            country: country,
-            state: stateSelected.value,
-        })
+    // Find the index of the selected item in categorySelected.value
+    const index = countrySelected.value.findIndex(
+        (item) => item.id === selectedItem.id
     );
-};
 
-// handle state
-const handleState = function (selectedItem) {
-    if (!selectedItem) {
-        return;
+    // If the item is found, remove it from the array
+    if (index !== -1) {
+        countrySelected.value.splice(index, 1);
     }
-
-    stateSelected.value = selectedItem;
 
     handleGetPosts(
         route(props.pathList, {
@@ -209,10 +230,84 @@ const handleState = function (selectedItem) {
             type: typeSelected.value,
             category: categorySelected.value,
             country: countrySelected.value,
-            state: state,
+            state: stateSelected.value,
         })
     );
 };
+const handleSelectCountry = function (selectedItem) {
+    if (!selectedItem) {
+        return;
+    }
+    // Check if there is no object with the same id
+    if (countrySelected.value.some((item) => item.id === selectedItem.id)) {
+        return;
+    }
+
+    countrySelected.value.push(selectedItem);
+
+    handleGetPosts(
+        route(props.pathList, {
+            page: 1,
+            search_query: searchForm.search_query,
+            type: typeSelected.value,
+            category: categorySelected.value,
+            country: countrySelected.value,
+            state: stateSelected.value,
+        })
+    );
+};
+// handle country # end
+
+// handle state # start
+const handleRemoveState = function (selectedItem) {
+    if (!selectedItem) {
+        return;
+    }
+
+    // Find the index of the selected item in categorySelected.value
+    const index = stateSelected.value.findIndex(
+        (item) => item.id === selectedItem.id
+    );
+
+    // If the item is found, remove it from the array
+    if (index !== -1) {
+        stateSelected.value.splice(index, 1);
+    }
+
+    handleGetPosts(
+        route(props.pathList, {
+            page: 1,
+            search_query: searchForm.search_query,
+            type: typeSelected.value,
+            category: categorySelected.value,
+            country: countrySelected.value,
+            state: stateSelected.value,
+        })
+    );
+};
+const handleSelectState = function (selectedItem) {
+    if (!selectedItem) {
+        return;
+    }
+    // Check if there is no object with the same id
+    if (stateSelected.value.some((item) => item.id === selectedItem.id)) {
+        return;
+    }
+
+    stateSelected.value.push(selectedItem);
+
+    handleGetPosts(
+        route(props.pathList, {
+            page: 1,
+            search_query: searchForm.search_query,
+            type: typeSelected.value,
+            category: categorySelected.value,
+            country: countrySelected.value,
+            state: stateSelected.value,
+        })
+    );
+};
+// handle state # end
 
 const goToSinglePost = function (teamSlug, postSlug, postId) {
     router.get(
@@ -290,243 +385,92 @@ onMounted(() => {
                 <template
                     v-if="!isLoadingPosts && !isErrorPosts && isSuccessPosts"
                 >
-                    <!-- Country # Start -->
-                    <template
-                        v-if="
-                            fetchedDataPosts &&
-                            fetchedDataPosts &&
-                            Array.isArray(fetchedDataPosts.countries)
-                        "
-                    >
-                        <div class="my-12 myPrimaryDarkGrayColor">
-                            <p class="text-xs">Countries</p>
-                            <div
-                                class="flex gap-2 flex-wrap py-4 border-t border-b border-gray-200"
-                            >
-                                <button
-                                    @click="
-                                        handleCountry({
-                                            name: 'All',
-                                            id: null,
-                                        })
-                                    "
-                                    class="myPrimaryTag"
-                                    :class="[
-                                        {
-                                            'bg-myPrimaryLinkColor text-white':
-                                                countrySelected.name === 'All',
-                                        },
-                                    ]"
-                                    :disabled="countrySelected.name === 'All'"
-                                >
-                                    All
-                                </button>
-                                <template
-                                    v-for="category in fetchedDataPosts.countries"
-                                    :key="category.id"
-                                >
-                                    <button
-                                        @click="
-                                            handleCountry({
-                                                name: category.name,
-                                                id: category.id,
-                                            })
-                                        "
-                                        class="myPrimaryTag"
-                                        :class="[
-                                            {
-                                                'bg-myPrimaryLinkColor text-white':
-                                                    countrySelected.name ===
-                                                    category.name,
-                                            },
-                                            {
-                                                'bg-myPrimaryLinkColor text-white':
-                                                    countrySelected.name ===
-                                                    category.name,
-                                            },
-                                        ]"
-                                        :disabled="
-                                            countrySelected.name ===
-                                            category.name
-                                        "
-                                    >
-                                        <div
-                                            class="flex justify-center items-center gap-1"
-                                        >
-                                            <GlobeAmericasIcon
-                                                class="mySmallIcon py-0 m-0"
-                                            ></GlobeAmericasIcon>
-                                            {{ category.name }}
-                                        </div>
-                                    </button>
-                                </template>
-                            </div>
+                    <div class="grid myPrimaryGap grid-cols-2">
+                        <!-- Country # start -->
+                        <div
+                            class="flex-1 w-full"
+                            v-if="
+                                countrySelected &&
+                                Array.isArray(countrySelected) &&
+                                fetchedDataPosts &&
+                                Array.isArray(fetchedDataPosts.countries)
+                            "
+                        >
+                            <ItemsFilterSelection
+                                nameOfList="Countries"
+                                :list="fetchedDataPosts.countries"
+                                :listSelected="countrySelected"
+                                icon="GlobeAmericasIcon"
+                                @removeItem="handleRemoveCountry"
+                                @selectItem="handleSelectCountry"
+                            ></ItemsFilterSelection>
                         </div>
-                    </template>
-                    <!-- Country # End -->
+                        <!-- Country # end -->
 
-                    <!-- States # Start -->
-                    <template
-                        v-if="
-                            fetchedDataPosts &&
-                            fetchedDataPosts &&
-                            Array.isArray(fetchedDataPosts.states)
-                        "
-                    >
-                        <div class="my-12 myPrimaryDarkGrayColor">
-                            <p class="text-xs">States</p>
-                            <div
-                                class="flex gap-2 flex-wrap py-4 border-t border-b border-gray-200"
-                            >
-                                <button
-                                    @click="
-                                        handleState({
-                                            name: 'All',
-                                            id: null,
-                                        })
-                                    "
-                                    class="myPrimaryTag"
-                                    :class="[
-                                        {
-                                            'bg-myPrimaryLinkColor text-white':
-                                                stateSelected.name === 'All',
-                                        },
-                                    ]"
-                                    :disabled="stateSelected.name === 'All'"
-                                >
-                                    All
-                                </button>
-                                <template
-                                    v-for="category in fetchedDataPosts.states"
-                                    :key="category.id"
-                                >
-                                    <button
-                                        @click="
-                                            handleState({
-                                                name: category.name,
-                                                id: category.id,
-                                            })
-                                        "
-                                        class="myPrimaryTag"
-                                        :class="[
-                                            {
-                                                'bg-myPrimaryLinkColor text-white':
-                                                    stateSelected.name ===
-                                                    category.name,
-                                            },
-                                            {
-                                                'bg-myPrimaryLinkColor text-white':
-                                                    stateSelected.name ===
-                                                    category.name,
-                                            },
-                                        ]"
-                                        :disabled="
-                                            stateSelected.name === category.name
-                                        "
-                                    >
-                                        <div
-                                            class="flex justify-center items-center gap-1"
-                                        >
-                                            <MapPinIcon
-                                                class="mySmallIcon py-0 m-0"
-                                            ></MapPinIcon>
-                                            {{ category.name }}
-                                        </div>
-                                    </button>
-                                </template>
-                            </div>
+                        <!-- State # start -->
+                        <div
+                            class="flex-1 w-full"
+                            v-if="
+                                stateSelected &&
+                                Array.isArray(stateSelected) &&
+                                fetchedDataPosts &&
+                                Array.isArray(fetchedDataPosts.states)
+                            "
+                        >
+                            <ItemsFilterSelection
+                                nameOfList="States"
+                                :list="fetchedDataPosts.states"
+                                :listSelected="stateSelected"
+                                icon="MapPinIcon"
+                                @removeItem="handleRemoveState"
+                                @selectItem="handleSelectState"
+                            ></ItemsFilterSelection>
                         </div>
-                    </template>
-                    <!-- State # End -->
+                        <!-- State # end -->
 
-                    <!-- Types # Start -->
-                    <template
-                        v-if="
-                            fetchedDataPosts &&
-                            fetchedDataPosts &&
-                            Array.isArray(fetchedDataPosts.types)
-                        "
-                    >
-                        <div class="my-12 myPrimaryDarkGrayColor">
-                            <p class="text-xs">Job types</p>
-                            <div
-                                class="flex gap-2 flex-wrap py-4 border-t border-b border-gray-200"
-                            >
-                                <button
-                                    @click="
-                                        handleJobType({
-                                            name: 'All',
-                                            id: null,
-                                        })
-                                    "
-                                    class="myPrimaryTag"
-                                    :class="[
-                                        {
-                                            'bg-myPrimaryLinkColor text-white':
-                                                typeSelected.name === 'All',
-                                        },
-                                    ]"
-                                    :disabled="typeSelected.name === 'All'"
-                                >
-                                    All
-                                </button>
-                                <template
-                                    v-for="category in fetchedDataPosts.types"
-                                    :key="category.id"
-                                >
-                                    <button
-                                        @click="
-                                            handleJobType({
-                                                name: category.name,
-                                                id: category.id,
-                                            })
-                                        "
-                                        class="myPrimaryTag"
-                                        :class="[
-                                            {
-                                                'bg-myPrimaryLinkColor text-white':
-                                                    typeSelected.name ===
-                                                    category.name,
-                                            },
-                                            {
-                                                'bg-myPrimaryLinkColor text-white':
-                                                    typeSelected.name ===
-                                                    category.name,
-                                            },
-                                        ]"
-                                        :disabled="
-                                            typeSelected.name === category.name
-                                        "
-                                    >
-                                        <div
-                                            class="flex justify-center items-center gap-1"
-                                        >
-                                            <NewspaperIcon
-                                                class="mySmallIcon py-0 m-0"
-                                            ></NewspaperIcon>
-                                            {{ category.name }}
-                                        </div>
-                                    </button>
-                                </template>
-                            </div>
+                        <!-- Type # start -->
+                        <div
+                            class="flex-1 w-full"
+                            v-if="
+                                typeSelected &&
+                                Array.isArray(typeSelected) &&
+                                fetchedDataPosts &&
+                                Array.isArray(fetchedDataPosts.types)
+                            "
+                        >
+                            <ItemsFilterSelection
+                                nameOfList="Types"
+                                :list="fetchedDataPosts.types"
+                                :listSelected="typeSelected"
+                                icon="NewspaperIcon"
+                                @removeItem="handleRemoveType"
+                                @selectItem="handleSelectType"
+                            ></ItemsFilterSelection>
                         </div>
-                    </template>
-                    <!-- Types # End -->
+                        <!-- Type # end -->
 
-                    <ItemsFilterSelection
-                        v-if="
-                            categorySelected &&
-                            Array.isArray(categorySelected) &&
-                            fetchedDataPosts &&
-                            Array.isArray(fetchedDataPosts.categories)
-                        "
-                        nameOfList="Categories"
-                        :list="fetchedDataPosts.categories"
-                        :listSelected="categorySelected"
-                        icon="Squares2X2Icon"
-                        @removeItem="handleRemoveCategory"
-                        @selectItem="handleSelectCategory"
-                    ></ItemsFilterSelection>
+                        <!-- Categories # start -->
+                        <div
+                            class="flex-1 w-full"
+                            v-if="
+                                categorySelected &&
+                                Array.isArray(categorySelected) &&
+                                fetchedDataPosts &&
+                                Array.isArray(fetchedDataPosts.categories)
+                            "
+                        >
+                            <ItemsFilterSelection
+                                nameOfList="Categories"
+                                :list="fetchedDataPosts.categories"
+                                :listSelected="categorySelected"
+                                icon="Squares2X2Icon"
+                                @removeItem="handleRemoveCategory"
+                                @selectItem="handleSelectCategory"
+                            ></ItemsFilterSelection>
+                        </div>
+                        <!-- Categories # end -->
+                    </div>
+
                     <!-- List Grid # start -->
                     <div v-if="fetchedDataPosts && fetchedDataPosts.posts">
                         <ul
@@ -535,7 +479,7 @@ onMounted(() => {
                                 fetchedDataPosts.posts.data.length !== 0
                             "
                             role="list"
-                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
+                            class="grid myPrimaryGap lg:grid-cols-4 sm:grid-cols-2"
                         >
                             <li
                                 v-for="post in fetchedDataPosts.posts.data"
@@ -625,163 +569,49 @@ onMounted(() => {
 
                                     <!-- Country # start -->
                                     <template v-if="post.countries">
-                                        <div
-                                            class="my-4 flex flex-wrap gap-2 items-center justify-left"
-                                        >
-                                            <button
-                                                @click="
-                                                    handleCountry({
-                                                        name: category.name,
-                                                        id: category.id,
-                                                    })
-                                                "
-                                                v-for="category in post.countries"
-                                                :key="category.id"
-                                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
-                                                :class="[
-                                                    {
-                                                        'bg-myPrimaryLinkColor text-white':
-                                                            countrySelected.name ===
-                                                            category.name,
-                                                    },
-                                                    {
-                                                        'bg-myPrimaryLinkColor text-white':
-                                                            countrySelected.name ===
-                                                            category.name,
-                                                    },
-                                                ]"
-                                                :disabled="
-                                                    countrySelected.name ===
-                                                    category.name
-                                                "
-                                            >
-                                                <GlobeAmericasIcon
-                                                    class="w-3 h-3 stroke-1"
-                                                ></GlobeAmericasIcon>
-                                                {{ category.name }}
-                                            </button>
-                                        </div>
+                                        <ItemDisplaySelection
+                                            :list="post.countries"
+                                            :listSelected="countrySelected"
+                                            icon="GlobeAmericasIcon"
+                                            @removeItem="handleRemoveCountry"
+                                            @selectItem="handleSelectCountry"
+                                        ></ItemDisplaySelection>
                                     </template>
                                     <!-- Country # end -->
 
                                     <!-- State # start -->
                                     <template v-if="post.states">
-                                        <div
-                                            class="my-4 flex flex-wrap gap-2 items-center justify-left"
-                                        >
-                                            <button
-                                                @click="
-                                                    handleState({
-                                                        name: category.name,
-                                                        id: category.id,
-                                                    })
-                                                "
-                                                v-for="category in post.states"
-                                                :key="category.id"
-                                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
-                                                :class="[
-                                                    {
-                                                        'bg-myPrimaryLinkColor text-white':
-                                                            stateSelected.name ===
-                                                            category.name,
-                                                    },
-                                                    {
-                                                        'bg-myPrimaryLinkColor text-white':
-                                                            stateSelected.name ===
-                                                            category.name,
-                                                    },
-                                                ]"
-                                                :disabled="
-                                                    stateSelected.name ===
-                                                    category.name
-                                                "
-                                            >
-                                                <MapPinIcon
-                                                    class="w-3 h-3 stroke-1"
-                                                ></MapPinIcon>
-                                                {{ category.name }}
-                                            </button>
-                                        </div>
+                                        <ItemDisplaySelection
+                                            :list="post.states"
+                                            :listSelected="stateSelected"
+                                            icon="MapPinIcon"
+                                            @removeItem="handleRemoveState"
+                                            @selectItem="handleSelectState"
+                                        ></ItemDisplaySelection>
                                     </template>
                                     <!-- State # end -->
 
                                     <!-- Type # start -->
                                     <template v-if="post.types">
-                                        <div
-                                            class="my-4 flex flex-wrap gap-2 items-center justify-left"
-                                        >
-                                            <button
-                                                @click="
-                                                    handleJobType({
-                                                        name: category.name,
-                                                        id: category.id,
-                                                    })
-                                                "
-                                                v-for="category in post.types"
-                                                :key="category.id"
-                                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
-                                                :class="[
-                                                    {
-                                                        'bg-myPrimaryLinkColor text-white':
-                                                            typeSelected.name ===
-                                                            category.name,
-                                                    },
-                                                    {
-                                                        'bg-myPrimaryLinkColor text-white':
-                                                            typeSelected.name ===
-                                                            category.name,
-                                                    },
-                                                ]"
-                                                :disabled="
-                                                    typeSelected.name ===
-                                                    category.name
-                                                "
-                                            >
-                                                <NewspaperIcon
-                                                    class="w-3 h-3 stroke-1"
-                                                ></NewspaperIcon>
-                                                {{ category.name }}
-                                            </button>
-                                        </div>
+                                        <ItemDisplaySelection
+                                            :list="post.types"
+                                            :listSelected="typeSelected"
+                                            icon="NewspaperIcon"
+                                            @removeItem="handleRemoveType"
+                                            @selectItem="handleSelectType"
+                                        ></ItemDisplaySelection>
                                     </template>
                                     <!-- Type # end -->
 
                                     <!-- Category # start -->
                                     <template v-if="post.categories">
-                                        <div
-                                            class="my-4 flex flex-wrap gap-2 items-center justify-left"
-                                        >
-                                            <button
-                                                @click="
-                                                    handleSelectCategory({
-                                                        name: category.name,
-                                                        id: category.id,
-                                                    })
-                                                "
-                                                v-for="category in post.categories"
-                                                :key="category.id"
-                                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
-                                                :class="[
-                                                    {
-                                                        'bg-myPrimaryLinkColor text-white':
-                                                            categorySelected.some(
-                                                                (cat) =>
-                                                                    cat.id ===
-                                                                    category.id
-                                                            ),
-                                                    },
-                                                ]"
-                                                :disabled="
-                                                    categorySelected.name ===
-                                                    category.name
-                                                "
-                                            >
-                                                <Squares2X2Icon
-                                                    class="w-3 h-3 stroke-1"
-                                                ></Squares2X2Icon>
-                                                {{ category.name }}
-                                            </button>
-                                        </div>
+                                        <ItemDisplaySelection
+                                            :list="post.categories"
+                                            :listSelected="categorySelected"
+                                            icon="Squares2X2Icon"
+                                            @removeItem="handleRemoveCategory"
+                                            @selectItem="handleSelectCategory"
+                                        ></ItemDisplaySelection>
                                     </template>
                                     <!-- Category # end -->
                                 </section>

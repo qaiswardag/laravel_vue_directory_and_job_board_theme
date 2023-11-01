@@ -282,7 +282,7 @@ class DatabaseSeeder extends Seeder
 
         // fake resources
 
-        $numbersOffakeResources = 200;
+        $numbersOffakeResources = 2000;
         // Post
         // Post
         // Post

@@ -16,12 +16,6 @@ class StoresGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
-        $stateID = null;
-
-        if (isset($request->state["id"])) {
-            $stateID = $request->state["id"];
-        }
-
         $searchQuery = $request->input("search_query");
 
         // Check $searchQuery is an array
@@ -53,7 +47,7 @@ class StoresGuestIndexController extends Controller
             }
         }
 
-        // Remove null values from the array (optional, based on your requirement)
+        // Remove null values from the array
         $categoryIDs = array_filter($categoryIDs, function ($value) {
             return $value !== null;
         });
@@ -67,19 +61,49 @@ class StoresGuestIndexController extends Controller
         }
         // categories filter logic # start
 
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        if ($stateID) {
-            $query->whereHas("states", function ($query) use ($stateID) {
-                $query->where("store_states.id", $stateID);
+        // states filter logic # start
+        $stateIDs = [];
+
+        if (isset($request->state) && is_array($request->state)) {
+            foreach ($request->state as $state) {
+                $stateIDs[] = $state["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array
+        $stateIDs = array_filter($stateIDs, function ($value) {
+            return $value !== null;
+        });
+
+        if (!empty($stateIDs)) {
+            $query->whereHas("states", function ($query) use ($stateIDs) {
+                $query->whereIn("store_states.id", $stateIDs);
             });
         }
+        // states filter logic # start
+
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
 
         $posts = $query->paginate(20);
 

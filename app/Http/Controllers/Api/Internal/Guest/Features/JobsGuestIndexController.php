@@ -19,14 +19,8 @@ class JobsGuestIndexController extends Controller
 
     public function index(Request $request)
     {
-        $categoryID = null;
         $typeID = null;
         $countryID = null;
-        $stateID = null;
-
-        if (isset($request->category["id"])) {
-            $categoryID = $request->category["id"];
-        }
 
         if (isset($request->type["id"])) {
             $typeID = $request->type["id"];
@@ -34,10 +28,6 @@ class JobsGuestIndexController extends Controller
 
         if (isset($request->country["id"])) {
             $countryID = $request->country["id"];
-        }
-
-        if (isset($request->state["id"])) {
-            $stateID = $request->state["id"];
         }
 
         $searchQuery = $request->input("search_query");
@@ -66,29 +56,113 @@ class JobsGuestIndexController extends Controller
                 $query->where("title", "LIKE", "%" . $term . "%");
             });
 
-        if ($categoryID) {
-            $query->whereHas("categories", function ($query) use ($categoryID) {
-                $query->where("job_categories.id", $categoryID);
-            });
+        // countries filter logic # start
+        $countryIDs = [];
+
+        if (isset($request->country) && is_array($request->country)) {
+            foreach ($request->country as $country) {
+                $countryIDs[] = $country["id"] ?? null;
+            }
         }
 
-        if ($typeID) {
-            $query->whereHas("types", function ($query) use ($typeID) {
-                $query->where("job_types.id", $typeID);
+        // Remove null values from the array
+        $countryIDs = array_filter($countryIDs, function ($value) {
+            return $value !== null;
+        });
+
+        if (!empty($countryIDs)) {
+            $query->whereHas("countries", function ($query) use ($countryIDs) {
+                $query->whereIn("job_countries.id", $countryIDs);
             });
+        }
+        // countries filter logic # end
+
+        // states filter logic # start
+        $stateIDs = [];
+
+        if (isset($request->state) && is_array($request->state)) {
+            foreach ($request->state as $state) {
+                $stateIDs[] = $state["id"] ?? null;
+            }
         }
 
-        if ($countryID) {
-            $query->whereHas("countries", function ($query) use ($countryID) {
-                $query->where("job_countries.id", $countryID);
+        // Remove null values from the array
+        $stateIDs = array_filter($stateIDs, function ($value) {
+            return $value !== null;
+        });
+
+        if (!empty($stateIDs)) {
+            $query->whereHas("states", function ($query) use ($stateIDs) {
+                $query->whereIn("job_states.id", $stateIDs);
             });
+        }
+        // states filter logic # end
+
+        // types filter logic # start
+        $typeIDs = [];
+
+        if (isset($request->type) && is_array($request->type)) {
+            foreach ($request->type as $type) {
+                $typeIDs[] = $type["id"] ?? null;
+            }
         }
 
-        if ($stateID) {
-            $query->whereHas("states", function ($query) use ($stateID) {
-                $query->where("job_states.id", $stateID);
+        // Remove null values from the array
+        $typeIDs = array_filter($typeIDs, function ($value) {
+            return $value !== null;
+        });
+
+        if (!empty($typeIDs)) {
+            $query->whereHas("types", function ($query) use ($typeIDs) {
+                $query->whereIn("job_types.id", $typeIDs);
             });
         }
+        // types filter logic # end
+
+        // categories filter logic # start
+        $categoryIDs = [];
+
+        if (isset($request->category) && is_array($request->category)) {
+            foreach ($request->category as $category) {
+                $categoryIDs[] = $category["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array
+        $categoryIDs = array_filter($categoryIDs, function ($value) {
+            return $value !== null;
+        });
+
+        if (!empty($categoryIDs)) {
+            $query->whereHas("categories", function ($query) use (
+                $categoryIDs
+            ) {
+                $query->whereIn("job_categories.id", $categoryIDs);
+            });
+        }
+        // categories filter logic # end
+
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+
+        // if ($typeID) {
+        //     $query->whereHas("types", function ($query) use ($typeID) {
+        //         $query->where("job_types.id", $typeID);
+        //     });
+        // }
+
+        // if ($countryID) {
+        //     $query->whereHas("countries", function ($query) use ($countryID) {
+        //         $query->where("job_countries.id", $countryID);
+        //     });
+        // }
 
         $posts = $query->paginate(20);
 

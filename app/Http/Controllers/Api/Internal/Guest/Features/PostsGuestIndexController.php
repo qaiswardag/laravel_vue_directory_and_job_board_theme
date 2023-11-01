@@ -15,12 +15,6 @@ class PostsGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
-        $categoryID = null;
-
-        if (isset($request->category["id"])) {
-            $categoryID = $request->category["id"];
-        }
-
         $searchQuery = $request->input("search_query");
 
         // Check $searchQuery is an array
@@ -41,11 +35,28 @@ class PostsGuestIndexController extends Controller
                 $query->where("title", "LIKE", "%" . $term . "%");
             });
 
-        if ($categoryID) {
-            $query->whereHas("categories", function ($query) use ($categoryID) {
-                $query->where("post_categories.id", $categoryID);
+        // categories filter logic # start
+        $categoryIDs = [];
+
+        if (isset($request->category) && is_array($request->category)) {
+            foreach ($request->category as $category) {
+                $categoryIDs[] = $category["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array
+        $categoryIDs = array_filter($categoryIDs, function ($value) {
+            return $value !== null;
+        });
+
+        if (!empty($categoryIDs)) {
+            $query->whereHas("categories", function ($query) use (
+                $categoryIDs
+            ) {
+                $query->whereIn("post_categories.id", $categoryIDs);
             });
         }
+        // categories filter logic # start
 
         $posts = $query->paginate(20);
 
