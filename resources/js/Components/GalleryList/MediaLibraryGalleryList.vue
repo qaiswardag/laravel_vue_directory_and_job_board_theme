@@ -254,6 +254,30 @@ onMounted(() => {
                             <dl
                                 class="myPrimaryParagraph text-xs mt-2 px-1 border-gray-200 divide-y divide-gray-200"
                             >
+                                <!-- Loading # start -->
+                                <dd
+                                    v-if="
+                                        getCurrentImage &&
+                                        getCurrentImage.isLoading
+                                    "
+                                >
+                                    <div
+                                        class="pb-2 flex justify-between items-center text-xs"
+                                    >
+                                        <dt></dt>
+                                        <div
+                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        >
+                                            <SmallUniversalSpinner
+                                                class="h-40"
+                                                width="w-2"
+                                                height="h-2"
+                                                border="border-2"
+                                            ></SmallUniversalSpinner>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <!-- Loading # end -->
                                 <dd
                                     v-if="
                                         image.id !==
@@ -275,6 +299,7 @@ onMounted(() => {
                                         </div>
                                     </div>
                                 </dd>
+
                                 <dd
                                     v-if="
                                         image.id ===

@@ -844,7 +844,7 @@ onMounted(() => {
                             :key="product.id"
                         >
                             <div
-                                class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag"
+                                class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white"
                             >
                                 <div>
                                     <div class="flex items-center">
@@ -891,7 +891,7 @@ onMounted(() => {
                                         <div></div>
                                         <div>
                                             <button
-                                                class="myPrimaryTag transition bg-white mt-0"
+                                                class="myPrimaryTag transition mt-0"
                                                 v-if="
                                                     selectedProduct?.id !==
                                                     product.id

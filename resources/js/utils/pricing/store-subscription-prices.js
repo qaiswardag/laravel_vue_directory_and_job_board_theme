@@ -13,7 +13,7 @@ const storeSubscriptionPrices = function (user) {
             price: "$20",
             frequencies: "monthly",
             billed: "Billed every month",
-            title: null,
+            title: "&nbsp;",
             description:
                 "The essentials to provide your best work for clients.",
             features: [
@@ -34,7 +34,7 @@ const storeSubscriptionPrices = function (user) {
             price: "$50",
             frequencies: "monthly",
             billed: "Billed every month",
-            title: "most popular",
+            title: "Most popular",
             description:
                 "The essentials to provide your best work for clients.",
             features: [
@@ -48,14 +48,15 @@ const storeSubscriptionPrices = function (user) {
         {
             name: "Up to 10 Stores",
             id: "ten_stores",
+            priceProductIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
             route: {
                 name: "stripe.stores.create.subscription",
                 parameters: [],
             },
             price: "$100",
             frequencies: "monthly",
-            billed: "Billed every 3 months",
-            title: null,
+            billed: "Billed every month",
+            title: "&nbsp;",
             description:
                 "A plan that scales with your rapidly growing business.",
             features: [
@@ -68,16 +69,18 @@ const storeSubscriptionPrices = function (user) {
             mostPopular: false,
         },
         {
-            name: "Entreprice",
+            name: "Up to 200 Stores",
             id: "two_hundred_stores",
+            id: "three_stores",
+            priceProductIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
             route: {
                 name: "stripe.stores.create.subscription",
                 parameters: null,
             },
-            price: "",
-            frequencies: "",
-            billed: "",
-            title: null,
+            price: "$1500",
+            frequencies: "monthly",
+            billed: "Billed every month",
+            title: "Entreprice",
             description:
                 "Dedicated support and infrastructure for your company.",
             features: [

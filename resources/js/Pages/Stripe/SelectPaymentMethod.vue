@@ -307,7 +307,7 @@ onMounted(() => {
                     :key="paymentMethod.id"
                 >
                     <div
-                        class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag"
+                        class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white"
                     >
                         <div>
                             <div class="flex items-center">
@@ -364,7 +364,7 @@ onMounted(() => {
                                         fetchedPaymentMethods?.defaultPaymentMethodId !==
                                         paymentMethod.id
                                     "
-                                    class="myPrimaryTag transition bg-white mt-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    class="myPrimaryTag transition mt-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     type="button"
                                     @click="
                                         handleSetDefaultPaymentMethod(
