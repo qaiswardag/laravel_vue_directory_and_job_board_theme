@@ -128,7 +128,7 @@ const faqs = [
                                 Exciting news! We're currently upgrading to a
                                 new platform with amazing new features! Get
                                 ready for a whole new experience! We'll be back
-                                by November 1, 2023! <br />
+                                by January 1, 2024! <br />
                                 Stay tuned and prepare to be amazed!
                             </p>
                         </div>
