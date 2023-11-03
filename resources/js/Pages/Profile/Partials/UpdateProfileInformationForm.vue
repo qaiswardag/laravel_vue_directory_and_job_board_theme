@@ -446,7 +446,8 @@ onMounted(() => {
                                                 :class="{
                                                     'bg-gray-800 text-white':
                                                         active,
-                                                    'text-gray-900': !active,
+                                                    'text-myPrimaryDarkGrayColor':
+                                                        !active,
                                                 }"
                                             >
                                                 <span
@@ -857,7 +858,8 @@ onMounted(() => {
                                             :class="{
                                                 'bg-gray-800 text-white':
                                                     active,
-                                                'text-gray-900': !active,
+                                                'text-myPrimaryDarkGrayColor':
+                                                    !active,
                                             }"
                                         >
                                             <span

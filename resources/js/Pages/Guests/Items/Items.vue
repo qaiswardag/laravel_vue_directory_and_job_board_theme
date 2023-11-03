@@ -509,7 +509,7 @@ onMounted(() => {
                                     ></ThumbnailSmallImageSlider>
                                 </template>
 
-                                <section class="pt-4 pb-4 px-4">
+                                <section class="pt-4 pb-4 px-2">
                                     <button
                                         @click="
                                             goToSinglePost(

@@ -61,7 +61,7 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                                 :class="[
                                     product.mostPopular
                                         ? 'text-myPrimaryLinkColor'
-                                        : 'text-gray-900',
+                                        : 'text-myPrimaryDarkGrayColor',
                                     'text-lg font-semibold leading-8',
                                 ]"
                             >

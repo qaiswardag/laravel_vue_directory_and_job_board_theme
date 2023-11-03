@@ -409,7 +409,7 @@ onMounted(async () => {
                                                     :class="{
                                                         'bg-gray-800 text-white':
                                                             active,
-                                                        'text-gray-900':
+                                                        'text-myPrimaryDarkGrayColor':
                                                             !active,
                                                     }"
                                                 >

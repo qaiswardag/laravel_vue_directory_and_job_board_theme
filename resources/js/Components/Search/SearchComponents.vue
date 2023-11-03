@@ -341,10 +341,10 @@ onMounted(async () => {
                 >
                     <section class="md:w-4/6">
                         <div
-                            class="overflow-scroll min-h-[30rem] max-h-[30rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor"
+                            class="overflow-scroll min-h-[25rem] max-h-[25rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 w-full myPrimaryGap px-2 p-4 border border-myPrimaryLightGrayColor rounded"
                         >
                             <div
-                                class="px-4 py-4 bg-gray-50"
+                                class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded bg-gray-100"
                                 v-for="component in getFetchedComponents &&
                                 getFetchedComponents.fetchedData &&
                                 getFetchedComponents.fetchedData.components &&
@@ -356,7 +356,7 @@ onMounted(async () => {
                                     .data"
                                 :key="component.id"
                             >
-                                <div>
+                                <div class="relative">
                                     <template
                                         v-if="
                                             component && component.cover_images
@@ -366,7 +366,7 @@ onMounted(async () => {
                                             :images="component.cover_images"
                                             imageSize="medium_path"
                                             imageHeight="h-auto"
-                                            imageWidth="w-full object-cover"
+                                            imageWidth="object-cover max-h-96 w-full object-cover cursor-pointer"
                                             :roundedFull="false"
                                             :squareButtons="true"
                                             @firstButtonClick="
@@ -375,72 +375,43 @@ onMounted(async () => {
                                             :imageClickable="true"
                                         ></ThumbnailSmallImageSlider>
                                     </template>
-                                </div>
 
-                                <div class="px-2 pt-4 pb-2">
-                                    <div v-if="!component.published">
-                                        <p
-                                            class="inline-block text-myPrimaryErrorColor text-xs font-medium"
-                                        >
-                                            Unpublished
-                                        </p>
+                                    <div class="px-2 pt-2 absolute top-0">
+                                        <div>
+                                            <div
+                                                class="myPrimaryTag text-white shadow bg-opacity-60"
+                                                :class="[
+                                                    {
+                                                        'bg-myPrimaryLinkColor':
+                                                            component.published,
+                                                    },
+                                                    {
+                                                        'bg-myPrimaryErrorColor':
+                                                            !component.published,
+                                                    },
+                                                ]"
+                                            >
+                                                {{
+                                                    component.published
+                                                        ? "Published"
+                                                        : "Unpublished"
+                                                }}
+                                                <span
+                                                    class="block text-[8px] font-bold"
+                                                    >Only visible for
+                                                    superadmin</span
+                                                >
+                                            </div>
+                                        </div>
                                     </div>
-                                    <button
-                                        type="button"
+                                </div>
+                                <div class="pt-4 pb-4 px-2">
+                                    <p
                                         @click="handleDropComponent(component)"
-                                        class="text-sm font-medium mt-2 mb-2 text-myPrimaryLinkColor inline-block text-left min-h-[2.5rem] h-full"
+                                        class="text-sm font-medium mt-2 mb-2 cursor-pointer"
                                     >
                                         {{ component.title }}
-                                    </button>
-
-                                    <div
-                                        class="flex flex-wrap gap-2 items-center justify-left"
-                                    >
-                                        <button
-                                            @click="
-                                                handleCategory({
-                                                    name: category.name,
-                                                    id: category.id,
-                                                })
-                                            "
-                                            v-for="category in component.categories &&
-                                            component.categories"
-                                            :key="category.id"
-                                            class="myPrimaryTag text-[10px] py-2 px-2"
-                                            :class="[
-                                                {
-                                                    'bg-myPrimaryLinkColor text-white':
-                                                        categorySelected.name ===
-                                                        category.name,
-                                                },
-                                                {
-                                                    'bg-myPrimaryLinkColor text-white':
-                                                        categorySelected.name ===
-                                                        category.name,
-                                                },
-                                            ]"
-                                            :disabled="
-                                                categorySelected.name ===
-                                                category.name
-                                            "
-                                        >
-                                            {{ category.name }}
-                                        </button>
-                                    </div>
-
-                                    <div
-                                        class="py-4 mt-4 border-t border-gray-200"
-                                    >
-                                        <button
-                                            type="button"
-                                            @click="
-                                                handleDropComponent(component)
-                                            "
-                                            class="myPrimaryButton text-xs"
-                                        >
-                                            Add
-                                        </button>
-                                    </div>
+                                    </p>
                                 </div>
                             </div>
                         </div>

@@ -101,7 +101,7 @@ watch(
                                 :class="[
                                     active
                                         ? 'bg-myPrimaryLinkColor text-white'
-                                        : 'text-gray-900',
+                                        : 'text-myPrimaryDarkGrayColor',
                                     'relative cursor-default select-none py-2 pl-3 pr-9',
                                 ]"
                             >
