@@ -1061,10 +1061,11 @@ const pageBuilder = new PageBuilder(store);
                         class="mx-auto h-12 w-12 text-gray-400 cursor-pointer"
                     ></FolderPlusIcon>
                     <h3 class="mt-2 text-sm font-semibold text-gray-900">
-                        Add Components
+                        Build your Store by adding Components
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">
-                        Get started by adding components.
+                        Get started by adding components using the drag & drop
+                        Page Builder.
                     </p>
                     <div class="mt-6">
                         <button

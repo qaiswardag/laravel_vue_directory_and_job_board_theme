@@ -123,32 +123,6 @@ const handleSelectComponent = function (componentObject) {
 };
 
 const draggableZone = ref(null);
-const showingMobile = ref(false);
-
-const showMobile = function () {
-    showingMobile.value = !showingMobile.value;
-    if (
-        showingMobile.value &&
-        Array.isArray(getComponents.value) &&
-        getComponents.value.length !== 0
-    ) {
-        draggableZone.value.classList.add("w-1/3");
-        draggableZone.value.classList.add("mx-auto");
-        draggableZone.value.classList.add("border-2");
-        draggableZone.value.classList.add("rounded-lg");
-        draggableZone.value.classList.add("border-gray-600");
-        draggableZone.value.classList.add("p-4");
-        draggableZone.value.classList.add("bg-white");
-    } else {
-        draggableZone.value.classList.remove("w-1/3");
-        draggableZone.value.classList.remove("mx-auto");
-        draggableZone.value.classList.remove("border-2");
-        draggableZone.value.classList.remove("rounded-lg");
-        draggableZone.value.classList.remove("border-gray-600");
-        draggableZone.value.classList.remove("p-4");
-        draggableZone.value.classList.remove("bg-white");
-    }
-};
 
 onMounted(async () => {
     pageBuilder.setEventListenersForElements();
@@ -228,21 +202,6 @@ onMounted(async () => {
                             >
                                 <EyeIcon class="mySmallIcon"></EyeIcon>
                             </button>
-                            <button
-                                type="button"
-                                @click="showMobile"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                :class="{
-                                    'bg-myPrimaryLinkColor': showingMobile,
-                                }"
-                            >
-                                <DevicePhoneMobileIcon
-                                    class="mySmallIcon"
-                                    :class="{
-                                        'text-white': showingMobile,
-                                    }"
-                                ></DevicePhoneMobileIcon>
-                            </button>
 
                             <button
                                 type="button"
@@ -301,7 +260,8 @@ onMounted(async () => {
                                 Add Component
                             </h3>
                             <p class="mt-1 text-sm text-gray-500">
-                                Get started by adding a new component.
+                                Get started by adding components using the drag
+                                & drop Page Builder.
                             </p>
                             <div class="mt-6">
                                 <button

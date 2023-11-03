@@ -80,71 +80,67 @@ const handleRemoveItem = function (selectedItem) {
         <Listbox>
             <div class="relative">
                 <!-- Selected list # Start -->
-                <ListboxButton class="myPrimarySelect min-h-[3.5rem] pt-1 pb-0">
-                    <template v-if="listSelected.length === 0">
+                <ListboxButton
+                    class="myPrimarySelect w-full min-h-[3.5rem] h-[3.5rem] pt-2 pb-0"
+                >
+                    <span
+                        v-if="listSelected.length === 0"
+                        class="font-normal text-gray-500"
+                    >
                         Select {{ nameOfList.toLowerCase() }}..
-                    </template>
+                    </span>
 
-                    <div class="overflow-x-auto flex gap-2 mr-4 pb-1">
-                        <div
+                    <ul
+                        class="overflow-x-scroll flex gap-2 mr-4 pb-1 min-w-full w-full"
+                    >
+                        <li
+                            @click.stop="
+                                handleRemoveItem({
+                                    name: singleSelection.name,
+                                    id: singleSelection.id,
+                                })
+                            "
                             v-for="singleSelection in listSelected"
                             :key="singleSelection.id"
+                            class="myPrimaryTag hover:bg-myPrimaryErrorColor hover:text-white my-0"
                         >
-                            <button
-                                @click.stop="
-                                    handleRemoveItem({
-                                        name: singleSelection.name,
-                                        id: singleSelection.id,
-                                    })
-                                "
-                                class="myPrimaryTag hover:bg-myPrimaryErrorColor hover:text-white my-0"
-                            >
-                                <div
-                                    class="flex justify-center items-center gap-2"
+                            <div class="flex justify-center items-center gap-2">
+                                <template
+                                    v-if="props.icon === 'Squares2X2Icon'"
                                 >
-                                    <template
-                                        v-if="props.icon === 'Squares2X2Icon'"
-                                    >
-                                        <Squares2X2Icon
-                                            class="mySmallIcon py-0 m-0"
-                                        ></Squares2X2Icon>
-                                    </template>
+                                    <Squares2X2Icon
+                                        class="mySmallIcon py-0 m-0"
+                                    ></Squares2X2Icon>
+                                </template>
 
-                                    <template
-                                        v-if="
-                                            props.icon === 'GlobeAmericasIcon'
-                                        "
-                                    >
-                                        <GlobeAmericasIcon
-                                            class="mySmallIcon py-0 m-0"
-                                        ></GlobeAmericasIcon>
-                                    </template>
+                                <template
+                                    v-if="props.icon === 'GlobeAmericasIcon'"
+                                >
+                                    <GlobeAmericasIcon
+                                        class="mySmallIcon py-0 m-0"
+                                    ></GlobeAmericasIcon>
+                                </template>
 
-                                    <template
-                                        v-if="props.icon === 'MapPinIcon'"
-                                    >
-                                        <MapPinIcon
-                                            class="mySmallIcon py-0 m-0"
-                                        ></MapPinIcon>
-                                    </template>
+                                <template v-if="props.icon === 'MapPinIcon'">
+                                    <MapPinIcon
+                                        class="mySmallIcon py-0 m-0"
+                                    ></MapPinIcon>
+                                </template>
 
-                                    <template
-                                        v-if="props.icon === 'NewspaperIcon'"
-                                    >
-                                        <NewspaperIcon
-                                            class="mySmallIcon py-0 m-0"
-                                        ></NewspaperIcon>
-                                    </template>
-                                    <div class="w-max">
-                                        {{ singleSelection.name }}
-                                    </div>
-                                    <XMarkIcon
-                                        class="mySmallIcon w-3 h-3 py-0 m-0"
-                                    ></XMarkIcon>
+                                <template v-if="props.icon === 'NewspaperIcon'">
+                                    <NewspaperIcon
+                                        class="mySmallIcon py-0 m-0"
+                                    ></NewspaperIcon>
+                                </template>
+                                <div class="w-max">
+                                    {{ singleSelection.name }}
                                 </div>
-                            </button>
-                        </div>
-                    </div>
+                                <XMarkIcon
+                                    class="mySmallIcon w-3 h-3 py-0 m-0"
+                                ></XMarkIcon>
+                            </div>
+                        </li>
+                    </ul>
                     <span
                         class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
                     >
