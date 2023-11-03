@@ -325,10 +325,22 @@ onMounted(() => {
         <FullWidthElement :descriptionArea="true" :headerArea="false">
             <template #content>
                 <!-- Search # start -->
-                <div>
-                    <form @submit.prevent="handleSearch">
-                        <div class="myPrimarySection">
-                            <div class="mysearchBarWithOptions">
+                <div
+                    class="flex flex-col myPrimaryGap border-b border-gray-200 pb-8 mb-8"
+                >
+                    <div class="flex md:flex-row flex-col myPrimaryGap">
+                        <div
+                            class="w-full"
+                            :class="[
+                                {
+                                    'md:w-1/3': nameList !== 'posts',
+                                },
+                                {
+                                    'md:w-1/2': nameList === 'posts',
+                                },
+                            ]"
+                        >
+                            <form @submit.prevent="handleSearch">
                                 <div class="relative w-full">
                                     <div
                                         class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
@@ -353,105 +365,25 @@ onMounted(() => {
                                         v-model="searchForm.search_query"
                                         type="search"
                                         id="search_query"
-                                        class="myPrimarySearchInput"
+                                        class="myPrimarySearchInput min-h-[3.5rem]"
                                         autocomplete="off"
-                                        placeholder="Search..."
+                                        :placeholder="`Search ${nameList}..`"
                                     />
                                 </div>
-
-                                <button
-                                    @click="handleSearch"
-                                    type="button"
-                                    class="myPrimaryButton"
-                                >
-                                    Search
-                                </button>
-                            </div>
+                            </form>
                         </div>
-                    </form>
-                    <!-- Search # end -->
-
-                    <!-- Loading # start -->
-                    <template v-if="isLoadingPosts">
-                        <SmallUniversalSpinner
-                            width="w-8"
-                            height="h-8"
-                            border="border-4"
-                        ></SmallUniversalSpinner>
-                    </template>
-                    <!-- Loading # end -->
-                </div>
-
-                <template
-                    v-if="!isLoadingPosts && !isErrorPosts && isSuccessPosts"
-                >
-                    <div class="grid myPrimaryGap grid-cols-2">
-                        <!-- Country # start -->
-                        <div
-                            class="flex-1 w-full"
-                            v-if="
-                                countrySelected &&
-                                Array.isArray(countrySelected) &&
-                                fetchedDataPosts &&
-                                Array.isArray(fetchedDataPosts.countries)
-                            "
-                        >
-                            <ItemsFilterSelection
-                                nameOfList="Countries"
-                                :list="fetchedDataPosts.countries"
-                                :listSelected="countrySelected"
-                                icon="GlobeAmericasIcon"
-                                @removeItem="handleRemoveCountry"
-                                @selectItem="handleSelectCountry"
-                            ></ItemsFilterSelection>
-                        </div>
-                        <!-- Country # end -->
-
-                        <!-- State # start -->
-                        <div
-                            class="flex-1 w-full"
-                            v-if="
-                                stateSelected &&
-                                Array.isArray(stateSelected) &&
-                                fetchedDataPosts &&
-                                Array.isArray(fetchedDataPosts.states)
-                            "
-                        >
-                            <ItemsFilterSelection
-                                nameOfList="States"
-                                :list="fetchedDataPosts.states"
-                                :listSelected="stateSelected"
-                                icon="MapPinIcon"
-                                @removeItem="handleRemoveState"
-                                @selectItem="handleSelectState"
-                            ></ItemsFilterSelection>
-                        </div>
-                        <!-- State # end -->
-
-                        <!-- Type # start -->
-                        <div
-                            class="flex-1 w-full"
-                            v-if="
-                                typeSelected &&
-                                Array.isArray(typeSelected) &&
-                                fetchedDataPosts &&
-                                Array.isArray(fetchedDataPosts.types)
-                            "
-                        >
-                            <ItemsFilterSelection
-                                nameOfList="Types"
-                                :list="fetchedDataPosts.types"
-                                :listSelected="typeSelected"
-                                icon="NewspaperIcon"
-                                @removeItem="handleRemoveType"
-                                @selectItem="handleSelectType"
-                            ></ItemsFilterSelection>
-                        </div>
-                        <!-- Type # end -->
-
+                        <!-- Search # end -->
                         <!-- Categories # start -->
                         <div
-                            class="flex-1 w-full"
+                            class="w-full"
+                            :class="[
+                                {
+                                    'md:w-1/3': nameList !== 'posts',
+                                },
+                                {
+                                    'md:w-1/2': nameList === 'posts',
+                                },
+                            ]"
                             v-if="
                                 categorySelected &&
                                 Array.isArray(categorySelected) &&
@@ -469,8 +401,100 @@ onMounted(() => {
                             ></ItemsFilterSelection>
                         </div>
                         <!-- Categories # end -->
+
+                        <!-- State # start -->
+                        <div
+                            class="md:w-1/3 w-full"
+                            v-if="
+                                stateSelected &&
+                                Array.isArray(stateSelected) &&
+                                fetchedDataPosts &&
+                                Array.isArray(fetchedDataPosts.states)
+                            "
+                        >
+                            <ItemsFilterSelection
+                                nameOfList="States"
+                                :list="fetchedDataPosts.states"
+                                :listSelected="stateSelected"
+                                icon="MapPinIcon"
+                                @removeItem="handleRemoveState"
+                                @selectItem="handleSelectState"
+                            ></ItemsFilterSelection>
+                        </div>
+                        <!-- State # end -->
                     </div>
 
+                    <template
+                        v-if="
+                            (countrySelected &&
+                                Array.isArray(countrySelected) &&
+                                fetchedDataPosts &&
+                                Array.isArray(fetchedDataPosts.countries)) ||
+                            (typeSelected &&
+                                Array.isArray(typeSelected) &&
+                                fetchedDataPosts &&
+                                Array.isArray(fetchedDataPosts.types))
+                        "
+                    >
+                        <div class="flex md:flex-row flex-col myPrimaryGap">
+                            <!-- Country # start -->
+                            <div
+                                class="md:w-1/2 w-full"
+                                v-if="
+                                    countrySelected &&
+                                    Array.isArray(countrySelected) &&
+                                    fetchedDataPosts &&
+                                    Array.isArray(fetchedDataPosts.countries)
+                                "
+                            >
+                                <ItemsFilterSelection
+                                    nameOfList="Countries"
+                                    :list="fetchedDataPosts.countries"
+                                    :listSelected="countrySelected"
+                                    icon="GlobeAmericasIcon"
+                                    @removeItem="handleRemoveCountry"
+                                    @selectItem="handleSelectCountry"
+                                ></ItemsFilterSelection>
+                            </div>
+                            <!-- Country # end -->
+
+                            <!-- Type # start -->
+                            <div
+                                class="md:w-1/2 w-full"
+                                v-if="
+                                    typeSelected &&
+                                    Array.isArray(typeSelected) &&
+                                    fetchedDataPosts &&
+                                    Array.isArray(fetchedDataPosts.types)
+                                "
+                            >
+                                <ItemsFilterSelection
+                                    nameOfList="Types"
+                                    :list="fetchedDataPosts.types"
+                                    :listSelected="typeSelected"
+                                    icon="NewspaperIcon"
+                                    @removeItem="handleRemoveType"
+                                    @selectItem="handleSelectType"
+                                ></ItemsFilterSelection>
+                            </div>
+                            <!-- Type # end -->
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Loading # start -->
+                <template v-if="isLoadingPosts">
+                    <SmallUniversalSpinner
+                        width="w-8"
+                        height="h-8"
+                        border="border-4"
+                    ></SmallUniversalSpinner>
+                </template>
+                <!-- Loading # end -->
+
+                <template
+                    v-if="!isLoadingPosts && !isErrorPosts && isSuccessPosts"
+                >
                     <!-- List Grid # start -->
                     <div v-if="fetchedDataPosts && fetchedDataPosts.posts">
                         <ul

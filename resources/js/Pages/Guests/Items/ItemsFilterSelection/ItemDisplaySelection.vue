@@ -34,7 +34,7 @@ const handleRemoveItem = function (selectedItem) {
 <template>
     <template v-if="list">
         <div
-            class="flex flex-wrap gap-2 items-center justify-left py-4 border-t-2 border-purple-700"
+            class="flex flex-wrap gap-2 items-center justify-left py-4 border-t border-gray-300"
         >
             <button
                 @click="
@@ -47,7 +47,7 @@ const handleRemoveItem = function (selectedItem) {
                 "
                 v-for="item in list"
                 :key="item.id"
-                class="py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white"
+                class="py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag hover:shadow"
                 :class="[
                     {
                         'bg-myPrimaryLinkColor text-white': listSelected.some(
@@ -55,8 +55,7 @@ const handleRemoveItem = function (selectedItem) {
                         ),
                     },
                     {
-                        'hover:bg-myPrimaryLinkColor hover:text-white ':
-                            listSelected.some((cat) => cat.id !== item.id),
+                        '': listSelected.some((cat) => cat.id !== item.id),
                     },
                 ]"
                 :disabled="listSelected.name === item.name"

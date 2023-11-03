@@ -6,6 +6,7 @@ import {
     NewspaperIcon,
     Square2StackIcon,
     Squares2X2Icon,
+    XMarkIcon,
 } from "@heroicons/vue/24/outline";
 
 import { ref, computed } from "vue";
@@ -81,7 +82,7 @@ const handleRemoveItem = function (selectedItem) {
                 <!-- Selected list # Start -->
                 <ListboxButton class="myPrimarySelect min-h-[3.5rem] pt-1 pb-0">
                     <template v-if="listSelected.length === 0">
-                        Select..
+                        Select {{ nameOfList.toLowerCase() }}..
                     </template>
 
                     <div class="overflow-x-auto flex gap-2 mr-4 pb-1">
@@ -90,13 +91,13 @@ const handleRemoveItem = function (selectedItem) {
                             :key="singleSelection.id"
                         >
                             <button
-                                @click="
+                                @click.stop="
                                     handleRemoveItem({
                                         name: singleSelection.name,
                                         id: singleSelection.id,
                                     })
                                 "
-                                class="myPrimaryTag my-0"
+                                class="myPrimaryTag hover:bg-myPrimaryErrorColor hover:text-white my-0"
                             >
                                 <div
                                     class="flex justify-center items-center gap-2"
@@ -137,6 +138,9 @@ const handleRemoveItem = function (selectedItem) {
                                     <div class="w-max">
                                         {{ singleSelection.name }}
                                     </div>
+                                    <XMarkIcon
+                                        class="mySmallIcon w-3 h-3 py-0 m-0"
+                                    ></XMarkIcon>
                                 </div>
                             </button>
                         </div>
@@ -154,12 +158,12 @@ const handleRemoveItem = function (selectedItem) {
 
                 <!-- List of option # start -->
                 <transition
-                    leave-active-class="transition duration-100 ease-in"
+                    leave-active-class="transition duration-100 ease-in "
                     leave-from-class="opacity-100"
                     leave-to-class="opacity-0"
                 >
                     <ListboxOptions
-                        class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
+                        class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white z-30 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
                     >
                         <ListboxOption
                             v-for="item in list"
@@ -178,10 +182,10 @@ const handleRemoveItem = function (selectedItem) {
                                         id: item.id,
                                     })
                                 "
-                                class="cursor-pointer hover:bg-myPrimaryLinkColor hover:text-white text-myPrimaryDarkGrayColor relative select-none py-2 pl-3 pr-9"
+                                class="cursor-pointer hover:bg-myPrimaryLinkColor hover:text-white text-myPrimaryDarkGrayColor relative select-none py-4 pl-3 pr-9"
                             >
                                 <div
-                                    class="flex justify-left items-center gap-1"
+                                    class="flex justify-left items-center gap-2"
                                 >
                                     <template
                                         v-if="props.icon === 'Squares2X2Icon'"
@@ -227,109 +231,4 @@ const handleRemoveItem = function (selectedItem) {
         </Listbox>
     </div>
     <!-- Selected # end -->
-
-    <div class="bg-purple-100 p-4 my-12">
-        <!-- Selected list # Start -->
-        <div class="border border-gray-200 rounded py-4 h-24 min-h-full">
-            <p class="text-xs">Selected {{ nameOfList }}</p>
-            <div class="overflow-x-scroll flex gap-2">
-                <template
-                    v-for="singleSelection in listSelected"
-                    :key="singleSelection.id"
-                >
-                    <button
-                        @click="
-                            handleRemoveItem({
-                                name: singleSelection.name,
-                                id: singleSelection.id,
-                            })
-                        "
-                        class="myPrimaryTag"
-                    >
-                        <div
-                            class="flex justify-center items-center myPrimaryGap"
-                        >
-                            <template v-if="props.icon === 'Squares2X2Icon'">
-                                <Squares2X2Icon
-                                    class="mySmallIcon py-0 m-0"
-                                ></Squares2X2Icon>
-                            </template>
-
-                            <template v-if="props.icon === 'GlobeAmericasIcon'">
-                                <GlobeAmericasIcon
-                                    class="mySmallIcon py-0 m-0"
-                                ></GlobeAmericasIcon>
-                            </template>
-
-                            <template v-if="props.icon === 'MapPinIcon'">
-                                <MapPinIcon
-                                    class="mySmallIcon py-0 m-0"
-                                ></MapPinIcon>
-                            </template>
-
-                            <template v-if="props.icon === 'NewspaperIcon'">
-                                <NewspaperIcon
-                                    class="mySmallIcon py-0 m-0"
-                                ></NewspaperIcon>
-                            </template>
-
-                            <span class="block w-max">
-                                {{ singleSelection.name }}
-                            </span>
-                        </div>
-                    </button>
-                </template>
-            </div>
-        </div>
-        <!-- Selected list # End -->
-
-        <!-- List # Start -->
-        <div class="my-12 myPrimaryDarkGrayColor">
-            <p class="text-xs">{{ nameOfList }}</p>
-            <div
-                class="flex gap-2 flex-wrap py-4 border-t border-b border-gray-200"
-            >
-                <template v-for="item in list" :key="item.id">
-                    <button
-                        v-if="!listSelected.some((cat) => cat.id === item.id)"
-                        @click="
-                            handleSelectItem({
-                                name: item.name,
-                                id: item.id,
-                            })
-                        "
-                        class="myPrimaryTag"
-                    >
-                        <div class="flex justify-center items-center gap-1">
-                            <template v-if="props.icon === 'Squares2X2Icon'">
-                                <Squares2X2Icon
-                                    class="mySmallIcon py-0 m-0"
-                                ></Squares2X2Icon>
-                            </template>
-
-                            <template v-if="props.icon === 'GlobeAmericasIcon'">
-                                <GlobeAmericasIcon
-                                    class="mySmallIcon py-0 m-0"
-                                ></GlobeAmericasIcon>
-                            </template>
-
-                            <template v-if="props.icon === 'MapPinIcon'">
-                                <MapPinIcon
-                                    class="mySmallIcon py-0 m-0"
-                                ></MapPinIcon>
-                            </template>
-
-                            <template v-if="props.icon === 'NewspaperIcon'">
-                                <NewspaperIcon
-                                    class="mySmallIcon py-0 m-0"
-                                ></NewspaperIcon>
-                            </template>
-                            {{ item.name }}
-                        </div>
-                    </button>
-                </template>
-            </div>
-        </div>
-        <!-- List # End -->
-    </div>
 </template>
