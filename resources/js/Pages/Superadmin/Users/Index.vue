@@ -664,7 +664,7 @@ onMounted(() => {
                                                     <PlusIcon
                                                         class="w-4 h-4"
                                                     ></PlusIcon>
-                                                    <p>Add Superadmin</p>
+                                                    <span>Add Superadmin</span>
                                                 </button>
                                             </template>
                                         </td>
