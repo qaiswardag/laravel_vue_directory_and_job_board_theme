@@ -10,6 +10,7 @@ import {
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import { useStore } from "vuex";
+import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
 
 import {
     Dialog,
@@ -201,33 +202,39 @@ onMounted(() => {
                                         null
                                     )
                                 "
-                                class="px-6 h-[10vh] flex items-center justify-between"
+                                class="px-4 h-[10vh] flex items-center justify-between"
                             >
                                 <div class="flex justify-start myPrimaryGap">
-                                    <button
-                                        class="myPrimaryButton py-2 mx-0 text-xs"
-                                        @click="secondButton"
-                                        type="button"
+                                    <ApplicationLogo></ApplicationLogo>
+
+                                    <div
+                                        class="flex justify-start myPrimaryGap"
                                     >
-                                        <BookmarkIcon
-                                            class="mySmallIcon p-0 m-0"
-                                        ></BookmarkIcon>
-                                        Save & Close
-                                    </button>
-                                    <button
-                                        v-if="
-                                            updateOrCreate === 'update' &&
-                                            hideDraftButton
-                                        "
-                                        class="mySecondaryButton py-2 mx-0 text-xs"
-                                        @click="handleDraftForUpdate"
-                                        type="button"
-                                    >
-                                        <PencilIcon
-                                            class="mySmallIcon p-0 m-0"
-                                        ></PencilIcon>
-                                        Draft
-                                    </button>
+                                        <button
+                                            class="myPrimaryButton py-2 mx-0 text-xs"
+                                            @click="secondButton"
+                                            type="button"
+                                        >
+                                            <BookmarkIcon
+                                                class="mySmallIcon p-0 m-0"
+                                            ></BookmarkIcon>
+                                            Save & Close
+                                        </button>
+                                        <button
+                                            v-if="
+                                                updateOrCreate === 'update' &&
+                                                hideDraftButton
+                                            "
+                                            class="mySecondaryButton py-2 mx-0 text-xs"
+                                            @click="handleDraftForUpdate"
+                                            type="button"
+                                        >
+                                            <PencilIcon
+                                                class="mySmallIcon p-0 m-0"
+                                            ></PencilIcon>
+                                            Draft
+                                        </button>
+                                    </div>
                                 </div>
                                 <button
                                     type="button"
