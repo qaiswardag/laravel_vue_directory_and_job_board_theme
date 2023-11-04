@@ -8,6 +8,7 @@ use App\Models\Job\JobCategory;
 use App\Models\Job\JobCountry;
 use App\Models\Job\JobState;
 use App\Models\Job\JobType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -19,17 +20,6 @@ class JobsGuestIndexController extends Controller
 
     public function index(Request $request)
     {
-        $typeID = null;
-        $countryID = null;
-
-        if (isset($request->type["id"])) {
-            $typeID = $request->type["id"];
-        }
-
-        if (isset($request->country["id"])) {
-            $countryID = $request->country["id"];
-        }
-
         $searchQuery = $request->input("search_query");
 
         // Check $searchQuery is an array
@@ -142,27 +132,16 @@ class JobsGuestIndexController extends Controller
         }
         // categories filter logic # end
 
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        // Add a condition to filter posts where started_at is
+        // not null and smaller than or equal to the current time
+        $query->where(function ($query) {
+            // Include posts where started_at is not null
+            $query->whereNotNull("started_at");
 
-        // if ($typeID) {
-        //     $query->whereHas("types", function ($query) use ($typeID) {
-        //         $query->where("job_types.id", $typeID);
-        //     });
-        // }
-
-        // if ($countryID) {
-        //     $query->whereHas("countries", function ($query) use ($countryID) {
-        //         $query->where("job_countries.id", $countryID);
-        //     });
-        // }
+            // Include posts where started_at is in the past or present
+            // Carbon::now() represents the current time
+            $query->where("started_at", "<=", Carbon::now());
+        });
 
         $posts = $query->paginate(20);
 

@@ -23,14 +23,20 @@ return new class extends Migration {
             //
             $table->boolean("show_author");
             $table->timestamp("deleted_at")->nullable();
-            $table->string("title");
+            $table->string("title")->index();
             $table->string("slug");
-            $table->string("address")->nullable();
+            $table
+                ->string("address")
+                ->nullable()
+                ->index();
             $table->string("floor")->nullable();
             $table->longText("content");
             $table->boolean("published");
 
-            $table->mediumText("tags")->nullable();
+            $table
+                ->mediumText("tags")
+                ->nullable()
+                ->index();
             $table->timestamps();
         });
     }

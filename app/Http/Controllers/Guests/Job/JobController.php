@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guests\Job;
 
 use App\Http\Controllers\Controller;
 use App\Models\Job\Job;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -41,6 +42,13 @@ class JobController extends Controller
         $post = Job::where("id", $postId)
             ->where("published", true)
             ->firstOrFail();
+
+        // Check if the current time is earlier than the post's started_at timestamp
+        if (Carbon::now()->lt($post->started_at)) {
+            return Inertia::render("Error", [
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
 
         $postRenderView = "Guests/Items/SingleItem";
 

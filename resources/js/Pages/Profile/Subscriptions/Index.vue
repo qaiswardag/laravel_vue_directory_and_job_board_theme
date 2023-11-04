@@ -456,7 +456,7 @@ const notificationsModalButton = function () {
                                                                 parseISO(
                                                                     post.created_at
                                                                 ),
-                                                                "dd/MM/yyyy HH:mm"
+                                                                "dd. MMMM yyyy HH:mm"
                                                             )
                                                         }}
                                                     </td>
@@ -468,7 +468,7 @@ const notificationsModalButton = function () {
                                                                 parseISO(
                                                                     post.updated_at
                                                                 ),
-                                                                "dd/MM/yyyy HH:mm"
+                                                                "dd. MMMM yyyy HH:mm"
                                                             )
                                                         }}
                                                     </td>
@@ -700,7 +700,7 @@ const notificationsModalButton = function () {
                                                                 parseISO(
                                                                     post.created_at
                                                                 ),
-                                                                "dd/MM/yyyy HH:mm"
+                                                                "dd. MMMM yyyy HH:mm"
                                                             )
                                                         }}
                                                     </td>
@@ -712,7 +712,7 @@ const notificationsModalButton = function () {
                                                                 parseISO(
                                                                     post.updated_at
                                                                 ),
-                                                                "dd/MM/yyyy HH:mm"
+                                                                "dd. MMMM yyyy HH:mm"
                                                             )
                                                         }}
                                                     </td>
@@ -918,7 +918,7 @@ const notificationsModalButton = function () {
                                                                 parseISO(
                                                                     post.created_at
                                                                 ),
-                                                                "dd/MM/yyyy HH:mm"
+                                                                "dd. MMMM yyyy HH:mm"
                                                             )
                                                         }}
                                                     </td>
@@ -930,7 +930,7 @@ const notificationsModalButton = function () {
                                                                 parseISO(
                                                                     post.updated_at
                                                                 ),
-                                                                "dd/MM/yyyy HH:mm"
+                                                                "dd. MMMM yyyy HH:mm"
                                                             )
                                                         }}
                                                     </td>
@@ -1133,7 +1133,7 @@ const notificationsModalButton = function () {
                                                                 parseISO(
                                                                     post.created_at
                                                                 ),
-                                                                "dd/MM/yyyy HH:mm"
+                                                                "dd. MMMM yyyy HH:mm"
                                                             )
                                                         }}
                                                     </td>
@@ -1145,7 +1145,7 @@ const notificationsModalButton = function () {
                                                                 parseISO(
                                                                     post.updated_at
                                                                 ),
-                                                                "dd/MM/yyyy HH:mm"
+                                                                "dd. MMMM yyyy HH:mm"
                                                             )
                                                         }}
                                                     </td>

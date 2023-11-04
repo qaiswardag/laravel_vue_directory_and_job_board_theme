@@ -105,7 +105,7 @@ defineProps({
                             {{
                                 format(
                                     parseISO(post.started_at),
-                                    "dd/MM/yyyy HH:mm"
+                                    "dd. MMMM yyyy HH:mm"
                                 )
                             }}
                         </div>
