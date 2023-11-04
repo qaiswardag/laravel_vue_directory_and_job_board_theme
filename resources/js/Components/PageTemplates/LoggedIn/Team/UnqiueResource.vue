@@ -99,7 +99,7 @@ defineProps({
                 <!-- started_at # start -->
                 <template v-if="post.started_at">
                     <div class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Start date</h4>
+                        <h4 class="myFourthHeader">Job publish date</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div>
                             {{
