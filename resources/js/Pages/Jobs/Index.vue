@@ -350,6 +350,9 @@ onMounted(() => {
                                         Status
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
+                                        Start date
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
                                         Show Authors
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
@@ -471,6 +474,14 @@ onMounted(() => {
                                                         : "Unpublished"
                                                 }}</span
                                             >
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{
+                                                format(
+                                                    parseISO(post.started_at),
+                                                    "dd/MM/yyyy HH:mm"
+                                                )
+                                            }}
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <span

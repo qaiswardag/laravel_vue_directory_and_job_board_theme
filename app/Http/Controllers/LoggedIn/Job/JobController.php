@@ -137,6 +137,7 @@ class JobController extends Controller
         $this->authorize("can-create-and-update", $team);
 
         $title = $request->title;
+        $startedAt = $request->started_at;
         $content = $request->content;
         $userId = $request->user_id;
 
@@ -148,6 +149,7 @@ class JobController extends Controller
             "user_id" => $userId,
             "team_id" => $team->id,
             "title" => $title,
+            "started_at" => $startedAt,
             "slug" => $slug,
             "published" => $request->published,
             "content" => $content,
@@ -478,6 +480,7 @@ class JobController extends Controller
         $slug = $request->slug;
 
         $title = $request->title;
+        $startedAt = $request->started_at;
         $content = $request->content;
         $teamId = $request->team["id"];
         $userId = $request->user_id;
@@ -490,6 +493,7 @@ class JobController extends Controller
             "user_id" => $userId,
             "team_id" => $teamId,
             "title" => $title,
+            "started_at" => $startedAt,
             "slug" => $slug,
             "published" => $request->published,
             "content" => $content,

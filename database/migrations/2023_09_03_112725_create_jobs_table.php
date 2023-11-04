@@ -22,6 +22,7 @@ return new class extends Migration {
                 ->constrained();
             //
             $table->boolean("show_author");
+            $table->timestamp("started_at");
             $table->timestamp("deleted_at")->nullable();
             $table->string("title");
             $table->string("slug");

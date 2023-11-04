@@ -20,6 +20,9 @@ import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import { delay } from "@/helpers/delay";
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import { parseISO, formatISO } from "date-fns";
 
 import {
     Listbox,
@@ -431,6 +434,7 @@ const slugValueCustom = ref("");
 const postForm = useForm({
     title: "",
     slug: "",
+    started_at: "",
     content: "",
     published: true,
     team: props.currentUserTeam,
@@ -501,6 +505,8 @@ const handleCreatePost = function () {
 
 const submittedOnUpdate = ref(true);
 
+const jobStartedAt = ref(null);
+
 const createPost = () => {
     if (formType.value === "create") {
         postForm.post(route("team.jobs.store"), {
@@ -524,6 +530,7 @@ const createPost = () => {
         });
     }
 };
+
 const handleClearForm = function () {
     // handle show modal for unique content
     modalShowClearForm.value = true;
@@ -556,6 +563,7 @@ const clearForm = function () {
     postForm.title = "";
     // slug
     postForm.slug = "";
+    postForm.started_at = null;
     isSlugEditable.value = false;
     slugValueTitle.value = "";
     slugValueCustom.value = "";
@@ -583,6 +591,14 @@ const clearForm = function () {
     localStorage.removeItem(pathPageBuilderLocalStorageCreate);
     store.commit("pageBuilderState/setComponents", []);
 };
+
+watch(
+    () => jobStartedAt.value,
+    (newValue) => {
+        postForm.started_at = formatISO(new Date(newValue));
+        console.log(`watch postForm.started_at:`, postForm.started_at);
+    }
+);
 
 const clearPageBuilderOnSuccessUpdate = function () {
     pageBuilder.removeItemComponentsLocalStorageUpdate();
@@ -861,6 +877,10 @@ onBeforeMount(() => {
             }
             //
             postForm.title = formLocalStorage.title;
+
+            jobStartedAt.value = formLocalStorage.started_at;
+            console.log(`den eeeer:`, formLocalStorage.started_at);
+
             postForm.content = formLocalStorage.content;
 
             postForm.published = formLocalStorage.published;
@@ -1063,6 +1083,9 @@ onBeforeMount(() => {
         store.commit("pageBuilderState/setComponents", extractedSections);
 
         postForm.title = props.post.title;
+
+        jobStartedAt.value = props.post.started_at;
+
         // slug logic
         // slug is editable when editing an existing post
         isSlugEditable.value = true;
@@ -1318,6 +1341,22 @@ const pageBuilder = new PageBuilder(store);
                 <InputError :message="postForm.errors.published" />
             </div>
             <!-- post status - end -->
+
+            <!-- startet at - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Startet at
+                    </div>
+                </div>
+                <!-- select - start -->
+                <div>
+                    <Datepicker v-model="jobStartedAt" />
+                </div>
+
+                <InputError :message="postForm.errors.started_at" />
+            </div>
+            <!-- startet at - end -->
 
             <!-- cover image - start -->
             <div class="myInputsOrganization">

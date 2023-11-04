@@ -19,6 +19,7 @@ class Job extends Model
         "user_id",
         "team_id",
         "title",
+        "started_at",
         "slug",
         "content",
         "published",
