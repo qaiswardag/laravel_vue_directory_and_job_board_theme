@@ -596,7 +596,6 @@ watch(
     () => jobStartedAt.value,
     (newValue) => {
         postForm.started_at = formatISO(new Date(newValue));
-        console.log(`watch postForm.started_at:`, postForm.started_at);
     }
 );
 
@@ -879,7 +878,6 @@ onBeforeMount(() => {
             postForm.title = formLocalStorage.title;
 
             jobStartedAt.value = formLocalStorage.started_at;
-            console.log(`den eeeer:`, formLocalStorage.started_at);
 
             postForm.content = formLocalStorage.content;
 
