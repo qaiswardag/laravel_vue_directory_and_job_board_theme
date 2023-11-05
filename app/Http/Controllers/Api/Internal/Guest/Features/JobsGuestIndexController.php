@@ -140,7 +140,7 @@ class JobsGuestIndexController extends Controller
 
             // Include posts where started_at is in the past or present
             // Carbon::now() represents the current time
-            $query->where("started_at", "<=", Carbon::now());
+            $query->where("started_at", "<=", Carbon::now()->addDays(1));
         });
 
         $posts = $query->paginate(20);

@@ -44,7 +44,11 @@ class JobController extends Controller
             ->firstOrFail();
 
         // Check if the current time is earlier than the post's started_at timestamp
-        if (Carbon::now()->lt($post->started_at)) {
+        if (
+            Carbon::now()
+                ->addDays(1)
+                ->lt($post->started_at)
+        ) {
             return Inertia::render("Error", [
                 "status" => 404, // HTTP status code for the response.
             ]);

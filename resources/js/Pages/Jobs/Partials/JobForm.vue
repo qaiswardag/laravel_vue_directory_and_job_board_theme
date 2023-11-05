@@ -22,7 +22,7 @@ import PageBuilder from "@/composables/PageBuilder";
 import { delay } from "@/helpers/delay";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import { parseISO, formatISO } from "date-fns";
+import { parseISO, formatISO, format } from "date-fns";
 
 import {
     Listbox,
@@ -1349,7 +1349,10 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- select - start -->
                 <div>
-                    <Datepicker v-model="jobStartedAt" />
+                    <Datepicker
+                        :enable-time-picker="false"
+                        v-model="jobStartedAt"
+                    />
                 </div>
 
                 <InputError :message="postForm.errors.started_at" />

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\LoggedIn\Job;
 
 use App\Models\MediaLibrary\MediaLibrary;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Validator;
 
@@ -102,6 +103,39 @@ class StoreJobRequest extends FormRequest
             }
 
             $this->validateProperties($validator);
+
+            // The Started at date must be in the future
+            if (
+                $this->started_at &&
+                Carbon::parse($this->started_at)->isValid() &&
+                Carbon::parse($this->started_at)->isPast() &&
+                Carbon::parse($this->started_at)->diffInDays(
+                    Carbon::now()->subDay()
+                ) > 0
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "started_at",
+                        "The Started at date must be in the future."
+                    );
+            }
+
+            // The started at date must not be more than 1 year in the future.
+            if (
+                $this->started_at &&
+                Carbon::parse($this->started_at)->isFuture() &&
+                Carbon::parse($this->started_at)->diffInDays(Carbon::now()) >
+                    365
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "started_at",
+                        "The started at date must not be more than 1 year in the future.."
+                    );
+            }
+            // started at date # end
 
             // validation for cover image # start
             if (
