@@ -505,7 +505,7 @@ const handleCreatePost = function () {
 
 const submittedOnUpdate = ref(true);
 
-const jobStartedAt = ref(null);
+const jobStartedAt = ref(formatISO(new Date()));
 
 const createPost = () => {
     if (formType.value === "create") {
@@ -560,6 +560,8 @@ const handleClearForm = function () {
 const clearTags = ref(0);
 // clear form
 const clearForm = function () {
+    jobStartedAt.value = formatISO(new Date());
+
     postForm.title = "";
     // slug
     postForm.slug = "";
