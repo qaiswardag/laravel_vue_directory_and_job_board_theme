@@ -20,7 +20,8 @@ import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import { delay } from "@/helpers/delay";
-import Datepicker from "@vuepic/vue-datepicker";
+import VueDatePicker from "@vuepic/vue-datepicker";
+
 import "@vuepic/vue-datepicker/dist/main.css";
 import { parseISO, formatISO, format } from "date-fns";
 
@@ -741,6 +742,11 @@ const jobTypesSorted = computed(() => {
     });
 });
 
+const dp = ref();
+
+const selectDate = function () {
+    dp.value.selectDate();
+};
 // Builder # Start
 const getComponents = computed(() => {
     return store.getters["pageBuilderState/getComponents"];
@@ -1350,12 +1356,23 @@ const pageBuilder = new PageBuilder(store);
                     </div>
                 </div>
                 <!-- select - start -->
-                <div>
-                    <Datepicker
-                        :enable-time-picker="false"
-                        v-model="jobStartedAt"
-                    />
-                </div>
+
+                <VueDatePicker
+                    :enable-time-picker="false"
+                    v-model="jobStartedAt"
+                    ref="dp"
+                >
+                    <template #action-buttons>
+                        <p
+                            class="myPrimaryButton py-2 cursor-pointer"
+                            @click="selectDate"
+                        >
+                            Select
+                        </p>
+                    </template>
+
+                    <template #calendar-icon> Back </template>
+                </VueDatePicker>
 
                 <InputError :message="postForm.errors.started_at" />
             </div>
