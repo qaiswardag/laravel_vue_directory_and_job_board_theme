@@ -518,12 +518,24 @@
     justify-content: center;
     margin: 0 0 10px 0;
 }
-.dp__today,
-.dp__active_date,
+.dp__today {
+    background: transparent !important;
+    border: 2px solid green !important;
+    color: #000 !important;
+    border-radius: 100% !important;
+}
+
+.dp__active_date {
+    background: #000 !important;
+    border: #000 !important;
+    color: #fff !important;
+    border-radius: 100% !important;
+}
+
 .dp__date_hover:hover {
-    background: black !important;
-    border: black !important;
-    color: white !important;
+    background: #f1f1f1 !important;
+    border: #f1f1f1 !important;
+    color: #000 !important;
     border-radius: 100% !important;
 }
 

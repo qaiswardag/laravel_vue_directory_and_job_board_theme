@@ -1364,7 +1364,7 @@ const pageBuilder = new PageBuilder(store);
                 >
                     <template #action-buttons>
                         <p
-                            class="myPrimaryButton py-2 cursor-pointer"
+                            class="myPrimaryButton text-xs py-2 cursor-pointer"
                             @click="selectDate"
                         >
                             Select
