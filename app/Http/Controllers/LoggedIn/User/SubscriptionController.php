@@ -54,7 +54,7 @@ class SubscriptionController extends Controller
         } catch (Exception $e) {
 
             return Inertia::render("Error", [
-                "customError" => "Oops! Something went wrong." . " " . $e->getMessage(),
+                "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG . " " . $e->getMessage(),
                 "status" => 422,
             ]);
         }
