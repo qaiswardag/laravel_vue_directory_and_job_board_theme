@@ -48,18 +48,18 @@ class CreateNewStripeUser
 		$stripeCustomer = $user->asStripeCustomer();
 
 		// if user is deleted at Stripe
-		// if ($stripeCustomer && $stripeCustomer->isDeleted()) {
-		// 	$user
-		// 		->forceFill([
-		// 			"stripe_id" => null,
-		// 			"trial_ends_at" => null,
-		// 			"pm_type" => null,
-		// 			"pm_last_four" => null,
-		// 		])
-		// 		->save();
+		if ($stripeCustomer && $stripeCustomer->isDeleted()) {
+			$user
+				->forceFill([
+					"stripe_id" => null,
+					"trial_ends_at" => null,
+					"pm_type" => null,
+					"pm_last_four" => null,
+				])
+				->save();
 
-		// 	$user->createAsStripeCustomer();
-		// }
+			$user->createAsStripeCustomer();
+		}
 
 
 		try {
@@ -84,14 +84,13 @@ class CreateNewStripeUser
 			return [
 				'intent' => $intent,
 				'paymentMethods' => $paymentMethods,
-				'publishableKey' => config('services.stripe.key'),
+				'publishableKey' => $publishableKey,
 			];
 		} catch (Exception $e) {
 			Log::error(
 				"Oops! Something went wrong. {$e->getMessage()}."
 			);
-			throw new Exception("
-			Unable to complete the setup process.");
+			throw new Exception("Unable to complete the setup process.");
 		}
 	}
 }
