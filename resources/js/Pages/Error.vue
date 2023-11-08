@@ -74,7 +74,7 @@ const handleBack = function () {
                         {{ description }}
                     </p>
                     <p
-                        class="myPrimaryParagraph text-white drop-shadow font-medium mt-4 leading-6"
+                        class="myPrimaryParagraph text-lg text-white drop-shadow font-medium leading-6"
                     >
                         {{ customError }}
                     </p>

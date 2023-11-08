@@ -1,0 +1,1 @@
+Pail: php artisan pail --level=error

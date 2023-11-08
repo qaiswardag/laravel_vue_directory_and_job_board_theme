@@ -31,23 +31,6 @@ class UserController extends Controller
      * @return \Laravel\Fortify\Contracts\ProfileInformationUpdatedResponse
      */
 
-    // public function update(
-    //     Request $request,
-    //     UpdatesUserProfileInformation $updater
-    // ) {
-    //     if (config("fortify.lowercase_usernames")) {
-    //         $request->merge([
-    //             Fortify::username() => Str::lower(
-    //                 $request->{Fortify::username()}
-    //             ),
-    //         ]);
-    //     }
-
-    //     $updater->update($request->user(), $request->all());
-
-    //     return app(ProfileInformationUpdatedResponse::class);
-    // }
-
     public function update(
         Request $request,
         UpdatesUserProfileInformation $updater
@@ -157,7 +140,7 @@ class UserController extends Controller
                 ],
                 "ip_address" => $session->ip_address,
                 "is_current_device" =>
-                    $session->id === $request->session()->getId(),
+                $session->id === $request->session()->getId(),
                 "last_active" => Carbon::createFromTimestamp(
                     $session->last_activity
                 )->diffForHumans(),

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\LoggedIn\User;
 
+use App\Actions\LoggedIn\Stripe\CreateNewStripeUser;
 use Exception;
 use ErrorException;
 use Illuminate\Validation\ValidationException;
@@ -36,85 +37,27 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(CreateNewStripeUser $createNewStripeUser)
     {
-        $user = Auth::user();
-
-        $name = $user->first_name . " " . $user->last_name;
-        $email = $user->email;
-        $country = $user->country;
-        $city = $user->city;
-
-        $state = $user->state;
-        $line1 = $user->line1;
-        $line2 = $user->line2;
-
-        $postalCode = $user->postal_code;
-        $phoneCode = $user->phone_code;
-        $phone = $user->phone;
-        $publishableKey = config("services.stripe.key");
-
-        $intent = null;
-        $paymentMethods = null;
-
-        $stripeId = $user->stripe_id;
-
-        if (!$stripeId) {
-            $user->createAsStripeCustomer();
-        }
-
-        $stripeCustomer = $user->asStripeCustomer();
-
-        // if user is deleted at Stripe
-        if ($stripeCustomer && $stripeCustomer->isDeleted()) {
-            $user
-                ->forceFill([
-                    "stripe_id" => null,
-                    "trial_ends_at" => null,
-                    "pm_type" => null,
-                    "pm_last_four" => null,
-                ])
-                ->save();
-
-            $user->createAsStripeCustomer();
-        }
 
         try {
-            $intent = $user->createSetupIntent();
-            $paymentMethods = $user->paymentMethods();
+            $stripeUserDetails = $createNewStripeUser->create();
 
-            $user->updateStripeCustomer([
-                "name" => $name,
-                "email" => $email,
-                "phone" => $phone,
-                "address" => [
-                    "country" => $country,
-                    "city" => $city,
-                    "state" => $state,
-                    "line1" => $line1,
-                    "line2" => $line2,
-                    "postal_code" => $postalCode,
-                ],
-            ]);
-        } catch (Exception $exception) {
-            Log::error(
-                "Something went wrong loading the subscription form. {$exception}"
+            return Inertia::render(
+                "Stripe/CreateStoreSubscription/CreateStoreSubscription",
+                [
+                    "intent" => $stripeUserDetails['intent'],
+                    "paymentMethods" => $stripeUserDetails['paymentMethods'],
+                    "publishableKey" => $stripeUserDetails['publishableKey'],
+                ]
             );
+        } catch (Exception $e) {
 
             return Inertia::render("Error", [
-                "customError" => self::TRY_CATCH_LOAD_FORM_ERROR,
+                "customError" => "Oops! Something went wrong." . " " . $e->getMessage(),
                 "status" => 422,
             ]);
         }
-
-        return Inertia::render(
-            "Stripe/CreateStoreSubscription/CreateStoreSubscription",
-            [
-                "intent" => $intent,
-                "paymentMethods" => $paymentMethods,
-                "publishableKey" => $publishableKey,
-            ]
-        );
     }
 
     /**
@@ -176,11 +119,11 @@ class SubscriptionController extends Controller
             } catch (Exception $e) {
                 throw ValidationException::withMessages([
                     "vat_id" =>
-                        "Oops! We were unable to process the VAT number." .
+                    "Oops! We were unable to process the VAT number." .
                         " " .
                         $e->getMessage(),
                     "vat_number" =>
-                        "Oops! We were unable to process the VAT number." .
+                    "Oops! We were unable to process the VAT number." .
                         " " .
                         $e->getMessage(),
                 ]);
@@ -244,7 +187,7 @@ class SubscriptionController extends Controller
 
             throw ValidationException::withMessages([
                 "error" =>
-                    "Oops! Something went wrong creating the subscription." .
+                "Oops! Something went wrong creating the subscription." .
                     " " .
                     $e->getMessage(),
             ]);
@@ -400,7 +343,7 @@ class SubscriptionController extends Controller
 
             throw ValidationException::withMessages([
                 "error" =>
-                    "Oops! Something went wrong updating the subscription." .
+                "Oops! Something went wrong updating the subscription." .
                     " " .
                     $e->getMessage(),
             ]);
@@ -432,7 +375,7 @@ class SubscriptionController extends Controller
 
             throw ValidationException::withMessages([
                 "error" =>
-                    "Oops! Something went wrong." . " " . $e->getMessage(),
+                "Oops! Something went wrong." . " " . $e->getMessage(),
             ]);
         }
 
@@ -463,7 +406,7 @@ class SubscriptionController extends Controller
 
             throw ValidationException::withMessages([
                 "error" =>
-                    "Oops! Something went wrong." . " " . $e->getMessage(),
+                "Oops! Something went wrong." . " " . $e->getMessage(),
             ]);
         }
 

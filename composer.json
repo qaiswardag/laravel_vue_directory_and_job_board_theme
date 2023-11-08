@@ -17,6 +17,7 @@
         "laravel/cashier": "^14.12",
         "laravel/framework": "^10.7",
         "laravel/jetstream": "^2.16",
+        "laravel/pail": "^1.0",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "^3.15",
