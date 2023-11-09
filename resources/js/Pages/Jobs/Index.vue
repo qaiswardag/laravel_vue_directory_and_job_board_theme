@@ -485,7 +485,7 @@ onMounted(() => {
                                             <span
                                                 class="myPrimaryTag"
                                                 :class="
-                                                    post.is_filled
+                                                    !post.is_filled
                                                         ? 'bg-myPrimaryLinkColor text-white'
                                                         : 'bg-myPrimaryErrorColor text-white'
                                                 "

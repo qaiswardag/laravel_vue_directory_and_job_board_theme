@@ -73,8 +73,8 @@ defineProps({
                 </template>
                 <!-- Post updated by - end -->
 
+                <!-- published # start -->
                 <template v-if="onlyForCurrentTeam">
-                    <!-- published # start -->
                     <div v-if="post.published" class="myPrimaryWidget">
                         <h4 class="myFourthHeader">Published</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
@@ -93,8 +93,21 @@ defineProps({
                             Unpublished
                         </div>
                     </div>
-                    <!-- published # end -->
                 </template>
+                <!-- published # end -->
+                <!-- is filled # start -->
+                <template v-if="post.is_filled">
+                    <div v-if="post.is_filled" class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">Is filled</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <div
+                            class="myPrimaryTag bg-myPrimaryErrorColor text-white"
+                        >
+                            Is filled
+                        </div>
+                    </div>
+                </template>
+                <!-- is filled # end -->
 
                 <!-- started_at # start -->
                 <template v-if="post.started_at">

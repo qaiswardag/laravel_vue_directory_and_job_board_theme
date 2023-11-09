@@ -438,6 +438,7 @@ const postForm = useForm({
     started_at: "",
     content: "",
     published: true,
+    is_filled: false,
     team: props.currentUserTeam,
     user_id: props.user.id,
 
@@ -572,6 +573,7 @@ const clearForm = function () {
     slugValueCustom.value = "";
     postForm.content = "";
     postForm.published = true;
+    postForm.is_filled = false;
     postForm.team = props.currentUserTeam;
     postForm.user_id = props.user.id;
 
@@ -598,7 +600,9 @@ const clearForm = function () {
 watch(
     () => jobStartedAt.value,
     (newValue) => {
-        postForm.started_at = formatISO(new Date(newValue));
+        if (newValue) {
+            postForm.started_at = formatISO(new Date(newValue));
+        }
     }
 );
 
@@ -890,6 +894,7 @@ onBeforeMount(() => {
             postForm.content = formLocalStorage.content;
 
             postForm.published = formLocalStorage.published;
+            postForm.is_filled = formLocalStorage.is_filled;
             postForm.show_author = formLocalStorage.show_author;
             postForm.tags = formLocalStorage.tags;
 
@@ -1099,6 +1104,7 @@ onBeforeMount(() => {
 
         postForm.content = props.post.content;
         postForm.published = props.post.published === 1 ? true : false;
+        postForm.is_filled = props.post.is_filled === 1 ? true : false;
         postForm.show_author = props.post.show_author === 1 ? true : false;
 
         postForm.tags = props.post.tags;
@@ -1347,6 +1353,92 @@ const pageBuilder = new PageBuilder(store);
                 <InputError :message="postForm.errors.published" />
             </div>
             <!-- post status - end -->
+
+            <!-- post is filled - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Is filled</div>
+                </div>
+                <div
+                    class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
+                >
+                    <InputLabel
+                        :value="
+                            postForm.is_filled
+                                ? 'Is filled'
+                                : 'Open for applications'
+                        "
+                        :class="{
+                            'text-myPrimaryLinkColor': !postForm.is_filled,
+                            'text-myPrimaryErrorColor': postForm.is_filled,
+                        }"
+                    />
+                    <Switch
+                        v-model="postForm.is_filled"
+                        :class="[
+                            postForm.is_filled
+                                ? 'bg-myPrimaryLinkColor'
+                                : 'bg-gray-200',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
+                        ]"
+                    >
+                        <span class="sr-only">Use setting</span>
+                        <span
+                            :class="[
+                                postForm.is_filled
+                                    ? 'translate-x-5'
+                                    : 'translate-x-0',
+                                'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                            ]"
+                        >
+                            <span
+                                :class="[
+                                    postForm.is_filled
+                                        ? 'opacity-0 ease-out duration-100'
+                                        : 'opacity-100 ease-in duration-200',
+                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                ]"
+                                aria-hidden="true"
+                            >
+                                <svg
+                                    class="h-3 w-3 text-gray-400"
+                                    fill="none"
+                                    viewBox="0 0 12 12"
+                                >
+                                    <path
+                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </span>
+                            <span
+                                :class="[
+                                    postForm.is_filled
+                                        ? 'opacity-100 ease-in duration-200'
+                                        : 'opacity-0 ease-out duration-100',
+                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
+                                ]"
+                                aria-hidden="true"
+                            >
+                                <svg
+                                    class="h-3 w-3 text-myPrimaryLinkColor"
+                                    fill="currentColor"
+                                    viewBox="0 0 12 12"
+                                >
+                                    <path
+                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
+                                    />
+                                </svg>
+                            </span>
+                        </span>
+                    </Switch>
+                </div>
+                <InputError :message="postForm.errors.is_filled" />
+            </div>
+            <!-- post is filled - end -->
 
             <!-- startet at - start -->
             <div class="myInputsOrganization">

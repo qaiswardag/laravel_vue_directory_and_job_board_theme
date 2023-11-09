@@ -53,7 +53,7 @@ const storeSubscriptionPrices = function (user) {
                 name: "stripe.stores.create.subscription",
                 parameters: [],
             },
-            price: "$180",
+            price: "$200",
             frequencies: "monthly",
             billed: "Billed every month",
             title: "&nbsp;",
@@ -71,13 +71,12 @@ const storeSubscriptionPrices = function (user) {
         {
             name: "Up to 30 Stores",
             id: "thirty_stores",
-            id: "three_stores",
             priceProductIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
             route: {
                 name: "stripe.stores.create.subscription",
                 parameters: null,
             },
-            price: "$400",
+            price: "$500",
             frequencies: "monthly",
             billed: "Billed every month",
             title: "Entreprice",

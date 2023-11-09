@@ -67,7 +67,6 @@ class StoreJobRequest extends FormRequest
             "tags" => ["nullable", "min:2", "string", "max:255"],
 
             "started_at" => ["required", "string", "max:255"],
-            "ended_at" => ["required", "string", "max:255"],
         ];
 
         return $rules;
