@@ -24,6 +24,8 @@ class StoreJobRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd($this->started_at);
+        // dd(Carbon::parse($this->started_at)->diffForHumans());
         $rules = [
             "published" => ["boolean"],
             "is_filled" => ["boolean"],
@@ -66,7 +68,7 @@ class StoreJobRequest extends FormRequest
 
             "tags" => ["nullable", "min:2", "string", "max:255"],
 
-            "started_at" => ["required", "string", "max:255"],
+            "started_at" => ["required", "date_format:Y-m-d H:i:s"],
         ];
 
         return $rules;
@@ -133,7 +135,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "started_at",
-                        "The started at date must not be more than 1 year in the future.."
+                        "The started at date must not be more than 1 year in the future."
                     );
             }
             // started at date # end

@@ -601,7 +601,11 @@ watch(
     () => jobStartedAt.value,
     (newValue) => {
         if (newValue) {
-            postForm.started_at = formatISO(new Date(newValue));
+            // postForm.started_at = formatISO(new Date(newValue));
+            const parsedDate = new Date(newValue);
+            const formattedDate = format(parsedDate, "yyyy-MM-dd HH:mm:ss");
+            postForm.started_at = formattedDate;
+            console.log(`newValue:`, postForm.started_at);
         }
     }
 );
