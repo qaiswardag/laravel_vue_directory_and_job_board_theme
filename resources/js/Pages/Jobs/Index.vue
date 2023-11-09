@@ -350,7 +350,13 @@ onMounted(() => {
                                         Status
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Start date
+                                        Is filled
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Job publish date
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Ends at date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Show Authors
@@ -476,12 +482,41 @@ onMounted(() => {
                                             >
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(post.started_at),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
+                                            <span
+                                                class="myPrimaryTag"
+                                                :class="
+                                                    post.is_filled
+                                                        ? 'bg-myPrimaryLinkColor text-white'
+                                                        : 'bg-myPrimaryErrorColor text-white'
+                                                "
+                                                >{{
+                                                    post.is_filled
+                                                        ? "Is filled"
+                                                        : "Open for applications"
+                                                }}</span
+                                            >
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <template v-if="post.started_at">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.started_at
+                                                        ),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </template>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <template v-if="post.ended_at">
+                                                {{
+                                                    format(
+                                                        parseISO(post.ended_at),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </template>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <span

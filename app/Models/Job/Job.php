@@ -27,6 +27,8 @@ class Job extends Model
         "show_author",
         "trash",
         "author_id",
+        "ended_at",
+        "is_filled",
     ];
 
     // Define the relationship with the Team model

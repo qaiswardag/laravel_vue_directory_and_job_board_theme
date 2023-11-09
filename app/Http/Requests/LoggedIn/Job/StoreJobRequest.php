@@ -26,6 +26,7 @@ class StoreJobRequest extends FormRequest
     {
         $rules = [
             "published" => ["boolean"],
+            "is_filled" => ["boolean"],
             "show_author" => ["boolean"],
             // If you do not include the string validation rule for a text input like title.
             // it may allow non-string values to be submitted and saved in the database.
@@ -63,9 +64,10 @@ class StoreJobRequest extends FormRequest
             // rules to validate that the input is not empty and is a string
             "content" => ["required", "string", "min:2", "max:65535"],
 
-            "tags" => ["required", "string", "max:255"],
+            "tags" => ["nullable", "min:2", "string", "max:255"],
 
             "started_at" => ["required", "string", "max:255"],
+            "ended_at" => ["required", "string", "max:255"],
         ];
 
         return $rules;
@@ -126,7 +128,7 @@ class StoreJobRequest extends FormRequest
                 $this->started_at &&
                 Carbon::parse($this->started_at)->isFuture() &&
                 Carbon::parse($this->started_at)->diffInDays(Carbon::now()) >
-                    365
+                365
             ) {
                 $validator
                     ->errors()

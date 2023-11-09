@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -21,23 +22,23 @@ return new class extends Migration {
                 ->onDelete("cascade")
                 ->constrained();
             //
-            $table->boolean("show_author");
-            $table->timestamp("deleted_at")->nullable();
             $table->string("title")->index();
             $table->string("slug");
+            $table->boolean("published");
+            $table->boolean("show_author");
             $table
                 ->string("address")
                 ->nullable()
                 ->index();
             $table->string("floor")->nullable();
             $table->longText("content");
-            $table->boolean("published");
 
             $table
-                ->mediumText("tags")
+                ->string("tags")
                 ->nullable()
                 ->index();
             $table->timestamps();
+            $table->timestamp("deleted_at")->nullable();
         });
     }
 
