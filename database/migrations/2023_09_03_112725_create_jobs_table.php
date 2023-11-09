@@ -22,8 +22,8 @@ return new class extends Migration
                 ->onDelete("cascade")
                 ->constrained();
             //
-            $table->timestamp("started_at")->index();
-            $table->timestamp("ended_at");
+            $table->timestamp("started_at")->nullable()->index();
+            $table->timestamp("ended_at")->nullable();
             $table->string("title")->index();
             $table->string("slug");
             $table->boolean("published");
