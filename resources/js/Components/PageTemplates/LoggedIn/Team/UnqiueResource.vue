@@ -110,17 +110,31 @@ defineProps({
                 <!-- is filled # end -->
 
                 <!-- started_at # start -->
-                <template v-if="post.started_at">
+                <template v-if="post.started_at && post.ended_at">
                     <div class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Job publish date</h4>
+                        <h4 class="myFourthHeader">Job publish & end date</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div>
-                            {{
-                                format(
-                                    parseISO(post.started_at),
-                                    "dd. MMMM yyyy HH:mm"
-                                )
-                            }}
+                            <template v-if="post.started_at">
+                                <span class="block">
+                                    {{
+                                        format(
+                                            parseISO(post.started_at),
+                                            "dd. MMMM yyyy HH:mm"
+                                        )
+                                    }}
+                                </span>
+                            </template>
+                            <template v-if="post.ended_at">
+                                <span class="block">
+                                    {{
+                                        format(
+                                            parseISO(post.ended_at),
+                                            "dd. MMMM yyyy HH:mm"
+                                        )
+                                    }}
+                                </span>
+                            </template>
                         </div>
                     </div>
                 </template>

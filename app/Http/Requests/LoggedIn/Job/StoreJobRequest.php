@@ -120,7 +120,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "started_at",
-                        "The Started at date must be in the future."
+                        "The started at date must be in the future."
                     );
             }
 

@@ -3,6 +3,7 @@
 namespace Database\Factories\Job;
 
 use App\Models\Team;
+use App\PageBuilderComponents\FactoriesPageBuilderContent;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -21,6 +22,8 @@ class JobFactory extends Factory
     {
         $title = substr($this->faker->sentence(rand(2, 10), false), 0, -1); // // delete the dot from last word
         $slug = Str::slug($title, "_");
+
+        $factoriesPageBuilderContent = new FactoriesPageBuilderContent();
 
         $randomUserFromTeam = Team::all()
             ->where("id", rand(1, 2))
@@ -69,8 +72,7 @@ class JobFactory extends Factory
             "deleted_at" => null,
             "title" => $title,
             "slug" => $slug,
-            "content" =>
-            "<section <div class=\"w-full md:pt-12 md:pb-12 pt-4 pb-4\"><div class=\"mx-auto max-w-7xl\" element=\"\"><div class=\"myPrimaryGap grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2\" element=\"\"> <div class=\"flex-1 py-2\" element=\"\"> <img class=\"object-cover w-full object-top aspect-square smooth-transition\" src=\"/storage/uploads/fake-images/stores/13.jpg\" alt=\"provider\" element=\"\" hovered=\"\"> <div class=\"break-all py-2\" element=\"\"><p element=\"\">Layouts and visual.</p><p element=\"\">Ullamcorper dignissim cras tincidunt.</p></div> </div> <div class=\"flex-1 py-2\" element=\"\"> <img class=\"object-cover w-full object-top aspect-square smooth-transition\" src=\"/storage/uploads/fake-images/stores/14.jpg\" alt=\"provider\" element=\"\"> <div class=\"break-all py-2\" element=\"\"><p element=\"\">Layouts and visual.</p><p element=\"\">Ullamcorper dignissim cras tincidunt.</p></div> </div>   </div> </div> </div></section>",
+            "content" => $factoriesPageBuilderContent->index(),
             "published" => 1,
             "is_filled" => rand(0, 1),
             "tags" => $selectedTagsList,
