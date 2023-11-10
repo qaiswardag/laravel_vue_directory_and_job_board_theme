@@ -312,38 +312,33 @@ defineProps({
                 </div>
                 <!-- categories # end -->
                 <!-- tags # start -->
-                <div
-                    v-if="
-                        categories &&
-                        Array.isArray(categories) &&
-                        categories.length !== 0
-                    "
-                    class="myPrimaryWidget"
-                >
-                    <h4 class="myFourthHeader">Tags</h4>
-                    <WidgetSectionBorder></WidgetSectionBorder>
-                    <div
-                        class="flex flex-wrap justify-start items-center gap-2"
-                    >
+                <template v-if="post.tags">
+                    <div class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">Tags</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="flex flex-wrap justify-start items-center gap-2"
                         >
-                            <p
-                                v-for="tag in post.tags &&
-                                post.tags
-                                    .split(',')
-                                    .sort((a, b) => a.localeCompare(b))"
-                                :key="tag"
-                                class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            <div
+                                class="flex flex-wrap justify-start items-center gap-2"
                             >
-                                <TagIcon class="w-3 h-3 stroke-1"></TagIcon>
-                                <span>
-                                    {{ tag }}
-                                </span>
-                            </p>
+                                <p
+                                    v-for="tag in post.tags &&
+                                    post.tags
+                                        .split(',')
+                                        .sort((a, b) => a.localeCompare(b))"
+                                    :key="tag"
+                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                >
+                                    <TagIcon class="w-3 h-3 stroke-1"></TagIcon>
+                                    <span>
+                                        {{ tag }}
+                                    </span>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </template>
                 <!-- tags # end -->
 
                 <!-- show authors # start -->
