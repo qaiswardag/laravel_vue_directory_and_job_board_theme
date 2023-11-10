@@ -43,6 +43,11 @@ class StoreJobRequest extends FormRequest
             "title" => ["required", "string", "min:2", "max:255"],
             "slug" => ["required", "string", "min:2", "max:255"],
 
+
+            "apply_via_link" => ["min:2", "max:255", "url:https", "nullable"],
+            "apply_via_email" => ["min:2", "max:255", "email", "nullable"],
+
+
             // If user_id is a foreign key column that references the id column of the users table,
             // you can use the exists validation rule to ensure that the value of user_id exists in
             // the id column of the users table.

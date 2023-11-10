@@ -29,6 +29,8 @@ class Job extends Model
         "author_id",
         "ended_at",
         "is_filled",
+        "apply_via_email",
+        "apply_via_link",
     ];
 
     // Define the relationship with the Team model

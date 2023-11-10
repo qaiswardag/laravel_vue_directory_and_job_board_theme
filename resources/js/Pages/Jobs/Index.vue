@@ -356,7 +356,7 @@ onMounted(() => {
                                         Job publish date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Ends at date
+                                        Job end date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Show Authors

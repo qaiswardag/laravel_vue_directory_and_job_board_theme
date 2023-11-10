@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string("slug");
             $table->boolean("published");
             $table->boolean("is_filled")->nullable();
+            $table->string("apply_via_email")->nullable();
+            $table->string("apply_via_link")->nullable();
             $table->boolean("show_author");
             $table->longText("content");
 

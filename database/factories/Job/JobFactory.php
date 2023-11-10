@@ -75,6 +75,8 @@ class JobFactory extends Factory
             "content" => $factoriesPageBuilderContent->index(),
             "published" => 1,
             "is_filled" => rand(0, 1),
+            "apply_via_email" => "jd@myself.ae",
+            "apply_via_link" => "https://www.google.dk",
             "tags" => $selectedTagsList,
             "started_at" => Carbon::now(),
             "ended_at" => Carbon::now()->addDays(30),

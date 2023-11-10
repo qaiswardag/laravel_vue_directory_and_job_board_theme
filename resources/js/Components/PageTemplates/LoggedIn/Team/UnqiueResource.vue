@@ -97,7 +97,7 @@ defineProps({
                 <!-- published # end -->
                 <!-- is filled # start -->
                 <template v-if="post.is_filled">
-                    <div v-if="post.is_filled" class="myPrimaryWidget">
+                    <div class="myPrimaryWidget">
                         <h4 class="myFourthHeader">Is filled</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
@@ -108,6 +108,41 @@ defineProps({
                     </div>
                 </template>
                 <!-- is filled # end -->
+
+                <!-- apply # start -->
+                <template v-if="post.apply_via_link || post.apply_via_email">
+                    <div class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">Apply</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+
+                        <div
+                            class="flex myPrimaryGap flex-col justify-normal items-start"
+                        >
+                            <template v-if="post.apply_via_link">
+                                <a :href="post.apply_via_link" target="_blank">
+                                    <button
+                                        type="button"
+                                        class="myPrimaryButton"
+                                    >
+                                        Apply
+                                    </button>
+                                </a>
+                            </template>
+                            <template v-if="post.apply_via_email">
+                                <button type="button" class="myPrimaryButton">
+                                    Copy email
+                                </button>
+                                <p
+                                    v-if="post.apply_via_email"
+                                    class="text-[10px]"
+                                >
+                                    Email: {{ post.apply_via_email }}
+                                </p>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+                <!-- apply # end -->
 
                 <!-- started_at # start -->
                 <template v-if="post.started_at && post.ended_at">

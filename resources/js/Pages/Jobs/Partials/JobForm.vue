@@ -439,6 +439,8 @@ const postForm = useForm({
     content: "",
     published: true,
     is_filled: false,
+    apply_via_link: null,
+    apply_via_email: null,
     team: props.currentUserTeam,
     user_id: props.user.id,
 
@@ -574,6 +576,8 @@ const clearForm = function () {
     postForm.content = "";
     postForm.published = true;
     postForm.is_filled = false;
+    postForm.apply_via_link = null;
+    postForm.apply_via_email = null;
     postForm.team = props.currentUserTeam;
     postForm.user_id = props.user.id;
 
@@ -898,6 +902,8 @@ onBeforeMount(() => {
 
             postForm.published = formLocalStorage.published;
             postForm.is_filled = formLocalStorage.is_filled;
+            postForm.apply_via_link = formLocalStorage.apply_via_link;
+            postForm.apply_via_email = formLocalStorage.apply_via_email;
             postForm.show_author = formLocalStorage.show_author;
             postForm.tags = formLocalStorage.tags;
 
@@ -1097,6 +1103,8 @@ onBeforeMount(() => {
         store.commit("pageBuilderState/setComponents", extractedSections);
 
         postForm.title = props.post.title;
+        postForm.apply_via_link = props.post.apply_via_link;
+        postForm.apply_via_email = props.post.apply_via_email;
 
         jobStartedAt.value = props.post.started_at;
 
@@ -1166,9 +1174,9 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <InputLabel for="title" value="Your Post title" />
+                    <InputLabel for="title" value="Job title" />
                     <TextInput
-                        placeholder="Enter your title.."
+                        placeholder="Job title.."
                         id="title"
                         v-model="postForm.title"
                         type="text"
@@ -1184,7 +1192,7 @@ const pageBuilder = new PageBuilder(store);
                         <InputLabel for="slug" value="Slug" />
                         <div class="relative flex items-center">
                             <TextInput
-                                placeholder="Post slug"
+                                placeholder="Job slug.."
                                 id="slug"
                                 v-model="slugValueTitle"
                                 type="text"
@@ -1231,6 +1239,41 @@ const pageBuilder = new PageBuilder(store);
                     <InputError :message="postForm.errors.slug" />
                 </div>
                 <!-- post slug end -->
+            </div>
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Apply method
+                    </div>
+                </div>
+                <!-- post apply_via_link start -->
+                <div class="myInputGroup">
+                    <InputLabel for="apply_via_link" value="Link.." />
+                    <TextInput
+                        placeholder="Link.."
+                        id="apply_via_link"
+                        v-model="postForm.apply_via_link"
+                        type="text"
+                        class="block w-full mt-1"
+                        autocomplete="off"
+                    />
+                    <InputError :message="postForm.errors.apply_via_link" />
+                </div>
+                <!-- post apply_via_email end -->
+                <!-- post apply_via_email start -->
+                <div class="myInputGroup">
+                    <InputLabel for="apply_via_email" value="Email.." />
+                    <TextInput
+                        placeholder="Email.."
+                        id="apply_via_email"
+                        v-model="postForm.apply_via_email"
+                        type="text"
+                        class="block w-full mt-1"
+                        autocomplete="off"
+                    />
+                    <InputError :message="postForm.errors.apply_via_email" />
+                </div>
+                <!-- post apply_via_link end -->
             </div>
 
             <!-- Builder #start -->
@@ -1380,9 +1423,9 @@ const pageBuilder = new PageBuilder(store);
                         v-model="postForm.is_filled"
                         :class="[
                             postForm.is_filled
-                                ? 'bg-myPrimaryLinkColor'
+                                ? 'bg-myPrimaryErrorColor'
                                 : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
+                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryErrorColor focus:ring-offset-2',
                         ]"
                     >
                         <span class="sr-only">Use setting</span>
@@ -1427,7 +1470,7 @@ const pageBuilder = new PageBuilder(store);
                                 aria-hidden="true"
                             >
                                 <svg
-                                    class="h-3 w-3 text-myPrimaryLinkColor"
+                                    class="h-3 w-3 text-myPrimaryErrorColor"
                                     fill="currentColor"
                                     viewBox="0 0 12 12"
                                 >
