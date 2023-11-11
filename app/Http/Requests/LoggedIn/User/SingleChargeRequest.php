@@ -24,6 +24,7 @@ class SingleChargeRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
+            "next_route_name" => ["required", "string", "min:2", "max:255"],
             "product_id" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
             "city" => ["required", "string", "min:2", "max:255", "nullable"],

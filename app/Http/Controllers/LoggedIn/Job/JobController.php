@@ -748,7 +748,7 @@ class JobController extends Controller
         $createSingleCharge = $singleCargeStripeUser->createSingleCharge($team->id);
 
         return redirect()->route("stripe.single.charge.create", [
-            "team" => $team->id,
+            "team" => $team->id
         ]);
 
 

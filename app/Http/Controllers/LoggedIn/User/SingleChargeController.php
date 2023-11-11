@@ -54,7 +54,7 @@ class SingleChargeController extends Controller
     {
         $updateUserLocallyPlusOnStripe->update($request);
 
-        return redirect()->route("team.jobs.index", [
+        return redirect()->route($request->next_route_name, [
             "teamId" => $team->id
         ]);
     }

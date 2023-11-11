@@ -58,17 +58,18 @@ const selectedProduct = ref(null);
 const handleSelectProduct = function (product) {
     if (selectedProduct.value?.id === product.id) {
         selectedProduct.value = null;
-        formSubscription.product_id = null;
-        formSubscription.price_product_identifier_stripe = null;
+        form.product_id = null;
+        form.price_product_identifier_stripe = null;
     } else {
         selectedProduct.value = product;
-        formSubscription.product_id = product.id;
-        formSubscription.price_product_identifier_stripe =
+        form.product_id = product.id;
+        form.price_product_identifier_stripe =
             product.priceProductIdentifierStripe;
     }
 };
 
-const formSubscription = useForm({
+const form = useForm({
+    next_route_name: "team.jobs.index",
     user_id: props.user.id,
     first_name: props.user.first_name,
     last_name: props.user.last_name,
@@ -90,13 +91,13 @@ const formSubscription = useForm({
 });
 
 const createOrUpdate = () => {
-    formSubscription.country = selectedCountry.value?.code;
-    formSubscription.phone_code = selectedPhoneCode.value?.phone_code;
+    form.country = selectedCountry.value?.code;
+    form.phone_code = selectedPhoneCode.value?.phone_code;
 
-    formSubscription.vat_id = selectedVatId.value?.code;
-    formSubscription.tax_id = selectedVatId.value?.tax_id;
+    form.vat_id = selectedVatId.value?.code;
+    form.tax_id = selectedVatId.value?.tax_id;
 
-    formSubscription.post(
+    form.post(
         route("stripe.single.charge.store", usePage().props.currentUserTeam.id),
         {
             preserveScroll: true,
@@ -210,14 +211,14 @@ onMounted(() => {
                     <div class="myInputGroup">
                         <InputLabel for="line1" value="Street address" />
                         <TextInput
-                            v-model="formSubscription.line1"
+                            v-model="form.line1"
                             type="text"
                             id="line1"
                             name="line1"
                             placeholder="Street address.."
                             autocomplete="off"
                         />
-                        <InputError :message="formSubscription.errors.line1" />
+                        <InputError :message="form.errors.line1" />
                     </div>
 
                     <div class="myInputGroup">
@@ -226,14 +227,14 @@ onMounted(() => {
                             value="Apt, suite, building etc. — optional"
                         />
                         <TextInput
-                            v-model="formSubscription.line2"
+                            v-model="form.line2"
                             type="text"
                             id="line2"
                             name="line2"
                             placeholder="Apt, suite, building.."
                             autocomplete="off"
                         />
-                        <InputError :message="formSubscription.errors.line2" />
+                        <InputError :message="form.errors.line2" />
                     </div>
                 </div>
 
@@ -383,19 +384,17 @@ onMounted(() => {
                                 </TransitionRoot>
                             </div>
                         </Combobox>
-                        <InputError
-                            :message="formSubscription.errors.country"
-                        />
+                        <InputError :message="form.errors.country" />
                     </div>
                     <div class="myInputGroup">
                         <InputLabel for="city" value="City" />
                         <TextInput
                             id="city"
-                            v-model="formSubscription.city"
+                            v-model="form.city"
                             placeholder="City.."
                             type="text"
                         />
-                        <InputError :message="formSubscription.errors.city" />
+                        <InputError :message="form.errors.city" />
                     </div>
                 </div>
 
@@ -406,14 +405,14 @@ onMounted(() => {
                             value="Province or region — optional"
                         />
                         <TextInput
-                            v-model="formSubscription.state"
+                            v-model="form.state"
                             type="text"
                             id="state"
                             name="state"
                             placeholder="Province or region.."
                             autocomplete="off"
                         />
-                        <InputError :message="formSubscription.errors.state" />
+                        <InputError :message="form.errors.state" />
                     </div>
 
                     <!-- postal code and phone # start -->
@@ -423,16 +422,14 @@ onMounted(() => {
                             value="Postal code — optional"
                         />
                         <TextInput
-                            v-model="formSubscription.postal_code"
+                            v-model="form.postal_code"
                             type="text"
                             id="postal_code"
                             name="postal_code"
                             placeholder="Postal code.."
                             autocomplete="off"
                         />
-                        <InputError
-                            :message="formSubscription.errors.postal_code"
-                        />
+                        <InputError :message="form.errors.postal_code" />
                     </div>
                 </div>
 
@@ -593,22 +590,20 @@ onMounted(() => {
                                 </TransitionRoot>
                             </div>
                         </Combobox>
-                        <InputError
-                            :message="formSubscription.errors.phone_code"
-                        />
+                        <InputError :message="form.errors.phone_code" />
                     </div>
                     <!-- phone code end -->
                     <div class="myInputGroup">
                         <InputLabel for="phone" value="Phone" />
                         <TextInput
-                            v-model="formSubscription.phone"
+                            v-model="form.phone"
                             type="text"
                             id="phone"
                             name="phone"
                             placeholder="Phone.."
                             autocomplete="off"
                         />
-                        <InputError :message="formSubscription.errors.phone" />
+                        <InputError :message="form.errors.phone" />
                     </div>
                 </div>
             </div>
@@ -770,7 +765,7 @@ onMounted(() => {
                                 </TransitionRoot>
                             </div>
                         </Combobox>
-                        <InputError :message="formSubscription.errors.vat_id" />
+                        <InputError :message="form.errors.vat_id" />
                     </div>
 
                     <div class="myInputGroup">
@@ -779,16 +774,14 @@ onMounted(() => {
                             value="Vat number — optional"
                         />
                         <TextInput
-                            v-model="formSubscription.vat_number"
+                            v-model="form.vat_number"
                             type="text"
                             id="vat_number"
                             name="vat_number"
                             placeholder="Vat number.."
                             autocomplete="off"
                         />
-                        <InputError
-                            :message="formSubscription.errors.vat_number"
-                        />
+                        <InputError :message="form.errors.vat_number" />
                     </div>
                 </div>
                 <!-- Vat ID and vat number # end -->
@@ -894,19 +887,16 @@ onMounted(() => {
                             </div>
                         </div>
                     </div>
-                    <InputError :message="formSubscription.errors.product_id" />
+                    <InputError :message="form.errors.product_id" />
                 </div>
             </div>
         </template>
         <template #actions>
-            <SubmitButton
-                :disabled="formSubscription.processing"
-                buttonText="Subscribe"
-            >
+            <SubmitButton :disabled="form.processing" buttonText="Subscribe">
             </SubmitButton>
             <div
                 class="flex justify-end mt-4"
-                v-if="Object.values(formSubscription.errors).length !== 0"
+                v-if="Object.values(form.errors).length !== 0"
             >
                 <div
                     @click="showErrorNotifications = true"
@@ -935,9 +925,9 @@ onMounted(() => {
                         class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
                     >
                         Show
-                        {{ Object.values(formSubscription.errors).length }}
+                        {{ Object.values(form.errors).length }}
                         {{
-                            Object.values(formSubscription.errors).length === 1
+                            Object.values(form.errors).length === 1
                                 ? "error"
                                 : "errors"
                         }}
@@ -945,22 +935,19 @@ onMounted(() => {
                 </div>
             </div>
 
-            <ActionMessage
-                :on="formSubscription.recentlySuccessful"
-                type="success"
-            >
+            <ActionMessage :on="form.recentlySuccessful" type="success">
                 Successfully submitted.
             </ActionMessage>
             <NotificationsFixedBottom
-                :listOfMessages="Object.values(formSubscription.errors)"
+                :listOfMessages="Object.values(form.errors)"
                 :show="showErrorNotifications"
                 @notificationsModalButton="notificationsModalButton"
             >
                 <div class="flex items-center justify-start gap-2">
                     <p class="myPrimaryParagraphError">
-                        {{ Object.values(formSubscription.errors).length }}
+                        {{ Object.values(form.errors).length }}
                         {{
-                            Object.values(formSubscription.errors).length === 1
+                            Object.values(form.errors).length === 1
                                 ? "error"
                                 : "errors"
                         }}
