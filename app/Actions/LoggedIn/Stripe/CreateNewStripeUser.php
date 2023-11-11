@@ -13,7 +13,6 @@ use Inertia\Inertia;
 
 class CreateNewStripeUser
 {
-
 	/**
 	 * Create a newly registered stripe user.
 	 *

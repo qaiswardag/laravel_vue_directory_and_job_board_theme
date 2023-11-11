@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\LoggedIn\Job;
 
+use App\Actions\LoggedIn\Stripe\SingleCargeStripeUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
 use App\Models\Job\AuthorJob;
@@ -311,6 +312,8 @@ class JobController extends Controller
             }
         }
 
+        // øø
+
         return redirect()->route("team.jobs.index", [
             "teamId" => $team->id,
         ]);
@@ -475,7 +478,7 @@ class JobController extends Controller
      * @param  \App\Models\Job\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreJobRequest $request, Job $job)
+    public function update(StoreJobRequest $request, Job $job, SingleCargeStripeUser $singleCargeStripeUser)
     {
         // Find the current team that the user is on, rather than the team that the user is storing the job for.
         $team = Team::findOrFail($request->team["id"]);
@@ -741,9 +744,20 @@ class JobController extends Controller
                 ->delete();
         }
 
-        return redirect()->route("team.jobs.index", [
-            "teamId" => $team->id,
+
+        $createSingleCharge = $singleCargeStripeUser->createSingleCharge($team->id);
+
+        return redirect()->route("stripe.single.charge.create", [
+            "team" => $team->id,
         ]);
+
+
+        //
+        //
+        //
+        // return redirect()->route("team.jobs.index", [
+        //     "teamId" => $team->id,
+        // ]);
     }
 
     /**

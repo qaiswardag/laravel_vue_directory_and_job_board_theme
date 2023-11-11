@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\LoggedIn\User;
 
 use App\Actions\LoggedIn\Stripe\CreateNewStripeUser;
+use App\Actions\LoggedIn\Stripe\UpdateUserLocallyPlusOnStripe;
 use Exception;
 use ErrorException;
 use Illuminate\Validation\ValidationException;
@@ -39,7 +40,6 @@ class SubscriptionController extends Controller
      */
     public function create(CreateNewStripeUser $createNewStripeUser)
     {
-
         try {
             $stripeUserDetails = $createNewStripeUser->create();
 
@@ -66,7 +66,7 @@ class SubscriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSubscriptionRequest $request)
+    public function store(StoreSubscriptionRequest $request, UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe)
     {
         $user = User::findOrFail($request->user_id);
 
@@ -99,7 +99,7 @@ class SubscriptionController extends Controller
         $tax_id = $request->tax_id ?? null;
         $vat_number = $request->vat_number ?? null;
 
-        //    TAX # START
+        // TAX # start
         if ($vat_id && $vat_number) {
             try {
                 // tax id is not null
@@ -130,39 +130,10 @@ class SubscriptionController extends Controller
             }
         }
 
-        //    TAX # END
-
+        // TAX # end
         try {
-            $user->updateStripeCustomer([
-                "name" => $user->first_name . " " . $user->last_name,
-                "email" => $user->email,
-                "phone" => $request->phone ?? null,
-                "address" => [
-                    "country" => $request->country ?? null,
-                    "city" => $request->city ?? null,
-                    "state" => $request->state ?? null,
-                    "line1" => $request->line1 ?? null,
-                    "line2" => $request->line2 ?? null,
-                    "postal_code" => $request->postal_code ?? null,
-                ],
-            ]);
 
-            $user
-                ->forceFill([
-                    "country" => $request->country ?? null,
-                    "city" => $request->city ?? null,
-                    "state" => $request->state ?? null,
-                    "line1" => $request->line1 ?? null,
-                    "line2" => $request->line2 ?? null,
-                    "postal_code" => $request->postal_code ?? null,
-                    "phone_code" => $request->phone_code ?? null,
-                    "phone" => $request->phone ?? null,
-
-                    "vat_id" => $request->vat_id ?? null,
-                    "tax_id" => $request->tax_id ?? null,
-                    "vat_number" => $request->vat_number ?? null,
-                ])
-                ->save();
+            $updateUserLocallyPlusOnStripe->update($request);
 
             $stripeCustomer
                 // The first argument passed to the newSubscription method
@@ -206,19 +177,6 @@ class SubscriptionController extends Controller
         $user = Auth::user();
 
         $subscription = Subscription::findOrFail($subscriptionId);
-
-        $name = $user->first_name . " " . $user->last_name;
-        $email = $user->email;
-        $country = $user->country;
-        $city = $user->city;
-
-        $state = $user->state;
-        $line1 = $user->line1;
-        $line2 = $user->line2;
-
-        $postalCode = $user->postal_code;
-        $phoneCode = $user->phone_code;
-        $phone = $user->phone;
         $publishableKey = config("services.stripe.key");
 
         $intent = null;
@@ -249,20 +207,6 @@ class SubscriptionController extends Controller
         try {
             $intent = $user->createSetupIntent();
             $paymentMethods = $user->paymentMethods();
-
-            $user->updateStripeCustomer([
-                "name" => $name,
-                "email" => $email,
-                "phone" => $phone,
-                "address" => [
-                    "country" => $country,
-                    "city" => $city,
-                    "state" => $state,
-                    "line1" => $line1,
-                    "line2" => $line2,
-                    "postal_code" => $postalCode,
-                ],
-            ]);
         } catch (Exception $exception) {
             Log::error(
                 "Something went wrong loading the subscription form. {$exception}"
@@ -280,7 +224,6 @@ class SubscriptionController extends Controller
                 "intent" => $intent,
                 "paymentMethods" => $paymentMethods,
                 "publishableKey" => $publishableKey,
-                "publishableKey" => $publishableKey,
                 "post" => $subscription,
             ]
         );
@@ -289,7 +232,7 @@ class SubscriptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreSubscriptionRequest $request, $subscriptionId)
+    public function update(StoreSubscriptionRequest $request, $subscriptionId, UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe)
     {
         $user = Auth::user();
         $newProductId = $request->product_id;
@@ -300,36 +243,7 @@ class SubscriptionController extends Controller
         $subscription = Subscription::findOrFail($subscriptionId);
 
         try {
-            $user->updateStripeCustomer([
-                "name" => $user->first_name . " " . $user->last_name,
-                "email" => $user->email,
-                "phone" => $request->phone ?? null,
-                "address" => [
-                    "country" => $request->country ?? null,
-                    "city" => $request->city ?? null,
-                    "state" => $request->state ?? null,
-                    "line1" => $request->line1 ?? null,
-                    "line2" => $request->line2 ?? null,
-                    "postal_code" => $request->postal_code ?? null,
-                ],
-            ]);
-
-            $user
-                ->forceFill([
-                    "country" => $request->country ?? null,
-                    "city" => $request->city ?? null,
-                    "state" => $request->state ?? null,
-                    "line1" => $request->line1 ?? null,
-                    "line2" => $request->line2 ?? null,
-                    "postal_code" => $request->postal_code ?? null,
-                    "phone_code" => $request->phone_code ?? null,
-                    "phone" => $request->phone ?? null,
-
-                    "vat_id" => $request->vat_id ?? null,
-                    "tax_id" => $request->tax_id ?? null,
-                    "vat_number" => $request->vat_number ?? null,
-                ])
-                ->save();
+            $updateUserLocallyPlusOnStripe->update($request);
 
             $subscription->swap($newPriceProductIdentifierStripe);
 
@@ -359,12 +273,9 @@ class SubscriptionController extends Controller
      */
     public function resume($subscriptionId)
     {
-        $user = Auth::user();
-
         $subscription = Subscription::findOrFail($subscriptionId);
 
         $stripeSubscription = $subscription->asStripeSubscription();
-        $stripeStatus = $stripeSubscription->status;
 
         $subscription = Subscription::findOrFail($subscriptionId);
 
@@ -394,7 +305,6 @@ class SubscriptionController extends Controller
         $subscription = Subscription::findOrFail($subscriptionId);
 
         $stripeSubscription = $subscription->asStripeSubscription();
-        $stripeStatus = $stripeSubscription->status;
 
         $subscription = Subscription::findOrFail($subscriptionId);
 
