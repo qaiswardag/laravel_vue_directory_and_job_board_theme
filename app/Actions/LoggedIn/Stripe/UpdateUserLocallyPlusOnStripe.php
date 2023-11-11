@@ -26,31 +26,31 @@ class UpdateUserLocallyPlusOnStripe
 			$user->updateStripeCustomer([
 				"name" => $user->first_name . " " . $user->last_name,
 				"email" => $user->email,
-				"phone" => $request->phone ?? null,
+				"phone" => $request->phone ?? $user->phone,
 				"address" => [
-					"country" => $request->country ?? null,
-					"city" => $request->city ?? null,
-					"state" => $request->state ?? null,
-					"line1" => $request->line1 ?? null,
-					"line2" => $request->line2 ?? null,
-					"postal_code" => $request->postal_code ?? null,
+					"country" => $request->country ?? $user->country,
+					"city" => $request->city ?? $user->city,
+					"state" => $request->state ?? $user->state,
+					"line1" => $request->line1 ?? $user->line1,
+					"line2" => $request->line2 ?? $user->line2,
+					"postal_code" => $request->postal_code ?? $user->postal_code,
 				],
 			]);
 
 			$user
 				->forceFill([
-					"country" => $request->country ?? null,
-					"city" => $request->city ?? null,
-					"state" => $request->state ?? null,
-					"line1" => $request->line1 ?? null,
-					"line2" => $request->line2 ?? null,
-					"postal_code" => $request->postal_code ?? null,
-					"phone_code" => $request->phone_code ?? null,
-					"phone" => $request->phone ?? null,
+					"country" => $request->country ?? $user->country,
+					"city" => $request->city ?? $user->city,
+					"state" => $request->state ?? $user->state,
+					"line1" => $request->line1 ?? $user->line1,
+					"line2" => $request->line2 ?? $user->line2,
+					"postal_code" => $request->postal_code ?? $user->postal_code,
+					"phone_code" => $request->phone_code ?? $user->phone_code,
+					"phone" => $request->phone ?? $user->phone,
 
-					"vat_id" => $request->vat_id ?? null,
-					"tax_id" => $request->tax_id ?? null,
-					"vat_number" => $request->vat_number ?? null,
+					"vat_id" => $request->vat_id ?? $user->vat_id,
+					"tax_id" => $request->tax_id ?? $user->tax_id,
+					"vat_number" => $request->vat_number ?? $user->vat_number,
 				])
 				->save();
 		} catch (Exception $e) {
