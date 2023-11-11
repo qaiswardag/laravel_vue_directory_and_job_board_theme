@@ -9,6 +9,7 @@ import TextInput from "@/Components/Forms/TextInput.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import { useStore } from "vuex";
+import jobPrices from "@/utils/pricing/job-prices";
 import countryListAllIsoData from "@/utils/country-list-all-iso-data";
 import vatIdList from "@/utils/vat-id-list";
 import { usePage } from "@inertiajs/vue3";
@@ -45,9 +46,6 @@ const props = defineProps({
     },
     post: {
         required: false,
-    },
-    products: {
-        required: true,
     },
 });
 
@@ -800,7 +798,7 @@ onMounted(() => {
                     <div class="space-y-4">
                         <div
                             as="template"
-                            v-for="product in products"
+                            v-for="product in jobPrices($page.props.user)"
                             :key="product.id"
                         >
                             <div

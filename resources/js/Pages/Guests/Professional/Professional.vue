@@ -45,7 +45,9 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                         class="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 md:max-w-2xl md:grid-cols-2 lg:max-w-4xl xl:mx-0 xl:max-w-none xl:grid-cols-4"
                     >
                         <div
-                            v-for="product in storeSubscriptionPrices"
+                            v-for="product in storeSubscriptionPrices(
+                                $page.props.user
+                            )"
                             :key="product.id"
                             :class="[
                                 product.mostPopular
