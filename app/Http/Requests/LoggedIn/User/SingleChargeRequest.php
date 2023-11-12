@@ -25,6 +25,7 @@ class SingleChargeRequest extends FormRequest
     {
         $rules = [
             "next_route_name" => ["required", "string", "min:2", "max:255"],
+            "card_id" => ["required", "string", "min:2", "max:255"],
             "product_id" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
             "city" => ["required", "string", "min:2", "max:255", "nullable"],
@@ -57,6 +58,7 @@ class SingleChargeRequest extends FormRequest
         $user = Auth::user();
 
         $stripeId = $user->stripe_id;
+
         $stripeCustomer = Cashier::findBillable($stripeId);
 
 

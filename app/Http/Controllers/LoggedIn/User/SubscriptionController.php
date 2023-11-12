@@ -95,13 +95,22 @@ class SubscriptionController extends Controller
             $stripeCustomer = $user->createAsStripeCustomer();
         }
 
+        // TAX # start
         $vat_id = $request->vat_id ?? null;
         $tax_id = $request->tax_id ?? null;
         $vat_number = $request->vat_number ?? null;
 
-        // TAX # start
         if ($vat_id && $vat_number) {
+
             try {
+                // Retrieve the current tax IDs for the customer
+                $currentTaxIds = $stripeCustomer->taxIds();
+
+                // Find and delete the existing tax ID (if it exists)
+                foreach ($currentTaxIds as $currentTaxId) {
+                    $stripeCustomer->deleteTaxId($currentTaxId->id);
+                }
+
                 // tax id is not null
                 if ($tax_id) {
                     $stripeCustomer->createTaxId(
@@ -129,8 +138,10 @@ class SubscriptionController extends Controller
                 ]);
             }
         }
-
         // TAX # end
+
+
+        // try charge
         try {
 
             $updateUserLocallyPlusOnStripe->update($request);

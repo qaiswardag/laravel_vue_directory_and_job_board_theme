@@ -54,10 +54,6 @@ const props = defineProps({
     },
 });
 
-const handleSubmit = () => {
-    createOrUpdate();
-};
-
 const selectedProduct = ref(null);
 
 const handleSelectProduct = function (product) {
@@ -82,6 +78,7 @@ const form = useForm({
     email: props.user.email,
     product_id: null,
     price_product_identifier_stripe: null,
+    card_id: null,
     country: props.user.country,
     city: props.user.city,
     state: props.user.state,
@@ -181,16 +178,41 @@ const handleRemoveInputPhoneCode = function () {
 };
 // phone code # end
 
-const stripe = ref(Stripe(props.publishableKey));
+//  Stripe
+const elementsStylesCard = {
+    style: {
+        base: {
+            color: "#000",
+            fontWeight: "500",
+            fontFamily: "Jost",
+            fontSize: "16px",
+            fontSmoothing: "antialiased",
+            ":-webkit-autofill": {
+                color: "#fce883",
+            },
+            "::placeholder": {
+                color: "#aaa",
+            },
+        },
+        invalid: {
+            iconColor: "#0000",
+            color: "myPrimaryErrorColor",
+        },
+    },
+};
+const stripe = Stripe(props.publishableKey);
 const elements = ref(null);
 const cardElement = ref(null);
 
-const proccessCard = async function () {
-    //
-    //
+const handleSubmit = () => {
+    proccessCard();
+    // createOrUpdate();
+};
 
-    //
-    const { paymentMethod, error } = await stripe.value.createPaymentMethod(
+const cardError = ref(null);
+
+const proccessCard = async function () {
+    const { paymentMethod, error } = await stripe.createPaymentMethod(
         "card",
         cardElement.value,
         {
@@ -200,10 +222,12 @@ const proccessCard = async function () {
 
     if (error) {
         // Display "error.message" to the user...
-        console.log(`error:`, error);
+        cardError.value = error.message;
     } else {
         // The card has been verified successfully...
-        console.log(`card have been verified. paymentMethod:`, paymentMethod);
+        cardError.value = null;
+        form.card_id = paymentMethod.id;
+        createOrUpdate();
     }
 };
 
@@ -223,8 +247,8 @@ onMounted(async () => {
     //
     //
     await nextTick();
-    elements.value = stripe.value.elements();
-    cardElement.value = elements.value.create("card");
+    elements.value = stripe.elements();
+    cardElement.value = elements.value.create("card", elementsStylesCard);
     cardElement.value.mount("#card-element");
     //
     //
@@ -974,16 +998,15 @@ onMounted(async () => {
                     />
 
                     <!-- Stripe Elements Placeholder -->
-                    <div id="card-element" class="mt-4"></div>
-
-                    <button
-                        @click="proccessCard"
-                        type="button"
-                        id="card-button"
-                        class="myPrimaryButton mt-4"
-                    >
-                        Process Payment øøøø
-                    </button>
+                    <div id="card-element" class="mt-8"></div>
+                    <template v-if="cardError">
+                        <p
+                            class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
+                        >
+                            {{ cardError }}
+                        </p>
+                    </template>
+                    <InputError :message="form.errors.card_id" />
                 </div>
             </div>
         </template>

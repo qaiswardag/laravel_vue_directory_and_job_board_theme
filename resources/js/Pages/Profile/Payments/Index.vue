@@ -126,22 +126,22 @@ const breadcrumbsLinks = [
             </template>
             <!-- Loading # end -->
 
+            <p class="my-12">
+                er: {{ JSON.stringify(fetchedPayments?.payments.invoices) }}
+            </p>
             <template
                 v-if="
                     fetchedPayments &&
                     fetchedPayments.payments &&
-                    Array.isArray(fetchedPayments.payments) &&
-                    fetchedPayments.payments.length === 0
+                    fetchedPayments.payments.invoices &&
+                    Array.isArray(fetchedPayments.payments.invoices) &&
+                    fetchedPayments.payments.invoices.length === 0
                 "
             >
                 <p class="myPrimaryParagraph">
                     Looks like there are no payments and invoices!
                 </p>
             </template>
-
-            <!-- <p class="my-12">
-                fetchedPayments: {{ JSON.stringify(fetchedPayments) }}
-            </p> -->
 
             <template v-if="!isLoadingPayments && !isErrorPayments">
                 <div
