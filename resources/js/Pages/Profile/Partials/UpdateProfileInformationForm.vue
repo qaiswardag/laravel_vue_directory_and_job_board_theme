@@ -767,7 +767,7 @@ onMounted(() => {
                 <div class="myInputGroup">
                     <InputLabel
                         for="line2"
-                        value="Apt, suite, building etc. — optional"
+                        value="Apt, suite, building etc. "
                     />
                     <TextInput
                         v-model="form.line2"
@@ -937,10 +937,7 @@ onMounted(() => {
                     <InputError :message="form.errors.city" />
                 </div>
                 <div class="myInputGroup">
-                    <InputLabel
-                        for="state"
-                        value="Province or region — optional"
-                    />
+                    <InputLabel for="state" value="Province or region " />
                     <TextInput
                         v-model="form.state"
                         type="text"
@@ -952,10 +949,7 @@ onMounted(() => {
                     <InputError :message="form.errors.state" />
                 </div>
                 <div class="myInputGroup">
-                    <InputLabel
-                        for="postal_code"
-                        value="Postal code — optional"
-                    />
+                    <InputLabel for="postal_code" value="Postal code " />
                     <TextInput
                         v-model="form.postal_code"
                         type="text"

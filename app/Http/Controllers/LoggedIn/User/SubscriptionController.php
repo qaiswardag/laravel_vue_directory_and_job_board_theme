@@ -101,29 +101,51 @@ class SubscriptionController extends Controller
         $vat_number = $request->vat_number ?? null;
 
         if ($vat_id && $vat_number) {
-
             try {
                 // Retrieve the current tax IDs for the customer
                 $currentTaxIds = $stripeCustomer->taxIds();
 
-                // Find and delete the existing tax ID (if it exists)
-                foreach ($currentTaxIds as $currentTaxId) {
-                    $stripeCustomer->deleteTaxId($currentTaxId->id);
+                if (count($currentTaxIds) !== 0) {
+                    // Find and delete the existing tax ID (if it exists)
+                    foreach ($currentTaxIds as $currentTaxId) {
+                        if ($currentTaxId->value !== $vat_id . $vat_number) {
+                            $stripeCustomer->deleteTaxId($currentTaxId->id);
+
+                            //
+                            // tax id is not null
+                            if ($tax_id) {
+                                $stripeCustomer->createTaxId(
+                                    $tax_id,
+                                    $tax_id === "eu_vat"
+                                        ? $vat_id . $vat_number
+                                        : $vat_number
+                                );
+                            }
+
+                            // tax id null
+                            if (!$tax_id) {
+                                $stripeCustomer->createTaxId($vat_id, $vat_number);
+                            }
+                        }
+                    }
                 }
 
-                // tax id is not null
-                if ($tax_id) {
-                    $stripeCustomer->createTaxId(
-                        $tax_id,
-                        $tax_id === "eu_vat"
-                            ? $vat_id . $vat_number
-                            : $vat_number
-                    );
-                }
 
-                // tax id null
-                if (!$tax_id) {
-                    $stripeCustomer->createTaxId($vat_id, $vat_number);
+                if (count($currentTaxIds) === 0) {
+                    // tax id is not null
+                    if ($tax_id) {
+                        $stripeCustomer->createTaxId(
+                            $tax_id,
+                            $tax_id === "eu_vat"
+                                ? $vat_id . $vat_number
+                                : $vat_number
+                        );
+                    }
+
+                    // tax id null
+                    if (!$tax_id) {
+                        $stripeCustomer->createTaxId($vat_id, $vat_number);
+                    }
                 }
             } catch (Exception $e) {
                 throw ValidationException::withMessages([

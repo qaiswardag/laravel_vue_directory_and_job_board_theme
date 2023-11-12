@@ -502,7 +502,7 @@ onMounted(async () => {
                             <div class="myInputGroup">
                                 <InputLabel
                                     for="payment_postal_code"
-                                    value="Postal code  — optional"
+                                    value="Postal code  "
                                 />
                                 <TextInput
                                     placeholder="Postal code.."

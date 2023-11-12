@@ -200,34 +200,43 @@ const elementsStylesCard = {
         },
     },
 };
+
+const isLoading = ref(false);
 const stripe = Stripe(props.publishableKey);
 const elements = ref(null);
 const cardElement = ref(null);
 
 const handleSubmit = () => {
     proccessCard();
-    // createOrUpdate();
 };
 
 const cardError = ref(null);
 
 const proccessCard = async function () {
-    const { paymentMethod, error } = await stripe.createPaymentMethod(
-        "card",
-        cardElement.value,
-        {
-            billing_details: { name: form.name },
-        }
-    );
+    isLoading.value = true;
 
-    if (error) {
-        // Display "error.message" to the user...
-        cardError.value = error.message;
-    } else {
-        // The card has been verified successfully...
-        cardError.value = null;
-        form.card_id = paymentMethod.id;
-        createOrUpdate();
+    try {
+        const { paymentMethod, error } = await stripe.createPaymentMethod(
+            "card",
+            cardElement.value,
+            {
+                billing_details: { name: form.name },
+            }
+        );
+
+        if (error) {
+            // Display "error.message" to the user...
+            cardError.value = error.message;
+        } else {
+            // The card has been verified successfully...
+            cardError.value = null;
+            form.card_id = paymentMethod.id;
+            createOrUpdate();
+        }
+    } catch (err) {
+        console.log(`err:`, err);
+    } finally {
+        isLoading.value = false;
     }
 };
 
@@ -309,7 +318,7 @@ onMounted(async () => {
                     <div class="myInputGroup">
                         <InputLabel
                             for="line2"
-                            value="Apt, suite, building etc. — optional"
+                            value="Apt, suite, building etc. "
                         />
                         <TextInput
                             v-model="form.line2"
@@ -485,10 +494,7 @@ onMounted(async () => {
 
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
-                        <InputLabel
-                            for="state"
-                            value="Province or region — optional"
-                        />
+                        <InputLabel for="state" value="Province or region " />
                         <TextInput
                             v-model="form.state"
                             type="text"
@@ -502,10 +508,7 @@ onMounted(async () => {
 
                     <!-- postal code and phone # start -->
                     <div class="myInputGroup">
-                        <InputLabel
-                            for="postal_code"
-                            value="Postal code — optional"
-                        />
+                        <InputLabel for="postal_code" value="Postal code " />
                         <TextInput
                             v-model="form.postal_code"
                             type="text"
@@ -698,14 +701,14 @@ onMounted(async () => {
                 <!-- Vat ID and vat number # start -->
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Company vat — optional
+                        Company vat
                     </div>
                 </div>
 
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
-                        <InputLabel for="vat_id123" value="Vat id — optional" />
+                        <InputLabel for="vat_id123" value="Vat id " />
                         <!-- Headless UI select # start -->
                         <Combobox v-model="selectedVatId">
                             <div class="relative mt-1">
@@ -854,10 +857,7 @@ onMounted(async () => {
                     </div>
 
                     <div class="myInputGroup">
-                        <InputLabel
-                            for="vat_number"
-                            value="Vat number — optional"
-                        />
+                        <InputLabel for="vat_number" value="Vat number " />
                         <TextInput
                             v-model="form.vat_number"
                             type="text"
@@ -1011,7 +1011,10 @@ onMounted(async () => {
             </div>
         </template>
         <template #actions>
-            <SubmitButton :disabled="form.processing" buttonText="Complete">
+            <SubmitButton
+                :disabled="form.processing || isLoading"
+                buttonText="Complete"
+            >
             </SubmitButton>
             <div
                 class="flex justify-end mt-4"

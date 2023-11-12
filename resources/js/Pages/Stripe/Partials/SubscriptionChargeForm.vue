@@ -258,7 +258,7 @@ onMounted(() => {
                     <div class="myInputGroup">
                         <InputLabel
                             for="line2"
-                            value="Apt, suite, building etc. — optional"
+                            value="Apt, suite, building etc. "
                         />
                         <TextInput
                             v-model="formSubscription.line2"
@@ -436,10 +436,7 @@ onMounted(() => {
 
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
-                        <InputLabel
-                            for="state"
-                            value="Province or region — optional"
-                        />
+                        <InputLabel for="state" value="Province or region " />
                         <TextInput
                             v-model="formSubscription.state"
                             type="text"
@@ -453,10 +450,7 @@ onMounted(() => {
 
                     <!-- postal code and phone # start -->
                     <div class="myInputGroup">
-                        <InputLabel
-                            for="postal_code"
-                            value="Postal code — optional"
-                        />
+                        <InputLabel for="postal_code" value="Postal code " />
                         <TextInput
                             v-model="formSubscription.postal_code"
                             type="text"
@@ -653,14 +647,14 @@ onMounted(() => {
                 <!-- Vat ID and vat number # start -->
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Company vat — optional
+                        Company vat
                     </div>
                 </div>
 
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
-                        <InputLabel for="vat_id123" value="Vat id — optional" />
+                        <InputLabel for="vat_id123" value="Vat id " />
                         <!-- Headless UI select # start -->
                         <Combobox v-model="selectedVatId">
                             <div class="relative mt-1">
@@ -809,10 +803,7 @@ onMounted(() => {
                     </div>
 
                     <div class="myInputGroup">
-                        <InputLabel
-                            for="vat_number"
-                            value="Vat number — optional"
-                        />
+                        <InputLabel for="vat_number" value="Vat number " />
                         <TextInput
                             v-model="formSubscription.vat_number"
                             type="text"
