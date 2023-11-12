@@ -10,7 +10,6 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import SelectPaymentMethod from "@/Pages/Stripe/SelectPaymentMethod.vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import { useStore } from "vuex";
-import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
 import countryListAllIsoData from "@/utils/country-list-all-iso-data";
 import vatIdList from "@/utils/vat-id-list";
 
@@ -46,6 +45,9 @@ const props = defineProps({
     },
     post: {
         required: false,
+    },
+    products: {
+        required: true,
     },
 });
 
@@ -194,7 +196,7 @@ onBeforeMount(() => {
     if (props.post) {
         formType.value = "update";
 
-        const product = storeSubscriptionPrices().find((product) => {
+        const product = props.products.find((product) => {
             return (
                 product.priceProductIdentifierStripe === props.post.stripe_price
             );
@@ -838,9 +840,7 @@ onMounted(() => {
                     <div class="space-y-4">
                         <div
                             as="template"
-                            v-for="product in storeSubscriptionPrices(
-                                $page.props.user
-                            )"
+                            v-for="product in products"
                             :key="product.id"
                         >
                             <div

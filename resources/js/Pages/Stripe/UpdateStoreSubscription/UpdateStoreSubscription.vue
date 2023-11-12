@@ -3,7 +3,8 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import PostForm from "@/Pages/Posts/Partials/PostForm.vue";
-import StoreSubscriptionForm from "@/Pages/Stripe/Partials/StoreSubscriptionForm.vue";
+import SubscriptionChargeForm from "@/Pages/Stripe/Partials/SubscriptionChargeForm.vue";
+import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
 
 const props = defineProps({
     user: {
@@ -46,12 +47,13 @@ const breadcrumbsLinks = [
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
-            <StoreSubscriptionForm
+            <SubscriptionChargeForm
                 :user="user"
                 :intent="intent"
                 :publishableKey="publishableKey"
                 :post="post"
-            ></StoreSubscriptionForm>
+                :products="storeSubscriptionPrices"
+            ></SubscriptionChargeForm>
         </LoggedInLayout>
     </MainLayout>
 </template>

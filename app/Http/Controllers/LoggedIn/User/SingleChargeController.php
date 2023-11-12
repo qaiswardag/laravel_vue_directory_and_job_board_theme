@@ -31,7 +31,7 @@ class SingleChargeController extends Controller
             $stripeUserDetails = $createNewStripeUser->create();
 
             return Inertia::render(
-                "Stripe/SingleCharge",
+                "Stripe/CreateSingleChargeJob/CreateSingleChargeJob",
                 [
                     "teamId" => $team->id,
                     "intent" => $stripeUserDetails['intent'],
