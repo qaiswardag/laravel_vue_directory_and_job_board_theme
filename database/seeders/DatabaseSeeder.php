@@ -332,7 +332,7 @@ class DatabaseSeeder extends Seeder
         $this->associateCategoriesWithItems(
             Post::class,
             $totalPost,
-            rand(2, 4),
+            rand(2, 2),
             PostCategory::class,
             "categories"
         );
@@ -479,7 +479,7 @@ class DatabaseSeeder extends Seeder
         $this->associateCategoriesWithItems(
             Job::class,
             $totalJobs,
-            rand(2, 4),
+            rand(2, 2),
             JobCategory::class,
             "categories"
         );
@@ -545,7 +545,7 @@ class DatabaseSeeder extends Seeder
         $this->associateCategoriesWithItems(
             Store::class,
             $totalStores,
-            rand(2, 4),
+            rand(2, 2),
             StoreCategory::class,
             "categories"
         );
@@ -714,6 +714,7 @@ class DatabaseSeeder extends Seeder
             PostCoverImageRelation::factory()->create([
                 "media_library_id" => $randomMediaLibraryId,
                 "post_id" => $number,
+                "primary" => 0
             ]);
         }
 
@@ -757,6 +758,7 @@ class DatabaseSeeder extends Seeder
             JobCoverImageRelation::factory()->create([
                 "media_library_id" => $randomMediaLibraryId,
                 "job_id" => $number,
+                "primary" => 0
             ]);
         }
 
@@ -803,6 +805,7 @@ class DatabaseSeeder extends Seeder
             StoreCoverImageRelation::factory()->create([
                 "media_library_id" => $randomMediaLibraryId,
                 "store_id" => $number,
+                "primary" => 0
             ]);
         }
 
