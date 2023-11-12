@@ -432,7 +432,6 @@ onMounted(async () => {
                                                                 <img
                                                                     :src="`/app-images/flags/${country.code.toLowerCase()}.svg`"
                                                                     class="object-cover object-center h-3 w-5 rounded-full drop-shadow-sm"
-                                                                    loading="lazy"
                                                                     alt="flag"
                                                                 />
                                                             </div>

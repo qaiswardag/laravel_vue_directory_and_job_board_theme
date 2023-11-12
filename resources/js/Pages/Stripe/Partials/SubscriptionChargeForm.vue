@@ -102,7 +102,6 @@ const createOrUpdate = () => {
         formSubscription.tax_id = selectedVatId.value?.tax_id;
 
         formSubscription.post(route("stripe.stores.store.subscription"), {
-            preserveScroll: true,
             onSuccess: () => {},
             onError: () => {},
             onFinish: () => {},
@@ -119,7 +118,6 @@ const createOrUpdate = () => {
         formSubscription.post(
             route("stripe.stores.update.subscription", props.post.id),
             {
-                preserveScroll: true,
                 onSuccess: () => {},
                 onError: () => {},
                 onFinish: () => {},
@@ -372,7 +370,6 @@ onMounted(() => {
                                                             <img
                                                                 :src="`/app-images/flags/${country.code.toLowerCase()}.svg`"
                                                                 class="object-cover object-center h-3 w-5 rounded-full drop-shadow-sm"
-                                                                loading="lazy"
                                                                 alt="flag"
                                                             />
                                                         </div>
@@ -581,7 +578,6 @@ onMounted(() => {
                                                             <img
                                                                 :src="`/app-images/flags/${country.code.toLowerCase()}.svg`"
                                                                 class="object-cover object-center h-3 w-5 rounded-full drop-shadow-sm"
-                                                                loading="lazy"
                                                                 alt="flag"
                                                             />
                                                         </div>
@@ -753,7 +749,6 @@ onMounted(() => {
                                                             <img
                                                                 :src="`/app-images/flags/${country.code.toLowerCase()}.svg`"
                                                                 class="object-cover object-center h-3 w-5 rounded-full drop-shadow-sm"
-                                                                loading="lazy"
                                                                 alt="flag"
                                                             />
                                                         </div>

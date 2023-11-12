@@ -37,10 +37,7 @@ const breadcrumbsLinks = [
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head
-                title="Payment
-"
-            />
+            <Head title="Payment" />
             <template #header>
                 <h2 class="myPrimaryMainPageHeader">Payment</h2>
             </template>

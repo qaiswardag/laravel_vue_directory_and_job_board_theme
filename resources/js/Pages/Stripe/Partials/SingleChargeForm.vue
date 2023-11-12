@@ -54,6 +54,10 @@ const props = defineProps({
     },
 });
 
+const getIsLoading = computed(() => {
+    return store.getters["user/getIsLoading"];
+});
+
 const selectedProduct = ref(null);
 
 const handleSelectProduct = function (product) {
@@ -106,7 +110,6 @@ const createOrUpdate = () => {
             usePage().props.currentUserTeam.id
         ),
         {
-            preserveScroll: true,
             onSuccess: () => {},
             onError: () => {},
             onFinish: () => {},
@@ -201,7 +204,6 @@ const elementsStylesCard = {
     },
 };
 
-const isLoading = ref(false);
 const stripe = Stripe(props.publishableKey);
 const elements = ref(null);
 const cardElement = ref(null);
@@ -213,7 +215,7 @@ const handleSubmit = () => {
 const cardError = ref(null);
 
 const proccessCard = async function () {
-    isLoading.value = true;
+    store.commit("user/setIsLoading", true);
 
     try {
         const { paymentMethod, error } = await stripe.createPaymentMethod(
@@ -234,37 +236,18 @@ const proccessCard = async function () {
             createOrUpdate();
         }
     } catch (err) {
-        console.log(`err:`, err);
+        cardError.value = "Something went wrong with the payment method.";
     } finally {
-        isLoading.value = false;
+        cardError.value = null;
+        store.commit("user/setIsLoading", false);
     }
 };
 
 onMounted(async () => {
-    // Stripe start
-    // await nextTick();
-    // elements.value = stripe.elements({
-    //     clientSecret: props.intent.client_secret,
-    // });
-    //
-    //
-    // cardElement.value = elements.value.create("card", elementsStylesCard);
-    // cardElement.value.mount("#card-element");
-    //
-    //
-    //
-    //
-    //
     await nextTick();
     elements.value = stripe.elements();
     cardElement.value = elements.value.create("card", elementsStylesCard);
     cardElement.value.mount("#card-element");
-    //
-    //
-    //
-    //
-    //
-    //
     //
     // Stripe end
     if (props.user.country) {
@@ -432,7 +415,6 @@ onMounted(async () => {
                                                             <img
                                                                 :src="`/app-images/flags/${country.code.toLowerCase()}.svg`"
                                                                 class="object-cover object-center h-3 w-5 rounded-full drop-shadow-sm"
-                                                                loading="lazy"
                                                                 alt="flag"
                                                             />
                                                         </div>
@@ -637,7 +619,6 @@ onMounted(async () => {
                                                             <img
                                                                 :src="`/app-images/flags/${country.code.toLowerCase()}.svg`"
                                                                 class="object-cover object-center h-3 w-5 rounded-full drop-shadow-sm"
-                                                                loading="lazy"
                                                                 alt="flag"
                                                             />
                                                         </div>
@@ -807,7 +788,6 @@ onMounted(async () => {
                                                             <img
                                                                 :src="`/app-images/flags/${country.code.toLowerCase()}.svg`"
                                                                 class="object-cover object-center h-3 w-5 rounded-full drop-shadow-sm"
-                                                                loading="lazy"
                                                                 alt="flag"
                                                             />
                                                         </div>
@@ -1012,8 +992,9 @@ onMounted(async () => {
         </template>
         <template #actions>
             <SubmitButton
-                :disabled="form.processing || isLoading"
+                :disabled="form.processing || getIsLoading"
                 buttonText="Complete"
+                @firstButtonClick="handleSubmit"
             >
             </SubmitButton>
             <div
