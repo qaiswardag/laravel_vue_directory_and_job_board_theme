@@ -100,7 +100,10 @@ const createOrUpdate = () => {
     form.tax_id = selectedVatId.value?.tax_id;
 
     form.post(
-        route("stripe.single.charge.store", usePage().props.currentUserTeam.id),
+        route(
+            "stripe.single.charge.job.store",
+            usePage().props.currentUserTeam.id
+        ),
         {
             preserveScroll: true,
             onSuccess: () => {},

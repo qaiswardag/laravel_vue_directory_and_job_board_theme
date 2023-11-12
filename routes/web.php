@@ -35,7 +35,7 @@ use App\Http\Controllers\LoggedIn\Store\StoreController;
 use App\Http\Controllers\LoggedIn\Team\TeamController as TeamTeamController;
 use App\Http\Controllers\LoggedIn\User\PaymentMethodsController as UserPaymentMethodsController;
 use App\Http\Controllers\LoggedIn\User\PaymentsController as UserPaymentsController;
-use App\Http\Controllers\LoggedIn\User\SingleChargeController;
+use App\Http\Controllers\LoggedIn\User\SingleChargeJobController;
 use App\Http\Controllers\LoggedIn\User\SubscriptionController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
 use App\Http\Controllers\Superadmin\PageBuilder\PageBuilderController;
@@ -417,15 +417,15 @@ Route::middleware([
     // single charge
     // single charge
     // single charge
-    Route::get("/single-charge/create/{team}", [
-        SingleChargeController::class,
+    Route::get("/single-charge/create/{team}/{job}", [
+        SingleChargeJobController::class,
         "create",
-    ])->name("stripe.single.charge.create");
+    ])->name("stripe.single.charge.job.create");
 
     Route::post("/stripe/single-charge/store/{team}", [
-        SingleChargeController::class,
+        SingleChargeJobController::class,
         "store",
-    ])->name("stripe.single.charge.store");
+    ])->name("stripe.single.charge.job.store");
 });
 // AUTH ONLY # END
 // AUTH ONLY # END

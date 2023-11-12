@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\LoggedIn\Job;
 
-use App\Actions\LoggedIn\Stripe\SingleCargeStripeUser;
+use App\Actions\LoggedIn\Stripe\singleChargeStripeUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
 use App\Models\Job\AuthorJob;
@@ -145,6 +145,8 @@ class JobController extends Controller
         // slug
         $slug = Str::lower(Str::slug($request->slug, "_"));
 
+        $endedAd =  Carbon::parse($startedAt)->addDays(30);
+
         // Create the job and store it in a variable
         $job = Job::create([
             "user_id" => $userId,
@@ -153,7 +155,7 @@ class JobController extends Controller
             "slug" => $slug,
             "published" => $request->published,
             "started_at" => $startedAt,
-            "ended_at" => Carbon::parse($startedAt)->addDays(30),
+            "ended_at" => $endedAd,
             "is_filled" => $request->is_filled,
             "apply_via_link" => $request->apply_via_link,
             "apply_via_email" => $request->apply_via_email,
@@ -478,7 +480,7 @@ class JobController extends Controller
      * @param  \App\Models\Job\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreJobRequest $request, Job $job, SingleCargeStripeUser $singleCargeStripeUser)
+    public function update(StoreJobRequest $request, Job $job, singleChargeStripeUser $singleChargeStripeUser)
     {
         // Find the current team that the user is on, rather than the team that the user is storing the job for.
         $team = Team::findOrFail($request->team["id"]);
@@ -495,12 +497,14 @@ class JobController extends Controller
         // Initialize the $authorId variable to null
         $authorId = null;
 
+        $endedAd =  Carbon::parse($startedAt)->addDays(30);
+
         // Create the job and store it in a variable
         $job->update([
             "user_id" => $userId,
             "team_id" => $teamId,
             "started_at" => $startedAt,
-            "ended_at" => Carbon::parse($startedAt)->addDays(30),
+            "ended_at" => $endedAd,
             "is_filled" => $request->is_filled,
             "apply_via_link" => $request->apply_via_link,
             "apply_via_email" => $request->apply_via_email,
@@ -744,11 +748,11 @@ class JobController extends Controller
                 ->delete();
         }
 
+        // $createSingleCharge = $singleChargeStripeUser->createSingleCharge($team);
 
-        $createSingleCharge = $singleCargeStripeUser->createSingleCharge($team->id);
-
-        return redirect()->route("stripe.single.charge.create", [
-            "team" => $team->id
+        return redirect()->route("stripe.single.charge.job.create", [
+            "team" => $team->id,
+            "job" => $job->id
         ]);
 
 

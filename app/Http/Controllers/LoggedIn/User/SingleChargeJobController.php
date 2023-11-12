@@ -6,13 +6,15 @@ use App\Actions\LoggedIn\Stripe\CreateNewStripeUser;
 use App\Actions\LoggedIn\Stripe\UpdateUserLocallyPlusOnStripe;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\User\SingleChargeRequest;
+use App\Models\Job\Job;
+use App\Models\Post\Post;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Exception;
 
 
-class SingleChargeController extends Controller
+class SingleChargeJobController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,8 +27,10 @@ class SingleChargeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Team $team, CreateNewStripeUser $createNewStripeUser)
+    public function create(Team $team, Job $job, CreateNewStripeUser $createNewStripeUser)
     {
+
+
         try {
             $stripeUserDetails = $createNewStripeUser->create();
 
@@ -52,6 +56,7 @@ class SingleChargeController extends Controller
      */
     public function store(SingleChargeRequest $request, Team $team, UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe)
     {
+
         $updateUserLocallyPlusOnStripe->update($request);
 
         return redirect()->route($request->next_route_name, [

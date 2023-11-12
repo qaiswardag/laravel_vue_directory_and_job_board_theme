@@ -244,7 +244,7 @@ import {
                     route().current('team.jobs.create') ||
                     route().current('team.jobs.job.edit') ||
                     route().current('team.jobs.job.show') ||
-                    route().current('stripe.single.charge.create')
+                    route().current('stripe.single.charge.job.create')
                 "
             >
                 <TagIcon class="myMediumIcon"></TagIcon>
