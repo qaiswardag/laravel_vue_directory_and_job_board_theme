@@ -5,6 +5,7 @@ import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import PostForm from "@/Pages/Posts/Partials/PostForm.vue";
 import SingleChargeForm from "@/Pages/Stripe/Partials/SingleChargeForm.vue";
 import jobPrices from "@/utils/pricing/job-prices";
+import { usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
     user: {
@@ -16,17 +17,20 @@ const props = defineProps({
     publishableKey: {
         required: true,
     },
+    job: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
     {
-        label: "All Subscriptions",
+        label: "All Jobs",
         route: {
-            name: "stripe.payment.subscription.index",
-            parameters: null,
+            name: "team.jobs.index",
+            parameters: usePage().props.currentUserTeam.id,
         },
     },
-    { label: "Create Subscription" },
+    { label: "Payment" },
 ];
 </script>
 
@@ -34,11 +38,11 @@ const breadcrumbsLinks = [
     <MainLayout>
         <LoggedInLayout>
             <Head
-                title="Create Subscription
+                title="Payment
 "
             />
             <template #header>
-                <h2 class="myPrimaryMainPageHeader">Create Subscription</h2>
+                <h2 class="myPrimaryMainPageHeader">Payment</h2>
             </template>
 
             <template #breadcrumbs>
@@ -49,6 +53,7 @@ const breadcrumbsLinks = [
                 :intent="intent"
                 :publishableKey="publishableKey"
                 :products="jobPrices"
+                :job="job"
             ></SingleChargeForm>
         </LoggedInLayout>
     </MainLayout>

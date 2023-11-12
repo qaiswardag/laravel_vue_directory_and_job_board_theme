@@ -109,11 +109,6 @@ const handleDeletePaymentMethod = function (method) {
         modalShowDeletePaymentMethod.value = false;
     };
     // handle click
-    // secondModalButtonFunction.value = function () {
-    //     // handle show modal for unique content
-    //     modalShowDeletePaymentMethod.value = false;
-    // };
-    // handle click
     thirdModalButtonFunction.value = function () {
         deletePaymentMethod(method);
     };

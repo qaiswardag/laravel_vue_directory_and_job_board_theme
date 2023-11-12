@@ -29,8 +29,6 @@ class SingleChargeJobController extends Controller
      */
     public function create(Team $team, Job $job, CreateNewStripeUser $createNewStripeUser)
     {
-
-
         try {
             $stripeUserDetails = $createNewStripeUser->create();
 
@@ -38,6 +36,7 @@ class SingleChargeJobController extends Controller
                 "Stripe/CreateSingleChargeJob/CreateSingleChargeJob",
                 [
                     "teamId" => $team->id,
+                    "job" => $job,
                     "intent" => $stripeUserDetails['intent'],
                     "paymentMethods" => $stripeUserDetails['paymentMethods'],
                     "publishableKey" => $stripeUserDetails['publishableKey'],
@@ -57,6 +56,7 @@ class SingleChargeJobController extends Controller
     public function store(SingleChargeRequest $request, Team $team, UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe)
     {
 
+        dd($request);
         $updateUserLocallyPlusOnStripe->update($request);
 
         return redirect()->route($request->next_route_name, [

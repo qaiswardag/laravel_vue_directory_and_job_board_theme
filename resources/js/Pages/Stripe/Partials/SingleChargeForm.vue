@@ -49,6 +49,9 @@ const props = defineProps({
     products: {
         required: true,
     },
+    job: {
+        required: true,
+    },
 });
 
 const handleSubmit = () => {
@@ -75,6 +78,7 @@ const form = useForm({
     user_id: props.user.id,
     first_name: props.user.first_name,
     last_name: props.user.last_name,
+    name: props.user.first_name + " " + props.user.last_name,
     email: props.user.email,
     product_id: null,
     price_product_identifier_stripe: null,
@@ -177,7 +181,59 @@ const handleRemoveInputPhoneCode = function () {
 };
 // phone code # end
 
-onMounted(() => {
+const stripe = ref(Stripe(props.publishableKey));
+const elements = ref(null);
+const cardElement = ref(null);
+
+const proccessCard = async function () {
+    //
+    //
+
+    //
+    const { paymentMethod, error } = await stripe.value.createPaymentMethod(
+        "card",
+        cardElement.value,
+        {
+            billing_details: { name: form.name },
+        }
+    );
+
+    if (error) {
+        // Display "error.message" to the user...
+        console.log(`error:`, error);
+    } else {
+        // The card has been verified successfully...
+        console.log(`card have been verified. paymentMethod:`, paymentMethod);
+    }
+};
+
+onMounted(async () => {
+    // Stripe start
+    // await nextTick();
+    // elements.value = stripe.elements({
+    //     clientSecret: props.intent.client_secret,
+    // });
+    //
+    //
+    // cardElement.value = elements.value.create("card", elementsStylesCard);
+    // cardElement.value.mount("#card-element");
+    //
+    //
+    //
+    //
+    //
+    await nextTick();
+    elements.value = stripe.value.elements();
+    cardElement.value = elements.value.create("card");
+    cardElement.value.mount("#card-element");
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // Stripe end
     if (props.user.country) {
         selectedCountry.value =
             filteredCountries.value.find((country) => {
@@ -203,7 +259,7 @@ onMounted(() => {
 
 <template>
     <FormSection @submitted="handleSubmit">
-        <template #title> Payment </template>
+        <template #title> Payment for job {{ job.title }} </template>
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -795,10 +851,7 @@ onMounted(() => {
 
         <template #sidebar>
             <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeader">
-                    Select subscription type
-                </div>
-
+                <div class="myPrimaryFormOrganizationHeader">Product</div>
                 <div>
                     <div class="space-y-4">
                         <div
@@ -894,10 +947,48 @@ onMounted(() => {
                     </div>
                     <InputError :message="form.errors.product_id" />
                 </div>
+                <div class="myPrimaryFormOrganizationHeader">Product</div>
+                <div>
+                    <div class="my-6 p-4 border rounded">
+                        <p class="my-2">Works: 4000002080000001</p>
+                        <p class="my-2">
+                            Can be added but insufficient funds:
+                            4000008260003178
+                        </p>
+                        <p class="my-2">
+                            Can be added but insufficient funds: Declined:
+                            4000000000000002
+                        </p>
+                    </div>
+                    <InputLabel
+                        for="card_holder_name"
+                        value="Cardholder name"
+                    />
+                    <TextInput
+                        placeholder="Cardholder name.."
+                        id="card_holder_name"
+                        v-model="form.name"
+                        type="text"
+                        autocomplete="off"
+                        class="block w-full mt-1"
+                    />
+
+                    <!-- Stripe Elements Placeholder -->
+                    <div id="card-element" class="mt-4"></div>
+
+                    <button
+                        @click="proccessCard"
+                        type="button"
+                        id="card-button"
+                        class="myPrimaryButton mt-4"
+                    >
+                        Process Payment øøøø
+                    </button>
+                </div>
             </div>
         </template>
         <template #actions>
-            <SubmitButton :disabled="form.processing" buttonText="Subscribe">
+            <SubmitButton :disabled="form.processing" buttonText="Complete">
             </SubmitButton>
             <div
                 class="flex justify-end mt-4"
