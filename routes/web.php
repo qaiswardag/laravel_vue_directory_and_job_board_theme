@@ -45,6 +45,7 @@ use App\Models\Post\Post;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -426,6 +427,14 @@ Route::middleware([
         SingleChargeJobController::class,
         "store",
     ])->name("stripe.single.charge.job.store");
+    //
+    //
+    //
+    //
+    Route::get("/product-checkout", [
+        SingleChargeJobController::class,
+        "checkout",
+    ]);
 });
 // AUTH ONLY # END
 // AUTH ONLY # END

@@ -73,7 +73,6 @@ class SingleChargeJobController extends Controller
 
         $priceIdentifierStripe = $request->price_identifier_stripe;
         $chargeableAmountInteger = $request->chargeable_amount_integer;
-        dd($chargeableAmountInteger);
 
         $cardId = $request->card_id;
 
@@ -123,22 +122,17 @@ class SingleChargeJobController extends Controller
             //
             //
             //
+            return Inertia::location("/product-checkout");
             //
             //
-            $stripeCharge = $stripeCustomer->charge([
-                'amount' => $chargeableAmountInteger, // or any other amount in cents
-                'currency' => 'usd',
-                'source' => $cardId,
-                'description' => 'Charge for Your Product Name',
-                'product' => $priceIdentifierStripe, // Use the product identifier here
-                'quantity' => 1, // You can adjust the quantity if needed
-            ]);
+            //
+            //
         } catch (Exception $e) {
-            Log::error("Something went wrong creating the subscription. {$e}");
+            Log::error("Something went wrong creating the payment. {$e}");
 
             throw ValidationException::withMessages([
                 "error" =>
-                "Oops! Something went wrong creating the subscription." .
+                "Oops! Something went wrong creating the payment." .
                     " " .
                     $e->getMessage(),
             ]);
@@ -148,6 +142,14 @@ class SingleChargeJobController extends Controller
         return redirect()->route($request->next_route_name, [
             "teamId" => $team->id
         ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function checkout(Request $request)
+    {
+        return $request->user()->checkout('price_1OBetvEuESfVmAWohyRBJN5A');
     }
 
     /**

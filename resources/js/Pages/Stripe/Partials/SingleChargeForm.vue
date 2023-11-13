@@ -61,7 +61,6 @@ const getIsLoading = computed(() => {
 const selectedProduct = ref(null);
 
 const handleSelectProduct = function (product) {
-    console.log(`product`, product);
     if (selectedProduct.value?.id === product.id) {
         selectedProduct.value = null;
         form.product_id = null;
@@ -981,7 +980,9 @@ onMounted(async () => {
                     />
 
                     <!-- Stripe Elements Placeholder -->
-                    <div id="card-element" class="mt-8"></div>
+                    <div class="py-8 px-4 my-8 rounded border-2 border-red-200">
+                        <div id="card-element"></div>
+                    </div>
                     <template v-if="cardError">
                         <p
                             class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
@@ -995,6 +996,7 @@ onMounted(async () => {
         </template>
         <template #actions>
             <SubmitButton
+                type="button"
                 :disabled="form.processing || getIsLoading"
                 buttonText="Complete"
                 @firstButtonClick="handleSubmit"

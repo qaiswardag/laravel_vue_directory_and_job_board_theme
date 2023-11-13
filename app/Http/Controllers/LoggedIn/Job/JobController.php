@@ -759,9 +759,12 @@ class JobController extends Controller
         //
         //
         //
-        // return redirect()->route("team.jobs.index", [
-        //     "teamId" => $team->id,
-        // ]);
+        // if job have already been paid
+        if (false) {
+            // return redirect()->route("team.jobs.index", [
+            //     "teamId" => $team->id,
+            // ]);
+        }
     }
 
     /**
