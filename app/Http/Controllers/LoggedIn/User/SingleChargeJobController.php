@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\LoggedIn\User;
 
 use App\Actions\LoggedIn\Stripe\CreateNewStripeUser;
+use App\Actions\LoggedIn\Stripe\CreateStripeUserTaxID;
 use App\Actions\LoggedIn\Stripe\UpdateUserLocallyPlusOnStripe;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\User\SingleChargeRequest;
@@ -61,8 +62,12 @@ class SingleChargeJobController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SingleChargeRequest $request, Team $team, UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe)
-    {
+    public function store(
+        SingleChargeRequest $request,
+        Team $team,
+        UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe,
+        CreateStripeUserTaxID $createStripeUserTaxID
+    ) {
 
         $productId = $request->product_id;
 
@@ -90,72 +95,26 @@ class SingleChargeJobController extends Controller
 
         // TAX # start
         $vat_id = $request->vat_id ?? null;
-        $tax_id = $request->tax_id ?? null;
         $vat_number = $request->vat_number ?? null;
-
-        if ($vat_id && $vat_number) {
-            try {
-                // Retrieve the current tax IDs for the customer
-                $currentTaxIds = $stripeCustomer->taxIds();
-
-                if (count($currentTaxIds) !== 0) {
-                    // Find and delete the existing tax ID (if it exists)
-                    foreach ($currentTaxIds as $currentTaxId) {
-                        if ($currentTaxId->value !== $vat_id . $vat_number) {
-                            $stripeCustomer->deleteTaxId($currentTaxId->id);
-
-                            //
-                            // tax id is not null
-                            if ($tax_id) {
-                                $stripeCustomer->createTaxId(
-                                    $tax_id,
-                                    $tax_id === "eu_vat"
-                                        ? $vat_id . $vat_number
-                                        : $vat_number
-                                );
-                            }
-
-                            // tax id null
-                            if (!$tax_id) {
-                                $stripeCustomer->createTaxId($vat_id, $vat_number);
-                            }
-                        }
-                    }
-                }
-
-
-                if (count($currentTaxIds) === 0) {
-                    // tax id is not null
-                    if ($tax_id) {
-                        $stripeCustomer->createTaxId(
-                            $tax_id,
-                            $tax_id === "eu_vat"
-                                ? $vat_id . $vat_number
-                                : $vat_number
-                        );
-                    }
-
-                    // tax id null
-                    if (!$tax_id) {
-                        $stripeCustomer->createTaxId($vat_id, $vat_number);
-                    }
-                }
-            } catch (Exception $e) {
-                throw ValidationException::withMessages([
-                    "vat_id" =>
-                    "Oops! We were unable to process the VAT number." .
-                        " " .
-                        $e->getMessage(),
-                    "vat_number" =>
-                    "Oops! We were unable to process the VAT number." .
-                        " " .
-                        $e->getMessage(),
-                ]);
-            }
-        }
         // TAX # end
 
-
+        try {
+            if ($vat_id && $vat_number) {
+                $createStripeUserTaxID->create($stripeCustomer, $request);
+            }
+        } catch (Exception $e) {
+            throw ValidationException::withMessages([
+                "vat_id" =>
+                "Oops! We were unable to process the VAT number." .
+                    " " .
+                    $e->getMessage(),
+                "vat_number" =>
+                "Oops! We were unable to process the VAT number." .
+                    " " .
+                    $e->getMessage(),
+            ]);
+        }
+        // TAX # end
 
         try {
             $stripeCharge = $stripeCustomer->charge($priceProductIdentifierStripe, $cardId, [
