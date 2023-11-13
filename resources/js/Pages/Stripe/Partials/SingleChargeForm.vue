@@ -61,15 +61,17 @@ const getIsLoading = computed(() => {
 const selectedProduct = ref(null);
 
 const handleSelectProduct = function (product) {
+    console.log(`product`, product);
     if (selectedProduct.value?.id === product.id) {
         selectedProduct.value = null;
         form.product_id = null;
-        form.price_product_identifier_stripe = null;
+        form.price_identifier_stripe = null;
+        form.chargeable_amount_integer = null;
     } else {
         selectedProduct.value = product;
         form.product_id = product.id;
-        form.price_product_identifier_stripe =
-            product.priceProductIdentifierStripe;
+        form.price_identifier_stripe = product.priceIdentifierStripe;
+        form.chargeable_amount_integer = product.chargeableAmountInteger;
     }
 };
 
@@ -81,7 +83,8 @@ const form = useForm({
     name: props.user.first_name + " " + props.user.last_name,
     email: props.user.email,
     product_id: null,
-    price_product_identifier_stripe: null,
+    price_identifier_stripe: null,
+    chargeable_amount_integer: null,
     card_id: null,
     country: props.user.country,
     city: props.user.city,

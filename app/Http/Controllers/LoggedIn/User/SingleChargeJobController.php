@@ -69,14 +69,13 @@ class SingleChargeJobController extends Controller
         CreateStripeUserTaxID $createStripeUserTaxID
     ) {
 
-        $productId = $request->product_id;
+        $productId = $request->product_id; // single_job_prost
 
-        $priceProductIdentifierStripe =
-            $request->price_product_identifier_stripe;
+        $priceIdentifierStripe = $request->price_identifier_stripe;
+        $chargeableAmountInteger = $request->chargeable_amount_integer;
+        dd($chargeableAmountInteger);
 
         $cardId = $request->card_id;
-
-
 
 
         $updateUserLocallyPlusOnStripe->update($request);
@@ -117,8 +116,22 @@ class SingleChargeJobController extends Controller
         // TAX # end
 
         try {
-            $stripeCharge = $stripeCustomer->charge($priceProductIdentifierStripe, $cardId, [
-                'default_tax_rates' => [],
+            // $stripeCharge = $stripeCustomer->charge($chargeableAmountInteger, $cardId, [
+            //     'default_tax_rates' => [],
+            // ]);
+
+            //
+            //
+            //
+            //
+            //
+            $stripeCharge = $stripeCustomer->charge([
+                'amount' => $chargeableAmountInteger, // or any other amount in cents
+                'currency' => 'usd',
+                'source' => $cardId,
+                'description' => 'Charge for Your Product Name',
+                'product' => $priceIdentifierStripe, // Use the product identifier here
+                'quantity' => 1, // You can adjust the quantity if needed
             ]);
         } catch (Exception $e) {
             Log::error("Something went wrong creating the subscription. {$e}");

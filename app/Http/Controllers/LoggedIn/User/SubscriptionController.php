@@ -75,8 +75,7 @@ class SubscriptionController extends Controller
         $user = User::findOrFail($request->user_id);
 
         $productId = $request->product_id;
-        $priceProductIdentifierStripe =
-            $request->price_product_identifier_stripe;
+        $priceIdentifierStripe = $request->price_identifier_stripe;
 
         $stripeId = $user->stripe_id;
 
@@ -143,7 +142,7 @@ class SubscriptionController extends Controller
                 // Price for Single Store
                 // Every 3 months / US$20.00 / Tax behaviour Inclusive
 
-                ->newSubscription($productId, $priceProductIdentifierStripe)
+                ->newSubscription($productId, $priceIdentifierStripe)
                 ->quantity(1)
                 ->create($defaultPaymentMethodId);
         } catch (Exception $e) {
@@ -230,15 +229,15 @@ class SubscriptionController extends Controller
         $user = Auth::user();
         $newProductId = $request->product_id;
 
-        $newPriceProductIdentifierStripe =
-            $request->price_product_identifier_stripe;
+        $newpriceIdentifierStripe =
+            $request->price_identifier_stripe;
 
         $subscription = Subscription::findOrFail($subscriptionId);
 
         try {
             $updateUserLocallyPlusOnStripe->update($request);
 
-            $subscription->swap($newPriceProductIdentifierStripe);
+            $subscription->swap($newpriceIdentifierStripe);
 
             // Update the product name, this won't affect Stripe
             // it's only for internal database records

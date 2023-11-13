@@ -3,8 +3,9 @@ import { usePage } from "@inertiajs/vue3";
 const jobPrices = [
     {
         name: "Single Job Posting",
-        id: "job_post",
-        priceProductIdentifierStripe: 15000,
+        id: "single_job_post",
+        priceIdentifierStripe: "prod_OzeC6J14JyuFRw",
+        chargeableAmountInteger: 15000,
         price: "$150",
         title: "&nbsp;",
         description: "Single job post.",

@@ -63,12 +63,12 @@ const handleSelectProduct = function (product) {
     if (selectedProduct.value?.id === product.id) {
         selectedProduct.value = null;
         formSubscription.product_id = null;
-        formSubscription.price_product_identifier_stripe = null;
+        formSubscription.price_identifier_stripe = null;
     } else {
         selectedProduct.value = product;
         formSubscription.product_id = product.id;
-        formSubscription.price_product_identifier_stripe =
-            product.priceProductIdentifierStripe;
+        formSubscription.price_identifier_stripe =
+            product.priceIdentifierStripe;
     }
 };
 
@@ -78,7 +78,7 @@ const formSubscription = useForm({
     last_name: props.user.last_name,
     email: props.user.email,
     product_id: null,
-    price_product_identifier_stripe: null,
+    price_identifier_stripe: null,
     country: props.user.country,
     city: props.user.city,
     state: props.user.state,
@@ -195,9 +195,7 @@ onBeforeMount(() => {
         formType.value = "update";
 
         const product = props.products.find((product) => {
-            return (
-                product.priceProductIdentifierStripe === props.post.stripe_price
-            );
+            return product.priceIdentifierStripe === props.post.stripe_price;
         });
 
         handleSelectProduct(product);
