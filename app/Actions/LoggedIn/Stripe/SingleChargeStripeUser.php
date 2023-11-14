@@ -12,7 +12,7 @@ use Inertia\Inertia;
 
 
 
-class singleChargeStripeUser
+class SingleChargeStripeUser
 {
 
 	/**
