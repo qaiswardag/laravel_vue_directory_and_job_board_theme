@@ -72,13 +72,8 @@ class SingleChargeJobController extends Controller
         $productId = $request->product_id; // single_job_prost
 
         $priceIdentifierStripe = $request->price_identifier_stripe;
-        $chargeableAmountInteger = $request->chargeable_amount_integer;
-
-        $cardId = $request->card_id;
-
 
         $updateUserLocallyPlusOnStripe->update($request);
-
 
         $user = Auth::user();
 
@@ -86,15 +81,12 @@ class SingleChargeJobController extends Controller
 
         $stripeCustomer = Cashier::findBillable($stripeId);
 
-
         if (!$stripeCustomer) {
             $stripeCustomer = $user->createAsStripeCustomer();
         }
 
         // TAX # start
         $vat_id = $request->vat_id ?? null;
-        $vat_number = $request->vat_number ?? null;
-        // TAX # end
 
         try {
             if ($vat_id && $vat_number) {
@@ -123,16 +115,12 @@ class SingleChargeJobController extends Controller
                 "published" => $request->published,
             ]);
 
-
             // Return the current team that the user is on, rather than the team that the user is storing the post for.
             $currentTeam = Auth::user()->currentTeam;
 
             return redirect()->route($request->next_route_name, [
                 "teamId" => $currentTeam->id
             ]);
-            //
-            //
-            //
         } catch (Exception $e) {
             Log::error("Something went wrong creating the payment. {$e}");
 
@@ -144,14 +132,6 @@ class SingleChargeJobController extends Controller
             ]);
             // charge end
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function checkout(Request $request)
-    {
-        return $request->user()->checkout('price_1OBetvEuESfVmAWohyRBJN5A');
     }
 
     /**
