@@ -15,7 +15,7 @@ createInertiaApp({
     title: (title) => `${appName} | ${title}`,
     // Disable or enable Inertia's default loading indicato
 
-    progress: true,
+    progress: false,
 
     //
     resolve: (name) =>

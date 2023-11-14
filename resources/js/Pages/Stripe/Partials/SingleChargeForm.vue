@@ -99,7 +99,7 @@ const form = useForm({
     vat_number: props.user.vat_number,
 });
 
-const createOrUpdate = () => {
+const createOrUpdate = async () => {
     form.country = selectedCountry.value?.code;
     form.phone_code = selectedPhoneCode.value?.phone_code;
 
@@ -107,7 +107,7 @@ const createOrUpdate = () => {
     form.tax_id = selectedVatId.value?.tax_id;
 
     form.post(
-        route(
+        await route(
             "stripe.single.charge.job.store",
             usePage().props.currentUserTeam.id
         ),
@@ -218,7 +218,6 @@ const cardError = ref(null);
 
 const proccessCard = async function () {
     store.commit("user/setIsLoading", true);
-
     try {
         const { paymentMethod, error } = await stripe.createPaymentMethod(
             "card",
@@ -235,7 +234,7 @@ const proccessCard = async function () {
             // The card has been verified successfully...
             cardError.value = null;
             form.card_id = paymentMethod.id;
-            createOrUpdate();
+            await createOrUpdate();
         }
     } catch (err) {
         cardError.value = "Something went wrong with the payment method.";

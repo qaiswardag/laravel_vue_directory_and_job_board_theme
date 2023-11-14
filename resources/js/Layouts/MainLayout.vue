@@ -52,9 +52,6 @@ const maintenance = true;
         <title>{{ title }}</title>
         <meta type="description" content="myself" head-key="description" />
     </Head>
-    <p class="my-8 py-4 border-2 border-red-300 text-center w-64 mx-auto">
-        Check component MainLayout
-    </p>
 
     <Flash
         v-show="shouldShowFlash"
