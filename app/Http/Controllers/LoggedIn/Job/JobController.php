@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\LoggedIn\Job;
 
-use App\Actions\LoggedIn\Stripe\singleChargeStripeUser;
+use App\Actions\LoggedIn\Stripe\SingleChargeStripeUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
 use App\Models\Job\AuthorJob;
@@ -480,7 +480,7 @@ class JobController extends Controller
      * @param  \App\Models\Job\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreJobRequest $request, Job $job, singleChargeStripeUser $singleChargeStripeUser)
+    public function update(StoreJobRequest $request, Job $job, SingleChargeStripeUser $SingleChargeStripeUser)
     {
         // Find the current team that the user is on, rather than the team that the user is storing the job for.
         $team = Team::findOrFail($request->team["id"]);
@@ -748,7 +748,7 @@ class JobController extends Controller
                 ->delete();
         }
 
-        // $createSingleCharge = $singleChargeStripeUser->createSingleCharge($team);
+        // $createSingleCharge = $SingleChargeStripeUser->createSingleCharge($team);
 
         return redirect()->route("stripe.single.charge.job.create", [
             "team" => $team->id,
