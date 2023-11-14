@@ -81,13 +81,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             "public" => ["boolean"],
             "photo" => ["nullable", "mimes:jpg,jpeg,png", "max:2048"],
 
-            "country" => ["required", "string", "min:2", "max:255", "nullable"],
-            "city" => ["required", "string", "min:2", "max:255", "nullable"],
-            "state" => ["required", "string", "min:2", "max:255", "nullable"],
-            "line1" => ["required", "string", "min:2", "max:255", "nullable"],
-            "line2" => ["required", "string", "min:2", "max:255", "nullable"],
+            "country" => ["string", "min:2", "max:255", "nullable"],
+            "city" => ["string", "min:2", "max:255", "nullable"],
+            "state" => ["string", "min:2", "max:255", "nullable"],
+            "line1" => ["string", "min:2", "max:255", "nullable"],
+            "line2" => ["string", "min:2", "max:255", "nullable"],
             "postal_code" => [
-                "required",
                 "string",
                 "min:2",
                 "max:255",

@@ -8,7 +8,7 @@ use Laravel\Cashier\Cashier;
 
 use Validator;
 
-class StoreSubscriptionRequest extends FormRequest
+class StoreChargeFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,6 +26,7 @@ class StoreSubscriptionRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
+            "next_route_name" => ["required", "string", "min:2", "max:255"],
             "product_id" => ["required", "string", "min:2", "max:255"],
             "price_identifier_stripe" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],

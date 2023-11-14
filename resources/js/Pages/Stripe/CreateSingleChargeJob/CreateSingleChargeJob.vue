@@ -3,7 +3,8 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import PostForm from "@/Pages/Posts/Partials/PostForm.vue";
-import SingleChargeForm from "@/Pages/Stripe/Partials/SingleChargeForm.vue";
+import ChargeForm from "@/Pages/Stripe/Partials/ChargeForm.vue";
+
 import jobPrices from "@/utils/pricing/job-prices";
 import { usePage } from "@inertiajs/vue3";
 
@@ -45,13 +46,17 @@ const breadcrumbsLinks = [
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
-            <SingleChargeForm
+
+            <ChargeForm
+                title="Payment job"
+                nextRouteName="team.jobs.index"
                 :user="user"
                 :intent="intent"
                 :publishableKey="publishableKey"
                 :products="jobPrices"
-                :job="job"
-            ></SingleChargeForm>
+                :resource="job"
+                createPath="stripe.single.charge.job.store"
+            ></ChargeForm>
         </LoggedInLayout>
     </MainLayout>
 </template>

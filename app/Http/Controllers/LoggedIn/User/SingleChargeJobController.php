@@ -6,7 +6,7 @@ use App\Actions\LoggedIn\Stripe\CreateNewStripeUser;
 use App\Actions\LoggedIn\Stripe\CreateStripeUserTaxID;
 use App\Actions\LoggedIn\Stripe\UpdateUserLocallyPlusOnStripe;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoggedIn\User\SingleChargeRequest;
+use App\Http\Requests\LoggedIn\User\StoreChargeFormRequest;
 use App\Models\Job\Job;
 use App\Models\Post\Post;
 use App\Models\Team;
@@ -36,7 +36,7 @@ class SingleChargeJobController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Team $team, Job $job, CreateNewStripeUser $createNewStripeUser)
+    public function create(Job $job, CreateNewStripeUser $createNewStripeUser)
     {
         try {
             $stripeUserDetails = $createNewStripeUser->create();
@@ -44,7 +44,6 @@ class SingleChargeJobController extends Controller
             return Inertia::render(
                 "Stripe/CreateSingleChargeJob/CreateSingleChargeJob",
                 [
-                    "teamId" => $team->id,
                     "job" => $job,
                     "intent" => $stripeUserDetails['intent'],
                     "paymentMethods" => $stripeUserDetails['paymentMethods'],
@@ -63,8 +62,7 @@ class SingleChargeJobController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(
-        SingleChargeRequest $request,
-        Team $team,
+        StoreChargeFormRequest $request,
         Job $job,
         UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe,
         CreateStripeUserTaxID $createStripeUserTaxID
@@ -116,26 +114,25 @@ class SingleChargeJobController extends Controller
         }
         // TAX # end
 
+        // charge # start
         try {
-            // $stripeCharge = $stripeCustomer->charge($chargeableAmountInteger, $cardId, [
-            //     'default_tax_rates' => [],
-            // ]);
-            //
-            //
-            // $stripeCharge = $stripeCustomer->charge($chargeableAmountInteger, $cardId, [
-            //     'default_tax_rates' => [],
-            // ]);
+            $stripeCustomer->invoicePrice($priceIdentifierStripe);
 
-            //
-            //
-            $stripeCustomer->invoicePrice($priceIdentifierStripe, 5);
-
-            //
-            //  return Inertia::location("/product-checkout");
-            //
             $job->update([
                 "is_paid" => true,
+                "published" => $request->published,
             ]);
+
+
+            // Return the current team that the user is on, rather than the team that the user is storing the post for.
+            $currentTeam = Auth::user()->currentTeam;
+
+            return redirect()->route($request->next_route_name, [
+                "teamId" => $currentTeam->id
+            ]);
+            //
+            //
+            //
         } catch (Exception $e) {
             Log::error("Something went wrong creating the payment. {$e}");
 
@@ -145,11 +142,8 @@ class SingleChargeJobController extends Controller
                     " " .
                     $e->getMessage(),
             ]);
+            // charge end
         }
-
-        return redirect()->route($request->next_route_name, [
-            "teamId" => $team->id
-        ]);
     }
 
     /**

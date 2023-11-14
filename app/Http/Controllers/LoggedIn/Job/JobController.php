@@ -153,7 +153,7 @@ class JobController extends Controller
             "team_id" => $team->id,
             "title" => $title,
             "slug" => $slug,
-            "published" => $request->published,
+            // "published" => $request->published,
             "started_at" => $startedAt,
             "ended_at" => $endedAd,
             "is_filled" => $request->is_filled,
@@ -510,7 +510,7 @@ class JobController extends Controller
             "apply_via_email" => $request->apply_via_email,
             "title" => $title,
             "slug" => $slug,
-            "published" => $request->published,
+            // "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
@@ -750,20 +750,26 @@ class JobController extends Controller
 
         // $createSingleCharge = $SingleChargeStripeUser->createSingleCharge($team);
 
-        return redirect()->route("stripe.single.charge.job.create", [
-            "team" => $team->id,
-            "job" => $job->id
-        ]);
+        if (!$job->is_paid && $request->published) {
+            return redirect()->route("stripe.single.charge.job.create", [
+                "team" => $team->id,
+                "job" => $job->id
+            ]);
+        }
 
 
         //
         //
         //
         // if job have already been paid
-        if (false) {
-            // return redirect()->route("team.jobs.index", [
-            //     "teamId" => $team->id,
-            // ]);
+        if ($job->is_paid || !$request->published) {
+            $job->update([
+                "published" => $request->published,
+            ]);
+
+            return redirect()->route("team.jobs.index", [
+                "teamId" => $team->id,
+            ]);
         }
     }
 

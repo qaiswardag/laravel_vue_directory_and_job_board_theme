@@ -10,7 +10,7 @@ use ErrorException;
 use Illuminate\Validation\ValidationException;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoggedIn\User\StoreSubscriptionRequest;
+use App\Http\Requests\LoggedIn\User\StoreChargeFormRequest;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -68,7 +68,7 @@ class SubscriptionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(
-        StoreSubscriptionRequest $request,
+        StoreChargeFormRequest $request,
         UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe,
         CreateStripeUserTaxID $createStripeUserTaxID
     ) {
@@ -121,11 +121,8 @@ class SubscriptionController extends Controller
         }
         // TAX # end
 
-
-        dd($request->price_identifier_stripe);
         // try charge
         try {
-
             $updateUserLocallyPlusOnStripe->update($request);
 
             $stripeCustomer
@@ -225,7 +222,7 @@ class SubscriptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreSubscriptionRequest $request, $subscriptionId, UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe)
+    public function update(StoreChargeFormRequest $request, $subscriptionId, UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe)
     {
         $user = Auth::user();
         $newProductId = $request->product_id;

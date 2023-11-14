@@ -418,23 +418,15 @@ Route::middleware([
     // single charge
     // single charge
     // single charge
-    Route::get("/single-charge/create/{team}/{job}", [
+    Route::get("/single-charge/create/{job}", [
         SingleChargeJobController::class,
         "create",
     ])->name("stripe.single.charge.job.create");
 
-    Route::post("/stripe/single-charge/store/{team}/{job}", [
+    Route::post("/stripe/single-charge/store/{job}", [
         SingleChargeJobController::class,
         "store",
     ])->name("stripe.single.charge.job.store");
-    //
-    //
-    //
-    //
-    Route::get("/product-checkout", [
-        SingleChargeJobController::class,
-        "checkout",
-    ]);
 });
 // AUTH ONLY # END
 // AUTH ONLY # END

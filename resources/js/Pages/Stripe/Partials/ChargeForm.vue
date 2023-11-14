@@ -34,6 +34,9 @@ import {
 const store = useStore();
 
 const props = defineProps({
+    title: {
+        required: true,
+    },
     user: {
         required: true,
     },
@@ -48,6 +51,18 @@ const props = defineProps({
     },
     products: {
         required: true,
+    },
+    resource: {
+        required: false,
+    },
+    createPath: {
+        required: false,
+    },
+    updatePath: {
+        required: false,
+    },
+    nextRouteName: {
+        required: false,
     },
 });
 
@@ -73,6 +88,7 @@ const handleSelectProduct = function (product) {
 };
 
 const formSubscription = useForm({
+    next_route_name: props.nextRouteName,
     user_id: props.user.id,
     first_name: props.user.first_name,
     last_name: props.user.last_name,
@@ -101,11 +117,16 @@ const createOrUpdate = () => {
         formSubscription.vat_id = selectedVatId.value?.code;
         formSubscription.tax_id = selectedVatId.value?.tax_id;
 
-        formSubscription.post(route("stripe.stores.store.subscription"), {
-            onSuccess: () => {},
-            onError: () => {},
-            onFinish: () => {},
-        });
+        formSubscription.post(
+            route(props.createPath, [
+                props.resource ? props.resource.id : null,
+            ]),
+            {
+                onSuccess: () => {},
+                onError: () => {},
+                onFinish: () => {},
+            }
+        );
     }
 
     if (formType.value === "update") {
@@ -115,14 +136,11 @@ const createOrUpdate = () => {
         formSubscription.vat_id = selectedVatId.value?.code;
         formSubscription.tax_id = selectedVatId.value?.tax_id;
 
-        formSubscription.post(
-            route("stripe.stores.update.subscription", props.post.id),
-            {
-                onSuccess: () => {},
-                onError: () => {},
-                onFinish: () => {},
-            }
-        );
+        formSubscription.post(route(props.updatePath, props.post.id), {
+            onSuccess: () => {},
+            onError: () => {},
+            onFinish: () => {},
+        });
     }
 };
 
@@ -228,12 +246,10 @@ onMounted(() => {
 
 <template>
     <FormSection @submitted="handleSubmit">
-        <template #title> Subscription Form </template>
+        <template #title>
+            {{ title }} {{ resource ? resource.title : "" }}
+        </template>
         <template #main>
-            <p>
-                formSubscription.price_identifier_stripe:
-                {{ JSON.stringify(formSubscription.price_identifier_stripe) }}
-            </p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
