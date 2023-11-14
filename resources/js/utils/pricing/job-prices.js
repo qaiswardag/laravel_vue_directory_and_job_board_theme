@@ -5,7 +5,6 @@ const jobPrices = [
         name: "Single Job Posting",
         id: "single_job_post",
         priceIdentifierStripe: "price_1OBetvEuESfVmAWohyRBJN5A",
-        chargeableAmountInteger: 15000,
         price: "$150",
         title: "&nbsp;",
         description: "Single job post.",

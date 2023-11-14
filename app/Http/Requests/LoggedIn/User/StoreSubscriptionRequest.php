@@ -27,6 +27,7 @@ class StoreSubscriptionRequest extends FormRequest
     {
         $rules = [
             "product_id" => ["required", "string", "min:2", "max:255"],
+            "price_identifier_stripe" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
             "city" => ["required", "string", "min:2", "max:255", "nullable"],
             "postal_code" => [

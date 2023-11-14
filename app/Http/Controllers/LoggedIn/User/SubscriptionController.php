@@ -122,6 +122,7 @@ class SubscriptionController extends Controller
         // TAX # end
 
 
+        dd($request->price_identifier_stripe);
         // try charge
         try {
 

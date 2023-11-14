@@ -230,6 +230,10 @@ onMounted(() => {
     <FormSection @submitted="handleSubmit">
         <template #title> Subscription Form </template>
         <template #main>
+            <p>
+                formSubscription.price_identifier_stripe:
+                {{ JSON.stringify(formSubscription.price_identifier_stripe) }}
+            </p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
