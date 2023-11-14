@@ -122,9 +122,13 @@ class SingleChargeJobController extends Controller
             // ]);
             //
             //
-            $stripeCharge = $stripeCustomer->charge($chargeableAmountInteger, $cardId, [
-                'default_tax_rates' => [],
-            ]);
+            // $stripeCharge = $stripeCustomer->charge($chargeableAmountInteger, $cardId, [
+            //     'default_tax_rates' => [],
+            // ]);
+
+            //
+            //
+            $stripeCustomer->invoicePrice($priceIdentifierStripe, 5);
 
             //
             //  return Inertia::location("/product-checkout");

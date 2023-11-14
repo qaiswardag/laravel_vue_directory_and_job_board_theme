@@ -2,7 +2,7 @@ const storeSubscriptionPrices = [
     {
         name: "Single Store",
         id: "single_store",
-        priceIdentifierStripe: "price_1O167uEuESfVmAWohyZDo7Ck",
+        priceProductIdentifierStripe: "price_1O167uEuESfVmAWohyZDo7Ck",
         route: {
             name: "stripe.stores.create.subscription",
             parameters: null,
@@ -18,7 +18,7 @@ const storeSubscriptionPrices = [
     {
         name: "Up to 3 Stores",
         id: "three_stores",
-        priceIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
+        priceProductIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
         route: {
             name: "stripe.stores.create.subscription",
             parameters: null,
@@ -39,7 +39,7 @@ const storeSubscriptionPrices = [
     {
         name: "Up to 10 Stores",
         id: "ten_stores",
-        priceIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
+        priceProductIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
         route: {
             name: "stripe.stores.create.subscription",
             parameters: [],
@@ -61,7 +61,7 @@ const storeSubscriptionPrices = [
     {
         name: "Up to 30 Stores",
         id: "thirty_stores",
-        priceIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
+        priceProductIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
         route: {
             name: "stripe.stores.create.subscription",
             parameters: null,
