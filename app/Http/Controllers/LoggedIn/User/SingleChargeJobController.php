@@ -69,6 +69,7 @@ class SingleChargeJobController extends Controller
         CreateStripeUserTaxID $createStripeUserTaxID
     ) {
 
+        sleep(2);
         $productId = $request->product_id; // single_job_prost
 
         $priceIdentifierStripe = $request->price_identifier_stripe;

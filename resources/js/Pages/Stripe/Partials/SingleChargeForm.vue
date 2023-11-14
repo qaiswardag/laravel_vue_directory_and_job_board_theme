@@ -107,7 +107,7 @@ const createOrUpdate = async () => {
     form.tax_id = selectedVatId.value?.tax_id;
 
     form.post(
-        await route(
+        route(
             "stripe.single.charge.job.store",
             usePage().props.currentUserTeam.id
         ),
@@ -228,7 +228,6 @@ const proccessCard = async function () {
         );
 
         if (error) {
-            // Display "error.message" to the user...
             cardError.value = error.message;
         } else {
             // The card has been verified successfully...
@@ -678,6 +677,50 @@ onMounted(async () => {
             </div>
             <!-- postal code and phone # end -->
 
+            <!-- pay with card # start -->
+            <div class="myInputsOrganization">
+                <!-- Vat ID and vat number # start -->
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Pay with card
+                    </div>
+                </div>
+
+                <div class="myInputGroup">
+                    <div>
+                        <InputLabel
+                            for="card_holder_name"
+                            value="Cardholder name"
+                        />
+                        <TextInput
+                            placeholder="Cardholder name.."
+                            id="card_holder_name"
+                            v-model="form.name"
+                            type="text"
+                            autocomplete="off"
+                            class="block w-full mt-1"
+                        />
+
+                        <!-- Stripe Elements Placeholder -->
+                        <div
+                            class="py-8 px-4 mt-8 mb-2 rounded border-2 border-red-200"
+                        >
+                            <div id="card-element"></div>
+                        </div>
+                        <template v-if="cardError">
+                            <p
+                                class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
+                            >
+                                {{ cardError }}
+                            </p>
+                        </template>
+                        <InputError :message="form.errors.card_id" />
+                    </div>
+                </div>
+            </div>
+            <!-- pay with card # end -->
+
+            <!-- Vat ID and vat number # start -->
             <div class="myInputsOrganization">
                 <!-- Vat ID and vat number # start -->
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -849,8 +892,8 @@ onMounted(async () => {
                         <InputError :message="form.errors.vat_number" />
                     </div>
                 </div>
-                <!-- Vat ID and vat number # end -->
             </div>
+            <!-- Vat ID and vat number # end -->
         </template>
 
         <template #sidebar>
@@ -951,46 +994,16 @@ onMounted(async () => {
                     </div>
                     <InputError :message="form.errors.product_id" />
                 </div>
-                <div class="myPrimaryFormOrganizationHeader">Product</div>
-                <div>
-                    <div class="my-6 p-4 border rounded">
-                        <p class="my-2">Works: 4000002080000001</p>
-                        <p class="my-2">
-                            Can be added but insufficient funds:
-                            4000008260003178
-                        </p>
-                        <p class="my-2">
-                            Can be added but insufficient funds: Declined:
-                            4000000000000002
-                        </p>
-                    </div>
-                    <InputLabel
-                        for="card_holder_name"
-                        value="Cardholder name"
-                    />
-                    <TextInput
-                        placeholder="Cardholder name.."
-                        id="card_holder_name"
-                        v-model="form.name"
-                        type="text"
-                        autocomplete="off"
-                        class="block w-full mt-1"
-                    />
 
-                    <!-- Stripe Elements Placeholder -->
-                    <div
-                        class="py-8 px-4 mt-8 mb-2 rounded border-2 border-red-200"
-                    >
-                        <div id="card-element"></div>
-                    </div>
-                    <template v-if="cardError">
-                        <p
-                            class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
-                        >
-                            {{ cardError }}
-                        </p>
-                    </template>
-                    <InputError :message="form.errors.card_id" />
+                <div class="my-6 p-4 border rounded">
+                    <p class="my-2">Works: 4000002080000001</p>
+                    <p class="my-2">
+                        Can be added but insufficient funds: 4000008260003178
+                    </p>
+                    <p class="my-2">
+                        Can be added but insufficient funds: Declined:
+                        4000000000000002
+                    </p>
                 </div>
             </div>
         </template>

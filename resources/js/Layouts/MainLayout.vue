@@ -58,6 +58,10 @@ const maintenance = true;
         :showCloseButton="false"
         :flash="$page.props.flash"
     ></Flash>
-    <FullScreenSpinner v-if="isDOMLoaded || getIsLoading"></FullScreenSpinner>
+    <teleport to="body">
+        <FullScreenSpinner
+            v-if="isDOMLoaded || getIsLoading"
+        ></FullScreenSpinner>
+    </teleport>
     <slot />
 </template>
