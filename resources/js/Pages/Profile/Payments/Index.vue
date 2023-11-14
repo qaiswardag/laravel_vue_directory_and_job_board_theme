@@ -126,9 +126,6 @@ const breadcrumbsLinks = [
             </template>
             <!-- Loading # end -->
 
-            <p class="my-12">
-                er: {{ JSON.stringify(fetchedPayments?.payments.invoices) }}
-            </p>
             <template
                 v-if="
                     fetchedPayments &&

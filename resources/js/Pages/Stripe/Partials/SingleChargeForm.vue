@@ -240,7 +240,6 @@ const proccessCard = async function () {
     } catch (err) {
         cardError.value = "Something went wrong with the payment method.";
     } finally {
-        cardError.value = null;
         store.commit("user/setIsLoading", false);
     }
 };
@@ -980,7 +979,9 @@ onMounted(async () => {
                     />
 
                     <!-- Stripe Elements Placeholder -->
-                    <div class="py-8 px-4 my-8 rounded border-2 border-red-200">
+                    <div
+                        class="py-8 px-4 mt-8 mb-2 rounded border-2 border-red-200"
+                    >
                         <div id="card-element"></div>
                     </div>
                     <template v-if="cardError">
