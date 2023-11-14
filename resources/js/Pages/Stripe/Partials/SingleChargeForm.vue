@@ -43,9 +43,6 @@ const props = defineProps({
     publishableKey: {
         required: true,
     },
-    post: {
-        required: false,
-    },
     products: {
         required: true,
     },
@@ -107,10 +104,10 @@ const createOrUpdate = async () => {
     form.tax_id = selectedVatId.value?.tax_id;
 
     form.post(
-        route(
-            "stripe.single.charge.job.store",
-            usePage().props.currentUserTeam.id
-        ),
+        route("stripe.single.charge.job.store", [
+            usePage().props.currentUserTeam.id,
+            props.job.id,
+        ]),
         {
             onSuccess: () => {},
             onError: () => {},
@@ -236,7 +233,7 @@ const proccessCard = async function () {
             await createOrUpdate();
         }
     } catch (err) {
-        cardError.value = "Something went wrong with the payment method.";
+        cardError.value = `Something went wrong with the payment method. ${err.message}`;
     } finally {
         store.commit("user/setIsLoading", false);
     }

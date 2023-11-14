@@ -344,6 +344,9 @@ onMounted(() => {
                                         Job ID
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
+                                        Is paid
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
                                         Team Name
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
@@ -456,6 +459,22 @@ onMounted(() => {
 
                                         <td class="myPrimaryTableTBodyTd">
                                             {{ post.id }}
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
+                                                class="myPrimaryTag"
+                                                :class="
+                                                    post.is_paid
+                                                        ? 'bg-myPrimaryLinkColor text-white'
+                                                        : 'bg-myPrimaryErrorColor text-white'
+                                                "
+                                                >{{
+                                                    post.is_paid
+                                                        ? "Paid"
+                                                        : "Unpaid"
+                                                }}</span
+                                            >
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">

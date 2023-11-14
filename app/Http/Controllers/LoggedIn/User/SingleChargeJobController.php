@@ -65,6 +65,7 @@ class SingleChargeJobController extends Controller
     public function store(
         SingleChargeRequest $request,
         Team $team,
+        Job $job,
         UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe,
         CreateStripeUserTaxID $createStripeUserTaxID
     ) {
@@ -119,15 +120,18 @@ class SingleChargeJobController extends Controller
             // $stripeCharge = $stripeCustomer->charge($chargeableAmountInteger, $cardId, [
             //     'default_tax_rates' => [],
             // ]);
+            //
+            //
+            $stripeCharge = $stripeCustomer->charge($chargeableAmountInteger, $cardId, [
+                'default_tax_rates' => [],
+            ]);
 
             //
+            //  return Inertia::location("/product-checkout");
             //
-            //
-            return Inertia::location("/product-checkout");
-            //
-            //
-            //
-            //
+            $job->update([
+                "is_paid" => true,
+            ]);
         } catch (Exception $e) {
             Log::error("Something went wrong creating the payment. {$e}");
 
@@ -138,7 +142,6 @@ class SingleChargeJobController extends Controller
                     $e->getMessage(),
             ]);
         }
-
 
         return redirect()->route($request->next_route_name, [
             "teamId" => $team->id

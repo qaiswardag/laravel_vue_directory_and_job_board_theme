@@ -423,7 +423,7 @@ Route::middleware([
         "create",
     ])->name("stripe.single.charge.job.create");
 
-    Route::post("/stripe/single-charge/store/{team}", [
+    Route::post("/stripe/single-charge/store/{team}/{job}", [
         SingleChargeJobController::class,
         "store",
     ])->name("stripe.single.charge.job.store");
