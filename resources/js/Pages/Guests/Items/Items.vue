@@ -482,15 +482,7 @@ onMounted(() => {
                     </template>
                 </div>
 
-                <!-- Loading # start -->
-                <template v-if="isLoadingPosts">
-                    <SmallUniversalSpinner
-                        width="w-8"
-                        height="h-8"
-                        border="border-4"
-                    ></SmallUniversalSpinner>
-                </template>
-                <!-- Loading # end -->
+                <!-- If posts is empty array # start -->
                 <template
                     v-if="
                         fetchedDataPosts &&
@@ -504,6 +496,18 @@ onMounted(() => {
                         Looks like there are no {{ nameList }}!
                     </p>
                 </template>
+                <!-- If posts is empty array # end -->
+
+                <!-- Loading # start -->
+                <template v-if="isLoadingPosts">
+                    <SmallUniversalSpinner
+                        width="w-8"
+                        height="h-8"
+                        border="border-4"
+                    ></SmallUniversalSpinner>
+                </template>
+                <!-- Loading # end -->
+
                 <template
                     v-if="!isLoadingPosts && !isErrorPosts && isSuccessPosts"
                 >
@@ -659,7 +663,7 @@ onMounted(() => {
                     <!-- Pagination # start -->
                     <div
                         v-if="fetchedDataPosts && fetchedDataPosts.posts"
-                        class="flex items-center justify-center border-t border-gray-200 bg-white py-3 mt-4 gap-2"
+                        class="flex items-center justify-center bg-white py-3 mt-4 gap-2"
                     >
                         <TailwindPagination
                             :limit="1"
