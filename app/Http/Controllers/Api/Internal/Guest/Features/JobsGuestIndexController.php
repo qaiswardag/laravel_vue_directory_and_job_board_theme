@@ -143,6 +143,17 @@ class JobsGuestIndexController extends Controller
             $query->where("started_at", "<=", Carbon::now()->addDays(1));
         });
 
+        // Add a condition to filter posts where ended_at is
+        // not null and smaller than or equal to the current time
+        $query->where(function ($query) {
+            // Include posts where ended_at is not null
+            $query->whereNotNull("ended_at");
+
+            // Include posts where ended_at is greater than the current date
+            $query->whereDate("ended_at", ">=", now()->toDateString());
+        });
+
+
         $posts = $query->paginate(20);
 
         $posts->appends($request->all());
