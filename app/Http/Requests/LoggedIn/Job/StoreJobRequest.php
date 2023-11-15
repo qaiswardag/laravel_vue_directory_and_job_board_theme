@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\LoggedIn\Job;
 
+use App\Models\Job\Job;
 use App\Models\MediaLibrary\MediaLibrary;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
@@ -109,8 +110,25 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add("team", "The team field is required.");
             }
-
             $this->validateProperties($validator);
+
+            if ($this->job && $this->job->id) {
+                // Check if the 'started_at' field is set on the job
+                if ($this->job->started_at) {
+                    // Calculate the difference in days between the job's creation date and the 'started_at' date
+                    $daysDifference = Carbon::parse($this->job->created_at)->diffInDays(Carbon::parse($this->job->started_at));
+
+                    // Check if the difference is greater than or equal to 5 days
+                    if ($daysDifference >= 5) {
+                        // Add an error message to the validator
+                        $validator
+                            ->errors()
+                            ->add("started_at", "Sorry, you cannot change the started at date 5 days from when the job was created.");
+                    }
+                }
+            }
+
+
 
             // The Started at date must be in the future
             if (
@@ -125,7 +143,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "started_at",
-                        "The started at date must be in the future."
+                        "The started at date must be from today and in the future."
                     );
             }
 
