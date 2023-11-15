@@ -128,11 +128,14 @@ const breadcrumbsLinks = [
 
             <template
                 v-if="
-                    fetchedPayments &&
-                    fetchedPayments.payments &&
-                    fetchedPayments.payments.invoices &&
-                    Array.isArray(fetchedPayments.payments.invoices) &&
-                    fetchedPayments.payments.invoices.length === 0
+                    (fetchedPayments &&
+                        Array.isArray(fetchedPayments.payments) &&
+                        fetchedPayments.payments.length === 0) ||
+                    (fetchedPayments &&
+                        fetchedPayments.payments &&
+                        fetchedPayments.payments.invoices &&
+                        Array.isArray(fetchedPayments.payments.invoices) &&
+                        fetchedPayments.payments.invoices.length === 0)
                 "
             >
                 <p class="myPrimaryParagraph">

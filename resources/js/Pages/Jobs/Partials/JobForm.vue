@@ -602,8 +602,13 @@ const clearForm = function () {
     store.commit("pageBuilderState/setComponents", []);
 };
 
-const setStartedAtDateToDb = function () {
-    jobStartedAt.value = props.post?.started_at;
+const setStartedAtDate = function () {
+    if (props.post) {
+        jobStartedAt.value = props.post?.started_at;
+    }
+    if (!props.post) {
+        jobStartedAt.value = formatISO(new Date());
+    }
 };
 watch(
     () => jobStartedAt.value,
@@ -1497,6 +1502,9 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- select - start -->
 
+                <p class="my-4">
+                    jobStartedAt: {{ JSON.stringify(jobStartedAt) }}
+                </p>
                 <VueDatePicker
                     :enable-time-picker="false"
                     v-model="jobStartedAt"
@@ -1517,7 +1525,7 @@ const pageBuilder = new PageBuilder(store);
                 <template v-if="postForm.errors.started_at">
                     <button
                         type="button"
-                        @click="setStartedAtDateToDb"
+                        @click="setStartedAtDate"
                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                     >
                         <ArrowPathIcon class="shrink-0 w-4 h-4 m-2 stroke-2">

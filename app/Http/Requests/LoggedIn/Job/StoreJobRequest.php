@@ -127,7 +127,7 @@ class StoreJobRequest extends FormRequest
 
             // The Started at date must be in the future
             if (
-                !$this->job && !$this->job->id &&
+                !$this->job &&
                 $this->started_at &&
                 Carbon::parse($this->started_at)->isValid() &&
                 Carbon::parse($this->started_at)->isPast() &&

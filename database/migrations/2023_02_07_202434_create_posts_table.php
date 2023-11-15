@@ -27,7 +27,7 @@ return new class extends Migration
             //
             $table->string("title")->index();
             $table->string("slug");
-            $table->boolean("published");
+            $table->boolean("published")->nullable();
             $table->boolean("show_author");
             $table->longText("content");
             $table

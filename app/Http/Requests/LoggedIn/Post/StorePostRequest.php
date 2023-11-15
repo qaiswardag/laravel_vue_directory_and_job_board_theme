@@ -65,7 +65,7 @@ class StorePostRequest extends FormRequest
             // rules to validate that the input is not empty and is a string
             "content" => ["required", "string", "min:2", "max:65535"],
 
-            "tags" => ["required", "string", "max:255"],
+            "tags" => ["string", "max:255", "nullable"],
         ];
 
         return $rules;
