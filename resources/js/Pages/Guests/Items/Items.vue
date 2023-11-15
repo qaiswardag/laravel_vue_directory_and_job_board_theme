@@ -491,7 +491,19 @@ onMounted(() => {
                     ></SmallUniversalSpinner>
                 </template>
                 <!-- Loading # end -->
-
+                <template
+                    v-if="
+                        fetchedDataPosts &&
+                        fetchedDataPosts.posts &&
+                        Array.isArray(fetchedDataPosts.posts.data) &&
+                        fetchedDataPosts.posts.data.length === 0
+                    "
+                >
+                    <h1 class="myPrimaryHeaderMessage">No {{ nameList }}</h1>
+                    <p class="myPrimaryParagraph">
+                        Looks like there are no {{ nameList }}!
+                    </p>
+                </template>
                 <template
                     v-if="!isLoadingPosts && !isErrorPosts && isSuccessPosts"
                 >

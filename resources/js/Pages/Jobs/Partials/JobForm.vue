@@ -1502,9 +1502,6 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- select - start -->
 
-                <p class="my-4">
-                    jobStartedAt: {{ JSON.stringify(jobStartedAt) }}
-                </p>
                 <VueDatePicker
                     :enable-time-picker="false"
                     v-model="jobStartedAt"
