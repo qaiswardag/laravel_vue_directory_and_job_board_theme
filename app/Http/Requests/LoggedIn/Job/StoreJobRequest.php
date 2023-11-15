@@ -114,24 +114,20 @@ class StoreJobRequest extends FormRequest
 
             if ($this->job && $this->job->id) {
                 // Check if the 'started_at' field is set on the job
-                if ($this->job->started_at) {
+                if ($this->job->started_at !== $this->started_at) {
                     // Calculate the difference in days between the job's creation date and the 'started_at' date
-                    $daysDifference = Carbon::parse($this->job->created_at)->diffInDays(Carbon::parse($this->job->started_at));
-
-                    // Check if the difference is greater than or equal to 5 days
+                    $daysDifference = Carbon::parse($this->job->created_at)->diffInDays(Carbon::now());                    // Check if the difference is greater than or equal to 5 days
                     if ($daysDifference >= 5) {
-                        // Add an error message to the validator
                         $validator
                             ->errors()
-                            ->add("started_at", "Sorry, you cannot change the started at date 5 days from when the job was created.");
+                            ->add("started_at", "Sorry, the started at date can no longer be updated. You cannot change the started at date 5 days from when the job was created.");
                     }
                 }
             }
 
-
-
             // The Started at date must be in the future
             if (
+                !$this->job && !$this->job->id &&
                 $this->started_at &&
                 Carbon::parse($this->started_at)->isValid() &&
                 Carbon::parse($this->started_at)->isPast() &&
@@ -144,6 +140,24 @@ class StoreJobRequest extends FormRequest
                     ->add(
                         "started_at",
                         "The started at date must be from today and in the future."
+                    );
+            }
+
+            // The Started at date must be in the future
+            if (
+                $this->job && $this->job->id &&
+                $this->started_at &&
+                Carbon::parse($this->started_at)->isValid() &&
+                Carbon::parse($this->started_at)->isPast() &&
+                Carbon::parse($this->started_at)->diffInDays(
+                    Carbon::now()
+                ) > 29
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "started_at",
+                        "The started at date must be in the past and can be up to 30 days old from today."
                     );
             }
 

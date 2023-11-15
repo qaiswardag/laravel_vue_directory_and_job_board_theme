@@ -34,6 +34,7 @@ import {
 } from "@headlessui/vue";
 
 import {
+    ArrowPathIcon,
     CheckIcon,
     ChevronUpDownIcon,
     LockClosedIcon,
@@ -601,11 +602,13 @@ const clearForm = function () {
     store.commit("pageBuilderState/setComponents", []);
 };
 
+const setStartedAtDateToDb = function () {
+    jobStartedAt.value = props.post?.started_at;
+};
 watch(
     () => jobStartedAt.value,
     (newValue) => {
         if (newValue) {
-            // postForm.started_at = formatISO(new Date(newValue));
             const parsedDate = new Date(newValue);
             const formattedDate = format(parsedDate, "yyyy-MM-dd HH:mm:ss");
             postForm.started_at = formattedDate;
@@ -1077,7 +1080,6 @@ onBeforeMount(() => {
     // User is editing an existing Resource, rather than creating a new one from scratch.
     if (props.post) {
         formType.value = "update";
-
         pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-draft-update-store-${
             props.post.id ? props.post.id : null
         }-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
@@ -1511,6 +1513,17 @@ const pageBuilder = new PageBuilder(store);
 
                     <template #calendar-icon> Back </template>
                 </VueDatePicker>
+
+                <template v-if="postForm.errors.started_at">
+                    <button
+                        type="button"
+                        @click="setStartedAtDateToDb"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                    >
+                        <ArrowPathIcon class="shrink-0 w-4 h-4 m-2 stroke-2">
+                        </ArrowPathIcon>
+                    </button>
+                </template>
 
                 <InputError :message="postForm.errors.started_at" />
             </div>
