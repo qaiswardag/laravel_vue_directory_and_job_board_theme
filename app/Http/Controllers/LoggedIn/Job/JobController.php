@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\LoggedIn\Job;
 
-use App\Actions\LoggedIn\Stripe\SingleChargeStripeUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
 use App\Models\Job\AuthorJob;
@@ -314,11 +313,23 @@ class JobController extends Controller
             }
         }
 
-        // øø
 
-        return redirect()->route("team.jobs.index", [
-            "teamId" => $team->id,
-        ]);
+        // job paid logic # start
+        if ($request->published) {
+            return redirect()->route("stripe.single.charge.job.create", [
+                "team" => $team->id,
+                "job" => $job->id
+            ]);
+        }
+        //
+        // if published is false. User just created a draft
+        if (!$request->published) {
+            return redirect()->route("team.jobs.index", [
+                "teamId" => $team->id,
+                "published" => $request->published,
+            ]);
+        }
+        // job paid logic # end
     }
 
     /**
@@ -480,14 +491,13 @@ class JobController extends Controller
      * @param  \App\Models\Job\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreJobRequest $request, Job $job, SingleChargeStripeUser $SingleChargeStripeUser)
+    public function update(StoreJobRequest $request, Job $job)
     {
         // Find the current team that the user is on, rather than the team that the user is storing the job for.
         $team = Team::findOrFail($request->team["id"]);
         $this->authorize("can-create-and-update", $team);
 
         $slug = $request->slug;
-
         $title = $request->title;
         $startedAt = $request->started_at;
         $content = $request->content;
@@ -748,8 +758,7 @@ class JobController extends Controller
                 ->delete();
         }
 
-        // $createSingleCharge = $SingleChargeStripeUser->createSingleCharge($team);
-
+        // job paid logic # start
         if (!$job->is_paid && $request->published) {
             return redirect()->route("stripe.single.charge.job.create", [
                 "team" => $team->id,
@@ -757,21 +766,14 @@ class JobController extends Controller
             ]);
         }
 
-
-        //
-        //
-        //
         // if job have already been paid
         if ($job->is_paid || !$request->published) {
-
-            // $job->update([
-            //     "published" => $request->published,
-            // ]);
-
             return redirect()->route("team.jobs.index", [
                 "teamId" => $team->id,
+                "published" => $request->published,
             ]);
         }
+        // job paid logic # end
     }
 
     /**
