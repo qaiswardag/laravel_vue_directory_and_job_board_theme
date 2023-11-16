@@ -102,7 +102,7 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                                         product.route.parameters
                                     )
                                 "
-                                >{{ product.name }}
+                                >{{ product.title }}
                             </Link>
                             <Link
                                 v-if="!$page.props?.user"
