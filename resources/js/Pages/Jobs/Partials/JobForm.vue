@@ -1621,7 +1621,7 @@ const pageBuilder = new PageBuilder(store);
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                    class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-[20rem]"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
@@ -1780,7 +1780,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="country.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddCountries"
@@ -1874,7 +1874,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="state?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddStates"
@@ -1980,7 +1980,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="category?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddCategories"
@@ -2075,7 +2075,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="jobType?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddJobTypes"

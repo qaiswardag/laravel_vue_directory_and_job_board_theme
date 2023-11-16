@@ -647,7 +647,7 @@ const categoriesSorted = computed(() => {
                             :key="category.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddCategories"
@@ -763,7 +763,7 @@ const categoriesSorted = computed(() => {
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                    class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-[20rem]"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
