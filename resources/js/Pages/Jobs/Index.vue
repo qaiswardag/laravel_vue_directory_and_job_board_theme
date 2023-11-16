@@ -639,7 +639,7 @@ onMounted(() => {
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <GlobeAmericasIcon
-                                                        class="w-3 h-3 stroke-1"
+                                                        class="w-3 h-3 stroke-2"
                                                     ></GlobeAmericasIcon>
                                                     <span>
                                                         {{ jobCountry.name }}
@@ -659,7 +659,7 @@ onMounted(() => {
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <MapPinIcon
-                                                        class="w-3 h-3 stroke-1"
+                                                        class="w-3 h-3 stroke-2"
                                                     ></MapPinIcon>
                                                     <span>
                                                         {{ jobState.name }}
@@ -679,7 +679,7 @@ onMounted(() => {
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <NewspaperIcon
-                                                        class="w-3 h-3 stroke-1"
+                                                        class="w-3 h-3 stroke-2"
                                                     >
                                                     </NewspaperIcon>
                                                     <span>
@@ -720,7 +720,7 @@ onMounted(() => {
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <Squares2X2Icon
-                                                        class="w-3 h-3 stroke-1"
+                                                        class="w-3 h-3 stroke-2"
                                                     ></Squares2X2Icon>
 
                                                     <span>
@@ -745,7 +745,7 @@ onMounted(() => {
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <TagIcon
-                                                        class="w-3 h-3 stroke-1"
+                                                        class="w-3 h-3 stroke-2"
                                                     ></TagIcon>
                                                     <span>
                                                         {{ tag }}

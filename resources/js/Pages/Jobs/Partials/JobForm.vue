@@ -1504,11 +1504,11 @@ const pageBuilder = new PageBuilder(store);
             </div>
             <!-- post is filled - end -->
 
-            <!-- startet at - start -->
+            <!-- started at - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Startet at
+                        Started at
                     </div>
                 </div>
                 <!-- select - start -->
@@ -1543,7 +1543,7 @@ const pageBuilder = new PageBuilder(store);
 
                 <InputError :message="postForm.errors.started_at" />
             </div>
-            <!-- startet at - end -->
+            <!-- started at - end -->
 
             <!-- cover image - start -->
             <div class="myInputsOrganization">
