@@ -266,7 +266,7 @@ onMounted(() => {
                             id="line1"
                             name="line1"
                             placeholder="Street address.."
-                            autocomplete="off"
+                            autocomplete="line1off123"
                         />
                         <InputError :message="formSubscription.errors.line1" />
                     </div>
@@ -282,7 +282,7 @@ onMounted(() => {
                             id="line2"
                             name="line2"
                             placeholder="Apt, suite, building.."
-                            autocomplete="off"
+                            autocomplete="line2off123"
                         />
                         <InputError :message="formSubscription.errors.line2" />
                     </div>
@@ -291,16 +291,16 @@ onMounted(() => {
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
-                        <InputLabel for="country123" value="Country" />
+                        <InputLabel for="countryoff123" value="Country" />
                         <!-- Headless UI select # start -->
                         <Combobox v-model="selectedCountry">
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="country123"
-                                        id="country123"
+                                        name="countryoff123"
+                                        id="countryoff123"
                                         class="myPrimarySelect"
-                                        autocomplete="country123"
+                                        autocomplete="countryoff123"
                                         placeholder="Search.."
                                         :displayValue="
                                             (country) => {
@@ -443,6 +443,7 @@ onMounted(() => {
                             id="city"
                             v-model="formSubscription.city"
                             placeholder="City.."
+                            autocomplete="cityoff123"
                             type="text"
                         />
                         <InputError :message="formSubscription.errors.city" />
@@ -458,7 +459,7 @@ onMounted(() => {
                             id="state"
                             name="state"
                             placeholder="Province or region.."
-                            autocomplete="off"
+                            autocomplete="stateoff123"
                         />
                         <InputError :message="formSubscription.errors.state" />
                     </div>
@@ -472,7 +473,7 @@ onMounted(() => {
                             id="postal_code"
                             name="postal_code"
                             placeholder="Postal code.."
-                            autocomplete="off"
+                            autocomplete="postal_code_off123"
                         />
                         <InputError
                             :message="formSubscription.errors.postal_code"
@@ -485,7 +486,7 @@ onMounted(() => {
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
                         <InputLabel
-                            for="phone_code123"
+                            for="phone_codeoff123"
                             value="Phone country code"
                         />
                         <!-- Headless UI select # start -->
@@ -493,9 +494,9 @@ onMounted(() => {
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="phone_code123"
-                                        id="phone_code123"
-                                        autocomplete="phone_code123"
+                                        name="phone_codeoff123"
+                                        id="phone_codeoff123"
+                                        autocomplete="phone_codeoff123"
                                         class="myPrimarySelect"
                                         placeholder="Search.."
                                         :displayValue="
@@ -649,7 +650,7 @@ onMounted(() => {
                             id="phone"
                             name="phone"
                             placeholder="Phone.."
-                            autocomplete="off"
+                            autocomplete="phoneoff123"
                         />
                         <InputError :message="formSubscription.errors.phone" />
                     </div>
@@ -668,16 +669,16 @@ onMounted(() => {
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
-                        <InputLabel for="vat_id123" value="Vat id " />
+                        <InputLabel for="vat_idoff123" value="Vat id " />
                         <!-- Headless UI select # start -->
                         <Combobox v-model="selectedVatId">
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="vat_id123"
-                                        id="vat_id123"
+                                        name="vat_idoff123"
+                                        id="vat_idoff123"
                                         class="myPrimarySelect"
-                                        autocomplete="vat_id123"
+                                        autocomplete="vat_idoff123"
                                         placeholder="Search.."
                                         :displayValue="
                                             (country) => {
@@ -823,7 +824,7 @@ onMounted(() => {
                             id="vat_number"
                             name="vat_number"
                             placeholder="Vat number.."
-                            autocomplete="off"
+                            autocomplete="vat_numberoff123"
                         />
                         <InputError
                             :message="formSubscription.errors.vat_number"

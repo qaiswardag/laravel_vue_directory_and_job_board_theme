@@ -31,6 +31,7 @@ class StoreChargeFormRequest extends FormRequest
             "price_identifier_stripe" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
             "city" => ["required", "string", "min:2", "max:255", "nullable"],
+            "state" => ["string", "min:2", "max:255", "nullable"],
             "postal_code" => [
                 "required",
                 "string",
