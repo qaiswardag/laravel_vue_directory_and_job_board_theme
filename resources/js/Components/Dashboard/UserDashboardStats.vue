@@ -488,7 +488,7 @@ onMounted(() => {
 
                     <!-- column charts # start -->
                     <div
-                        class="lg:col-span-12 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                     >
                         <div class="border-b border-gray-200 mb-8 pb-2">
                             <div
@@ -503,7 +503,7 @@ onMounted(() => {
                     <!-- column charts # end -->
                     <!-- column stats # start -->
                     <div
-                        class="lg:col-span-12 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                     >
                         <div class="border-b border-gray-200 mb-8 pb-2">
                             <div
@@ -513,40 +513,7 @@ onMounted(() => {
                             </div>
                         </div>
 
-                        <div
-                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
-                        >
-                            <div class="mx-auto">
-                                <h3 class="myFourthHeader">
-                                    Trusted by thousands of
-                                    creators&nbsp;worldwide
-                                </h3>
-                                <p class="myPrimaryParagrph">
-                                    Lorem ipsum, dolor sit amet consectetur
-                                    adipisicing elit. Maiores impedit
-                                    perferendis suscipit eaque, iste dolor
-                                    cupiditate blanditiis ratione.
-                                </p>
-                                <dl
-                                    class="mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 xl:mt-16"
-                                >
-                                    <div
-                                        v-for="stat in stats"
-                                        :key="stat.id"
-                                        class="flex flex-col gap-y-3 border-l border-gray-900/10 pl-6"
-                                    >
-                                        <dt class="myPrimaryParagraph">
-                                            {{ stat.name }}
-                                        </dt>
-                                        <dd
-                                            class="order-first text-3xl font-semibold tracking-tight text-gray-900"
-                                        >
-                                            {{ stat.value }}
-                                        </dd>
-                                    </div>
-                                </dl>
-                            </div>
-                        </div>
+                        <ChartDefault></ChartDefault>
                     </div>
                     <!-- column stats # end -->
                 </div>

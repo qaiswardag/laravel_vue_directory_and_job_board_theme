@@ -1,141 +1,187 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/vue/20/solid";
 
+const stats = [
+    { name: "Number of deploys", value: "405+" },
+    { name: "Average deploy time", value: "3.65", unit: "mins" },
+    { name: "Number of servers", value: "3", unit: "mins" },
+    { name: "Success rate", value: "98.5%" },
+];
+
+// create charts
 const chart = ref(null);
+onMounted(async () => {
+    console.log(`chart.value:`, chart?.value);
 
-onMounted(() => {
-    chart.value.outerHTML = "<p>Hello world. Display Charts here.</p>";
+    if (chart?.value) {
+        chart.value.outerHTML = "<p>Hello world. Display Charts here.</p>";
+
+        //
+        //
+        //
+        //
+        //chart data
+        var chartjson = {
+            title: "Students Academic Scores",
+            data: [
+                {
+                    name: "Kerry",
+                    score: 20,
+                },
+                {
+                    name: "Teegan",
+                    score: 73,
+                },
+                {
+                    name: "Jamalia",
+                    score: 20,
+                },
+                {
+                    name: "Quincy",
+                    score: 89,
+                },
+                {
+                    name: "Darryl",
+                    score: 24,
+                },
+                {
+                    name: "Jescie",
+                    score: 86,
+                },
+                {
+                    name: "Quemby",
+                    score: 96,
+                },
+                {
+                    name: "McKenzie",
+                    score: 71,
+                },
+            ],
+            xtitle: "Secured Marks",
+            ytitle: "Marks",
+            ymax: 100,
+            ykey: "score",
+            xkey: "name",
+            prefix: "%",
+        };
+
+        //chart colors
+        var colors = [
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+            "six",
+            "seven",
+            "eight",
+            "nine",
+            "ten",
+            "eleven",
+            "twelve",
+            "thirteen",
+            "fourteen",
+        ];
+
+        //constants
+        var TROW = "tr",
+            TDATA = "td";
+
+        var chart = document.createElement("div");
+        //create the chart canvas
+        var barchart = document.createElement("table");
+        //create the title row
+        var titlerow = document.createElement(TROW);
+        //create the title data
+        var titledata = document.createElement(TDATA);
+        //make the colspan to number of records
+        titledata.setAttribute("colspan", chartjson.data.length + 1);
+        titledata.setAttribute("class", "charttitle");
+        titledata.innerText = chartjson.title;
+        titlerow.appendChild(titledata);
+        barchart.appendChild(titlerow);
+        chart.appendChild(barchart);
+
+        //create the bar row
+        var barrow = document.createElement(TROW);
+
+        //lets add data to the chart
+        for (var i = 0; i < chartjson.data.length; i++) {
+            barrow.setAttribute("class", "bars");
+            var prefix = chartjson.prefix || "";
+            //create the bar data
+            var bardata = document.createElement(TDATA);
+            var bar = document.createElement("div");
+            bar.setAttribute("class", colors[i]);
+            bar.style.height = chartjson.data[i][chartjson.ykey] + prefix;
+            bardata.innerText = chartjson.data[i][chartjson.ykey] + prefix;
+            bardata.appendChild(bar);
+            barrow.appendChild(bardata);
+        }
+
+        //create legends
+        var legendrow = document.createElement(TROW);
+        var legend = document.createElement(TDATA);
+        legend.setAttribute("class", "legend");
+        legend.setAttribute("colspan", chartjson.data.length);
+
+        //add legend data
+        for (var i = 0; i < chartjson.data.length; i++) {
+            var legbox = document.createElement("span");
+            legbox.setAttribute("class", "legbox");
+            var barname = document.createElement("span");
+            barname.setAttribute("class", colors[i] + " xaxisname");
+            var bartext = document.createElement("span");
+            bartext.innerText = chartjson.data[i][chartjson.xkey];
+            legbox.appendChild(barname);
+            legbox.appendChild(bartext);
+            legend.appendChild(legbox);
+        }
+        barrow.appendChild(legend);
+        barchart.appendChild(barrow);
+        barchart.appendChild(legendrow);
+        console.log(`er:`, chart.value);
+        chart.value.appendChild(barchart);
+    }
 });
 </script>
 
 <template>
     <div ref="chart"></div>
+
+    <div class="mx-auto">
+        <h3 class="myFourthHeader">
+            Trusted by thousands of creators&nbsp;worldwide
+        </h3>
+        <p class="myPrimaryParagrph">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
+            impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis
+            ratione.
+        </p>
+        <div class="mt-8 bg-gray-900 rounded">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
+                <div
+                    v-for="stat in stats"
+                    :key="stat.name"
+                    class="px-4 py-6 sm:px-6 lg:px-8"
+                >
+                    <p class="text-sm font-medium leading-6 text-gray-400">
+                        {{ stat.name }}
+                    </p>
+                    <p class="mt-2 flex items-baseline gap-x-2">
+                        <span
+                            class="text-4xl font-semibold tracking-tight text-white"
+                            >{{ stat.value }}</span
+                        >
+                        <span v-if="stat.unit" class="text-sm text-gray-400">{{
+                            stat.unit
+                        }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
-<style scoped>
-#chart {
-    padding: 20px;
-}
-
-table {
-    width: 100%;
-    height: 400px;
-}
-
-.charttitle {
-    text-align: center;
-}
-
-.bars td {
-    vertical-align: bottom;
-}
-
-.bars div:hover {
-    opacity: 0.6;
-}
-
-.legend {
-    vertical-align: bottom;
-    padding-left: 20px;
-    text-align: left;
-}
-
-.legbox {
-    display: block;
-    clear: both;
-}
-
-.xaxisname {
-    margin: 5px;
-    color: #fff;
-    font-size: 77%;
-    padding: 5px;
-    float: left;
-}
-
-/*Flat UI colors*/
-
-.one {
-    background: #16a085;
-}
-
-.two {
-    background: #2ecc71;
-}
-
-.three {
-    background: #27ae60;
-}
-
-.four {
-    background: #3498db;
-}
-
-.five {
-    background: #2980b9;
-}
-
-.six {
-    background: #9b59b6;
-}
-
-.seven {
-    background: #8e44ad;
-}
-
-.eight {
-    background: #34495e;
-}
-
-.nine {
-    background: #2c3e50;
-}
-
-.ten {
-    background: #22313f;
-}
-
-.eleven {
-    background: #f1c40f;
-}
-
-.twelve {
-    background: #f39c12;
-}
-
-.thirteen {
-    background: #e67e22;
-}
-
-.fourteen {
-    background: #d35400;
-}
-
-.fifteen {
-    background: #e74c3c;
-}
-
-.sixteen {
-    background: #c0392b;
-}
-
-.seventeen {
-    background: #ecf0f1;
-}
-
-.seventeen.clouds {
-    color: #bdc3c7;
-}
-
-.eighteen {
-    background: #bdc3c7;
-}
-
-.nineteen {
-    background: #95a5a6;
-}
-
-.twenty {
-    background: #7f8c8d;
-}
-</style>
+<style scoped></style>
