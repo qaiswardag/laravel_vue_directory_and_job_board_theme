@@ -19,6 +19,7 @@ import {
     NewspaperIcon,
     XMarkIcon,
     ChevronUpDownIcon,
+    MinusIcon,
     PlusIcon,
     InformationCircleIcon,
 } from "@heroicons/vue/24/outline";
@@ -912,103 +913,117 @@ onMounted(() => {
                                     </div>
 
                                     <div
-                                        class="flex gap-2 justify-between items-start border-t border-gray-400 pt-2"
+                                        class="flex items-center gap-2 mt-4 border-t border-gray-200"
                                     >
-                                        <div></div>
-                                        <div>
-                                            <button
-                                                class="myPrimaryTag transition mt-0"
-                                                v-if="
-                                                    selectedProduct?.id !==
-                                                    product.id
-                                                "
-                                                type="button"
-                                                @click="
-                                                    handleSelectProduct(product)
-                                                "
-                                            >
-                                                <span> Select </span>
-                                            </button>
-                                            <button
-                                                class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
-                                                v-if="
-                                                    selectedProduct?.id ===
-                                                    product.id
-                                                "
-                                                type="button"
-                                                @click="
-                                                    handleSelectProduct(product)
-                                                "
+                                        <!-- product quantity # start  -->
+                                        <div class="2/3">
+                                            <InputLabel
+                                                for="product_quantity"
+                                                value="Store quantity"
+                                            />
+                                            <!-- Input Number -->
+                                            <div
+                                                class="myPrimaryInput p-0"
+                                                data-hs-input-number
                                             >
                                                 <div
-                                                    class="flex items-center justify-center gap-2"
+                                                    class="w-full flex gap-2 justify-between items-center"
                                                 >
-                                                    <span> Selected</span>
-                                                    <CheckIcon
-                                                        class="w-3 h-3 stroke-2"
-                                                    ></CheckIcon>
+                                                    <input
+                                                        placeholder="Store quantity.."
+                                                        id="product_quantity"
+                                                        v-model="
+                                                            formCharge.product_quantity
+                                                        "
+                                                        class="myPrimaryInputNoBorder mt-0"
+                                                        autocomplete="off"
+                                                    />
+                                                    <div
+                                                        class="flex items-center"
+                                                    >
+                                                        <button
+                                                            @click="
+                                                                removeFromProductQuantity
+                                                            "
+                                                            type="button"
+                                                            class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                        >
+                                                            <MinusIcon
+                                                                class="mySmallIcon"
+                                                            ></MinusIcon>
+                                                        </button>
+                                                        <button
+                                                            @click="
+                                                                addToProductQuantity
+                                                            "
+                                                            type="button"
+                                                            class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                        >
+                                                            <PlusIcon
+                                                                class="mySmallIcon"
+                                                            ></PlusIcon>
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- product quantity # start  -->
-                                <div class="myInputGroup md:w-1/3">
-                                    <InputLabel
-                                        for="floor"
-                                        value="Store floor"
-                                    />
-                                    <!-- Input Number -->
-                                    <div
-                                        class="myPrimaryInput p-0"
-                                        data-hs-input-number
-                                    >
-                                        <div
-                                            class="w-full flex gap-2 justify-between items-center"
-                                        >
-                                            <input
-                                                placeholder="Enter store floor.."
-                                                id="floor"
-                                                v-model="
-                                                    formCharge.product_quantity
+                                            </div>
+                                            <!-- End Input Number -->
+                                            <InputError
+                                                :message="
+                                                    formCharge.errors
+                                                        .product_quantity
                                                 "
-                                                class="myPrimaryInputNoBorder mt-0"
-                                                autocomplete="off"
                                             />
-                                            <div class="flex items-center">
+                                        </div>
+                                        <!-- product quantity # end  -->
+
+                                        <!-- select product # start -->
+                                        <div
+                                            class="flex gap-2 justify-between items-start w-1/3"
+                                        >
+                                            <div></div>
+                                            <div>
                                                 <button
-                                                    @click="
-                                                        removeFromProductQuantity
+                                                    class="myPrimaryTag transition mt-0 mb-0 break-keep w-max"
+                                                    v-if="
+                                                        selectedProduct?.id !==
+                                                        product.id
                                                     "
                                                     type="button"
-                                                    class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                    @click="
+                                                        handleSelectProduct(
+                                                            product
+                                                        )
+                                                    "
                                                 >
-                                                    <MinusIcon
-                                                        class="mySmallIcon"
-                                                    ></MinusIcon>
+                                                    <span> Select </span>
                                                 </button>
                                                 <button
-                                                    @click="
-                                                        addToProductQuantity
+                                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0 mb-0 break-keep w-max"
+                                                    v-if="
+                                                        selectedProduct?.id ===
+                                                        product.id
                                                     "
                                                     type="button"
-                                                    class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                    @click="
+                                                        handleSelectProduct(
+                                                            product
+                                                        )
+                                                    "
                                                 >
-                                                    <PlusIcon
-                                                        class="mySmallIcon"
-                                                    ></PlusIcon>
+                                                    <div
+                                                        class="flex items-center justify-center gap-2"
+                                                    >
+                                                        <span> Selected</span>
+                                                        <CheckIcon
+                                                            class="w-3 h-3 stroke-2"
+                                                        ></CheckIcon>
+                                                    </div>
                                                 </button>
                                             </div>
                                         </div>
+                                        <!-- select product # end -->
                                     </div>
-                                    <!-- End Input Number -->
-                                    <InputError
-                                        :message="
-                                            formCharge.errors.product_quantity
-                                        "
-                                    />
                                 </div>
-                                <!-- product quantity # end  -->
                             </div>
                         </div>
                     </div>
