@@ -1259,15 +1259,17 @@ const pageBuilder = new PageBuilder(store);
                                     <div
                                         class="flex justify-left items-center gap-2"
                                     >
-                                        <img
-                                            @click="handleUploadCoverImage"
-                                            :src="`/storage/uploads/${image?.thumbnail_path}`"
-                                            alt="image"
-                                            class="myPrimarythumbnailInsertPreview"
-                                        />
+                                        <div class="flex-shrink-0">
+                                            <img
+                                                @click="handleUploadCoverImage"
+                                                :src="`/storage/uploads/${image?.thumbnail_path}`"
+                                                alt="image"
+                                                class="myPrimarythumbnailInsertPreview"
+                                            />
+                                        </div>
 
                                         <button
-                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white break-keep"
                                             v-if="
                                                 image?.pivot?.primary &&
                                                 postForm.cover_image.length > 1
@@ -1287,7 +1289,7 @@ const pageBuilder = new PageBuilder(store);
                                             </div>
                                         </button>
                                         <button
-                                            class="myPrimaryTag transition bg-white"
+                                            class="myPrimaryTag transition bg-white break-keep"
                                             v-if="
                                                 !image?.pivot?.primary &&
                                                 postForm.cover_image?.length > 1

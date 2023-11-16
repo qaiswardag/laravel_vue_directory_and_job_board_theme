@@ -564,15 +564,17 @@ onBeforeMount(() => {
                                     <div
                                         class="flex justify-left items-center gap-2"
                                     >
-                                        <img
-                                            @click="handleUploadLogo"
-                                            :src="`/storage/uploads/${image?.thumbnail_path}`"
-                                            alt="image"
-                                            class="myPrimarythumbnailInsertPreview"
-                                        />
+                                        <div class="flex-shrink-0">
+                                            <img
+                                                @click="handleUploadLogo"
+                                                :src="`/storage/uploads/${image?.thumbnail_path}`"
+                                                alt="image"
+                                                class="myPrimarythumbnailInsertPreview"
+                                            />
+                                        </div>
 
                                         <button
-                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white break-keep"
                                             v-if="
                                                 image?.pivot?.primary &&
                                                 postForm.logo.length > 1
@@ -592,7 +594,7 @@ onBeforeMount(() => {
                                             </div>
                                         </button>
                                         <button
-                                            class="myPrimaryTag transition bg-white"
+                                            class="myPrimaryTag transition bg-white break-keep"
                                             v-if="
                                                 !image?.pivot?.primary &&
                                                 postForm.logo?.length > 1
@@ -724,12 +726,14 @@ onBeforeMount(() => {
                                     <div
                                         class="flex justify-left items-center gap-2"
                                     >
-                                        <img
-                                            @click="handleUploadCoverImage"
-                                            :src="`/storage/uploads/${image?.thumbnail_path}`"
-                                            alt="image"
-                                            class="myPrimarythumbnailInsertPreview"
-                                        />
+                                        <div class="flex-shrink-0">
+                                            <img
+                                                @click="handleUploadCoverImage"
+                                                :src="`/storage/uploads/${image?.thumbnail_path}`"
+                                                alt="image"
+                                                class="myPrimarythumbnailInsertPreview"
+                                            />
+                                        </div>
 
                                         <button
                                             class="myPrimaryTag bg-myPrimaryLinkColor text-white"
