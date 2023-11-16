@@ -12,7 +12,7 @@ const storeSubscriptionPrices = [
         frequencies: "monthly",
         billed: "Billed every month",
         title: "&nbsp;",
-        description: "The essentials to provide your best work for clients.",
+        description: "Affordable & with all features.",
         features: ["5 products", "Up to 1,000 subscribers", "Basic analytics"],
         mostPopular: true,
     },
@@ -29,7 +29,7 @@ const storeSubscriptionPrices = [
         frequencies: "monthly",
         billed: "Billed every month",
         title: "Most popular",
-        description: "The essentials to provide your best work for clients.",
+        description: "Affordable & with all features.",
         features: [
             "5 products",
             "Up to 1,000 subscribers",
@@ -51,7 +51,7 @@ const storeSubscriptionPrices = [
         frequencies: "monthly",
         billed: "Billed every month",
         title: "Entreprice",
-        description: "A plan that scales with your rapidly growing business.",
+        description: "A plan that scales with your business.",
         features: [
             "25 products",
             "Up to 10,000 subscribers",

@@ -42,7 +42,7 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                 </template>
                 <template #content>
                     <div
-                        class="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 md:max-w-2xl md:grid-cols-2 lg:max-w-4xl xl:mx-0 xl:max-w-none xl:grid-cols-4"
+                        class="isolate mx-auto mt-10 grid grid-cols-1 gap-8 md:grid-cols-3 xl:grid-cols-3"
                     >
                         <div
                             v-for="product in storeSubscriptionPrices"
