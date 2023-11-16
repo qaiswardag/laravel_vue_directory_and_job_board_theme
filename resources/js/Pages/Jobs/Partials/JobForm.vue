@@ -1411,21 +1411,25 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Is filled</div>
+                    <p class="myPrimaryParagraph">
+                        {{
+                            postForm.is_filled
+                                ? "Job is displayed with is filled tag."
+                                : "Job is open for new applications."
+                        }}
+                    </p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
                 >
                     <InputLabel
-                        :value="
-                            postForm.is_filled
-                                ? 'Is filled'
-                                : 'Open for applications'
-                        "
+                        :value="postForm.is_filled ? 'Filled' : 'Not filled'"
                         :class="{
                             'text-myPrimaryLinkColor': !postForm.is_filled,
                             'text-myPrimaryErrorColor': postForm.is_filled,
                         }"
                     />
+
                     <Switch
                         v-model="postForm.is_filled"
                         :class="[

@@ -12,7 +12,7 @@ const stats = [
 // create charts
 const chart = ref(null);
 onMounted(async () => {
-    console.log(`chart.value:`, chart?.value);
+    // console.log(`chart.value:`, chart?.value);
 
     if (chart?.value) {
         chart.value.outerHTML = "<p>Hello world. Display Charts here.</p>";
