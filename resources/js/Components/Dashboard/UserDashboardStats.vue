@@ -105,7 +105,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FullWidthElement :descriptionArea="true">
+    <FullWidthElement :descriptionArea="true" class="bg-red-50">
         <template #title>Latest team resources</template>
         <template #description>
             You are currently viewing the latest resources uploaded by your
@@ -555,7 +555,8 @@ onMounted(() => {
         </template>
     </FullWidthElement>
 
-    <FullWidthElement :descriptionArea="true">
+    <!-- user object # start -->
+    <FullWidthElement :descriptionArea="true" class="bg-indigo-50">
         <template #title
             >Details about the logged-in user and team insights</template
         >
@@ -566,7 +567,7 @@ onMounted(() => {
         </template>
         <template #content>
             <div class="grid grid-cols-1 md:grid-cols-12 lg:gap-12 gap-18">
-                <div class="col-span-1 md:col-span-8">
+                <div class="col-span-1 md:col-span-12">
                     <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
                         Details about the logged-in user
                     </h2>
@@ -608,15 +609,6 @@ onMounted(() => {
                         </Disclosure>
                     </dl>
                 </div>
-
-                <div class="col-span-1 md:col-span-4">
-                    <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
-                        Somthing here
-                    </h2>
-                    <div>
-                        <p class="myPrimaryParagraph">Details here</p>
-                    </div>
-                </div>
             </div>
             <MediaLibraryModal
                 :user="user"
@@ -634,4 +626,5 @@ onMounted(() => {
             </MediaLibraryModal>
         </template>
     </FullWidthElement>
+    <!-- user object # end -->
 </template>
