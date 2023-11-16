@@ -974,6 +974,13 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
+                    <p class="myPrimaryParagraph">
+                        {{
+                            postForm.published
+                                ? "Public and accessible for public viewing."
+                                : "Private and not accessible for public viewing."
+                        }}
+                    </p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"

@@ -669,6 +669,13 @@ onMounted(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
+                    <p class="myPrimaryParagraph">
+                        {{
+                            form.public
+                                ? "Public and accessible for public viewing."
+                                : "Private and not accessible for public viewing."
+                        }}
+                    </p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
