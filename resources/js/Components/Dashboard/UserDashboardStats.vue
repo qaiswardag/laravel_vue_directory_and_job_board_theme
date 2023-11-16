@@ -1,5 +1,6 @@
 <script setup>
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
+import PostCardLoggedIn from "@/Components/Cards/PostCardLoggedIn.vue";
 import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/vue/24/outline";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import EmptySectionBorder from "@/Components/Sections/EmptySectionBorder.vue";
@@ -8,6 +9,7 @@ import { onMounted, computed, ref } from "vue";
 import { parseISO, format } from "date-fns";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
+import ChartDefault from "@/Components/Charts/ChartDefault.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 import { router } from "@inertiajs/vue3";
@@ -94,20 +96,6 @@ const stats = [
     { id: 3, name: "Uptime guarantee", value: "99.9%" },
     { id: 4, name: "Paid out to creators", value: "$70M" },
 ];
-
-const goToSinglePost = function (current_teamId, postId, postSlug) {
-    router.get(
-        route("team.posts.post.show", [current_teamId, postSlug, postId])
-    );
-};
-const goToSingleJob = function (current_teamId, postId, postSlug) {
-    router.get(route("team.jobs.job.show", [current_teamId, postSlug, postId]));
-};
-const goToSingleStore = function (current_teamId, postSlug, postId) {
-    router.get(
-        route("team.stores.store.show", [current_teamId, postId, postSlug])
-    );
-};
 
 onMounted(() => {
     store.dispatch("userDashboard/loadDashboardStats", {
@@ -374,55 +362,11 @@ onMounted(() => {
                                     :key="post.id"
                                     class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
                                 >
-                                    <!-- start photo -->
-
-                                    <template
-                                        v-if="
-                                            post && post.cover_images !== null
-                                        "
-                                    >
-                                        <ThumbnailSmallImageSlider
-                                            :images="post.cover_images"
-                                            imageSize="medium_path"
-                                            imageHeight="max-h-96"
-                                            imageWidth="w-full object-cover"
-                                            :roundedFull="false"
-                                            :squareButtons="true"
-                                            @firstButtonClick="
-                                                goToSinglePost(
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.id,
-                                                    post.slug
-                                                )
-                                            "
-                                            :imageClickable="true"
-                                        ></ThumbnailSmallImageSlider>
-                                    </template>
-
-                                    <div class="px-2 pt-4 pb-2">
-                                        <Link
-                                            :href="
-                                                route('team.posts.post.show', [
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.slug,
-                                                    post.id,
-                                                ])
-                                            "
-                                        >
-                                            <p
-                                                class="text-sm font-medium mt-2 mb-2"
-                                            >
-                                                {{ post.title.slice(0, 25)
-                                                }}{{
-                                                    post.title.length > 25
-                                                        ? ".."
-                                                        : ""
-                                                }}
-                                            </p>
-                                        </Link>
-                                    </div>
+                                    <PostCardLoggedIn
+                                        :post="post"
+                                        postListPathName="posts"
+                                        postSinglePathName="post"
+                                    ></PostCardLoggedIn>
                                 </li>
                             </ul>
                         </div>
@@ -474,53 +418,11 @@ onMounted(() => {
                                 >
                                     <!-- start photo -->
 
-                                    <template
-                                        v-if="
-                                            post && post.cover_images !== null
-                                        "
-                                    >
-                                        <ThumbnailSmallImageSlider
-                                            :images="post.cover_images"
-                                            imageSize="medium_path"
-                                            imageHeight="max-h-96"
-                                            imageWidth="w-full object-cover"
-                                            :roundedFull="false"
-                                            :squareButtons="true"
-                                            @firstButtonClick="
-                                                goToSingleJob(
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.id,
-                                                    post.slug
-                                                )
-                                            "
-                                            :imageClickable="true"
-                                        ></ThumbnailSmallImageSlider>
-                                    </template>
-
-                                    <div class="px-2 pt-4 pb-2">
-                                        <Link
-                                            :href="
-                                                route('team.jobs.job.show', [
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.slug,
-                                                    post.id,
-                                                ])
-                                            "
-                                        >
-                                            <p
-                                                class="text-sm font-medium mt-2 mb-2"
-                                            >
-                                                {{ post.title.slice(0, 25)
-                                                }}{{
-                                                    post.title.length > 25
-                                                        ? ".."
-                                                        : ""
-                                                }}
-                                            </p>
-                                        </Link>
-                                    </div>
+                                    <PostCardLoggedIn
+                                        :post="post"
+                                        postListPathName="jobs"
+                                        postSinglePathName="job"
+                                    ></PostCardLoggedIn>
                                 </li>
                             </ul>
                         </div>
@@ -573,62 +475,32 @@ onMounted(() => {
                                 >
                                     <!-- start photo -->
 
-                                    <template
-                                        v-if="
-                                            post && post.cover_images !== null
-                                        "
-                                    >
-                                        <ThumbnailSmallImageSlider
-                                            :images="post.cover_images"
-                                            imageSize="medium_path"
-                                            imageHeight="max-h-96"
-                                            imageWidth="w-full object-cover"
-                                            :roundedFull="false"
-                                            :squareButtons="true"
-                                            @firstButtonClick="
-                                                goToSingleStore(
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.id,
-                                                    post.slug
-                                                )
-                                            "
-                                            :imageClickable="true"
-                                        ></ThumbnailSmallImageSlider>
-                                    </template>
-
-                                    <div class="px-2 pt-4 pb-2">
-                                        <Link
-                                            :href="
-                                                route(
-                                                    'team.stores.store.show',
-                                                    [
-                                                        $page.props.user
-                                                            .current_team.id,
-                                                        post.slug,
-                                                        post.id,
-                                                    ]
-                                                )
-                                            "
-                                        >
-                                            <p
-                                                class="text-sm font-medium mt-2 mb-2"
-                                            >
-                                                {{ post.title.slice(0, 25)
-                                                }}{{
-                                                    post.title.length > 25
-                                                        ? ".."
-                                                        : ""
-                                                }}
-                                            </p>
-                                        </Link>
-                                    </div>
+                                    <PostCardLoggedIn
+                                        :post="post"
+                                        postListPathName="stores"
+                                        postSinglePathName="store"
+                                    ></PostCardLoggedIn>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <!-- column stores # end -->
 
+                    <!-- column charts # start -->
+                    <div
+                        class="lg:col-span-12 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    >
+                        <div class="border-b border-gray-200 mb-8 pb-2">
+                            <div
+                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            >
+                                Latest Team Stats
+                            </div>
+                        </div>
+
+                        <ChartDefault></ChartDefault>
+                    </div>
+                    <!-- column charts # end -->
                     <!-- column stats # start -->
                     <div
                         class="lg:col-span-12 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
