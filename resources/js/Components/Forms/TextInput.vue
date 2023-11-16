@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
-defineProps({
+const props = defineProps({
     modelValue: String,
 });
 
@@ -21,7 +21,7 @@ defineExpose({ focus: () => input.value.focus() });
 <template>
     <input
         ref="input"
-        class="myPrimaryInput mt-1"
+        class="myPrimaryInput"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
     />

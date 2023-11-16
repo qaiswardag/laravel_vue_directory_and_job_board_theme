@@ -695,7 +695,7 @@ onMounted(async () => {
                             v-model="form.name"
                             type="text"
                             autocomplete="off"
-                            class="block w-full mt-1"
+                            class="block w-full"
                         />
 
                         <!-- Stripe Elements Placeholder -->

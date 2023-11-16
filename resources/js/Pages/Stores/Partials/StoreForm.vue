@@ -44,6 +44,7 @@ import {
     MapPinIcon,
     PlusIcon,
     FolderPlusIcon,
+    MinusIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -493,6 +494,26 @@ const clearForm = function () {
     localStorage.removeItem(pathLocalStorage);
     localStorage.removeItem(pathPageBuilderLocalStorageCreate);
     store.commit("pageBuilderState/setComponents", []);
+};
+
+const removeFromFloor = function () {
+    if (isNaN(postForm.floor)) {
+        postForm.floor = 0;
+    }
+
+    if (typeof postForm.floor === "number" && postForm.floor < 1) {
+        postForm.floor = 1;
+    }
+    postForm.floor--;
+};
+const addToFloor = function () {
+    if (isNaN(postForm.floor)) {
+        postForm.floor = 0;
+    }
+    if (typeof postForm.floor === "number" && postForm.floor < 1) {
+        postForm.floor = 0;
+    }
+    postForm.floor++;
 };
 
 const clearPageBuilderOnSuccessUpdate = function () {
@@ -958,7 +979,7 @@ const pageBuilder = new PageBuilder(store);
                         id="title"
                         v-model="postForm.title"
                         type="text"
-                        class="block w-full mt-1"
+                        class="block w-full"
                         autocomplete="off"
                     />
                     <InputError :message="postForm.errors.title" />
@@ -974,7 +995,7 @@ const pageBuilder = new PageBuilder(store);
                                 id="slug"
                                 v-model="slugValueTitle"
                                 type="text"
-                                class="block w-full mt-1 myPrimaryInputReadonly"
+                                class="block w-full myPrimaryInputReadonly"
                                 readonly
                                 autocomplete="off"
                             />
@@ -997,7 +1018,7 @@ const pageBuilder = new PageBuilder(store);
                                 id="slug"
                                 v-model="slugValueCustom"
                                 type="text"
-                                class="block w-full mt-1"
+                                class="block w-full"
                                 autocomplete="off"
                             />
                             <div
@@ -1026,21 +1047,49 @@ const pageBuilder = new PageBuilder(store);
                             id="address"
                             v-model="postForm.address"
                             type="text"
-                            class="block w-full mt-1"
+                            class="block w-full"
                             autocomplete="off"
                         />
                         <InputError :message="postForm.errors.address" />
                     </div>
                     <div class="myInputGroup md:w-1/3">
                         <InputLabel for="floor" value="Store floor" />
-                        <TextInput
-                            placeholder="Enter store floor.."
-                            type="number"
-                            id="floor"
-                            v-model="postForm.floor"
-                            class="block w-full mt-1"
-                            autocomplete="off"
-                        />
+
+                        <!-- Input Number -->
+                        <div class="myPrimaryInput p-0" data-hs-input-number>
+                            <div
+                                class="w-full flex gap-2 justify-between items-center"
+                            >
+                                <input
+                                    placeholder="Enter store floor.."
+                                    id="floor"
+                                    v-model="postForm.floor"
+                                    class="myPrimaryInputNoBorder mt-0"
+                                    autocomplete="off"
+                                />
+                                <div class="flex items-center">
+                                    <button
+                                        @click="removeFromFloor"
+                                        type="button"
+                                        class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                    >
+                                        <MinusIcon
+                                            class="mySmallIcon"
+                                        ></MinusIcon>
+                                    </button>
+                                    <button
+                                        @click="addToFloor"
+                                        type="button"
+                                        class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                    >
+                                        <PlusIcon
+                                            class="mySmallIcon"
+                                        ></PlusIcon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Input Number -->
                         <InputError :message="postForm.errors.floor" />
                     </div>
                 </div>

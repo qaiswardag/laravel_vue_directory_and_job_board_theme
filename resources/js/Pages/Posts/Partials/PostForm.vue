@@ -869,7 +869,7 @@ const pageBuilder = new PageBuilder(store);
                         id="title"
                         v-model="postForm.title"
                         type="text"
-                        class="block w-full mt-1"
+                        class="block w-full"
                         autocomplete="off"
                     />
                     <InputError :message="postForm.errors.title" />
@@ -885,7 +885,7 @@ const pageBuilder = new PageBuilder(store);
                                 id="slug"
                                 v-model="slugValueTitle"
                                 type="text"
-                                class="block w-full mt-1 myPrimaryInputReadonly"
+                                class="block w-full myPrimaryInputReadonly"
                                 readonly
                                 autocomplete="off"
                             />
@@ -908,7 +908,7 @@ const pageBuilder = new PageBuilder(store);
                                 id="slug"
                                 v-model="slugValueCustom"
                                 type="text"
-                                class="block w-full mt-1"
+                                class="block w-full"
                                 autocomplete="off"
                             />
                             <div

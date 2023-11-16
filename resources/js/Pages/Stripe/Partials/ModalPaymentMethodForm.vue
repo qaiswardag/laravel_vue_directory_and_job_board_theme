@@ -280,7 +280,7 @@ onMounted(async () => {
                                     v-model="form.name"
                                     type="text"
                                     autocomplete="off"
-                                    class="block w-full mt-1"
+                                    class="block w-full"
                                 />
                                 <InputError :message="form.errors.name" />
                             </div>
@@ -293,7 +293,7 @@ onMounted(async () => {
                                 placeholder="Email.."
                                 v-model="form.email"
                                 type="email"
-                                class="block w-full mt-1"
+                                class="block w-full"
                             />
                             <InputError :message="form.errors.email" />
                         </div>
@@ -494,7 +494,7 @@ onMounted(async () => {
                                     v-model="form.city"
                                     type="text"
                                     autocomplete="off"
-                                    class="block w-full mt-1"
+                                    class="block w-full"
                                 />
                                 <InputError :message="form.errors.city" />
                             </div>
@@ -509,7 +509,7 @@ onMounted(async () => {
                                     v-model="form.postal_code"
                                     type="text"
                                     autocomplete="off"
-                                    class="block w-full mt-1"
+                                    class="block w-full"
                                 />
                                 <InputError
                                     :message="form.errors.postal_code"

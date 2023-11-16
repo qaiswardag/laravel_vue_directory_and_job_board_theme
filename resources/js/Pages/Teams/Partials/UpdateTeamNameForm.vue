@@ -365,7 +365,7 @@ onBeforeMount(() => {
                             id="slug"
                             v-model="slugValueTeamName"
                             type="text"
-                            class="block w-full mt-1 myPrimaryInputReadonly"
+                            class="block w-full myPrimaryInputReadonly"
                             readonly
                             autocomplete="off"
                         />
@@ -388,7 +388,7 @@ onBeforeMount(() => {
                             id="slug"
                             v-model="slugValueCustom"
                             type="text"
-                            class="block w-full mt-1"
+                            class="block w-full"
                             autocomplete="off"
                         />
                         <div

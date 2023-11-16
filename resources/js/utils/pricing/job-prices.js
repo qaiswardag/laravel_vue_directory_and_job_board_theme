@@ -4,6 +4,7 @@ const jobPrices = [
     {
         name: "Single Job Posting",
         id: "single_job_post",
+        dynamic_product: false,
         priceIdentifierStripe: "price_1OBetvEuESfVmAWohyRBJN5A",
         price: "$150",
         title: "&nbsp;",

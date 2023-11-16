@@ -26,7 +26,7 @@ class StoreChargeFormRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            "next_route_name" => ["required", "string", "min:2", "max:255"],
+            "next_route_name" => ["string", "min:2", "max:255"],
             "product_id" => ["required", "string", "min:2", "max:255"],
             "price_identifier_stripe" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
@@ -44,6 +44,7 @@ class StoreChargeFormRequest extends FormRequest
 
             "vat_id" => ["string", "min:2", "max:255", "nullable"],
             "vat_number" => ["string", "min:2", "max:255", "nullable"],
+            "dynamic_product" => ["boolean"],
         ];
 
         return $rules;
@@ -61,13 +62,9 @@ class StoreChargeFormRequest extends FormRequest
             "Oops! No default payment method has been selected. Please select a default payment method.";
 
         $user = Auth::user();
-
         $stripeId = $user->stripe_id;
         $stripeCustomer = Cashier::findBillable($stripeId);
-
-        $defaultPaymentMethodId =
-            $stripeCustomer->defaultPaymentMethod()->id ?? null;
-
+        $defaultPaymentMethodId = $stripeCustomer->defaultPaymentMethod()->id ?? null;
         $paymentMethods = $stripeCustomer->paymentMethods();
 
         $validator->after(function ($validator) use (
@@ -75,21 +72,20 @@ class StoreChargeFormRequest extends FormRequest
             $defaultPaymentMethodId,
             $paymentMethods
         ) {
+
+            // payment method validation # start
             if (!$defaultPaymentMethodId) {
                 $validator
                     ->errors()
                     ->add("payment_method_id", $noDefaultPaymentMethodError);
             }
-            //
-            //
+
             if (!$paymentMethods) {
                 $validator
                     ->errors()
                     ->add("payment_method_id", $noDefaultPaymentMethodError);
             }
 
-            //
-            //
             if ($paymentMethods) {
                 $validPaymentMethod = false;
 
@@ -108,6 +104,18 @@ class StoreChargeFormRequest extends FormRequest
                             $noDefaultPaymentMethodError
                         );
                 }
+                // payment method validation # start
+
+
+                // dynamic product validation # start
+                if ($this->dynamic_product && !$this->product_quantity) {
+                    $validator->errors()->add(
+                        "product_id",
+                        "Product quantity is missing
+                    "
+                    );
+                }
+                // dynamic product validation # end
 
                 // logic for phone and phone country code # start
                 if ($this->phone && !$this->phone_code) {
@@ -133,7 +141,6 @@ class StoreChargeFormRequest extends FormRequest
                     $validator->errors()->add(
                         "vat_number",
                         "Vat number is required when vat id is set.
-    
                     "
                     );
                 }
