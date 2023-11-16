@@ -11,6 +11,7 @@ import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallI
 import UserTag from "@/Components/Users/UserTag.vue";
 import {
     BriefcaseIcon,
+    CalendarDaysIcon,
     CheckIcon,
     GlobeAmericasIcon,
     MapIcon,
@@ -149,26 +150,44 @@ defineProps({
                     <div class="myPrimaryWidget">
                         <h4 class="myFourthHeader">Job publish & end date</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
-                        <div>
+                        <div class="flex flex-col gap-2">
                             <template v-if="post.started_at">
-                                <span class="block">
-                                    {{
-                                        format(
-                                            parseISO(post.started_at),
-                                            "dd. MMMM yyyy HH:mm"
-                                        )
-                                    }}
-                                </span>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <div
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-100 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    >
+                                        <CalendarDaysIcon
+                                            class="mySmallIcon"
+                                        ></CalendarDaysIcon>
+                                    </div>
+                                    <span class="block">
+                                        {{
+                                            format(
+                                                parseISO(post.started_at),
+                                                "dd. MMMM yyyy"
+                                            )
+                                        }}
+                                    </span>
+                                </div>
                             </template>
                             <template v-if="post.ended_at">
-                                <span class="block">
-                                    {{
-                                        format(
-                                            parseISO(post.ended_at),
-                                            "dd. MMMM yyyy HH:mm"
-                                        )
-                                    }}
-                                </span>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <div
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-100 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    >
+                                        <CalendarDaysIcon
+                                            class="mySmallIcon"
+                                        ></CalendarDaysIcon>
+                                    </div>
+                                    <span class="block">
+                                        {{
+                                            format(
+                                                parseISO(post.ended_at),
+                                                "dd. MMMM yyyy"
+                                            )
+                                        }}
+                                    </span>
+                                </div>
                             </template>
                         </div>
                     </div>
@@ -192,7 +211,7 @@ defineProps({
                         <p
                             v-for="jobCountry in countries && countries"
                             :key="jobCountry"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <GlobeAmericasIcon
                                 class="w-3 h-3 stroke-1"
@@ -219,7 +238,7 @@ defineProps({
                         <p
                             v-for="state in states"
                             :key="state"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <MapPinIcon class="w-3 h-3 stroke-1"></MapPinIcon>
                             <span>
@@ -228,7 +247,7 @@ defineProps({
                         </p>
                         <p
                             v-if="post.address"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <MapPinIcon class="w-3 h-3 stroke-1"></MapPinIcon>
                             <span>
@@ -237,7 +256,7 @@ defineProps({
                         </p>
                         <p
                             v-if="post.floor"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <Square3Stack3DIcon
                                 class="w-3 h-3 stroke-1"
@@ -270,7 +289,7 @@ defineProps({
                         <p
                             v-for="state in jobTypes && jobTypes"
                             :key="state"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <NewspaperIcon
                                 class="w-3 h-3 stroke-1"
@@ -299,7 +318,7 @@ defineProps({
                         <p
                             v-for="state in categories && categories"
                             :key="state"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <Squares2X2Icon
                                 class="w-3 h-3 stroke-1"
@@ -328,7 +347,7 @@ defineProps({
                                         .split(',')
                                         .sort((a, b) => a.localeCompare(b))"
                                     :key="tag"
-                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                    class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                 >
                                     <TagIcon class="w-3 h-3 stroke-1"></TagIcon>
                                     <span>
@@ -381,7 +400,7 @@ defineProps({
                         <div
                             v-for="author in authors"
                             :key="author"
-                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <div v-if="author.profile_photo_path !== null">
                                 <div class="h-5 w-5 flex-shrink-0">
@@ -396,7 +415,7 @@ defineProps({
                             <div
                                 style="font-size: 9px; gap: 2px"
                                 v-if="author.profile_photo_path === null"
-                                class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
+                                class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-sm"
                             >
                                 <span>
                                     {{
@@ -416,7 +435,7 @@ defineProps({
                             >
                                 <p
                                     style="font-size: 10px"
-                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
+                                    class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
                                 >
                                     <span>
                                         {{ author.first_name }}
