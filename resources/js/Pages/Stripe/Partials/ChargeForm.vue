@@ -95,6 +95,7 @@ const formCharge = useForm({
     last_name: props.user.last_name,
     email: props.user.email,
     dynamic_product: null,
+    product_quantity: null,
     product_id: null,
     price_identifier_stripe: null,
     country: props.user.country,
@@ -110,6 +111,32 @@ const formCharge = useForm({
     tax_id: props.user.tax_id,
     vat_number: props.user.vat_number,
 });
+
+const removeFromProductQuantity = function () {
+    if (isNaN(formCharge.product_quantity)) {
+        formCharge.product_quantity = 0;
+    }
+
+    if (
+        typeof formCharge.product_quantity === "number" &&
+        formCharge.product_quantity < 1
+    ) {
+        formCharge.product_quantity = 1;
+    }
+    formCharge.product_quantity--;
+};
+const addToProductQuantity = function () {
+    if (isNaN(formCharge.product_quantity)) {
+        formCharge.product_quantity = 0;
+    }
+    if (
+        typeof formCharge.product_quantity === "number" &&
+        formCharge.product_quantity < 1
+    ) {
+        formCharge.product_quantity = 0;
+    }
+    formCharge.product_quantity++;
+};
 
 const createOrUpdate = () => {
     if (formType.value === "create") {
@@ -925,6 +952,63 @@ onMounted(() => {
                                         </div>
                                     </div>
                                 </div>
+                                <!-- product quantity # start  -->
+                                <div class="myInputGroup md:w-1/3">
+                                    <InputLabel
+                                        for="floor"
+                                        value="Store floor"
+                                    />
+                                    <!-- Input Number -->
+                                    <div
+                                        class="myPrimaryInput p-0"
+                                        data-hs-input-number
+                                    >
+                                        <div
+                                            class="w-full flex gap-2 justify-between items-center"
+                                        >
+                                            <input
+                                                placeholder="Enter store floor.."
+                                                id="floor"
+                                                v-model="
+                                                    formCharge.product_quantity
+                                                "
+                                                class="myPrimaryInputNoBorder mt-0"
+                                                autocomplete="off"
+                                            />
+                                            <div class="flex items-center">
+                                                <button
+                                                    @click="
+                                                        removeFromProductQuantity
+                                                    "
+                                                    type="button"
+                                                    class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                >
+                                                    <MinusIcon
+                                                        class="mySmallIcon"
+                                                    ></MinusIcon>
+                                                </button>
+                                                <button
+                                                    @click="
+                                                        addToProductQuantity
+                                                    "
+                                                    type="button"
+                                                    class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                >
+                                                    <PlusIcon
+                                                        class="mySmallIcon"
+                                                    ></PlusIcon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Input Number -->
+                                    <InputError
+                                        :message="
+                                            formCharge.errors.product_quantity
+                                        "
+                                    />
+                                </div>
+                                <!-- product quantity # end  -->
                             </div>
                         </div>
                     </div>

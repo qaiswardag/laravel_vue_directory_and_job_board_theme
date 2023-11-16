@@ -27,6 +27,7 @@ class StoreChargeFormRequest extends FormRequest
     {
         $rules = [
             "next_route_name" => ["string", "min:2", "max:255"],
+            "product_quantity" => ["integer", "digits_between:1,4", "nullable"],
             "product_id" => ["required", "string", "min:2", "max:255"],
             "price_identifier_stripe" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],

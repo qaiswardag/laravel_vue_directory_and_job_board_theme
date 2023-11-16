@@ -1052,9 +1052,9 @@ const pageBuilder = new PageBuilder(store);
                         />
                         <InputError :message="postForm.errors.address" />
                     </div>
+
                     <div class="myInputGroup md:w-1/3">
                         <InputLabel for="floor" value="Store floor" />
-
                         <!-- Input Number -->
                         <div class="myPrimaryInput p-0" data-hs-input-number>
                             <div
