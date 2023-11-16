@@ -53,9 +53,9 @@ const goToSinglePost = function (current_teamId, postId, postSlug) {
                 ])
             "
         >
-            <p class="text-sm font-medium mt-2 mb-2">
-                {{ post.title.slice(0, 25)
-                }}{{ post.title.length > 25 ? ".." : "" }}
+            <p class="text-xs mt-2 mb-2">
+                {{ post.title.slice(0, 35)
+                }}{{ post.title.length > 35 ? ".." : "" }}
             </p>
         </Link>
     </div>
