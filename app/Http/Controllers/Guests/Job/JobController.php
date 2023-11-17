@@ -41,6 +41,7 @@ class JobController extends Controller
     {
         $post = Job::where("id", $postId)
             ->where("published", true)
+            ->where("is_paid", true)
             ->firstOrFail();
 
         // Check if the current time is earlier than the post's started_at timestamp

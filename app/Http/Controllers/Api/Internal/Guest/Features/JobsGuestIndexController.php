@@ -42,6 +42,7 @@ class JobsGuestIndexController extends Controller
             ->with("states")
             ->with("authors")
             ->where("published", true)
+            ->where("is_paid", true)
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("title", "LIKE", "%" . $term . "%");
             });
