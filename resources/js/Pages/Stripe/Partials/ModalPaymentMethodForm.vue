@@ -235,30 +235,6 @@ onMounted(async () => {
                 <div class="mb-4 myPrimaryFormMain w-full">
                     <div class="myInputsOrganization">
                         <div class="myInputGroup">
-                            <p class="my-4">
-                                <a
-                                    href="https://stripe.com/docs/testing"
-                                    target="blank"
-                                    >Testing Cards</a
-                                >
-                            </p>
-                            <p class="my-4">
-                                Works:
-                                <br />
-                                4000002080000001
-                            </p>
-                            <p class="my-4">
-                                Can be added but insufficient funds:
-                                <br />
-                                4000008260003178
-                            </p>
-                            <p class="my-4">
-                                Declined:
-                                <br />
-                                4000000000000002
-                            </p>
-                            <p class="my-4">12/34</p>
-                            <p class="my-4">567</p>
                             <!-- Email -->
                             <div class="myInputGroup">
                                 <div
