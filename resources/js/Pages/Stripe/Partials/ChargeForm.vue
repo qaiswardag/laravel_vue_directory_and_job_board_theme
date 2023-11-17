@@ -938,10 +938,28 @@ onMounted(() => {
                                                         }}</span
                                                     >
                                                 </div>
-                                                <p>
-                                                    Total:
-                                                    {{ fullDynamicPrice }}
-                                                </p>
+                                                <template
+                                                    v-if="
+                                                        !product.dynamic_product
+                                                    "
+                                                >
+                                                    <p>
+                                                        Total: ${{
+                                                            product.totalPrice
+                                                        }}
+                                                    </p>
+                                                </template>
+                                                <template
+                                                    v-if="
+                                                        product.dynamic_product
+                                                    "
+                                                >
+                                                    <p>
+                                                        Total: ${{
+                                                            fullDynamicPrice
+                                                        }}
+                                                    </p>
+                                                </template>
                                                 <div
                                                     class="block text-[10px] leading-6 text-gray-600 italic mt-1"
                                                 >
@@ -951,84 +969,98 @@ onMounted(() => {
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="flex items-center gap-2 mt-4 border-t border-gray-200"
+                                    <p
+                                        class="text-xs text-red-400 font-medium my-4"
                                     >
-                                        <!-- product quantity # start  -->
-                                        <div class="2/3">
-                                            <InputLabel
-                                                for="product_quantity"
-                                                value="Store quantity"
-                                            />
-                                            <!-- Input Number -->
-                                            <div
-                                                class="myPrimaryInput p-0"
-                                                data-hs-input-number
-                                            >
+                                        formCharge.product_quantity:
+                                        {{
+                                            JSON.stringify(
+                                                formCharge.product_quantity
+                                            )
+                                        }}
+                                    </p>
+                                    <div
+                                        class="flex items-center justify-end gap-2 mt-4 border-t border-gray-200 pt-2"
+                                    >
+                                        <template
+                                            v-if="product.dynamic_product"
+                                        >
+                                            <!-- product quantity # start  -->
+                                            <div class="2/3">
+                                                <!-- Input Number -->
                                                 <div
-                                                    class="w-full flex gap-2 justify-between items-center"
+                                                    class="myPrimaryInput p-0 mt-0"
+                                                    data-hs-input-number
                                                 >
-                                                    <input
-                                                        placeholder="Store quantity.."
-                                                        id="product_quantity"
-                                                        @input="
-                                                            changeInProductQuantity(
-                                                                product
-                                                            )
-                                                        "
-                                                        v-model="
-                                                            productQuantity
-                                                        "
-                                                        class="myPrimaryInputNoBorder mt-0"
-                                                        autocomplete="off"
-                                                    />
                                                     <div
-                                                        class="flex items-center"
+                                                        class="w-full flex gap-2 justify-between items-center"
                                                     >
-                                                        <button
-                                                            @click="
-                                                                removeFromProductQuantity(
+                                                        <input
+                                                            placeholder="Store quantity.."
+                                                            id="product_quantity"
+                                                            @input="
+                                                                changeInProductQuantity(
                                                                     product
                                                                 )
                                                             "
-                                                            type="button"
-                                                            class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
-                                                        >
-                                                            <MinusIcon
-                                                                class="mySmallIcon"
-                                                            ></MinusIcon>
-                                                        </button>
-                                                        <button
-                                                            @click="
-                                                                addToProductQuantity(
-                                                                    product
-                                                                )
+                                                            v-model="
+                                                                productQuantity
                                                             "
-                                                            type="button"
-                                                            class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                            class="myPrimaryInputNoBorder mt-0"
+                                                            autocomplete="off"
+                                                        />
+                                                        <div
+                                                            class="flex items-center"
                                                         >
-                                                            <PlusIcon
-                                                                class="mySmallIcon"
-                                                            ></PlusIcon>
-                                                        </button>
+                                                            <button
+                                                                @click="
+                                                                    removeFromProductQuantity(
+                                                                        product
+                                                                    )
+                                                                "
+                                                                type="button"
+                                                                class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                            >
+                                                                <MinusIcon
+                                                                    class="mySmallIcon"
+                                                                ></MinusIcon>
+                                                            </button>
+                                                            <button
+                                                                @click="
+                                                                    addToProductQuantity(
+                                                                        product
+                                                                    )
+                                                                "
+                                                                type="button"
+                                                                class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                            >
+                                                                <PlusIcon
+                                                                    class="mySmallIcon"
+                                                                ></PlusIcon>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <!-- End Input Number -->
+                                                <InputError
+                                                    :message="
+                                                        formCharge.errors
+                                                            .product_quantity
+                                                    "
+                                                />
                                             </div>
-                                            <!-- End Input Number -->
-                                            <InputError
-                                                :message="
-                                                    formCharge.errors
-                                                        .product_quantity
-                                                "
-                                            />
-                                        </div>
-                                        <!-- product quantity # end  -->
+                                            <!-- product quantity # end  -->
+                                        </template>
 
                                         <!-- select product # start -->
                                         <div
-                                            class="flex gap-2 justify-between items-start w-1/3"
+                                            class="flex gap-2 justify-end items-end self-start"
+                                            :class="[
+                                                product.dynamic_product
+                                                    ? 'w-1/3'
+                                                    : '',
+                                            ]"
                                         >
-                                            <div></div>
                                             <div>
                                                 <button
                                                     class="myPrimaryTag transition mt-0 mb-0 break-keep w-max"

@@ -83,7 +83,12 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                                 >
                             </p>
                             <p
-                                class="block text-[10px] leading-6 text-gray-600 italic mt-1"
+                                class="block text-sm leading-6 font-medium text-gray-600 italic mt-1"
+                            >
+                                Total ${{ product.totalPrice }}
+                            </p>
+                            <p
+                                class="block text-[12px] leading-6 text-gray-600 italic mt-1"
                             >
                                 {{ product.billed }}
                             </p>
