@@ -342,7 +342,7 @@ onMounted(() => {
                     :key="paymentMethod.id"
                 >
                     <div
-                        class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white"
+                        class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white w-max"
                     >
                         <div>
                             <div class="flex items-center">
@@ -379,27 +379,15 @@ onMounted(() => {
                             </div>
                         </div>
                         <div
-                            class="flex gap-2 justify-between items-start border-t border-gray-400 pt-2"
+                            class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-[18rem]"
                         >
-                            <button
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                type="button"
-                                @click="
-                                    handleDeletePaymentMethod(paymentMethod)
-                                "
-                            >
-                                <TrashIcon
-                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                ></TrashIcon>
-                            </button>
-
                             <div>
                                 <button
                                     v-if="
                                         fetchedPaymentMethods?.defaultPaymentMethodId !==
                                         paymentMethod.id
                                     "
-                                    class="myPrimaryTag transition mt-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    class="myPrimaryTag transition my-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0 bg-white"
                                     type="button"
                                     @click="
                                         handleSetDefaultPaymentMethod(
@@ -414,7 +402,7 @@ onMounted(() => {
                                         fetchedPaymentMethods?.defaultPaymentMethodId ===
                                         paymentMethod.id
                                     "
-                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
+                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white my-0"
                                     type="button"
                                     @click="
                                         handleSetDefaultPaymentMethod(
@@ -432,6 +420,17 @@ onMounted(() => {
                                     </div>
                                 </button>
                             </div>
+                            <button
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                type="button"
+                                @click="
+                                    handleDeletePaymentMethod(paymentMethod)
+                                "
+                            >
+                                <TrashIcon
+                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                ></TrashIcon>
+                            </button>
                         </div>
                     </div>
                 </div>
