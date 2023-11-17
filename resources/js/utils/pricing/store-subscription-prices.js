@@ -46,7 +46,7 @@ const storeSubscriptionPrices = [
         name: "From 4 stores and above",
         id: "dynamic_stores_enterprise",
         dynamic_product: true,
-        priceIdentifierStripe: "price_1ODSJEEuESfVmAWorQ0sCL7u",
+        priceIdentifierStripe: "price_1ODWh0EuESfVmAWo0xHMTEyy",
         route: {
             name: "stripe.stores.create.subscription",
             parameters: [],

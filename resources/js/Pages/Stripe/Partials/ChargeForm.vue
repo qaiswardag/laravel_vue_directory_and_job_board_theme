@@ -95,7 +95,6 @@ const handleSelectProduct = function (product) {
     } else {
         selectedProduct.value = product;
         formCharge.dynamic_product = product.dynamic_product;
-        formCharge.product_quantity = product.product_quantity;
         formCharge.product_id = product.id;
         formCharge.price_identifier_stripe = product.priceIdentifierStripe;
     }
@@ -291,8 +290,6 @@ onBeforeMount(() => {
             return product.priceIdentifierStripe === props.post.stripe_price;
         });
 
-        handleSelectProduct(product);
-        console.log(`product:`, props.post.quantity);
         productQuantity.value = props.post.quantity;
         fullDynamicPrice.value = props.post.quantity * product.priceRaw;
         formCharge.product_quantity = props.post.quantity;
