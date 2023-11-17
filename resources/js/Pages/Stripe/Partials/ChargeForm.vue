@@ -81,6 +81,11 @@ const handleSelectProduct = function (product) {
     if (!product.dynamic_product) {
         formCharge.product_quantity = null;
     }
+
+    if (product.dynamic_product) {
+        formCharge.product_quantity = productQuantity.value;
+    }
+
     if (selectedProduct.value?.id === product.id) {
         selectedProduct.value = null;
         formCharge.dynamic_product = null;
