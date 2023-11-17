@@ -132,7 +132,6 @@ const changeInProductQuantity = function (product) {
     // full dynamic price
     fullDynamicPrice.value = productQuantity.value * product.priceRaw;
     formCharge.product_quantity = productQuantity.value;
-    console.log(`formCharge.product_quantity:`, formCharge.product_quantity);
 };
 
 const addToProductQuantity = function (product) {
@@ -180,6 +179,10 @@ const removeFromProductQuantity = function (product) {
 };
 
 const createOrUpdate = () => {
+    if (!formCharge.dynamic_product) {
+        formCharge.product_quantity = null;
+    }
+
     if (formType.value === "create") {
         formCharge.country = selectedCountry.value?.code;
         formCharge.phone_code = selectedPhoneCode.value?.phone_code;
