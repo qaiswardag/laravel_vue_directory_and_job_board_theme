@@ -618,7 +618,8 @@ watch(
             const formattedDate = format(parsedDate, "yyyy-MM-dd HH:mm:ss");
             postForm.started_at = formattedDate;
         }
-    }
+    },
+    { immediate: true }
 );
 
 const clearPageBuilderOnSuccessUpdate = function () {
