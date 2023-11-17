@@ -290,6 +290,7 @@ onBeforeMount(() => {
             return product.priceIdentifierStripe === props.post.stripe_price;
         });
 
+        handleSelectProduct(product);
         productQuantity.value = props.post.quantity;
         fullDynamicPrice.value = props.post.quantity * product.priceRaw;
         formCharge.product_quantity = props.post.quantity;
