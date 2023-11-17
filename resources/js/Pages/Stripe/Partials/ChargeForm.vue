@@ -126,6 +126,7 @@ const changeInProductQuantity = function (product) {
 
     // full dynamic price
     fullDynamicPrice.value = productQuantity.value * product.priceRaw;
+    formCharge.product_quantity = productQuantity.value;
 };
 
 const addToProductQuantity = function (product) {
