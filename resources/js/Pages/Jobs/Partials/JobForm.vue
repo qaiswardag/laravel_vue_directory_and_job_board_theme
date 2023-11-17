@@ -1256,7 +1256,7 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post apply_via_link start -->
                 <div class="myInputGroup">
-                    <InputLabel for="apply_via_link" value="Link.." />
+                    <InputLabel for="apply_via_link" value="Apply via URL" />
                     <TextInput
                         placeholder="Link.."
                         id="apply_via_link"
@@ -1270,7 +1270,7 @@ const pageBuilder = new PageBuilder(store);
                 <!-- post apply_via_email end -->
                 <!-- post apply_via_email start -->
                 <div class="myInputGroup">
-                    <InputLabel for="apply_via_email" value="Email.." />
+                    <InputLabel for="apply_via_email" value="Apply via email" />
                     <TextInput
                         placeholder="Email.."
                         id="apply_via_email"
