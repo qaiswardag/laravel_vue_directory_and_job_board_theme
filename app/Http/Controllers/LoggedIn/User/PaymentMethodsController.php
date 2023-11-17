@@ -66,11 +66,9 @@ class PaymentMethodsController extends Controller
 
         $paymentMethods = $stripeCustomer->paymentMethods();
 
-        if (count($paymentMethods) === 1) {
-            $stripeCustomer->updateDefaultPaymentMethod(
-                $paymentMethods->first()->id
-            );
-        }
+        $stripeCustomer->updateDefaultPaymentMethod(
+            $paymentMethods->first()->id
+        );
     }
 
     /**

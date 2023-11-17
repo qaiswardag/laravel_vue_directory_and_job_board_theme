@@ -268,15 +268,31 @@ onMounted(() => {
             >
         </p>
         <p class="my-4">
-            Works: <br data-v-c4557987="" />
+            Works: Visa
+            <br />
+            United Arab Emirates (AE)
+            <br />
+            4000007840000001
+        </p>
+        <p class="my-4">
+            Works: Mastercard
+            <br />
+            United Arab Emirates (AE)
+            <br />
+            5200007840000022
+        </p>
+        <p class="my-4">
+            Works: Visa <br />
+            Denmark (DK)
+            <br />
             4000002080000001
         </p>
         <p class="my-4">
-            Can be added but insufficient funds: <br data-v-c4557987="" />
+            Can be added but insufficient funds: <br />
             4000008260003178
         </p>
         <p class="my-4">
-            Declined: <br data-v-c4557987="" />
+            Declined: <br />
             4000000000000002
         </p>
         <p class="my-4">12/34</p>
