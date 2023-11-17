@@ -11,7 +11,7 @@ use Inertia\Inertia;
 
 
 
-class CreateNewStripeUser
+class CreateOrGetStripeCustomer
 {
 	/**
 	 * Create a newly registered stripe user.
@@ -20,7 +20,7 @@ class CreateNewStripeUser
 	public function create()
 	{
 		$user = Auth::user();
-
+		$stripeCustomer = null;
 		$name = $user->first_name . " " . $user->last_name;
 		$email = $user->email;
 		$country = $user->country;
@@ -39,14 +39,14 @@ class CreateNewStripeUser
 		$paymentMethods = null;
 
 		$stripeId = $user->stripe_id;
-
 		if (!$stripeId) {
 			$user->createAsStripeCustomer();
 		}
 
+
 		$stripeCustomer = $user->asStripeCustomer();
 
-		// if user is deleted at Stripe
+
 		if ($stripeCustomer && $stripeCustomer->isDeleted()) {
 			$user
 				->forceFill([
@@ -89,7 +89,7 @@ class CreateNewStripeUser
 			Log::error(
 				"Oops! Something went wrong. {$e->getMessage()}."
 			);
-			throw new Exception("Unable to complete the setup process.");
+			throw new Exception($e->getMessage());
 		}
 	}
 }

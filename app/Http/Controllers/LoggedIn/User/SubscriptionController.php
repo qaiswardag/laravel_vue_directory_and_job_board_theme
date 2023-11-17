@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\LoggedIn\User;
 
-use App\Actions\LoggedIn\Stripe\CreateNewStripeUser;
+use App\Actions\LoggedIn\Stripe\CreateOrGetStripeCustomer;
 use App\Actions\LoggedIn\Stripe\CreateStripeUserTaxID;
 use App\Actions\LoggedIn\Stripe\UpdateUserLocallyPlusOnStripe;
 use Exception;
@@ -39,10 +39,10 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(CreateNewStripeUser $createNewStripeUser)
+    public function create(CreateOrGetStripeCustomer $createOrGetStripeCustomer)
     {
         try {
-            $stripeUserDetails = $createNewStripeUser->create();
+            $stripeUserDetails = $createOrGetStripeCustomer->create();
 
             return Inertia::render(
                 "Stripe/CreateStoreSubscription/CreateStoreSubscription",

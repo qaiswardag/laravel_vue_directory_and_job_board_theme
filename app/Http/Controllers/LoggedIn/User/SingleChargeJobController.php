@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\LoggedIn\User;
 
-use App\Actions\LoggedIn\Stripe\CreateNewStripeUser;
+use App\Actions\LoggedIn\Stripe\CreateOrGetStripeCustomer;
 use App\Actions\LoggedIn\Stripe\CreateStripeUserTaxID;
 use App\Actions\LoggedIn\Stripe\UpdateUserLocallyPlusOnStripe;
 use App\Http\Controllers\Controller;
@@ -36,10 +36,10 @@ class SingleChargeJobController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Job $job, CreateNewStripeUser $createNewStripeUser)
+    public function create(Job $job, CreateOrGetStripeCustomer $createOrGetStripeCustomer)
     {
         try {
-            $stripeUserDetails = $createNewStripeUser->create();
+            $stripeUserDetails = $createOrGetStripeCustomer->create();
 
             return Inertia::render(
                 "Stripe/CreateSingleChargeJob/CreateSingleChargeJob",
@@ -68,7 +68,6 @@ class SingleChargeJobController extends Controller
         CreateStripeUserTaxID $createStripeUserTaxID
     ) {
 
-        sleep(2);
         $productId = $request->product_id; // single_job_prost
 
         $priceIdentifierStripe = $request->price_identifier_stripe;
