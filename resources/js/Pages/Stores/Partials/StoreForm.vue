@@ -496,24 +496,25 @@ const clearForm = function () {
     store.commit("pageBuilderState/setComponents", []);
 };
 
-const removeFromFloor = function () {
-    if (isNaN(postForm.floor)) {
-        postForm.floor = 0;
-    }
-
-    if (typeof postForm.floor === "number" && postForm.floor < 1) {
-        postForm.floor = 1;
-    }
-    postForm.floor--;
-};
 const addToFloor = function () {
-    if (isNaN(postForm.floor)) {
+    if (typeof postForm.floor !== "number") {
         postForm.floor = 0;
     }
     if (typeof postForm.floor === "number" && postForm.floor < 1) {
         postForm.floor = 0;
     }
     postForm.floor++;
+};
+
+const removeFromFloor = function () {
+    if (typeof postForm.floor !== "number") {
+        postForm.floor = 1;
+    }
+
+    if (typeof postForm.floor === "number" && postForm.floor < 1) {
+        postForm.floor = 1;
+    }
+    postForm.floor--;
 };
 
 const clearPageBuilderOnSuccessUpdate = function () {

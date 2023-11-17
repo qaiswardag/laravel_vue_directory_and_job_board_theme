@@ -7,6 +7,7 @@ const jobPrices = [
         dynamic_product: false,
         priceIdentifierStripe: "price_1OBetvEuESfVmAWohyRBJN5A",
         price: "$150",
+        priceRaw: "150",
         title: "&nbsp;",
         description: "Single job post.",
         features: [

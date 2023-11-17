@@ -74,6 +74,7 @@ const handleSubmit = () => {
 };
 
 const selectedProduct = ref(null);
+const fullDynamicPrice = ref(0);
 
 const handleSelectProduct = function (product) {
     if (selectedProduct.value?.id === product.id) {
@@ -113,21 +114,8 @@ const formCharge = useForm({
     vat_number: props.user.vat_number,
 });
 
-const removeFromProductQuantity = function () {
-    if (isNaN(formCharge.product_quantity)) {
-        formCharge.product_quantity = 0;
-    }
-
-    if (
-        typeof formCharge.product_quantity === "number" &&
-        formCharge.product_quantity < 1
-    ) {
-        formCharge.product_quantity = 1;
-    }
-    formCharge.product_quantity--;
-};
-const addToProductQuantity = function () {
-    if (isNaN(formCharge.product_quantity)) {
+const addToProductQuantity = function (product) {
+    if (typeof formCharge.product_quantity !== "number") {
         formCharge.product_quantity = 0;
     }
     if (
@@ -137,6 +125,26 @@ const addToProductQuantity = function () {
         formCharge.product_quantity = 0;
     }
     formCharge.product_quantity++;
+
+    // fullDynamicPrice
+    fullDynamicPrice.value = formCharge.product_quantity * product.priceRaw;
+};
+
+const removeFromProductQuantity = function (product) {
+    if (typeof formCharge.product_quantity !== "number") {
+        formCharge.product_quantity = 1;
+    }
+
+    if (
+        typeof formCharge.product_quantity === "number" &&
+        formCharge.product_quantity < 1
+    ) {
+        formCharge.product_quantity = 1;
+    }
+    formCharge.product_quantity--;
+
+    // fullDynamicPrice
+    fullDynamicPrice.value = formCharge.product_quantity * product.priceRaw;
 };
 
 const createOrUpdate = () => {
@@ -903,6 +911,10 @@ onMounted(() => {
                                                         }}</span
                                                     >
                                                 </div>
+                                                <p>
+                                                    Total:
+                                                    {{ fullDynamicPrice }}
+                                                </p>
                                                 <div
                                                     class="block text-[10px] leading-6 text-gray-600 italic mt-1"
                                                 >
@@ -943,7 +955,9 @@ onMounted(() => {
                                                     >
                                                         <button
                                                             @click="
-                                                                removeFromProductQuantity
+                                                                removeFromProductQuantity(
+                                                                    product
+                                                                )
                                                             "
                                                             type="button"
                                                             class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
@@ -954,7 +968,9 @@ onMounted(() => {
                                                         </button>
                                                         <button
                                                             @click="
-                                                                addToProductQuantity
+                                                                addToProductQuantity(
+                                                                    product
+                                                                )
                                                             "
                                                             type="button"
                                                             class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
