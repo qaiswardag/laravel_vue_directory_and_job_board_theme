@@ -357,7 +357,7 @@
     }
 
     .myPrimaryInputLabel {
-        @apply my-0 block text-sm font-normal text-myPrimaryDarkGrayColor text-left;
+        @apply my-0 block text-sm font-normal text-myPrimaryDarkGrayColor text-left mb-2;
     }
 
     .myPrimaryFormFocus {
