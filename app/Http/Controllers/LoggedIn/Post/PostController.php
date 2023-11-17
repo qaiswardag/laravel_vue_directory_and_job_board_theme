@@ -368,6 +368,7 @@ class PostController extends Controller
         $newPost = $post->replicate();
 
         $newPost->created_at = Carbon::now();
+        $newPost->updated_at = Carbon::now();
         $newPost->published = false;
         $newPost->save();
 

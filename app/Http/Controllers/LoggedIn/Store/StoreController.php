@@ -400,6 +400,7 @@ class StoreController extends Controller
         $newStore = $store->replicate();
 
         $newStore->created_at = Carbon::now();
+        $newStore->updated_at = Carbon::now();
         $newStore->published = false;
         $newStore->save();
 

@@ -476,6 +476,8 @@ class JobController extends Controller
         $newJob = $job->replicate();
 
         $newJob->created_at = Carbon::now();
+        $newJob->updated_at = Carbon::now();
+        $newJob->is_paid = null;
         $newJob->published = false;
         $newJob->save();
 
