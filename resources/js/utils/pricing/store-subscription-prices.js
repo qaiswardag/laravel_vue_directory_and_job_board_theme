@@ -39,10 +39,10 @@ const storeSubscriptionPrices = [
         mostPopular: false,
     },
     {
-        name: "Up to 10 Stores",
+        name: "From 4 stores and above",
         id: "ten_stores",
         dynamic_product: true,
-        priceIdentifierStripe: "price_1O161pEuESfVmAWoCs69v0gU",
+        priceIdentifierStripe: "price_1ODMovEuESfVmAWoHbphgMBG",
         route: {
             name: "stripe.stores.create.subscription",
             parameters: [],
