@@ -114,7 +114,7 @@ class StoreChargeFormRequest extends FormRequest
                 if (!$this->dynamic_product && !is_null($this->product_quantity)) {
                     $validator->errors()->add(
                         "product_id",
-                        "When product pricing Is dynamic, the product quantity field should be set to Null.
+                        "When product pricing Is dynamic, the product quantity field should be set to null.
                     "
                     );
                 }
