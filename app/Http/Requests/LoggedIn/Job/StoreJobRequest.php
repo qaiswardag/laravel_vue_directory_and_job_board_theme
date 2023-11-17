@@ -147,6 +147,24 @@ class StoreJobRequest extends FormRequest
             if (
                 $this->job && $this->job->id &&
                 $this->started_at &&
+                !$this->is_paid &&
+                Carbon::parse($this->started_at)->isValid() &&
+                Carbon::parse($this->started_at)->isPast() &&
+                Carbon::parse($this->started_at)->diffInDays(
+                    Carbon::now()->subDay()
+                ) > 0
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "started_at",
+                        "The started at date must be from today and in the future."
+                    );
+            }
+            // The Started at date must be in the future
+            if (
+                $this->job && $this->job->id &&
+                $this->started_at &&
                 Carbon::parse($this->started_at)->isValid() &&
                 Carbon::parse($this->started_at)->isPast() &&
                 Carbon::parse($this->started_at)->diffInDays(
