@@ -74,6 +74,7 @@ class JobFactory extends Factory
             "slug" => $slug,
             "content" => $factoriesPageBuilderContent->index(),
             "published" => 1,
+            "is_paid" => 1,
             "is_filled" => rand(0, 1),
             "apply_via_link" => "https://www.google.dk",
             "apply_via_email" => null,
