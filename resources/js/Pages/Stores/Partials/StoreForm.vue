@@ -497,6 +497,11 @@ const clearForm = function () {
 };
 
 const addToFloor = function () {
+    postForm.floor = Number(postForm.floor);
+    if (isNaN(postForm.floor)) {
+        postForm.floor = 0;
+    }
+
     if (typeof postForm.floor !== "number") {
         postForm.floor = 0;
     }
@@ -507,6 +512,11 @@ const addToFloor = function () {
 };
 
 const removeFromFloor = function () {
+    postForm.floor = Number(postForm.floor);
+    if (isNaN(postForm.floor)) {
+        postForm.floor = 1;
+    }
+
     if (typeof postForm.floor !== "number") {
         postForm.floor = 1;
     }

@@ -125,24 +125,34 @@ class SubscriptionController extends Controller
         try {
             $updateUserLocallyPlusOnStripe->update($request);
 
-            $stripeCustomer
-                // The first argument passed to the newSubscription method
-                // should be the internal name of the subscription.
-                // This subscription name is only for internal application usage
-                // and is not meant to be shown to users. In addition,
-                // it should not contain spaces and it should never be changed
-                // after creating the subscription.
 
-                // The second argument is the specific price the user is subscribing to.
-                // This value should correspond to the price's identifier in Stripe.
+            // when dynamic product pass quantity to subscription
+            if ($request->dynamic_product) {
+                $stripeCustomer
+                    // The first argument passed to the newSubscription method
+                    // should be the internal name of the subscription.
+                    // This subscription name is only for internal application usage
+                    // and is not meant to be shown to users. In addition,
+                    // it should not contain spaces and it should never be changed
+                    // after creating the subscription.
 
-                // STRIPE:
-                // Price for Single Store
-                // Every 3 months / US$20.00 / Tax behaviour Inclusive
+                    // The second argument is the specific price the user is subscribing to.
+                    // This value should correspond to the price's identifier in Stripe.
 
-                ->newSubscription($productId, $priceIdentifierStripe)
-                ->quantity(1)
-                ->create($defaultPaymentMethodId);
+                    // STRIPE:
+                    // Price for Single Store
+                    // Every 3 months / US$20.00 / Tax behaviour Inclusive
+
+                    ->newSubscription($productId, $priceIdentifierStripe)
+                    ->quantity($request->product_quantity)
+                    ->create($defaultPaymentMethodId);
+            }
+            if (!$request->dynamic_product) {
+                $stripeCustomer
+                    ->newSubscription($productId, $priceIdentifierStripe)
+                    ->quantity(1)
+                    ->create($defaultPaymentMethodId);
+            }
         } catch (Exception $e) {
             Log::error("Something went wrong creating the subscription. {$e}");
 

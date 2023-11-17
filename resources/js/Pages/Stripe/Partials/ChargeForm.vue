@@ -74,6 +74,7 @@ const handleSubmit = () => {
 };
 
 const selectedProduct = ref(null);
+const productQuantity = ref(null);
 const fullDynamicPrice = ref(0);
 
 const handleSelectProduct = function (product) {
@@ -117,36 +118,57 @@ const formCharge = useForm({
     vat_number: props.user.vat_number,
 });
 
+const changeInProductQuantity = function (product) {
+    if (typeof fullDynamicPrice.value !== "number") {
+        fullDynamicPrice.value = Number(fullDynamicPrice.value);
+        productQuantity.value = 0;
+    }
+
+    // full dynamic price
+    fullDynamicPrice.value = productQuantity.value * product.priceRaw;
+};
+
 const addToProductQuantity = function (product) {
-    if (typeof formCharge.product_quantity !== "number") {
-        formCharge.product_quantity = 0;
+    productQuantity.value = Number(productQuantity.value);
+    if (isNaN(productQuantity.value)) {
+        productQuantity.value = 0;
+    }
+
+    if (typeof productQuantity.value !== "number") {
+        productQuantity.value = 0;
     }
     if (
-        typeof formCharge.product_quantity === "number" &&
-        formCharge.product_quantity < 1
+        typeof productQuantity.value === "number" &&
+        productQuantity.value < 1
     ) {
-        formCharge.product_quantity = 0;
+        productQuantity.value = 0;
     }
-    formCharge.product_quantity++;
+    productQuantity.value++;
+    formCharge.product_quantity = productQuantity.value;
 
-    // fullDynamicPrice
+    // full dynamic price
     fullDynamicPrice.value = formCharge.product_quantity * product.priceRaw;
 };
 
 const removeFromProductQuantity = function (product) {
-    if (typeof formCharge.product_quantity !== "number") {
-        formCharge.product_quantity = 1;
+    productQuantity.value = Number(productQuantity.value);
+    if (isNaN(productQuantity.value)) {
+        productQuantity.value = 0;
     }
 
+    if (typeof productQuantity.value !== "number") {
+        productQuantity.value = 1;
+    }
     if (
-        typeof formCharge.product_quantity === "number" &&
-        formCharge.product_quantity < 1
+        typeof productQuantity.value === "number" &&
+        productQuantity.value < 1
     ) {
-        formCharge.product_quantity = 1;
+        productQuantity.value = 1;
     }
-    formCharge.product_quantity--;
+    productQuantity.value--;
+    formCharge.product_quantity = productQuantity.value;
 
-    // fullDynamicPrice
+    // full dynamic price
     fullDynamicPrice.value = formCharge.product_quantity * product.priceRaw;
 };
 
@@ -947,8 +969,13 @@ onMounted(() => {
                                                     <input
                                                         placeholder="Store quantity.."
                                                         id="product_quantity"
+                                                        @input="
+                                                            changeInProductQuantity(
+                                                                product
+                                                            )
+                                                        "
                                                         v-model="
-                                                            formCharge.product_quantity
+                                                            productQuantity
                                                         "
                                                         class="myPrimaryInputNoBorder mt-0"
                                                         autocomplete="off"
