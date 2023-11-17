@@ -245,7 +245,14 @@ class SubscriptionController extends Controller
         try {
             $updateUserLocallyPlusOnStripe->update($request);
 
-            $subscription->swap($newpriceIdentifierStripe);
+            if ($request->dynamic_product) {
+                $updatedSubscription = $subscription->swap($newpriceIdentifierStripe);
+                $updatedSubscription->updateQuantity($request->product_quantity);
+            }
+            if (!$request->dynamic_product) {
+                $updatedSubscription = $subscription->swap($newpriceIdentifierStripe);
+                $updatedSubscription->updateQuantity(1);
+            }
 
             // Update the product name, this won't affect Stripe
             // it's only for internal database records
