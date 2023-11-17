@@ -77,6 +77,9 @@ const selectedProduct = ref(null);
 const fullDynamicPrice = ref(0);
 
 const handleSelectProduct = function (product) {
+    if (!product.dynamic_product) {
+        formCharge.product_quantity = null;
+    }
     if (selectedProduct.value?.id === product.id) {
         selectedProduct.value = null;
         formCharge.dynamic_product = null;

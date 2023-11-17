@@ -67,11 +67,13 @@ class StoreChargeFormRequest extends FormRequest
         $stripeCustomer = Cashier::findBillable($stripeId);
         $defaultPaymentMethodId = $stripeCustomer->defaultPaymentMethod()->id ?? null;
         $paymentMethods = $stripeCustomer->paymentMethods();
+        $minimumQuantity = 4;
 
         $validator->after(function ($validator) use (
             $noDefaultPaymentMethodError,
             $defaultPaymentMethodId,
-            $paymentMethods
+            $paymentMethods,
+            $minimumQuantity
         ) {
 
             // payment method validation # start
@@ -109,10 +111,24 @@ class StoreChargeFormRequest extends FormRequest
 
 
                 // dynamic product validation # start
-                if ($this->dynamic_product && !$this->product_quantity) {
+                if (!$this->dynamic_product && !is_null($this->product_quantity)) {
                     $validator->errors()->add(
                         "product_id",
-                        "Product quantity is missing
+                        "When product pricing Is dynamic, the product quantity field should be set to Null.
+                    "
+                    );
+                }
+                if ($this->dynamic_product && is_null($this->product_quantity)) {
+                    $validator->errors()->add(
+                        "product_id",
+                        "Product quantity is required.
+                    "
+                    );
+                }
+                if ($this->dynamic_product && $this->product_quantity < 4) {
+                    $validator->errors()->add(
+                        "product_id",
+                        "At least {$minimumQuantity} quantity is needed for this subscription type.
                     "
                     );
                 }
@@ -137,6 +153,7 @@ class StoreChargeFormRequest extends FormRequest
                     );
                 }
                 // logic for phone and phone country code # end
+
                 // logic for vat id and vat number # start
                 if ($this->vat_id && !$this->vat_number) {
                     $validator->errors()->add(
