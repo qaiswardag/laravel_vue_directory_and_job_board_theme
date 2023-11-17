@@ -112,7 +112,7 @@ class StoreJobRequest extends FormRequest
             }
             $this->validateProperties($validator);
 
-            if ($this->job && $this->job->id) {
+            if ($this->job && $this->job->id && $this->job->is_paid) {
                 // Check if the 'started_at' field is set on the job
                 if ($this->job->started_at !== $this->started_at) {
                     // Calculate the difference in days between the job's creation date and the 'started_at' date
