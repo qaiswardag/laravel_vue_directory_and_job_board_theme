@@ -375,12 +375,7 @@ onMounted(() => {
                                     <th scope="col" class="myPrimaryTableTh">
                                         Is filled
                                     </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Job publish date
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Job end date
-                                    </th>
+
                                     <th scope="col" class="myPrimaryTableTh">
                                         Show Authors
                                     </th>
@@ -535,28 +530,7 @@ onMounted(() => {
                                                 }}</span
                                             >
                                         </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <template v-if="post.started_at">
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.started_at
-                                                        ),
-                                                        "dd. MMMM yyyy HH:mm"
-                                                    )
-                                                }}
-                                            </template>
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <template v-if="post.ended_at">
-                                                {{
-                                                    format(
-                                                        parseISO(post.ended_at),
-                                                        "dd. MMMM yyyy HH:mm"
-                                                    )
-                                                }}
-                                            </template>
-                                        </td>
+
                                         <td class="myPrimaryTableTBodyTd">
                                             <span
                                                 class="myPrimaryTag"

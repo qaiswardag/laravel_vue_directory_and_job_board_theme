@@ -67,13 +67,11 @@ class StoreChargeFormRequest extends FormRequest
         $stripeCustomer = Cashier::findBillable($stripeId);
         $defaultPaymentMethodId = $stripeCustomer->defaultPaymentMethod()->id ?? null;
         $paymentMethods = $stripeCustomer->paymentMethods();
-        $minimumQuantity = 4;
 
         $validator->after(function ($validator) use (
             $noDefaultPaymentMethodError,
             $defaultPaymentMethodId,
             $paymentMethods,
-            $minimumQuantity
         ) {
 
             // payment method validation # start
@@ -118,20 +116,52 @@ class StoreChargeFormRequest extends FormRequest
                     "
                     );
                 }
+
+                // product quantity is required # start
                 if ($this->dynamic_product && is_null($this->product_quantity)) {
                     $validator->errors()->add(
                         "product_id",
                         "Product quantity is required.
-                    "
+                        "
                     );
                 }
-                if ($this->dynamic_product && $this->product_quantity < 4) {
+                // product quantity is required # end
+
+                // min & maximum_quantity is required # start
+                if ($this->dynamic_product && is_null($this->minimum_quantity)) {
+                    $validator->errors()->add(
+                        "minimum_quantity",
+                        "At least {$this->minimum_quantity} quantity is needed for this subscription type.
+                        "
+                    );
+                }
+                if ($this->dynamic_product && is_null($this->maximum_quantity)) {
+                    $validator->errors()->add(
+                        "maximum_quantity",
+                        "You can not add more than {$this->maximum_quantity}.
+                        "
+                    );
+                }
+                // min & maximum_quantity is required # end
+
+
+                // check if ordered less then minimum_quantity or more than maximum_quantity # start
+                if ($this->dynamic_product && $this->product_quantity < $this->minimum_quantity) {
                     $validator->errors()->add(
                         "product_id",
-                        "At least {$minimumQuantity} quantity is needed for this subscription type.
-                    "
+                        "At least {$this->minimum_quantity} quantity is needed for this subscription type.
+                        "
                     );
                 }
+                if ($this->dynamic_product && $this->product_quantity > $this->maximum_quantity) {
+                    $validator->errors()->add(
+                        "product_id",
+                        "At least {$this->maximum_quantity} quantity is needed for this subscription type.
+                        "
+                    );
+                }
+                // check if ordered less then minimum_quantity or more than maximum_quantity # end
+
                 // dynamic product validation # end
 
                 // logic for phone and phone country code # start

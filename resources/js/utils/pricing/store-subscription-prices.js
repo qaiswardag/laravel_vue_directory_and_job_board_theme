@@ -21,7 +21,9 @@ const storeSubscriptionPrices = [
     {
         name: "Up to 3 Stores",
         id: "three_stores",
-        dynamic_product: false,
+        dynamic_product: true,
+        minimum_quantity: 3,
+        maximum_quantity: 3,
         priceIdentifierStripe: "price_1ODSGpEuESfVmAWocVQlIIkT",
         route: {
             name: "stripe.stores.create.subscription",
@@ -46,6 +48,8 @@ const storeSubscriptionPrices = [
         name: "From 4 stores and above",
         id: "dynamic_stores_enterprise",
         dynamic_product: true,
+        minimum_quantity: 4,
+        maximum_quantity: 1000,
         priceIdentifierStripe: "price_1ODWh0EuESfVmAWo0xHMTEyy",
         route: {
             name: "stripe.stores.create.subscription",
