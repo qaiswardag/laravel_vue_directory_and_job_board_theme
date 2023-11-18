@@ -1428,22 +1428,22 @@ const pageBuilder = new PageBuilder(store);
                     </p>
                 </div>
                 <div class="myInputGroup">
-                    <div class="relative flex items-start py-4">
-                        <div class="min-w-0 flex-1 text-sm leading-6">
-                            <label
-                                for="is_filled"
-                                class="select-none font-medium text-gray-900"
-                                >Is filled</label
-                            >
-                        </div>
-                        <div class="ml-3 flex h-6 items-center">
+                    <div class="relative flex items-start">
+                        <div class="flex h-6 items-center">
                             <input
                                 id="is_filled"
                                 name="is_filled"
                                 v-model="postForm.is_filled"
                                 type="checkbox"
-                                class="h-6 w-6 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                                class="h-4 w-4 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
                             />
+                        </div>
+                        <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                            <label
+                                for="is_filled"
+                                class="select-none font-medium text-gray-900"
+                                >Is filled</label
+                            >
                         </div>
                     </div>
                 </div>

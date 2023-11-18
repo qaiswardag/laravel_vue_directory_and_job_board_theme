@@ -1136,10 +1136,7 @@ onMounted(() => {
             </div>
         </template>
         <template #actions>
-            <SubmitButton
-                :disabled="formCharge.processing"
-                buttonText="Subscribe"
-            >
+            <SubmitButton :disabled="formCharge.processing" buttonText="Save">
             </SubmitButton>
             <div
                 class="flex justify-end mt-4"
