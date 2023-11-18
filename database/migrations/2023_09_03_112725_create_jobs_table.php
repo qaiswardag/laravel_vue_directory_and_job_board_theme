@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string("title")->index();
             $table->string("slug");
             $table->boolean("is_paid")->nullable();
+            $table->timestamp("paid_at")->nullable();
             $table->boolean("published")->nullable();
             $table->boolean("is_filled")->nullable();
             $table->string("apply_via_email")->nullable();

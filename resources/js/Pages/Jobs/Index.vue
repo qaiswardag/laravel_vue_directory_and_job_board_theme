@@ -367,6 +367,9 @@ onMounted(() => {
                                         Is paid
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
+                                        Paid at
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
                                         Team Name
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
@@ -495,6 +498,16 @@ onMounted(() => {
                                                         : "Unpaid"
                                                 }}</span
                                             >
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <template v-if="post.paid_at">
+                                                {{
+                                                    format(
+                                                        parseISO(post.paid_at),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </template>
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">

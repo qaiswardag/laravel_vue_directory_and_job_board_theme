@@ -18,6 +18,8 @@ use Laravel\Cashier\Cashier;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Carbon;
+
 
 
 
@@ -111,6 +113,7 @@ class SingleChargeJobController extends Controller
 
             $job->update([
                 "is_paid" => true,
+                "paid_at" => Carbon::now(),
                 "published" => $request->published,
             ]);
 
