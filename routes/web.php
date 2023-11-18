@@ -30,6 +30,7 @@ use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Guests\User\UserController;
 use App\Http\Controllers\LoggedIn\Job\JobController;
+use App\Http\Controllers\LoggedIn\Job\JobOutdatedController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
 use App\Http\Controllers\LoggedIn\Team\TeamController as TeamTeamController;
@@ -569,6 +570,9 @@ Route::middleware([
     // JOBS #START
     Route::get("/team/jobs/{teamId}", [JobController::class, "index"])->name(
         "team.jobs.index"
+    );
+    Route::get("/team/jobs/outdated/{teamId}", [JobOutdatedController::class, "index"])->name(
+        "team.jobs.index.outdated"
     );
     // unique job
     Route::get("/team/{teamId}/jobs/{slug}/view/{jobId}/", [

@@ -74,6 +74,14 @@ class JobController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
+            // Add the condition for started_at
+            ->where(function ($query) {
+                // Include posts where ended_at is not null
+                $query->whereNotNull("ended_at");
+
+                // Include posts where ended_at is greater than the current date
+                $query->whereDate("ended_at", ">=", now()->toDateString());
+            })
             ->latest()
             ->paginate(12);
 
@@ -95,6 +103,8 @@ class JobController extends Controller
                 $job->updatedBy = null;
             }
         }
+
+
 
         return Inertia::render("Jobs/Index", [
             "posts" => $jobs,
