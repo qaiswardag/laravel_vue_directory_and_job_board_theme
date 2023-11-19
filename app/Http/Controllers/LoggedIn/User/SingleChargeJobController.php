@@ -113,8 +113,8 @@ class SingleChargeJobController extends Controller
 
             $job->update([
                 "is_paid" => true,
+                "published" => true,
                 "paid_at" => Carbon::now(),
-                "published" => $request->published,
             ]);
 
             // Return the current team that the user is on, rather than the team that the user is storing the post for.

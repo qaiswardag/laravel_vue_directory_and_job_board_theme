@@ -116,11 +116,11 @@ class StoreJobRequest extends FormRequest
                 // Check if the 'started_at' field is set on the job
                 if ($this->job->started_at !== $this->started_at) {
                     // Calculate the difference in days between the job's creation date and the 'started_at' date
-                    $daysDifference = Carbon::parse($this->job->created_at)->diffInDays(Carbon::now());                    // Check if the difference is greater than or equal to 5 days
+                    $daysDifference = Carbon::parse($this->job->paid_at)->diffInDays(Carbon::now());                    // Check if the difference is greater than or equal to 5 days
                     if ($daysDifference >= 5) {
                         $validator
                             ->errors()
-                            ->add("started_at", "Sorry, the started at date can no longer be updated. You cannot change the started at date 5 days from when the job was created.");
+                            ->add("started_at", "Sorry, the started at is unchangeable after 5 days from payment.");
                     }
                 }
             }
