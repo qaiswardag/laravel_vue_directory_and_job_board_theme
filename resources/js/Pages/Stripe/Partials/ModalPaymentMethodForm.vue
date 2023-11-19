@@ -235,30 +235,6 @@ onMounted(async () => {
                 <div class="mb-4 myPrimaryFormMain w-full">
                     <div class="myInputsOrganization">
                         <div class="myInputGroup">
-                            <p class="my-4">
-                                <a
-                                    href="https://stripe.com/docs/testing"
-                                    target="blank"
-                                    >Testing Cards</a
-                                >
-                            </p>
-                            <p class="my-4">
-                                Works:
-                                <br />
-                                4000002080000001
-                            </p>
-                            <p class="my-4">
-                                Can be added but insufficient funds:
-                                <br />
-                                4000008260003178
-                            </p>
-                            <p class="my-4">
-                                Declined:
-                                <br />
-                                4000000000000002
-                            </p>
-                            <p class="my-4">12/34</p>
-                            <p class="my-4">567</p>
                             <!-- Email -->
                             <div class="myInputGroup">
                                 <div
@@ -280,7 +256,7 @@ onMounted(async () => {
                                     v-model="form.name"
                                     type="text"
                                     autocomplete="off"
-                                    class="block w-full mt-1"
+                                    class="block w-full"
                                 />
                                 <InputError :message="form.errors.name" />
                             </div>
@@ -293,7 +269,7 @@ onMounted(async () => {
                                 placeholder="Email.."
                                 v-model="form.email"
                                 type="email"
-                                class="block w-full mt-1"
+                                class="block w-full"
                             />
                             <InputError :message="form.errors.email" />
                         </div>
@@ -494,7 +470,7 @@ onMounted(async () => {
                                     v-model="form.city"
                                     type="text"
                                     autocomplete="off"
-                                    class="block w-full mt-1"
+                                    class="block w-full"
                                 />
                                 <InputError :message="form.errors.city" />
                             </div>
@@ -509,7 +485,7 @@ onMounted(async () => {
                                     v-model="form.postal_code"
                                     type="text"
                                     autocomplete="off"
-                                    class="block w-full mt-1"
+                                    class="block w-full"
                                 />
                                 <InputError
                                     :message="form.errors.postal_code"

@@ -695,7 +695,7 @@ onMounted(async () => {
                             v-model="form.name"
                             type="text"
                             autocomplete="off"
-                            class="block w-full mt-1"
+                            class="block w-full"
                         />
 
                         <!-- Stripe Elements Placeholder -->
@@ -990,17 +990,6 @@ onMounted(async () => {
                         </div>
                     </div>
                     <InputError :message="form.errors.product_id" />
-                </div>
-
-                <div class="my-6 p-4 border rounded">
-                    <p class="my-2">Works: 4000002080000001</p>
-                    <p class="my-2">
-                        Can be added but insufficient funds: 4000008260003178
-                    </p>
-                    <p class="my-2">
-                        Can be added but insufficient funds: Declined:
-                        4000000000000002
-                    </p>
                 </div>
             </div>
         </template>

@@ -260,6 +260,46 @@ onMounted(() => {
         No payment methods are connected to your account.
     </p>
 
+    <!-- card testing # start -->
+    <div class="my-4 p-4 border rounded">
+        <p>
+            <a href="https://stripe.com/docs/testing" target="blank"
+                >Testing Cards</a
+            >
+        </p>
+        <p class="my-4">
+            Works: Visa
+            <br />
+            United Arab Emirates (AE)
+            <br />
+            4000007840000001
+        </p>
+        <p class="my-4">
+            Works: Mastercard
+            <br />
+            United Arab Emirates (AE)
+            <br />
+            5200007840000022
+        </p>
+        <p class="my-4">
+            Works: Visa <br />
+            Denmark (DK)
+            <br />
+            4000002080000001
+        </p>
+        <p class="my-4">
+            Can be added but insufficient funds: <br />
+            4000008260003178
+        </p>
+        <p class="my-4">
+            Declined: <br />
+            4000000000000002
+        </p>
+        <p class="my-4">12/34</p>
+        <p class="my-4">567</p>
+    </div>
+    <!-- card testing # end -->
+
     <template v-if="!isLoadingPaymentMethods && !isErrorPaymentMethods">
         <p
             class="py-4"
@@ -302,7 +342,7 @@ onMounted(() => {
                     :key="paymentMethod.id"
                 >
                     <div
-                        class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white"
+                        class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white w-max min-w-full"
                     >
                         <div>
                             <div class="flex items-center">
@@ -339,27 +379,15 @@ onMounted(() => {
                             </div>
                         </div>
                         <div
-                            class="flex gap-2 justify-between items-start border-t border-gray-400 pt-2"
+                            class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-full"
                         >
-                            <button
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                type="button"
-                                @click="
-                                    handleDeletePaymentMethod(paymentMethod)
-                                "
-                            >
-                                <TrashIcon
-                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                ></TrashIcon>
-                            </button>
-
                             <div>
                                 <button
                                     v-if="
                                         fetchedPaymentMethods?.defaultPaymentMethodId !==
                                         paymentMethod.id
                                     "
-                                    class="myPrimaryTag transition mt-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    class="myPrimaryTag transition my-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0 bg-white"
                                     type="button"
                                     @click="
                                         handleSetDefaultPaymentMethod(
@@ -374,7 +402,7 @@ onMounted(() => {
                                         fetchedPaymentMethods?.defaultPaymentMethodId ===
                                         paymentMethod.id
                                     "
-                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
+                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white my-0"
                                     type="button"
                                     @click="
                                         handleSetDefaultPaymentMethod(
@@ -392,6 +420,17 @@ onMounted(() => {
                                     </div>
                                 </button>
                             </div>
+                            <button
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                type="button"
+                                @click="
+                                    handleDeletePaymentMethod(paymentMethod)
+                                "
+                            >
+                                <TrashIcon
+                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                ></TrashIcon>
+                            </button>
                         </div>
                     </div>
                 </div>

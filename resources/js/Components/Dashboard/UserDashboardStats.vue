@@ -1,5 +1,6 @@
 <script setup>
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
+import PostCardLoggedIn from "@/Components/Cards/PostCardLoggedIn.vue";
 import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/vue/24/outline";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import EmptySectionBorder from "@/Components/Sections/EmptySectionBorder.vue";
@@ -8,6 +9,7 @@ import { onMounted, computed, ref } from "vue";
 import { parseISO, format } from "date-fns";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
+import ChartDefault from "@/Components/Charts/ChartDefault.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 import { router } from "@inertiajs/vue3";
@@ -95,20 +97,6 @@ const stats = [
     { id: 4, name: "Paid out to creators", value: "$70M" },
 ];
 
-const goToSinglePost = function (current_teamId, postId, postSlug) {
-    router.get(
-        route("team.posts.post.show", [current_teamId, postSlug, postId])
-    );
-};
-const goToSingleJob = function (current_teamId, postId, postSlug) {
-    router.get(route("team.jobs.job.show", [current_teamId, postSlug, postId]));
-};
-const goToSingleStore = function (current_teamId, postSlug, postId) {
-    router.get(
-        route("team.stores.store.show", [current_teamId, postId, postSlug])
-    );
-};
-
 onMounted(() => {
     store.dispatch("userDashboard/loadDashboardStats", {
         teamId: props.currentUserTeam && props.currentUserTeam.id,
@@ -117,7 +105,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FullWidthElement :descriptionArea="true">
+    <FullWidthElement :descriptionArea="true" class="bg-red-50">
         <template #title>Latest team resources</template>
         <template #description>
             You are currently viewing the latest resources uploaded by your
@@ -328,102 +316,6 @@ onMounted(() => {
                         </div>
                     </div>
                     <!-- column images # end -->
-                    <!-- column stats # start -->
-                    <div
-                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                    >
-                        <div class="border-b border-gray-200 mb-8 pb-2">
-                            <div
-                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                            >
-                                Latest Team Stats
-                            </div>
-                        </div>
-
-                        <div
-                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
-                        >
-                            <div class="mx-auto">
-                                <h3 class="myFourthHeader">
-                                    Trusted by thousands of
-                                    creators&nbsp;worldwide
-                                </h3>
-                                <p class="myPrimaryParagrph">
-                                    Lorem ipsum, dolor sit amet consectetur
-                                    adipisicing elit. Maiores impedit
-                                    perferendis suscipit eaque, iste dolor
-                                    cupiditate blanditiis ratione.
-                                </p>
-                                <dl
-                                    class="mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 xl:mt-16"
-                                >
-                                    <div
-                                        v-for="stat in stats"
-                                        :key="stat.id"
-                                        class="flex flex-col gap-y-3 border-l border-gray-900/10 pl-6"
-                                    >
-                                        <dt class="myPrimaryParagraph">
-                                            {{ stat.name }}
-                                        </dt>
-                                        <dd
-                                            class="order-first text-3xl font-semibold tracking-tight text-gray-900"
-                                        >
-                                            {{ stat.value }}
-                                        </dd>
-                                    </div>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- column stats # end -->
-                    <!-- column stats # start -->
-                    <div
-                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                    >
-                        <div class="border-b border-gray-200 mb-8 pb-2">
-                            <div
-                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                            >
-                                Latest Team Stats
-                            </div>
-                        </div>
-
-                        <div
-                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
-                        >
-                            <div class="mx-auto">
-                                <h3 class="myFourthHeader">
-                                    Trusted by thousands of
-                                    creators&nbsp;worldwide
-                                </h3>
-                                <p class="myPrimaryParagrph">
-                                    Lorem ipsum, dolor sit amet consectetur
-                                    adipisicing elit. Maiores impedit
-                                    perferendis suscipit eaque, iste dolor
-                                    cupiditate blanditiis ratione.
-                                </p>
-                                <dl
-                                    class="mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 xl:mt-16"
-                                >
-                                    <div
-                                        v-for="stat in stats"
-                                        :key="stat.id"
-                                        class="flex flex-col gap-y-3 border-l border-gray-900/10 pl-6"
-                                    >
-                                        <dt class="myPrimaryParagraph">
-                                            {{ stat.name }}
-                                        </dt>
-                                        <dd
-                                            class="order-first text-3xl font-semibold tracking-tight text-gray-900"
-                                        >
-                                            {{ stat.value }}
-                                        </dd>
-                                    </div>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- column stats # end -->
 
                     <!-- column post # start -->
                     <div
@@ -470,55 +362,11 @@ onMounted(() => {
                                     :key="post.id"
                                     class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
                                 >
-                                    <!-- start photo -->
-
-                                    <template
-                                        v-if="
-                                            post && post.cover_images !== null
-                                        "
-                                    >
-                                        <ThumbnailSmallImageSlider
-                                            :images="post.cover_images"
-                                            imageSize="medium_path"
-                                            imageHeight="max-h-96"
-                                            imageWidth="w-full object-cover"
-                                            :roundedFull="false"
-                                            :squareButtons="true"
-                                            @firstButtonClick="
-                                                goToSinglePost(
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.id,
-                                                    post.slug
-                                                )
-                                            "
-                                            :imageClickable="true"
-                                        ></ThumbnailSmallImageSlider>
-                                    </template>
-
-                                    <div class="px-2 pt-4 pb-2">
-                                        <Link
-                                            :href="
-                                                route('team.posts.post.show', [
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.slug,
-                                                    post.id,
-                                                ])
-                                            "
-                                        >
-                                            <p
-                                                class="text-sm font-medium mt-2 mb-2"
-                                            >
-                                                {{ post.title.slice(0, 25)
-                                                }}{{
-                                                    post.title.length > 25
-                                                        ? ".."
-                                                        : ""
-                                                }}
-                                            </p>
-                                        </Link>
-                                    </div>
+                                    <PostCardLoggedIn
+                                        :post="post"
+                                        postListPathName="posts"
+                                        postSinglePathName="post"
+                                    ></PostCardLoggedIn>
                                 </li>
                             </ul>
                         </div>
@@ -570,53 +418,11 @@ onMounted(() => {
                                 >
                                     <!-- start photo -->
 
-                                    <template
-                                        v-if="
-                                            post && post.cover_images !== null
-                                        "
-                                    >
-                                        <ThumbnailSmallImageSlider
-                                            :images="post.cover_images"
-                                            imageSize="medium_path"
-                                            imageHeight="max-h-96"
-                                            imageWidth="w-full object-cover"
-                                            :roundedFull="false"
-                                            :squareButtons="true"
-                                            @firstButtonClick="
-                                                goToSingleJob(
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.id,
-                                                    post.slug
-                                                )
-                                            "
-                                            :imageClickable="true"
-                                        ></ThumbnailSmallImageSlider>
-                                    </template>
-
-                                    <div class="px-2 pt-4 pb-2">
-                                        <Link
-                                            :href="
-                                                route('team.jobs.job.show', [
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.slug,
-                                                    post.id,
-                                                ])
-                                            "
-                                        >
-                                            <p
-                                                class="text-sm font-medium mt-2 mb-2"
-                                            >
-                                                {{ post.title.slice(0, 25)
-                                                }}{{
-                                                    post.title.length > 25
-                                                        ? ".."
-                                                        : ""
-                                                }}
-                                            </p>
-                                        </Link>
-                                    </div>
+                                    <PostCardLoggedIn
+                                        :post="post"
+                                        postListPathName="jobs"
+                                        postSinglePathName="job"
+                                    ></PostCardLoggedIn>
                                 </li>
                             </ul>
                         </div>
@@ -669,68 +475,55 @@ onMounted(() => {
                                 >
                                     <!-- start photo -->
 
-                                    <template
-                                        v-if="
-                                            post && post.cover_images !== null
-                                        "
-                                    >
-                                        <ThumbnailSmallImageSlider
-                                            :images="post.cover_images"
-                                            imageSize="medium_path"
-                                            imageHeight="max-h-96"
-                                            imageWidth="w-full object-cover"
-                                            :roundedFull="false"
-                                            :squareButtons="true"
-                                            @firstButtonClick="
-                                                goToSingleStore(
-                                                    $page.props.user
-                                                        .current_team.id,
-                                                    post.id,
-                                                    post.slug
-                                                )
-                                            "
-                                            :imageClickable="true"
-                                        ></ThumbnailSmallImageSlider>
-                                    </template>
-
-                                    <div class="px-2 pt-4 pb-2">
-                                        <Link
-                                            :href="
-                                                route(
-                                                    'team.stores.store.show',
-                                                    [
-                                                        $page.props.user
-                                                            .current_team.id,
-                                                        post.slug,
-                                                        post.id,
-                                                    ]
-                                                )
-                                            "
-                                        >
-                                            <p
-                                                class="text-sm font-medium mt-2 mb-2"
-                                            >
-                                                {{ post.title.slice(0, 25)
-                                                }}{{
-                                                    post.title.length > 25
-                                                        ? ".."
-                                                        : ""
-                                                }}
-                                            </p>
-                                        </Link>
-                                    </div>
+                                    <PostCardLoggedIn
+                                        :post="post"
+                                        postListPathName="stores"
+                                        postSinglePathName="store"
+                                    ></PostCardLoggedIn>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <!-- column stores # end -->
+
+                    <!-- column charts # start -->
+                    <div
+                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    >
+                        <div class="border-b border-gray-200 mb-8 pb-2">
+                            <div
+                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            >
+                                Latest Team Stats
+                            </div>
+                        </div>
+
+                        <ChartDefault></ChartDefault>
+                    </div>
+                    <!-- column charts # end -->
+                    <!-- column stats # start -->
+                    <div
+                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    >
+                        <div class="border-b border-gray-200 mb-8 pb-2">
+                            <div
+                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            >
+                                Latest Team Stats
+                            </div>
+                        </div>
+
+                        <ChartDefault></ChartDefault>
+                    </div>
+                    <!-- column stats # end -->
                 </div>
             </template>
             <!-- Actualt data # Start -->
         </template>
     </FullWidthElement>
 
-    <FullWidthElement :descriptionArea="true">
+    <!-- user object # start -->
+    <FullWidthElement :descriptionArea="true" class="bg-indigo-50">
         <template #title
             >Details about the logged-in user and team insights</template
         >
@@ -741,7 +534,7 @@ onMounted(() => {
         </template>
         <template #content>
             <div class="grid grid-cols-1 md:grid-cols-12 lg:gap-12 gap-18">
-                <div class="col-span-1 md:col-span-8">
+                <div class="col-span-1 md:col-span-12">
                     <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
                         Details about the logged-in user
                     </h2>
@@ -783,15 +576,6 @@ onMounted(() => {
                         </Disclosure>
                     </dl>
                 </div>
-
-                <div class="col-span-1 md:col-span-4">
-                    <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
-                        Somthing here
-                    </h2>
-                    <div>
-                        <p class="myPrimaryParagraph">Details here</p>
-                    </div>
-                </div>
             </div>
             <MediaLibraryModal
                 :user="user"
@@ -809,4 +593,5 @@ onMounted(() => {
             </MediaLibraryModal>
         </template>
     </FullWidthElement>
+    <!-- user object # end -->
 </template>

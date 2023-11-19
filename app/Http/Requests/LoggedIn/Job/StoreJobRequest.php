@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\LoggedIn\Job;
 
+use App\Models\Job\Job;
 use App\Models\MediaLibrary\MediaLibrary;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
@@ -109,23 +110,71 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add("team", "The team field is required.");
             }
-
             $this->validateProperties($validator);
+
+            if ($this->job && $this->job->id && $this->job->is_paid) {
+                // Check if the 'started_at' field is set on the job
+
+                if ($this->job->started_at !== $this->started_at) {
+                    // Calculate the difference in days between the job's creation date and the 'started_at' date
+                    $daysDifference = Carbon::parse($this->job->paid_at)->diffInDays(Carbon::now());                    // Check if the difference is greater than or equal to 5 days
+                    if ($daysDifference >= 5) {
+                        $validator
+                            ->errors()
+                            ->add("started_at", "Sorry, the started at is unchangeable after 5 days from payment.");
+                    }
+                }
+            }
 
             // The Started at date must be in the future
             if (
+                !$this->job &&
                 $this->started_at &&
                 Carbon::parse($this->started_at)->isValid() &&
                 Carbon::parse($this->started_at)->isPast() &&
-                Carbon::parse($this->started_at)->diffInDays(
-                    Carbon::now()->subDay()
-                ) > 0
+                !Carbon::parse($this->started_at)->addDays(1)->isFuture()
             ) {
                 $validator
                     ->errors()
                     ->add(
                         "started_at",
-                        "The started at date must be in the future."
+                        "The started at date must be from today and in the future."
+                    );
+            }
+
+            // The Started at date must be in the future
+            if (
+                $this->job && $this->job->id &&
+                $this->started_at &&
+                !$this->is_paid &&
+                Carbon::parse($this->started_at)->isValid() &&
+                !Carbon::parse($this->started_at)->addDays(1)->isFuture()
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "started_at",
+                        "The started at date must be from today and in the future."
+                    );
+            }
+            //
+            //
+            //
+            // The started at date must be in the past and can be up to 30 days old from today.
+            if (
+                $this->job && $this->job->id &&
+                $this->started_at &&
+                Carbon::parse($this->started_at)->isValid() &&
+                Carbon::parse($this->started_at)->isPast() &&
+                Carbon::parse($this->started_at)->diffInDays(
+                    Carbon::now()
+                ) > 29
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "started_at",
+                        "The started at date must be in the past and can be up to 30 days old from today."
                     );
             }
 

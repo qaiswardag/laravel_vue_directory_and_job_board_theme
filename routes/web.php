@@ -30,6 +30,7 @@ use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Guests\User\UserController;
 use App\Http\Controllers\LoggedIn\Job\JobController;
+use App\Http\Controllers\LoggedIn\Job\JobOutdatedController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
 use App\Http\Controllers\LoggedIn\Team\TeamController as TeamTeamController;
@@ -418,23 +419,15 @@ Route::middleware([
     // single charge
     // single charge
     // single charge
-    Route::get("/single-charge/create/{team}/{job}", [
+    Route::get("/single-charge/create/{job}", [
         SingleChargeJobController::class,
         "create",
     ])->name("stripe.single.charge.job.create");
 
-    Route::post("/stripe/single-charge/store/{team}/{job}", [
+    Route::post("/stripe/single-charge/store/{job}", [
         SingleChargeJobController::class,
         "store",
     ])->name("stripe.single.charge.job.store");
-    //
-    //
-    //
-    //
-    Route::get("/product-checkout", [
-        SingleChargeJobController::class,
-        "checkout",
-    ]);
 });
 // AUTH ONLY # END
 // AUTH ONLY # END
@@ -577,6 +570,9 @@ Route::middleware([
     // JOBS #START
     Route::get("/team/jobs/{teamId}", [JobController::class, "index"])->name(
         "team.jobs.index"
+    );
+    Route::get("/team/jobs/outdated/{teamId}", [JobOutdatedController::class, "index"])->name(
+        "team.jobs.index.outdated"
     );
     // unique job
     Route::get("/team/{teamId}/jobs/{slug}/view/{jobId}/", [
@@ -830,6 +826,11 @@ Route::middleware([
         JobController::class,
         "edit",
     ])->name("team.jobs.job.edit");
+
+    Route::get("/team/jobs/job/republish/{teamId}/{job}", [
+        JobOutdatedController::class,
+        "update",
+    ])->name("team.jobs.job.republish");
 
     Route::post("/team/jobs/job/update/{job}", [
         JobController::class,

@@ -8,7 +8,7 @@ use Laravel\Cashier\Cashier;
 
 use Validator;
 
-class StoreSubscriptionRequest extends FormRequest
+class StoreChargeFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,15 @@ class StoreSubscriptionRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
+            "next_route_name" => ["string", "min:2", "max:255"],
+            "product_quantity" => ["integer", "digits_between:1,4", "nullable"],
+            "minimum_quantity" => ["integer", "digits_between:1,4", "nullable"],
+            "maximum_quantity" => ["integer", "digits_between:1,4", "nullable"],
             "product_id" => ["required", "string", "min:2", "max:255"],
+            "price_identifier_stripe" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
             "city" => ["required", "string", "min:2", "max:255", "nullable"],
+            "state" => ["string", "min:2", "max:255", "nullable"],
             "postal_code" => [
                 "required",
                 "string",
@@ -41,6 +47,7 @@ class StoreSubscriptionRequest extends FormRequest
 
             "vat_id" => ["string", "min:2", "max:255", "nullable"],
             "vat_number" => ["string", "min:2", "max:255", "nullable"],
+            "dynamic_product" => ["boolean"],
         ];
 
         return $rules;
@@ -58,35 +65,30 @@ class StoreSubscriptionRequest extends FormRequest
             "Oops! No default payment method has been selected. Please select a default payment method.";
 
         $user = Auth::user();
-
         $stripeId = $user->stripe_id;
         $stripeCustomer = Cashier::findBillable($stripeId);
-
-        $defaultPaymentMethodId =
-            $stripeCustomer->defaultPaymentMethod()->id ?? null;
-
+        $defaultPaymentMethodId = $stripeCustomer->defaultPaymentMethod()->id ?? null;
         $paymentMethods = $stripeCustomer->paymentMethods();
 
         $validator->after(function ($validator) use (
             $noDefaultPaymentMethodError,
             $defaultPaymentMethodId,
-            $paymentMethods
+            $paymentMethods,
         ) {
+
+            // payment method validation # start
             if (!$defaultPaymentMethodId) {
                 $validator
                     ->errors()
                     ->add("payment_method_id", $noDefaultPaymentMethodError);
             }
-            //
-            //
+
             if (!$paymentMethods) {
                 $validator
                     ->errors()
                     ->add("payment_method_id", $noDefaultPaymentMethodError);
             }
 
-            //
-            //
             if ($paymentMethods) {
                 $validPaymentMethod = false;
 
@@ -105,6 +107,65 @@ class StoreSubscriptionRequest extends FormRequest
                             $noDefaultPaymentMethodError
                         );
                 }
+                // payment method validation # start
+
+
+                // dynamic product validation # start
+                if (!$this->dynamic_product && !is_null($this->product_quantity)) {
+                    $validator->errors()->add(
+                        "product_id",
+                        "When product pricing Is dynamic, the product quantity field should be set to null.
+                    "
+                    );
+                }
+
+                // when dynamic product product quantity & min & maximum_quantity is required # start
+                if ($this->dynamic_product && is_null($this->product_quantity)) {
+                    $validator->errors()->add(
+                        "product_id",
+                        "Product quantity is required.
+                        "
+                    );
+                }
+
+                if ($this->dynamic_product && is_null($this->minimum_quantity)) {
+                    $validator->errors()->add(
+                        "Minimum_quantity",
+                        "Minimum quantity quantity is required.
+                        "
+                    );
+                }
+                if ($this->dynamic_product && is_null($this->maximum_quantity)) {
+                    $validator->errors()->add(
+                        "maximum_quantity",
+                        "Maximum quantity quantity is required.
+                        "
+                    );
+                }
+                // when dynamic product product quantity & min & maximum_quantity is required # end
+
+
+
+
+
+                // check if ordered less then minimum_quantity or more than maximum_quantity # start
+                if ($this->dynamic_product && $this->product_quantity < $this->minimum_quantity) {
+                    $validator->errors()->add(
+                        "product_id",
+                        "Restricted to a minimum of {$this->minimum_quantity} you have selected {$this->product_quantity}.
+                        "
+                    );
+                }
+                if ($this->dynamic_product && $this->product_quantity > $this->maximum_quantity) {
+                    $validator->errors()->add(
+                        "product_id",
+                        "Restricted to a maximum of {$this->maximum_quantity} you have selected {$this->product_quantity}.
+                        "
+                    );
+                }
+                // check if ordered less then minimum_quantity or more than maximum_quantity # end
+
+                // dynamic product validation # end
 
                 // logic for phone and phone country code # start
                 if ($this->phone && !$this->phone_code) {
@@ -125,12 +186,12 @@ class StoreSubscriptionRequest extends FormRequest
                     );
                 }
                 // logic for phone and phone country code # end
+
                 // logic for vat id and vat number # start
                 if ($this->vat_id && !$this->vat_number) {
                     $validator->errors()->add(
                         "vat_number",
                         "Vat number is required when vat id is set.
-    
                     "
                     );
                 }

@@ -465,7 +465,7 @@ const categoriesSorted = computed(() => {
                         id="title"
                         v-model="postForm.title"
                         type="text"
-                        class="block w-full mt-1"
+                        class="block w-full"
                         autocomplete="off"
                     />
                     <InputError :message="postForm.errors.title" />
@@ -647,7 +647,7 @@ const categoriesSorted = computed(() => {
                             :key="category.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddCategories"
@@ -763,20 +763,21 @@ const categoriesSorted = computed(() => {
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                    class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
                                     >
-                                        <img
-                                            @click="handleUploadCoverImage"
-                                            :src="`/storage/uploads/${image?.thumbnail_path}`"
-                                            alt="image"
-                                            class="myPrimarythumbnailInsertPreview"
-                                        />
-
+                                        <div class="flex-shrink-0">
+                                            <img
+                                                @click="handleUploadCoverImage"
+                                                :src="`/storage/uploads/${image?.thumbnail_path}`"
+                                                alt="image"
+                                                class="myPrimarythumbnailInsertPreview"
+                                            />
+                                        </div>
                                         <button
-                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white break-keep"
                                             v-if="
                                                 image?.pivot?.primary &&
                                                 postForm.cover_image?.length > 1
@@ -796,7 +797,7 @@ const categoriesSorted = computed(() => {
                                             </div>
                                         </button>
                                         <button
-                                            class="myPrimaryTag transition bg-white"
+                                            class="myPrimaryTag transition bg-white break-keep"
                                             v-if="
                                                 !image?.pivot?.primary &&
                                                 postForm.cover_image?.length > 1

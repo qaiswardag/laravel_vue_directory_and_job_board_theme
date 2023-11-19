@@ -284,10 +284,6 @@ const routesArray = [
             <template #description></template>
             <CardHeadings :routesArray="routesArray">
                 <template #title>Components </template>
-                <template #subTitle
-                    >Lorem ipsum dolor sit amet consectetur adipisicing elit
-                    quam corrupti consectetur.
-                </template>
 
                 <template #buttons>
                     <button
@@ -479,7 +475,7 @@ const routesArray = [
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <Squares2X2Icon
-                                                        class="w-3 h-3 stroke-1"
+                                                        class="w-3 h-3 stroke-2"
                                                     ></Squares2X2Icon>
 
                                                     <span>

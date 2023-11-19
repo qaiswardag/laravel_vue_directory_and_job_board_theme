@@ -42,7 +42,7 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                 </template>
                 <template #content>
                     <div
-                        class="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 md:max-w-2xl md:grid-cols-2 lg:max-w-4xl xl:mx-0 xl:max-w-none xl:grid-cols-4"
+                        class="isolate mx-auto mt-10 grid grid-cols-1 gap-8 md:grid-cols-3 xl:grid-cols-3"
                     >
                         <div
                             v-for="product in storeSubscriptionPrices"
@@ -83,7 +83,12 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                                 >
                             </p>
                             <p
-                                class="block text-[10px] leading-6 text-gray-600 italic mt-1"
+                                class="block text-sm leading-6 font-medium text-gray-600 italic mt-1"
+                            >
+                                Total ${{ product.totalPrice }}
+                            </p>
+                            <p
+                                class="block text-[12px] leading-6 text-gray-600 italic mt-1"
                             >
                                 {{ product.billed }}
                             </p>
@@ -102,7 +107,7 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                                         product.route.parameters
                                     )
                                 "
-                                >{{ product.name }}
+                                >{{ product.title }}
                             </Link>
                             <Link
                                 v-if="!$page.props?.user"

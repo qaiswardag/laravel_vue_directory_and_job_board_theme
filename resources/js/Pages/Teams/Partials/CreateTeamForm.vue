@@ -206,7 +206,7 @@ onBeforeMount(() => {});
                                 id="slug"
                                 v-model="slugValueTeamName"
                                 type="text"
-                                class="block w-full mt-1 myPrimaryInputReadonly"
+                                class="block w-full myPrimaryInputReadonly"
                                 readonly
                                 autocomplete="off"
                             />
@@ -229,7 +229,7 @@ onBeforeMount(() => {});
                                 id="slug"
                                 v-model="slugValueCustom"
                                 type="text"
-                                class="block w-full mt-1"
+                                class="block w-full"
                                 autocomplete="off"
                             />
                             <div
@@ -256,6 +256,13 @@ onBeforeMount(() => {});
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
+                    <p class="myPrimaryParagraph">
+                        {{
+                            postForm.public
+                                ? "Public and accessible for public viewing."
+                                : "Private and not accessible for public viewing."
+                        }}
+                    </p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"

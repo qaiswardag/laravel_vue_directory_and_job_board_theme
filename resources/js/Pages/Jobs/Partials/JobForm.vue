@@ -34,6 +34,7 @@ import {
 } from "@headlessui/vue";
 
 import {
+    ArrowPathIcon,
     CheckIcon,
     ChevronUpDownIcon,
     LockClosedIcon,
@@ -601,16 +602,27 @@ const clearForm = function () {
     store.commit("pageBuilderState/setComponents", []);
 };
 
+const setStartedAtDate = function () {
+    if (props.post) {
+        jobStartedAt.value = props.post?.started_at;
+    }
+    if (!props.post) {
+        jobStartedAt.value = formatISO(new Date());
+    }
+};
 watch(
     () => jobStartedAt.value,
     (newValue) => {
         if (newValue) {
-            // postForm.started_at = formatISO(new Date(newValue));
             const parsedDate = new Date(newValue);
             const formattedDate = format(parsedDate, "yyyy-MM-dd HH:mm:ss");
             postForm.started_at = formattedDate;
         }
-    }
+        if (newValue === null) {
+            postForm.started_at = null;
+        }
+    },
+    { immediate: true }
 );
 
 const clearPageBuilderOnSuccessUpdate = function () {
@@ -1077,7 +1089,6 @@ onBeforeMount(() => {
     // User is editing an existing Resource, rather than creating a new one from scratch.
     if (props.post) {
         formType.value = "update";
-
         pathPageBuilderLocalStorageUpdateDraft.value = `page-builder-draft-update-store-${
             props.post.id ? props.post.id : null
         }-team-${props.currentUserTeam ? props.currentUserTeam.id : null}`;
@@ -1180,7 +1191,7 @@ const pageBuilder = new PageBuilder(store);
                         id="title"
                         v-model="postForm.title"
                         type="text"
-                        class="block w-full mt-1"
+                        class="block w-full"
                         autocomplete="off"
                     />
                     <InputError :message="postForm.errors.title" />
@@ -1196,7 +1207,7 @@ const pageBuilder = new PageBuilder(store);
                                 id="slug"
                                 v-model="slugValueTitle"
                                 type="text"
-                                class="block w-full mt-1 myPrimaryInputReadonly"
+                                class="block w-full myPrimaryInputReadonly"
                                 readonly
                                 autocomplete="off"
                             />
@@ -1219,7 +1230,7 @@ const pageBuilder = new PageBuilder(store);
                                 id="slug"
                                 v-model="slugValueCustom"
                                 type="text"
-                                class="block w-full mt-1"
+                                class="block w-full"
                                 autocomplete="off"
                             />
                             <div
@@ -1248,13 +1259,13 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post apply_via_link start -->
                 <div class="myInputGroup">
-                    <InputLabel for="apply_via_link" value="Link.." />
+                    <InputLabel for="apply_via_link" value="Apply via URL" />
                     <TextInput
                         placeholder="Link.."
                         id="apply_via_link"
                         v-model="postForm.apply_via_link"
                         type="text"
-                        class="block w-full mt-1"
+                        class="block w-full"
                         autocomplete="off"
                     />
                     <InputError :message="postForm.errors.apply_via_link" />
@@ -1262,13 +1273,13 @@ const pageBuilder = new PageBuilder(store);
                 <!-- post apply_via_email end -->
                 <!-- post apply_via_email start -->
                 <div class="myInputGroup">
-                    <InputLabel for="apply_via_email" value="Email.." />
+                    <InputLabel for="apply_via_email" value="Apply via email" />
                     <TextInput
                         placeholder="Email.."
                         id="apply_via_email"
                         v-model="postForm.apply_via_email"
                         type="text"
-                        class="block w-full mt-1"
+                        class="block w-full"
                         autocomplete="off"
                     />
                     <InputError :message="postForm.errors.apply_via_email" />
@@ -1320,6 +1331,13 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
+                    <p class="myPrimaryParagraph">
+                        {{
+                            postForm.published
+                                ? "Public and accessible for public viewing."
+                                : "Private and not accessible for public viewing."
+                        }}
+                    </p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
@@ -1404,117 +1422,81 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Is filled</div>
-                </div>
-                <div
-                    class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
-                >
-                    <InputLabel
-                        :value="
+                    <p class="myPrimaryParagraph">
+                        {{
                             postForm.is_filled
-                                ? 'Is filled'
-                                : 'Open for applications'
-                        "
-                        :class="{
-                            'text-myPrimaryLinkColor': !postForm.is_filled,
-                            'text-myPrimaryErrorColor': postForm.is_filled,
-                        }"
-                    />
-                    <Switch
-                        v-model="postForm.is_filled"
-                        :class="[
-                            postForm.is_filled
-                                ? 'bg-myPrimaryErrorColor'
-                                : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryErrorColor focus:ring-offset-2',
-                        ]"
-                    >
-                        <span class="sr-only">Use setting</span>
-                        <span
-                            :class="[
-                                postForm.is_filled
-                                    ? 'translate-x-5'
-                                    : 'translate-x-0',
-                                'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-                            ]"
-                        >
-                            <span
-                                :class="[
-                                    postForm.is_filled
-                                        ? 'opacity-0 ease-out duration-100'
-                                        : 'opacity-100 ease-in duration-200',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-gray-400"
-                                    fill="none"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
-                                        stroke="currentColor"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </span>
-                            <span
-                                :class="[
-                                    postForm.is_filled
-                                        ? 'opacity-100 ease-in duration-200'
-                                        : 'opacity-0 ease-out duration-100',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-myPrimaryErrorColor"
-                                    fill="currentColor"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
-                                    />
-                                </svg>
-                            </span>
-                        </span>
-                    </Switch>
+                                ? "Job is displayed with is filled tag."
+                                : "Job is open for new applications."
+                        }}
+                    </p>
                 </div>
-                <InputError :message="postForm.errors.is_filled" />
+                <div class="myInputGroup">
+                    <div class="relative flex items-start">
+                        <div class="flex h-6 items-center">
+                            <input
+                                id="is_filled"
+                                name="is_filled"
+                                v-model="postForm.is_filled"
+                                type="checkbox"
+                                class="h-4 w-4 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                            />
+                        </div>
+                        <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                            <label
+                                for="is_filled"
+                                class="select-none font-medium text-gray-900"
+                                >Is filled</label
+                            >
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- post is filled - end -->
 
-            <!-- startet at - start -->
+            <!-- started at - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Startet at
+                        Started at
                     </div>
                 </div>
                 <!-- select - start -->
 
-                <VueDatePicker
-                    :enable-time-picker="false"
-                    v-model="jobStartedAt"
-                    ref="dp"
-                >
-                    <template #action-buttons>
-                        <p
-                            class="myPrimaryButton text-xs py-2 cursor-pointer"
-                            @click="selectDate"
-                        >
-                            Select
-                        </p>
-                    </template>
+                <div class="flex items-center gap-2">
+                    <VueDatePicker
+                        :enable-time-picker="false"
+                        v-model="jobStartedAt"
+                        ref="dp"
+                    >
+                        <template #action-buttons>
+                            <button
+                                type="button"
+                                class="myPrimaryButton text-xs py-2 cursor-pointer"
+                                @click="selectDate"
+                            >
+                                Select
+                            </button>
+                        </template>
+                        <template #calendar-icon> Back </template>
+                    </VueDatePicker>
 
-                    <template #calendar-icon> Back </template>
-                </VueDatePicker>
+                    <template v-if="postForm.errors.started_at">
+                        <button
+                            type="button"
+                            @click="setStartedAtDate"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                        >
+                            <ArrowPathIcon
+                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                            >
+                            </ArrowPathIcon>
+                        </button>
+                    </template>
+                </div>
 
                 <InputError :message="postForm.errors.started_at" />
             </div>
-            <!-- startet at - end -->
+            <!-- started at - end -->
 
             <!-- cover image - start -->
             <div class="myInputsOrganization">
@@ -1592,20 +1574,22 @@ const pageBuilder = new PageBuilder(store);
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                    class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
                                     >
-                                        <img
-                                            @click="handleUploadCoverImage"
-                                            :src="`/storage/uploads/${image?.thumbnail_path}`"
-                                            alt="image"
-                                            class="myPrimarythumbnailInsertPreview"
-                                        />
+                                        <div class="flex-shrink-0">
+                                            <img
+                                                @click="handleUploadCoverImage"
+                                                :src="`/storage/uploads/${image?.thumbnail_path}`"
+                                                alt="image"
+                                                class="myPrimarythumbnailInsertPreview"
+                                            />
+                                        </div>
 
                                         <button
-                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white w-full break-keep"
                                             v-if="
                                                 image?.pivot?.primary &&
                                                 postForm.cover_image.length > 1
@@ -1625,7 +1609,7 @@ const pageBuilder = new PageBuilder(store);
                                             </div>
                                         </button>
                                         <button
-                                            class="myPrimaryTag transition bg-white"
+                                            class="myPrimaryTag transition bg-white break-keep"
                                             v-if="
                                                 !image?.pivot?.primary &&
                                                 postForm.cover_image?.length > 1
@@ -1749,7 +1733,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="country.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddCountries"
@@ -1843,7 +1827,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="state?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddStates"
@@ -1949,7 +1933,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="category?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddCategories"
@@ -2044,7 +2028,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="jobType?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddJobTypes"

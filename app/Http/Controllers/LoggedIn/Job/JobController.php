@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\LoggedIn\Job;
 
-use App\Actions\LoggedIn\Stripe\SingleChargeStripeUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
 use App\Models\Job\AuthorJob;
@@ -75,6 +74,20 @@ class JobController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
+            ->where(function ($query) {
+                $query
+                    ->where('is_paid', true)
+                    ->where(function ($query) {
+                        $query
+                            ->where('ended_at', '>', Carbon::now())
+                            ->orWhereNull('ended_at');
+                    });
+            })
+            ->orWhere(function ($query) {
+                $query
+                    ->where('is_paid', false)
+                    ->orWhereNull('is_paid');
+            })
             ->latest()
             ->paginate(12);
 
@@ -96,6 +109,8 @@ class JobController extends Controller
                 $job->updatedBy = null;
             }
         }
+
+
 
         return Inertia::render("Jobs/Index", [
             "posts" => $jobs,
@@ -153,7 +168,7 @@ class JobController extends Controller
             "team_id" => $team->id,
             "title" => $title,
             "slug" => $slug,
-            "published" => $request->published,
+            // "published" => $request->published,
             "started_at" => $startedAt,
             "ended_at" => $endedAd,
             "is_filled" => $request->is_filled,
@@ -314,11 +329,23 @@ class JobController extends Controller
             }
         }
 
-        // øø
 
-        return redirect()->route("team.jobs.index", [
-            "teamId" => $team->id,
-        ]);
+        // job paid logic # start
+        if ($request->published) {
+            return redirect()->route("stripe.single.charge.job.create", [
+                "team" => $team->id,
+                "job" => $job->id
+            ]);
+        }
+        //
+        // if published is false. User just created a draft
+        if (!$request->published) {
+            return redirect()->route("team.jobs.index", [
+                "teamId" => $team->id,
+                "published" => $request->published,
+            ]);
+        }
+        // job paid logic # end
     }
 
     /**
@@ -465,6 +492,8 @@ class JobController extends Controller
         $newJob = $job->replicate();
 
         $newJob->created_at = Carbon::now();
+        $newJob->updated_at = Carbon::now();
+        $newJob->is_paid = null;
         $newJob->published = false;
         $newJob->save();
 
@@ -480,14 +509,13 @@ class JobController extends Controller
      * @param  \App\Models\Job\Job  $job
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreJobRequest $request, Job $job, SingleChargeStripeUser $SingleChargeStripeUser)
+    public function update(StoreJobRequest $request, Job $job)
     {
         // Find the current team that the user is on, rather than the team that the user is storing the job for.
         $team = Team::findOrFail($request->team["id"]);
         $this->authorize("can-create-and-update", $team);
 
         $slug = $request->slug;
-
         $title = $request->title;
         $startedAt = $request->started_at;
         $content = $request->content;
@@ -510,7 +538,7 @@ class JobController extends Controller
             "apply_via_email" => $request->apply_via_email,
             "title" => $title,
             "slug" => $slug,
-            "published" => $request->published,
+            // "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
@@ -748,23 +776,30 @@ class JobController extends Controller
                 ->delete();
         }
 
-        // $createSingleCharge = $SingleChargeStripeUser->createSingleCharge($team);
-
-        return redirect()->route("stripe.single.charge.job.create", [
-            "team" => $team->id,
-            "job" => $job->id
-        ]);
-
-
-        //
-        //
-        //
-        // if job have already been paid
-        if (false) {
-            // return redirect()->route("team.jobs.index", [
-            //     "teamId" => $team->id,
-            // ]);
+        // job paid logic # start
+        if (!$job->is_paid && $request->published) {
+            return redirect()->route("stripe.single.charge.job.create", [
+                "team" => $team->id,
+                "job" => $job->id
+            ]);
         }
+        // job paid logic # start
+        if (!$job->is_paid && !$request->published) {
+            return redirect()->route("team.jobs.index", [
+                "teamId" => $team->id,
+            ]);
+        }
+
+        // if job have already been paid
+        if ($job->is_paid) {
+            $job->update([
+                "published" => $request->published,
+            ]);
+            return redirect()->route("team.jobs.index", [
+                "teamId" => $team->id,
+            ]);
+        }
+        // job paid logic # end
     }
 
     /**

@@ -44,6 +44,7 @@ import {
     MapPinIcon,
     PlusIcon,
     FolderPlusIcon,
+    MinusIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -493,6 +494,37 @@ const clearForm = function () {
     localStorage.removeItem(pathLocalStorage);
     localStorage.removeItem(pathPageBuilderLocalStorageCreate);
     store.commit("pageBuilderState/setComponents", []);
+};
+
+const addToFloor = function () {
+    postForm.floor = Number(postForm.floor);
+    if (isNaN(postForm.floor)) {
+        postForm.floor = 0;
+    }
+
+    if (typeof postForm.floor !== "number") {
+        postForm.floor = 0;
+    }
+    if (typeof postForm.floor === "number" && postForm.floor < 1) {
+        postForm.floor = 0;
+    }
+    postForm.floor++;
+};
+
+const removeFromFloor = function () {
+    postForm.floor = Number(postForm.floor);
+    if (isNaN(postForm.floor)) {
+        postForm.floor = 1;
+    }
+
+    if (typeof postForm.floor !== "number") {
+        postForm.floor = 1;
+    }
+
+    if (typeof postForm.floor === "number" && postForm.floor < 1) {
+        postForm.floor = 1;
+    }
+    postForm.floor--;
 };
 
 const clearPageBuilderOnSuccessUpdate = function () {
@@ -958,7 +990,7 @@ const pageBuilder = new PageBuilder(store);
                         id="title"
                         v-model="postForm.title"
                         type="text"
-                        class="block w-full mt-1"
+                        class="block w-full"
                         autocomplete="off"
                     />
                     <InputError :message="postForm.errors.title" />
@@ -974,7 +1006,7 @@ const pageBuilder = new PageBuilder(store);
                                 id="slug"
                                 v-model="slugValueTitle"
                                 type="text"
-                                class="block w-full mt-1 myPrimaryInputReadonly"
+                                class="block w-full myPrimaryInputReadonly"
                                 readonly
                                 autocomplete="off"
                             />
@@ -997,7 +1029,7 @@ const pageBuilder = new PageBuilder(store);
                                 id="slug"
                                 v-model="slugValueCustom"
                                 type="text"
-                                class="block w-full mt-1"
+                                class="block w-full"
                                 autocomplete="off"
                             />
                             <div
@@ -1026,21 +1058,49 @@ const pageBuilder = new PageBuilder(store);
                             id="address"
                             v-model="postForm.address"
                             type="text"
-                            class="block w-full mt-1"
+                            class="block w-full"
                             autocomplete="off"
                         />
                         <InputError :message="postForm.errors.address" />
                     </div>
+
                     <div class="myInputGroup md:w-1/3">
                         <InputLabel for="floor" value="Store floor" />
-                        <TextInput
-                            placeholder="Enter store floor.."
-                            type="number"
-                            id="floor"
-                            v-model="postForm.floor"
-                            class="block w-full mt-1"
-                            autocomplete="off"
-                        />
+                        <!-- Input Number -->
+                        <div class="myPrimaryInput p-0" data-hs-input-number>
+                            <div
+                                class="w-full flex gap-2 justify-between items-center"
+                            >
+                                <input
+                                    placeholder="Enter store floor.."
+                                    id="floor"
+                                    v-model="postForm.floor"
+                                    class="myPrimaryInputNoBorder mt-0"
+                                    autocomplete="off"
+                                />
+                                <div class="flex items-center">
+                                    <button
+                                        @click="removeFromFloor"
+                                        type="button"
+                                        class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                    >
+                                        <MinusIcon
+                                            class="mySmallIcon"
+                                        ></MinusIcon>
+                                    </button>
+                                    <button
+                                        @click="addToFloor"
+                                        type="button"
+                                        class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                    >
+                                        <PlusIcon
+                                            class="mySmallIcon"
+                                        ></PlusIcon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Input Number -->
                         <InputError :message="postForm.errors.floor" />
                     </div>
                 </div>
@@ -1091,6 +1151,13 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Status</div>
+                    <p class="myPrimaryParagraph">
+                        {{
+                            postForm.published
+                                ? "Public and accessible for public viewing."
+                                : "Private and not accessible for public viewing."
+                        }}
+                    </p>
                 </div>
                 <div
                     class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
@@ -1247,20 +1314,22 @@ const pageBuilder = new PageBuilder(store);
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                    class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
                                     >
-                                        <img
-                                            @click="handleUploadCoverImage"
-                                            :src="`/storage/uploads/${image?.thumbnail_path}`"
-                                            alt="image"
-                                            class="myPrimarythumbnailInsertPreview"
-                                        />
+                                        <div class="flex-shrink-0">
+                                            <img
+                                                @click="handleUploadCoverImage"
+                                                :src="`/storage/uploads/${image?.thumbnail_path}`"
+                                                alt="image"
+                                                class="myPrimarythumbnailInsertPreview"
+                                            />
+                                        </div>
 
                                         <button
-                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white"
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white break-keep"
                                             v-if="
                                                 image?.pivot?.primary &&
                                                 postForm.cover_image.length > 1
@@ -1280,7 +1349,7 @@ const pageBuilder = new PageBuilder(store);
                                             </div>
                                         </button>
                                         <button
-                                            class="myPrimaryTag transition bg-white"
+                                            class="myPrimaryTag transition bg-white break-keep"
                                             v-if="
                                                 !image?.pivot?.primary &&
                                                 postForm.cover_image?.length > 1
@@ -1393,7 +1462,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="state?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddStates"
@@ -1498,7 +1567,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="category?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
                             >
                                 <div
                                     @click="handleAddCategories"

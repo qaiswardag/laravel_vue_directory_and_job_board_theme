@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\LoggedIn\User;
 
-use App\Actions\LoggedIn\Stripe\CreateNewStripeUser;
+use App\Actions\LoggedIn\Stripe\CreateOrGetStripeCustomer;
 use App\Actions\LoggedIn\Stripe\CreateStripeUserTaxID;
 use App\Actions\LoggedIn\Stripe\UpdateUserLocallyPlusOnStripe;
 use Exception;
@@ -10,7 +10,7 @@ use ErrorException;
 use Illuminate\Validation\ValidationException;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoggedIn\User\StoreSubscriptionRequest;
+use App\Http\Requests\LoggedIn\User\StoreChargeFormRequest;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -39,10 +39,10 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(CreateNewStripeUser $createNewStripeUser)
+    public function create(CreateOrGetStripeCustomer $createOrGetStripeCustomer)
     {
         try {
-            $stripeUserDetails = $createNewStripeUser->create();
+            $stripeUserDetails = $createOrGetStripeCustomer->create();
 
             return Inertia::render(
                 "Stripe/CreateStoreSubscription/CreateStoreSubscription",
@@ -68,7 +68,7 @@ class SubscriptionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(
-        StoreSubscriptionRequest $request,
+        StoreChargeFormRequest $request,
         UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe,
         CreateStripeUserTaxID $createStripeUserTaxID
     ) {
@@ -121,30 +121,38 @@ class SubscriptionController extends Controller
         }
         // TAX # end
 
-
         // try charge
         try {
-
             $updateUserLocallyPlusOnStripe->update($request);
 
-            $stripeCustomer
-                // The first argument passed to the newSubscription method
-                // should be the internal name of the subscription.
-                // This subscription name is only for internal application usage
-                // and is not meant to be shown to users. In addition,
-                // it should not contain spaces and it should never be changed
-                // after creating the subscription.
 
-                // The second argument is the specific price the user is subscribing to.
-                // This value should correspond to the price's identifier in Stripe.
+            // when dynamic product pass quantity to subscription
+            if ($request->dynamic_product) {
+                $stripeCustomer
+                    // The first argument passed to the newSubscription method
+                    // should be the internal name of the subscription.
+                    // This subscription name is only for internal application usage
+                    // and is not meant to be shown to users. In addition,
+                    // it should not contain spaces and it should never be changed
+                    // after creating the subscription.
 
-                // STRIPE:
-                // Price for Single Store
-                // Every 3 months / US$20.00 / Tax behaviour Inclusive
+                    // The second argument is the specific price the user is subscribing to.
+                    // This value should correspond to the price's identifier in Stripe.
 
-                ->newSubscription($productId, $priceIdentifierStripe)
-                ->quantity(1)
-                ->create($defaultPaymentMethodId);
+                    // STRIPE:
+                    // Price for Single Store
+                    // Every 3 months / US$20.00 / Tax behaviour Inclusive
+
+                    ->newSubscription($productId, $priceIdentifierStripe)
+                    ->quantity($request->product_quantity)
+                    ->create($defaultPaymentMethodId);
+            }
+            if (!$request->dynamic_product) {
+                $stripeCustomer
+                    ->newSubscription($productId, $priceIdentifierStripe)
+                    ->quantity(1)
+                    ->create($defaultPaymentMethodId);
+            }
         } catch (Exception $e) {
             Log::error("Something went wrong creating the subscription. {$e}");
 
@@ -224,7 +232,7 @@ class SubscriptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreSubscriptionRequest $request, $subscriptionId, UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe)
+    public function update(StoreChargeFormRequest $request, $subscriptionId, UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe)
     {
         $user = Auth::user();
         $newProductId = $request->product_id;
@@ -237,7 +245,14 @@ class SubscriptionController extends Controller
         try {
             $updateUserLocallyPlusOnStripe->update($request);
 
-            $subscription->swap($newpriceIdentifierStripe);
+            if ($request->dynamic_product) {
+                $updatedSubscription = $subscription->swap($newpriceIdentifierStripe);
+                $updatedSubscription->updateQuantity($request->product_quantity);
+            }
+            if (!$request->dynamic_product) {
+                $updatedSubscription = $subscription->swap($newpriceIdentifierStripe);
+                $updatedSubscription->updateQuantity(1);
+            }
 
             // Update the product name, this won't affect Stripe
             // it's only for internal database records

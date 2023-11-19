@@ -482,6 +482,22 @@ onMounted(() => {
                     </template>
                 </div>
 
+                <!-- If posts is empty array # start -->
+                <template
+                    v-if="
+                        fetchedDataPosts &&
+                        fetchedDataPosts.posts &&
+                        Array.isArray(fetchedDataPosts.posts.data) &&
+                        fetchedDataPosts.posts.data.length === 0
+                    "
+                >
+                    <h1 class="myPrimaryHeaderMessage">No {{ nameList }}</h1>
+                    <p class="myPrimaryParagraph">
+                        Looks like there are no {{ nameList }}!
+                    </p>
+                </template>
+                <!-- If posts is empty array # end -->
+
                 <!-- Loading # start -->
                 <template v-if="isLoadingPosts">
                     <SmallUniversalSpinner
@@ -647,7 +663,7 @@ onMounted(() => {
                     <!-- Pagination # start -->
                     <div
                         v-if="fetchedDataPosts && fetchedDataPosts.posts"
-                        class="flex items-center justify-center border-t border-gray-200 bg-white py-3 mt-4 gap-2"
+                        class="flex items-center justify-center bg-white py-3 mt-4 gap-2"
                     >
                         <TailwindPagination
                             :limit="1"

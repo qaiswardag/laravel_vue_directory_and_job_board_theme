@@ -19,6 +19,7 @@ import {
     NewspaperIcon,
     XMarkIcon,
     ChevronUpDownIcon,
+    MinusIcon,
     PlusIcon,
     InformationCircleIcon,
 } from "@heroicons/vue/24/outline";
@@ -34,6 +35,9 @@ import {
 const store = useStore();
 
 const props = defineProps({
+    title: {
+        required: true,
+    },
     user: {
         required: true,
     },
@@ -49,6 +53,18 @@ const props = defineProps({
     products: {
         required: true,
     },
+    resource: {
+        required: false,
+    },
+    createPath: {
+        required: false,
+    },
+    updatePath: {
+        required: false,
+    },
+    nextRouteName: {
+        required: false,
+    },
 });
 
 const formType = ref("create");
@@ -58,25 +74,45 @@ const handleSubmit = () => {
 };
 
 const selectedProduct = ref(null);
+const productQuantity = ref(null);
+const fullDynamicPrice = ref(0);
 
 const handleSelectProduct = function (product) {
+    if (!product.dynamic_product) {
+        formCharge.product_quantity = null;
+    }
+
+    if (product.dynamic_product) {
+        formCharge.product_quantity = productQuantity.value;
+    }
+
     if (selectedProduct.value?.id === product.id) {
         selectedProduct.value = null;
-        formSubscription.product_id = null;
-        formSubscription.price_identifier_stripe = null;
+        formCharge.dynamic_product = null;
+        formCharge.product_quantity = null;
+        formCharge.product_id = null;
+        formCharge.price_identifier_stripe = null;
     } else {
         selectedProduct.value = product;
-        formSubscription.product_id = product.id;
-        formSubscription.price_identifier_stripe =
-            product.priceIdentifierStripe;
+        formCharge.dynamic_product = product.dynamic_product;
+        formCharge.product_id = product.id;
+        formCharge.price_identifier_stripe = product.priceIdentifierStripe;
+
+        formCharge.minimum_quantity = product.minimum_quantity;
+        formCharge.maximum_quantity = product.maximum_quantity;
     }
 };
 
-const formSubscription = useForm({
+const formCharge = useForm({
+    next_route_name: props.nextRouteName,
     user_id: props.user.id,
     first_name: props.user.first_name,
     last_name: props.user.last_name,
     email: props.user.email,
+    dynamic_product: null,
+    product_quantity: null,
+    minimum_quantity: null,
+    maximum_quantity: null,
     product_id: null,
     price_identifier_stripe: null,
     country: props.user.country,
@@ -93,36 +129,99 @@ const formSubscription = useForm({
     vat_number: props.user.vat_number,
 });
 
-const createOrUpdate = () => {
-    if (formType.value === "create") {
-        formSubscription.country = selectedCountry.value?.code;
-        formSubscription.phone_code = selectedPhoneCode.value?.phone_code;
-
-        formSubscription.vat_id = selectedVatId.value?.code;
-        formSubscription.tax_id = selectedVatId.value?.tax_id;
-
-        formSubscription.post(route("stripe.stores.store.subscription"), {
-            onSuccess: () => {},
-            onError: () => {},
-            onFinish: () => {},
-        });
+const changeInProductQuantity = function (product) {
+    if (typeof fullDynamicPrice.value !== "number") {
+        fullDynamicPrice.value = Number(fullDynamicPrice.value);
+        productQuantity.value = 0;
     }
 
-    if (formType.value === "update") {
-        formSubscription.country = selectedCountry.value?.code;
-        formSubscription.phone_code = selectedPhoneCode.value?.phone_code;
+    // full dynamic price
+    fullDynamicPrice.value = productQuantity.value * product.priceRaw;
+    formCharge.product_quantity = productQuantity.value;
+};
 
-        formSubscription.vat_id = selectedVatId.value?.code;
-        formSubscription.tax_id = selectedVatId.value?.tax_id;
+const addToProductQuantity = function (product) {
+    productQuantity.value = Number(productQuantity.value);
+    if (isNaN(productQuantity.value)) {
+        productQuantity.value = 0;
+    }
 
-        formSubscription.post(
-            route("stripe.stores.update.subscription", props.post.id),
+    if (typeof productQuantity.value !== "number") {
+        productQuantity.value = 0;
+    }
+    if (
+        typeof productQuantity.value === "number" &&
+        productQuantity.value < 1
+    ) {
+        productQuantity.value = 0;
+    }
+    productQuantity.value++;
+    formCharge.product_quantity = productQuantity.value;
+
+    // full dynamic price
+    fullDynamicPrice.value = formCharge.product_quantity * product.priceRaw;
+};
+
+const removeFromProductQuantity = function (product) {
+    productQuantity.value = Number(productQuantity.value);
+    if (isNaN(productQuantity.value)) {
+        productQuantity.value = 0;
+    }
+
+    if (typeof productQuantity.value !== "number") {
+        productQuantity.value = 1;
+    }
+    if (
+        typeof productQuantity.value === "number" &&
+        productQuantity.value < 1
+    ) {
+        productQuantity.value = 1;
+    }
+    productQuantity.value--;
+    formCharge.product_quantity = productQuantity.value;
+
+    // full dynamic price
+    fullDynamicPrice.value = formCharge.product_quantity * product.priceRaw;
+};
+
+const createOrUpdate = () => {
+    if (!formCharge.dynamic_product) {
+        formCharge.product_quantity = null;
+        formCharge.minimum_quantity = null;
+        formCharge.maximum_quantity = null;
+    }
+
+    if (formType.value === "create") {
+        formCharge.country = selectedCountry.value?.code;
+        formCharge.phone_code = selectedPhoneCode.value?.phone_code;
+
+        formCharge.vat_id = selectedVatId.value?.code;
+        formCharge.tax_id = selectedVatId.value?.tax_id;
+
+        formCharge.post(
+            route(props.createPath, [
+                props.resource ? props.resource.id : null,
+            ]),
             {
                 onSuccess: () => {},
                 onError: () => {},
                 onFinish: () => {},
             }
         );
+    }
+
+    if (formType.value === "update") {
+        formCharge.country = selectedCountry.value?.code;
+        formCharge.phone_code = selectedPhoneCode.value?.phone_code;
+
+        formCharge.vat_id = selectedVatId.value?.code;
+        formCharge.tax_id = selectedVatId.value?.tax_id;
+
+        formCharge.post(route(props.updatePath, props.post.id), {
+            onSuccess: () => {},
+            onError: () => {},
+            onFinish: () => {},
+        });
     }
 };
 
@@ -199,6 +298,9 @@ onBeforeMount(() => {
         });
 
         handleSelectProduct(product);
+        productQuantity.value = props.post.quantity;
+        fullDynamicPrice.value = props.post.quantity * product.priceRaw;
+        formCharge.product_quantity = props.post.quantity;
     }
 });
 
@@ -228,7 +330,9 @@ onMounted(() => {
 
 <template>
     <FormSection @submitted="handleSubmit">
-        <template #title> Subscription Form </template>
+        <template #title>
+            {{ title }} {{ resource ? resource.title : "" }}
+        </template>
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -241,14 +345,14 @@ onMounted(() => {
                     <div class="myInputGroup">
                         <InputLabel for="line1" value="Street address" />
                         <TextInput
-                            v-model="formSubscription.line1"
+                            v-model="formCharge.line1"
                             type="text"
                             id="line1"
                             name="line1"
                             placeholder="Street address.."
-                            autocomplete="off"
+                            autocomplete="line1off123"
                         />
-                        <InputError :message="formSubscription.errors.line1" />
+                        <InputError :message="formCharge.errors.line1" />
                     </div>
 
                     <div class="myInputGroup">
@@ -257,30 +361,30 @@ onMounted(() => {
                             value="Apt, suite, building etc. "
                         />
                         <TextInput
-                            v-model="formSubscription.line2"
+                            v-model="formCharge.line2"
                             type="text"
                             id="line2"
                             name="line2"
                             placeholder="Apt, suite, building.."
-                            autocomplete="off"
+                            autocomplete="line2off123"
                         />
-                        <InputError :message="formSubscription.errors.line2" />
+                        <InputError :message="formCharge.errors.line2" />
                     </div>
                 </div>
 
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
-                        <InputLabel for="country123" value="Country" />
+                        <InputLabel for="countryoff123" value="Country" />
                         <!-- Headless UI select # start -->
                         <Combobox v-model="selectedCountry">
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="country123"
-                                        id="country123"
+                                        name="countryoff123"
+                                        id="countryoff123"
                                         class="myPrimarySelect"
-                                        autocomplete="country123"
+                                        autocomplete="countryoff123"
                                         placeholder="Search.."
                                         :displayValue="
                                             (country) => {
@@ -413,19 +517,18 @@ onMounted(() => {
                                 </TransitionRoot>
                             </div>
                         </Combobox>
-                        <InputError
-                            :message="formSubscription.errors.country"
-                        />
+                        <InputError :message="formCharge.errors.country" />
                     </div>
                     <div class="myInputGroup">
                         <InputLabel for="city" value="City" />
                         <TextInput
                             id="city"
-                            v-model="formSubscription.city"
+                            v-model="formCharge.city"
                             placeholder="City.."
+                            autocomplete="cityoff123"
                             type="text"
                         />
-                        <InputError :message="formSubscription.errors.city" />
+                        <InputError :message="formCharge.errors.city" />
                     </div>
                 </div>
 
@@ -433,30 +536,28 @@ onMounted(() => {
                     <div class="myInputGroup">
                         <InputLabel for="state" value="Province or region " />
                         <TextInput
-                            v-model="formSubscription.state"
+                            v-model="formCharge.state"
                             type="text"
                             id="state"
                             name="state"
                             placeholder="Province or region.."
-                            autocomplete="off"
+                            autocomplete="stateoff123"
                         />
-                        <InputError :message="formSubscription.errors.state" />
+                        <InputError :message="formCharge.errors.state" />
                     </div>
 
                     <!-- postal code and phone # start -->
                     <div class="myInputGroup">
                         <InputLabel for="postal_code" value="Postal code " />
                         <TextInput
-                            v-model="formSubscription.postal_code"
+                            v-model="formCharge.postal_code"
                             type="text"
                             id="postal_code"
                             name="postal_code"
                             placeholder="Postal code.."
-                            autocomplete="off"
+                            autocomplete="postal_code_off123"
                         />
-                        <InputError
-                            :message="formSubscription.errors.postal_code"
-                        />
+                        <InputError :message="formCharge.errors.postal_code" />
                     </div>
                 </div>
 
@@ -465,7 +566,7 @@ onMounted(() => {
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
                         <InputLabel
-                            for="phone_code123"
+                            for="phone_codeoff123"
                             value="Phone country code"
                         />
                         <!-- Headless UI select # start -->
@@ -473,9 +574,9 @@ onMounted(() => {
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="phone_code123"
-                                        id="phone_code123"
-                                        autocomplete="phone_code123"
+                                        name="phone_codeoff123"
+                                        id="phone_codeoff123"
+                                        autocomplete="phone_codeoff123"
                                         class="myPrimarySelect"
                                         placeholder="Search.."
                                         :displayValue="
@@ -616,22 +717,20 @@ onMounted(() => {
                                 </TransitionRoot>
                             </div>
                         </Combobox>
-                        <InputError
-                            :message="formSubscription.errors.phone_code"
-                        />
+                        <InputError :message="formCharge.errors.phone_code" />
                     </div>
                     <!-- phone code end -->
                     <div class="myInputGroup">
                         <InputLabel for="phone" value="Phone" />
                         <TextInput
-                            v-model="formSubscription.phone"
+                            v-model="formCharge.phone"
                             type="text"
                             id="phone"
                             name="phone"
                             placeholder="Phone.."
-                            autocomplete="off"
+                            autocomplete="phoneoff123"
                         />
-                        <InputError :message="formSubscription.errors.phone" />
+                        <InputError :message="formCharge.errors.phone" />
                     </div>
                 </div>
             </div>
@@ -648,16 +747,16 @@ onMounted(() => {
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
-                        <InputLabel for="vat_id123" value="Vat id " />
+                        <InputLabel for="vat_idoff123" value="Vat id " />
                         <!-- Headless UI select # start -->
                         <Combobox v-model="selectedVatId">
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="vat_id123"
-                                        id="vat_id123"
+                                        name="vat_idoff123"
+                                        id="vat_idoff123"
                                         class="myPrimarySelect"
-                                        autocomplete="vat_id123"
+                                        autocomplete="vat_idoff123"
                                         placeholder="Search.."
                                         :displayValue="
                                             (country) => {
@@ -792,22 +891,20 @@ onMounted(() => {
                                 </TransitionRoot>
                             </div>
                         </Combobox>
-                        <InputError :message="formSubscription.errors.vat_id" />
+                        <InputError :message="formCharge.errors.vat_id" />
                     </div>
 
                     <div class="myInputGroup">
                         <InputLabel for="vat_number" value="Vat number " />
                         <TextInput
-                            v-model="formSubscription.vat_number"
+                            v-model="formCharge.vat_number"
                             type="text"
                             id="vat_number"
                             name="vat_number"
                             placeholder="Vat number.."
-                            autocomplete="off"
+                            autocomplete="vat_numberoff123"
                         />
-                        <InputError
-                            :message="formSubscription.errors.vat_number"
-                        />
+                        <InputError :message="formCharge.errors.vat_number" />
                     </div>
                 </div>
                 <!-- Vat ID and vat number # end -->
@@ -817,10 +914,12 @@ onMounted(() => {
         <template #sidebar>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeader">
-                    Select subscription type
+                    Select product
                 </div>
 
-                <div>
+                <div
+                    class="flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                >
                     <div class="space-y-4">
                         <div
                             as="template"
@@ -828,7 +927,7 @@ onMounted(() => {
                             :key="product.id"
                         >
                             <div
-                                class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white"
+                                class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white w-max min-w-full"
                             >
                                 <div>
                                     <div class="flex items-center">
@@ -860,6 +959,28 @@ onMounted(() => {
                                                         }}</span
                                                     >
                                                 </div>
+                                                <template
+                                                    v-if="
+                                                        !product.dynamic_product
+                                                    "
+                                                >
+                                                    <p>
+                                                        Total: ${{
+                                                            product.totalPrice
+                                                        }}
+                                                    </p>
+                                                </template>
+                                                <template
+                                                    v-if="
+                                                        product.dynamic_product
+                                                    "
+                                                >
+                                                    <p>
+                                                        Total: ${{
+                                                            fullDynamicPrice
+                                                        }}
+                                                    </p>
+                                                </template>
                                                 <div
                                                     class="block text-[10px] leading-6 text-gray-600 italic mt-1"
                                                 >
@@ -869,51 +990,149 @@ onMounted(() => {
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="flex gap-2 justify-between items-start border-t border-gray-400 pt-2"
+                                    <p
+                                        class="text-xs text-red-400 font-medium my-4"
                                     >
-                                        <div></div>
+                                        formCharge.product_quantity:
+                                        {{
+                                            JSON.stringify(
+                                                formCharge.product_quantity
+                                            )
+                                        }}
+                                    </p>
+                                    <div
+                                        class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
+                                    >
                                         <div>
-                                            <button
-                                                class="myPrimaryTag transition mt-0"
+                                            <!-- product quantity # start  -->
+                                            <div
                                                 v-if="
-                                                    selectedProduct?.id !==
-                                                    product.id
-                                                "
-                                                type="button"
-                                                @click="
-                                                    handleSelectProduct(product)
-                                                "
-                                            >
-                                                <span> Select </span>
-                                            </button>
-                                            <button
-                                                class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0"
-                                                v-if="
+                                                    product.dynamic_product &&
                                                     selectedProduct?.id ===
-                                                    product.id
-                                                "
-                                                type="button"
-                                                @click="
-                                                    handleSelectProduct(product)
+                                                        product.id
                                                 "
                                             >
+                                                <!-- Input Number -->
                                                 <div
-                                                    class="flex items-center justify-center gap-2"
+                                                    class="myPrimaryInput p-0 mt-0"
+                                                    data-hs-input-number
                                                 >
-                                                    <span> Selected</span>
-                                                    <CheckIcon
-                                                        class="w-3 h-3 stroke-2"
-                                                    ></CheckIcon>
+                                                    <div
+                                                        class="w-full flex gap-2 justify-between items-center"
+                                                    >
+                                                        <input
+                                                            placeholder="Store quantity.."
+                                                            id="product_quantity"
+                                                            @input="
+                                                                changeInProductQuantity(
+                                                                    product
+                                                                )
+                                                            "
+                                                            v-model="
+                                                                productQuantity
+                                                            "
+                                                            class="myPrimaryInputNoBorder mt-0"
+                                                            autocomplete="off"
+                                                        />
+                                                        <div
+                                                            class="flex items-center"
+                                                        >
+                                                            <button
+                                                                @click="
+                                                                    removeFromProductQuantity(
+                                                                        product
+                                                                    )
+                                                                "
+                                                                type="button"
+                                                                class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                            >
+                                                                <MinusIcon
+                                                                    class="mySmallIcon"
+                                                                ></MinusIcon>
+                                                            </button>
+                                                            <button
+                                                                @click="
+                                                                    addToProductQuantity(
+                                                                        product
+                                                                    )
+                                                                "
+                                                                type="button"
+                                                                class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                            >
+                                                                <PlusIcon
+                                                                    class="mySmallIcon"
+                                                                ></PlusIcon>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </button>
+                                                <!-- End Input Number -->
+                                            </div>
+                                            <!-- product quantity # end  -->
                                         </div>
+
+                                        <!-- select product # start -->
+                                        <div
+                                            class="flex gap-2 justify-end items-end self-start justify-self-end"
+                                        >
+                                            <div>
+                                                <button
+                                                    class="myPrimaryTag transition mt-0 mb-0 break-keep w-max bg-white"
+                                                    v-if="
+                                                        selectedProduct?.id !==
+                                                        product.id
+                                                    "
+                                                    type="button"
+                                                    @click="
+                                                        handleSelectProduct(
+                                                            product
+                                                        )
+                                                    "
+                                                >
+                                                    <span> Select </span>
+                                                </button>
+                                                <button
+                                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0 mb-0 break-keep w-max"
+                                                    v-if="
+                                                        selectedProduct?.id ===
+                                                        product.id
+                                                    "
+                                                    type="button"
+                                                    @click="
+                                                        handleSelectProduct(
+                                                            product
+                                                        )
+                                                    "
+                                                >
+                                                    <div
+                                                        class="flex items-center justify-center gap-2"
+                                                    >
+                                                        <span> Selected</span>
+                                                        <CheckIcon
+                                                            class="w-3 h-3 stroke-2"
+                                                        ></CheckIcon>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- select product # end -->
                                     </div>
                                 </div>
                             </div>
+                            <div class="min-h-[1.5rem]">
+                                <template
+                                    v-if="selectedProduct?.id === product.id"
+                                >
+                                    <InputError
+                                        :message="formCharge.errors.product_id"
+                                    />
+                                </template>
+                            </div>
                         </div>
                     </div>
-                    <InputError :message="formSubscription.errors.product_id" />
+                    <template v-if="!selectedProduct?.id">
+                        <InputError :message="formCharge.errors.product_id" />
+                    </template>
                 </div>
             </div>
 
@@ -926,20 +1145,15 @@ onMounted(() => {
                     :intent="intent"
                     :publishableKey="publishableKey"
                 ></SelectPaymentMethod>
-                <InputError
-                    :message="formSubscription.errors.payment_method_id"
-                />
+                <InputError :message="formCharge.errors.payment_method_id" />
             </div>
         </template>
         <template #actions>
-            <SubmitButton
-                :disabled="formSubscription.processing"
-                buttonText="Subscribe"
-            >
+            <SubmitButton :disabled="formCharge.processing" buttonText="Save">
             </SubmitButton>
             <div
                 class="flex justify-end mt-4"
-                v-if="Object.values(formSubscription.errors).length !== 0"
+                v-if="Object.values(formCharge.errors).length !== 0"
             >
                 <div
                     @click="showErrorNotifications = true"
@@ -968,9 +1182,9 @@ onMounted(() => {
                         class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
                     >
                         Show
-                        {{ Object.values(formSubscription.errors).length }}
+                        {{ Object.values(formCharge.errors).length }}
                         {{
-                            Object.values(formSubscription.errors).length === 1
+                            Object.values(formCharge.errors).length === 1
                                 ? "error"
                                 : "errors"
                         }}
@@ -978,22 +1192,19 @@ onMounted(() => {
                 </div>
             </div>
 
-            <ActionMessage
-                :on="formSubscription.recentlySuccessful"
-                type="success"
-            >
+            <ActionMessage :on="formCharge.recentlySuccessful" type="success">
                 Successfully submitted.
             </ActionMessage>
             <NotificationsFixedBottom
-                :listOfMessages="Object.values(formSubscription.errors)"
+                :listOfMessages="Object.values(formCharge.errors)"
                 :show="showErrorNotifications"
                 @notificationsModalButton="notificationsModalButton"
             >
                 <div class="flex items-center justify-start gap-2">
                     <p class="myPrimaryParagraphError">
-                        {{ Object.values(formSubscription.errors).length }}
+                        {{ Object.values(formCharge.errors).length }}
                         {{
-                            Object.values(formSubscription.errors).length === 1
+                            Object.values(formCharge.errors).length === 1
                                 ? "error"
                                 : "errors"
                         }}

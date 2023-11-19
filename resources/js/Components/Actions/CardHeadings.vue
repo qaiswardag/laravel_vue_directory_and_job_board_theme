@@ -30,7 +30,7 @@ defineProps({
                     <p class="mySecondaryHeader my-0">
                         <slot name="title" />
                     </p>
-                    <p class="myPrimaryParagraph text-xs pt-2">
+                    <p class="myPrimaryParagraph pt-2 text-sm">
                         <slot name="subTitle" />
                     </p>
                 </div>

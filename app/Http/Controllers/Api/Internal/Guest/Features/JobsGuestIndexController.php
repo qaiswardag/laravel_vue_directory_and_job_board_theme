@@ -42,6 +42,7 @@ class JobsGuestIndexController extends Controller
             ->with("states")
             ->with("authors")
             ->where("published", true)
+            ->where("is_paid", true)
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("title", "LIKE", "%" . $term . "%");
             });
@@ -132,16 +133,17 @@ class JobsGuestIndexController extends Controller
         }
         // categories filter logic # end
 
-        // Add a condition to filter posts where started_at is
-        // not null and smaller than or equal to the current time
-        $query->where(function ($query) {
-            // Include posts where started_at is not null
-            $query->whereNotNull("started_at");
 
-            // Include posts where started_at is in the past or present
-            // Carbon::now() represents the current time
-            $query->where("started_at", "<=", Carbon::now()->addDays(1));
+        // Add a condition to filter posts where ended_at is
+        $query->where(function ($query) {
+            // Include posts where ended_at is not null
+            $query
+                ->whereNotNull("started_at")
+                ->whereNotNull("ended_at")
+                ->where("started_at", "<", now()->addDays(1))
+                ->where("ended_at", ">", now());
         });
+
 
         $posts = $query->paginate(20);
 

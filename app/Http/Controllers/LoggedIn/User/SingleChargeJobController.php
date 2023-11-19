@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\LoggedIn\User;
 
-use App\Actions\LoggedIn\Stripe\CreateNewStripeUser;
+use App\Actions\LoggedIn\Stripe\CreateOrGetStripeCustomer;
 use App\Actions\LoggedIn\Stripe\CreateStripeUserTaxID;
 use App\Actions\LoggedIn\Stripe\UpdateUserLocallyPlusOnStripe;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoggedIn\User\SingleChargeRequest;
+use App\Http\Requests\LoggedIn\User\StoreChargeFormRequest;
 use App\Models\Job\Job;
 use App\Models\Post\Post;
 use App\Models\Team;
@@ -18,6 +18,8 @@ use Laravel\Cashier\Cashier;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Carbon;
+
 
 
 
@@ -36,15 +38,14 @@ class SingleChargeJobController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Team $team, Job $job, CreateNewStripeUser $createNewStripeUser)
+    public function create(Job $job, CreateOrGetStripeCustomer $createOrGetStripeCustomer)
     {
         try {
-            $stripeUserDetails = $createNewStripeUser->create();
+            $stripeUserDetails = $createOrGetStripeCustomer->create();
 
             return Inertia::render(
                 "Stripe/CreateSingleChargeJob/CreateSingleChargeJob",
                 [
-                    "teamId" => $team->id,
                     "job" => $job,
                     "intent" => $stripeUserDetails['intent'],
                     "paymentMethods" => $stripeUserDetails['paymentMethods'],
@@ -63,24 +64,17 @@ class SingleChargeJobController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(
-        SingleChargeRequest $request,
-        Team $team,
+        StoreChargeFormRequest $request,
         Job $job,
         UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe,
         CreateStripeUserTaxID $createStripeUserTaxID
     ) {
 
-        sleep(2);
         $productId = $request->product_id; // single_job_prost
 
         $priceIdentifierStripe = $request->price_identifier_stripe;
-        $chargeableAmountInteger = $request->chargeable_amount_integer;
-
-        $cardId = $request->card_id;
-
 
         $updateUserLocallyPlusOnStripe->update($request);
-
 
         $user = Auth::user();
 
@@ -88,15 +82,12 @@ class SingleChargeJobController extends Controller
 
         $stripeCustomer = Cashier::findBillable($stripeId);
 
-
         if (!$stripeCustomer) {
             $stripeCustomer = $user->createAsStripeCustomer();
         }
 
         // TAX # start
         $vat_id = $request->vat_id ?? null;
-        $vat_number = $request->vat_number ?? null;
-        // TAX # end
 
         try {
             if ($vat_id && $vat_number) {
@@ -116,21 +107,21 @@ class SingleChargeJobController extends Controller
         }
         // TAX # end
 
+        // charge # start
         try {
-            // $stripeCharge = $stripeCustomer->charge($chargeableAmountInteger, $cardId, [
-            //     'default_tax_rates' => [],
-            // ]);
-            //
-            //
-            $stripeCharge = $stripeCustomer->charge($chargeableAmountInteger, $cardId, [
-                'default_tax_rates' => [],
-            ]);
+            $stripeCustomer->invoicePrice($priceIdentifierStripe);
 
-            //
-            //  return Inertia::location("/product-checkout");
-            //
             $job->update([
                 "is_paid" => true,
+                "published" => true,
+                "paid_at" => Carbon::now(),
+            ]);
+
+            // Return the current team that the user is on, rather than the team that the user is storing the post for.
+            $currentTeam = Auth::user()->currentTeam;
+
+            return redirect()->route($request->next_route_name, [
+                "teamId" => $currentTeam->id
             ]);
         } catch (Exception $e) {
             Log::error("Something went wrong creating the payment. {$e}");
@@ -141,19 +132,8 @@ class SingleChargeJobController extends Controller
                     " " .
                     $e->getMessage(),
             ]);
+            // charge end
         }
-
-        return redirect()->route($request->next_route_name, [
-            "teamId" => $team->id
-        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function checkout(Request $request)
-    {
-        return $request->user()->checkout('price_1OBetvEuESfVmAWohyRBJN5A');
     }
 
     /**
