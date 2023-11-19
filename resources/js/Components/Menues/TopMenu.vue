@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="myBreadcrumbsContainer">
+    <div class="flex myPrimaryGap items-center">
         <div
             class="font-medium"
             v-for="(link, index) in links"
@@ -16,11 +16,11 @@ const props = defineProps({
         >
             <Link
                 :href="route(link.route.name, link.route.parameters)"
-                class="py-2 px-3 my-1 text-xs cursor-pointer font-medium myPrimaryButton whitespace-nowrap"
+                class="py-2 px-3 my-1 text-xs cursor-pointer font-medium mySecondaryButton whitespace-nowrap"
                 :class="[
                     route().current(link.route.name)
-                        ? 'bg-red-400'
-                        : 'bg-green-400',
+                        ? 'hover:bg-myPrimaryLinkColor hover:text-white bg-myPrimaryLinkColor text-white'
+                        : '',
                 ]"
             >
                 {{ link.label }}

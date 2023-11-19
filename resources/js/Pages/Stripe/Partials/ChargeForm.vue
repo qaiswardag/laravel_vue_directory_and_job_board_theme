@@ -97,6 +97,9 @@ const handleSelectProduct = function (product) {
         formCharge.dynamic_product = product.dynamic_product;
         formCharge.product_id = product.id;
         formCharge.price_identifier_stripe = product.priceIdentifierStripe;
+
+        formCharge.minimum_quantity = product.minimum_quantity;
+        formCharge.maximum_quantity = product.maximum_quantity;
     }
 };
 
@@ -108,6 +111,8 @@ const formCharge = useForm({
     email: props.user.email,
     dynamic_product: null,
     product_quantity: null,
+    minimum_quantity: null,
+    maximum_quantity: null,
     product_id: null,
     price_identifier_stripe: null,
     country: props.user.country,
@@ -182,6 +187,8 @@ const removeFromProductQuantity = function (product) {
 const createOrUpdate = () => {
     if (!formCharge.dynamic_product) {
         formCharge.product_quantity = null;
+        formCharge.minimum_quantity = null;
+        formCharge.maximum_quantity = null;
     }
 
     if (formType.value === "create") {

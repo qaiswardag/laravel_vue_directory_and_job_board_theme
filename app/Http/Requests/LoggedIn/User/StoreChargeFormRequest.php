@@ -28,6 +28,8 @@ class StoreChargeFormRequest extends FormRequest
         $rules = [
             "next_route_name" => ["string", "min:2", "max:255"],
             "product_quantity" => ["integer", "digits_between:1,4", "nullable"],
+            "minimum_quantity" => ["integer", "digits_between:1,4", "nullable"],
+            "maximum_quantity" => ["integer", "digits_between:1,4", "nullable"],
             "product_id" => ["required", "string", "min:2", "max:255"],
             "price_identifier_stripe" => ["required", "string", "min:2", "max:255"],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
@@ -117,7 +119,7 @@ class StoreChargeFormRequest extends FormRequest
                     );
                 }
 
-                // product quantity is required # start
+                // when dynamic product product quantity & min & maximum_quantity is required # start
                 if ($this->dynamic_product && is_null($this->product_quantity)) {
                     $validator->errors()->add(
                         "product_id",
@@ -125,38 +127,39 @@ class StoreChargeFormRequest extends FormRequest
                         "
                     );
                 }
-                // product quantity is required # end
 
-                // min & maximum_quantity is required # start
                 if ($this->dynamic_product && is_null($this->minimum_quantity)) {
                     $validator->errors()->add(
-                        "minimum_quantity",
-                        "At least {$this->minimum_quantity} quantity is needed for this subscription type.
+                        "Minimum_quantity",
+                        "Minimum quantity quantity is required.
                         "
                     );
                 }
                 if ($this->dynamic_product && is_null($this->maximum_quantity)) {
                     $validator->errors()->add(
                         "maximum_quantity",
-                        "You can not add more than {$this->maximum_quantity}.
+                        "Maximum quantity quantity is required.
                         "
                     );
                 }
-                // min & maximum_quantity is required # end
+                // when dynamic product product quantity & min & maximum_quantity is required # end
+
+
+
 
 
                 // check if ordered less then minimum_quantity or more than maximum_quantity # start
                 if ($this->dynamic_product && $this->product_quantity < $this->minimum_quantity) {
                     $validator->errors()->add(
                         "product_id",
-                        "At least {$this->minimum_quantity} quantity is needed for this subscription type.
+                        "At least {$this->minimum_quantity} quantity is needed for selected subscription type.
                         "
                     );
                 }
                 if ($this->dynamic_product && $this->product_quantity > $this->maximum_quantity) {
                     $validator->errors()->add(
                         "product_id",
-                        "At least {$this->maximum_quantity} quantity is needed for this subscription type.
+                        "Maximum quantity is {$this->maximum_quantity} for selected subscription type.
                         "
                     );
                 }
