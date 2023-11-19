@@ -160,23 +160,6 @@ const handleRepublish = function (postId) {
     );
 };
 
-const duplicateForm = useForm({
-    teamId: props.currentUserTeam.id,
-    postId: "",
-});
-
-// handle action
-const handleDuplicate = function (postId) {
-    duplicateForm.postId = postId;
-    //
-    duplicateForm.post(route("team.jobs.duplicate"), {
-        preserveScroll: false,
-        onSuccess: () => {},
-        onError: () => {},
-        onFinish: () => {},
-    });
-};
-
 // form
 const searchForm = useForm({
     search_query: "",
@@ -213,14 +196,6 @@ const handleRight = function () {
     }
 };
 
-window.addEventListener("keyup", (e) => {
-    if (e.key === "ArrowLeft") {
-        handleLeft();
-    }
-    if (e.key === "ArrowRight") {
-        handleRight();
-    }
-});
 onMounted(() => {
     if (props.oldInput?.search_query) {
         searchForm.search_query = props.oldInput.search_query;
@@ -364,25 +339,14 @@ onMounted(() => {
                                     <th scope="col" class="myPrimaryTableTh">
                                         Job ID
                                     </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Is paid
-                                    </th>
+
                                     <th scope="col" class="myPrimaryTableTh">
                                         Team Name
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Status
                                     </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Is filled
-                                    </th>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Show Authors
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Authors
-                                    </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Country
                                     </th>
@@ -403,13 +367,6 @@ onMounted(() => {
                                         Updated By
                                     </th>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Updated Date
-                                    </th>
-
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Created Date
-                                    </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Republish
                                     </th>
@@ -475,22 +432,6 @@ onMounted(() => {
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            <span
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    post.is_paid
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                                >{{
-                                                    post.is_paid
-                                                        ? "Paid"
-                                                        : "Unpaid"
-                                                }}</span
-                                            >
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
                                             {{
                                                 $page.props.user &&
                                                 $page.props.user.current_team
@@ -513,113 +454,7 @@ onMounted(() => {
                                                 }}</span
                                             >
                                         </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <span
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    !post.is_filled
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                                >{{
-                                                    post.is_filled
-                                                        ? "Is filled"
-                                                        : "Open for applications"
-                                                }}</span
-                                            >
-                                        </td>
 
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <span
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    post.show_author
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                                >{{
-                                                    post.show_author
-                                                        ? "Visible"
-                                                        : "Hidden"
-                                                }}</span
-                                            >
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                class="flex flex-wrap justify-start items-center gap-1"
-                                            >
-                                                <div
-                                                    v-for="author in post.authors &&
-                                                    post.authors"
-                                                    :key="author"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
-                                                >
-                                                    <div
-                                                        v-if="
-                                                            author.profile_photo_path !==
-                                                            null
-                                                        "
-                                                    >
-                                                        <div
-                                                            class="h-5 w-5 flex-shrink-0"
-                                                        >
-                                                            <img
-                                                                class="object-cover h-5 w-5 rounded-full"
-                                                                :src="`/storage/${author.profile_photo_path}`"
-                                                                alt="avatar"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div
-                                                        style="
-                                                            font-size: 9px;
-                                                            gap: 2px;
-                                                        "
-                                                        v-if="
-                                                            author.profile_photo_path ===
-                                                            null
-                                                        "
-                                                        class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
-                                                    >
-                                                        <span>
-                                                            {{
-                                                                author.first_name
-                                                                    .charAt(0)
-                                                                    .toUpperCase()
-                                                            }}
-                                                        </span>
-                                                        <span>
-                                                            {{
-                                                                author.last_name
-                                                                    .charAt(0)
-                                                                    .toUpperCase()
-                                                            }}
-                                                        </span>
-                                                    </div>
-                                                    <span
-                                                        class="flex flex-col items-left gap-1 myPrimaryParagraph"
-                                                    >
-                                                        <p
-                                                            style="
-                                                                font-size: 10px;
-                                                            "
-                                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
-                                                        >
-                                                            <span>
-                                                                {{
-                                                                    author.first_name
-                                                                }}
-                                                                {{
-                                                                    author.last_name
-                                                                }}
-                                                            </span>
-                                                        </p>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
                                                 class="flex flex-wrap justify-start items-center gap-2"
@@ -751,23 +586,6 @@ onMounted(() => {
                                                 :user="post.updatedBy"
                                                 :showJobTitle="true"
                                             ></UserTag>
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(post.updated_at),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(post.created_at),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">

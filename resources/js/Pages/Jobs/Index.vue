@@ -208,14 +208,6 @@ const handleRight = function () {
     }
 };
 
-window.addEventListener("keyup", (e) => {
-    if (e.key === "ArrowLeft") {
-        handleLeft();
-    }
-    if (e.key === "ArrowRight") {
-        handleRight();
-    }
-});
 onMounted(() => {
     if (props.oldInput?.search_query) {
         searchForm.search_query = props.oldInput.search_query;
