@@ -274,7 +274,7 @@ class StoreController extends Controller
      * @param  \App\Models\Store\Store $store
      * @return \Illuminate\Http\Response
      */
-    public function show($teamId, $slug, Store $storeId)
+    public function show($teamId, $slug, $storeId)
     {
         $storeRenderView = "Stores/Show/ShowTeamStore";
 
@@ -289,34 +289,37 @@ class StoreController extends Controller
 
         $this->authorize("can-read", $team);
 
-        // Retrieve the user associated with the store
-        $user = User::find($storeId->user_id);
+        // Retrieve the post, including soft-deleted posts
+        $store = Store::withTrashed()->findOrFail($storeId);
 
-        // Update the $storeId array with updatedBy information
+        // Retrieve the user associated with the store
+        $user = User::find($store->user_id);
+
+        // Update the $store array with updatedBy information
         if ($user !== null) {
-            $storeId->updatedBy = [
+            $store->updatedBy = [
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
             ];
         }
         if ($user === null) {
-            $storeId->updatedBy = null;
+            $store->updatedBy = null;
         }
 
         $authors = [];
 
-        if ($storeId->show_author) {
-            $authors = $storeId->authors()->get();
+        if ($store->show_author) {
+            $authors = $store->authors()->get();
         }
 
-        $categories = $storeId->categories;
-        $states = $storeId->states;
-        $coverImages = $storeId->coverImages;
+        $categories = $store->categories;
+        $states = $store->states;
+        $coverImages = $store->coverImages;
 
         // Render the store
         return Inertia::render($storeRenderView, [
-            "post" => $storeId,
+            "post" => $store,
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,

@@ -354,7 +354,7 @@ class JobController extends Controller
      * @param  \App\Models\Job\Job $job
      * @return \Illuminate\Http\Response
      */
-    public function show($teamId, $slug, Job $jobId)
+    public function show($teamId, $slug, $jobId)
     {
         $jobRenderView = "Jobs/Show/ShowTeamJob";
 
@@ -369,39 +369,39 @@ class JobController extends Controller
 
         $this->authorize("can-read", $team);
 
-        // Decode the slug parameter
-        $slug = urldecode($slug);
+        // Retrieve the post, including soft-deleted posts
+        $job = Job::withTrashed()->findOrFail($jobId);
 
         // Retrieve the user associated with the job
-        $user = User::find($jobId->user_id);
+        $user = User::find($job->user_id);
 
-        // Update the $jobId array with updatedBy information
+        // Update the $job array with updatedBy information
         if ($user !== null) {
-            $jobId->updatedBy = [
+            $job->updatedBy = [
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
             ];
         }
         if ($user === null) {
-            $jobId->updatedBy = null;
+            $job->updatedBy = null;
         }
 
         $authors = [];
 
-        if ($jobId->show_author) {
-            $authors = $jobId->authors()->get();
+        if ($job->show_author) {
+            $authors = $job->authors()->get();
         }
 
-        $categories = $jobId->categories;
-        $countries = $jobId->countries;
-        $states = $jobId->states;
-        $jobTypes = $jobId->types;
-        $coverImages = $jobId->coverImages;
+        $categories = $job->categories;
+        $countries = $job->countries;
+        $states = $job->states;
+        $jobTypes = $job->types;
+        $coverImages = $job->coverImages;
 
         // Render the job
         return Inertia::render($jobRenderView, [
-            "post" => $jobId,
+            "post" => $job,
             "authors" => $authors,
             "countries" => $countries,
             "states" => $states,

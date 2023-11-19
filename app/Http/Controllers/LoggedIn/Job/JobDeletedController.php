@@ -118,9 +118,22 @@ class JobDeletedController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function restore($jobId, Team $team)
     {
-        //
+        $this->authorize("can-create-and-update", $team);
+
+        $job = Job::withTrashed()->findOrFail($jobId);
+
+
+        $job->restore();
+
+
+        return redirect()
+            ->back()
+            ->with(
+                "success",
+                "Successfully restored."
+            );
     }
 
     /**
@@ -163,7 +176,7 @@ class JobDeletedController extends Controller
             ->back()
             ->with(
                 "success",
-                "Successfully deleted the Job with id: {$job->id}."
+                "Successfully deleted the Job."
             );
     }
 }

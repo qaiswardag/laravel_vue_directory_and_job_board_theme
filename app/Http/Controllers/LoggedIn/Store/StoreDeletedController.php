@@ -110,9 +110,22 @@ class StoreDeletedController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function restore($storeId, Team $team)
     {
-        //
+        $this->authorize("can-create-and-update", $team);
+
+
+        $store = Store::withTrashed()->findOrFail($storeId);
+        dd("come here. post:", $store);
+
+        $store->restore();
+
+        return redirect()
+            ->back()
+            ->with(
+                "success",
+                "Successfully restored."
+            );
     }
 
     /**
@@ -154,7 +167,7 @@ class StoreDeletedController extends Controller
             ->back()
             ->with(
                 "success",
-                "Successfully deleted the Store with id: {$store->id}."
+                "Successfully deleted the Store."
             );
     }
 }

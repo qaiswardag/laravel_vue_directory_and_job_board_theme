@@ -822,6 +822,11 @@ Route::middleware([
         "store",
     ])->name("team.posts.store");
 
+    Route::post("/team/posts/post/restore/{postId}/{team}", [
+        PostDeletedController::class,
+        "restore",
+    ])->name("team.posts.restore");
+
     Route::post("/team/posts/duplicate", [
         PostController::class,
         "duplicate",
@@ -858,6 +863,11 @@ Route::middleware([
     Route::post("/team/jobs/job/store", [JobController::class, "store"])->name(
         "team.jobs.store"
     );
+
+    Route::post("/team/jobs/job/restore/{jobId}/{team}", [JobDeletedController::class, "restore"])->name(
+        "team.jobs.restore"
+    );
+
     Route::post("/team/jobs/duplicate", [
         JobController::class,
         "duplicate",
@@ -891,6 +901,11 @@ Route::middleware([
         StoreController::class,
         "store",
     ])->name("team.stores.store");
+
+    Route::post("/team/stores/store/restore/{storeId}/{team}", [
+        StoreDeletedController::class,
+        "restore",
+    ])->name("team.stores.restore");
 
     Route::post("/team/stores/duplicate", [
         StoreController::class,

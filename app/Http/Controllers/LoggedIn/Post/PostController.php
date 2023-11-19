@@ -242,7 +242,7 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($teamId, $slug, Post $postId)
+    public function show($teamId, $slug, $postId)
     {
         $postRenderView = "Posts/Show/ShowTeamPost";
 
@@ -257,36 +257,36 @@ class PostController extends Controller
 
         $this->authorize("can-read", $team);
 
-        // Decode the slug parameter
-        $slug = urldecode($slug);
+        // Retrieve the post, including soft-deleted posts
+        $post = Post::withTrashed()->findOrFail($postId);
 
         // Retrieve the user associated with the post
-        $user = User::find($postId->user_id);
+        $user = User::find($post->user_id);
 
-        // Update the $postId array with updatedBy information
+        // Update the $post array with updatedBy information
         if ($user !== null) {
-            $postId->updatedBy = [
+            $post->updatedBy = [
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
             ];
         }
         if ($user === null) {
-            $postId->updatedBy = null;
+            $post->updatedBy = null;
         }
 
         $authors = [];
 
-        if ($postId->show_author) {
-            $authors = $postId->authors()->get();
+        if ($post->show_author) {
+            $authors = $post->authors()->get();
         }
 
-        $categories = $postId->categories;
-        $coverImages = $postId->coverImages;
+        $categories = $post->categories;
+        $coverImages = $post->coverImages;
 
         // Render the post
         return Inertia::render($postRenderView, [
-            "post" => $postId,
+            "post" => $post,
             "authors" => $authors,
             "categories" => $categories,
             "coverImages" => $coverImages,

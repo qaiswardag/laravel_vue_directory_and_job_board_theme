@@ -107,9 +107,21 @@ class PostDeletedController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function restore($postId, Team $team)
     {
-        //
+        $this->authorize("can-create-and-update", $team);
+
+
+        $post = Post::withTrashed()->findOrFail($postId);
+
+        $post->restore();
+
+        return redirect()
+            ->back()
+            ->with(
+                "success",
+                "Successfully restored."
+            );
     }
 
     /**
@@ -151,7 +163,7 @@ class PostDeletedController extends Controller
             ->back()
             ->with(
                 "success",
-                "Successfully deleted the Post with id: {$post->id}."
+                "Successfully deleted the Post."
             );
     }
 }

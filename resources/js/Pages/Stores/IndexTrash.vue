@@ -24,15 +24,13 @@ import {
     EllipsisVerticalIcon,
     PlusCircleIcon,
     PlusIcon,
-} from "@heroicons/vue/20/solid";
-
-import {
     MapPinIcon,
     TagIcon,
     TrashIcon,
     Squares2X2Icon,
     UserIcon,
     PencilIcon,
+    ArrowPathIcon,
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
@@ -153,28 +151,49 @@ const deletePost = (postId) => {
     );
 };
 
+const modalShowRestorePost = ref(false);
 // handle action
-const handleEdit = function (postId) {
-    router.get(
-        route("team.stores.store.edit", [props.currentUserTeam.id, postId])
-    );
+const handleRestore = function (postId, post) {
+    modalShowRestorePost.value = true;
+
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 3;
+    titleModal.value = `Restore store ${post.title}?`;
+    descriptionModal.value = `Are you sure you want to restore this store?`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Restore store";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowRestorePost.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        handleRestorePost(postId);
+    };
+    // end modal
 };
 
-const duplicateForm = useForm({
-    teamId: props.currentUserTeam.id,
-    postId: "",
-});
+const restoreForm = useForm({});
 
-// handle action
-const handleDuplicate = function (postId) {
-    duplicateForm.postId = postId;
-    //
-    duplicateForm.post(route("team.stores.duplicate"), {
-        preserveScroll: false,
-        onSuccess: () => {},
-        onError: () => {},
-        onFinish: () => {},
-    });
+const handleRestorePost = function (postId) {
+    restoreForm.post(
+        route("team.store.restore", [
+            postId,
+            props.currentUserTeam.id,
+            //
+        ]),
+        {
+            onSuccess: () => (modalShowRestorePost.value = false),
+            onError: (err) => {},
+            onFinish: (log) => {
+                modalShowRestorePost.value = false;
+            },
+        }
+    );
 };
 
 // form
@@ -241,6 +260,24 @@ onMounted(() => {
             >
                 <header></header>
 
+                <main></main>
+            </DynamicModal>
+            <DynamicModal
+                :show="modalShowRestorePost"
+                :type="typeModal"
+                :disabled="deletePostForm.processing"
+                disabledWhichButton="thirdButton"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
                 <main></main>
             </DynamicModal>
             <template #header>
@@ -389,10 +426,7 @@ onMounted(() => {
                                         Created Date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Options
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Edit
+                                        Restore
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Delete
@@ -674,64 +708,17 @@ onMounted(() => {
                                                 )
                                             }}
                                         </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <Menu
-                                                as="div"
-                                                class="relative inline-block text-left"
-                                            >
-                                                <div>
-                                                    <MenuButton
-                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                    >
-                                                        <EllipsisVerticalIcon
-                                                            class="mySmallIcon"
-                                                            aria-hidden="true"
-                                                        />
-                                                    </MenuButton>
-                                                </div>
-                                                <transition
-                                                    enter-active-class="transition ease-out duration-100"
-                                                    enter-from-class="transform opacity-0 scale-95"
-                                                    enter-to-class="transform opacity-100 scale-100"
-                                                    leave-active-class="transition ease-in duration-75"
-                                                    leave-from-class="transform opacity-100 scale-100"
-                                                    leave-to-class="transform opacity-0 scale-95"
-                                                >
-                                                    <MenuItems
-                                                        class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                                    >
-                                                        <MenuItem
-                                                            class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
-                                                        >
-                                                            <button
-                                                                class="flex gap-1 items-center"
-                                                                type="button"
-                                                                @click="
-                                                                    handleDuplicate(
-                                                                        post.id
-                                                                    )
-                                                                "
-                                                            >
-                                                                <CheckIcon
-                                                                    class="w-4 h-4"
-                                                                ></CheckIcon>
-                                                                Duplicate Store
-                                                            </button>
-                                                        </MenuItem>
-                                                    </MenuItems>
-                                                </transition>
-                                            </Menu>
-                                        </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <button
                                                 type="button"
-                                                @click="handleEdit(post.id)"
+                                                @click="
+                                                    handleRestore(post.id, post)
+                                                "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <PencilIcon
+                                                <ArrowPathIcon
                                                     class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                ></PencilIcon>
+                                                ></ArrowPathIcon>
                                             </button>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
