@@ -3,34 +3,14 @@
 namespace App\Http\Controllers\LoggedIn\Job;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoggedIn\Job\StoreJobRequest;
-use App\Models\Job\AuthorJob;
 use App\Models\Job\Job;
-use App\Models\Job\JobCategory;
-use App\Models\Job\JobCategoryRelation;
-use App\Models\Job\JobCountry;
-use App\Models\Job\JobCountryRelation;
-use App\Models\Job\JobCoverImageRelation;
-use App\Models\Job\JobState;
-use App\Models\Job\JobStateRelation;
-use App\Models\Job\JobType;
-use App\Models\Job\JobTypeRelation;
-use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
-use Database\Factories\Job\JobStateFactory;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+
 
 class JobOutdatedController extends Controller
 {
@@ -144,9 +124,32 @@ class JobOutdatedController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update($teamId, Job $job)
     {
-        //
+        $team = Team::find($teamId);
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
+        // Authorize the team that the user has selected to store the job for, rather than the team that the user is currently on.
+        $this->authorize("can-create-and-update", $team);
+
+        $job->update([
+            "published" => null,
+            "is_paid" => null,
+            "paid_at" => null,
+            "started_at" => null,
+            "ended_at" => null,
+        ]);
+
+        return redirect()->route("team.jobs.job.edit", [
+            "teamId" => $team->id,
+            "job" => $job->id
+        ]);
     }
 
     /**

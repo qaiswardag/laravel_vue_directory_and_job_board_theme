@@ -76,8 +76,8 @@ class JobController extends Controller
             })
             // Add the condition for started_at
             ->where(function ($query) {
-                $query->whereNotNull("ended_at");
-                $query->where("ended_at", ">", Carbon::now());
+                $query->where('ended_at', '>', Carbon::now())
+                    ->orWhereNull('ended_at');
             })
             ->latest()
             ->paginate(12);

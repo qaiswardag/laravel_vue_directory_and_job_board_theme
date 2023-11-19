@@ -342,7 +342,7 @@ onMounted(() => {
                     :key="paymentMethod.id"
                 >
                     <div
-                        class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white w-max"
+                        class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white w-max min-w-full"
                     >
                         <div>
                             <div class="flex items-center">
@@ -379,7 +379,7 @@ onMounted(() => {
                             </div>
                         </div>
                         <div
-                            class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-[18rem]"
+                            class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-full"
                         >
                             <div>
                                 <button

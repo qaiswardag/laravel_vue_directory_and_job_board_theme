@@ -917,7 +917,9 @@ onMounted(() => {
                     Select product
                 </div>
 
-                <div>
+                <div
+                    class="flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                >
                     <div class="space-y-4">
                         <div
                             as="template"
@@ -925,7 +927,7 @@ onMounted(() => {
                             :key="product.id"
                         >
                             <div
-                                class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white"
+                                class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white w-max min-w-full"
                             >
                                 <div>
                                     <div class="flex items-center">
@@ -999,17 +1001,17 @@ onMounted(() => {
                                         }}
                                     </p>
                                     <div
-                                        class="flex items-center justify-end gap-2 mt-4 border-t border-gray-200 pt-2"
+                                        class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
                                     >
-                                        <template
-                                            v-if="
-                                                product.dynamic_product &&
-                                                selectedProduct?.id ===
-                                                    product.id
-                                            "
-                                        >
+                                        <div>
                                             <!-- product quantity # start  -->
-                                            <div class="2/3">
+                                            <div
+                                                v-if="
+                                                    product.dynamic_product &&
+                                                    selectedProduct?.id ===
+                                                        product.id
+                                                "
+                                            >
                                                 <!-- Input Number -->
                                                 <div
                                                     class="myPrimaryInput p-0 mt-0"
@@ -1067,20 +1069,15 @@ onMounted(() => {
                                                 <!-- End Input Number -->
                                             </div>
                                             <!-- product quantity # end  -->
-                                        </template>
+                                        </div>
 
                                         <!-- select product # start -->
                                         <div
-                                            class="flex gap-2 justify-end items-end self-start"
-                                            :class="[
-                                                product.dynamic_product
-                                                    ? 'w-1/3'
-                                                    : '',
-                                            ]"
+                                            class="flex gap-2 justify-end items-end self-start justify-self-end"
                                         >
                                             <div>
                                                 <button
-                                                    class="myPrimaryTag transition mt-0 mb-0 break-keep w-max"
+                                                    class="myPrimaryTag transition mt-0 mb-0 break-keep w-max bg-white"
                                                     v-if="
                                                         selectedProduct?.id !==
                                                         product.id
@@ -1122,11 +1119,15 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
-                            <template v-if="selectedProduct?.id === product.id">
-                                <InputError
-                                    :message="formCharge.errors.product_id"
-                                />
-                            </template>
+                            <div class="min-h-[1.5rem]">
+                                <template
+                                    v-if="selectedProduct?.id === product.id"
+                                >
+                                    <InputError
+                                        :message="formCharge.errors.product_id"
+                                    />
+                                </template>
+                            </div>
                         </div>
                     </div>
                     <template v-if="!selectedProduct?.id">

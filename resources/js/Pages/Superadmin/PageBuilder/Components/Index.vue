@@ -284,10 +284,6 @@ const routesArray = [
             <template #description></template>
             <CardHeadings :routesArray="routesArray">
                 <template #title>Components </template>
-                <template #subTitle
-                    >Lorem ipsum dolor sit amet consectetur adipisicing elit
-                    quam corrupti consectetur.
-                </template>
 
                 <template #buttons>
                     <button

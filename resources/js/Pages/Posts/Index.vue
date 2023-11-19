@@ -230,10 +230,6 @@ onMounted(() => {
                     >Posts for
                     {{ $page.props.user && $page.props.user.current_team.name }}
                 </template>
-                <template #subTitle
-                    >Lorem ipsum dolor sit amet consectetur adipisicing elit
-                    quam corrupti consectetur.
-                </template>
                 <template #buttons>
                     <Link
                         class="myPrimaryButton"
