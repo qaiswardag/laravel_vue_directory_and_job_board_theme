@@ -66,7 +66,7 @@ const linksTopMenu = [
         },
     },
     {
-        label: "Outdated",
+        label: "Outdated Paid Jobs",
         route: {
             name: "team.jobs.index.outdated",
             parameters: [props.currentUserTeam.id],
