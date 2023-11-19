@@ -344,10 +344,6 @@ onMounted(() => {
                                         Team Name
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Status
-                                    </th>
-
-                                    <th scope="col" class="myPrimaryTableTh">
                                         Country
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
@@ -437,22 +433,6 @@ onMounted(() => {
                                                 $page.props.user.current_team
                                                     .name
                                             }}
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <span
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    post.published
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                                >{{
-                                                    post.published
-                                                        ? "Published"
-                                                        : "Unpublished"
-                                                }}</span
-                                            >
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
