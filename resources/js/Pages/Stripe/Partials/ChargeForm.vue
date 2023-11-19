@@ -914,7 +914,7 @@ onMounted(() => {
         <template #sidebar>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeader">
-                    Select subscription type
+                    Select product
                 </div>
 
                 <div>
