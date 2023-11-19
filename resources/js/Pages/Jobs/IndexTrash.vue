@@ -7,25 +7,31 @@ import CardHeadings from "@/Components/Actions/CardHeadings.vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
-import { onMounted, ref } from "vue";
+import { computed, nextTick, onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
+import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import TopMenu from "@/Components/Menues/TopMenu.vue";
 
 import {
     EllipsisVerticalIcon,
+    BriefcaseIcon,
     CheckIcon,
+    GlobeAmericasIcon,
+    MapIcon,
+    MapPinIcon,
+    NewspaperIcon,
+    PencilIcon,
+    Squares2X2Icon,
+    SquaresPlusIcon,
     TagIcon,
     TrashIcon,
-    Squares2X2Icon,
     UserIcon,
-    PencilIcon,
     ArrowLeftIcon,
     ArrowRightIcon,
 } from "@heroicons/vue/24/outline";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
-import UserTag from "@/Components/Users/UserTag.vue";
 
 const props = defineProps({
     posts: {
@@ -43,9 +49,9 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All Jobs",
         route: {
-            name: "team.posts.index",
+            name: "team.jobs.index",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -53,16 +59,23 @@ const breadcrumbsLinks = [
 
 const linksTopMenu = [
     {
-        label: "All Post",
+        label: "All Jobs",
         route: {
-            name: "team.posts.index",
+            name: "team.jobs.index",
+            parameters: [props.currentUserTeam.id],
+        },
+    },
+    {
+        label: "Outdated Paid Jobs",
+        route: {
+            name: "team.jobs.index.outdated",
             parameters: [props.currentUserTeam.id],
         },
     },
     {
         label: "Trash",
         route: {
-            name: "team.posts.index.trash",
+            name: "team.jobs.index.trash",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -70,16 +83,16 @@ const linksTopMenu = [
 
 const routesArray = [
     {
-        label: "All Posts",
+        label: "All Jobs",
         route: {
-            name: "team.posts.index",
+            name: "team.jobs.index",
             parameters: [props.currentUserTeam.id],
         },
     },
     {
-        label: "Create Post",
+        label: "Create Job",
         route: {
-            name: "team.posts.create",
+            name: "team.jobs.create",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -108,10 +121,10 @@ const handleDelete = function (postId, post) {
     typeModal.value = "delete";
     gridColumnModal.value = 3;
     titleModal.value = `Delete ${post.title}?`;
-    descriptionModal.value = `Are you sure you want to delete post with title ${post.title}?`;
+    descriptionModal.value = `Are you sure you want to delete job with title ${post.title}?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
-    thirdButtonModal.value = "Delete Post";
+    thirdButtonModal.value = "Delete Job";
 
     // handle click
     firstModalButtonFunction.value = function () {
@@ -135,7 +148,10 @@ const deletePostForm = useForm({});
 // form action
 const deletePost = (postId) => {
     deletePostForm.delete(
-        route("team.posts.post.destroy", [postId, props.currentUserTeam.id]),
+        route("team.jobs.job.destroy.force", [
+            postId,
+            props.currentUserTeam.id,
+        ]),
         {
             preserveScroll: true,
             onSuccess: () => (modalShowDeletePost.value = false),
@@ -149,9 +165,7 @@ const deletePost = (postId) => {
 
 // handle action
 const handleEdit = function (postId) {
-    router.get(
-        route("team.posts.post.edit", [props.currentUserTeam.id, postId])
-    );
+    router.get(route("team.jobs.job.edit", [props.currentUserTeam.id, postId]));
 };
 
 const duplicateForm = useForm({
@@ -163,7 +177,7 @@ const duplicateForm = useForm({
 const handleDuplicate = function (postId) {
     duplicateForm.postId = postId;
     //
-    duplicateForm.post(route("team.posts.duplicate"), {
+    duplicateForm.post(route("team.jobs.duplicate"), {
         preserveScroll: false,
         onSuccess: () => {},
         onError: () => {},
@@ -177,7 +191,7 @@ const searchForm = useForm({
 });
 
 const handleSearch = function () {
-    searchForm.get(route("team.posts.index", [props.currentUserTeam.id]), {
+    searchForm.get(route("team.jobs.index.trash", [props.currentUserTeam.id]), {
         preserveScroll: true,
         onSuccess: () => {},
         onError: (err) => {},
@@ -214,7 +228,7 @@ onMounted(() => {
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Posts" />
+            <Head title="Jobs" />
             <DynamicModal
                 :show="modalShowDeletePost"
                 :type="typeModal"
@@ -235,7 +249,7 @@ onMounted(() => {
             </DynamicModal>
             <template #header>
                 <h2 class="myPrimaryMainPageHeader">
-                    Posts for
+                    Jobs for
                     {{ $page.props.user && $page.props.currentUserTeam.name }}
                 </h2>
             </template>
@@ -245,16 +259,16 @@ onMounted(() => {
 
             <CardHeadings :routesArray="routesArray">
                 <template #title
-                    >Posts for
+                    >Jobs for
                     {{ $page.props.user && $page.props.user.current_team.name }}
                 </template>
                 <template #buttons>
                     <Link
                         class="myPrimaryButton"
                         type="button"
-                        :href="route('team.posts.create', currentUserTeam.id)"
+                        :href="route('team.jobs.create', currentUserTeam.id)"
                     >
-                        Create Post
+                        Create Job
                     </Link>
                 </template>
             </CardHeadings>
@@ -306,8 +320,8 @@ onMounted(() => {
             </form>
 
             <template v-if="posts && posts.data.length <= 0">
-                <h1 class="myPrimaryHeaderMessage">No Posts</h1>
-                <p class="myPrimaryParagraph">Looks like there are no posts!</p>
+                <h1 class="myPrimaryHeaderMessage">No Jobs</h1>
+                <p class="myPrimaryParagraph">Looks like there are no jobs!</p>
             </template>
 
             <!-- table start -->
@@ -318,15 +332,19 @@ onMounted(() => {
                 <div class="myScrollButtonContainer">
                     <button
                         @click="handleLeft"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="h-10 w-10 bg-gray-50 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                     >
-                        <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
+                        <ArrowLeftIcon
+                            class="shrink-0 h-4 w-4 m-2 stroke-2"
+                        ></ArrowLeftIcon>
                     </button>
                     <button
                         @click="handleRight"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="h-10 w-10 bg-gray-50 cursor-pointer rounded-full flex items-center justify-center aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                     >
-                        <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
+                        <ArrowRightIcon
+                            class="shrink-0 h-4 w-4 m-2 stroke-2"
+                        ></ArrowRightIcon>
                     </button>
                 </div>
                 <div ref="scrolTableContainer" class="myTableContainer">
@@ -341,7 +359,13 @@ onMounted(() => {
                                         Title
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Post ID
+                                        Job ID
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Is paid
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Paid at
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Team Name
@@ -349,18 +373,33 @@ onMounted(() => {
                                     <th scope="col" class="myPrimaryTableTh">
                                         Status
                                     </th>
-
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Is filled
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Job publish date
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Job end date
+                                    </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Show Authors
                                     </th>
-
                                     <th scope="col" class="myPrimaryTableTh">
                                         Authors
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
+                                        Country
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        State
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Job Type
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
                                         Categories
                                     </th>
-
                                     <th scope="col" class="myPrimaryTableTh">
                                         Tags
                                     </th>
@@ -420,7 +459,7 @@ onMounted(() => {
                                             <Link
                                                 :href="
                                                     route(
-                                                        'team.posts.post.show',
+                                                        'team.jobs.job.show',
                                                         [
                                                             $page.props.user
                                                                 .current_team
@@ -438,9 +477,37 @@ onMounted(() => {
                                                 </span>
                                             </Link>
                                         </td>
+
                                         <td class="myPrimaryTableTBodyTd">
                                             {{ post.id }}
                                         </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
+                                                class="myPrimaryTag"
+                                                :class="
+                                                    post.is_paid
+                                                        ? 'bg-myPrimaryLinkColor text-white'
+                                                        : 'bg-myPrimaryErrorColor text-white'
+                                                "
+                                                >{{
+                                                    post.is_paid
+                                                        ? "Paid"
+                                                        : "Unpaid"
+                                                }}</span
+                                            >
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <template v-if="post.paid_at">
+                                                {{
+                                                    format(
+                                                        parseISO(post.paid_at),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </template>
+                                        </td>
+
                                         <td class="myPrimaryTableTBodyTd">
                                             {{
                                                 $page.props.user &&
@@ -450,38 +517,73 @@ onMounted(() => {
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            <div
+                                            <span
                                                 class="myPrimaryTag"
                                                 :class="
                                                     post.published
                                                         ? 'bg-myPrimaryLinkColor text-white'
                                                         : 'bg-myPrimaryErrorColor text-white'
                                                 "
-                                            >
-                                                {{
+                                                >{{
                                                     post.published
                                                         ? "Published"
                                                         : "Unpublished"
-                                                }}
-                                            </div>
+                                                }}</span
+                                            >
                                         </td>
-
                                         <td class="myPrimaryTableTBodyTd">
-                                            <div
+                                            <span
+                                                class="myPrimaryTag"
+                                                :class="
+                                                    !post.is_filled
+                                                        ? 'bg-myPrimaryLinkColor text-white'
+                                                        : 'bg-myPrimaryErrorColor text-white'
+                                                "
+                                                >{{
+                                                    post.is_filled
+                                                        ? "Is filled"
+                                                        : "Open for applications"
+                                                }}</span
+                                            >
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <template v-if="post.started_at">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.started_at
+                                                        ),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </template>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <template v-if="post.ended_at">
+                                                {{
+                                                    format(
+                                                        parseISO(post.ended_at),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </template>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
                                                 class="myPrimaryTag"
                                                 :class="
                                                     post.show_author
                                                         ? 'bg-myPrimaryLinkColor text-white'
                                                         : 'bg-myPrimaryErrorColor text-white'
                                                 "
-                                            >
-                                                {{
+                                                >{{
                                                     post.show_author
                                                         ? "Visible"
                                                         : "Hidden"
-                                                }}
-                                            </div>
+                                                }}</span
+                                            >
                                         </td>
+
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
                                                 class="flex flex-wrap justify-start items-center gap-1"
@@ -562,6 +664,67 @@ onMounted(() => {
                                                 class="flex flex-wrap justify-start items-center gap-2"
                                             >
                                                 <p
+                                                    v-for="jobCountry in post.countries &&
+                                                    post.countries"
+                                                    :key="jobCountry"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                >
+                                                    <GlobeAmericasIcon
+                                                        class="w-3 h-3 stroke-2"
+                                                    ></GlobeAmericasIcon>
+                                                    <span>
+                                                        {{ jobCountry.name }}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <div
+                                                class="flex flex-wrap justify-start items-center gap-2"
+                                            >
+                                                <p
+                                                    v-for="jobState in post.states &&
+                                                    post.states"
+                                                    :key="jobState"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                >
+                                                    <MapPinIcon
+                                                        class="w-3 h-3 stroke-2"
+                                                    ></MapPinIcon>
+                                                    <span>
+                                                        {{ jobState.name }}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <div
+                                                class="flex flex-wrap justify-start items-center gap-2"
+                                            >
+                                                <p
+                                                    v-for="jobType in post.types &&
+                                                    post.types"
+                                                    :key="jobType"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                >
+                                                    <NewspaperIcon
+                                                        class="w-3 h-3 stroke-2"
+                                                    >
+                                                    </NewspaperIcon>
+                                                    <span>
+                                                        {{ jobType.name }}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <div
+                                                class="flex flex-wrap justify-start items-center gap-2"
+                                            >
+                                                <p
                                                     v-for="category in post.categories &&
                                                     Array.isArray(
                                                         post.categories
@@ -597,6 +760,7 @@ onMounted(() => {
                                                 </p>
                                             </div>
                                         </td>
+
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
                                                 class="flex flex-wrap justify-start items-center gap-2"
@@ -655,7 +819,7 @@ onMounted(() => {
                                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                     >
                                                         <EllipsisVerticalIcon
-                                                            class="mySmallIcon"
+                                                            class="shrink-0 h-4 w-4 m-2 stroke-2"
                                                             aria-hidden="true"
                                                         />
                                                     </MenuButton>
@@ -686,7 +850,7 @@ onMounted(() => {
                                                                 <CheckIcon
                                                                     class="w-4 h-4"
                                                                 ></CheckIcon>
-                                                                Duplicate Post
+                                                                Duplicate Job
                                                             </button>
                                                         </MenuItem>
                                                     </MenuItems>

@@ -72,6 +72,13 @@ const linksTopMenu = [
             parameters: [props.currentUserTeam.id],
         },
     },
+    {
+        label: "Trash",
+        route: {
+            name: "team.jobs.index.trash",
+            parameters: [props.currentUserTeam.id],
+        },
+    },
 ];
 
 const routesArray = [

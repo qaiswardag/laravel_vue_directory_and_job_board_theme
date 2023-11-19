@@ -1,5 +1,4 @@
 <script setup>
-import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
@@ -10,22 +9,31 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import MainLayout from "@/Layouts/MainLayout.vue";
 import TopMenu from "@/Components/Menues/TopMenu.vue";
 
 import {
-    EllipsisVerticalIcon,
+    ArrowLeftIcon,
+    ArrowRightIcon,
     CheckIcon,
+    ChevronDownIcon,
+    DocumentDuplicateIcon,
+    EllipsisVerticalIcon,
+    PlusCircleIcon,
+    PlusIcon,
+} from "@heroicons/vue/20/solid";
+
+import {
+    MapPinIcon,
     TagIcon,
     TrashIcon,
     Squares2X2Icon,
     UserIcon,
     PencilIcon,
-    ArrowLeftIcon,
-    ArrowRightIcon,
 } from "@heroicons/vue/24/outline";
-import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
-import UserTag from "@/Components/Users/UserTag.vue";
 
 const props = defineProps({
     posts: {
@@ -43,9 +51,9 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All Stores",
         route: {
-            name: "team.posts.index",
+            name: "team.stores.index",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -53,16 +61,16 @@ const breadcrumbsLinks = [
 
 const linksTopMenu = [
     {
-        label: "All Post",
+        label: "All Stores",
         route: {
-            name: "team.posts.index",
+            name: "team.stores.index",
             parameters: [props.currentUserTeam.id],
         },
     },
     {
         label: "Trash",
         route: {
-            name: "team.posts.index.trash",
+            name: "team.stores.index.trash",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -70,16 +78,16 @@ const linksTopMenu = [
 
 const routesArray = [
     {
-        label: "All Posts",
+        label: "All Stores",
         route: {
-            name: "team.posts.index",
+            name: "team.stores.index",
             parameters: [props.currentUserTeam.id],
         },
     },
     {
-        label: "Create Post",
+        label: "Create Store",
         route: {
-            name: "team.posts.create",
+            name: "team.stores.create",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -108,22 +116,17 @@ const handleDelete = function (postId, post) {
     typeModal.value = "delete";
     gridColumnModal.value = 3;
     titleModal.value = `Delete ${post.title}?`;
-    descriptionModal.value = `Are you sure you want to delete post with title ${post.title}?`;
+    descriptionModal.value = `Are you sure you want to delete store with title ${post.title}?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
-    thirdButtonModal.value = "Delete Post";
+    thirdButtonModal.value = "Delete Store";
 
     // handle click
     firstModalButtonFunction.value = function () {
         // handle show modal for unique content
         modalShowDeletePost.value = false;
     };
-    // handle click
-    // secondModalButtonFunction.value = function () {
-    //     // handle show modal for unique content
-    //     modalShowDeletePost.value = false;
-    // };
-    // handle click
+
     thirdModalButtonFunction.value = function () {
         deletePost(postId);
     };
@@ -135,7 +138,10 @@ const deletePostForm = useForm({});
 // form action
 const deletePost = (postId) => {
     deletePostForm.delete(
-        route("team.posts.post.destroy", [postId, props.currentUserTeam.id]),
+        route("team.stores.store.destroy.force", [
+            postId,
+            props.currentUserTeam.id,
+        ]),
         {
             preserveScroll: true,
             onSuccess: () => (modalShowDeletePost.value = false),
@@ -150,7 +156,7 @@ const deletePost = (postId) => {
 // handle action
 const handleEdit = function (postId) {
     router.get(
-        route("team.posts.post.edit", [props.currentUserTeam.id, postId])
+        route("team.stores.store.edit", [props.currentUserTeam.id, postId])
     );
 };
 
@@ -163,7 +169,7 @@ const duplicateForm = useForm({
 const handleDuplicate = function (postId) {
     duplicateForm.postId = postId;
     //
-    duplicateForm.post(route("team.posts.duplicate"), {
+    duplicateForm.post(route("team.stores.duplicate"), {
         preserveScroll: false,
         onSuccess: () => {},
         onError: () => {},
@@ -177,12 +183,15 @@ const searchForm = useForm({
 });
 
 const handleSearch = function () {
-    searchForm.get(route("team.posts.index", [props.currentUserTeam.id]), {
-        preserveScroll: true,
-        onSuccess: () => {},
-        onError: (err) => {},
-        onFinish: () => {},
-    });
+    searchForm.get(
+        route("team.stores.index.trash", [props.currentUserTeam.id]),
+        {
+            preserveScroll: true,
+            onSuccess: () => {},
+            onError: (err) => {},
+            onFinish: () => {},
+        }
+    );
 };
 
 const scrolTableContainer = ref("scrolTableContainer");
@@ -214,7 +223,7 @@ onMounted(() => {
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Posts" />
+            <Head title="Stores" />
             <DynamicModal
                 :show="modalShowDeletePost"
                 :type="typeModal"
@@ -231,11 +240,12 @@ onMounted(() => {
                 @thirdModalButtonFunction="thirdModalButtonFunction"
             >
                 <header></header>
+
                 <main></main>
             </DynamicModal>
             <template #header>
                 <h2 class="myPrimaryMainPageHeader">
-                    Posts for
+                    Stores for
                     {{ $page.props.user && $page.props.currentUserTeam.name }}
                 </h2>
             </template>
@@ -245,16 +255,16 @@ onMounted(() => {
 
             <CardHeadings :routesArray="routesArray">
                 <template #title
-                    >Posts for
+                    >Stores for
                     {{ $page.props.user && $page.props.user.current_team.name }}
                 </template>
                 <template #buttons>
                     <Link
                         class="myPrimaryButton"
                         type="button"
-                        :href="route('team.posts.create', currentUserTeam.id)"
+                        :href="route('team.stores.create', currentUserTeam.id)"
                     >
-                        Create Post
+                        Create Store
                     </Link>
                 </template>
             </CardHeadings>
@@ -306,8 +316,10 @@ onMounted(() => {
             </form>
 
             <template v-if="posts && posts.data.length <= 0">
-                <h1 class="myPrimaryHeaderMessage">No Posts</h1>
-                <p class="myPrimaryParagraph">Looks like there are no posts!</p>
+                <h1 class="myPrimaryHeaderMessage">No Stores</h1>
+                <p class="myPrimaryParagraph">
+                    Looks like there are no stores!
+                </p>
             </template>
 
             <!-- table start -->
@@ -341,7 +353,7 @@ onMounted(() => {
                                         Title
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Post ID
+                                        Store ID
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Team Name
@@ -349,18 +361,18 @@ onMounted(() => {
                                     <th scope="col" class="myPrimaryTableTh">
                                         Status
                                     </th>
-
                                     <th scope="col" class="myPrimaryTableTh">
                                         Show Authors
                                     </th>
-
                                     <th scope="col" class="myPrimaryTableTh">
                                         Authors
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
+                                        State
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
                                         Categories
                                     </th>
-
                                     <th scope="col" class="myPrimaryTableTh">
                                         Tags
                                     </th>
@@ -413,14 +425,13 @@ onMounted(() => {
                                                 ></ThumbnailSmallImageSlider>
                                             </div>
                                         </td>
-
                                         <td
                                             class="myPrimaryTableTBodyTd myPrimaryResourceTableBodyTdTitle"
                                         >
                                             <Link
                                                 :href="
                                                     route(
-                                                        'team.posts.post.show',
+                                                        'team.stores.store.show',
                                                         [
                                                             $page.props.user
                                                                 .current_team
@@ -438,9 +449,11 @@ onMounted(() => {
                                                 </span>
                                             </Link>
                                         </td>
+
                                         <td class="myPrimaryTableTBodyTd">
                                             {{ post.id }}
                                         </td>
+
                                         <td class="myPrimaryTableTBodyTd">
                                             {{
                                                 $page.props.user &&
@@ -448,7 +461,6 @@ onMounted(() => {
                                                     .name
                                             }}
                                         </td>
-
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
                                                 class="myPrimaryTag"
@@ -562,6 +574,25 @@ onMounted(() => {
                                                 class="flex flex-wrap justify-start items-center gap-2"
                                             >
                                                 <p
+                                                    v-for="storeState in post.states &&
+                                                    post.states"
+                                                    :key="storeState"
+                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                >
+                                                    <MapPinIcon
+                                                        class="w-3 h-3 stroke-2"
+                                                    ></MapPinIcon>
+                                                    <span>
+                                                        {{ storeState.name }}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <div
+                                                class="flex flex-wrap justify-start items-center gap-2"
+                                            >
+                                                <p
                                                     v-for="category in post.categories &&
                                                     Array.isArray(
                                                         post.categories
@@ -620,7 +651,6 @@ onMounted(() => {
                                                 </p>
                                             </div>
                                         </td>
-
                                         <td class="myPrimaryTableTBodyTd">
                                             <UserTag
                                                 :user="post.updatedBy"
@@ -686,14 +716,13 @@ onMounted(() => {
                                                                 <CheckIcon
                                                                     class="w-4 h-4"
                                                                 ></CheckIcon>
-                                                                Duplicate Post
+                                                                Duplicate Store
                                                             </button>
                                                         </MenuItem>
                                                     </MenuItems>
                                                 </transition>
                                             </Menu>
                                         </td>
-
                                         <td class="myPrimaryTableTBodyTd">
                                             <button
                                                 type="button"
