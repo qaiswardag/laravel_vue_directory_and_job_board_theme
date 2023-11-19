@@ -74,10 +74,19 @@ class JobController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
-            // Add the condition for started_at
             ->where(function ($query) {
-                $query->where('ended_at', '>', Carbon::now())
-                    ->orWhereNull('ended_at');
+                $query
+                    ->where('is_paid', true)
+                    ->where(function ($query) {
+                        $query
+                            ->where('ended_at', '>', Carbon::now())
+                            ->orWhereNull('ended_at');
+                    });
+            })
+            ->orWhere(function ($query) {
+                $query
+                    ->where('is_paid', false)
+                    ->orWhereNull('is_paid');
             })
             ->latest()
             ->paginate(12);

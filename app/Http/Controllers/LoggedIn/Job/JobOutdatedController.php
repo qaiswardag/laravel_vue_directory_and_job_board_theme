@@ -56,7 +56,9 @@ class JobOutdatedController extends Controller
             })
             // Add the condition for started_at here
             ->where(function ($query) {
-                $query->whereNotNull("ended_at");
+                $query
+                    ->where('is_paid', true)
+                    ->whereNotNull("ended_at");
                 $query->where("ended_at", "<", Carbon::now());
             })
             ->latest()
