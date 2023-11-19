@@ -410,7 +410,6 @@ class JobController extends Controller
      */
     public function edit($teamId, Job $job)
     {
-        dd(Carbon::now());
         $team = Team::find($teamId);
 
         if ($team === null) {

@@ -618,6 +618,9 @@ watch(
             const formattedDate = format(parsedDate, "yyyy-MM-dd HH:mm:ss");
             postForm.started_at = formattedDate;
         }
+        if (newValue === null) {
+            postForm.started_at = null;
+        }
     },
     { immediate: true }
 );
@@ -1466,12 +1469,13 @@ const pageBuilder = new PageBuilder(store);
                         ref="dp"
                     >
                         <template #action-buttons>
-                            <p
+                            <button
+                                type="button"
                                 class="myPrimaryButton text-xs py-2 cursor-pointer"
                                 @click="selectDate"
                             >
                                 Select
-                            </p>
+                            </button>
                         </template>
                         <template #calendar-icon> Back </template>
                     </VueDatePicker>

@@ -67,6 +67,8 @@ class DashboardStatsController extends Controller
             $latestJobs = Job::where("team_id", $team->id)
                 ->latest()
                 ->with("coverImages")
+                ->whereNotNull("ended_at")
+                ->where("ended_at", ">", now())
                 ->take(10)
                 ->get();
 
