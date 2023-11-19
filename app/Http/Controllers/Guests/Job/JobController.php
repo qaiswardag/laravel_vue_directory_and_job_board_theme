@@ -52,8 +52,6 @@ class JobController extends Controller
             ->firstOrFail();
 
 
-
-
         $postRenderView = "Guests/Items/SingleItem";
 
         $authors = $post->authors;
