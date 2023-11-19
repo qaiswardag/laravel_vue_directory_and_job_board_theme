@@ -80,7 +80,7 @@ class JobOutdatedController extends Controller
                 $query->whereNotNull("ended_at");
 
                 // Include posts where ended_at is greater than the current date
-                $query->whereDate("ended_at", "<", now());
+                $query->where("ended_at", "<", Carbon::now());
             })
             ->latest()
             ->paginate(12);

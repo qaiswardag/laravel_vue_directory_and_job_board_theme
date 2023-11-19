@@ -133,25 +133,15 @@ class JobsGuestIndexController extends Controller
         }
         // categories filter logic # end
 
-        // Add a condition to filter posts where started_at is
-        // not null and smaller than or equal to the current time
-        $query->where(function ($query) {
-            // Include posts where started_at is not null
-            $query->whereNotNull("started_at");
-
-            // Include posts where started_at is in the past or present
-            // Carbon::now() represents the current time
-            $query->where("started_at", "<=", Carbon::now()->addDays(1));
-        });
 
         // Add a condition to filter posts where ended_at is
-        // not null and smaller than or equal to the current time
         $query->where(function ($query) {
             // Include posts where ended_at is not null
-            $query->whereNotNull("ended_at");
-
-            // Include posts where ended_at is greater than the current date
-            $query->whereDate("ended_at", ">=", now()->toDateString());
+            $query
+                ->whereNotNull("started_at")
+                ->whereNotNull("ended_at")
+                ->where("started_at", "<", now())
+                ->where("ended_at", ">", now());
         });
 
 

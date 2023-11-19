@@ -42,25 +42,16 @@ class JobController extends Controller
         $post = Job::where("id", $postId)
             ->where("published", true)
             ->where("is_paid", true)
+            ->where(function ($query) {
+                $query
+                    ->whereNotNull("started_at")
+                    ->whereNotNull("ended_at")
+                    ->where("started_at", "<", now())
+                    ->where("ended_at", ">", now());
+            })
             ->firstOrFail();
 
-        // Check if the current time is earlier than the post's started_at timestamp
-        if (
-            Carbon::now()
-            ->addDays(1)
-            ->lt($post->started_at)
-        ) {
-            return Inertia::render("Error", [
-                "status" => 404, // HTTP status code for the response.
-            ]);
-        }
 
-        // Check if the current time is later than the post's ended_at timestamp
-        if (Carbon::now()->gt($post->ended_at)) {
-            return Inertia::render("Error", [
-                "status" => 404, // HTTP status code for the response.
-            ]);
-        }
 
 
         $postRenderView = "Guests/Items/SingleItem";
