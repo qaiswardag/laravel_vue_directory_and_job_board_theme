@@ -152,14 +152,14 @@ class StoreChargeFormRequest extends FormRequest
                 if ($this->dynamic_product && $this->product_quantity < $this->minimum_quantity) {
                     $validator->errors()->add(
                         "product_id",
-                        "At least {$this->minimum_quantity} quantity is needed for selected subscription type.
+                        "Restricted to a minimum of {$this->minimum_quantity} you have selected {$this->product_quantity}.
                         "
                     );
                 }
                 if ($this->dynamic_product && $this->product_quantity > $this->maximum_quantity) {
                     $validator->errors()->add(
                         "product_id",
-                        "Maximum quantity is {$this->maximum_quantity} for selected subscription type.
+                        "Restricted to a maximum of {$this->maximum_quantity} you have selected {$this->product_quantity}.
                         "
                     );
                 }

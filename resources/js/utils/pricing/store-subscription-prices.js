@@ -24,7 +24,7 @@ const storeSubscriptionPrices = [
         dynamic_product: true,
         minimum_quantity: 3,
         maximum_quantity: 3,
-        priceIdentifierStripe: "price_1ODSGpEuESfVmAWocVQlIIkT",
+        priceIdentifierStripe: "price_1OE7qfEuESfVmAWoqMrTMFhQ",
         route: {
             name: "stripe.stores.create.subscription",
             parameters: null,

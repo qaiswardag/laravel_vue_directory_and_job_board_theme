@@ -114,6 +114,7 @@ class StoreJobRequest extends FormRequest
 
             if ($this->job && $this->job->id && $this->job->is_paid) {
                 // Check if the 'started_at' field is set on the job
+
                 if ($this->job->started_at !== $this->started_at) {
                     // Calculate the difference in days between the job's creation date and the 'started_at' date
                     $daysDifference = Carbon::parse($this->job->paid_at)->diffInDays(Carbon::now());                    // Check if the difference is greater than or equal to 5 days

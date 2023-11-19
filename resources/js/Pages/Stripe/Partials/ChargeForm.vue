@@ -1002,7 +1002,11 @@ onMounted(() => {
                                         class="flex items-center justify-end gap-2 mt-4 border-t border-gray-200 pt-2"
                                     >
                                         <template
-                                            v-if="product.dynamic_product"
+                                            v-if="
+                                                product.dynamic_product &&
+                                                selectedProduct?.id ===
+                                                    product.id
+                                            "
                                         >
                                             <!-- product quantity # start  -->
                                             <div class="2/3">
@@ -1061,12 +1065,6 @@ onMounted(() => {
                                                     </div>
                                                 </div>
                                                 <!-- End Input Number -->
-                                                <InputError
-                                                    :message="
-                                                        formCharge.errors
-                                                            .product_quantity
-                                                    "
-                                                />
                                             </div>
                                             <!-- product quantity # end  -->
                                         </template>
@@ -1124,9 +1122,16 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
+                            <template v-if="selectedProduct?.id === product.id">
+                                <InputError
+                                    :message="formCharge.errors.product_id"
+                                />
+                            </template>
                         </div>
                     </div>
-                    <InputError :message="formCharge.errors.product_id" />
+                    <template v-if="!selectedProduct?.id">
+                        <InputError :message="formCharge.errors.product_id" />
+                    </template>
                 </div>
             </div>
 

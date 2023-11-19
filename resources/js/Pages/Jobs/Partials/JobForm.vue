@@ -1459,33 +1459,36 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- select - start -->
 
-                <VueDatePicker
-                    :enable-time-picker="false"
-                    v-model="jobStartedAt"
-                    ref="dp"
-                >
-                    <template #action-buttons>
-                        <p
-                            class="myPrimaryButton text-xs py-2 cursor-pointer"
-                            @click="selectDate"
-                        >
-                            Select
-                        </p>
-                    </template>
-
-                    <template #calendar-icon> Back </template>
-                </VueDatePicker>
-
-                <template v-if="postForm.errors.started_at">
-                    <button
-                        type="button"
-                        @click="setStartedAtDate"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                <div class="flex items-center gap-2">
+                    <VueDatePicker
+                        :enable-time-picker="false"
+                        v-model="jobStartedAt"
+                        ref="dp"
                     >
-                        <ArrowPathIcon class="shrink-0 w-4 h-4 m-2 stroke-2">
-                        </ArrowPathIcon>
-                    </button>
-                </template>
+                        <template #action-buttons>
+                            <p
+                                class="myPrimaryButton text-xs py-2 cursor-pointer"
+                                @click="selectDate"
+                            >
+                                Select
+                            </p>
+                        </template>
+                        <template #calendar-icon> Back </template>
+                    </VueDatePicker>
+
+                    <template v-if="postForm.errors.started_at">
+                        <button
+                            type="button"
+                            @click="setStartedAtDate"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                        >
+                            <ArrowPathIcon
+                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                            >
+                            </ArrowPathIcon>
+                        </button>
+                    </template>
+                </div>
 
                 <InputError :message="postForm.errors.started_at" />
             </div>
