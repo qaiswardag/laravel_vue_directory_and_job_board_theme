@@ -181,12 +181,15 @@ const searchForm = useForm({
 });
 
 const handleSearch = function () {
-    searchForm.get(route("team.jobs.index", [props.currentUserTeam.id]), {
-        preserveScroll: true,
-        onSuccess: () => {},
-        onError: (err) => {},
-        onFinish: () => {},
-    });
+    searchForm.get(
+        route("team.jobs.index.outdated", [props.currentUserTeam.id]),
+        {
+            preserveScroll: true,
+            onSuccess: () => {},
+            onError: (err) => {},
+            onFinish: () => {},
+        }
+    );
 };
 
 const scrolTableContainer = ref("scrolTableContainer");

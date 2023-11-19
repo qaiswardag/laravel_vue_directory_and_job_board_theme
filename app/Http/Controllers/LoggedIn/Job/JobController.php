@@ -76,10 +76,7 @@ class JobController extends Controller
             })
             // Add the condition for started_at
             ->where(function ($query) {
-                // Include posts where ended_at is not null
                 $query->whereNotNull("ended_at");
-
-                // Include posts where ended_at is greater than the current date
                 $query->where("ended_at", ">", Carbon::now());
             })
             ->latest()
