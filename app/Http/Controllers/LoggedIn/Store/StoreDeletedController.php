@@ -116,7 +116,6 @@ class StoreDeletedController extends Controller
 
 
         $store = Store::withTrashed()->findOrFail($storeId);
-        dd("come here. post:", $store);
 
         $store->restore();
 
