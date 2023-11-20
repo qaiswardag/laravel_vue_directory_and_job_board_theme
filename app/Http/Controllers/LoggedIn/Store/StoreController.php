@@ -156,6 +156,7 @@ class StoreController extends Controller
             "show_author" => $request->show_author,
         ]);
 
+        // set team address if team address is null
         if (is_null($team->address)) {
             $team->update([
                 "address" => $address,

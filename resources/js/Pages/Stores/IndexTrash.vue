@@ -181,7 +181,7 @@ const restoreForm = useForm({});
 
 const handleRestorePost = function (postId) {
     restoreForm.post(
-        route("team.store.restore", [
+        route("team.stores.restore", [
             postId,
             props.currentUserTeam.id,
             //

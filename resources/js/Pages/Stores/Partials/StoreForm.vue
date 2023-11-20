@@ -472,7 +472,13 @@ const clearForm = function () {
     postForm.title = "";
     // slug
     postForm.slug = "";
-    postForm.address = "";
+
+    if (props.currentUserTeam && props.currentUserTeam.address) {
+        postForm.address = props.currentUserTeam.address;
+    } else {
+        postForm.address = "";
+    }
+
     postForm.floor = "";
     isSlugEditable.value = false;
     slugValueTitle.value = "";
@@ -1081,7 +1087,10 @@ const pageBuilder = new PageBuilder(store);
                     </div>
 
                     <div class="myInputGroup md:w-1/3">
-                        <InputLabel for="floor" value="Store floor" />
+                        <InputLabel
+                            for="floor"
+                            value="Store floor — zero for ground floor"
+                        />
                         <!-- Input Number -->
                         <div class="myPrimaryInput p-0" data-hs-input-number>
                             <div
