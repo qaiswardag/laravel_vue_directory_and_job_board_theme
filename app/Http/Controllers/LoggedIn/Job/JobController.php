@@ -88,7 +88,7 @@ class JobController extends Controller
                     ->where('is_paid', false)
                     ->orWhereNull('is_paid');
             })
-            ->latest()
+            ->orderBy('updated_at', 'desc')
             ->paginate(12);
 
         $jobs->appends($request->all());

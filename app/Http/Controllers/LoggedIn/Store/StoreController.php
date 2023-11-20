@@ -68,7 +68,7 @@ class StoreController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
-            ->latest()
+            ->orderBy('updated_at', 'desc')
             ->paginate(12);
 
         $stores->appends($request->all());

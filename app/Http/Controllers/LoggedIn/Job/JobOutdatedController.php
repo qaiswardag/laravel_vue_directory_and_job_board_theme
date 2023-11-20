@@ -61,7 +61,7 @@ class JobOutdatedController extends Controller
                     ->whereNotNull("ended_at");
                 $query->where("ended_at", "<", Carbon::now());
             })
-            ->latest()
+            ->orderBy('updated_at', 'desc')
             ->paginate(12);
 
         $jobs->appends($request->all());
