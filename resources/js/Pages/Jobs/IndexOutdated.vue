@@ -348,6 +348,12 @@ onMounted(() => {
                                         Job ID
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
+                                        Is paid
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Paid at
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
                                         Job publish date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
@@ -435,6 +441,32 @@ onMounted(() => {
 
                                         <td class="myPrimaryTableTBodyTd">
                                             {{ post.id }}
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
+                                                class="myPrimaryTag"
+                                                :class="
+                                                    post.is_paid
+                                                        ? 'bg-myPrimaryLinkColor text-white'
+                                                        : 'bg-myPrimaryErrorColor text-white'
+                                                "
+                                                >{{
+                                                    post.is_paid
+                                                        ? "Paid"
+                                                        : "Unpaid"
+                                                }}</span
+                                            >
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <template v-if="post.paid_at">
+                                                {{
+                                                    format(
+                                                        parseISO(post.paid_at),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </template>
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">

@@ -3,10 +3,21 @@
 namespace App\Http\Controllers\LoggedIn\Job;
 
 use App\Http\Controllers\Controller;
+use App\Models\Job\AuthorJob;
 use App\Models\Job\Job;
+use App\Models\Job\JobCategory;
+use App\Models\Job\JobCategoryRelation;
+use App\Models\Job\JobCountryRelation;
+use App\Models\Job\JobCoverImageRelation;
+use App\Models\Job\JobStateRelation;
+use App\Models\Job\JobTypeRelation;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Exception;
+use Illuminate\Support\Facades\Log;
+
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -126,7 +137,7 @@ class JobOutdatedController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($teamId, Job $job)
+    public function republish($teamId, Job $job)
     {
         $team = Team::find($teamId);
 
@@ -140,17 +151,141 @@ class JobOutdatedController extends Controller
         // Authorize the team that the user has selected to store the job for, rather than the team that the user is currently on.
         $this->authorize("can-create-and-update", $team);
 
-        $job->update([
-            "published" => true,
-            "is_paid" => null,
-            "paid_at" => null,
-            "started_at" => null,
-            "ended_at" => null,
-        ]);
 
-        return redirect()->route("team.jobs.job.edit", [
-            "teamId" => $team->id,
-            "job" => $job->id
+        $newJob = null;
+
+
+        try {
+            DB::transaction(function () use ($job, &$newJob) {
+                // replicate new job # start
+                $newJob = $job->replicate();
+                $newJob->save();
+                $newJob->update([
+                    "published" => true,
+                    "is_paid" => null,
+                    "paid_at" => null,
+                    "started_at" => null,
+                    "ended_at" => null,
+                    "created_at" => Carbon::now(),
+                    "updated_at" => Carbon::now(),
+                ]);
+                // replicate new job # end
+
+
+
+                // replicate new categories # start
+                if ($job->categories !== null) {
+                    foreach ($job->categories as $category) {
+                        // Create a new instance of the pivot model
+                        $newCategoriesPivotData = new JobCategoryRelation([
+                            'job_id' => $newJob->id,
+                            'category_id' => $category->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newCategoriesPivotData->save();
+                    }
+                }
+                // replicate new categories # end
+
+                // replicate new cover images # start
+                if ($job->coverImages !== null) {
+                    foreach ($job->coverImages as $coverImage) {
+                        // Create a new instance of the pivot model
+                        $newCoverImagePivotData = new JobCoverImageRelation([
+                            'job_id' => $newJob->id,
+                            'media_library_id' => $coverImage->id,
+                            "primary" => $coverImage->pivot->primary ?? null,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newCoverImagePivotData->save();
+                    }
+                }
+                // replicate new cover images # start
+
+                // replicate new cover images # start
+                if ($job->authors !== null) {
+                    foreach ($job->authors as $author) {
+                        // Create a new instance of the pivot model
+                        $newJobAuthorsPivotData = new AuthorJob([
+                            'job_id' => $newJob->id,
+                            'user_id' => $author->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newJobAuthorsPivotData->save();
+                    }
+                }
+                // replicate new cover images # end
+
+                // replicate new types # start
+                if ($job->types !== null) {
+                    foreach ($job->types as $type) {
+                        // Create a new instance of the pivot model
+                        $newJobTypesPivotData = new JobTypeRelation([
+                            'job_id' => $newJob->id,
+                            'type_id' => $type->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newJobTypesPivotData->save();
+                    }
+                }
+                // replicate new types # end
+
+                // replicate new states # start
+                if ($job->states !== null) {
+                    foreach ($job->states as $state) {
+                        // Create a new instance of the pivot model
+                        $newJobStatePivotData = new JobStateRelation([
+                            'job_id' => $newJob->id,
+                            'state_id' => $state->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newJobStatePivotData->save();
+                    }
+                }
+                // replicate new states # end
+
+                // replicate new countries # start
+                if ($job->countries !== null) {
+                    foreach ($job->countries as $country) {
+                        // Create a new instance of the pivot model
+                        $newJobStatePivotData = new JobCountryRelation([
+                            'job_id' => $newJob->id,
+                            'country_id' => $country->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newJobStatePivotData->save();
+                    }
+                }
+                // replicate new countries # end
+
+            });
+        } catch (Exception $e) {
+            Log::error(
+                "Oops! Something went wrong. {$e->getMessage()}."
+            );
+
+            return Inertia::render("Error", [
+                "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG, // Error message for the user.
+                "status" => 422, // HTTP status code for the response.
+            ]);
+        }
+
+        if ($newJob !== null) {
+            return redirect()->route("team.jobs.job.edit", [
+                "teamId" => $team->id,
+                "job" => $newJob->id
+            ]);
+        }
+
+        return Inertia::render("Error", [
+            "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG,
+            "status" => 422,
         ]);
     }
 

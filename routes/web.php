@@ -847,7 +847,7 @@ Route::middleware([
 
     Route::get("/team/jobs/job/republish/{teamId}/{job}", [
         JobOutdatedController::class,
-        "update",
+        "republish",
     ])->name("team.jobs.job.republish");
 
     Route::post("/team/jobs/job/update/{job}", [
