@@ -81,7 +81,7 @@ const handleRemoveItem = function (selectedItem) {
             <div class="relative">
                 <!-- Selected list # Start -->
                 <ListboxButton
-                    class="myPrimarySelect w-full min-h-[3.5rem] h-[3.5rem] pt-2 pb-0"
+                    class="border border-gray-300 shadow-sm rounded-md w-full min-h-[3.5rem] h-[3.5rem] pt-2 pb-0 pr-8 pl-2 text-left text-sm"
                 >
                     <span
                         v-if="listSelected.length === 0"
@@ -102,7 +102,7 @@ const handleRemoveItem = function (selectedItem) {
                             "
                             v-for="singleSelection in listSelected"
                             :key="singleSelection.id"
-                            class="myPrimaryTag hover:bg-myPrimaryErrorColor hover:text-white my-0"
+                            class="bg-gray-200 py-2 px-2 rounded-full hover:bg-myPrimaryErrorColor hover:text-white my-0"
                         >
                             <div class="flex justify-center items-center gap-2">
                                 <template
