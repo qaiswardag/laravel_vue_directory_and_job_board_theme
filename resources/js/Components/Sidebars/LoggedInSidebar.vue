@@ -242,6 +242,7 @@ import {
                 "
                 :active="
                     route().current('team.jobs.index') ||
+                    route().current('team.jobs.index.unpaid') ||
                     route().current('team.jobs.index.outdated') ||
                     route().current('team.jobs.index.trash') ||
                     route().current('team.jobs.create') ||

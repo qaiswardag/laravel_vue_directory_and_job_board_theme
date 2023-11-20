@@ -60,9 +60,16 @@ const breadcrumbsLinks = [
 
 const linksTopMenu = [
     {
-        label: "All Jobs",
+        label: "Running Jobs",
         route: {
             name: "team.jobs.index",
+            parameters: [props.currentUserTeam.id],
+        },
+    },
+    {
+        label: "Unpaid Jobs",
+        route: {
+            name: "team.jobs.index.unpaid",
             parameters: [props.currentUserTeam.id],
         },
     },

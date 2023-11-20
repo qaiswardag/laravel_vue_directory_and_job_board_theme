@@ -85,6 +85,87 @@ class JobController extends Controller
                             ->orWhereNull('ended_at');
                     });
             })
+            ->orderBy('updated_at', 'desc')
+            ->paginate(12);
+
+        $jobs->appends($request->all());
+
+        // Job created by
+        // Retrieve user information for each job
+        foreach ($jobs as $job) {
+            $user = User::find($job->user_id);
+            if ($user !== null) {
+                $job->updatedBy = [
+                    "first_name" => $user->first_name,
+                    "last_name" => $user->last_name,
+                    "job_title" => $user->job_title,
+                    "profile_photo_path" => $user->profile_photo_path,
+                ];
+            }
+            if ($user === null) {
+                $job->updatedBy = null;
+            }
+        }
+
+
+
+        return Inertia::render("Jobs/Index", [
+            "posts" => $jobs,
+            "oldInput" => [
+                "search_query" => $request->input("search_query"),
+            ],
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexUnpaid(Request $request, $teamId)
+    {
+        $team = Team::find($teamId);
+
+        if ($team === null) {
+            return Inertia::render("Error", [
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ]);
+        }
+
+        $searchQuery = $request->input("search_query");
+
+        // Check $searchQuery is an array
+        // If it is, the implode function joins the elements of the array into a comma-separated string
+        if (is_array($searchQuery)) {
+            $searchQuery = implode(",", $searchQuery);
+        }
+
+        // Authorize the team that the user has selected to store the job for, rather than the team that the user is currently on.
+        $this->authorize("can-read", $team);
+
+        $jobs = $team
+            ->jobs()
+            ->with("coverImages")
+            ->with("countries")
+            ->with("states")
+            ->with("categories")
+            ->with("types")
+            ->with("authors")
+            ->where(function ($query) use ($searchQuery) {
+                $query
+                    ->where("title", "like", "%" . $searchQuery . "%")
+                    ->orWhere("content", "like", "%" . $searchQuery . "%");
+            })
+            ->where(function ($query) {
+                $query
+                    ->where('is_paid', false)
+                    ->where(function ($query) {
+                        $query
+                            ->where('ended_at', '>', Carbon::now())
+                            ->orWhereNull('ended_at');
+                    });
+            })
             ->orWhere(function ($query) {
                 $query
                     ->where('is_paid', false)
@@ -114,7 +195,7 @@ class JobController extends Controller
 
 
 
-        return Inertia::render("Jobs/Index", [
+        return Inertia::render("Jobs/IndexUnpaid", [
             "posts" => $jobs,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
