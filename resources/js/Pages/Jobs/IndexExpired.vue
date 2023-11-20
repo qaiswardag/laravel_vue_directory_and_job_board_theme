@@ -74,9 +74,9 @@ const linksTopMenu = [
         },
     },
     {
-        label: "Outdated Paid Jobs",
+        label: "Expired Paid Jobs",
         route: {
-            name: "team.jobs.index.outdated",
+            name: "team.jobs.index.expired",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -182,7 +182,7 @@ const searchForm = useForm({
 
 const handleSearch = function () {
     searchForm.get(
-        route("team.jobs.index.outdated", [props.currentUserTeam.id]),
+        route("team.jobs.index.expired", [props.currentUserTeam.id]),
         {
             preserveScroll: true,
             onSuccess: () => {},

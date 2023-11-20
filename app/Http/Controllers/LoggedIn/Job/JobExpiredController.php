@@ -23,7 +23,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 
-class JobOutdatedController extends Controller
+class JobExpiredController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -94,7 +94,7 @@ class JobOutdatedController extends Controller
             }
         }
 
-        return Inertia::render("Jobs/IndexOutdated", [
+        return Inertia::render("Jobs/IndexExpired", [
             "posts" => $jobs,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),

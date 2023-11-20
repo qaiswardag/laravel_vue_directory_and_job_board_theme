@@ -422,7 +422,7 @@ class JobController extends Controller
         //
         // if published is false. User just created a draft
         if (!$request->published) {
-            return redirect()->route("team.jobs.index", [
+            return redirect()->route("team.jobs.index.unpaid", [
                 "teamId" => $team->id,
                 "published" => $request->published,
             ]);

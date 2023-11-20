@@ -31,7 +31,7 @@ use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Guests\User\UserController;
 use App\Http\Controllers\LoggedIn\Job\JobController;
 use App\Http\Controllers\LoggedIn\Job\JobDeletedController;
-use App\Http\Controllers\LoggedIn\Job\JobOutdatedController;
+use App\Http\Controllers\LoggedIn\Job\JobExpiredController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Post\PostDeletedController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
@@ -580,8 +580,8 @@ Route::middleware([
     Route::get("/team/jobs/unpaid/{teamId}", [JobController::class, "indexUnpaid"])->name(
         "team.jobs.index.unpaid"
     );
-    Route::get("/team/jobs/outdated/{teamId}", [JobOutdatedController::class, "index"])->name(
-        "team.jobs.index.outdated"
+    Route::get("/team/jobs/expired/{teamId}", [JobExpiredController::class, "index"])->name(
+        "team.jobs.index.expired"
     );
     Route::get("/team/jobs/trash/{teamId}", [JobDeletedController::class, "index"])->name(
         "team.jobs.index.trash"
@@ -849,7 +849,7 @@ Route::middleware([
     ])->name("team.jobs.job.edit");
 
     Route::get("/team/jobs/job/republish/{teamId}/{job}", [
-        JobOutdatedController::class,
+        JobExpiredController::class,
         "republish",
     ])->name("team.jobs.job.republish");
 
