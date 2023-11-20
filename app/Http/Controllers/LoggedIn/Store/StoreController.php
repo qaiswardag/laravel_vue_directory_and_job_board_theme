@@ -156,6 +156,12 @@ class StoreController extends Controller
             "show_author" => $request->show_author,
         ]);
 
+        if (is_null($team->address)) {
+            $team->update([
+                "address" => $address,
+            ]);
+        }
+
         // Get the store ID
         $storeId = $store->id;
 

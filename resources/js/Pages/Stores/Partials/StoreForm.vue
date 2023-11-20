@@ -763,6 +763,12 @@ onBeforeMount(async () => {
         }
 
         // local storage for form
+        if (localStorage.getItem(pathLocalStorage) === null) {
+            if (props.currentUserTeam && props.currentUserTeam.address) {
+                postForm.address = props.currentUserTeam.address;
+            }
+        }
+        // local storage for form
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
             const formDataJson = localStorage.getItem(pathLocalStorage);
@@ -779,7 +785,17 @@ onBeforeMount(async () => {
             }
 
             postForm.title = formLocalStorage.title;
-            postForm.address = formLocalStorage.address;
+
+            if (!formLocalStorage.address) {
+                if (props.currentUserTeam && props.currentUserTeam.address) {
+                    postForm.address = props.currentUserTeam.address;
+                }
+            }
+
+            if (formLocalStorage.address) {
+                postForm.address = formLocalStorage.address;
+            }
+
             postForm.floor = formLocalStorage.floor;
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
@@ -984,7 +1000,7 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <InputLabel for="title" value="Your Post title" />
+                    <InputLabel for="title" value="Store name" />
                     <TextInput
                         placeholder="Enter your title.."
                         id="title"

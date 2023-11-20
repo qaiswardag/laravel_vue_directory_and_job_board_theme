@@ -23,6 +23,10 @@ return new class extends Migration
                 ->constrained();
             //
             $table->string("name");
+            $table
+                ->string("address")
+                ->nullable()
+                ->index();
 
             $table
                 ->string("slug")
