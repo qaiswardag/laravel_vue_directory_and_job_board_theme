@@ -695,7 +695,7 @@ class JobController extends Controller
         }
 
         if ($newJob !== null) {
-            return redirect()->route("team.jobs.index", [
+            return redirect()->route("team.jobs.index.unpaid", [
                 "teamId" => $team->id,
             ]);
         }
