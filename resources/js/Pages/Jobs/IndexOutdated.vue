@@ -30,6 +30,7 @@ import {
     UserIcon,
     ArrowLeftIcon,
     ArrowRightIcon,
+    ArrowPathIcon,
 } from "@heroicons/vue/24/outline";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 
@@ -346,9 +347,11 @@ onMounted(() => {
                                     <th scope="col" class="myPrimaryTableTh">
                                         Job ID
                                     </th>
-
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Team Name
+                                        Job publish date
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Job end date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Country
@@ -435,11 +438,26 @@ onMounted(() => {
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                $page.props.user &&
-                                                $page.props.user.current_team
-                                                    .name
-                                            }}
+                                            <template v-if="post.started_at">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.started_at
+                                                        ),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </template>
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <template v-if="post.ended_at">
+                                                {{
+                                                    format(
+                                                        parseISO(post.ended_at),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </template>
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
@@ -583,9 +601,9 @@ onMounted(() => {
                                                 "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <PencilIcon
+                                                <ArrowPathIcon
                                                     class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                ></PencilIcon>
+                                                ></ArrowPathIcon>
                                             </button>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">

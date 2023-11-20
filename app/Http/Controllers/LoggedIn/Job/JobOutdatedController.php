@@ -141,7 +141,7 @@ class JobOutdatedController extends Controller
         $this->authorize("can-create-and-update", $team);
 
         $job->update([
-            "published" => null,
+            "published" => true,
             "is_paid" => null,
             "paid_at" => null,
             "started_at" => null,
