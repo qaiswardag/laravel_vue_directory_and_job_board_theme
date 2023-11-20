@@ -8,7 +8,9 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="flex myPrimaryGap items-center">
+    <div
+        class="flex myPrimaryGap items-center overflow-x-scroll border border-gray-200 rounded px-2 pt-3 pb-2"
+    >
         <div
             class="font-medium"
             v-for="(link, index) in links"

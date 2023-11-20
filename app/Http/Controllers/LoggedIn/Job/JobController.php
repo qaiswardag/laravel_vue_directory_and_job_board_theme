@@ -159,16 +159,15 @@ class JobController extends Controller
             })
             ->where(function ($query) {
                 $query
-                    ->where('is_paid', false)
-                    ->where(function ($query) {
-                        $query
-                            ->where('ended_at', '>', Carbon::now())
-                            ->orWhereNull('ended_at');
-                    });
-            })
-            ->orWhere(function ($query) {
-                $query
-                    ->where('is_paid', false)
+                    ->where(function ($subquery) {
+                        $subquery
+                            ->where('is_paid', false)
+                            ->where(function ($subsubquery) {
+                                $subsubquery
+                                    ->where('ended_at', '>', Carbon::now())
+                                    ->orWhereNull('ended_at');
+                            });
+                    })
                     ->orWhereNull('is_paid');
             })
             ->orderBy('updated_at', 'desc')
