@@ -31,6 +31,9 @@ return new class extends Migration
                 ->nullable()
                 ->index();
             $table->string("floor")->nullable();
+            $table
+                ->string("contact_page_url")
+                ->nullable();
             $table->longText("content");
 
             $table

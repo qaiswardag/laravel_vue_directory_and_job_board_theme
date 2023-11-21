@@ -1297,20 +1297,25 @@ const pageBuilder = new PageBuilder(store);
             <!-- post status - end -->
 
             <!-- post contact page url # start -->
-            <div class="myInputGroup">
-                <InputLabel
-                    for="contact_page_url"
-                    value="Store contact_page_url"
-                />
-                <TextInput
-                    placeholder="Contact page url.."
-                    id="contact_page_url"
-                    v-model="postForm.contact_page_url"
-                    type="text"
-                    class="block w-full"
-                    autocomplete="off"
-                />
-                <InputError :message="postForm.errors.contact_page_url" />
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Url for contact form
+                    </div>
+                </div>
+                <!-- post title start -->
+                <div class="myInputGroup">
+                    <InputLabel for="contact_page_url" value="Url" />
+                    <TextInput
+                        placeholder="Contact page url.."
+                        id="contact_page_url"
+                        v-model="postForm.contact_page_url"
+                        type="text"
+                        class="block w-full"
+                        autocomplete="off"
+                    />
+                    <InputError :message="postForm.errors.contact_page_url" />
+                </div>
             </div>
             <!-- post contact page url # end -->
 

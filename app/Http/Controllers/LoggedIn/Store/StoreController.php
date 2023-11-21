@@ -151,6 +151,7 @@ class StoreController extends Controller
             "slug" => $slug,
             "address" => $address,
             "floor" => $floor,
+            "contact_page_url" => $contactPageUrl,
             "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,
@@ -158,16 +159,16 @@ class StoreController extends Controller
         ]);
 
         // set team address if team address is null
-        if (is_null($address)) {
+        if (!is_null($address)) {
             $team->update([
                 "address" => $address,
             ]);
         }
 
         // set team contact page url if null
-        if (is_null($contactPageUrl)) {
+        if (!is_null($contactPageUrl)) {
             $team->update([
-                "address" => $contactPageUrl,
+                "contact_page_url" => $contactPageUrl,
             ]);
         }
 
@@ -538,6 +539,7 @@ class StoreController extends Controller
         $content = $request->content;
         $teamId = $request->team["id"];
         $userId = $request->user_id;
+        $contactPageUrl = $request->contact_page_url;
 
         // Initialize the $authorId variable to null
         $authorId = null;
@@ -550,6 +552,7 @@ class StoreController extends Controller
             "slug" => $slug,
             "address" => $address,
             "floor" => $floor,
+            "contact_page_url" => $contactPageUrl,
             "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,
