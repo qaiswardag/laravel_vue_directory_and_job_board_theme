@@ -1305,7 +1305,10 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <InputLabel for="contact_page_url" value="Url" />
+                    <InputLabel
+                        for="contact_page_url"
+                        value="Url for contact form"
+                    />
                     <TextInput
                         placeholder="Contact page url.."
                         id="contact_page_url"
