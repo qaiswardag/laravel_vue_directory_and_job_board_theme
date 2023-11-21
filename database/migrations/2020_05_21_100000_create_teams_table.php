@@ -29,6 +29,10 @@ return new class extends Migration
                 ->index();
 
             $table
+                ->string("contact_page_url")
+                ->nullable();
+
+            $table
                 ->string("slug")
                 ->unique()
                 ->index();

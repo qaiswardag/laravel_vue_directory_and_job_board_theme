@@ -135,6 +135,7 @@ class StoreController extends Controller
 
         $title = $request->title;
         $address = $request->address;
+        $contactPageUrl = $request->contact_page_url;
         $floor = $request->floor;
         $content = $request->content;
         $userId = $request->user_id;
@@ -157,9 +158,16 @@ class StoreController extends Controller
         ]);
 
         // set team address if team address is null
-        if (is_null($team->address)) {
+        if (is_null($address)) {
             $team->update([
                 "address" => $address,
+            ]);
+        }
+
+        // set team contact page url if null
+        if (is_null($contactPageUrl)) {
+            $team->update([
+                "address" => $contactPageUrl,
             ]);
         }
 

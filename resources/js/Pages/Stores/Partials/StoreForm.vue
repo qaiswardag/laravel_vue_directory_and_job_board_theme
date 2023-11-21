@@ -348,6 +348,7 @@ const postForm = useForm({
     title: "",
     slug: "",
     address: "",
+    contact_page_url: "",
     floor: "",
     content: "",
     published: true,
@@ -477,6 +478,12 @@ const clearForm = function () {
         postForm.address = props.currentUserTeam.address;
     } else {
         postForm.address = "";
+    }
+
+    if (props.currentUserTeam && props.currentUserTeam.contact_page_url) {
+        postForm.contact_page_url = props.currentUserTeam.contact_page_url;
+    } else {
+        postForm.contact_page_url = "";
     }
 
     postForm.floor = "";
@@ -774,6 +781,17 @@ onBeforeMount(async () => {
                 postForm.address = props.currentUserTeam.address;
             }
         }
+
+        // local storage for form
+        if (localStorage.getItem(pathLocalStorage) === null) {
+            if (
+                props.currentUserTeam &&
+                props.currentUserTeam.contact_page_url
+            ) {
+                postForm.contact_page_url =
+                    props.currentUserTeam.contact_page_url;
+            }
+        }
         // local storage for form
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
@@ -798,8 +816,22 @@ onBeforeMount(async () => {
                 }
             }
 
+            if (!formLocalStorage.contact_page_url) {
+                if (
+                    props.currentUserTeam &&
+                    props.currentUserTeam.contact_page_url
+                ) {
+                    postForm.contact_page_url =
+                        props.currentUserTeam.contact_page_url;
+                }
+            }
+
             if (formLocalStorage.address) {
                 postForm.address = formLocalStorage.address;
+            }
+
+            if (formLocalStorage.contact_page_url) {
+                postForm.contact_page_url = formLocalStorage.contact_page_url;
             }
 
             postForm.floor = formLocalStorage.floor;
@@ -943,6 +975,7 @@ onBeforeMount(async () => {
 
         postForm.title = props.post.title;
         postForm.address = props.post.address;
+        postForm.contact_page_url = props.post.contact_page_url;
         postForm.floor = props.post.floor;
         // slug logic
         // slug is editable when editing an existing post
@@ -1262,6 +1295,24 @@ const pageBuilder = new PageBuilder(store);
                 <InputError :message="postForm.errors.published" />
             </div>
             <!-- post status - end -->
+
+            <!-- post contact page url # start -->
+            <div class="myInputGroup">
+                <InputLabel
+                    for="contact_page_url"
+                    value="Store contact_page_url"
+                />
+                <TextInput
+                    placeholder="Contact page url.."
+                    id="contact_page_url"
+                    v-model="postForm.contact_page_url"
+                    type="text"
+                    class="block w-full"
+                    autocomplete="off"
+                />
+                <InputError :message="postForm.errors.contact_page_url" />
+            </div>
+            <!-- post contact page url # end -->
 
             <!-- cover image - start -->
             <div class="myInputsOrganization">
