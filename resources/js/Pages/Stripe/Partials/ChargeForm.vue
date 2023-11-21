@@ -69,8 +69,8 @@ const props = defineProps({
 
 const formType = ref("create");
 
-const handleSubmit = () => {
-    createOrUpdate();
+const handleSubmit = async () => {
+    await createOrUpdate();
 };
 
 const selectedProduct = ref(null);
@@ -184,7 +184,7 @@ const removeFromProductQuantity = function (product) {
     fullDynamicPrice.value = formCharge.product_quantity * product.priceRaw;
 };
 
-const createOrUpdate = () => {
+const createOrUpdate = async () => {
     if (!formCharge.dynamic_product) {
         formCharge.product_quantity = null;
         formCharge.minimum_quantity = null;

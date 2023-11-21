@@ -105,493 +105,469 @@ onMounted(() => {
 </script>
 
 <template>
-    <FullWidthElement :descriptionArea="true" class="bg-red-50">
-        <template #title>Latest team resources</template>
-        <template #description>
-            You are currently viewing the latest resources uploaded by your
-            team. These resources are sorted by date, with the most recent ones
-            displayed first.
-        </template>
-        <template #content>
-            <!-- No team # start -->
-            <div v-if="$page.props && !$page.props.currentUserTeam">
-                <p class="myPrimaryParagraph">
-                    Looks like no Team is Selected!
-                </p>
-            </div>
-            <!-- No team # end -->
+    <div v-if="$page.props && !$page.props.currentUserTeam">
+        <div>
+            <h1 class="myPrimaryHeaderMessage">No Team selected</h1>
+        </div>
+        <p class="myPrimaryParagraph">Looks like no Team is Selected!</p>
+    </div>
 
-            <!-- Error # start -->
-            <template
+    <!-- Error # start -->
+    <template
+        v-if="
+            getDashboardStats &&
+            !getDashboardStats.isSuccess &&
+            !getDashboardStats.isLoading &&
+            getDashboardStats.isError
+        "
+    >
+        <p class="myPrimaryParagraphError">
+            {{ getDashboardStats.error }}
+        </p>
+    </template>
+    <!-- Error # end -->
+
+    <!-- Loading # start -->
+    <template v-if="getDashboardStats && getDashboardStats.isLoading">
+        <SmallUniversalSpinner
+            width="w-8"
+            height="h-8"
+            border="border-4"
+        ></SmallUniversalSpinner>
+    </template>
+    <!-- Loading # end -->
+
+    <!-- Actualt data # Start -->
+    <template
+        v-if="$page.props && $page.props.currentUserTeam && getDashboardStats"
+    >
+        <div class="myPrimarySection">
+            <div
                 v-if="
-                    getDashboardStats &&
-                    !getDashboardStats.isSuccess &&
+                    getDashboardStats.fetchedData &&
                     !getDashboardStats.isLoading &&
-                    getDashboardStats.isError
+                    !getDashboardStats.isError &&
+                    getDashboardStats.isSuccess
                 "
+                class="grid grid-cols-1 lg:gap-8 gap-12 lg:grid-cols-12"
             >
-                <p class="myPrimaryParagraphError">
-                    {{ getDashboardStats.error }}
-                </p>
-            </template>
-            <!-- Error # end -->
-
-            <!-- Loading # start -->
-            <template v-if="getDashboardStats && getDashboardStats.isLoading">
-                <SmallUniversalSpinner
-                    width="w-8"
-                    height="h-8"
-                    border="border-4"
-                ></SmallUniversalSpinner>
-            </template>
-            <!-- Loading # end -->
-
-            <!-- Actualt data # Start -->
-            <template
-                v-if="
-                    $page.props &&
-                    $page.props.currentUserTeam &&
-                    getDashboardStats
-                "
-            >
+                <!-- column start -->
                 <div
-                    v-if="
-                        getDashboardStats.fetchedData &&
-                        !getDashboardStats.isLoading &&
-                        !getDashboardStats.isError &&
-                        getDashboardStats.isSuccess
-                    "
-                    class="grid grid-cols-1 lg:gap-8 gap-12 lg:grid-cols-12"
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                 >
-                    <!-- column start -->
-                    <div
-                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                    >
-                        <div class="border-b border-gray-200 mb-8 pb-2">
-                            <Link
-                                :href="
-                                    route(
-                                        'team.members',
-                                        $page.props.user.current_team.id
-                                    )
-                                "
-                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                            >
-                                Latest Team Members
-                            </Link>
-                        </div>
-
-                        <div
-                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <Link
+                            :href="
+                                route(
+                                    'team.members',
+                                    $page.props.user.current_team.id
+                                )
+                            "
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                         >
-                            <div
-                                v-if="
-                                    Array.isArray(
-                                        getDashboardStats.fetchedData
-                                            .latestTeamMembers
-                                    ) &&
-                                    getDashboardStats.fetchedData
-                                        .latestTeamMembers.length === 0
-                                "
-                            >
-                                <p class="myPrimaryParagraph">
-                                    Looks like there are no Team Members.
-                                </p>
-                            </div>
-
-                            <ul role="list" class="flex flex-wrap myPrimaryGap">
-                                <li
-                                    v-for="member in getDashboardStats
-                                        .fetchedData.latestTeamMembers"
-                                    :key="member.id"
-                                >
-                                    <Link
-                                        :href="
-                                            route(
-                                                'team.members',
-                                                $page.props.user.current_team.id
-                                            )
-                                        "
-                                    >
-                                        <UserTag
-                                            customClass="my-0"
-                                            :user="member"
-                                            :showTeamRole="true"
-                                            :clickable="true"
-                                            :currentUserTeamRole="member"
-                                        ></UserTag>
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
+                            Latest Team Members
+                        </Link>
                     </div>
-                    <!-- column end -->
 
-                    <!-- column images # start -->
-                    <div
-                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                    >
-                        <div class="border-b border-gray-200 mb-8 pb-2">
-                            <Link
-                                :href="
-                                    route(
-                                        'media.index',
-                                        $page.props.user.current_team.id
-                                    )
-                                "
-                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                            >
-                                Latest Team Images
-                            </Link>
+                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
+                        <div
+                            v-if="
+                                Array.isArray(
+                                    getDashboardStats.fetchedData
+                                        .latestTeamMembers
+                                ) &&
+                                getDashboardStats.fetchedData.latestTeamMembers
+                                    .length === 0
+                            "
+                        >
+                            <p class="myPrimaryParagraph">
+                                Looks like there are no Team Members.
+                            </p>
                         </div>
 
-                        <div
-                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
+                        <ul role="list" class="flex flex-wrap myPrimaryGap">
+                            <li
+                                v-for="member in getDashboardStats.fetchedData
+                                    .latestTeamMembers"
+                                :key="member.id"
+                            >
+                                <Link
+                                    :href="
+                                        route(
+                                            'team.members',
+                                            $page.props.user.current_team.id
+                                        )
+                                    "
+                                >
+                                    <UserTag
+                                        customClass="my-0"
+                                        :user="member"
+                                        :showTeamRole="true"
+                                        :clickable="true"
+                                        :currentUserTeamRole="member"
+                                    ></UserTag>
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- column end -->
+
+                <!-- column images # start -->
+                <div
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                >
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <Link
+                            :href="
+                                route(
+                                    'media.index',
+                                    $page.props.user.current_team.id
+                                )
+                            "
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                         >
-                            <div
-                                v-if="
-                                    Array.isArray(
-                                        getDashboardStats.fetchedData
-                                            .latestMedia
-                                    ) &&
+                            Latest Team Images
+                        </Link>
+                    </div>
+
+                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
+                        <div
+                            v-if="
+                                Array.isArray(
                                     getDashboardStats.fetchedData.latestMedia
-                                        .length === 0
-                                "
+                                ) &&
+                                getDashboardStats.fetchedData.latestMedia
+                                    .length === 0
+                            "
+                        >
+                            <p class="myPrimaryParagraph">
+                                Looks like there are no Images.
+                            </p>
+                        </div>
+                        <ul
+                            role="list"
+                            class="grid myPrimaryGap md:grid-cols-3 grid-cols-2"
+                        >
+                            <li
+                                v-for="file in getDashboardStats.fetchedData
+                                    .latestMedia"
+                                :key="file.id"
+                                @click="handleMediaLibrary(file.id)"
+                                class="rounded px-0 pb-2 cursor-pointer bg-gray-50"
                             >
-                                <p class="myPrimaryParagraph">
-                                    Looks like there are no Images.
-                                </p>
-                            </div>
-                            <ul
-                                role="list"
-                                class="grid myPrimaryGap md:grid-cols-3 grid-cols-2"
-                            >
-                                <li
-                                    v-for="file in getDashboardStats.fetchedData
-                                        .latestMedia"
-                                    :key="file.id"
-                                    @click="handleMediaLibrary(file.id)"
-                                    class="rounded px-0 pb-2 cursor-pointer bg-gray-50"
+                                <div
+                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-gray-100"
+                                >
+                                    <img
+                                        :src="`/storage/uploads/${file.medium_path}`"
+                                        alt=""
+                                        class="w-full pointer-events-none object-cover group-hover:opacity-75"
+                                    />
+                                </div>
+
+                                <dl
+                                    class="px-2 myPrimaryParagraph text-xs border-b border-myPrimaryLightGrayColor divide-y"
                                 >
                                     <div
-                                        class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-gray-100"
+                                        class="py-3 flex justify-between items-center"
                                     >
-                                        <img
-                                            :src="`/storage/uploads/${file.medium_path}`"
-                                            alt=""
-                                            class="w-full pointer-events-none object-cover group-hover:opacity-75"
-                                        />
+                                        <dt class="">Dimensions</dt>
+                                        <dd class="">
+                                            {{ file.width }} x
+                                            {{ file.height }}
+                                        </dd>
                                     </div>
-
-                                    <dl
-                                        class="px-2 myPrimaryParagraph text-xs border-b border-myPrimaryLightGrayColor divide-y"
+                                    <div
+                                        class="py-3 flex justify-between items-center"
                                     >
-                                        <div
-                                            class="py-3 flex justify-between items-center"
-                                        >
-                                            <dt class="">Dimensions</dt>
-                                            <dd class="">
-                                                {{ file.width }} x
-                                                {{ file.height }}
-                                            </dd>
-                                        </div>
-                                        <div
-                                            class="py-3 flex justify-between items-center"
-                                        >
-                                            <dd class="">
-                                                {{
-                                                    file.name ? file.name : "–"
-                                                }}
-                                            </dd>
-                                        </div>
-                                        <div
-                                            class="py-3 flex justify-between items-center"
-                                        >
-                                            <dt class="">Size</dt>
-                                            <dd class="">{{ file.size }} KB</dd>
-                                        </div>
-                                    </dl>
-                                </li>
-                            </ul>
-                        </div>
+                                        <dd class="">
+                                            {{ file.name ? file.name : "–" }}
+                                        </dd>
+                                    </div>
+                                    <div
+                                        class="py-3 flex justify-between items-center"
+                                    >
+                                        <dt class="">Size</dt>
+                                        <dd class="">{{ file.size }} KB</dd>
+                                    </div>
+                                </dl>
+                            </li>
+                        </ul>
                     </div>
-                    <!-- column images # end -->
+                </div>
+                <!-- column images # end -->
 
-                    <!-- column post # start -->
-                    <div
-                        class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                    >
-                        <div class="border-b border-gray-200 mb-8 pb-2">
-                            <Link
-                                :href="
-                                    route(
-                                        'team.posts.index',
-                                        $page.props.user.current_team.id
-                                    )
-                                "
-                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                            >
-                                Latest Posts
-                            </Link>
-                        </div>
-
-                        <div
-                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
+                <!-- column post # start -->
+                <div
+                    class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                >
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <Link
+                            :href="
+                                route(
+                                    'team.posts.index',
+                                    $page.props.user.current_team.id
+                                )
+                            "
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                         >
-                            <template
-                                v-if="
-                                    Array.isArray(
-                                        getDashboardStats.fetchedData
-                                            .latestPosts
-                                    ) &&
+                            Latest Posts
+                        </Link>
+                    </div>
+
+                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
+                        <template
+                            v-if="
+                                Array.isArray(
                                     getDashboardStats.fetchedData.latestPosts
-                                        .length === 0
-                                "
-                            >
-                                <p class="myPrimaryParagraph">
-                                    Looks like there are no Posts.
-                                </p>
-                            </template>
-                            <ul
-                                role="list"
-                                class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
-                            >
-                                <li
-                                    v-for="post in getDashboardStats.fetchedData
-                                        .latestPosts"
-                                    :key="post.id"
-                                    class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
-                                >
-                                    <PostCardLoggedIn
-                                        :post="post"
-                                        postListPathName="posts"
-                                        postSinglePathName="post"
-                                    ></PostCardLoggedIn>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- column post # end -->
-                    <!-- column jobs # start -->
-                    <div
-                        class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                    >
-                        <div class="border-b border-gray-200 mb-8 pb-2">
-                            <Link
-                                :href="
-                                    route(
-                                        'team.jobs.index',
-                                        $page.props.user.current_team.id
-                                    )
-                                "
-                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                            >
-                                Latest Jobs
-                            </Link>
-                        </div>
-
-                        <div
-                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
+                                ) &&
+                                getDashboardStats.fetchedData.latestPosts
+                                    .length === 0
+                            "
                         >
-                            <template
-                                v-if="
-                                    Array.isArray(
-                                        getDashboardStats.fetchedData.latestJobs
-                                    ) &&
+                            <p class="myPrimaryParagraph">
+                                Looks like there are no Posts.
+                            </p>
+                        </template>
+                        <ul
+                            role="list"
+                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
+                        >
+                            <li
+                                v-for="post in getDashboardStats.fetchedData
+                                    .latestPosts"
+                                :key="post.id"
+                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                            >
+                                <PostCardLoggedIn
+                                    :post="post"
+                                    postListPathName="posts"
+                                    postSinglePathName="post"
+                                ></PostCardLoggedIn>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- column post # end -->
+                <!-- column jobs # start -->
+                <div
+                    class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                >
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <Link
+                            :href="
+                                route(
+                                    'team.jobs.index',
+                                    $page.props.user.current_team.id
+                                )
+                            "
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                        >
+                            Latest Jobs
+                        </Link>
+                    </div>
+
+                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
+                        <template
+                            v-if="
+                                Array.isArray(
                                     getDashboardStats.fetchedData.latestJobs
-                                        .length === 0
-                                "
-                            >
-                                <p class="myPrimaryParagraph">
-                                    Looks like there are no Jobs.
-                                </p>
-                            </template>
-                            <ul
-                                role="list"
-                                class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
-                            >
-                                <li
-                                    v-for="post in getDashboardStats.fetchedData
-                                        .latestJobs"
-                                    :key="post.id"
-                                    class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
-                                >
-                                    <!-- start photo -->
-
-                                    <PostCardLoggedIn
-                                        :post="post"
-                                        postListPathName="jobs"
-                                        postSinglePathName="job"
-                                    ></PostCardLoggedIn>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- column jobs # end -->
-                    <!-- column stores # start -->
-                    <div
-                        class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                    >
-                        <div class="border-b border-gray-200 mb-8 pb-2">
-                            <Link
-                                :href="
-                                    route(
-                                        'team.stores.index',
-                                        $page.props.user.current_team.id
-                                    )
-                                "
-                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                            >
-                                Latest Stores
-                            </Link>
-                        </div>
-
-                        <div
-                            class="min-h-[36rem] max-h-[36rem] overflow-y-scroll"
+                                ) &&
+                                getDashboardStats.fetchedData.latestJobs
+                                    .length === 0
+                            "
                         >
-                            <template
-                                v-if="
-                                    Array.isArray(
-                                        getDashboardStats.fetchedData
-                                            .latestStores
-                                    ) &&
+                            <p class="myPrimaryParagraph">
+                                Looks like there are no Jobs.
+                            </p>
+                        </template>
+                        <ul
+                            role="list"
+                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
+                        >
+                            <li
+                                v-for="post in getDashboardStats.fetchedData
+                                    .latestJobs"
+                                :key="post.id"
+                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                            >
+                                <!-- start photo -->
+
+                                <PostCardLoggedIn
+                                    :post="post"
+                                    postListPathName="jobs"
+                                    postSinglePathName="job"
+                                ></PostCardLoggedIn>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- column jobs # end -->
+                <!-- column stores # start -->
+                <div
+                    class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                >
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <Link
+                            :href="
+                                route(
+                                    'team.stores.index',
+                                    $page.props.user.current_team.id
+                                )
+                            "
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                        >
+                            Latest Stores
+                        </Link>
+                    </div>
+
+                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
+                        <template
+                            v-if="
+                                Array.isArray(
                                     getDashboardStats.fetchedData.latestStores
-                                        .length === 0
-                                "
-                            >
-                                <p class="myPrimaryParagraph">
-                                    Looks like there are no Stores.
-                                </p>
-                            </template>
-                            <ul
-                                role="list"
-                                class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
-                            >
-                                <li
-                                    v-for="post in getDashboardStats.fetchedData
-                                        .latestStores"
-                                    :key="post.id"
-                                    class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
-                                >
-                                    <!-- start photo -->
-
-                                    <PostCardLoggedIn
-                                        :post="post"
-                                        postListPathName="stores"
-                                        postSinglePathName="store"
-                                    ></PostCardLoggedIn>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- column stores # end -->
-
-                    <!-- column charts # start -->
-                    <div
-                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                    >
-                        <div class="border-b border-gray-200 mb-8 pb-2">
-                            <div
-                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                            >
-                                Latest Team Stats
-                            </div>
-                        </div>
-
-                        <ChartDefault></ChartDefault>
-                    </div>
-                    <!-- column charts # end -->
-                    <!-- column stats # start -->
-                    <div
-                        class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                    >
-                        <div class="border-b border-gray-200 mb-8 pb-2">
-                            <div
-                                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                            >
-                                Latest Team Stats
-                            </div>
-                        </div>
-
-                        <ChartDefault></ChartDefault>
-                    </div>
-                    <!-- column stats # end -->
-                </div>
-            </template>
-            <!-- Actualt data # Start -->
-        </template>
-    </FullWidthElement>
-
-    <!-- user object # start -->
-    <FullWidthElement :descriptionArea="true" class="bg-indigo-50">
-        <template #title
-            >Details about the logged-in user and team insights</template
-        >
-        <template #description>
-            Retrieve details about the logged-in user and team insights for
-            current user. Discover insights about the logged-in user and the
-            team.
-        </template>
-        <template #content>
-            <div class="grid grid-cols-1 md:grid-cols-12 lg:gap-12 gap-18">
-                <div class="col-span-1 md:col-span-12">
-                    <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
-                        Details about the logged-in user
-                    </h2>
-                    <dl class="divide-y divide-myPrimaryMediumGrayColor">
-                        <Disclosure
-                            as="div"
-                            v-for="faq in faqs"
-                            :key="faq.question"
-                            v-slot="{ open }"
+                                ) &&
+                                getDashboardStats.fetchedData.latestStores
+                                    .length === 0
+                            "
                         >
-                            <dt>
-                                <DisclosureButton
-                                    class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
-                                >
-                                    <span class="myPrimaryParagraph"
-                                        >{{ faq.question }}
-                                    </span>
-                                    <span class="ml-6 flex h-7 items-center">
-                                        <PlusSmallIcon
-                                            v-if="!open"
-                                            class="h-5 w-5"
-                                            aria-hidden="true"
-                                        />
-                                        <MinusSmallIcon
-                                            v-else
-                                            class="h-5 w-5"
-                                            aria-hidden="true"
-                                        />
-                                    </span>
-                                </DisclosureButton>
-                            </dt>
-                            <DisclosurePanel as="dd" class="mt-2 pr-12 pb-16">
-                                <p
-                                    class="myPrimaryParagraph whitespace-pre-line"
-                                >
-                                    {{ faq.answer }}
-                                </p>
-                            </DisclosurePanel>
-                        </Disclosure>
-                    </dl>
+                            <p class="myPrimaryParagraph">
+                                Looks like there are no Stores.
+                            </p>
+                        </template>
+                        <ul
+                            role="list"
+                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
+                        >
+                            <li
+                                v-for="post in getDashboardStats.fetchedData
+                                    .latestStores"
+                                :key="post.id"
+                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                            >
+                                <!-- start photo -->
+
+                                <PostCardLoggedIn
+                                    :post="post"
+                                    postListPathName="stores"
+                                    postSinglePathName="store"
+                                ></PostCardLoggedIn>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+                <!-- column stores # end -->
+
+                <!-- column charts # start -->
+                <div
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                >
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <div
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                        >
+                            Latest Team Stats
+                        </div>
+                    </div>
+
+                    <ChartDefault></ChartDefault>
+                </div>
+                <!-- column charts # end -->
+                <!-- column stats # start -->
+                <div
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                >
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <div
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                        >
+                            Latest Team Stats
+                        </div>
+                    </div>
+
+                    <ChartDefault></ChartDefault>
+                </div>
+                <!-- column stats # end -->
             </div>
-            <MediaLibraryModal
-                :user="user"
-                :team="currentUserTeam"
-                :open="showMediaLibraryModal"
-                :title="titleMedia"
-                :description="descriptionMedia"
-                :firstButtonText="firstButtonMedia"
-                :secondButtonText="secondButtonMedia"
-                :thirdButtonText="thirdButtonMedia"
-                @firstMediaButtonFunction="firstMediaButtonFunction"
-                @secondMediaButtonFunction="secondMediaButtonFunction"
-                @thirdMediaButtonFunction="thirdMediaButtonFunction"
+        </div>
+
+        <!-- user object # start -->
+        <FullWidthElement :descriptionArea="true" class="bg-indigo-50">
+            <template #title
+                >Details about the logged-in user and team insights</template
             >
-            </MediaLibraryModal>
-        </template>
-    </FullWidthElement>
-    <!-- user object # end -->
+            <template #description>
+                Retrieve details about the logged-in user and team insights for
+                current user. Discover insights about the logged-in user and the
+                team.
+            </template>
+            <template #content>
+                <div class="grid grid-cols-1 md:grid-cols-12 lg:gap-12 gap-18">
+                    <div class="col-span-1 md:col-span-12">
+                        <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
+                            Details about the logged-in user
+                        </h2>
+                        <dl class="divide-y divide-myPrimaryMediumGrayColor">
+                            <Disclosure
+                                as="div"
+                                v-for="faq in faqs"
+                                :key="faq.question"
+                                v-slot="{ open }"
+                            >
+                                <dt>
+                                    <DisclosureButton
+                                        class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
+                                    >
+                                        <span class="myPrimaryParagraph"
+                                            >{{ faq.question }}
+                                        </span>
+                                        <span
+                                            class="ml-6 flex h-7 items-center"
+                                        >
+                                            <PlusSmallIcon
+                                                v-if="!open"
+                                                class="h-5 w-5"
+                                                aria-hidden="true"
+                                            />
+                                            <MinusSmallIcon
+                                                v-else
+                                                class="h-5 w-5"
+                                                aria-hidden="true"
+                                            />
+                                        </span>
+                                    </DisclosureButton>
+                                </dt>
+                                <DisclosurePanel
+                                    as="dd"
+                                    class="mt-2 pr-12 pb-16"
+                                >
+                                    <p
+                                        class="myPrimaryParagraph whitespace-pre-line"
+                                    >
+                                        {{ faq.answer }}
+                                    </p>
+                                </DisclosurePanel>
+                            </Disclosure>
+                        </dl>
+                    </div>
+                </div>
+                <MediaLibraryModal
+                    :user="user"
+                    :team="currentUserTeam"
+                    :open="showMediaLibraryModal"
+                    :title="titleMedia"
+                    :description="descriptionMedia"
+                    :firstButtonText="firstButtonMedia"
+                    :secondButtonText="secondButtonMedia"
+                    :thirdButtonText="thirdButtonMedia"
+                    @firstMediaButtonFunction="firstMediaButtonFunction"
+                    @secondMediaButtonFunction="secondMediaButtonFunction"
+                    @thirdMediaButtonFunction="thirdMediaButtonFunction"
+                >
+                </MediaLibraryModal>
+            </template>
+        </FullWidthElement>
+        <!-- user object # end -->
+    </template>
 </template>

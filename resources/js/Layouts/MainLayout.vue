@@ -43,8 +43,6 @@ watch(flashState, (newValue) => {
         shouldShowFlash.value = false;
     }, 1000);
 });
-
-const maintenance = true;
 </script>
 
 <template>
