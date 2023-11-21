@@ -113,8 +113,8 @@ const handleDelete = function (postId, post) {
     // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 3;
-    titleModal.value = `Delete ${post.title}?`;
-    descriptionModal.value = `Are you sure you want to delete store with title ${post.title}?`;
+    titleModal.value = `Permanently delete ${post.title}?`;
+    descriptionModal.value = `Are you sure you want to permanently delete store with title ${post.title}?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Delete Store";
