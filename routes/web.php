@@ -30,9 +30,12 @@ use App\Http\Controllers\Superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Guests\User\UserController;
 use App\Http\Controllers\LoggedIn\Job\JobController;
-use App\Http\Controllers\LoggedIn\Job\JobOutdatedController;
+use App\Http\Controllers\LoggedIn\Job\JobDeletedController;
+use App\Http\Controllers\LoggedIn\Job\JobExpiredController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
+use App\Http\Controllers\LoggedIn\Post\PostDeletedController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
+use App\Http\Controllers\LoggedIn\Store\StoreDeletedController;
 use App\Http\Controllers\LoggedIn\Team\TeamController as TeamTeamController;
 use App\Http\Controllers\LoggedIn\User\PaymentMethodsController as UserPaymentMethodsController;
 use App\Http\Controllers\LoggedIn\User\PaymentsController as UserPaymentsController;
@@ -554,6 +557,9 @@ Route::middleware([
     Route::get("/team/posts/{teamId}", [PostController::class, "index"])->name(
         "team.posts.index"
     );
+    Route::get("/team/posts/trash/{teamId}", [PostDeletedController::class, "index"])->name(
+        "team.posts.index.trash"
+    );
     // unique post
     Route::get("/team/{teamId}/posts/{slug}/view{postId}/", [
         PostController::class,
@@ -571,8 +577,14 @@ Route::middleware([
     Route::get("/team/jobs/{teamId}", [JobController::class, "index"])->name(
         "team.jobs.index"
     );
-    Route::get("/team/jobs/outdated/{teamId}", [JobOutdatedController::class, "index"])->name(
-        "team.jobs.index.outdated"
+    Route::get("/team/jobs/unpaid/{teamId}", [JobController::class, "indexUnpaid"])->name(
+        "team.jobs.index.unpaid"
+    );
+    Route::get("/team/jobs/expired/{teamId}", [JobExpiredController::class, "index"])->name(
+        "team.jobs.index.expired"
+    );
+    Route::get("/team/jobs/trash/{teamId}", [JobDeletedController::class, "index"])->name(
+        "team.jobs.index.trash"
     );
     // unique job
     Route::get("/team/{teamId}/jobs/{slug}/view/{jobId}/", [
@@ -592,6 +604,10 @@ Route::middleware([
         StoreController::class,
         "index",
     ])->name("team.stores.index");
+
+    Route::get("/team/stores/trash/{teamId}", [StoreDeletedController::class, "index"])->name(
+        "team.stores.index.trash"
+    );
 
     // unique store
     Route::get("/team/{teamId}/stores/{slug}/view/{storeId}", [
@@ -809,6 +825,11 @@ Route::middleware([
         "store",
     ])->name("team.posts.store");
 
+    Route::post("/team/posts/post/restore/{postId}/{team}", [
+        PostDeletedController::class,
+        "restore",
+    ])->name("team.posts.restore");
+
     Route::post("/team/posts/duplicate", [
         PostController::class,
         "duplicate",
@@ -828,8 +849,8 @@ Route::middleware([
     ])->name("team.jobs.job.edit");
 
     Route::get("/team/jobs/job/republish/{teamId}/{job}", [
-        JobOutdatedController::class,
-        "update",
+        JobExpiredController::class,
+        "republish",
     ])->name("team.jobs.job.republish");
 
     Route::post("/team/jobs/job/update/{job}", [
@@ -845,6 +866,11 @@ Route::middleware([
     Route::post("/team/jobs/job/store", [JobController::class, "store"])->name(
         "team.jobs.store"
     );
+
+    Route::post("/team/jobs/job/restore/{jobId}/{team}", [JobDeletedController::class, "restore"])->name(
+        "team.jobs.restore"
+    );
+
     Route::post("/team/jobs/duplicate", [
         JobController::class,
         "duplicate",
@@ -878,6 +904,11 @@ Route::middleware([
         StoreController::class,
         "store",
     ])->name("team.stores.store");
+
+    Route::post("/team/stores/store/restore/{storeId}/{team}", [
+        StoreDeletedController::class,
+        "restore",
+    ])->name("team.stores.restore");
 
     Route::post("/team/stores/duplicate", [
         StoreController::class,
@@ -997,6 +1028,11 @@ Route::middleware([
         PostController::class,
         "destroy",
     ])->name("team.posts.post.destroy");
+
+    Route::delete("/team/posts/trash/{post}/{team}", [
+        PostDeletedController::class,
+        "destroy",
+    ])->name("team.posts.post.destroy.force");
     // POSTS #END
     // POSTS #END
     // POSTS #END
@@ -1010,6 +1046,11 @@ Route::middleware([
         JobController::class,
         "destroy",
     ])->name("team.jobs.job.destroy");
+
+    Route::delete("/team/jobs/trash/{job}/{team}", [
+        JobDeletedController::class,
+        "destroy",
+    ])->name("team.jobs.job.destroy.force");
     // JOBS #END
     // JOBS #END
     // JOBS #END
@@ -1023,6 +1064,11 @@ Route::middleware([
         StoreController::class,
         "destroy",
     ])->name("team.stores.store.destroy");
+
+    Route::delete("/team/stores/trash/{post}/{team}", [
+        StoreDeletedController::class,
+        "destroy",
+    ])->name("team.stores.store.destroy.force");
     // STORES #END
     // STORES #END
     // STORES #END

@@ -13,6 +13,7 @@ import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallI
 import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
+import TopMenu from "@/Components/Menues/TopMenu.vue";
 
 import {
     ArrowLeftIcon,
@@ -53,6 +54,23 @@ const breadcrumbsLinks = [
         label: "All Stores",
         route: {
             name: "team.stores.index",
+            parameters: [props.currentUserTeam.id],
+        },
+    },
+];
+
+const linksTopMenu = [
+    {
+        label: "All Stores",
+        route: {
+            name: "team.stores.index",
+            parameters: [props.currentUserTeam.id],
+        },
+    },
+    {
+        label: "Trash",
+        route: {
+            name: "team.stores.index.trash",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -234,11 +252,6 @@ onMounted(() => {
                     >Stores for
                     {{ $page.props.user && $page.props.user.current_team.name }}
                 </template>
-                <template #subTitle
-                    >Become competitive with a store profile on the largest
-                    fashion directory in the United Arab Emirates, which will
-                    lead your customers right to your door.
-                </template>
                 <template #buttons>
                     <Link
                         class="myPrimaryButton"
@@ -249,6 +262,8 @@ onMounted(() => {
                     </Link>
                 </template>
             </CardHeadings>
+
+            <TopMenu :links="linksTopMenu"></TopMenu>
 
             <form @submit.prevent="handleSearch">
                 <div class="myPrimarySection">

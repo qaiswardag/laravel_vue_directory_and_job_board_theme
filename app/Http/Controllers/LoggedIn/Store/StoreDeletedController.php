@@ -1,23 +1,39 @@
 <?php
 
-namespace App\Http\Controllers\LoggedIn\Job;
+namespace App\Http\Controllers\LoggedIn\Store;
 
 use App\Http\Controllers\Controller;
-use App\Models\Job\Job;
+use Illuminate\Http\Request;
+
+use App\Http\Requests\LoggedIn\Store\StoreStoreRequest;
+use App\Models\MediaLibrary\MediaLibrary;
+use App\Models\Store\AuthorStore;
+use App\Models\Store\Store;
+use App\Models\Store\StoreCategory;
+use App\Models\Store\StoreCategoryRelation;
+use App\Models\Store\StoreCoverImageRelation;
+use App\Models\Store\StoreState;
+use App\Models\Store\StoreStateRelation;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
-
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use SoftDeletes;
 
 
-class JobOutdatedController extends Controller
+class StoreDeletedController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(Request $request, $teamId)
     {
@@ -38,40 +54,32 @@ class JobOutdatedController extends Controller
             $searchQuery = implode(",", $searchQuery);
         }
 
-        // Authorize the team that the user has selected to store the job for, rather than the team that the user is currently on.
+        // Authorize the team that the user has selected to store the store for, rather than the team that the user is currently on.
         $this->authorize("can-read", $team);
 
-        $jobs = $team
-            ->jobs()
+        $stores = $team
+            ->stores()
+            ->onlyTrashed()
             ->with("coverImages")
-            ->with("countries")
             ->with("states")
             ->with("categories")
-            ->with("types")
             ->with("authors")
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
-            // Add the condition for started_at here
-            ->where(function ($query) {
-                $query
-                    ->where('is_paid', true)
-                    ->whereNotNull("ended_at");
-                $query->where("ended_at", "<", Carbon::now());
-            })
-            ->latest()
+            ->orderBy('updated_at', 'desc')
             ->paginate(12);
 
-        $jobs->appends($request->all());
+        $stores->appends($request->all());
 
-        // Job created by
-        // Retrieve user information for each job
-        foreach ($jobs as $job) {
-            $user = User::find($job->user_id);
+        // Store created by
+        // Retrieve user information for each store
+        foreach ($stores as $store) {
+            $user = User::find($store->user_id);
             if ($user !== null) {
-                $job->updatedBy = [
+                $store->updatedBy = [
                     "first_name" => $user->first_name,
                     "last_name" => $user->last_name,
                     "job_title" => $user->job_title,
@@ -79,12 +87,12 @@ class JobOutdatedController extends Controller
                 ];
             }
             if ($user === null) {
-                $job->updatedBy = null;
+                $store->updatedBy = null;
             }
         }
 
-        return Inertia::render("Jobs/IndexOutdated", [
-            "posts" => $jobs,
+        return Inertia::render("Stores/IndexTrash", [
+            "posts" => $stores,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
             ],
@@ -102,9 +110,21 @@ class JobOutdatedController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function restore($storeId, Team $team)
     {
-        //
+        $this->authorize("can-create-and-update", $team);
+
+
+        $store = Store::withTrashed()->findOrFail($storeId);
+
+        $store->restore();
+
+        return redirect()
+            ->back()
+            ->with(
+                "success",
+                "Successfully restored."
+            );
     }
 
     /**
@@ -126,39 +146,27 @@ class JobOutdatedController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($teamId, Job $job)
+    public function update(Request $request, string $id)
     {
-        $team = Team::find($teamId);
-
-        if ($team === null) {
-            return Inertia::render("Error", [
-                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
-                "status" => 404, // HTTP status code for the response.
-            ]);
-        }
-
-        // Authorize the team that the user has selected to store the job for, rather than the team that the user is currently on.
-        $this->authorize("can-create-and-update", $team);
-
-        $job->update([
-            "published" => null,
-            "is_paid" => null,
-            "paid_at" => null,
-            "started_at" => null,
-            "ended_at" => null,
-        ]);
-
-        return redirect()->route("team.jobs.job.edit", [
-            "teamId" => $team->id,
-            "job" => $job->id
-        ]);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($storeId, Team $team)
     {
-        //
+        $this->authorize("can-destroy", $team);
+
+        $store = Store::withTrashed()->findOrFail($storeId);
+
+        $store->forceDelete();
+
+        return redirect()
+            ->back()
+            ->with(
+                "success",
+                "Successfully deleted the Store."
+            );
     }
 }

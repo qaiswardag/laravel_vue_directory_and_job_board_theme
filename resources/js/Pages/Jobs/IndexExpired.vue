@@ -30,6 +30,7 @@ import {
     UserIcon,
     ArrowLeftIcon,
     ArrowRightIcon,
+    ArrowPathIcon,
 } from "@heroicons/vue/24/outline";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 
@@ -168,25 +169,10 @@ const deletePost = (postId) => {
 };
 
 // handle action
-const handleEdit = function (postId) {
-    router.get(route("team.jobs.job.edit", [props.currentUserTeam.id, postId]));
-};
-
-const duplicateForm = useForm({
-    teamId: props.currentUserTeam.id,
-    postId: "",
-});
-
-// handle action
-const handleDuplicate = function (postId) {
-    duplicateForm.postId = postId;
-    //
-    duplicateForm.post(route("team.jobs.duplicate"), {
-        preserveScroll: false,
-        onSuccess: () => {},
-        onError: () => {},
-        onFinish: () => {},
-    });
+const handleRepublish = function (postId) {
+    router.get(
+        route("team.jobs.job.republish", [props.currentUserTeam.id, postId])
+    );
 };
 
 // form
@@ -195,12 +181,15 @@ const searchForm = useForm({
 });
 
 const handleSearch = function () {
-    searchForm.get(route("team.jobs.index", [props.currentUserTeam.id]), {
-        preserveScroll: true,
-        onSuccess: () => {},
-        onError: (err) => {},
-        onFinish: () => {},
-    });
+    searchForm.get(
+        route("team.jobs.index.expired", [props.currentUserTeam.id]),
+        {
+            preserveScroll: true,
+            onSuccess: () => {},
+            onError: (err) => {},
+            onFinish: () => {},
+        }
+    );
 };
 
 const scrolTableContainer = ref("scrolTableContainer");
@@ -372,25 +361,10 @@ onMounted(() => {
                                         Paid at
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Team Name
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Status
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Is filled
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
                                         Job publish date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Job end date
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Show Authors
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Authors
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Country
@@ -413,17 +387,7 @@ onMounted(() => {
                                     </th>
 
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Updated Date
-                                    </th>
-
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Created Date
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Options
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Edit
+                                        Republish
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Delete
@@ -513,44 +477,6 @@ onMounted(() => {
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                $page.props.user &&
-                                                $page.props.user.current_team
-                                                    .name
-                                            }}
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <span
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    post.published
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                                >{{
-                                                    post.published
-                                                        ? "Published"
-                                                        : "Unpublished"
-                                                }}</span
-                                            >
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <span
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    !post.is_filled
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                                >{{
-                                                    post.is_filled
-                                                        ? "Is filled"
-                                                        : "Open for applications"
-                                                }}</span
-                                            >
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
                                             <template v-if="post.started_at">
                                                 {{
                                                     format(
@@ -572,97 +498,7 @@ onMounted(() => {
                                                 }}
                                             </template>
                                         </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <span
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    post.show_author
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                                >{{
-                                                    post.show_author
-                                                        ? "Visible"
-                                                        : "Hidden"
-                                                }}</span
-                                            >
-                                        </td>
 
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                class="flex flex-wrap justify-start items-center gap-1"
-                                            >
-                                                <div
-                                                    v-for="author in post.authors &&
-                                                    post.authors"
-                                                    :key="author"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
-                                                >
-                                                    <div
-                                                        v-if="
-                                                            author.profile_photo_path !==
-                                                            null
-                                                        "
-                                                    >
-                                                        <div
-                                                            class="h-5 w-5 flex-shrink-0"
-                                                        >
-                                                            <img
-                                                                class="object-cover h-5 w-5 rounded-full"
-                                                                :src="`/storage/${author.profile_photo_path}`"
-                                                                alt="avatar"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div
-                                                        style="
-                                                            font-size: 9px;
-                                                            gap: 2px;
-                                                        "
-                                                        v-if="
-                                                            author.profile_photo_path ===
-                                                            null
-                                                        "
-                                                        class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
-                                                    >
-                                                        <span>
-                                                            {{
-                                                                author.first_name
-                                                                    .charAt(0)
-                                                                    .toUpperCase()
-                                                            }}
-                                                        </span>
-                                                        <span>
-                                                            {{
-                                                                author.last_name
-                                                                    .charAt(0)
-                                                                    .toUpperCase()
-                                                            }}
-                                                        </span>
-                                                    </div>
-                                                    <span
-                                                        class="flex flex-col items-left gap-1 myPrimaryParagraph"
-                                                    >
-                                                        <p
-                                                            style="
-                                                                font-size: 10px;
-                                                            "
-                                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
-                                                        >
-                                                            <span>
-                                                                {{
-                                                                    author.first_name
-                                                                }}
-                                                                {{
-                                                                    author.last_name
-                                                                }}
-                                                            </span>
-                                                        </p>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
                                                 class="flex flex-wrap justify-start items-center gap-2"
@@ -797,80 +633,16 @@ onMounted(() => {
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(post.updated_at),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(post.created_at),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <Menu
-                                                as="div"
-                                                class="relative inline-block text-left"
-                                            >
-                                                <div>
-                                                    <MenuButton
-                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                    >
-                                                        <EllipsisVerticalIcon
-                                                            class="shrink-0 h-4 w-4 m-2 stroke-2"
-                                                            aria-hidden="true"
-                                                        />
-                                                    </MenuButton>
-                                                </div>
-                                                <transition
-                                                    enter-active-class="transition ease-out duration-100"
-                                                    enter-from-class="transform opacity-0 scale-95"
-                                                    enter-to-class="transform opacity-100 scale-100"
-                                                    leave-active-class="transition ease-in duration-75"
-                                                    leave-from-class="transform opacity-100 scale-100"
-                                                    leave-to-class="transform opacity-0 scale-95"
-                                                >
-                                                    <MenuItems
-                                                        class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                                    >
-                                                        <MenuItem
-                                                            class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
-                                                        >
-                                                            <button
-                                                                class="flex gap-1 items-center"
-                                                                type="button"
-                                                                @click="
-                                                                    handleDuplicate(
-                                                                        post.id
-                                                                    )
-                                                                "
-                                                            >
-                                                                <CheckIcon
-                                                                    class="w-4 h-4"
-                                                                ></CheckIcon>
-                                                                Duplicate Job
-                                                            </button>
-                                                        </MenuItem>
-                                                    </MenuItems>
-                                                </transition>
-                                            </Menu>
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
                                             <button
                                                 type="button"
-                                                @click="handleEdit(post.id)"
+                                                @click="
+                                                    handleRepublish(post.id)
+                                                "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <PencilIcon
+                                                <ArrowPathIcon
                                                     class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                ></PencilIcon>
+                                                ></ArrowPathIcon>
                                             </button>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">

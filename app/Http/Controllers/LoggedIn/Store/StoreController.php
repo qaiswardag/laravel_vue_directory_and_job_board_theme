@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class StoreController extends Controller
 {
@@ -68,7 +70,7 @@ class StoreController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
-            ->latest()
+            ->orderBy('updated_at', 'desc')
             ->paginate(12);
 
         $stores->appends($request->all());
@@ -133,6 +135,7 @@ class StoreController extends Controller
 
         $title = $request->title;
         $address = $request->address;
+        $contactPageUrl = $request->contact_page_url;
         $floor = $request->floor;
         $content = $request->content;
         $userId = $request->user_id;
@@ -148,11 +151,26 @@ class StoreController extends Controller
             "slug" => $slug,
             "address" => $address,
             "floor" => $floor,
+            "contact_page_url" => $contactPageUrl,
             "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
         ]);
+
+        // set team address if team address is null
+        if (!is_null($address)) {
+            $team->update([
+                "address" => $address,
+            ]);
+        }
+
+        // set team contact page url if null
+        if (!is_null($contactPageUrl)) {
+            $team->update([
+                "contact_page_url" => $contactPageUrl,
+            ]);
+        }
 
         // Get the store ID
         $storeId = $store->id;
@@ -274,7 +292,7 @@ class StoreController extends Controller
      * @param  \App\Models\Store\Store $store
      * @return \Illuminate\Http\Response
      */
-    public function show($teamId, $slug, Store $storeId)
+    public function show($teamId, $slug, $storeId)
     {
         $storeRenderView = "Stores/Show/ShowTeamStore";
 
@@ -289,34 +307,37 @@ class StoreController extends Controller
 
         $this->authorize("can-read", $team);
 
-        // Retrieve the user associated with the store
-        $user = User::find($storeId->user_id);
+        // Retrieve the post, including soft-deleted posts
+        $store = Store::withTrashed()->findOrFail($storeId);
 
-        // Update the $storeId array with updatedBy information
+        // Retrieve the user associated with the store
+        $user = User::find($store->user_id);
+
+        // Update the $store array with updatedBy information
         if ($user !== null) {
-            $storeId->updatedBy = [
+            $store->updatedBy = [
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
             ];
         }
         if ($user === null) {
-            $storeId->updatedBy = null;
+            $store->updatedBy = null;
         }
 
         $authors = [];
 
-        if ($storeId->show_author) {
-            $authors = $storeId->authors()->get();
+        if ($store->show_author) {
+            $authors = $store->authors()->get();
         }
 
-        $categories = $storeId->categories;
-        $states = $storeId->states;
-        $coverImages = $storeId->coverImages;
+        $categories = $store->categories;
+        $states = $store->states;
+        $coverImages = $store->coverImages;
 
         // Render the store
         return Inertia::render($storeRenderView, [
-            "post" => $storeId,
+            "post" => $store,
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,
@@ -397,15 +418,103 @@ class StoreController extends Controller
         // Authorize the team that the user has selected
         $this->authorize("can-create-and-update", $team);
 
-        $newStore = $store->replicate();
+        $newStore = null;
 
-        $newStore->created_at = Carbon::now();
-        $newStore->updated_at = Carbon::now();
-        $newStore->published = false;
-        $newStore->save();
+        try {
+            DB::transaction(function () use ($store, &$newStore) {
+                // replicate new job # start
+                $newStore = $store->replicate();
+                $newStore->save();
+                $newStore->update([
+                    "published" => false,
+                    "created_at" => Carbon::now(),
+                    "updated_at" => Carbon::now(),
+                ]);
+                // replicate new job # end
 
-        return redirect()->route("team.stores.index", [
-            "teamId" => $team->id,
+
+
+                // replicate new categories # start
+                if ($store->categories !== null) {
+                    foreach ($store->categories as $category) {
+                        // Create a new instance of the pivot model
+                        $newCategoriesPivotData = new StoreCategoryRelation([
+                            'store_id' => $newStore->id,
+                            'category_id' => $category->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newCategoriesPivotData->save();
+                    }
+                }
+                // replicate new categories # end
+
+                // replicate new cover images # start
+                if ($store->coverImages !== null) {
+                    foreach ($store->coverImages as $coverImage) {
+                        // Create a new instance of the pivot model
+                        $newCoverImagePivotData = new StoreCoverImageRelation([
+                            'store_id' => $newStore->id,
+                            'media_library_id' => $coverImage->id,
+                            "primary" => $coverImage->pivot->primary ?? null,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newCoverImagePivotData->save();
+                    }
+                }
+                // replicate new cover images # start
+
+                // replicate new cover images # start
+                if ($store->authors !== null) {
+                    foreach ($store->authors as $author) {
+                        // Create a new instance of the pivot model
+                        $newJobAuthorsPivotData = new AuthorStore([
+                            'store_id' => $newStore->id,
+                            'user_id' => $author->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newJobAuthorsPivotData->save();
+                    }
+                }
+                // replicate new cover images # end
+
+                // replicate new states # start
+                if ($store->states !== null) {
+                    foreach ($store->states as $state) {
+                        // Create a new instance of the pivot model
+                        $newJobStatePivotData = new StoreStateRelation([
+                            'store_id' => $newStore->id,
+                            'state_id' => $state->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newJobStatePivotData->save();
+                    }
+                }
+                // replicate new states # end
+            });
+        } catch (Exception $e) {
+            Log::error(
+                "Oops! Something went wrong. {$e->getMessage()}."
+            );
+
+            return Inertia::render("Error", [
+                "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG, // Error message for the user.
+                "status" => 422, // HTTP status code for the response.
+            ]);
+        }
+
+        if ($newStore !== null) {
+            return redirect()->route("team.stores.index", [
+                "teamId" => $team->id,
+            ]);
+        }
+
+        return Inertia::render("Error", [
+            "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG,
+            "status" => 422,
         ]);
     }
 
@@ -430,6 +539,7 @@ class StoreController extends Controller
         $content = $request->content;
         $teamId = $request->team["id"];
         $userId = $request->user_id;
+        $contactPageUrl = $request->contact_page_url;
 
         // Initialize the $authorId variable to null
         $authorId = null;
@@ -442,6 +552,7 @@ class StoreController extends Controller
             "slug" => $slug,
             "address" => $address,
             "floor" => $floor,
+            "contact_page_url" => $contactPageUrl,
             "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,

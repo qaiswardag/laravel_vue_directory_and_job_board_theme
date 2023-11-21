@@ -11,6 +11,7 @@ import { onMounted, ref } from "vue";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { parseISO, format } from "date-fns";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import TopMenu from "@/Components/Menues/TopMenu.vue";
 
 import {
     EllipsisVerticalIcon,
@@ -45,6 +46,23 @@ const breadcrumbsLinks = [
         label: "All Posts",
         route: {
             name: "team.posts.index",
+            parameters: [props.currentUserTeam.id],
+        },
+    },
+];
+
+const linksTopMenu = [
+    {
+        label: "All Post",
+        route: {
+            name: "team.posts.index",
+            parameters: [props.currentUserTeam.id],
+        },
+    },
+    {
+        label: "Trash",
+        route: {
+            name: "team.posts.index.trash",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -240,6 +258,8 @@ onMounted(() => {
                     </Link>
                 </template>
             </CardHeadings>
+
+            <TopMenu :links="linksTopMenu"></TopMenu>
 
             <form @submit.prevent="handleSearch">
                 <div class="myPrimarySection">

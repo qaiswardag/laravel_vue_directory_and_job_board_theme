@@ -348,6 +348,7 @@ const postForm = useForm({
     title: "",
     slug: "",
     address: "",
+    contact_page_url: "",
     floor: "",
     content: "",
     published: true,
@@ -472,7 +473,19 @@ const clearForm = function () {
     postForm.title = "";
     // slug
     postForm.slug = "";
-    postForm.address = "";
+
+    if (props.currentUserTeam && props.currentUserTeam.address) {
+        postForm.address = props.currentUserTeam.address;
+    } else {
+        postForm.address = "";
+    }
+
+    if (props.currentUserTeam && props.currentUserTeam.contact_page_url) {
+        postForm.contact_page_url = props.currentUserTeam.contact_page_url;
+    } else {
+        postForm.contact_page_url = "";
+    }
+
     postForm.floor = "";
     isSlugEditable.value = false;
     slugValueTitle.value = "";
@@ -763,6 +776,23 @@ onBeforeMount(async () => {
         }
 
         // local storage for form
+        if (localStorage.getItem(pathLocalStorage) === null) {
+            if (props.currentUserTeam && props.currentUserTeam.address) {
+                postForm.address = props.currentUserTeam.address;
+            }
+        }
+
+        // local storage for form
+        if (localStorage.getItem(pathLocalStorage) === null) {
+            if (
+                props.currentUserTeam &&
+                props.currentUserTeam.contact_page_url
+            ) {
+                postForm.contact_page_url =
+                    props.currentUserTeam.contact_page_url;
+            }
+        }
+        // local storage for form
         if (localStorage.getItem(pathLocalStorage) !== null) {
             // Get the saved form data from local storage using the form ID as the key
             const formDataJson = localStorage.getItem(pathLocalStorage);
@@ -779,7 +809,31 @@ onBeforeMount(async () => {
             }
 
             postForm.title = formLocalStorage.title;
-            postForm.address = formLocalStorage.address;
+
+            if (!formLocalStorage.address) {
+                if (props.currentUserTeam && props.currentUserTeam.address) {
+                    postForm.address = props.currentUserTeam.address;
+                }
+            }
+
+            if (!formLocalStorage.contact_page_url) {
+                if (
+                    props.currentUserTeam &&
+                    props.currentUserTeam.contact_page_url
+                ) {
+                    postForm.contact_page_url =
+                        props.currentUserTeam.contact_page_url;
+                }
+            }
+
+            if (formLocalStorage.address) {
+                postForm.address = formLocalStorage.address;
+            }
+
+            if (formLocalStorage.contact_page_url) {
+                postForm.contact_page_url = formLocalStorage.contact_page_url;
+            }
+
             postForm.floor = formLocalStorage.floor;
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
@@ -921,6 +975,7 @@ onBeforeMount(async () => {
 
         postForm.title = props.post.title;
         postForm.address = props.post.address;
+        postForm.contact_page_url = props.post.contact_page_url;
         postForm.floor = props.post.floor;
         // slug logic
         // slug is editable when editing an existing post
@@ -984,7 +1039,7 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <InputLabel for="title" value="Your Post title" />
+                    <InputLabel for="title" value="Store name" />
                     <TextInput
                         placeholder="Enter your title.."
                         id="title"
@@ -1065,7 +1120,10 @@ const pageBuilder = new PageBuilder(store);
                     </div>
 
                     <div class="myInputGroup md:w-1/3">
-                        <InputLabel for="floor" value="Store floor" />
+                        <InputLabel
+                            for="floor"
+                            value="Store floor — zero for ground floor"
+                        />
                         <!-- Input Number -->
                         <div class="myPrimaryInput p-0" data-hs-input-number>
                             <div
@@ -1237,6 +1295,29 @@ const pageBuilder = new PageBuilder(store);
                 <InputError :message="postForm.errors.published" />
             </div>
             <!-- post status - end -->
+
+            <!-- post contact page url # start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Url for contact form
+                    </div>
+                </div>
+                <!-- post title start -->
+                <div class="myInputGroup">
+                    <InputLabel for="contact_page_url" value="Url" />
+                    <TextInput
+                        placeholder="Contact page url.."
+                        id="contact_page_url"
+                        v-model="postForm.contact_page_url"
+                        type="text"
+                        class="block w-full"
+                        autocomplete="off"
+                    />
+                    <InputError :message="postForm.errors.contact_page_url" />
+                </div>
+            </div>
+            <!-- post contact page url # end -->
 
             <!-- cover image - start -->
             <div class="myInputsOrganization">

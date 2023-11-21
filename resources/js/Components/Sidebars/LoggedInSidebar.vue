@@ -218,6 +218,7 @@ import {
                 "
                 :active="
                     route().current('team.posts.index') ||
+                    route().current('team.posts.index.trash') ||
                     route().current('team.posts.create') ||
                     route().current('team.posts.post.edit') ||
                     route().current('team.posts.post.show')
@@ -241,7 +242,9 @@ import {
                 "
                 :active="
                     route().current('team.jobs.index') ||
-                    route().current('team.jobs.index.outdated') ||
+                    route().current('team.jobs.index.unpaid') ||
+                    route().current('team.jobs.index.expired') ||
+                    route().current('team.jobs.index.trash') ||
                     route().current('team.jobs.create') ||
                     route().current('team.jobs.job.edit') ||
                     route().current('team.jobs.job.show') ||
@@ -266,6 +269,7 @@ import {
                 "
                 :active="
                     route().current('team.stores.index') ||
+                    route().current('team.stores.index.trash') ||
                     route().current('team.stores.create') ||
                     route().current('team.stores.store.edit') ||
                     route().current('team.stores.store.show')

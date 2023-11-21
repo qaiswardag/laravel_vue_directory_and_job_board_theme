@@ -360,6 +360,24 @@ defineProps({
                 </template>
                 <!-- tags # end -->
 
+                <!-- Url for contact page # start -->
+                <template v-if="post.contact_page_url">
+                    <div class="myPrimaryWidget">
+                        <h4 class="myFourthHeader">Contact Store</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <div
+                            class="flex flex-wrap justify-start items-center gap-2"
+                        >
+                            <a :href="post.contact_page_url" target="_blank">
+                                <button type="button" class="myPrimaryButton">
+                                    Contact store
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </template>
+                <!-- Url for contact page # end -->
+
                 <!-- show authors # start -->
                 <template v-if="onlyForCurrentTeam">
                     <div v-if="post.show_author" class="myPrimaryWidget">

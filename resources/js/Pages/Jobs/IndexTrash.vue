@@ -30,6 +30,7 @@ import {
     UserIcon,
     ArrowLeftIcon,
     ArrowRightIcon,
+    ArrowPathIcon,
 } from "@heroicons/vue/24/outline";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 
@@ -127,8 +128,8 @@ const handleDelete = function (postId, post) {
     // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 3;
-    titleModal.value = `Delete ${post.title}?`;
-    descriptionModal.value = `Are you sure you want to delete job with title ${post.title}?`;
+    titleModal.value = `Permanently delete ${post.title}?`;
+    descriptionModal.value = `Are you sure you want to permanently delete job with title ${post.title}?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Delete Job";
@@ -155,7 +156,10 @@ const deletePostForm = useForm({});
 // form action
 const deletePost = (postId) => {
     deletePostForm.delete(
-        route("team.jobs.job.destroy", [postId, props.currentUserTeam.id]),
+        route("team.jobs.job.destroy.force", [
+            postId,
+            props.currentUserTeam.id,
+        ]),
         {
             preserveScroll: true,
             onSuccess: () => (modalShowDeletePost.value = false),
@@ -167,35 +171,57 @@ const deletePost = (postId) => {
     );
 };
 
+const modalShowRestorePost = ref(false);
 // handle action
-const handleEdit = function (postId) {
-    router.get(route("team.jobs.job.edit", [props.currentUserTeam.id, postId]));
+const handleRestore = function (postId, post) {
+    modalShowRestorePost.value = true;
+
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 3;
+    titleModal.value = `Restore job ${post.title}?`;
+    descriptionModal.value = `Are you sure you want to restore this job?`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Restore job";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowRestorePost.value = false;
+    };
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        handleRestorePost(postId);
+    };
+    // end modal
 };
 
-const duplicateForm = useForm({
-    teamId: props.currentUserTeam.id,
-    postId: "",
-});
+const restoreForm = useForm({});
 
-// handle action
-const handleDuplicate = function (postId) {
-    duplicateForm.postId = postId;
-    //
-    duplicateForm.post(route("team.jobs.duplicate"), {
-        preserveScroll: false,
-        onSuccess: () => {},
-        onError: () => {},
-        onFinish: () => {},
-    });
+const handleRestorePost = function (postId) {
+    restoreForm.post(
+        route("team.jobs.restore", [
+            postId,
+            props.currentUserTeam.id,
+            //
+        ]),
+        {
+            onSuccess: () => (modalShowRestorePost.value = false),
+            onError: (err) => {},
+            onFinish: (log) => {
+                modalShowRestorePost.value = false;
+            },
+        }
+    );
 };
-
 // form
 const searchForm = useForm({
     search_query: "",
 });
 
 const handleSearch = function () {
-    searchForm.get(route("team.jobs.index", [props.currentUserTeam.id]), {
+    searchForm.get(route("team.jobs.index.trash", [props.currentUserTeam.id]), {
         preserveScroll: true,
         onSuccess: () => {},
         onError: (err) => {},
@@ -235,6 +261,24 @@ onMounted(() => {
             <Head title="Jobs" />
             <DynamicModal
                 :show="modalShowDeletePost"
+                :type="typeModal"
+                :disabled="deletePostForm.processing"
+                disabledWhichButton="thirdButton"
+                :gridColumnAmount="gridColumnModal"
+                :title="titleModal"
+                :description="descriptionModal"
+                :firstButtonText="firstButtonModal"
+                :secondButtonText="secondButtonModal"
+                :thirdButtonText="thirdButtonModal"
+                @firstModalButtonFunction="firstModalButtonFunction"
+                @secondModalButtonFunction="secondModalButtonFunction"
+                @thirdModalButtonFunction="thirdModalButtonFunction"
+            >
+                <header></header>
+                <main></main>
+            </DynamicModal>
+            <DynamicModal
+                :show="modalShowRestorePost"
                 :type="typeModal"
                 :disabled="deletePostForm.processing"
                 disabledWhichButton="thirdButton"
@@ -420,10 +464,7 @@ onMounted(() => {
                                         Created Date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Options
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Edit
+                                        Restore
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Delete
@@ -814,63 +855,16 @@ onMounted(() => {
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            <Menu
-                                                as="div"
-                                                class="relative inline-block text-left"
-                                            >
-                                                <div>
-                                                    <MenuButton
-                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                    >
-                                                        <EllipsisVerticalIcon
-                                                            class="shrink-0 h-4 w-4 m-2 stroke-2"
-                                                            aria-hidden="true"
-                                                        />
-                                                    </MenuButton>
-                                                </div>
-                                                <transition
-                                                    enter-active-class="transition ease-out duration-100"
-                                                    enter-from-class="transform opacity-0 scale-95"
-                                                    enter-to-class="transform opacity-100 scale-100"
-                                                    leave-active-class="transition ease-in duration-75"
-                                                    leave-from-class="transform opacity-100 scale-100"
-                                                    leave-to-class="transform opacity-0 scale-95"
-                                                >
-                                                    <MenuItems
-                                                        class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                                    >
-                                                        <MenuItem
-                                                            class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
-                                                        >
-                                                            <button
-                                                                class="flex gap-1 items-center"
-                                                                type="button"
-                                                                @click="
-                                                                    handleDuplicate(
-                                                                        post.id
-                                                                    )
-                                                                "
-                                                            >
-                                                                <CheckIcon
-                                                                    class="w-4 h-4"
-                                                                ></CheckIcon>
-                                                                Duplicate Job
-                                                            </button>
-                                                        </MenuItem>
-                                                    </MenuItems>
-                                                </transition>
-                                            </Menu>
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
                                             <button
                                                 type="button"
-                                                @click="handleEdit(post.id)"
+                                                @click="
+                                                    handleRestore(post.id, post)
+                                                "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <PencilIcon
+                                                <ArrowPathIcon
                                                     class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                ></PencilIcon>
+                                                ></ArrowPathIcon>
                                             </button>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">

@@ -4,10 +4,10 @@ namespace App\Http\Controllers\LoggedIn\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Post\StorePostRequest;
-use App\Models\Job\JobCategory;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\AuthorPost;
 use App\Models\Post\Post;
+use App\Models\Post\PostCategory;
 use App\Models\Post\PostCategoryRelation;
 use App\Models\Post\PostCoverImageRelation;
 use App\Models\Team;
@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
@@ -64,7 +66,7 @@ class PostController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
-            ->latest()
+            ->orderBy('updated_at', 'desc')
             ->paginate(12);
 
         $posts->appends($request->all());
@@ -218,7 +220,7 @@ class PostController extends Controller
                     $categoryId = $category["id"];
 
                     // Check if a category record with this ID exists
-                    $categoryModel = JobCategory::find($categoryId);
+                    $categoryModel = PostCategory::find($categoryId);
 
                     if ($categoryModel) {
                         // Create a new record in the PostCategoryRelation table
@@ -242,7 +244,7 @@ class PostController extends Controller
      * @param  \App\Models\Post\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($teamId, $slug, Post $postId)
+    public function show($teamId, $slug, $postId)
     {
         $postRenderView = "Posts/Show/ShowTeamPost";
 
@@ -257,36 +259,36 @@ class PostController extends Controller
 
         $this->authorize("can-read", $team);
 
-        // Decode the slug parameter
-        $slug = urldecode($slug);
+        // Retrieve the post, including soft-deleted posts
+        $post = Post::withTrashed()->findOrFail($postId);
 
         // Retrieve the user associated with the post
-        $user = User::find($postId->user_id);
+        $user = User::find($post->user_id);
 
-        // Update the $postId array with updatedBy information
+        // Update the $post array with updatedBy information
         if ($user !== null) {
-            $postId->updatedBy = [
+            $post->updatedBy = [
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
             ];
         }
         if ($user === null) {
-            $postId->updatedBy = null;
+            $post->updatedBy = null;
         }
 
         $authors = [];
 
-        if ($postId->show_author) {
-            $authors = $postId->authors()->get();
+        if ($post->show_author) {
+            $authors = $post->authors()->get();
         }
 
-        $categories = $postId->categories;
-        $coverImages = $postId->coverImages;
+        $categories = $post->categories;
+        $coverImages = $post->coverImages;
 
         // Render the post
         return Inertia::render($postRenderView, [
-            "post" => $postId,
+            "post" => $post,
             "authors" => $authors,
             "categories" => $categories,
             "coverImages" => $coverImages,
@@ -365,15 +367,90 @@ class PostController extends Controller
         // Authorize the team that the user has selected
         $this->authorize("can-create-and-update", $team);
 
-        $newPost = $post->replicate();
 
-        $newPost->created_at = Carbon::now();
-        $newPost->updated_at = Carbon::now();
-        $newPost->published = false;
-        $newPost->save();
+        $newPost = null;
 
-        return redirect()->route("team.posts.index", [
-            "teamId" => $team->id,
+        try {
+            DB::transaction(function () use ($post, &$newPost) {
+                // replicate new post # start
+                $newPost = $post->replicate();
+                $newPost->save();
+                $newPost->update([
+                    "published" => false,
+                    "created_at" => Carbon::now(),
+                    "updated_at" => Carbon::now(),
+                ]);
+                // replicate new post # end
+
+
+
+                // replicate new categories # start
+                if ($post->categories !== null) {
+                    foreach ($post->categories as $category) {
+                        // Create a new instance of the pivot model
+                        $newCategoriesPivotData = new PostCategoryRelation([
+                            'post_id' => $newPost->id,
+                            'category_id' => $category->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newCategoriesPivotData->save();
+                    }
+                }
+                // replicate new categories # end
+
+                // replicate new cover images # start
+                if ($post->coverImages !== null) {
+                    foreach ($post->coverImages as $coverImage) {
+                        // Create a new instance of the pivot model
+                        $newCoverImagePivotData = new PostCoverImageRelation([
+                            'post_id' => $newPost->id,
+                            'media_library_id' => $coverImage->id,
+                            "primary" => $coverImage->pivot->primary ?? null,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newCoverImagePivotData->save();
+                    }
+                }
+                // replicate new cover images # start
+
+                // replicate new cover images # start
+                if ($post->authors !== null) {
+                    foreach ($post->authors as $author) {
+                        // Create a new instance of the pivot model
+                        $newPostAuthorsPivotData = new AuthorPost([
+                            'post_id' => $newPost->id,
+                            'user_id' => $author->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newPostAuthorsPivotData->save();
+                    }
+                }
+                // replicate new cover images # end
+
+            });
+        } catch (Exception $e) {
+            Log::error(
+                "Oops! Something went wrong. {$e->getMessage()}."
+            );
+
+            return Inertia::render("Error", [
+                "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG, // Error message for the user.
+                "status" => 422, // HTTP status code for the response.
+            ]);
+        }
+
+        if ($newPost !== null) {
+            return redirect()->route("team.posts.index", [
+                "teamId" => $team->id,
+            ]);
+        }
+
+        return Inertia::render("Error", [
+            "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG,
+            "status" => 422,
         ]);
     }
 
