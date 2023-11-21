@@ -49,7 +49,7 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Jobs",
+        label: "Running Jobs",
         route: {
             name: "team.jobs.index",
             parameters: [props.currentUserTeam.id],
@@ -66,14 +66,14 @@ const linksTopMenu = [
         },
     },
     {
-        label: "Unpaid Jobs",
+        label: "Drafts & Unpiad Jobs",
         route: {
             name: "team.jobs.index.unpaid",
             parameters: [props.currentUserTeam.id],
         },
     },
     {
-        label: "Expired Paid Jobs",
+        label: "Paid Expired Jobs",
         route: {
             name: "team.jobs.index.expired",
             parameters: [props.currentUserTeam.id],
@@ -90,7 +90,7 @@ const linksTopMenu = [
 
 const routesArray = [
     {
-        label: "All Jobs",
+        label: "Running Jobs",
         route: {
             name: "team.jobs.index",
             parameters: [props.currentUserTeam.id],
