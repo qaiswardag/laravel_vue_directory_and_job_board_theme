@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Superadmin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use PhpParser\Node\Expr\AssignOp\Concat;
@@ -150,6 +151,12 @@ class UserController extends Controller
     {
         $this->authorize("superadmin-can-destroy");
 
+        if (Auth::user()->id === $user->id) {
+            return Inertia::render("Error", [
+                "customError" => "You cannot delete your own account.", // Error message for the user.
+                "status" => 403, // HTTP status code for the response.
+            ]);
+        }
         $user->delete();
 
         return redirect()

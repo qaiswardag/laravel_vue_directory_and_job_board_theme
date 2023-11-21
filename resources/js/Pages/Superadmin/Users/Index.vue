@@ -596,8 +596,8 @@ onMounted(() => {
                                             >
                                                 {{
                                                     user.public
-                                                        ? "Published"
-                                                        : "Unpublished"
+                                                        ? "Public"
+                                                        : "Private"
                                                 }}
                                             </div>
                                         </td>
