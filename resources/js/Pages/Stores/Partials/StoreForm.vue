@@ -1035,7 +1035,20 @@ onMounted(async () => {
     //
     //
     google.maps.event.addListener(autocomplete, "place_changed", () => {
+        console.log(
+            `Address could be:`,
+            `${autocomplete.getPlace().address_components[0].long_name}, ${
+                autocomplete.getPlace().address_components[1].long_name
+            }`
+        );
         console.log(`changed..:`, autocomplete.getPlace());
+
+        //
+        //
+        //
+        postForm.address = `${
+            autocomplete.getPlace().address_components[0].long_name
+        }, ${autocomplete.getPlace().address_components[1].long_name}`;
     });
     //
     //
@@ -1133,6 +1146,7 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post slug end -->
                 <!-- post address and floor start -->
+                <p class="my-4">send with post: {{ postForm.address }}</p>
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup md:w-2/3">
                         <InputLabel for="address" value="Store address" />
