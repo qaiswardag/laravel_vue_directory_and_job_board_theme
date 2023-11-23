@@ -224,9 +224,7 @@ onMounted(async () => {
                     {{ title }}
                 </h3>
                 <div @click="firstButton" class="flex-end">
-                    <XMarkIcon
-                        class="h-6 w-6 text-myPrimaryDarkGrayColor self-center cursor-pointer"
-                    ></XMarkIcon>
+                    <XMarkIcon class="myMediumIcon cursor-pointer"></XMarkIcon>
                 </div>
             </div>
 

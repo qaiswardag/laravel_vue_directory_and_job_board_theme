@@ -250,7 +250,7 @@ onMounted(() => {
                         stroke-width="1.5"
                         stroke="currentColor"
                         aria-hidden="true"
-                        class="h-6 w-6 text-myPrimaryDarkGrayColor self-center cursor-pointer"
+                        class="myMediumIcon cursor-pointer"
                     >
                         <path
                             stroke-linecap="round"
