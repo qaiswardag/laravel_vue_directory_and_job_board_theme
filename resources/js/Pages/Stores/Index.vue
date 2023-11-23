@@ -574,7 +574,7 @@ onMounted(() => {
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <MapPinIcon
-                                                        class="w-3 h-3 stroke-2"
+                                                        class="w-3 h-3 stroke-1.5"
                                                     ></MapPinIcon>
                                                     <span>
                                                         {{ storeState.name }}
@@ -613,7 +613,7 @@ onMounted(() => {
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <Squares2X2Icon
-                                                        class="w-3 h-3 stroke-2"
+                                                        class="w-3 h-3 stroke-1.5"
                                                     ></Squares2X2Icon>
 
                                                     <span>
@@ -637,7 +637,7 @@ onMounted(() => {
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
                                                     <TagIcon
-                                                        class="w-3 h-3 stroke-2"
+                                                        class="w-3 h-3 stroke-1.5"
                                                     ></TagIcon>
                                                     <span>
                                                         {{ tag }}
@@ -724,7 +724,7 @@ onMounted(() => {
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
                                                 <PencilIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                 ></PencilIcon>
                                             </button>
                                         </td>
@@ -737,7 +737,7 @@ onMounted(() => {
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                             >
                                                 <TrashIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                 ></TrashIcon>
                                             </button>
                                         </td>

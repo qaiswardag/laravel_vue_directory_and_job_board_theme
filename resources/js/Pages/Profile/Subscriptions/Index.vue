@@ -485,7 +485,7 @@ const notificationsModalButton = function () {
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                         >
                                                             <PencilIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                             ></PencilIcon>
                                                         </button>
                                                     </td>
@@ -502,7 +502,7 @@ const notificationsModalButton = function () {
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                                         >
                                                             <TrashIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                             ></TrashIcon>
                                                         </button>
                                                     </td>
@@ -729,7 +729,7 @@ const notificationsModalButton = function () {
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                         >
                                                             <CheckIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                             ></CheckIcon>
                                                         </button>
                                                     </td>
@@ -1162,7 +1162,7 @@ const notificationsModalButton = function () {
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                         >
                                                             <PencilIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                             ></PencilIcon>
                                                         </button>
                                                     </td>
@@ -1179,7 +1179,7 @@ const notificationsModalButton = function () {
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                                         >
                                                             <TrashIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                             ></TrashIcon>
                                                         </button>
                                                     </td>

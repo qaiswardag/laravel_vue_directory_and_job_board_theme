@@ -558,7 +558,7 @@ onMounted(() => {
                                                                 "
                                                             >
                                                                 <Squares2X2Icon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                                 >
                                                                 </Squares2X2Icon>
                                                             </div>
@@ -569,7 +569,7 @@ onMounted(() => {
                                                                 "
                                                             >
                                                                 <CheckIcon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                                 >
                                                                 </CheckIcon>
                                                             </div>
@@ -580,7 +580,7 @@ onMounted(() => {
                                                                 "
                                                             >
                                                                 <MapPinIcon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                                 >
                                                                 </MapPinIcon>
                                                             </div>
@@ -592,7 +592,7 @@ onMounted(() => {
                                                                 "
                                                             >
                                                                 <GlobeAmericasIcon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                                 >
                                                                 </GlobeAmericasIcon>
                                                             </div>
@@ -603,7 +603,7 @@ onMounted(() => {
                                                                 "
                                                             >
                                                                 <NewspaperIcon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                                 >
                                                                 </NewspaperIcon>
                                                             </div>
@@ -626,7 +626,7 @@ onMounted(() => {
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLinkColor text-white"
                                             >
                                                 <PlusIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                 ></PlusIcon>
                                             </button>
                                             <button
@@ -642,7 +642,7 @@ onMounted(() => {
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryErrorColor text-white"
                                             >
                                                 <MinusIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                 ></MinusIcon>
                                             </button>
                                         </div>
@@ -754,7 +754,7 @@ onMounted(() => {
                                                     "
                                                 >
                                                     <Squares2X2Icon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                     >
                                                     </Squares2X2Icon>
                                                 </div>
@@ -765,7 +765,7 @@ onMounted(() => {
                                                     "
                                                 >
                                                     <CheckIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                     >
                                                     </CheckIcon>
                                                 </div>
@@ -776,7 +776,7 @@ onMounted(() => {
                                                     "
                                                 >
                                                     <MapPinIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                     >
                                                     </MapPinIcon>
                                                 </div>
@@ -787,7 +787,7 @@ onMounted(() => {
                                                     "
                                                 >
                                                     <GlobeAmericasIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                     >
                                                     </GlobeAmericasIcon>
                                                 </div>
@@ -798,7 +798,7 @@ onMounted(() => {
                                                     "
                                                 >
                                                     <NewspaperIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                                     >
                                                     </NewspaperIcon>
                                                 </div>
@@ -827,7 +827,7 @@ onMounted(() => {
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                     ></TrashIcon>
                                 </button>
                             </div>

@@ -247,7 +247,7 @@ onMounted(() => {
                                         Close Builder
                                     </span>
                                     <XMarkIcon
-                                        class="h-4 w-4 self-center stroke-2"
+                                        class="h-4 w-4 self-center stroke-1.5"
                                     ></XMarkIcon>
                                 </button>
                             </div>

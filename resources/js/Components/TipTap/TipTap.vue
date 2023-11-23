@@ -366,7 +366,7 @@ onMounted(() => {});
                             editor.isActive('bulletList'),
                     }"
                 >
-                    <ListBulletIcon class="w-5 h-5 stroke-2"></ListBulletIcon>
+                    <ListBulletIcon class="w-5 h-5 stroke-1.5"></ListBulletIcon>
                 </button>
                 <button
                     @click="handleURL"
@@ -376,7 +376,7 @@ onMounted(() => {});
                             editor.isActive('link'),
                     }"
                 >
-                    <LinkIcon class="w-4 h-4 stroke-2"></LinkIcon>
+                    <LinkIcon class="w-4 h-4 stroke-1.5"></LinkIcon>
                 </button>
             </div>
             <editor-content

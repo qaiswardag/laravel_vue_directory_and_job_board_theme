@@ -214,7 +214,7 @@ defineProps({
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <GlobeAmericasIcon
-                                class="w-3 h-3 stroke-2"
+                                class="w-3 h-3 stroke-1.5"
                             ></GlobeAmericasIcon>
                             <span>
                                 {{ jobCountry.name }}
@@ -240,7 +240,7 @@ defineProps({
                             :key="state"
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
-                            <MapPinIcon class="w-3 h-3 stroke-2"></MapPinIcon>
+                            <MapPinIcon class="w-3 h-3 stroke-1.5"></MapPinIcon>
                             <span>
                                 {{ state.name }}
                             </span>
@@ -249,7 +249,7 @@ defineProps({
                             v-if="post.address"
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
-                            <MapPinIcon class="w-3 h-3 stroke-2"></MapPinIcon>
+                            <MapPinIcon class="w-3 h-3 stroke-1.5"></MapPinIcon>
                             <span>
                                 {{ post.address }}
                             </span>
@@ -259,7 +259,7 @@ defineProps({
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <Square3Stack3DIcon
-                                class="w-3 h-3 stroke-2"
+                                class="w-3 h-3 stroke-1.5"
                             ></Square3Stack3DIcon>
                             <span>
                                 {{
@@ -292,7 +292,7 @@ defineProps({
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <NewspaperIcon
-                                class="w-3 h-3 stroke-2"
+                                class="w-3 h-3 stroke-1.5"
                             ></NewspaperIcon>
                             <span>
                                 {{ state.name }}
@@ -321,7 +321,7 @@ defineProps({
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <Squares2X2Icon
-                                class="w-3 h-3 stroke-2"
+                                class="w-3 h-3 stroke-1.5"
                             ></Squares2X2Icon>
                             <span>
                                 {{ state.name }}
@@ -349,7 +349,9 @@ defineProps({
                                     :key="tag"
                                     class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                 >
-                                    <TagIcon class="w-3 h-3 stroke-2"></TagIcon>
+                                    <TagIcon
+                                        class="w-3 h-3 stroke-1.5"
+                                    ></TagIcon>
                                     <span>
                                         {{ tag }}
                                     </span>

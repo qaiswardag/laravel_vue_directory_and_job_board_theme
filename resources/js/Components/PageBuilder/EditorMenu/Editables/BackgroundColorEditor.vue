@@ -50,7 +50,7 @@ watch(
                                 class="w-6 h-6 cursor-default border border-gray-200 rounded-sm"
                             >
                                 <XMarkIcon
-                                    class="text-myPrimaryErrorColor stroke-2"
+                                    class="text-myPrimaryErrorColor stroke-1.5"
                                 ></XMarkIcon>
                             </div>
                             <div
@@ -111,7 +111,7 @@ watch(
                                             class="w-6 h-6 cursor-default border border-gray-200 rounded-sm bg-white"
                                         >
                                             <XMarkIcon
-                                                class="text-myPrimaryErrorColor stroke-2"
+                                                class="text-myPrimaryErrorColor stroke-1.5"
                                             ></XMarkIcon>
                                         </div>
                                         <span class="ml-3">{{ color }}</span>
