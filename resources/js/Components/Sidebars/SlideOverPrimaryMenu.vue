@@ -154,7 +154,7 @@ const navigation = [
                                                         "
                                                     >
                                                         <XMarkIcon
-                                                            class="mySmallIcon"
+                                                            class="myMediumIcon"
                                                         ></XMarkIcon>
                                                     </button>
                                                 </div>
