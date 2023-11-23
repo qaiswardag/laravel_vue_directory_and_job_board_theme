@@ -124,8 +124,7 @@ onMounted(() => {
                     getCurrentMedia.fetchedMedia &&
                     getCurrentMedia.fetchedMedia.media &&
                     getCurrentMedia.fetchedMedia.media.data &&
-                    !getCurrentMedia.isError &&
-                    getCurrentMedia.fetchedMedia.total_results !== 0
+                    !getCurrentMedia.isError
                 "
             >
                 <div class="flex items-center min-h-[2.5rem]">
@@ -211,14 +210,23 @@ onMounted(() => {
     </template>
     <!-- Loading # end -->
 
-    <template v-if="getCurrentMedia && !getCurrentMedia.isError">
+    <template
+        v-if="
+            getCurrentMedia &&
+            !getCurrentMedia.isError &&
+            !getCurrentMedia.isLoading
+        "
+    >
         <div
-            class="border overflow-y-scroll md:min-h-[33rem] md:max-h-[33rem] min-h-[15rem] max-h-[15rem] p-2 rounded"
+            class="border border-gray-200 overflow-y-scroll md:min-h-[33rem] md:max-h-[33rem] min-h-[15rem] max-h-[15rem] p-2 rounded"
         >
             <div v-if="getCurrentMedia?.fetchedMedia?.total_results === 0">
-                <p class="myPrimaryParagraph">
-                    It looks like there are no images..
-                </p>
+                <div class="pt-6 py-b px-4">
+                    <h2 class="mySecondaryHeader">No images</h2>
+                    <p class="myPrimaryParagraph">
+                        It looks like there are no images..
+                    </p>
+                </div>
             </div>
 
             <!-- Done loading # start -->
@@ -293,7 +301,7 @@ onMounted(() => {
                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                         >
                                             <EllipsisVerticalIcon
-                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                             >
                                             </EllipsisVerticalIcon>
                                         </div>
@@ -315,7 +323,7 @@ onMounted(() => {
                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                         >
                                             <CheckIcon
-                                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                             >
                                             </CheckIcon>
                                         </div>

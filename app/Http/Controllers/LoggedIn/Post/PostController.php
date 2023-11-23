@@ -376,6 +376,7 @@ class PostController extends Controller
                 $newPost = $post->replicate();
                 $newPost->save();
                 $newPost->update([
+                    "title" => $newPost->title . " " . "copy",
                     "published" => false,
                     "created_at" => Carbon::now(),
                     "updated_at" => Carbon::now(),

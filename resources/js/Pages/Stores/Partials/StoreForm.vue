@@ -1468,7 +1468,7 @@ const pageBuilder = new PageBuilder(store);
                                             >
                                                 <span> Primary </span>
                                                 <CheckIcon
-                                                    class="w-3 h-3 stroke-2"
+                                                    class="w-3 h-3 stroke-1.5"
                                                 ></CheckIcon>
                                             </div>
                                         </button>
@@ -1495,7 +1495,7 @@ const pageBuilder = new PageBuilder(store);
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                         ></TrashIcon>
                                     </button>
                                 </div>
@@ -1521,7 +1521,7 @@ const pageBuilder = new PageBuilder(store);
                                 @click="handleUploadCoverImage"
                             >
                                 <PlusIcon
-                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                 ></PlusIcon>
                             </button>
                         </div>
@@ -1597,7 +1597,7 @@ const pageBuilder = new PageBuilder(store);
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <MapPinIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                         ></MapPinIcon>
                                     </button>
                                     <div>
@@ -1613,7 +1613,7 @@ const pageBuilder = new PageBuilder(store);
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                     ></TrashIcon>
                                 </button>
                             </div>
@@ -1702,7 +1702,7 @@ const pageBuilder = new PageBuilder(store);
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <Squares2X2Icon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                         ></Squares2X2Icon>
                                     </button>
                                     <div>
@@ -1720,7 +1720,7 @@ const pageBuilder = new PageBuilder(store);
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                     ></TrashIcon>
                                 </button>
                             </div>
@@ -1953,7 +1953,7 @@ const pageBuilder = new PageBuilder(store);
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                         ></TrashIcon>
                                     </button>
                                 </div>

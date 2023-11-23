@@ -113,7 +113,6 @@ class SingleChargeJobController extends Controller
 
             $job->update([
                 "is_paid" => true,
-                "published" => true,
                 "paid_at" => Carbon::now(),
             ]);
 

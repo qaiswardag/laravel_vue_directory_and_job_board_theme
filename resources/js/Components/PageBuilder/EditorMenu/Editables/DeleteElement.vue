@@ -29,7 +29,7 @@ const getRestoredElement = computed(() => {
                     class="myPrimaryButton gap-2 items-center w-full"
                 >
                     <ArrowPathRoundedSquareIcon
-                        class="w-4 h-4 text-white stroke-2"
+                        class="w-4 h-4 text-white stroke-1.5"
                     ></ArrowPathRoundedSquareIcon>
                     Restore Element
                 </button>
@@ -39,7 +39,9 @@ const getRestoredElement = computed(() => {
                     type="button"
                     class="myPrimaryDeleteButton gap-2 items-center w-full"
                 >
-                    <TrashIcon class="w-4 h-4 text-white stroke-2"></TrashIcon>
+                    <TrashIcon
+                        class="w-4 h-4 text-white stroke-1.5"
+                    ></TrashIcon>
                     Delete Element
                 </button>
             </div>

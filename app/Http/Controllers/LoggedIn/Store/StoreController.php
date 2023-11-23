@@ -426,6 +426,7 @@ class StoreController extends Controller
                 $newStore = $store->replicate();
                 $newStore->save();
                 $newStore->update([
+                    "title" => $newStore->title . " " . "copy",
                     "published" => false,
                     "created_at" => Carbon::now(),
                     "updated_at" => Carbon::now(),

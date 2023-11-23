@@ -86,7 +86,7 @@ const handleAddImage = function () {
                 type="button"
                 class="myPrimaryButton gap-2 items-center w-full"
             >
-                <PhotoIcon class="w-4 h-4 stroke-2"></PhotoIcon>
+                <PhotoIcon class="w-4 h-4 stroke-1.5"></PhotoIcon>
                 Update image
             </button>
         </div>

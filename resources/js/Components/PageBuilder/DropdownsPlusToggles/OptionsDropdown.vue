@@ -118,9 +118,12 @@ const settingsSlideOverButton = function () {
             <MenuButton
                 class="inline-flex items-center gap-2 justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-emerald-600"
             >
-                <CheckIcon class="h-4 w-4 stroke-2"></CheckIcon>
+                <CheckIcon class="h-4 w-4 stroke-1.5"></CheckIcon>
                 Options
-                <ChevronDownIcon class="h-3 w-3 stroke-2" aria-hidden="true" />
+                <ChevronDownIcon
+                    class="h-3 w-3 stroke-1.5"
+                    aria-hidden="true"
+                />
             </MenuButton>
         </div>
 
@@ -152,7 +155,7 @@ const settingsSlideOverButton = function () {
                                     class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
                                     <EyeIcon
-                                        class="stroke-2 w-3 h-3 m-1.5"
+                                        class="stroke-1.5 w-3 h-3 m-1.5"
                                     ></EyeIcon>
                                 </div>
                                 Preview page
@@ -176,7 +179,7 @@ const settingsSlideOverButton = function () {
                                     class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
                                 >
                                     <AdjustmentsVerticalIcon
-                                        class="stroke-2 w-3 h-3 m-1.5"
+                                        class="stroke-1.5 w-3 h-3 m-1.5"
                                     ></AdjustmentsVerticalIcon>
                                 </div>
                                 Settings
@@ -199,7 +202,7 @@ const settingsSlideOverButton = function () {
                                     class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square"
                                 >
                                     <TrashIcon
-                                        class="stroke-2 w-3 h-3 m-1.5 group-hover:text-myPrimaryDarkGrayColor"
+                                        class="stroke-1.5 w-3 h-3 m-1.5 group-hover:text-myPrimaryDarkGrayColor"
                                     ></TrashIcon>
                                 </div>
                                 <span class="group-hover:text-white">

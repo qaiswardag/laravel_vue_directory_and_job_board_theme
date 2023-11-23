@@ -227,10 +227,10 @@
     |--------------------------------------------------------------------------
     */
     .mySmallIcon {
-        @apply shrink-0 h-4 w-4 m-2 stroke-2;
+        @apply shrink-0 h-4 w-4 m-2 stroke-[1.5px];
     }
     .myMediumIcon {
-        @apply shrink-0 h-6 w-6 m-2 stroke-2;
+        @apply shrink-0 h-6 w-6 m-2 stroke-[1.5px];
     }
 
     /*

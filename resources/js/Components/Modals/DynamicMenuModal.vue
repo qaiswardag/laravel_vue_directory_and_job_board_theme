@@ -54,20 +54,12 @@ const handleLogout = () => {
                 data-headlessui-state="open"
                 tabindex="0"
             >
-                <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    class="h-6 w-6 text-zinc-500 dark:text-zinc-400"
+                <button
+                    type="button"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
                 >
-                    <path
-                        d="m17.25 6.75-10.5 10.5M6.75 6.75l10.5 10.5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    ></path>
-                </svg>
+                    <XMarkIcon class="myMediumIcon"></XMarkIcon>
+                </button>
             </button>
             <h2 class="text-sm font-normal text-zinc-600 dark:text-zinc-400">
                 Menu

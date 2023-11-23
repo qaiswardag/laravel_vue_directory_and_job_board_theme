@@ -91,7 +91,7 @@ const notificationsSlideOverButton = function () {
                                                             >Close panel</span
                                                         >
                                                         <XMarkIcon
-                                                            class="mySmallIcon"
+                                                            class="myMediumIcon"
                                                         ></XMarkIcon>
                                                     </button>
                                                 </div>

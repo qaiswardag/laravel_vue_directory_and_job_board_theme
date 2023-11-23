@@ -49,6 +49,7 @@ import {
     PhotoIcon,
     MapPinIcon,
     GlobeAmericasIcon,
+    MinusIcon,
     PlusIcon,
     FolderPlusIcon,
 } from "@heroicons/vue/24/outline";
@@ -93,6 +94,7 @@ const props = defineProps({
     },
 });
 
+const jobOptions = ref(false);
 const modalShowClearForm = ref(false);
 
 // modal content
@@ -1418,40 +1420,71 @@ const pageBuilder = new PageBuilder(store);
             </div>
             <!-- post status - end -->
 
-            <!-- post is filled - start -->
+            <!-- Job options # start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Is filled</div>
-                    <p class="myPrimaryParagraph">
-                        {{
-                            postForm.is_filled
-                                ? "Job is displayed with is filled tag."
-                                : "Job is open for new applications."
-                        }}
-                    </p>
-                </div>
-                <div class="myInputGroup">
-                    <div class="relative flex items-start">
-                        <div class="flex h-6 items-center">
-                            <input
-                                id="is_filled"
-                                name="is_filled"
-                                v-model="postForm.is_filled"
-                                type="checkbox"
-                                class="h-4 w-4 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
-                            />
-                        </div>
-                        <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
-                            <label
-                                for="is_filled"
-                                class="select-none font-medium text-gray-900"
-                                >Is filled</label
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Job options
+                    </div>
+                    <div class="pt-4 pb-4">
+                        <button
+                            type="button"
+                            class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
+                            @click="jobOptions = !jobOptions"
+                        >
+                            <span class="font-medium text-gray-900"
+                                >Options</span
                             >
+                            <span class="ml-6 flex items-center">
+                                <PlusIcon
+                                    v-if="!jobOptions"
+                                    class="mySmallIcon"
+                                ></PlusIcon>
+                                <MinusIcon
+                                    v-if="jobOptions"
+                                    class="mySmallIcon"
+                                ></MinusIcon>
+                            </span>
+                        </button>
+
+                        <div
+                            v-if="jobOptions"
+                            class="border-t border-gray-200 py-6"
+                        >
+                            <!-- post is filled - start -->
+
+                            <div class="relative flex items-start">
+                                <div class="flex h-6 items-center">
+                                    <input
+                                        id="is_filled"
+                                        name="is_filled"
+                                        v-model="postForm.is_filled"
+                                        type="checkbox"
+                                        class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                                    />
+                                </div>
+                                <div
+                                    class="ml-3 min-w-0 flex-1 text-sm leading-6"
+                                >
+                                    <label
+                                        for="is_filled"
+                                        class="select-none font-medium text-gray-900"
+                                    >
+                                        {{
+                                            postForm.is_filled
+                                                ? "Job is displayed with is filled tag."
+                                                : "Job is open for new applications."
+                                        }}
+                                    </label>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- post is filled - end -->
                     </div>
                 </div>
             </div>
-            <!-- post is filled - end -->
+            <!-- Job options # end -->
 
             <!-- started at - start -->
             <div class="myInputsOrganization">
@@ -1487,7 +1520,7 @@ const pageBuilder = new PageBuilder(store);
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                         >
                             <ArrowPathIcon
-                                class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                             >
                             </ArrowPathIcon>
                         </button>
@@ -1604,7 +1637,7 @@ const pageBuilder = new PageBuilder(store);
                                             >
                                                 <span> Primary </span>
                                                 <CheckIcon
-                                                    class="w-3 h-3 stroke-2"
+                                                    class="w-3 h-3 stroke-1.5"
                                                 ></CheckIcon>
                                             </div>
                                         </button>
@@ -1631,7 +1664,7 @@ const pageBuilder = new PageBuilder(store);
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                         ></TrashIcon>
                                     </button>
                                 </div>
@@ -1657,7 +1690,7 @@ const pageBuilder = new PageBuilder(store);
                                 @click="handleUploadCoverImage"
                             >
                                 <PlusIcon
-                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                 ></PlusIcon>
                             </button>
                         </div>
@@ -1744,7 +1777,7 @@ const pageBuilder = new PageBuilder(store);
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <GlobeAmericasIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                         ></GlobeAmericasIcon>
                                     </button>
                                     <div>
@@ -1762,7 +1795,7 @@ const pageBuilder = new PageBuilder(store);
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                     ></TrashIcon>
                                 </button>
                             </div>
@@ -1838,7 +1871,7 @@ const pageBuilder = new PageBuilder(store);
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <MapPinIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                         ></MapPinIcon>
                                     </button>
                                     <div>
@@ -1854,7 +1887,7 @@ const pageBuilder = new PageBuilder(store);
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                     ></TrashIcon>
                                 </button>
                             </div>
@@ -1944,7 +1977,7 @@ const pageBuilder = new PageBuilder(store);
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <Squares2X2Icon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                         ></Squares2X2Icon>
                                     </button>
                                     <div>
@@ -1961,7 +1994,7 @@ const pageBuilder = new PageBuilder(store);
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                     ></TrashIcon>
                                 </button>
                             </div>
@@ -2039,7 +2072,7 @@ const pageBuilder = new PageBuilder(store);
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <NewspaperIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                         ></NewspaperIcon>
                                     </button>
                                     <div>
@@ -2055,7 +2088,7 @@ const pageBuilder = new PageBuilder(store);
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                     ></TrashIcon>
                                 </button>
                             </div>
@@ -2288,7 +2321,7 @@ const pageBuilder = new PageBuilder(store);
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
                                         ></TrashIcon>
                                     </button>
                                 </div>

@@ -250,7 +250,7 @@ class JobController extends Controller
             "team_id" => $team->id,
             "title" => $title,
             "slug" => $slug,
-            // "published" => $request->published,
+            "published" => $request->published,
             "started_at" => $startedAt,
             "ended_at" => $endedAd,
             "is_filled" => $request->is_filled,
@@ -579,7 +579,7 @@ class JobController extends Controller
                 $newJob = $job->replicate();
                 $newJob->save();
                 $newJob->update([
-                    "published" => true,
+                    "title" => $newJob->title . " " . "copy",
                     "is_paid" => null,
                     "paid_at" => null,
                     "started_at" => null,
@@ -742,7 +742,7 @@ class JobController extends Controller
             "apply_via_email" => $request->apply_via_email,
             "title" => $title,
             "slug" => $slug,
-            // "published" => $request->published,
+            "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,
             "show_author" => $request->show_author,
@@ -987,18 +987,16 @@ class JobController extends Controller
                 "job" => $job->id
             ]);
         }
-        // job paid logic # start
+        // job unpaid logic # start
         if (!$job->is_paid && !$request->published) {
-            return redirect()->route("team.jobs.index", [
+            return redirect()->route("team.jobs.index.unpaid", [
                 "teamId" => $team->id,
             ]);
         }
+        // job unpaid logic # end
 
         // if job have already been paid
         if ($job->is_paid) {
-            $job->update([
-                "published" => $request->published,
-            ]);
             return redirect()->route("team.jobs.index", [
                 "teamId" => $team->id,
             ]);

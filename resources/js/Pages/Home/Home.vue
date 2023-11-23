@@ -166,6 +166,133 @@ const faqs = [
                     </div>
                 </template>
 
+                <!-- Builder # start -->
+                <FullWidthElement :descriptionArea="true" class="bg-red-50">
+                    <template #title>Edit or add designs</template>
+                    <template #description>
+                        Add generated cutouts to your image, with
+                        representation. Specify clothing, position, camera angle
+                        and more to occupy your image perfectly.
+                    </template>
+                    <template #content>
+                        <div class="w-full relative">
+                            <img
+                                class="top-0 left-0 w-full object-cover rounded-lg"
+                                src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/6502f8c0d2d28543f52f901e_prod-hero-ds.webp"
+                                alt="/"
+                            />
+                            <div
+                                class="bg-black/0 absolute top-0 left-0 w-full h-full rounded-lg"
+                            ></div>
+                        </div>
+                    </template>
+                </FullWidthElement>
+                <!-- Builder # end -->
+                <!-- 4 images # start -->
+                <FullWidthElement :descriptionArea="true" class="bg-gray-50">
+                    <template #title>How it works </template>
+                    <template #description>
+                        Let users and teams elevate their administrative
+                        abilities to new heights. Designed to streamline
+                        operations and enhance productivity.
+                    </template>
+                    <template #content>
+                        <div
+                            class="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                        >
+                            <div
+                                class="w-full h-[30rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                            >
+                                <img
+                                    class="top-0 left-0 w-full object-cover h-[30rem] rounded-lg"
+                                    src="https://images.unsplash.com/photo-1543728069-a3f97c5a2f32?auto=format&fit=crop&q=80&w=3269&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                    alt="/"
+                                />
+                                <div
+                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                ></div>
+                                <div class="px-2 pt-8 absolute top-0 w-full">
+                                    <p class="text-white mySecondaryHeader">
+                                        Populate the image
+                                    </p>
+                                    <p class="myPrimaryParagrapg text-white">
+                                        Control every aspect of your assets with
+                                        generative editing, flexible setting and
+                                        useful filters.
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="w-full h-[30rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                            >
+                                <img
+                                    class="top-0 left-0 w-full object-cover h-[30rem] rounded-lg"
+                                    src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/64e8fb8601b9e5823dfede12_wys-1.webp"
+                                    alt="/"
+                                />
+                                <div
+                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                ></div>
+                                <div class="px-2 pt-8 absolute top-0 w-full">
+                                    <p class="text-white mySecondaryHeader">
+                                        Architecture & Design
+                                    </p>
+                                    <p class="myPrimaryParagrapg text-white">
+                                        No special hardware or technical skills
+                                        required—only the web app, your idea and
+                                        a sketch.
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="w-full h-[30rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                            >
+                                <img
+                                    class="top-0 left-0 w-full object-cover h-[30rem] rounded-lg"
+                                    src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/64e8fba35806093b06741fe8_wys-2.webp"
+                                    alt="/"
+                                />
+                                <div
+                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                ></div>
+                                <div class="px-2 pt-8 absolute top-0 w-full">
+                                    <p class="text-white mySecondaryHeader">
+                                        Easy to use
+                                    </p>
+                                    <p class="myPrimaryParagrapg text-white">
+                                        Eliminate render time. Skip browsing
+                                        though countless asset libraries.
+                                        Iterate in an instant.
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="w-full h-[30rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                            >
+                                <img
+                                    class="top-0 left-0 w-full object-cover h-[30rem] rounded-lg"
+                                    src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/64e8fccaba3cd3a0f6992383_wys-3.webp"
+                                    alt="/"
+                                />
+                                <div
+                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                ></div>
+                                <div class="px-2 pt-8 absolute top-0 w-full">
+                                    <p class="text-white mySecondaryHeader">
+                                        Professional output
+                                    </p>
+                                    <p class="myPrimaryParagrapg text-white">
+                                        Get high quality assets and images, with
+                                        a suite of tools dedicated to architects
+                                        and designers.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </FullWidthElement>
+                <!-- 4 images # end -->
+                <!-- FAQ # start -->
                 <FullWidthElement :descriptionArea="true" class="bg-red-50">
                     <template #title>Frequently asked questions</template>
                     <template #description>
@@ -224,13 +351,14 @@ const faqs = [
                                 </Disclosure>
                             </dl>
                             <img
-                                class="w-full object-cover lg:col-span-8"
+                                class="w-full object-cover lg:col-span-8 rounded-lg"
                                 src="/app-images/pages/frequently_asked_questions.jpg"
                                 alt="image"
                             />
                         </div>
                     </template>
                 </FullWidthElement>
+                <!-- FAQ # end -->
             </GuestsLayout>
         </template>
     </MainLayout>
