@@ -11,8 +11,6 @@
         <!-- TODO: remove no index after lunch -->
         <meta name="robots" content="noindex">
         
-        
-        
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,6 +18,13 @@
         href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&display=swap"
         rel="stylesheet"
         />
+
+        <!-- Google start-->
+        <!-- The callback parameter is required, so we use console.debug as a noop -->
+        <script
+        async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzutbgFidPQIG0Gkaqx8DmiwiB0pUFyeE&libraries=places&callback=console.debug"></script>
+        <!-- Google end -->
+
         <!-- Fonts -->
         <!-- Favicon start -->
         <link
@@ -34,6 +39,7 @@
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
+
     </head>
     <body class="font-sans antialiased">
         @inertia

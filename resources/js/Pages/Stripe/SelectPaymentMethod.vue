@@ -60,7 +60,7 @@ const firstModalPaymentMethodFunctionForm = ref(null);
 const secondModalPaymentMethodFunctionForm = ref(null);
 
 const handleCreatePaymentMethod = function () {
-    titleModalPaymentMethodForm.value = "This is title for card form";
+    titleModalPaymentMethodForm.value = "Add payment method";
     firstButtonTextModalPaymentMethodForm.value = "Close";
     showModalPaymentMethodForm.value = true;
 

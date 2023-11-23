@@ -503,7 +503,6 @@ onMounted(async () => {
             <div class="sm:w-3/6 w-full px-2 my-2 flex gap-2 justify-end">
                 <button
                     v-if="firstButtonTextModalPaymentMethodForm"
-                    ref="firstButtonRef"
                     class="mySecondaryButton"
                     type="button"
                     @click="firstButton"

@@ -1011,7 +1011,48 @@ onBeforeMount(async () => {
     );
 });
 
-onMounted(() => {
+// google autocomplete # start
+const addressRef = ref();
+
+const options = {
+    componentRestrictions: { country: "ae" },
+    fields: ["address_components"],
+    strictBounds: false,
+};
+
+// google autocomplete # end
+onMounted(async () => {
+    //
+    //
+    //
+    //
+    //
+    //
+    const autocomplete = new google.maps.places.Autocomplete(
+        addressRef.value,
+        options
+    );
+    //
+    //
+    google.maps.event.addListener(autocomplete, "place_changed", () => {
+        console.log(
+            `Address could be:`,
+            `${autocomplete.getPlace().address_components[0].long_name}, ${
+                autocomplete.getPlace().address_components[1].long_name
+            }`
+        );
+        console.log(`changed..:`, autocomplete.getPlace());
+
+        //
+        //
+        //
+        postForm.address = `${
+            autocomplete.getPlace().address_components[0].long_name
+        }, ${autocomplete.getPlace().address_components[1].long_name}`;
+    });
+    //
+    //
+    //
     submittedOnUpdate.value = true;
 });
 const pageBuilder = new PageBuilder(store);
@@ -1105,25 +1146,24 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post slug end -->
                 <!-- post address and floor start -->
+                <p class="my-4">send with post: {{ postForm.address }}</p>
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup md:w-2/3">
                         <InputLabel for="address" value="Store address" />
-                        <TextInput
+                        <input
+                            ref="addressRef"
                             placeholder="Enter store address.."
                             id="address"
                             v-model="postForm.address"
                             type="text"
-                            class="block w-full"
+                            class="block w-full myPrimaryInput"
                             autocomplete="off"
                         />
                         <InputError :message="postForm.errors.address" />
                     </div>
 
                     <div class="myInputGroup md:w-1/3">
-                        <InputLabel
-                            for="floor"
-                            value="Store floor — zero for ground floor"
-                        />
+                        <InputLabel for="floor" value="Store floor" />
                         <!-- Input Number -->
                         <div class="myPrimaryInput p-0" data-hs-input-number>
                             <div
@@ -1305,7 +1345,10 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <InputLabel for="contact_page_url" value="Url" />
+                    <InputLabel
+                        for="contact_page_url"
+                        value="Url for contact form"
+                    />
                     <TextInput
                         placeholder="Contact page url.."
                         id="contact_page_url"

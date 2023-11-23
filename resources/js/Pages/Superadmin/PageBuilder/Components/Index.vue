@@ -104,12 +104,13 @@ const checkUserTeamAuthorization = function () {
 };
 
 const duplicateForm = useForm({
-    teamId: props.currentUserTeam.id,
+    teamId: null,
     componentId: "",
 });
 
 // handle action
 const handleDuplicate = function (componentId) {
+    duplicateForm.teamId = props.currentUserTeam.id;
     duplicateForm.componentId = componentId;
     //
     duplicateForm.post(route("admin.components.component.duplicate"), {
@@ -281,8 +282,18 @@ const routesArray = [
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
-            <template #description></template>
-            <CardHeadings :routesArray="routesArray">
+            <template #description>deeeeeeeee</template>
+            <div>
+                <div>
+                    <h1 class="myPrimaryHeaderMessage">No Team selected</h1>
+                </div>
+                <p class="myPrimaryParagraph">
+                    Looks like no Team is Selected!
+                </p>
+            </div>
+            <CardHeadings
+                :routesArray="props.currentUserTeam === null ? [] : routesArray"
+            >
                 <template #title>Components </template>
 
                 <template #buttons>
@@ -314,291 +325,336 @@ const routesArray = [
                     </Link>
                 </template>
             </CardHeadings>
-            <form @submit.prevent="handleSearch">
-                <!-- search bar component - start -->
-                <SearchBarWithOptions
-                    v-model="searchForm.search_query"
-                    @selectedUpdated="selectedUpdated"
-                    :currentSelect="searchForm.selected_category"
-                    @firstButtonClick="handleSearch"
-                    :categories="searchCategories"
-                    placeholderButton="Search"
-                    placeholderInput="Search.."
-                ></SearchBarWithOptions>
-                <!-- search bar component - ens -->
-            </form>
 
-            <div
-                v-if="components && components.data.length >= 1"
-                class="myTableContainerPlusScrollButton"
-            >
-                <div class="myScrollButtonContainer">
-                    <button
-                        @click="handleLeft"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                    >
-                        <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
-                    </button>
-                    <button
-                        @click="handleRight"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                    >
-                        <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
-                    </button>
-                </div>
-                <div ref="scrolTableContainer" class="myTableContainer">
-                    <div class="myTableSubContainer">
-                        <table class="myPrimaryTable" aria-describedby="index">
-                            <thead class="myPrimaryTableTHead">
-                                <tr class="myPrimaryTableTr">
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Image
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Title
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        ID
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Published
-                                    </th>
+            <template v-if="props.currentUserTeam !== null">
+                <form @submit.prevent="handleSearch">
+                    <!-- search bar component - start -->
+                    <SearchBarWithOptions
+                        v-model="searchForm.search_query"
+                        @selectedUpdated="selectedUpdated"
+                        :currentSelect="searchForm.selected_category"
+                        @firstButtonClick="handleSearch"
+                        :categories="searchCategories"
+                        placeholderButton="Search"
+                        placeholderInput="Search.."
+                    ></SearchBarWithOptions>
+                    <!-- search bar component - ens -->
+                </form>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Categories
-                                    </th>
+                <div
+                    v-if="components && components.data.length >= 1"
+                    class="myTableContainerPlusScrollButton"
+                >
+                    <div class="myScrollButtonContainer">
+                        <button
+                            @click="handleLeft"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        >
+                            <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
+                        </button>
+                        <button
+                            @click="handleRight"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        >
+                            <ArrowRightIcon
+                                class="mySmallIcon"
+                            ></ArrowRightIcon>
+                        </button>
+                    </div>
+                    <div ref="scrolTableContainer" class="myTableContainer">
+                        <div class="myTableSubContainer">
+                            <table
+                                class="myPrimaryTable"
+                                aria-describedby="index"
+                            >
+                                <thead class="myPrimaryTableTHead">
+                                    <tr class="myPrimaryTableTr">
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Image
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Title
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            ID
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Published
+                                        </th>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Updated By
-                                    </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Categories
+                                        </th>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Updated Date
-                                    </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Updated By
+                                        </th>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Created Date
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Options
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Edit
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Delete
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="myPrimaryTableTBody">
-                                <TransitionGroup name="table">
-                                    <tr
-                                        class="myPrimaryTableTBodyTr"
-                                        v-for="component in components.data"
-                                        :key="component.id"
-                                    >
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                v-if="
-                                                    Array.isArray(
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Updated Date
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Created Date
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Options
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Edit
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Delete
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="myPrimaryTableTBody">
+                                    <TransitionGroup name="table">
+                                        <tr
+                                            class="myPrimaryTableTBodyTr"
+                                            v-for="component in components.data"
+                                            :key="component.id"
+                                        >
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <div
+                                                    v-if="
+                                                        Array.isArray(
+                                                            component.cover_images
+                                                        ) &&
                                                         component.cover_images
-                                                    ) &&
-                                                    component.cover_images
-                                                        .length !== 0 &&
-                                                    component.cover_images
-                                                "
-                                            >
-                                                <ThumbnailSmallImageSlider
-                                                    :images="
+                                                            .length !== 0 &&
                                                         component.cover_images
                                                     "
-                                                    imageSize="medium_path"
-                                                    imageHeight="h-28"
-                                                    imageWidth="w-28"
-                                                    :roundedFull="true"
-                                                ></ThumbnailSmallImageSlider>
-                                            </div>
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{ component.title }}
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{ component.id }}
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    component.published
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                            >
-                                                {{
-                                                    component.published
-                                                        ? "Published"
-                                                        : "Unpublished"
-                                                }}
-                                            </div>
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                class="flex flex-wrap justify-start items-center gap-2"
-                                            >
-                                                <p
-                                                    v-for="category in component.categories &&
-                                                    Array.isArray(
-                                                        component.categories
-                                                    ) &&
-                                                    component.categories.sort(
-                                                        (a, b) => {
-                                                            const nameA =
-                                                                a.name;
-                                                            const nameB =
-                                                                b.name;
-
-                                                            if (nameA < nameB) {
-                                                                return -1;
-                                                            } else if (
-                                                                nameA > nameB
-                                                            ) {
-                                                                return 1;
-                                                            } else {
-                                                                return 0;
-                                                            }
-                                                        }
-                                                    )"
-                                                    :key="category"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <Squares2X2Icon
-                                                        class="w-3 h-3 stroke-2"
-                                                    ></Squares2X2Icon>
-
-                                                    <span>
-                                                        {{ category.name }}
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <UserTag
-                                                :user="component.updatedBy"
-                                            ></UserTag>
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(
-                                                        component.updated_at
-                                                    ),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(
-                                                        component.created_at
-                                                    ),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <Menu
-                                                as="div"
-                                                class="relative inline-block text-left"
-                                            >
-                                                <div>
-                                                    <MenuButton
-                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                    >
-                                                        <EllipsisVerticalIcon
-                                                            class="mySmallIcon"
-                                                            aria-hidden="true"
-                                                        />
-                                                    </MenuButton>
+                                                    <ThumbnailSmallImageSlider
+                                                        :images="
+                                                            component.cover_images
+                                                        "
+                                                        imageSize="medium_path"
+                                                        imageHeight="h-28"
+                                                        imageWidth="w-28"
+                                                        :roundedFull="true"
+                                                    ></ThumbnailSmallImageSlider>
                                                 </div>
-                                                <transition
-                                                    enter-active-class="transition ease-out duration-100"
-                                                    enter-from-class="transform opacity-0 scale-95"
-                                                    enter-to-class="transform opacity-100 scale-100"
-                                                    leave-active-class="transition ease-in duration-75"
-                                                    leave-from-class="transform opacity-100 scale-100"
-                                                    leave-to-class="transform opacity-0 scale-95"
-                                                >
-                                                    <MenuItems
-                                                        class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                                    >
-                                                        <MenuItem
-                                                            class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
-                                                        >
-                                                            <button
-                                                                class="flex gap-1 items-center"
-                                                                type="button"
-                                                                @click="
-                                                                    handleDuplicate(
-                                                                        component.id
-                                                                    )
-                                                                "
-                                                            >
-                                                                <CheckIcon
-                                                                    class="w-4 h-4"
-                                                                ></CheckIcon>
-                                                                Duplicate
-                                                                Component
-                                                            </button>
-                                                        </MenuItem>
-                                                    </MenuItems>
-                                                </transition>
-                                            </Menu>
-                                        </td>
+                                            </td>
 
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <button
-                                                type="button"
-                                                @click="
-                                                    handleEdit(component.id)
-                                                "
-                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                            >
-                                                <PencilIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                ></PencilIcon>
-                                            </button>
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <button
-                                                type="button"
-                                                @click="
-                                                    handleDelete(
-                                                        component.id,
-                                                        post
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ component.title }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ component.id }}
+                                            </td>
+
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <div
+                                                    class="myPrimaryTag"
+                                                    :class="
+                                                        component.published
+                                                            ? 'bg-myPrimaryLinkColor text-white'
+                                                            : 'bg-myPrimaryErrorColor text-white'
+                                                    "
+                                                >
+                                                    {{
+                                                        component.published
+                                                            ? "Published"
+                                                            : "Unpublished"
+                                                    }}
+                                                </div>
+                                            </td>
+
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <div
+                                                    class="flex flex-wrap justify-start items-center gap-2"
+                                                >
+                                                    <p
+                                                        v-for="category in component.categories &&
+                                                        Array.isArray(
+                                                            component.categories
+                                                        ) &&
+                                                        component.categories.sort(
+                                                            (a, b) => {
+                                                                const nameA =
+                                                                    a.name;
+                                                                const nameB =
+                                                                    b.name;
+
+                                                                if (
+                                                                    nameA <
+                                                                    nameB
+                                                                ) {
+                                                                    return -1;
+                                                                } else if (
+                                                                    nameA >
+                                                                    nameB
+                                                                ) {
+                                                                    return 1;
+                                                                } else {
+                                                                    return 0;
+                                                                }
+                                                            }
+                                                        )"
+                                                        :key="category"
+                                                        class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                    >
+                                                        <Squares2X2Icon
+                                                            class="w-3 h-3 stroke-2"
+                                                        ></Squares2X2Icon>
+
+                                                        <span>
+                                                            {{ category.name }}
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </td>
+
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <UserTag
+                                                    :user="component.updatedBy"
+                                                ></UserTag>
+                                            </td>
+
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            component.updated_at
+                                                        ),
+                                                        "dd. MMMM yyyy HH:mm"
                                                     )
-                                                "
-                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                            >
-                                                <TrashIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-2"
-                                                ></TrashIcon>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </TransitionGroup>
-                            </tbody>
-                        </table>
+                                                }}
+                                            </td>
+
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            component.created_at
+                                                        ),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </td>
+
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <Menu
+                                                    as="div"
+                                                    class="relative inline-block text-left"
+                                                >
+                                                    <div>
+                                                        <MenuButton
+                                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                        >
+                                                            <EllipsisVerticalIcon
+                                                                class="mySmallIcon"
+                                                                aria-hidden="true"
+                                                            />
+                                                        </MenuButton>
+                                                    </div>
+                                                    <transition
+                                                        enter-active-class="transition ease-out duration-100"
+                                                        enter-from-class="transform opacity-0 scale-95"
+                                                        enter-to-class="transform opacity-100 scale-100"
+                                                        leave-active-class="transition ease-in duration-75"
+                                                        leave-from-class="transform opacity-100 scale-100"
+                                                        leave-to-class="transform opacity-0 scale-95"
+                                                    >
+                                                        <MenuItems
+                                                            class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                                        >
+                                                            <MenuItem
+                                                                class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
+                                                            >
+                                                                <button
+                                                                    class="flex gap-1 items-center"
+                                                                    type="button"
+                                                                    @click="
+                                                                        handleDuplicate(
+                                                                            component.id
+                                                                        )
+                                                                    "
+                                                                >
+                                                                    <CheckIcon
+                                                                        class="w-4 h-4"
+                                                                    ></CheckIcon>
+                                                                    Duplicate
+                                                                    Component
+                                                                </button>
+                                                            </MenuItem>
+                                                        </MenuItems>
+                                                    </transition>
+                                                </Menu>
+                                            </td>
+
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <button
+                                                    type="button"
+                                                    @click="
+                                                        handleEdit(component.id)
+                                                    "
+                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                >
+                                                    <PencilIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    ></PencilIcon>
+                                                </button>
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <button
+                                                    type="button"
+                                                    @click="
+                                                        handleDelete(
+                                                            component.id,
+                                                            post
+                                                        )
+                                                    "
+                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                                >
+                                                    <TrashIcon
+                                                        class="shrink-0 w-4 h-4 m-2 stroke-2"
+                                                    ></TrashIcon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </TransitionGroup>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </template>
             <Pagination :links="components.links"></Pagination>
 
             <DynamicModal

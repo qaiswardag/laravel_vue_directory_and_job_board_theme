@@ -18,7 +18,7 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Jobs",
+        label: "Running Jobs",
         route: {
             name: "team.jobs.index",
             parameters: [props.currentUserTeam.id],
