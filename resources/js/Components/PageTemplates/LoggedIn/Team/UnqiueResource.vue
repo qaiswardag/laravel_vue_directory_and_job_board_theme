@@ -473,7 +473,7 @@ defineProps({
                     :images="post.cover_images"
                     imageSize="large_path"
                     imageHeight="h-auto"
-                    imageWidth="w-full"
+                    imageWidth="w-full rounded-md"
                     :roundedFull="false"
                     :squareButtons="true"
                 ></ThumbnailSmallImageSlider>

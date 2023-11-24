@@ -28,7 +28,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryWidget {
-        @apply py-8 px-4 border border-myPrimaryLightGrayColor;
+        @apply py-8 px-4 border border-myPrimaryLightGrayColor rounded-md;
     }
 
     /*
