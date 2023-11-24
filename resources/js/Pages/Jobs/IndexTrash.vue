@@ -422,7 +422,7 @@ onMounted(() => {
                                         Status
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Is filled
+                                        Application status
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Job publish date
@@ -578,18 +578,11 @@ onMounted(() => {
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <span
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    !post.is_filled
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                                >{{
-                                                    post.is_filled
-                                                        ? "Is filled"
-                                                        : "Open for applications"
-                                                }}</span
+                                                v-if="post.is_filled"
+                                                class="myPrimaryTag bg-myPrimaryErrorColor text-white"
                                             >
+                                                Closed for new applications
+                                            </span>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <template v-if="post.started_at">

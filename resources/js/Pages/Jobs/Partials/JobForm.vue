@@ -1429,11 +1429,9 @@ const pageBuilder = new PageBuilder(store);
                         class="w-full"
                     >
                         <div
-                            class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
+                            class="myPrimaryFormOrganizationHeader flex w-full items-center justify-between pb-2"
                         >
-                            <div class="myPrimaryFormOrganizationHeader">
-                                Job options
-                            </div>
+                            <div>Job options</div>
                             <div class="ml-auto flex items-center">
                                 <PlusIcon
                                     v-if="!jobOptions"
@@ -1453,7 +1451,7 @@ const pageBuilder = new PageBuilder(store);
                     >
                         <!-- post is filled - start -->
 
-                        <div class="relative flex items-start">
+                        <div class="relative flex items-center">
                             <div class="flex h-6 items-center">
                                 <input
                                     id="is_filled"
@@ -1467,7 +1465,7 @@ const pageBuilder = new PageBuilder(store);
                                 <label
                                     for="is_filled"
                                     class="select-none font-medium text-gray-900"
-                                    >Display with "closed for new applications"
+                                    >Closed for new applications
                                 </label>
                             </div>
                         </div>

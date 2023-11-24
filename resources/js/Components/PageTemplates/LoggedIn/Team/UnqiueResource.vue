@@ -99,7 +99,7 @@ defineProps({
                 <!-- is filled # start -->
                 <template v-if="post.is_filled">
                     <div class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Status</h4>
+                        <h4 class="myFourthHeader">Application status</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="myPrimaryTag bg-myPrimaryErrorColor text-white"

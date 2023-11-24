@@ -361,6 +361,12 @@ onMounted(() => {
                                         Paid at
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
+                                        Status
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Application status
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
                                         Job publish date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
@@ -475,7 +481,29 @@ onMounted(() => {
                                                 }}
                                             </template>
                                         </td>
-
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
+                                                class="myPrimaryTag"
+                                                :class="
+                                                    post.published
+                                                        ? 'bg-myPrimaryLinkColor text-white'
+                                                        : 'bg-myPrimaryErrorColor text-white'
+                                                "
+                                                >{{
+                                                    post.published
+                                                        ? "Published"
+                                                        : "Unpublished"
+                                                }}</span
+                                            >
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
+                                                v-if="post.is_filled"
+                                                class="myPrimaryTag bg-myPrimaryErrorColor text-white"
+                                            >
+                                                Closed for new applications
+                                            </span>
+                                        </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <template v-if="post.started_at">
                                                 {{
