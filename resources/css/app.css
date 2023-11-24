@@ -130,17 +130,16 @@
     .myPrimaryMainPageParagraphNotLoggedIn {
         @apply lg:max-w-3xl text-xl mx-auto text-center font-medium;
     }
-
     .myPrimaryHeader {
-        @apply text-3xl mb-2 font-medium text-myPrimaryDarkGrayColor;
+        @apply font-['Cormorant'] font-semibold break-words lg:text-6xl md:text-5xl text-3xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
     }
 
     .mySecondaryHeader {
-        @apply text-2xl mb-2 font-medium text-myPrimaryDarkGrayColor;
+        @apply font-['Cormorant'] font-semibold break-words lg:text-5xl md:text-4xl text-3xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
     }
 
     .myTertiaryHeader {
-        @apply text-lg mb-2 font-medium text-myPrimaryDarkGrayColor;
+        @apply font-['Cormorant'] font-semibold break-words lg:text-3xl md:text-2xl text-2xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
     }
 
     h2 {

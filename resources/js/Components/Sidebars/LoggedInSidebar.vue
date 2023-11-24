@@ -18,6 +18,7 @@ import {
     Square3Stack3DIcon,
     FingerPrintIcon,
     CheckIcon,
+    MegaphoneIcon,
 } from "@heroicons/vue/24/outline";
 </script>
 
@@ -160,7 +161,9 @@ import {
             :href="route('dashboard')"
             :active="route().current('dashboard')"
         >
-            <Squares2X2Icon class="myMediumIcon"></Squares2X2Icon>
+            <span class="myMediumIcon material-symbols-outlined">
+                interests
+            </span>
 
             Dashboard
         </SideBarLink>
@@ -178,7 +181,7 @@ import {
                 route().current('stripe.payments.index')
             "
         >
-            <UserIcon class="myMediumIcon"></UserIcon>
+            <span class="myMediumIcon material-symbols-outlined"> person </span>
             Your Profile
         </SideBarLink>
 
@@ -200,7 +203,9 @@ import {
                 :href="route('media.index', $page.props.user.current_team.id)"
                 :active="route().current('media.index')"
             >
-                <PhotoIcon class="myMediumIcon"></PhotoIcon>
+                <span class="myMediumIcon material-symbols-outlined">
+                    perm_media
+                </span>
                 Media
             </SideBarLink>
         </template>
@@ -224,7 +229,9 @@ import {
                     route().current('team.posts.post.show')
                 "
             >
-                <DocumentTextIcon class="myMediumIcon"></DocumentTextIcon>
+                <span class="myMediumIcon material-symbols-outlined">
+                    hub
+                </span>
 
                 Blog
             </SideBarLink>
@@ -251,8 +258,9 @@ import {
                     route().current('stripe.single.charge.job.create')
                 "
             >
-                <TagIcon class="myMediumIcon"></TagIcon>
-
+                <span class="myMediumIcon material-symbols-outlined">
+                    work
+                </span>
                 Jobs
             </SideBarLink>
         </template>
@@ -275,7 +283,9 @@ import {
                     route().current('team.stores.store.show')
                 "
             >
-                <ShoppingBagIcon class="myMediumIcon"></ShoppingBagIcon>
+                <span class="myMediumIcon material-symbols-outlined">
+                    storefront
+                </span>
                 Stores
             </SideBarLink>
         </template>
@@ -295,7 +305,9 @@ import {
                     route().current('team.delete')
                 "
             >
-                <Cog6ToothIcon class="myMediumIcon"></Cog6ToothIcon>
+                <span class="myMediumIcon material-symbols-outlined">
+                    settings
+                </span>
                 Team Settings
             </SideBarLink>
         </template>
@@ -308,7 +320,7 @@ import {
                 route().current('teams.create.team')
             "
         >
-            <Square3Stack3DIcon class="myMediumIcon"></Square3Stack3DIcon>
+            <span class="myMediumIcon material-symbols-outlined"> layers </span>
             All Teams
         </SideBarLink>
         <SideBarLink
@@ -322,7 +334,9 @@ import {
                 route().current('admin.components.component.edit')
             "
         >
-            <FingerPrintIcon class="myMediumIcon"></FingerPrintIcon>
+            <span class="myMediumIcon material-symbols-outlined">
+                shield_person
+            </span>
             Superadmin
         </SideBarLink>
     </nav>
