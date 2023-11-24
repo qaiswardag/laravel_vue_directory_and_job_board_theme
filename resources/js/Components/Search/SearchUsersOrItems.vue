@@ -437,7 +437,7 @@ onMounted(() => {
                                         getCurrentItems.fetchedData.items.data
                                             .length === 0
                                     "
-                                    class="flex justify-between items-center w-full"
+                                    class="flex justify-between items-center my-2 myPrimaryTag w-max gap-4"
                                 >
                                     <p class="myPrimaryParagraph">
                                         It looks like there are no items..
@@ -454,14 +454,13 @@ onMounted(() => {
                                         v-for="item in getCurrentItems
                                             .fetchedData.items.data"
                                         :key="item.id"
-                                        class="myPrimaryBorderFullRoundedUsers"
                                     >
                                         <div
                                             v-if="
                                                 getCurrentItems.fetchedData
                                                     .items.data !== 0
                                             "
-                                            class="flex justify-between items-center w-full"
+                                            class="flex justify-between items-center my-2 myPrimaryTag w-max gap-4"
                                         >
                                             <div
                                                 class="flex items-center gap-4 my-2"
@@ -694,7 +693,7 @@ onMounted(() => {
                             class="px-2 hover:bg-white"
                         >
                             <div
-                                class="flex justify-between items-center my-2 myPrimaryTag"
+                                class="flex justify-between items-center my-2 myPrimaryTag w-max gap-4"
                             >
                                 <div class="flex items-center gap-2">
                                     <!-- start photo -->
