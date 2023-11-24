@@ -105,9 +105,11 @@ const handleLogout = () => {
                                 type="button"
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <AdjustmentsHorizontalIcon
-                                    class="mySmallIcon"
-                                />
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    settings
+                                </span>
                             </button>
                             <div>Team Settings</div>
                         </div>
@@ -166,7 +168,11 @@ const handleLogout = () => {
                                     type="button"
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 >
-                                    <UserIcon class="mySmallIcon" />
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        person
+                                    </span>
                                 </button>
                             </template>
                         </div>
@@ -183,7 +189,11 @@ const handleLogout = () => {
                             type="button"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         >
-                            <ArrowRightIcon class="mySmallIcon" />
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                arrow_forward
+                            </span>
                         </button>
                         <div>Log out</div>
                     </div>

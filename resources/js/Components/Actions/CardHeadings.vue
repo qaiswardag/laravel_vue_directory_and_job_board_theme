@@ -27,7 +27,7 @@ defineProps({
                 class="flex items-center justify-between space-x-3 gap-2 md:flex-row"
             >
                 <div class="min-w-0 w-2/3">
-                    <p class="mySecondaryHeader my-0">
+                    <p class="myTertiaryHeader my-0">
                         <slot name="title" />
                     </p>
                     <p class="myPrimaryParagraph pt-2 text-sm">

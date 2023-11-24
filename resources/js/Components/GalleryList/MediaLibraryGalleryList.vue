@@ -112,7 +112,7 @@ onMounted(() => {
                 <button
                     @click="handleSearch(1)"
                     type="button"
-                    class="myPrimaryButton"
+                    class="myPrimarySearchButton"
                 >
                     Search
                 </button>

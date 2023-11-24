@@ -163,7 +163,7 @@ const selectedUpdated = function (chosen) {
             <button
                 @click="firstButtonClick"
                 type="button"
-                class="myPrimaryButton"
+                class="myPrimarySearchButton"
             >
                 {{ placeholderButton }}
             </button>
