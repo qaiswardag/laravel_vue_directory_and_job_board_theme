@@ -220,7 +220,7 @@
         @apply shrink-0 h-4 w-4 m-2 stroke-[1.5px] flex justify-center items-center;
     }
     .myMediumIcon {
-        @apply shrink-0 h-6 w-6 m-2 stroke-[1.5px] flex justify-center items-center;
+        @apply shrink-0 h-6 w-6 stroke-[1.5px] flex justify-center items-center;
     }
 
     /*

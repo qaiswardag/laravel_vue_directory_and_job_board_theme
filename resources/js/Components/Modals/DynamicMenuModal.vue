@@ -89,6 +89,7 @@ const handleLogout = () => {
                                 $page.props.user.current_team.id
                             )
                         "
+                        class="myPrimaryParagraph"
                     >
                         <div
                             class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-gray-50 cursor-pointer"
@@ -128,6 +129,7 @@ const handleLogout = () => {
                         route().current('user.profile.password') ||
                         route().current('user.profile.security')
                     "
+                    class="myPrimaryParagraph"
                 >
                     <div
                         class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-gray-50 cursor-pointer"
