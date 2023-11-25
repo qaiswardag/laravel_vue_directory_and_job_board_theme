@@ -365,7 +365,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                         class="hidden sm:block"
                                                     >
                                                         <div
-                                                            class="flex items-center border border-gray-200 py-1 px-2 rounded"
+                                                            class="flex myPrimaryGap items-center overflow-x-scroll bg-gray-100 px-2 pt-3 pb-2 rounded-full"
                                                         >
                                                             <nav
                                                                 class="flex-1 -mb-px flex space-x-2 xl:space-x-4"
@@ -395,9 +395,29 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                                         'whitespace-nowrap',
                                                                     ]"
                                                                 >
-                                                                    {{
-                                                                        tab.name
-                                                                    }}
+                                                                    <span
+                                                                        v-if="
+                                                                            tab.name ===
+                                                                            'Upload'
+                                                                        "
+                                                                        class="material-symbols-outlined"
+                                                                    >
+                                                                        arrow_upward
+                                                                    </span>
+                                                                    <span
+                                                                        v-if="
+                                                                            tab.name ===
+                                                                            'Media library'
+                                                                        "
+                                                                        class="myMediumIcon material-symbols-outlined"
+                                                                    >
+                                                                        perm_media
+                                                                    </span>
+                                                                    <span>
+                                                                        {{
+                                                                            tab.name
+                                                                        }}
+                                                                    </span>
                                                                 </button>
                                                             </nav>
                                                         </div>

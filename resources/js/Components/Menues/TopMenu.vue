@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
     <div
-        class="flex myPrimaryGap items-center overflow-x-scroll bg-gray-100 rounded px-2 pt-3 pb-2"
+        class="flex myPrimaryGap items-center overflow-x-scroll bg-gray-100 px-2 pt-3 pb-2 rounded-full"
     >
         <div class="font-medium" v-for="link in links" :key="link.label">
             <Link
