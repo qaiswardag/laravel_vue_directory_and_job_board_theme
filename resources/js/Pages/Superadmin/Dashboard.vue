@@ -29,14 +29,14 @@ const actions = [
     {
         title: "Users",
         href: "admin.users",
-        icon: UsersIcon,
+        icon: "users",
         iconForeground: "text-myPrimaryBrandColor",
         iconBackground: "bg-gray-50",
     },
     {
         title: "Page Builder Components",
         href: "admin.components",
-        icon: Square3Stack3DIcon,
+        icon: "html",
         iconForeground: "text-myPrimaryBrandColor",
         iconBackground: "bg-gray-50",
     },
@@ -92,11 +92,16 @@ const actions = [
                                     'h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0',
                                 ]"
                             >
-                                <component
-                                    :is="action.icon"
-                                    class="myMediumIcon"
-                                    aria-hidden="true"
-                                />
+                                <template v-if="action.icon === 'users'">
+                                    <span class="material-symbols-outlined">
+                                        group
+                                    </span>
+                                </template>
+                                <template v-if="action.icon === 'html'">
+                                    <span class="material-symbols-outlined">
+                                        html
+                                    </span>
+                                </template>
                             </span>
                         </div>
                         <div class="mt-8">
@@ -114,9 +119,11 @@ const actions = [
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
-                                Doloribus dolores nostrum quia qui natus officia
-                                quod et dolorem. Sit repellendus qui ut at
-                                blanditiis et quo et molestiae.
+                                Navigate to the page and discover a range of
+                                settings crafted to suit your needs. Whether
+                                it's personalizing your account details,
+                                adjusting security preferences, or fine-tuning
+                                company settings.
                             </p>
                         </div>
                         <span

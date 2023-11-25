@@ -147,7 +147,7 @@ const faqs = [
                             alt="/"
                         />
                         <div
-                            class="bg-black/10 absolute top-0 left-0 w-full h-[32rem]"
+                            class="bg-black/20 absolute top-0 left-0 w-full h-[32rem]"
                         ></div>
                         <div
                             class="absolute text-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"

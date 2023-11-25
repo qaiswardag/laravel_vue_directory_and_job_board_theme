@@ -15,14 +15,30 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
         <GuestsLayout>
             <Head title="Professional" />
             <template #header>
-                <div class="myPrimaryHeaderParagraph">
-                    <h1 class="myPrimaryHeader">Professional</h1>
-                    <p class="myPrimaryParagraph text-center font-medium">
-                        myself.ae brings fashion to where the consumers are.
-                        <br />
-                        Join Fashion's most comprehensive marketing platform in
-                        the U.A.E. Showcase stores to local consumers.
-                    </p>
+                <div class="w-full relative h-[32rem]">
+                    <img
+                        class="top-0 left-0 w-full object-cover h-[32rem]"
+                        src="/brand-images/pink-lady-high-resolution.jpg"
+                        alt="/"
+                    />
+                    <div
+                        class="bg-black/20 absolute top-0 left-0 w-full h-[32rem]"
+                    ></div>
+                    <div
+                        class="absolute text-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    >
+                        <h1 class="myPrimaryHeader text-white text-center">
+                            Professional
+                        </h1>
+                        <p
+                            class="myPrimaryParagraph text-white text-center font-medium"
+                        >
+                            myself.ae brings fashion to where the consumers are.
+                            <br />
+                            Join Fashion's most comprehensive marketing platform
+                            in the U.A.E. Showcase stores to local consumers.
+                        </p>
+                    </div>
                 </div>
             </template>
 
@@ -92,11 +108,11 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
 
                             <Link
                                 v-if="$page.props?.user"
+                                class="myPrimaryButton w-full mt-4"
                                 :class="[
                                     product.mostPopular
-                                        ? 'bg-myPrimaryLinkColor text-white shadow-sm hover:bg-myPrimaryLinkColor'
-                                        : 'text-myPrimaryLinkColor ring-1 ring-inset ring-myPrimaryLinkColor hover:ring-myPrimaryLinkColor',
-                                    'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-myPrimaryLinkColor cursor-pointer',
+                                        ? 'bg-myPrimaryLinkColor text-white'
+                                        : 'bg-transparent border-myPrimaryLinkColor text-myPrimaryDarkGrayColor hover:text-white',
                                 ]"
                                 :href="
                                     route(

@@ -38,20 +38,9 @@ const breadcrumbsLinks = [
                             <span
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="myMediumIcon"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
-                                    />
-                                </svg>
+                                <span class="material-symbols-outlined">
+                                    compare_arrows
+                                </span>
                             </span>
                         </div>
                         <div class="mt-8">
@@ -68,25 +57,20 @@ const breadcrumbsLinks = [
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
-                                Doloribus dolores nostrum quia qui natus officia
-                                quod et dolorem. Sit repellendus qui ut at
-                                blanditiis et quo et molestiae.
+                                Navigate to the page and discover a range of
+                                settings crafted to suit your needs. Whether
+                                it's personalizing your account details,
+                                adjusting security preferences, or fine-tuning
+                                company settings.
                             </p>
                         </div>
                         <span
                             class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
                             aria-hidden="true"
                         >
-                            <svg
-                                class="h-6 w-6"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z"
-                                />
-                            </svg>
+                            <span class="material-symbols-outlined">
+                                arrow_forward
+                            </span>
                         </span>
                     </div>
 
@@ -97,20 +81,9 @@ const breadcrumbsLinks = [
                             <span
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="myMediumIcon"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                </svg>
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
                             </span>
                         </div>
                         <div class="mt-8">
@@ -134,16 +107,9 @@ const breadcrumbsLinks = [
                             class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
                             aria-hidden="true"
                         >
-                            <svg
-                                class="h-6 w-6"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z"
-                                />
-                            </svg>
+                            <span class="material-symbols-outlined">
+                                arrow_forward
+                            </span>
                         </span>
                     </div>
                 </div>
