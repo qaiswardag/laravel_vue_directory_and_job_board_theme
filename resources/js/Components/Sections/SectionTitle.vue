@@ -1,6 +1,6 @@
 <template>
     <div class="myPrimaryFormTitleDescription">
-        <h3 class="mySecondaryHeader">
+        <h3 class="myTertiaryHeader">
             <slot name="title" />
         </h3>
 

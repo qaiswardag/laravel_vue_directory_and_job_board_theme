@@ -121,17 +121,9 @@
     | Headers
     |--------------------------------------------------------------------------
     */
-    .myPrimaryMainPageHeader {
-        @apply mySecondaryHeader text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor my-0;
-    }
-    .myPrimaryMainPageHeaderNotLoggedIn {
-        @apply text-6xl leading-tight mb-6 font-medium text-center;
-    }
-    .myPrimaryMainPageParagraphNotLoggedIn {
-        @apply lg:max-w-3xl text-xl mx-auto text-center font-medium;
-    }
+
     .myPrimaryHeader {
-        @apply font-['Cormorant'] font-semibold break-words lg:text-6xl md:text-5xl text-3xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
+        @apply lg:text-7xl md:text-6xl text-5xl font-medium break-words lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
     }
 
     .mySecondaryHeader {
@@ -141,6 +133,7 @@
     .myTertiaryHeader {
         @apply font-medium break-words lg:text-3xl md:text-2xl text-2xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
     }
+
     .myQuaternaryHeader {
         @apply font-medium break-words lg:text-xl md:text-lg text-base lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
     }

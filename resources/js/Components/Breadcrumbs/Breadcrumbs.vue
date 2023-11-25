@@ -9,7 +9,9 @@ const props = defineProps({
 });
 </script>
 <template>
-    <div class="myBreadcrumbsContainer flex items-center">
+    <div
+        class="text-sm flex items-center gap-2 overflow-x-scroll pl-6 pr-2 pt-3 pb-2 rounded-full mx-4"
+    >
         <div
             class="font-medium flex gap-2"
             v-for="(link, index) in links"
@@ -18,7 +20,7 @@ const props = defineProps({
             <template v-if="link.route && link.route.name !== undefined">
                 <Link
                     :href="route(link.route.name, link.route.parameters)"
-                    class="myPrimaryLink flex items-center gap-2"
+                    class="text-myPrimaryDarkGrayColor flex items-center gap-2"
                 >
                     <span>
                         {{ link.label }}
@@ -31,7 +33,9 @@ const props = defineProps({
                 </span>
             </div>
             <template v-if="index < links.length - 1">
-                <span class="material-symbols-outlined"> chevron_right </span>
+                <span class="material-symbols-outlined text-gray-400">
+                    arrow_forward
+                </span>
             </template>
         </div>
     </div>

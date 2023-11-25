@@ -24,7 +24,7 @@ const breadcrumbsLinks = [
             parameters: [props.currentUserTeam.id],
         },
     },
-    { label: "Add Job" },
+    { label: "Create Job" },
 ];
 </script>
 

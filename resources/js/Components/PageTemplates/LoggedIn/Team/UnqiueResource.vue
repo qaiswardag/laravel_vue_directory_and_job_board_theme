@@ -54,10 +54,10 @@ defineProps({
 });
 </script>
 <template>
-    <div class="myPrimaryMainPageHeaderParagraph my-0 py-0"></div>
+    <div class="myPrimaryHeaderParagraph my-0 py-0"></div>
     <ArticleTemplate :sidebarArea="true" :actionsArea="false">
         <template #main>
-            <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
+            <h1 class="myPrimaryHeader text-center">
                 {{ post.title }}
             </h1>
             <section v-html="post.content"></section>

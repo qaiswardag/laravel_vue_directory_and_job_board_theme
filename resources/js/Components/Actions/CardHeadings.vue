@@ -22,7 +22,7 @@ defineProps({
 
 <template>
     <div class="myPrimarySection">
-        <div class="bg-white px-4 py-5 sm:px-6">
+        <div class="overflow-x-scrollpx-2 pt-3 pb-2 rounded-full">
             <div
                 class="flex items-center justify-between space-x-3 gap-2 md:flex-row"
             >
@@ -30,9 +30,11 @@ defineProps({
                     <p class="myQuaternaryHeader my-0">
                         <slot name="title" />
                     </p>
-                    <p class="myPrimaryParagraph pt-2 text-sm">
-                        <slot name="subTitle" />
-                    </p>
+                    <template v-if="$slots.subTitle">
+                        <p class="myPrimaryParagraph pt-2 text-sm">
+                            <slot name="subTitle" />
+                        </p>
+                    </template>
                 </div>
                 <div
                     class="flex flex-shrink-0 items-center self-center myPrimaryGap"

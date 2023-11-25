@@ -44,14 +44,8 @@ const submit = () => {
             <GuestsLayout>
                 <Head title="Sign up" />
                 <template #header>
-                    <div
-                        class="myPrimaryMainPageHeaderParagraph pb-8 text-center"
-                    >
-                        <h1
-                            class="myPrimaryMainPageHeaderNotLoggedIn text-white"
-                        >
-                            Sign up
-                        </h1>
+                    <div class="myPrimaryHeaderParagraph pb-8 text-center">
+                        <h1 class="myPrimaryHeader text-white">Sign up</h1>
                     </div>
                 </template>
 

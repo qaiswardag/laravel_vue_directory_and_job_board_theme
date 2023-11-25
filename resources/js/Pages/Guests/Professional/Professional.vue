@@ -15,14 +15,11 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
         <GuestsLayout>
             <Head title="Professional" />
             <template #header>
-                <div class="myPrimaryMainPageHeaderParagraph">
-                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
-                        Professional
-                    </h1>
-                    <p class="myPrimaryMainPageParagraphNotLoggedIn">
-                        myself.ae brings fashion to where the consumers are
-                    </p>
-                    <p class="myPrimaryparagraph text-center">
+                <div class="myPrimaryHeaderParagraph">
+                    <h1 class="myPrimaryHeader">Professional</h1>
+                    <p class="myPrimaryParagraph text-center font-medium">
+                        myself.ae brings fashion to where the consumers are.
+                        <br />
                         Join Fashion's most comprehensive marketing platform in
                         the U.A.E. Showcase stores to local consumers.
                     </p>

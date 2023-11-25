@@ -139,7 +139,7 @@ const sidebarOpen = ref(false);
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>
-                <Bars3BottomLeftIcon class="h-6 w-6" aria-hidden="true" />
+                <span class="material-symbols-outlined"> drag_handle </span>
             </button>
             <LoggedInNavbar></LoggedInNavbar>
         </div>

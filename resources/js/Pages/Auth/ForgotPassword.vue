@@ -32,12 +32,8 @@ const submit = () => {
             <GuestsLayout>
                 <Head title="Forgot password" />
                 <template #header>
-                    <div
-                        class="myPrimaryMainPageHeaderParagraph pb-8 text-center"
-                    >
-                        <h1
-                            class="myPrimaryMainPageHeaderNotLoggedIn text-white"
-                        >
+                    <div class="myPrimaryHeaderParagraph pb-8 text-center">
+                        <h1 class="myPrimaryHeader text-white">
                             Forgot password
                         </h1>
                     </div>

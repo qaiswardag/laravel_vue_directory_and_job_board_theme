@@ -96,11 +96,10 @@ const searchAnythingModalButton = function () {
                             </div>
 
                             <Combobox>
-                                <div class="relative flex items-center">
-                                    <MagnifyingGlassIcon
-                                        class="pointer-events-none absolute left-5 h-5 w-4 text-myPrimaryLightTextColor"
-                                        aria-hidden="true"
-                                    />
+                                <div class="pl-4 relative flex items-center">
+                                    <span class="material-symbols-outlined">
+                                        search
+                                    </span>
                                     <ComboboxInput
                                         class="h-14 w-full border-0 bg-transparent pl-11 pr-4 text-myPrimaryDarkGrayColor placeholder-gray-400 focus:ring-0 sm:text-sm"
                                         placeholder="Search..."

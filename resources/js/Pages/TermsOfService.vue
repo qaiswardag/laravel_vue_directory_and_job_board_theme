@@ -14,10 +14,8 @@ defineProps({
         <GuestsLayout>
             <Head title="Home" />
             <template #header>
-                <div class="myPrimaryMainPageHeaderParagraph">
-                    <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
-                        Terms of Service
-                    </h1>
+                <div class="myPrimaryHeaderParagraph">
+                    <h1 class="myPrimaryHeader">Terms of Service</h1>
                 </div>
                 <div class="myPrimaryContentSection" v-html="terms" />
             </template>

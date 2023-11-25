@@ -117,9 +117,7 @@ const faqs = [
                         class="mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8 z-20"
                     >
                         <div>
-                            <h1
-                                class="myPrimaryMainPageHeaderNotLoggedIn text-white"
-                            >
+                            <h1 class="myPrimaryHeader text-white">
                                 myself fashion &amp; jobs <br />
                             </h1>
                             <p
@@ -154,12 +152,14 @@ const faqs = [
                         <div
                             class="absolute text-2xl text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                         >
-                            <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
+                            <h1 class="myPrimaryHeader">
                                 myself fashion & jobs
                                 <br />
                             </h1>
 
-                            <p class="myPrimaryMainPageParagraphNotLoggedIn">
+                            <p
+                                class="myPrimaryParagraph text-white text-center font-medium"
+                            >
                                 Discover Fashion in the United Arab Emirates.
                             </p>
                         </div>
