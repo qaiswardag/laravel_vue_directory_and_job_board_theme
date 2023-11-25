@@ -152,41 +152,37 @@ defineProps({
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div class="flex flex-col gap-2">
                             <template v-if="post.started_at">
-                                <div class="flex items-center gap-2 text-sm">
-                                    <div
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-100 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                <div class="flex items-center gap-4">
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
                                     >
-                                        <CalendarDaysIcon
-                                            class="mySmallIcon"
-                                        ></CalendarDaysIcon>
-                                    </div>
-                                    <span class="block">
+                                        calendar_month
+                                    </span>
+                                    <p class="myPrimaryParagraph">
                                         {{
                                             format(
                                                 parseISO(post.started_at),
                                                 "dd. MMMM yyyy"
                                             )
                                         }}
-                                    </span>
+                                    </p>
                                 </div>
                             </template>
                             <template v-if="post.ended_at">
-                                <div class="flex items-center gap-2 text-sm">
-                                    <div
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-100 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                <div class="flex items-center gap-4">
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
                                     >
-                                        <CalendarDaysIcon
-                                            class="mySmallIcon"
-                                        ></CalendarDaysIcon>
-                                    </div>
-                                    <span class="block">
+                                        calendar_month
+                                    </span>
+                                    <p class="myPrimaryParagraph">
                                         {{
                                             format(
                                                 parseISO(post.ended_at),
                                                 "dd. MMMM yyyy"
                                             )
                                         }}
-                                    </span>
+                                    </p>
                                 </div>
                             </template>
                         </div>

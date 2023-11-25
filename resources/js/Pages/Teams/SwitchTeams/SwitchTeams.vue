@@ -37,7 +37,7 @@ const breadcrumbsLinks = [
                     $page.props.jetstream.hasTeamFeatures
                 "
             >
-                <h1 class="myPrimaryHeaderMessage">No Teams</h1>
+                <h1 class="myTertiaryHeader">No Teams</h1>
                 <p class="myPrimaryParagraph">Looks like there are no Teams!</p>
             </div>
 

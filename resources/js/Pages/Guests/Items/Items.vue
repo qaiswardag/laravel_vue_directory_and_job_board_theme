@@ -330,6 +330,7 @@ onMounted(() => {
                 >
                     <div class="flex md:flex-row flex-col myPrimaryGap">
                         <div
+                            v-if="fetchedDataPosts && fetchedDataPosts.posts"
                             class="w-full"
                             :class="[
                                 {
@@ -488,11 +489,14 @@ onMounted(() => {
                         fetchedDataPosts &&
                         fetchedDataPosts.posts &&
                         Array.isArray(fetchedDataPosts.posts.data) &&
-                        fetchedDataPosts.posts.data.length === 0
+                        fetchedDataPosts.posts.data.length === 0 &&
+                        !isLoadingPosts
                     "
                 >
-                    <h1 class="myPrimaryHeaderMessage">No {{ nameList }}</h1>
-                    <p class="myPrimaryParagraph">
+                    <h1 class="myTertiaryHeader text-center">
+                        No {{ nameList }}
+                    </h1>
+                    <p class="myPrimaryParagraph text-center">
                         Looks like there are no {{ nameList }}!
                     </p>
                 </template>

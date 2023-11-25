@@ -283,7 +283,7 @@ const routesArray = [
             <template #description>deeeeeeeee</template>
             <div>
                 <div>
-                    <h1 class="myPrimaryHeaderMessage">No Team selected</h1>
+                    <h1 class="myTertiaryHeader">No Team selected</h1>
                 </div>
                 <p class="myPrimaryParagraph">
                     Looks like no Team is Selected!

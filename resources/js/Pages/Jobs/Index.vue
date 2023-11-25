@@ -327,7 +327,7 @@ onMounted(() => {
             </form>
 
             <template v-if="posts && posts.data.length <= 0">
-                <h1 class="myPrimaryHeaderMessage">No Jobs</h1>
+                <h1 class="myTertiaryHeader">No Jobs</h1>
                 <p class="myPrimaryParagraph">Looks like there are no jobs!</p>
             </template>
 

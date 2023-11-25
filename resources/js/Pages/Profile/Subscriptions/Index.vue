@@ -233,7 +233,7 @@ const notificationsModalButton = function () {
             </template>
 
             <div>
-                <h1 class="myPrimaryHeaderMessage">Subscriptions</h1>
+                <h1 class="myTertiaryHeader">Subscriptions</h1>
             </div>
 
             <!-- error # start -->

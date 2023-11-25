@@ -107,7 +107,7 @@ onMounted(() => {
 <template>
     <div v-if="$page.props && !$page.props.currentUserTeam">
         <div>
-            <h1 class="myPrimaryHeaderMessage">No Team selected</h1>
+            <h1 class="myTertiaryHeader">No Team selected</h1>
         </div>
         <p class="myPrimaryParagraph">Looks like no Team is Selected!</p>
     </div>

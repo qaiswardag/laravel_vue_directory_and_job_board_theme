@@ -99,7 +99,7 @@ const breadcrumbsLinks = [
             </template>
 
             <div>
-                <h1 class="myPrimaryHeaderMessage">Payments and invoices</h1>
+                <h1 class="myTertiaryHeader">Payments and invoices</h1>
             </div>
 
             <!-- error # start -->
