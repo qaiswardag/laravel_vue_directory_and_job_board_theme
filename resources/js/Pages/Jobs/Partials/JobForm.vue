@@ -1433,14 +1433,18 @@ const pageBuilder = new PageBuilder(store);
                         >
                             <div>Job options</div>
                             <div class="ml-auto flex items-center">
-                                <PlusIcon
+                                <span
                                     v-if="!jobOptions"
-                                    class="mySmallIcon"
-                                ></PlusIcon>
-                                <MinusIcon
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    add
+                                </span>
+                                <span
                                     v-if="jobOptions"
-                                    class="mySmallIcon"
-                                ></MinusIcon>
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    remove
+                                </span>
                             </div>
                         </div>
                     </button>
@@ -1626,9 +1630,11 @@ const pageBuilder = new PageBuilder(store);
                                                 class="flex items-center justify-center gap-2"
                                             >
                                                 <span> Primary </span>
-                                                <CheckIcon
-                                                    class="w-3 h-3 stroke-1.5"
-                                                ></CheckIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    check
+                                                </span>
                                             </div>
                                         </button>
                                         <button
@@ -1653,9 +1659,11 @@ const pageBuilder = new PageBuilder(store);
                                         "
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
-                                        <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></TrashIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            delete
+                                        </span>
                                     </button>
                                 </div>
                             </div>
@@ -1679,9 +1687,11 @@ const pageBuilder = new PageBuilder(store);
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadCoverImage"
                             >
-                                <PlusIcon
-                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                ></PlusIcon>
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    add
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -1766,9 +1776,11 @@ const pageBuilder = new PageBuilder(store);
                                         type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
-                                        <GlobeAmericasIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></GlobeAmericasIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            globe
+                                        </span>
                                     </button>
                                     <div>
                                         {{ country?.name }}
@@ -1784,9 +1796,11 @@ const pageBuilder = new PageBuilder(store);
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
-                                    <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                    ></TrashIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -1860,9 +1874,11 @@ const pageBuilder = new PageBuilder(store);
                                         type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
-                                        <MapPinIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></MapPinIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            location_on
+                                        </span>
                                     </button>
                                     <div>
                                         {{ state?.name }}
@@ -1876,9 +1892,11 @@ const pageBuilder = new PageBuilder(store);
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
-                                    <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                    ></TrashIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -1966,9 +1984,11 @@ const pageBuilder = new PageBuilder(store);
                                         type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
-                                        <Squares2X2Icon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></Squares2X2Icon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            category
+                                        </span>
                                     </button>
                                     <div>
                                         {{ category?.name }}
@@ -1983,9 +2003,11 @@ const pageBuilder = new PageBuilder(store);
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
-                                    <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                    ></TrashIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -2061,9 +2083,11 @@ const pageBuilder = new PageBuilder(store);
                                         type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
-                                        <NewspaperIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></NewspaperIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            book_4
+                                        </span>
                                     </button>
                                     <div>
                                         {{ jobType?.name }}
@@ -2077,9 +2101,11 @@ const pageBuilder = new PageBuilder(store);
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
-                                    <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                    ></TrashIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -2310,9 +2336,11 @@ const pageBuilder = new PageBuilder(store);
                                         "
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
-                                        <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></TrashIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            delete
+                                        </span>
                                     </button>
                                 </div>
                             </div>

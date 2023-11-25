@@ -132,7 +132,9 @@ import {
                     }"
                 >
                     <div class="flex items-center gap-2">
-                        <CheckIcon class="mySmallIcon p-0 m-0"></CheckIcon>
+                        <span class="myMediumIcon material-symbols-outlined">
+                            check
+                        </span>
                         Selected Team
                     </div>
                 </Link>
@@ -151,7 +153,9 @@ import {
                 class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
             >
                 <div class="flex items-center gap-2">
-                    <CheckIcon class="mySmallIcon p-0 m-0"></CheckIcon>
+                    <span class="myMediumIcon material-symbols-outlined">
+                        check
+                    </span>
                     <span> Create a Team </span>
                 </div>
             </Link>

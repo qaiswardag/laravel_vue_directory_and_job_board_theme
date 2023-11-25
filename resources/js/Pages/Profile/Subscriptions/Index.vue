@@ -501,9 +501,11 @@ const notificationsModalButton = function () {
                                                             "
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                                         >
-                                                            <TrashIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                            ></TrashIcon>
+                                                            <span
+                                                                class="myMediumIcon material-symbols-outlined"
+                                                            >
+                                                                delete
+                                                            </span>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -728,9 +730,11 @@ const notificationsModalButton = function () {
                                                             "
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                         >
-                                                            <CheckIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                            ></CheckIcon>
+                                                            <span
+                                                                class="myMediumIcon material-symbols-outlined"
+                                                            >
+                                                                check
+                                                            </span>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -1178,9 +1182,11 @@ const notificationsModalButton = function () {
                                                             "
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                                         >
-                                                            <TrashIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                            ></TrashIcon>
+                                                            <span
+                                                                class="myMediumIcon material-symbols-outlined"
+                                                            >
+                                                                delete
+                                                            </span>
                                                         </button>
                                                     </td>
                                                 </tr>

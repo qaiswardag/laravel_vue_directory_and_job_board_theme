@@ -338,7 +338,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                         <main class="flex-1 relativ">
                                             <div class="pb-4 max-w-7xl mx-auto">
                                                 <!-- Tabs -->
-                                                <div class="mb-2">
+                                                <div class="mb-4">
                                                     <!-- Tabs Mobile -->
                                                     <div class="sm:hidden">
                                                         <label
@@ -753,9 +753,11 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                                             "
                                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                                                         >
-                                                                            <TrashIcon
-                                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                                            ></TrashIcon>
+                                                                            <span
+                                                                                class="myMediumIcon material-symbols-outlined"
+                                                                            >
+                                                                                delete
+                                                                            </span>
                                                                         </button>
                                                                     </dd>
                                                                 </div>

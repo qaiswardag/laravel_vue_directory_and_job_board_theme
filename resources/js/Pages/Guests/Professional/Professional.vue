@@ -129,10 +129,11 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
                                     :key="feature"
                                     class="flex gap-x-3"
                                 >
-                                    <CheckIcon
-                                        class="h-6 w-5 flex-none text-myPrimaryLinkColor"
-                                        aria-hidden="true"
-                                    />
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        check
+                                    </span>
                                     {{ feature }}
                                 </li>
                             </ul>

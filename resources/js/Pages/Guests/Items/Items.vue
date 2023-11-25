@@ -365,7 +365,7 @@ onMounted(() => {
                                         v-model="searchForm.search_query"
                                         type="search"
                                         id="search_query"
-                                        class="myPrimarySearchInput min-h-[3.5rem] h-[3.5rem]"
+                                        class="myPrimaryInput pl-10 shadow-none min-h-[3.5rem] h-[3.5rem]"
                                         autocomplete="off"
                                         :placeholder="`Search ${nameList}..`"
                                     />

@@ -414,9 +414,11 @@ onMounted(() => {
                                         class="flex items-center justify-center gap-2"
                                     >
                                         <span> Default</span>
-                                        <CheckIcon
-                                            class="w-3 h-3 stroke-1.5"
-                                        ></CheckIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            check
+                                        </span>
                                     </div>
                                 </button>
                             </div>
@@ -427,9 +429,11 @@ onMounted(() => {
                                     handleDeletePaymentMethod(paymentMethod)
                                 "
                             >
-                                <TrashIcon
-                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                ></TrashIcon>
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    delete
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -457,9 +461,9 @@ onMounted(() => {
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     @click="handleCreatePaymentMethod"
                 >
-                    <PlusIcon
-                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                    ></PlusIcon>
+                    <span class="myMediumIcon material-symbols-outlined">
+                        add
+                    </span>
                 </button>
             </div>
         </div>

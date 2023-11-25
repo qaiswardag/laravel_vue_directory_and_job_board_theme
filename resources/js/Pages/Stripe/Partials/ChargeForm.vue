@@ -492,10 +492,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <PlusIcon
-                                                        class="h-3 w-3"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                 </span>
                                                 <span
                                                     v-if="selected"
@@ -506,10 +507,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <CheckIcon
-                                                        class="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ComboboxOption>
@@ -692,10 +694,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <PlusIcon
-                                                        class="h-3 w-3"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                 </span>
                                                 <span
                                                     v-if="selected"
@@ -706,10 +709,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <CheckIcon
-                                                        class="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ComboboxOption>
@@ -866,10 +870,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <PlusIcon
-                                                        class="h-3 w-3"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                 </span>
                                                 <span
                                                     v-if="selected"
@@ -880,10 +885,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <CheckIcon
-                                                        class="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ComboboxOption>
@@ -1046,9 +1052,11 @@ onMounted(() => {
                                                                 type="button"
                                                                 class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
                                                             >
-                                                                <MinusIcon
-                                                                    class="mySmallIcon"
-                                                                ></MinusIcon>
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
+                                                                >
+                                                                    remove
+                                                                </span>
                                                             </button>
                                                             <button
                                                                 @click="
@@ -1059,9 +1067,11 @@ onMounted(() => {
                                                                 type="button"
                                                                 class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
                                                             >
-                                                                <PlusIcon
-                                                                    class="mySmallIcon"
-                                                                ></PlusIcon>
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
+                                                                >
+                                                                    add
+                                                                </span>
                                                             </button>
                                                         </div>
                                                     </div>
@@ -1108,9 +1118,11 @@ onMounted(() => {
                                                         class="flex items-center justify-center gap-2"
                                                     >
                                                         <span> Selected</span>
-                                                        <CheckIcon
-                                                            class="w-3 h-3 stroke-1.5"
-                                                        ></CheckIcon>
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            check
+                                                        </span>
                                                     </div>
                                                 </button>
                                             </div>

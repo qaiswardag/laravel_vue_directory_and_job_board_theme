@@ -91,10 +91,11 @@ const thirdButton = function () {
                             v-if="type === 'success'"
                             class="flex items-center justify-center h-6 w-6 rounded-full bg-green-100"
                         >
-                            <CheckIcon
-                                aria-hidden="true"
-                                class="h-4 w-4 text-myPrimaryLinkColor"
-                            />
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                check
+                            </span>
                         </div>
 
                         <div

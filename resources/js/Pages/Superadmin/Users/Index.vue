@@ -641,9 +641,11 @@ onMounted(() => {
                                                         "
                                                         class="myPrimaryDeleteButton flex items-center gap-1 text-xs"
                                                     >
-                                                        <MinusIcon
-                                                            class="w-4 h-4"
-                                                        ></MinusIcon>
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            remove
+                                                        </span>
                                                         Remove
                                                     </button>
                                                 </div>
@@ -661,9 +663,11 @@ onMounted(() => {
                                                     "
                                                     class="mySecondaryButton flex items-center gap-1 text-xs"
                                                 >
-                                                    <PlusIcon
-                                                        class="w-4 h-4"
-                                                    ></PlusIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                     <span>Add Superadmin</span>
                                                 </button>
                                             </template>
@@ -691,9 +695,11 @@ onMounted(() => {
                                                 @click="handleEdit(user.id)"
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <PencilIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></PencilIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    edit
+                                                </span>
                                             </button>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
@@ -704,9 +710,11 @@ onMounted(() => {
                                                 "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                             >
-                                                <TrashIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></TrashIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    delete
+                                                </span>
                                             </button>
                                         </td>
                                     </tr>

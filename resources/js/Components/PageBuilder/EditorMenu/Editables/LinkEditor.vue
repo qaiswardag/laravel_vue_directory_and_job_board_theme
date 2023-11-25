@@ -109,9 +109,11 @@
                 >
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
-                            <CheckIcon
-                                class="w-4 h-4 text-myPrimaryLinkColor"
-                            ></CheckIcon>
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                check
+                            </span>
                         </div>
                         <div class="ml-2">
                             <p class="text-sm font-medium text-green-800">

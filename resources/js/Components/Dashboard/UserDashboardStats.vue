@@ -525,16 +525,18 @@ onMounted(() => {
                                         <span
                                             class="ml-6 flex h-7 items-center"
                                         >
-                                            <PlusSmallIcon
+                                            <span
                                                 v-if="!open"
-                                                class="h-5 w-5"
-                                                aria-hidden="true"
-                                            />
-                                            <MinusSmallIcon
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                add
+                                            </span>
+                                            <span
                                                 v-else
-                                                class="h-5 w-5"
-                                                aria-hidden="true"
-                                            />
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                remove
+                                            </span>
                                         </span>
                                     </DisclosureButton>
                                 </dt>

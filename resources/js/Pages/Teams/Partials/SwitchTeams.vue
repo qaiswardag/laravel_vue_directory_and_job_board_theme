@@ -341,9 +341,11 @@ const switchTeam = function (team) {
                                                                             .current_team_id
                                                                     "
                                                                 >
-                                                                    <CheckIcon
-                                                                        class="h-5 w-5"
-                                                                    ></CheckIcon>
+                                                                    <span
+                                                                        class="myMediumIcon material-symbols-outlined"
+                                                                    >
+                                                                        check
+                                                                    </span>
                                                                 </div>
                                                             </button>
                                                         </div>
@@ -448,9 +450,11 @@ const switchTeam = function (team) {
                                                                             .current_team_id
                                                                     "
                                                                 >
-                                                                    <CheckIcon
-                                                                        class="w-5 h-5"
-                                                                    ></CheckIcon>
+                                                                    <span
+                                                                        class="myMediumIcon material-symbols-outlined"
+                                                                    >
+                                                                        check
+                                                                    </span>
                                                                 </div>
                                                             </button>
                                                         </div>

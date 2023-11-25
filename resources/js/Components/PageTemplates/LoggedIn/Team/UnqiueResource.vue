@@ -213,9 +213,11 @@ defineProps({
                             :key="jobCountry"
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
-                            <GlobeAmericasIcon
-                                class="w-3 h-3 stroke-1.5"
-                            ></GlobeAmericasIcon>
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                globe
+                            </span>
                             <span>
                                 {{ jobCountry.name }}
                             </span>
@@ -240,7 +242,11 @@ defineProps({
                             :key="state"
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
-                            <MapPinIcon class="w-3 h-3 stroke-1.5"></MapPinIcon>
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                location_on
+                            </span>
                             <span>
                                 {{ state.name }}
                             </span>
@@ -249,7 +255,11 @@ defineProps({
                             v-if="post.address"
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
-                            <MapPinIcon class="w-3 h-3 stroke-1.5"></MapPinIcon>
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                location_on
+                            </span>
                             <span>
                                 {{ post.address }}
                             </span>
@@ -258,9 +268,11 @@ defineProps({
                             v-if="post.floor"
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
-                            <Square3Stack3DIcon
-                                class="w-3 h-3 stroke-1.5"
-                            ></Square3Stack3DIcon>
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                category
+                            </span>
                             <span>
                                 {{
                                     post.floor === 0 || post.floor === "0"
@@ -291,9 +303,11 @@ defineProps({
                             :key="state"
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
-                            <NewspaperIcon
-                                class="w-3 h-3 stroke-1.5"
-                            ></NewspaperIcon>
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                book_4
+                            </span>
                             <span>
                                 {{ state.name }}
                             </span>
@@ -320,9 +334,11 @@ defineProps({
                             :key="state"
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
-                            <Squares2X2Icon
-                                class="w-3 h-3 stroke-1.5"
-                            ></Squares2X2Icon>
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                category
+                            </span>
                             <span>
                                 {{ state.name }}
                             </span>
@@ -349,9 +365,11 @@ defineProps({
                                     :key="tag"
                                     class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                 >
-                                    <TagIcon
-                                        class="w-3 h-3 stroke-1.5"
-                                    ></TagIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        loyalty
+                                    </span>
                                     <span>
                                         {{ tag }}
                                     </span>

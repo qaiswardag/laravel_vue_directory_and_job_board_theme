@@ -118,7 +118,9 @@ const settingsSlideOverButton = function () {
             <MenuButton
                 class="inline-flex items-center gap-2 justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-emerald-600"
             >
-                <CheckIcon class="h-4 w-4 stroke-1.5"></CheckIcon>
+                <span class="myMediumIcon material-symbols-outlined">
+                    check
+                </span>
                 Options
                 <ChevronDownIcon
                     class="h-3 w-3 stroke-1.5"
@@ -201,9 +203,11 @@ const settingsSlideOverButton = function () {
                                 <div
                                     class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square"
                                 >
-                                    <TrashIcon
-                                        class="stroke-1.5 w-3 h-3 m-1.5 group-hover:text-myPrimaryDarkGrayColor"
-                                    ></TrashIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
                                 </div>
                                 <span class="group-hover:text-white">
                                     Delete all Components

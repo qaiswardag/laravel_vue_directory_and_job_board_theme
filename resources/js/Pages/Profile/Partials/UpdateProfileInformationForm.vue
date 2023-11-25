@@ -488,10 +488,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <PlusIcon
-                                                        class="h-3 w-3"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                 </span>
                                                 <span
                                                     v-if="selected"
@@ -502,10 +503,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <CheckIcon
-                                                        class="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ComboboxOption>
@@ -903,10 +905,11 @@ onMounted(() => {
                                                     'text-gray-200': !active,
                                                 }"
                                             >
-                                                <PlusIcon
-                                                    class="h-3 w-3"
-                                                    aria-hidden="true"
-                                                />
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    add
+                                                </span>
                                             </span>
                                             <span
                                                 v-if="selected"
@@ -916,10 +919,11 @@ onMounted(() => {
                                                     'text-gray-800': !active,
                                                 }"
                                             >
-                                                <CheckIcon
-                                                    class="h-5 w-5"
-                                                    aria-hidden="true"
-                                                />
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    check
+                                                </span>
                                             </span>
                                         </li>
                                     </ComboboxOption>

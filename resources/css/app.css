@@ -66,10 +66,10 @@
         @apply lg:py-8 md:py-8 py-8;
     }
     .myPrimaryHeaderMessage {
-        @apply myPrimarySection myPrimaryHeader text-myPrimaryDarkGrayColor text-center;
+        @apply myPrimarySection myTertiaryHeader text-myPrimaryDarkGrayColor text-center;
     }
     .myPrimaryWarningAlertMessage {
-        @apply myPrimarySection myPrimaryHeader text-yellow-400 text-center;
+        @apply myPrimarySection myTertiaryHeader text-yellow-400 text-center;
     }
     .myFocus {
         @apply focus-within:border-2 focus-within:border-myPrimaryBrandColor;
@@ -139,7 +139,7 @@
     }
 
     .myTertiaryHeader {
-        @apply font-medium break-words lg:text-2xl md:text-2xl text-2xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
+        @apply font-medium break-words lg:text-3xl md:text-2xl text-2xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
     }
 
     h2 {
@@ -217,10 +217,10 @@
     |--------------------------------------------------------------------------
     */
     .mySmallIcon {
-        @apply shrink-0 h-4 w-4 m-2 stroke-[1.5px];
+        @apply shrink-0 h-4 w-4 m-2 stroke-[1.5px] flex justify-center items-center;
     }
     .myMediumIcon {
-        @apply shrink-0 h-6 w-6 m-2 stroke-[1.5px];
+        @apply shrink-0 h-6 w-6 m-2 stroke-[1.5px] flex justify-center items-center;
     }
 
     /*
@@ -242,7 +242,7 @@
         @apply min-w-full align-middle;
     }
     .myPrimaryTable {
-        @apply text-sm divide-y divide-myPrimaryLightGrayColor table-fixed min-w-full text-left;
+        @apply text-sm divide-y divide-myPrimaryLightGrayColor table-fixed min-w-full text-left mb-20;
     }
     .myPrimaryTableCaption {
         @apply bg-white myPrimaryParagraph py-4;
@@ -303,7 +303,7 @@
     }
 
     .myPrimarySearchButton {
-        @apply rounded-r-full text-xs lg:pl-8 lg:pr-10 pl-4 pr-4 text-center border-l border-gray-400 font-medium;
+        @apply rounded-r-full text-sm lg:pl-8 lg:pr-10 pl-4 pr-4 text-center border-l border-gray-300 font-medium;
     }
 
     /*

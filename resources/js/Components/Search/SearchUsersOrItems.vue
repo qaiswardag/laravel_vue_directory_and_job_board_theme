@@ -556,10 +556,11 @@ onMounted(() => {
                                                                     'Squares2X2Icon'
                                                                 "
                                                             >
-                                                                <Squares2X2Icon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
                                                                 >
-                                                                </Squares2X2Icon>
+                                                                    category
+                                                                </span>
                                                             </div>
                                                             <div
                                                                 v-if="
@@ -567,10 +568,11 @@ onMounted(() => {
                                                                     'CheckIcon'
                                                                 "
                                                             >
-                                                                <CheckIcon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
                                                                 >
-                                                                </CheckIcon>
+                                                                    check
+                                                                </span>
                                                             </div>
                                                             <div
                                                                 v-if="
@@ -578,10 +580,11 @@ onMounted(() => {
                                                                     'MapPinIcon'
                                                                 "
                                                             >
-                                                                <MapPinIcon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
                                                                 >
-                                                                </MapPinIcon>
+                                                                    location_on
+                                                                </span>
                                                             </div>
 
                                                             <div
@@ -590,10 +593,11 @@ onMounted(() => {
                                                                     'GlobeAmericasIcon'
                                                                 "
                                                             >
-                                                                <GlobeAmericasIcon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
                                                                 >
-                                                                </GlobeAmericasIcon>
+                                                                    globe
+                                                                </span>
                                                             </div>
                                                             <div
                                                                 v-if="
@@ -601,10 +605,11 @@ onMounted(() => {
                                                                     'NewspaperIcon'
                                                                 "
                                                             >
-                                                                <NewspaperIcon
-                                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
                                                                 >
-                                                                </NewspaperIcon>
+                                                                    book_4
+                                                                </span>
                                                             </div>
                                                         </button>
                                                         <span
@@ -624,9 +629,11 @@ onMounted(() => {
                                                 "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLinkColor text-white"
                                             >
-                                                <PlusIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></PlusIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    add
+                                                </span>
                                             </button>
                                             <button
                                                 @click="
@@ -640,9 +647,11 @@ onMounted(() => {
                                                 "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryErrorColor text-white"
                                             >
-                                                <MinusIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></MinusIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    remove
+                                                </span>
                                             </button>
                                         </div>
                                     </div>
@@ -752,10 +761,11 @@ onMounted(() => {
                                                         'Squares2X2Icon'
                                                     "
                                                 >
-                                                    <Squares2X2Icon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                    </Squares2X2Icon>
+                                                        category
+                                                    </span>
                                                 </div>
                                                 <div
                                                     v-if="
@@ -763,10 +773,11 @@ onMounted(() => {
                                                         'CheckIcon'
                                                     "
                                                 >
-                                                    <CheckIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                    </CheckIcon>
+                                                        check
+                                                    </span>
                                                 </div>
                                                 <div
                                                     v-if="
@@ -774,10 +785,11 @@ onMounted(() => {
                                                         'MapPinIcon'
                                                     "
                                                 >
-                                                    <MapPinIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                    </MapPinIcon>
+                                                        location_on
+                                                    </span>
                                                 </div>
                                                 <div
                                                     v-if="
@@ -785,10 +797,11 @@ onMounted(() => {
                                                         'GlobeAmericasIcon'
                                                     "
                                                 >
-                                                    <GlobeAmericasIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                    </GlobeAmericasIcon>
+                                                        globe
+                                                    </span>
                                                 </div>
                                                 <div
                                                     v-if="
@@ -796,10 +809,11 @@ onMounted(() => {
                                                         'NewspaperIcon'
                                                     "
                                                 >
-                                                    <NewspaperIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                    </NewspaperIcon>
+                                                        book_4
+                                                    </span>
                                                 </div>
                                             </button>
                                             <span class="font-medium">
@@ -825,9 +839,11 @@ onMounted(() => {
                                     @click="handleRemoveAttachedItem(item.id)"
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
-                                    <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                    ></TrashIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
                                 </button>
                             </div>
                         </div>

@@ -43,10 +43,11 @@ defineProps({
                             <MenuButton
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <EllipsisVerticalIcon
-                                    class="mySmallIcon"
-                                    aria-hidden="true"
-                                />
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    more_vert
+                                </span>
                             </MenuButton>
                         </div>
 

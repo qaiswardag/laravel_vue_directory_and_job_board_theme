@@ -707,9 +707,11 @@ onMounted(() => {
                                                     :key="jobCountry"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <GlobeAmericasIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></GlobeAmericasIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        globe
+                                                    </span>
                                                     <span>
                                                         {{ jobCountry.name }}
                                                     </span>
@@ -727,9 +729,11 @@ onMounted(() => {
                                                     :key="jobState"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <MapPinIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></MapPinIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        location_on
+                                                    </span>
                                                     <span>
                                                         {{ jobState.name }}
                                                     </span>
@@ -747,10 +751,11 @@ onMounted(() => {
                                                     :key="jobType"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <NewspaperIcon
-                                                        class="w-3 h-3 stroke-1.5"
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                    </NewspaperIcon>
+                                                        book_4
+                                                    </span>
                                                     <span>
                                                         {{ jobType.name }}
                                                     </span>
@@ -788,10 +793,11 @@ onMounted(() => {
                                                     :key="category"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <Squares2X2Icon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></Squares2X2Icon>
-
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        category
+                                                    </span>
                                                     <span>
                                                         {{ category.name }}
                                                     </span>
@@ -813,9 +819,11 @@ onMounted(() => {
                                                     :key="tag"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <TagIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></TagIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        loyalty
+                                                    </span>
                                                     <span>
                                                         {{ tag }}
                                                     </span>
@@ -868,9 +876,11 @@ onMounted(() => {
                                                 "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                             >
-                                                <TrashIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></TrashIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    delete
+                                                </span>
                                             </button>
                                         </td>
                                     </tr>

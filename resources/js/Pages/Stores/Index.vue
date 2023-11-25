@@ -573,9 +573,11 @@ onMounted(() => {
                                                     :key="storeState"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <MapPinIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></MapPinIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        location_on
+                                                    </span>
                                                     <span>
                                                         {{ storeState.name }}
                                                     </span>
@@ -612,10 +614,11 @@ onMounted(() => {
                                                     :key="category"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <Squares2X2Icon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></Squares2X2Icon>
-
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        category
+                                                    </span>
                                                     <span>
                                                         {{ category.name }}
                                                     </span>
@@ -636,9 +639,11 @@ onMounted(() => {
                                                     :key="tag"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <TagIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></TagIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        loyalty
+                                                    </span>
                                                     <span>
                                                         {{ tag }}
                                                     </span>
@@ -678,10 +683,11 @@ onMounted(() => {
                                                     <MenuButton
                                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                     >
-                                                        <EllipsisVerticalIcon
-                                                            class="mySmallIcon"
-                                                            aria-hidden="true"
-                                                        />
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            more_vert
+                                                        </span>
                                                     </MenuButton>
                                                 </div>
                                                 <transition
@@ -696,7 +702,7 @@ onMounted(() => {
                                                         class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                                     >
                                                         <MenuItem
-                                                            class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
+                                                            class="w-full flex justify-start text-sm leading-5 text-myPrimaryDarkGrayColor py-4 px-4 z-30 rounded hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
                                                         >
                                                             <button
                                                                 class="flex gap-1 items-center"
@@ -707,9 +713,11 @@ onMounted(() => {
                                                                     )
                                                                 "
                                                             >
-                                                                <CheckIcon
-                                                                    class="w-4 h-4"
-                                                                ></CheckIcon>
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
+                                                                >
+                                                                    check
+                                                                </span>
                                                                 Duplicate Store
                                                             </button>
                                                         </MenuItem>
@@ -723,9 +731,11 @@ onMounted(() => {
                                                 @click="handleEdit(post.id)"
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <PencilIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></PencilIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    edit
+                                                </span>
                                             </button>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
@@ -736,9 +746,11 @@ onMounted(() => {
                                                 "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                             >
-                                                <TrashIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></TrashIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    delete
+                                                </span>
                                             </button>
                                         </td>
                                     </tr>
