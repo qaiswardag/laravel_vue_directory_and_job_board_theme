@@ -11,7 +11,7 @@ defineProps({
 <template>
     <!-- chimp start -->
     <div class="myPrimaryModule">
-        <div class="myHeaderParagraphSection">
+        <div class="myPrimaryContentSection">
             <h2 class="mySecondaryHeader">
                 <slot name="title" />
             </h2>

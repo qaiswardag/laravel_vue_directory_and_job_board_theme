@@ -3,7 +3,7 @@ const storeSubscriptionPrices = [
         name: "Single Store",
         id: "single_store",
         dynamic_product: false,
-        priceIdentifierStripe: "price_1ODSDgEuESfVmAWo0KtBmxWR",
+        priceIdentifierStripe: "price_1OGMtIEuESfVmAWoB7nK43QU",
         route: {
             name: "stripe.stores.create.subscription",
             parameters: null,
@@ -24,7 +24,7 @@ const storeSubscriptionPrices = [
         dynamic_product: true,
         minimum_quantity: 3,
         maximum_quantity: 3,
-        priceIdentifierStripe: "price_1OE7qfEuESfVmAWoqMrTMFhQ",
+        priceIdentifierStripe: "price_1OGMuREuESfVmAWoz4Ym8g6m",
         route: {
             name: "stripe.stores.create.subscription",
             parameters: null,
@@ -50,7 +50,7 @@ const storeSubscriptionPrices = [
         dynamic_product: true,
         minimum_quantity: 4,
         maximum_quantity: 1000,
-        priceIdentifierStripe: "price_1ODWh0EuESfVmAWo0xHMTEyy",
+        priceIdentifierStripe: "price_1OGMvZEuESfVmAWoDY2Wv45O",
         route: {
             name: "stripe.stores.create.subscription",
             parameters: [],

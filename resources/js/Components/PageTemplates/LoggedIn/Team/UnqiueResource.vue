@@ -54,7 +54,7 @@ defineProps({
 });
 </script>
 <template>
-    <div class="myPrimaryHeaderParagraph my-0 py-0"></div>
+    <div class="my-0 py-0"></div>
     <ArticleTemplate :sidebarArea="true" :actionsArea="false">
         <template #main>
             <h1 class="myPrimaryHeader text-center">

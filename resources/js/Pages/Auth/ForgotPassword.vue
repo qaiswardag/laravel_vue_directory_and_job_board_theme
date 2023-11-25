@@ -32,8 +32,8 @@ const submit = () => {
             <GuestsLayout>
                 <Head title="Forgot password" />
                 <template #header>
-                    <div class="myPrimaryHeaderParagraph pb-8 text-center">
-                        <h1 class="myPrimaryHeader text-white">
+                    <div class="pb-8 text-center">
+                        <h1 class="myTertiaryHeader text-white">
                             Forgot password
                         </h1>
                     </div>
@@ -45,8 +45,8 @@ const submit = () => {
                     </template>
 
                     <div class="mt-4 mb-8">
-                        <h1 class="mySecondaryHeader text-center">
-                            Sign up and get started today
+                        <h1 class="myTertiaryHeader text-center">
+                            Forgot password
                         </h1>
                         <p class="myPrimaryParagraph text-center">
                             Forgot your password? No problem. Just let us know

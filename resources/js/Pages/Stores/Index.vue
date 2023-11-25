@@ -239,6 +239,34 @@ onMounted(() => {
 
                 <main></main>
             </DynamicModal>
+
+            <template v-if="true">
+                <div>
+                    <div>
+                        <p class="myPrimaryParagraph leading-8">
+                            Total stores which can be created
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <div
+                            class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
+                        >
+                            <p class="myPrimaryParagraph leading-8">
+                                Subscription name: Up to 6 stores with this
+                                subscription
+                            </p>
+                        </div>
+                        <div
+                            class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
+                        >
+                            <p class="myPrimaryParagraph leading-8">
+                                Subscription name: Up to 8 stores with this
+                                subscription
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </template>
             <template #header>
                 Stores for
                 {{ $page.props.user && $page.props.currentUserTeam.name }}
@@ -311,7 +339,7 @@ onMounted(() => {
             </form>
 
             <template v-if="posts && posts.data.length <= 0">
-                <h1 class="myTertiaryHeader">No Stores</h1>
+                <h1 class="myQuaternaryHeader">No Stores</h1>
                 <p class="myPrimaryParagraph">
                     Looks like there are no stores!
                 </p>

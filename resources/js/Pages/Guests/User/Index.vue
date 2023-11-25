@@ -25,7 +25,7 @@ defineProps({
         <GuestsLayout>
             <Head title="Users" />
             <template #header>
-                <div class="myPrimaryHeaderParagraph">
+                <div>
                     <h1 class="myPrimaryHeader">Users</h1>
                 </div>
             </template>

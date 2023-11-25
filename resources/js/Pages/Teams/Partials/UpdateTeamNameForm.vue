@@ -221,12 +221,6 @@ const handleRemoveLogo = function (imageId) {
     postForm.logo = postForm.logo.filter((image) => image.id !== imageId);
 };
 
-//
-//
-//
-//
-//
-//
 const handleUploadCoverImage = function () {
     // handle show media library modal
     showMediaLibraryModal.value = true;
@@ -312,7 +306,7 @@ onBeforeMount(() => {
 
         // slug logic
         // slug is editable when editing an existing post
-        isSlugEditable.value = true;
+        isSlugEditable.value = false;
         slugValueCustom.value = props.team.slug;
 
         postForm.public = props.team.public ? true : false;

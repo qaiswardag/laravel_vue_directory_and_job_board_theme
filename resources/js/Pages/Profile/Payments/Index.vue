@@ -98,10 +98,6 @@ const breadcrumbsLinks = [
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
-            <div>
-                <h1 class="myTertiaryHeader">Payments and invoices</h1>
-            </div>
-
             <!-- error # start -->
             <template
                 v-if="
@@ -136,9 +132,12 @@ const breadcrumbsLinks = [
                         fetchedPayments.payments.invoices.length === 0)
                 "
             >
-                <p class="myPrimaryParagraph">
-                    Looks like there are no payments and invoices!
-                </p>
+                <div>
+                    <h1 class="myQuaternaryHeader">Payments and invoices</h1>
+                    <p class="myPrimaryParagraph">
+                        Looks like there are no payments and invoices!
+                    </p>
+                </div>
             </template>
 
             <template v-if="!isLoadingPayments && !isErrorPayments">

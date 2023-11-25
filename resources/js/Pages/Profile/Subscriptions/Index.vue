@@ -267,7 +267,7 @@ const notificationsModalButton = function () {
                 <!-- Active subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="myTertiaryHeader">Active Subscriptions</h2>
+                        <h2 class="myQuaternaryHeader">Active Subscriptions</h2>
                     </div>
                     <template
                         v-if="
@@ -517,7 +517,9 @@ const notificationsModalButton = function () {
                 <!-- Canceled subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="myTertiaryHeader">Canceled Subscriptions</h2>
+                        <h2 class="myQuaternaryHeader">
+                            Canceled Subscriptions
+                        </h2>
                     </div>
                     <template
                         v-if="
@@ -743,7 +745,7 @@ const notificationsModalButton = function () {
                 <!-- Ended subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="myTertiaryHeader">Ended Subscriptions</h2>
+                        <h2 class="myQuaternaryHeader">Ended Subscriptions</h2>
                     </div>
                     <template
                         v-if="
@@ -944,7 +946,7 @@ const notificationsModalButton = function () {
                 <!-- Incomplete subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="myTertiaryHeader">
+                        <h2 class="myQuaternaryHeader">
                             Incomplete Subscriptions
                         </h2>
                     </div>
