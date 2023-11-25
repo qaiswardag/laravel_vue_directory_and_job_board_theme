@@ -26,9 +26,7 @@ const breadcrumbsLinks = [
     <MainLayout>
         <LoggedInLayout>
             <Head title="Team Settings" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Team Settings</h2>
-            </template>
+            <template #header> Team Settings </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>

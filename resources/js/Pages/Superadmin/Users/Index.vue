@@ -488,9 +488,7 @@ onMounted(() => {
                 <header></header>
                 <main></main>
             </DynamicModal>
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Users</h2>
-            </template>
+            <template #header> Users </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>

@@ -1513,10 +1513,9 @@ const pageBuilder = new PageBuilder(store);
                             @click="setStartedAtDate"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                         >
-                            <ArrowPathIcon
-                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                            >
-                            </ArrowPathIcon>
+                            <span class="material-symbols-outlined">
+                                undo
+                            </span>
                         </button>
                     </template>
                 </div>

@@ -47,9 +47,7 @@ const actions = [
     <MainLayout>
         <LoggedInLayout>
             <Head title="Dashboard" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Super Admininistrator</h2>
-            </template>
+            <template #header> Super Admininistrator </template>
 
             <template #description>Super Admininistrator Dashboard </template>
 

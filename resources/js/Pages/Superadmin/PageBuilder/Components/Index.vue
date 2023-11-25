@@ -275,9 +275,7 @@ const routesArray = [
                 <main></main>
             </DynamicModal>
             <Head title="Components" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">List of Components</h2>
-            </template>
+            <template #header> List of Components </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>

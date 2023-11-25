@@ -22,9 +22,7 @@ const breadcrumbsLinks = [
     <MainLayout>
         <LoggedInLayout>
             <Head title="Switch Team" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Switch Teams</h2>
-            </template>
+            <template #header> Switch Teams </template>
             <template #description>
                 This is Team index page ipsum dolor sit, amet consectetur
                 adipisicing elit. Animi, distinctio.

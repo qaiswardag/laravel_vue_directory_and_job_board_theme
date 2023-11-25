@@ -102,9 +102,7 @@ const updatePaymentMethod = function () {
     <MainLayout>
         <LoggedInLayout>
             <Head title="Your Profile" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Your Profile</h2>
-            </template>
+            <template #header> Your Profile </template>
             <template #description> Profile Settings </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
@@ -352,9 +350,9 @@ const updatePaymentMethod = function () {
                             <span
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <ArrowPathIcon
-                                    class="myMediumIcon"
-                                ></ArrowPathIcon>
+                                <span class="material-symbols-outlined">
+                                    undo
+                                </span>
                             </span>
                         </div>
                         <div class="mt-8">

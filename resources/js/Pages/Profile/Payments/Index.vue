@@ -93,9 +93,7 @@ const breadcrumbsLinks = [
         <LoggedInLayout>
             <Head title="Payments and invoices" />
 
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Payments and invoices</h2>
-            </template>
+            <template #header> Payments and invoices </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>

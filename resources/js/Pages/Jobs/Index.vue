@@ -60,6 +60,7 @@ const breadcrumbsLinks = [
 const linksTopMenu = [
     {
         label: "Running Jobs",
+        icon: "work",
         route: {
             name: "team.jobs.index",
             parameters: [props.currentUserTeam.id],
@@ -67,6 +68,7 @@ const linksTopMenu = [
     },
     {
         label: "Drafts & Unpiad Jobs",
+        icon: "draw",
         route: {
             name: "team.jobs.index.unpaid",
             parameters: [props.currentUserTeam.id],
@@ -74,6 +76,7 @@ const linksTopMenu = [
     },
     {
         label: "Paid Expired Jobs",
+        icon: "schedule",
         route: {
             name: "team.jobs.index.expired",
             parameters: [props.currentUserTeam.id],
@@ -81,6 +84,7 @@ const linksTopMenu = [
     },
     {
         label: "Trash",
+        icon: "delete",
         route: {
             name: "team.jobs.index.trash",
             parameters: [props.currentUserTeam.id],
@@ -252,10 +256,8 @@ onMounted(() => {
                 <main></main>
             </DynamicModal>
             <template #header>
-                <h2 class="myPrimaryMainPageHeader">
-                    Jobs for
-                    {{ $page.props.user && $page.props.currentUserTeam.name }}
-                </h2>
+                Jobs for
+                {{ $page.props.user && $page.props.currentUserTeam.name }}
             </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
@@ -272,6 +274,7 @@ onMounted(() => {
                         type="button"
                         :href="route('team.jobs.create', currentUserTeam.id)"
                     >
+                        <span class="material-symbols-outlined"> add </span>
                         Create Job
                     </Link>
                 </template>

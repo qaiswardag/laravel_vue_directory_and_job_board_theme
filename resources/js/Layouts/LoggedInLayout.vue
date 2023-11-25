@@ -147,7 +147,9 @@ const sidebarOpen = ref(false);
         <main class="flex-1 bg-gray-50 relative">
             <Banner />
             <header v-if="$slots.header">
-                <slot name="header" />
+                <h2 class="myTertiaryHeader text-center py-12 pb-8">
+                    <slot name="header" />
+                </h2>
                 <slot name="breadcrumbs" />
             </header>
             <div

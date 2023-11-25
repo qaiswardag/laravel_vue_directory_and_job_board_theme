@@ -18,9 +18,7 @@ const breadcrumbsLinks = [
     <MainLayout>
         <LoggedInLayout>
             <Head title="Your Teams" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Your Teams</h2>
-            </template>
+            <template #header> Your Teams </template>
             <template #description>
                 This is Team index page ipsum dolor sit, amet consectetur
                 adipisicing elit. Animi, distinctio.

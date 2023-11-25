@@ -60,6 +60,7 @@ const breadcrumbsLinks = [
 const linksTopMenu = [
     {
         label: "All Stores",
+        icon: "storefront",
         route: {
             name: "team.stores.index",
             parameters: [props.currentUserTeam.id],
@@ -67,13 +68,13 @@ const linksTopMenu = [
     },
     {
         label: "Trash",
+        icon: "delete",
         route: {
             name: "team.stores.index.trash",
             parameters: [props.currentUserTeam.id],
         },
     },
 ];
-
 const routesArray = [
     {
         label: "All Stores",
@@ -281,10 +282,8 @@ onMounted(() => {
                 <main></main>
             </DynamicModal>
             <template #header>
-                <h2 class="myPrimaryMainPageHeader">
-                    Stores for
-                    {{ $page.props.user && $page.props.currentUserTeam.name }}
-                </h2>
+                Stores for
+                {{ $page.props.user && $page.props.currentUserTeam.name }}
             </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
@@ -301,6 +300,7 @@ onMounted(() => {
                         type="button"
                         :href="route('team.stores.create', currentUserTeam.id)"
                     >
+                        <span class="material-symbols-outlined"> add </span>
                         Create Store
                     </Link>
                 </template>
@@ -721,9 +721,11 @@ onMounted(() => {
                                                 "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <ArrowPathIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></ArrowPathIcon>
+                                                <span
+                                                    class="material-symbols-outlined"
+                                                >
+                                                    undo
+                                                </span>
                                             </button>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">

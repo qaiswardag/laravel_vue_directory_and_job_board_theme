@@ -9,26 +9,30 @@ const props = defineProps({
 });
 </script>
 <template>
-    <div class="myBreadcrumbsContainer">
+    <div class="myBreadcrumbsContainer flex items-center">
         <div
-            class="font-medium"
+            class="font-medium flex gap-2"
             v-for="(link, index) in links"
             :key="link.label"
         >
             <template v-if="link.route && link.route.name !== undefined">
                 <Link
                     :href="route(link.route.name, link.route.parameters)"
-                    class="myPrimaryLink"
+                    class="myPrimaryLink flex items-center gap-2"
                 >
-                    {{ link.label }}
+                    <span>
+                        {{ link.label }}
+                    </span>
                 </Link>
             </template>
-            <template v-if="link.label && link.route === undefined">
+            <div v-if="link.label && link.route === undefined">
                 <span class="text-myPrimaryMediumGrayColor">
                     {{ link.label }}
                 </span>
+            </div>
+            <template v-if="index < links.length - 1">
+                <span class="material-symbols-outlined"> chevron_right </span>
             </template>
-            <template v-if="index < links.length - 1"> &#47;</template>
         </div>
     </div>
 </template>

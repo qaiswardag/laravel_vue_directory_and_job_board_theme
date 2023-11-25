@@ -227,9 +227,7 @@ const notificationsModalButton = function () {
                 <header></header>
                 <main></main>
             </DynamicModal>
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Subscriptions</h2>
-            </template>
+            <template #header> Subscriptions </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
