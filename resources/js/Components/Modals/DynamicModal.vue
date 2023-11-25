@@ -138,7 +138,7 @@ const thirdButton = function () {
                             />
                         </div>
 
-                        <h3 as="h3" class="myTertiaryHeader my-0 py-0">
+                        <h3 as="h3" class="myQuaternaryHeader my-0 py-0">
                             {{ title }}
                         </h3>
                     </div>

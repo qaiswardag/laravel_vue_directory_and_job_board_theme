@@ -151,7 +151,7 @@ onMounted(async () => {
     <div ref="chart"></div>
 
     <div class="mx-auto">
-        <h3 class="myFourthHeader">
+        <h3 class="myQuaternaryHeader">
             Trusted by thousands of creators&nbsp;worldwide
         </h3>
         <p class="myPrimaryParagrph">

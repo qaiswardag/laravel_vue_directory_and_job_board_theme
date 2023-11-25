@@ -150,9 +150,9 @@ const faqs = [
                             class="bg-black/10 absolute top-0 left-0 w-full h-[32rem]"
                         ></div>
                         <div
-                            class="absolute text-2xl text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                            class="absolute text-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                         >
-                            <h1 class="myPrimaryHeader">
+                            <h1 class="myPrimaryHeader text-white text-center">
                                 myself fashion & jobs
                                 <br />
                             </h1>

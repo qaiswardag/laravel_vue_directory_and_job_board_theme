@@ -4,26 +4,6 @@
 @layer components {
     /*
     |--------------------------------------------------------------------------
-    | PageBuilder 
-    |--------------------------------------------------------------------------
-    */
-    .myPrimaryComponentToDrag {
-        @apply border border-gray-200 rounded-md py-4 px-2 cursor-grabbing;
-    }
-    .myPrimaryComponentName {
-        @apply text-center myPrimaryParagraph text-xs italic mb-1;
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Main Header
-    |--------------------------------------------------------------------------
-    */
-    .myPrimaryMainPageHeaderParagraph {
-        @apply md:py-24 py-12 md:px-8 px-4;
-    }
-    /*
-    |--------------------------------------------------------------------------
     | Widgets
     |--------------------------------------------------------------------------
     */
@@ -89,14 +69,12 @@
     | Thumbnail
     |--------------------------------------------------------------------------
     */
-
     .myPrimarythumbnailLogo {
         @apply mx-auto block mt-2 mb-6 w-40 transition-all rounded-md object-cover cursor-pointer;
     }
     .myPrimarythumbnailInsertPreview {
         @apply block md:h-16 md:w-16 h-16 w-16 hover:shadow-sm transition-all cursor-pointer rounded-full object-cover;
     }
-
     /*
     |--------------------------------------------------------------------------
     | Primary paragraphs
@@ -142,11 +120,6 @@
     h3 {
         @apply text-xl mb-2 font-medium;
     }
-
-    .myFourthHeader {
-        @apply text-base mb-2 font-medium text-myPrimaryDarkGrayColor;
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Links
@@ -334,7 +307,7 @@
         @apply mb-4;
     }
     .myPrimaryFormOrganizationHeader {
-        @apply myFourthHeader m-0 pt-4;
+        @apply myQuaternaryHeader m-0 pt-4;
     }
 
     .myInputsFamily {

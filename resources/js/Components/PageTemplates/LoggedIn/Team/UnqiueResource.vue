@@ -67,7 +67,7 @@ defineProps({
                 <!-- Post updated by - start -->
                 <template v-if="onlyForCurrentTeam">
                     <div class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Updated By</h4>
+                        <h4 class="myQuaternaryHeader">Updated By</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <UserTag :user="post.updatedBy"></UserTag>
                     </div>
@@ -77,7 +77,7 @@ defineProps({
                 <!-- published # start -->
                 <template v-if="onlyForCurrentTeam">
                     <div v-if="post.published" class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Published</h4>
+                        <h4 class="myQuaternaryHeader">Published</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="myPrimaryTag bg-myPrimaryLinkColor text-white"
@@ -86,7 +86,7 @@ defineProps({
                         </div>
                     </div>
                     <div v-if="!post.published" class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Published</h4>
+                        <h4 class="myQuaternaryHeader">Published</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="myPrimaryTag bg-myPrimaryErrorColor text-white"
@@ -99,7 +99,7 @@ defineProps({
                 <!-- is filled # start -->
                 <template v-if="post.is_filled">
                     <div class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Application status</h4>
+                        <h4 class="myQuaternaryHeader">Application status</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="myPrimaryTag bg-myPrimaryErrorColor text-white"
@@ -113,7 +113,7 @@ defineProps({
                 <!-- apply # start -->
                 <template v-if="post.apply_via_link || post.apply_via_email">
                     <div class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Apply</h4>
+                        <h4 class="myQuaternaryHeader">Apply</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
 
                         <div
@@ -148,7 +148,9 @@ defineProps({
                 <!-- started_at # start -->
                 <template v-if="post.started_at && post.ended_at">
                     <div class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Job publish & end date</h4>
+                        <h4 class="myQuaternaryHeader">
+                            Job publish & end date
+                        </h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div class="flex flex-col gap-2">
                             <template v-if="post.started_at">
@@ -199,7 +201,7 @@ defineProps({
                     "
                     class="myPrimaryWidget"
                 >
-                    <h4 class="myFourthHeader">Country</h4>
+                    <h4 class="myQuaternaryHeader">Country</h4>
                     <WidgetSectionBorder></WidgetSectionBorder>
                     <div
                         class="flex flex-wrap justify-start items-center gap-2"
@@ -228,7 +230,7 @@ defineProps({
                     "
                     class="myPrimaryWidget"
                 >
-                    <h4 class="myFourthHeader">Location</h4>
+                    <h4 class="myQuaternaryHeader">Location</h4>
                     <WidgetSectionBorder></WidgetSectionBorder>
                     <div
                         class="flex flex-wrap justify-start items-center gap-2"
@@ -289,7 +291,7 @@ defineProps({
                     "
                     class="myPrimaryWidget"
                 >
-                    <h4 class="myFourthHeader">Job type</h4>
+                    <h4 class="myQuaternaryHeader">Job type</h4>
                     <WidgetSectionBorder></WidgetSectionBorder>
                     <div
                         class="flex flex-wrap justify-start items-center gap-2"
@@ -320,7 +322,7 @@ defineProps({
                     "
                     class="myPrimaryWidget"
                 >
-                    <h4 class="myFourthHeader">Categories</h4>
+                    <h4 class="myQuaternaryHeader">Categories</h4>
                     <WidgetSectionBorder></WidgetSectionBorder>
                     <div
                         class="flex flex-wrap justify-start items-center gap-2"
@@ -345,7 +347,7 @@ defineProps({
                 <!-- tags # start -->
                 <template v-if="post.tags">
                     <div class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Tags</h4>
+                        <h4 class="myQuaternaryHeader">Tags</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="flex flex-wrap justify-start items-center gap-2"
@@ -379,7 +381,7 @@ defineProps({
                 <!-- Url for contact page # start -->
                 <template v-if="post.contact_page_url">
                     <div class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">Contact Store</h4>
+                        <h4 class="myQuaternaryHeader">Contact Store</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="flex flex-wrap justify-start items-center gap-2"
@@ -397,7 +399,7 @@ defineProps({
                 <!-- show authors # start -->
                 <template v-if="onlyForCurrentTeam">
                     <div v-if="post.show_author" class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">People visibility</h4>
+                        <h4 class="myQuaternaryHeader">People visibility</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="myPrimaryTag bg-myPrimaryLinkColor text-white"
@@ -406,7 +408,7 @@ defineProps({
                         </div>
                     </div>
                     <div v-if="!post.show_author" class="myPrimaryWidget">
-                        <h4 class="myFourthHeader">People visibility</h4>
+                        <h4 class="myQuaternaryHeader">People visibility</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="myPrimaryTag bg-myPrimaryErrorColor text-white"
@@ -426,7 +428,7 @@ defineProps({
                     "
                     class="myPrimaryWidget"
                 >
-                    <h4 class="myFourthHeader">People</h4>
+                    <h4 class="myQuaternaryHeader">People</h4>
                     <WidgetSectionBorder></WidgetSectionBorder>
                     <div
                         class="flex flex-wrap justify-start items-center gap-1"

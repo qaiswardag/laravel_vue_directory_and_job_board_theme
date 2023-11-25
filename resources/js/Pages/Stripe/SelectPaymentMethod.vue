@@ -260,46 +260,6 @@ onMounted(() => {
         No payment methods are connected to your account.
     </p>
 
-    <!-- card testing # start -->
-    <div class="my-4 p-4 border rounded">
-        <p>
-            <a href="https://stripe.com/docs/testing" target="blank"
-                >Testing Cards</a
-            >
-        </p>
-        <p class="my-4">
-            Works: Visa
-            <br />
-            United Arab Emirates (AE)
-            <br />
-            4000007840000001
-        </p>
-        <p class="my-4">
-            Works: Mastercard
-            <br />
-            United Arab Emirates (AE)
-            <br />
-            5200007840000022
-        </p>
-        <p class="my-4">
-            Works: Visa <br />
-            Denmark (DK)
-            <br />
-            4000002080000001
-        </p>
-        <p class="my-4">
-            Can be added but insufficient funds: <br />
-            4000008260003178
-        </p>
-        <p class="my-4">
-            Declined: <br />
-            4000000000000002
-        </p>
-        <p class="my-4">12/34</p>
-        <p class="my-4">567</p>
-    </div>
-    <!-- card testing # end -->
-
     <template v-if="!isLoadingPaymentMethods && !isErrorPaymentMethods">
         <p
             class="py-4"

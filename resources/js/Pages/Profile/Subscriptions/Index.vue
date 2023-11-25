@@ -232,10 +232,6 @@ const notificationsModalButton = function () {
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
-            <div>
-                <h1 class="myTertiaryHeader">Subscriptions</h1>
-            </div>
-
             <!-- error # start -->
             <template
                 v-if="
@@ -260,17 +256,18 @@ const notificationsModalButton = function () {
             </template>
             <!-- Loading # end -->
 
-            <template
+            <div
                 v-if="
                     !isLoadingSubscriptions &&
                     !isErrorSubscriptions &&
                     isSuccessSubscriptions
                 "
+                class="myPrimarySection"
             >
                 <!-- Active subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="mySecondaryHeader">Active Subscriptions</h2>
+                        <h2 class="myTertiaryHeader">Active Subscriptions</h2>
                     </div>
                     <template
                         v-if="
@@ -520,9 +517,7 @@ const notificationsModalButton = function () {
                 <!-- Canceled subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="mySecondaryHeader">
-                            Canceled Subscriptions
-                        </h2>
+                        <h2 class="myTertiaryHeader">Canceled Subscriptions</h2>
                     </div>
                     <template
                         v-if="
@@ -748,7 +743,7 @@ const notificationsModalButton = function () {
                 <!-- Ended subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="mySecondaryHeader">Ended Subscriptions</h2>
+                        <h2 class="myTertiaryHeader">Ended Subscriptions</h2>
                     </div>
                     <template
                         v-if="
@@ -949,7 +944,7 @@ const notificationsModalButton = function () {
                 <!-- Incomplete subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="mySecondaryHeader">
+                        <h2 class="myTertiaryHeader">
                             Incomplete Subscriptions
                         </h2>
                     </div>
@@ -1196,7 +1191,7 @@ const notificationsModalButton = function () {
                         </div>
                     </template>
                 </div>
-            </template>
+            </div>
 
             <div
                 class="flex justify-end mt-4 pb-8 bottom-0 right-0 sticky"
