@@ -162,7 +162,7 @@ onMounted(async () => {
                     {{ title }}
                 </h3>
                 <div @click="firstButton" class="flex-end">
-                    <XMarkIcon class="myMediumIcon cursor-pointer"></XMarkIcon>
+                    <span class="material-symbols-outlined"> close </span>
                 </div>
             </div>
 
@@ -427,9 +427,11 @@ onMounted(async () => {
                                 "
                                 v-for="helperComponent in componentHelpers"
                                 :key="helperComponent.title"
-                                class="myPrimaryTag m-0 pt-10 pb-4 px-2 rounded cursor-pointer"
+                                class="myPrimaryTag m-0 pt-8 pb-4 px-2 rounded cursor-pointer"
                             >
-                                <p class="text-5xl flex justify-center">H</p>
+                                <div class="flex justify-center items-center">
+                                    <span v-html="helperComponent.icon"> </span>
+                                </div>
                                 <div
                                     class="flex justify-center items-center gap-4 text-xs font-medium"
                                 >

@@ -153,12 +153,10 @@ const settingsSlideOverButton = function () {
                             ]"
                         >
                             <div class="flex items-center justify-left gap-2">
-                                <div
-                                    class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                                >
-                                    <EyeIcon
-                                        class="stroke-1.5 w-3 h-3 m-1.5"
-                                    ></EyeIcon>
+                                <div class="flex gap-2 items-center">
+                                    <span class="material-symbols-outlined">
+                                        visibility
+                                    </span>
                                 </div>
                                 Preview page
                             </div>
@@ -177,12 +175,10 @@ const settingsSlideOverButton = function () {
                             ]"
                         >
                             <div class="flex items-center justify-left gap-2">
-                                <div
-                                    class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
-                                >
-                                    <AdjustmentsVerticalIcon
-                                        class="stroke-1.5 w-3 h-3 m-1.5"
-                                    ></AdjustmentsVerticalIcon>
+                                <div class="flex gap-2 items-center">
+                                    <span class="material-symbols-outlined">
+                                        tune
+                                    </span>
                                 </div>
                                 Settings
                             </div>
@@ -191,7 +187,7 @@ const settingsSlideOverButton = function () {
                     <MenuItem v-slot="{ active }">
                         <div
                             @click="deleteAllComponents"
-                            class="cursor-pointer hover:bg-myPrimaryErrorColor group"
+                            class="cursor-pointer"
                             :class="[
                                 active
                                     ? 'bg-gray-100 text-gray-900'
@@ -200,9 +196,7 @@ const settingsSlideOverButton = function () {
                             ]"
                         >
                             <div class="flex items-center justify-left gap-2">
-                                <div
-                                    class="cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryLightGrayColor aspect-square"
-                                >
+                                <div class="flex gap-2 items-center">
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
                                     >

@@ -104,9 +104,9 @@ watch(
                                 v-if="getBorderColor === 'none'"
                                 class="w-6 h-6 cursor-default border border-gray-200 rounded-sm"
                             >
-                                <XMarkIcon
-                                    class="text-myPrimaryErrorColor stroke-1.5"
-                                ></XMarkIcon>
+                                <span class="material-symbols-outlined">
+                                    close
+                                </span>
                             </div>
                             <div
                                 v-if="borderColor !== 'none'"
@@ -163,9 +163,11 @@ watch(
                                         <div
                                             class="w-6 h-6 cursor-default border border-gray-200 rounded-sm bg-white"
                                         >
-                                            <XMarkIcon
-                                                class="text-myPrimaryErrorColor stroke-1.5"
-                                            ></XMarkIcon>
+                                            <span
+                                                class="material-symbols-outlined"
+                                            >
+                                                close
+                                            </span>
                                         </div>
                                         <span class="ml-3">{{ color }}</span>
                                     </div>

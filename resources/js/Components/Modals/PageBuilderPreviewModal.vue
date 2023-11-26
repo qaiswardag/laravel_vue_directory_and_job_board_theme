@@ -78,28 +78,16 @@ const firstButton = function () {
                                 <ApplicationLogo></ApplicationLogo>
                                 <div
                                     @click="firstButton"
-                                    class="flex items-center justify-center gap-1 cursor-pointer hover:underline"
+                                    class="flex items-center justify-center gap-1 cursor-pointer"
                                 >
                                     <span
                                         class="myPrimaryParagraph font-medium"
                                     >
                                         Close Preview
                                     </span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        aria-hidden="true"
-                                        class="h-4 w-4 text-black self-center"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M6 18L18 6M6 6l12 12"
-                                        ></path>
-                                    </svg>
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
                                 </div>
                             </div>
                             <slot></slot>

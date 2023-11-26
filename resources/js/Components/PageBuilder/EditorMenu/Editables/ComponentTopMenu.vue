@@ -94,14 +94,14 @@ const deleteComponent = function (e) {
                 @click="pageBuilder.moveComponent(1)"
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
-                <ArrowDownIcon class="mySmallIcon" />
+                <span class="material-symbols-outlined"> arrow_downward </span>
             </button>
             <button
                 type="button"
                 @click="pageBuilder.moveComponent(-1)"
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
-                <ArrowUpIcon class="mySmallIcon" />
+                <span class="material-symbols-outlined"> arrow_upward </span>
             </button>
         </div>
     </div>

@@ -58,7 +58,7 @@ const handleLogout = () => {
                     type="button"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
                 >
-                    <XMarkIcon class="myMediumIcon"></XMarkIcon>
+                    <span class="material-symbols-outlined"> close </span>
                 </button>
             </button>
             <h2 class="text-sm font-normal text-zinc-600 dark:text-zinc-400">

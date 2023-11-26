@@ -405,9 +405,11 @@ onMounted(() => {
                                                 type="button"
                                                 class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <XMarkIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></XMarkIcon>
+                                                <span
+                                                    class="material-symbols-outlined"
+                                                >
+                                                    close
+                                                </span>
                                             </button>
                                             <ComboboxButton
                                                 class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
@@ -606,9 +608,11 @@ onMounted(() => {
                                                 type="button"
                                                 class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <XMarkIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></XMarkIcon>
+                                                <span
+                                                    class="material-symbols-outlined"
+                                                >
+                                                    close
+                                                </span>
                                             </button>
                                             <ComboboxButton
                                                 class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
@@ -783,9 +787,11 @@ onMounted(() => {
                                                 type="button"
                                                 class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <XMarkIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></XMarkIcon>
+                                                <span
+                                                    class="material-symbols-outlined"
+                                                >
+                                                    close
+                                                </span>
                                             </button>
                                             <ComboboxButton
                                                 class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"

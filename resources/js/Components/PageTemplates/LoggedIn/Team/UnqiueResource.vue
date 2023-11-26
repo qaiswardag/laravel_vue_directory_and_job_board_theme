@@ -60,7 +60,9 @@ defineProps({
             <h1 class="myPrimaryHeader text-center">
                 {{ post.title }}
             </h1>
-            <section v-html="post.content"></section>
+            <div id="defined-page-content">
+                <section v-html="post.content"></section>
+            </div>
         </template>
         <template #sidebar>
             <aside class="flex gap-8 flex-col">
