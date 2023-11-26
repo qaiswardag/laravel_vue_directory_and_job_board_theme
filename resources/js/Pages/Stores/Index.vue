@@ -241,9 +241,9 @@ onMounted(() => {
             </DynamicModal>
 
             <template v-if="true">
-                <div>
+                <div class="rounded px-4 py-6 bg-gray-100">
                     <div>
-                        <p class="myPrimaryParagraph leading-8">
+                        <p class="myPrimaryParagraph leading-8 font-medium">
                             Total stores which can be created
                         </p>
                     </div>

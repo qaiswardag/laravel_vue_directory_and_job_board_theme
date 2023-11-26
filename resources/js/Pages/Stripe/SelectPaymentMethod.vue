@@ -261,171 +261,154 @@ onMounted(() => {
     </p>
 
     <template v-if="!isLoadingPaymentMethods && !isErrorPaymentMethods">
-        <p
-            class="py-4"
-            v-if="
-                fetchedPaymentMethods &&
-                fetchedPaymentMethods.paymentMethods &&
-                Array.isArray(fetchedPaymentMethods.paymentMethods) &&
-                fetchedPaymentMethods.paymentMethods.length !== 0
-            "
-        >
-            {{ fetchedPaymentMethods.paymentMethods.length }} available payment
-            {{
-                fetchedPaymentMethods.paymentMethods.length === 1
-                    ? "method"
-                    : "methods"
-            }}
-        </p>
-
-        <div
-            :class="{
-                'p-2 border':
-                    fetchedPaymentMethods &&
-                    fetchedPaymentMethods.paymentMethods &&
-                    Array.isArray(fetchedPaymentMethods.paymentMethods) &&
-                    fetchedPaymentMethods.paymentMethods.length !== 0,
-            }"
-        >
-            <div
+        <div class="myPrimaryFormOrganizationHeader">
+            <p
+                class="pb-4 pt-2"
                 v-if="
                     fetchedPaymentMethods &&
                     fetchedPaymentMethods.paymentMethods &&
                     Array.isArray(fetchedPaymentMethods.paymentMethods) &&
                     fetchedPaymentMethods.paymentMethods.length !== 0
                 "
-                class="min-h-[4rem] max-h-[32rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
             >
-                <div
-                    as="template"
-                    v-for="paymentMethod in fetchedPaymentMethods.paymentMethods"
-                    :key="paymentMethod.id"
-                >
-                    <div
-                        class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white w-max min-w-full"
-                    >
-                        <div>
-                            <div class="flex items-center">
-                                <span class="flex flex-col text-sm">
-                                    <div
-                                        as="span"
-                                        class="font-medium text-gray-900 mb-4"
-                                    >
+                {{ fetchedPaymentMethods.paymentMethods.length }} available
+                payment
+                {{
+                    fetchedPaymentMethods.paymentMethods.length === 1
+                        ? "method"
+                        : "methods"
+                }}
+            </p>
+        </div>
+
+        <div
+            v-if="
+                fetchedPaymentMethods &&
+                fetchedPaymentMethods.paymentMethods &&
+                Array.isArray(fetchedPaymentMethods.paymentMethods) &&
+                fetchedPaymentMethods.paymentMethods.length !== 0
+            "
+            class="flex flex-col gap-6"
+        >
+            <div
+                v-for="paymentMethod in fetchedPaymentMethods.paymentMethods"
+                :key="paymentMethod.id"
+            >
+                <div class="px-2 py-8 rounded border border-gray-200">
+                    <div>
+                        <div class="flex items-center">
+                            <span class="flex flex-col text-sm">
+                                <div as="span" class="myQuaternaryHeader">
+                                    {{
+                                        paymentMethod.card?.brand
+                                            ?.charAt(0)
+                                            .toUpperCase() +
+                                        paymentMethod.card?.brand.slice(1)
+                                    }}
+                                </div>
+                                <div
+                                    as="span"
+                                    class="text-gray-500 flex flex-col gap-2"
+                                >
+                                    <div>
+                                        **** **** ****
+                                        {{ paymentMethod.card?.last4 }}
+                                    </div>
+                                    <div class="block sm:inline">
+                                        Name:
                                         {{
-                                            paymentMethod.card?.brand?.toUpperCase()
+                                            paymentMethod.billing_details?.name
                                         }}
                                     </div>
-                                    <div
-                                        as="span"
-                                        class="text-gray-500 flex flex-col gap-2"
-                                    >
-                                        <div>
-                                            **** **** ****
-                                            {{ paymentMethod.card?.last4 }}
-                                        </div>
-                                        <div class="block sm:inline">
-                                            Name:
-                                            {{
-                                                paymentMethod.billing_details
-                                                    ?.name
-                                            }}
-                                        </div>
-                                        <div class="block sm:inline">
-                                            Country:
-                                            {{ paymentMethod.card?.country }}
-                                        </div>
+                                    <div class="block sm:inline">
+                                        Country:
+                                        {{ paymentMethod.card?.country }}
                                     </div>
-                                </span>
-                            </div>
+                                </div>
+                            </span>
                         </div>
-                        <div
-                            class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag w-max min-w-full"
-                        >
-                            <div>
-                                <button
-                                    v-if="
-                                        fetchedPaymentMethods?.defaultPaymentMethodId !==
-                                        paymentMethod.id
-                                    "
-                                    class="myPrimaryTag transition my-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0 bg-white"
-                                    type="button"
-                                    @click="
-                                        handleSetDefaultPaymentMethod(
-                                            paymentMethod
-                                        )
-                                    "
-                                >
-                                    <span> Set default </span>
-                                </button>
-                                <button
-                                    v-if="
-                                        fetchedPaymentMethods?.defaultPaymentMethodId ===
-                                        paymentMethod.id
-                                    "
-                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white my-0"
-                                    type="button"
-                                    @click="
-                                        handleSetDefaultPaymentMethod(
-                                            paymentMethod
-                                        )
-                                    "
-                                >
-                                    <div
-                                        class="flex items-center justify-center gap-2"
-                                    >
-                                        <span> Default</span>
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            check
-                                        </span>
-                                    </div>
-                                </button>
-                            </div>
+                    </div>
+                    <div
+                        class="flex justify-between items-center gap-4 text-xs font-medium myPrimaryTag w-max min-w-full my-0"
+                    >
+                        <div>
                             <button
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                v-if="
+                                    fetchedPaymentMethods?.defaultPaymentMethodId !==
+                                    paymentMethod.id
+                                "
+                                class="myPrimaryTag transition my-0 hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0 bg-white"
                                 type="button"
                                 @click="
-                                    handleDeletePaymentMethod(paymentMethod)
+                                    handleSetDefaultPaymentMethod(paymentMethod)
                                 "
                             >
-                                <span
-                                    class="myMediumIcon material-symbols-outlined"
+                                <span> Set default </span>
+                            </button>
+                            <button
+                                v-if="
+                                    fetchedPaymentMethods?.defaultPaymentMethodId ===
+                                    paymentMethod.id
+                                "
+                                class="myPrimaryTag transition bg-myPrimaryLinkColor text-white my-0"
+                                type="button"
+                                @click="
+                                    handleSetDefaultPaymentMethod(paymentMethod)
+                                "
+                            >
+                                <div
+                                    class="flex items-center justify-center gap-2"
                                 >
-                                    delete
-                                </span>
+                                    <span> Default</span>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        check
+                                    </span>
+                                </div>
                             </button>
                         </div>
+                        <button
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                            type="button"
+                            @click="handleDeletePaymentMethod(paymentMethod)"
+                        >
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                delete
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div
-                class="flex items-center justify-between pt-2 mt-8"
-                :class="{
-                    'border-t border-gray-200':
-                        fetchedPaymentMethods &&
-                        fetchedPaymentMethods.paymentMethods &&
-                        Array.isArray(fetchedPaymentMethods.paymentMethods) &&
-                        fetchedPaymentMethods.paymentMethods.length !== 0,
-                }"
+        <div
+            class="flex items-center justify-between pt-2 mt-8"
+            :class="{
+                'border-t border-gray-200':
+                    fetchedPaymentMethods &&
+                    fetchedPaymentMethods.paymentMethods &&
+                    Array.isArray(fetchedPaymentMethods.paymentMethods) &&
+                    fetchedPaymentMethods.paymentMethods.length !== 0,
+            }"
+        >
+            <p
+                @click="handleCreatePaymentMethod"
+                class="myPrimaryParagraph text-xs cursor-pointer font-bold py-4"
             >
-                <p
-                    @click="handleCreatePaymentMethod"
-                    class="myPrimaryParagraph text-xs cursor-pointer font-bold py-4"
-                >
-                    Add Payment Method
-                </p>
-                <button
-                    type="button"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                    @click="handleCreatePaymentMethod"
-                >
-                    <span class="myMediumIcon material-symbols-outlined">
-                        add
-                    </span>
-                </button>
-            </div>
+                Add Payment Method
+            </p>
+            <button
+                type="button"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                @click="handleCreatePaymentMethod"
+            >
+                <span class="myMediumIcon material-symbols-outlined">
+                    add
+                </span>
+            </button>
         </div>
 
         <InputError

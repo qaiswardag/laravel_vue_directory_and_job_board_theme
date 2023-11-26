@@ -10,17 +10,17 @@ const props = defineProps({
 </script>
 <template>
     <div
-        class="text-sm flex items-center gap-0 overflow-x-scroll pl-6 pr-2 pt-3 pb-2 rounded-full"
+        class="text-sm flex items-center gap-1 overflow-x-scroll pl-6 pr-2 pt-3 pb-2 rounded-full"
     >
         <div
-            class="font-medium flex gap-0"
+            class="font-medium flex gap-1"
             v-for="(link, index) in links"
             :key="link.label"
         >
             <template v-if="link.route && link.route.name !== undefined">
                 <Link
                     :href="route(link.route.name, link.route.parameters)"
-                    class="text-myPrimaryDarkGrayColor flex items-center gap-0"
+                    class="text-myPrimaryDarkGrayColor flex items-center gap-1"
                 >
                     <span>
                         {{ link.label }}
@@ -33,9 +33,7 @@ const props = defineProps({
                 </span>
             </div>
             <template v-if="index < links.length - 1">
-                <span class="material-symbols-outlined">
-                    subdirectory_arrow_right
-                </span>
+                <span class="material-symbols-outlined"> arrow_right_alt </span>
             </template>
         </div>
     </div>

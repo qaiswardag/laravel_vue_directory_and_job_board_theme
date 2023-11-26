@@ -1175,6 +1175,13 @@ const pageBuilder = new PageBuilder(store);
     >
         <PageBuilderView :user="user" :team="postForm.team"></PageBuilderView>
     </PageBuilderModal>
+
+    <template v-if="user.superadmin">
+        <p class="my-4">
+            You are posting jobs for free as superadmin for
+            {{ currentUserTeam.name }}
+        </p>
+    </template>
     <FormSection @submitted="handleCreatePost">
         <template #title>Job details</template>
         <template #description> Create a new Job. </template>
