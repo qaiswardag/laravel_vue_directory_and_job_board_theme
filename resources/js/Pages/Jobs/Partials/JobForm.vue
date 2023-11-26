@@ -21,6 +21,7 @@ import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import { delay } from "@/helpers/delay";
 import VueDatePicker from "@vuepic/vue-datepicker";
+import FriendlyAlert from "@/Components/Alerts/FriendlyAlert.vue";
 
 import "@vuepic/vue-datepicker/dist/main.css";
 import { parseISO, formatISO, format } from "date-fns";
@@ -1179,10 +1180,10 @@ const pageBuilder = new PageBuilder(store);
     </PageBuilderModal>
 
     <template v-if="user.superadmin">
-        <p class="my-4">
-            You are posting jobs for free as superadmin for
-            {{ currentUserTeam.name }}
-        </p>
+        <FriendlyAlert
+            :message="`You are posting jobs for free as superadmin for ${currentUserTeam.name}.`"
+        >
+        </FriendlyAlert>
     </template>
     <FormSection @submitted="handleCreatePost">
         <template #title>Job details</template>
