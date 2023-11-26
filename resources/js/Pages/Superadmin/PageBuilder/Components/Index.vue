@@ -280,49 +280,48 @@ const routesArray = [
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
-            <template #description>deeeeeeeee</template>
+            <template #description></template>
             <div>
-                <div>
-                    <h1 class="myTertiaryHeader">No Team selected</h1>
-                </div>
-                <p class="myPrimaryParagraph">
-                    Looks like no Team is Selected!
-                </p>
-            </div>
-            <CardHeadings
-                :routesArray="props.currentUserTeam === null ? [] : routesArray"
-            >
-                <template #title>Components </template>
-
-                <template #buttons>
-                    <button
-                        v-if="props.currentUserTeam === null"
-                        class="myPrimaryButton"
-                        type="button"
-                        @click="checkUserTeamAuthorization"
-                    >
-                        Create Component
-                    </button>
-                    <Link
-                        class="myPrimaryButton"
-                        type="button"
-                        prop
-                        v-if="props.currentUserTeam !== null"
-                        :href="
-                            route(
-                                'admin.components.component.create',
-                                props.currentUserTeam &&
-                                    props.currentUserTeam.id !== null &&
-                                    props.currentUserTeam.id !== undefined
-                                    ? props.currentUserTeam.id
-                                    : 0
-                            )
-                        "
-                    >
-                        Create Component
-                    </Link>
+                <template v-if="!props.currentUserTeam">
+                    <div>
+                        <h1 class="myTertiaryHeader">No Team selected</h1>
+                    </div>
+                    <p class="myPrimaryParagraph">
+                        Looks like no Team is Selected!
+                    </p>
                 </template>
-            </CardHeadings>
+            </div>
+
+            <template v-if="props.currentUserTeam">
+                <CardHeadings
+                    :routesArray="
+                        props.currentUserTeam === null ? [] : routesArray
+                    "
+                >
+                    <template #title>Components </template>
+
+                    <template #buttons>
+                        <Link
+                            class="myPrimaryButton"
+                            type="button"
+                            prop
+                            v-if="props.currentUserTeam !== null"
+                            :href="
+                                route(
+                                    'admin.components.component.create',
+                                    props.currentUserTeam &&
+                                        props.currentUserTeam.id !== null &&
+                                        props.currentUserTeam.id !== undefined
+                                        ? props.currentUserTeam.id
+                                        : 0
+                                )
+                            "
+                        >
+                            Create Component
+                        </Link>
+                    </template>
+                </CardHeadings>
+            </template>
 
             <template v-if="props.currentUserTeam !== null">
                 <form @submit.prevent="handleSearch">
