@@ -311,78 +311,90 @@ onMounted(() => {});
             v-if="editor"
             class="my-12 blockease-linear duration-200 block px-4 ease-linear"
         >
-            <div
-                class="flex items-center gap-2 bg-black py-2 px-2 rounded-t-lg"
-            >
-                <button
-                    @click="editor.chain().focus().toggleBold().run()"
-                    class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
-                    :class="{
-                        'bg-myPrimaryLinkColor text-white':
-                            editor.isActive('bold'),
-                    }"
+            <div class="relative">
+                <div
+                    class="h-16 bg-black rounded-t-lg sticky top-0 z-20 flex gap-4 flex-shrink-0 justify-between items-center border-b-2 border-gray-100 overflow-x-scroll"
                 >
-                    B
-                </button>
-                <button
-                    @click="
-                        editor.chain().focus().toggleHeading({ level: 2 }).run()
-                    "
-                    class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
-                    :class="{
-                        'bg-myPrimaryLinkColor text-white': editor.isActive(
-                            'heading',
-                            { level: 2 }
-                        ),
-                    }"
-                >
-                    H2
-                </button>
-                <button
-                    @click="
-                        editor.chain().focus().toggleHeading({ level: 3 }).run()
-                    "
-                    class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
-                    :class="{
-                        'bg-myPrimaryLinkColor text-white': editor.isActive(
-                            'heading',
-                            { level: 3 }
-                        ),
-                    }"
-                >
-                    H3
-                </button>
-                <button
-                    @click="editor.chain().focus().setHardBreak().run()"
-                    class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
-                >
-                    br
-                </button>
-                <button
-                    class="text-base text-gray-200 font-semibold py-1 px-1 rounded-lg"
-                    @click="editor.chain().focus().toggleBulletList().run()"
-                    :class="{
-                        'bg-myPrimaryLinkColor text-white':
-                            editor.isActive('bulletList'),
-                    }"
-                >
-                    <ListBulletIcon class="w-5 h-5 stroke-1.5"></ListBulletIcon>
-                </button>
-                <button
-                    @click="handleURL"
-                    class="text-base text-gray-200 font-semibold py-1 px-1 rounded-lg"
-                    :class="{
-                        'bg-myPrimaryLinkColor text-white':
-                            editor.isActive('link'),
-                    }"
-                >
-                    <LinkIcon class="w-4 h-4 stroke-1.5"></LinkIcon>
-                </button>
+                    <button
+                        @click="editor.chain().focus().toggleBold().run()"
+                        class="text-base text-gray-200 font-semibold py-0.5 px-4 rounded-lg"
+                        :class="{
+                            'bg-myPrimaryLinkColor text-white':
+                                editor.isActive('bold'),
+                        }"
+                    >
+                        B
+                    </button>
+                    <button
+                        @click="
+                            editor
+                                .chain()
+                                .focus()
+                                .toggleHeading({ level: 2 })
+                                .run()
+                        "
+                        class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
+                        :class="{
+                            'bg-myPrimaryLinkColor text-white': editor.isActive(
+                                'heading',
+                                { level: 2 }
+                            ),
+                        }"
+                    >
+                        H2
+                    </button>
+                    <button
+                        @click="
+                            editor
+                                .chain()
+                                .focus()
+                                .toggleHeading({ level: 3 })
+                                .run()
+                        "
+                        class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
+                        :class="{
+                            'bg-myPrimaryLinkColor text-white': editor.isActive(
+                                'heading',
+                                { level: 3 }
+                            ),
+                        }"
+                    >
+                        H3
+                    </button>
+                    <button
+                        @click="editor.chain().focus().setHardBreak().run()"
+                        class="text-base text-gray-200 font-semibold py-0.5 px-2 rounded-lg"
+                    >
+                        br
+                    </button>
+                    <button
+                        class="text-base text-gray-200 font-semibold py-1 px-1 rounded-lg"
+                        @click="editor.chain().focus().toggleBulletList().run()"
+                        :class="{
+                            'bg-myPrimaryLinkColor text-white':
+                                editor.isActive('bulletList'),
+                        }"
+                    >
+                        <ListBulletIcon
+                            class="w-5 h-5 stroke-1.5"
+                        ></ListBulletIcon>
+                    </button>
+                    <button
+                        @click="handleURL"
+                        class="text-base text-gray-200 font-semibold py-1 px-1 rounded-lg"
+                        :class="{
+                            'bg-myPrimaryLinkColor text-white':
+                                editor.isActive('link'),
+                        }"
+                    >
+                        <LinkIcon class="w-4 h-4 stroke-1.5"></LinkIcon>
+                    </button>
+                </div>
+                <editor-content
+                    :editor="editor"
+                    class="myPrimaryTextArea p-0 m-0 rounded-none rounded-b-lg"
+                />
             </div>
-            <editor-content
-                :editor="editor"
-                class="myPrimaryTextArea p-0 m-0 rounded-none rounded-b-lg"
-            />
         </div>
     </template>
 </template>
