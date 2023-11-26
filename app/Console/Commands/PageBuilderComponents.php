@@ -53,7 +53,6 @@ class PageBuilderComponents extends Command
         //
         //
         // fake images for components # start
-        // fake images for components # start
         $directory = storage_path(
             "app/public/uploads/components/single_component_cover_image"
         );
@@ -97,8 +96,6 @@ class PageBuilderComponents extends Command
                 ]);
             }
         }
-
-        // fake images for components # end
         // fake images for components # end
         //
         //

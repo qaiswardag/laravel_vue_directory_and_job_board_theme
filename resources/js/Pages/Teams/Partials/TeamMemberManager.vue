@@ -661,9 +661,11 @@ const displayAbleRole = (role) => {
                                                                 type="button"
                                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                             >
-                                                                <PencilIcon
-                                                                    class="mySmallIcon"
-                                                                ></PencilIcon>
+                                                                <span
+                                                                    class="material-symbols-outlined"
+                                                                >
+                                                                    edit
+                                                                </span>
                                                             </button>
                                                         </div>
                                                     </div>

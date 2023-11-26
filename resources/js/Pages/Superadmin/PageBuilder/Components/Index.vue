@@ -627,9 +627,11 @@ const routesArray = [
                                                     "
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                 >
-                                                    <PencilIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                    ></PencilIcon>
+                                                    <span
+                                                        class="material-symbols-outlined"
+                                                    >
+                                                        edit
+                                                    </span>
                                                 </button>
                                             </td>
                                             <td class="myPrimaryTableTBodyTd">
