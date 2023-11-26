@@ -143,9 +143,11 @@ const navigation = [
                                                             )
                                                         "
                                                     >
-                                                        <XMarkIcon
-                                                            class="myMediumIcon"
-                                                        ></XMarkIcon>
+                                                        <span
+                                                            class="material-symbols-outlined"
+                                                        >
+                                                            close
+                                                        </span>
                                                     </button>
                                                 </div>
                                             </div>

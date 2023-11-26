@@ -14,6 +14,7 @@ import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
 import TopMenu from "@/Components/Menues/TopMenu.vue";
+import FriendlyAlert from "@/Components/Alerts/FriendlyAlert.vue";
 
 import {
     ArrowLeftIcon,
@@ -240,8 +241,11 @@ onMounted(() => {
                 <main></main>
             </DynamicModal>
 
+            <FriendlyAlert message="Total stores which can be created.">
+            </FriendlyAlert>
+
             <template v-if="true">
-                <div class="rounded px-4 py-6 bg-gray-100">
+                <div class="rounded px-4 py-6 bg-gray-100 mt-4">
                     <div>
                         <p class="myPrimaryParagraph leading-8 font-medium">
                             Total stores which can be created

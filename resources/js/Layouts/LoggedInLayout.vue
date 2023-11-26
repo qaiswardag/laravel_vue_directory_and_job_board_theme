@@ -88,10 +88,9 @@ const sidebarOpen = ref(false);
                                     @click="sidebarOpen = false"
                                 >
                                     <span class="sr-only">Close sidebar</span>
-                                    <XMarkIcon
-                                        class="myMediumIcon"
-                                        aria-hidden="true"
-                                    />
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
                                 </button>
                             </div>
                         </TransitionChild>

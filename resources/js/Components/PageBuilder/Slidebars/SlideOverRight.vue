@@ -85,10 +85,11 @@ const slideOverButton = function () {
                                                         "
                                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                     >
-                                                        <XMarkIcon
-                                                            class="shrink-0 h-4 w-4 m-2 stroke-1.5"
+                                                        <span
+                                                            class="material-symbols-outlined"
                                                         >
-                                                        </XMarkIcon>
+                                                            close
+                                                        </span>
                                                     </button>
                                                 </div>
                                             </div>

@@ -135,9 +135,9 @@ const handleRemoveItem = function (selectedItem) {
                                 <div class="w-max">
                                     {{ singleSelection.name }}
                                 </div>
-                                <XMarkIcon
-                                    class="mySmallIcon w-3 h-3 py-0 m-0"
-                                ></XMarkIcon>
+                                <span class="material-symbols-outlined">
+                                    close
+                                </span>
                             </div>
                         </li>
                     </ul>

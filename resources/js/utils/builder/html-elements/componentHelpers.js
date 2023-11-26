@@ -16,22 +16,42 @@ const componentHelpers = [
         </div>
         </div></div></section>`,
         id: null,
-        title: "Paragraph — description",
+        title: "Text",
+        icon: `
+        <span class="material-symbols-outlined">
+        text_fields
+        </span>
+        `,
     },
     {
         html_code: `<section><div class="relative py-4"><div class="mx-auto max-w-7xl"><div class="break-all"><h2>Bonjour Comment Ça Va</h2></div></div></div></section>`,
         id: null,
         title: "Header H2",
+        icon: `
+        <span class="material-symbols-outlined">
+        format_h2
+        </span>
+        `,
     },
     {
         html_code: `<section><div class="relative py-4"><div class="mx-auto max-w-7xl"><div class="break-all"><h3>Bonjour Comment Ça Va</h3></div></div></div></section>`,
         id: null,
         title: "Header H3",
+        icon: `
+        <span class="material-symbols-outlined">
+        format_h3
+        </span>
+        `,
     },
     {
         html_code: `<section><div class="relative py-8"><div class="absolute inset-0 flex items-center" aria-hidden="true"><div class="w-full border-4 border-gray-800 leading-none"></div></div><div class="relative flex justify-start"></div></div></section>`,
         id: null,
         title: "Line Break Divider",
+        icon: `
+        <span class="material-symbols-outlined">
+        horizontal_rule
+        </span>
+        `,
     },
 ];
 

@@ -64,10 +64,9 @@ const flashModalButton = function () {
                                     class="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-green-50"
                                 >
                                     <span class="sr-only">Dismiss</span>
-                                    <XMarkIcon
-                                        class="h-5 w-5"
-                                        aria-hidden="true"
-                                    />
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -101,10 +100,9 @@ const flashModalButton = function () {
                                     type="button"
                                     class="inline-flex rounded-md bg-green-50 p-1.5 text-myPrimaryLinkColor hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2 focus:ring-offset-green-50"
                                 >
-                                    <XMarkIcon
-                                        class="h-5 w-5"
-                                        aria-hidden="true"
-                                    />
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
                                 </button>
                             </div>
                         </div>

@@ -239,16 +239,16 @@ onMounted(() => {
                                 <button
                                     type="button"
                                     @click="firstButton"
-                                    class="flex items-center justify-center gap-1 cursor-pointer hover:underline"
+                                    class="flex items-center justify-center gap-1 cursor-pointer"
                                 >
                                     <span
                                         class="myPrimaryParagraph font-medium"
                                     >
                                         Close Builder
                                     </span>
-                                    <XMarkIcon
-                                        class="h-4 w-4 self-center stroke-1.5"
-                                    ></XMarkIcon>
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
                                 </button>
                             </div>
                             <slot></slot>

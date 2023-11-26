@@ -1206,7 +1206,7 @@ const notificationsModalButton = function () {
                     @click="showErrorNotifications = true"
                     class="w-fit py-1 flex items-center gap-2 rounded-md px-2 cursor-pointer italic"
                 >
-                    <EyeIcon class="w-4 h-4 text-myPrimaryErrorColor"></EyeIcon>
+                    <span class="material-symbols-outlined"> visibility </span>
                     <p
                         class="myPrimaryParagraph text-xs text-myPrimaryErrorColor py-0 my-0"
                     >

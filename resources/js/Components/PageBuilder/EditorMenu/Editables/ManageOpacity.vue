@@ -49,9 +49,9 @@ watch(
                             class="aspect-square w-6 h-6"
                         >
                             <div class="myPrimaryColorPreview bg-gray-100">
-                                <XMarkIcon
-                                    class="text-myPrimaryErrorColor"
-                                ></XMarkIcon>
+                                <span class="material-symbols-outlined">
+                                    close
+                                </span>
                             </div>
                         </div>
 
@@ -113,9 +113,11 @@ watch(
                                         <div
                                             class="myPrimaryColorPreview bg-gray-100"
                                         >
-                                            <XMarkIcon
-                                                class="text-myPrimaryErrorColor"
-                                            ></XMarkIcon>
+                                            <span
+                                                class="material-symbols-outlined"
+                                            >
+                                                close
+                                            </span>
                                         </div>
                                     </div>
 

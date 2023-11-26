@@ -93,6 +93,7 @@ class PageBuilderComponents extends Command
                 PageBuilderCoverImageRelation::factory()->create([
                     "media_library_id" => $mediaLibrary->id,
                     "component_id" => $component->id,
+                    "primary" => 0
                 ]);
             }
         }
