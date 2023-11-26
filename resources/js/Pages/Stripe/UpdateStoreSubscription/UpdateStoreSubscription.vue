@@ -40,9 +40,7 @@ const breadcrumbsLinks = [
                 title="Update Subscription
 "
             />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Update Subscription</h2>
-            </template>
+            <template #header> Update Subscription </template>
 
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

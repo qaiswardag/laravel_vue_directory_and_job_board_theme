@@ -227,16 +227,10 @@ const notificationsModalButton = function () {
                 <header></header>
                 <main></main>
             </DynamicModal>
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Subscriptions</h2>
-            </template>
+            <template #header> Subscriptions </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
-
-            <div>
-                <h1 class="myPrimaryHeaderMessage">Subscriptions</h1>
-            </div>
 
             <!-- error # start -->
             <template
@@ -262,17 +256,18 @@ const notificationsModalButton = function () {
             </template>
             <!-- Loading # end -->
 
-            <template
+            <div
                 v-if="
                     !isLoadingSubscriptions &&
                     !isErrorSubscriptions &&
                     isSuccessSubscriptions
                 "
+                class="myPrimarySection"
             >
                 <!-- Active subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="mySecondaryHeader">Active Subscriptions</h2>
+                        <h2 class="myQuaternaryHeader">Active Subscriptions</h2>
                     </div>
                     <template
                         v-if="
@@ -501,9 +496,11 @@ const notificationsModalButton = function () {
                                                             "
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                                         >
-                                                            <TrashIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                            ></TrashIcon>
+                                                            <span
+                                                                class="myMediumIcon material-symbols-outlined"
+                                                            >
+                                                                delete
+                                                            </span>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -520,7 +517,7 @@ const notificationsModalButton = function () {
                 <!-- Canceled subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="mySecondaryHeader">
+                        <h2 class="myQuaternaryHeader">
                             Canceled Subscriptions
                         </h2>
                     </div>
@@ -728,9 +725,11 @@ const notificationsModalButton = function () {
                                                             "
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                         >
-                                                            <CheckIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                            ></CheckIcon>
+                                                            <span
+                                                                class="myMediumIcon material-symbols-outlined"
+                                                            >
+                                                                check
+                                                            </span>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -746,7 +745,7 @@ const notificationsModalButton = function () {
                 <!-- Ended subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="mySecondaryHeader">Ended Subscriptions</h2>
+                        <h2 class="myQuaternaryHeader">Ended Subscriptions</h2>
                     </div>
                     <template
                         v-if="
@@ -947,7 +946,7 @@ const notificationsModalButton = function () {
                 <!-- Incomplete subcriptions # start -->
                 <div class="mb-24">
                     <div class="mb-4">
-                        <h2 class="mySecondaryHeader">
+                        <h2 class="myQuaternaryHeader">
                             Incomplete Subscriptions
                         </h2>
                     </div>
@@ -1178,9 +1177,11 @@ const notificationsModalButton = function () {
                                                             "
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                                         >
-                                                            <TrashIcon
-                                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                            ></TrashIcon>
+                                                            <span
+                                                                class="myMediumIcon material-symbols-outlined"
+                                                            >
+                                                                delete
+                                                            </span>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -1192,7 +1193,7 @@ const notificationsModalButton = function () {
                         </div>
                     </template>
                 </div>
-            </template>
+            </div>
 
             <div
                 class="flex justify-end mt-4 pb-8 bottom-0 right-0 sticky"

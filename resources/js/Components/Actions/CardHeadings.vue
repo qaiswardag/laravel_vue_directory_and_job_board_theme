@@ -22,17 +22,19 @@ defineProps({
 
 <template>
     <div class="myPrimarySection">
-        <div class="bg-white px-4 py-5 sm:px-6">
+        <div class="overflow-x-scrollpx-2 pt-3 pb-2 rounded-full">
             <div
                 class="flex items-center justify-between space-x-3 gap-2 md:flex-row"
             >
                 <div class="min-w-0 w-2/3">
-                    <p class="mySecondaryHeader my-0">
+                    <p class="myQuaternaryHeader my-0">
                         <slot name="title" />
                     </p>
-                    <p class="myPrimaryParagraph pt-2 text-sm">
-                        <slot name="subTitle" />
-                    </p>
+                    <template v-if="$slots.subTitle">
+                        <p class="myPrimaryParagraph pt-2 text-sm">
+                            <slot name="subTitle" />
+                        </p>
+                    </template>
                 </div>
                 <div
                     class="flex flex-shrink-0 items-center self-center myPrimaryGap"
@@ -43,10 +45,11 @@ defineProps({
                             <MenuButton
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <EllipsisVerticalIcon
-                                    class="mySmallIcon"
-                                    aria-hidden="true"
-                                />
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    more_vert
+                                </span>
                             </MenuButton>
                         </div>
 

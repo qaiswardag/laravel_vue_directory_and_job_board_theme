@@ -64,7 +64,7 @@ const handleDownloadHTML = function () {
     <!-- Advanced Settings - start -->
     <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
         <div class="flex items-left flex-col gap-1">
-            <h3 class="myFourthHeader">Advanced Settings</h3>
+            <h3 class="myQuaternaryHeader">Advanced Settings</h3>
             <p class="myPrimaryParagraph text-xs">
                 Manage advanced settings here. Like an overview of Selected
                 Element, Component, and Components in real-time.
@@ -84,7 +84,7 @@ const handleDownloadHTML = function () {
     <!-- Download Layout HTML - start -->
     <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
         <div class="flex items-left flex-col gap-1">
-            <h3 class="myFourthHeader">Download Page as HTML</h3>
+            <h3 class="myQuaternaryHeader">Download Page as HTML</h3>
             <p class="myPrimaryParagraph text-xs">
                 Download current page layout.
             </p>

@@ -35,9 +35,7 @@ const currentUserDetails = ref(false);
     <MainLayout>
         <LoggedInLayout>
             <Head title="Dashboard" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Dashboard</h2>
-            </template>
+            <template #header> Dashboard </template>
 
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

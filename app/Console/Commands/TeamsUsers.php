@@ -60,10 +60,10 @@ class TeamsUsers extends Command
                 "password" => Hash::make("123456"),
             ]);
 
-            Superadmin::factory()->create([
-                "user_id" => 2,
-                "role" => "reader", // reader, editor or admin
-            ]);
+            // Superadmin::factory()->create([
+            //     "user_id" => 2,
+            //     "role" => "editor", // reader, editor or admin
+            // ]);
         }
 
         // Check if the team with ID 1 exists
@@ -89,15 +89,41 @@ class TeamsUsers extends Command
             ]);
         }
 
+
+        // Check if the user with ID 1 exists
+        if (!User::where("id", 3)->exists()) {
+            User::factory()->create([
+                "id" => 3,
+                "first_name" => "Eliza",
+                "last_name" => "Stoenescu",
+                "email" => "es@myself.ae",
+                "public" => true,
+                "current_team_id" => 2,
+                "password" => Hash::make("123456"),
+            ]);
+
+            Superadmin::factory()->create([
+                "user_id" => 3, // Qais Wardag
+                "role" => "editor", // reader, editor, or admin
+            ]);
+        }
+
+
         TeamUser::factory()->create([
-            "team_id" => Team::find(2)->id,
             "user_id" => User::find(1)->id,
+            "team_id" => Team::find(2)->id,
             "role" => "admin",
         ]);
 
         TeamUser::factory()->create([
-            "team_id" => Team::find(1)->id,
             "user_id" => User::find(2)->id,
+            "team_id" => Team::find(2)->id,
+            "role" => "editor",
+        ]);
+
+        TeamUser::factory()->create([
+            "user_id" => User::find(3)->id,
+            "team_id" => Team::find(2)->id,
             "role" => "editor",
         ]);
 

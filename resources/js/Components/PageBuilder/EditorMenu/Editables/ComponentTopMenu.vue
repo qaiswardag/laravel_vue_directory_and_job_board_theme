@@ -82,7 +82,9 @@ const deleteComponent = function (e) {
                 @click="deleteComponent()"
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
             >
-                <TrashIcon class="mySmallIcon" />
+                <span class="myMediumIcon material-symbols-outlined">
+                    delete
+                </span>
             </div>
         </div>
 

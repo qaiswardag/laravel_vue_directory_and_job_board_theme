@@ -61,23 +61,27 @@ const handleRemoveItem = function (selectedItem) {
                 :disabled="listSelected.name === item.name"
             >
                 <template v-if="props.icon === 'Squares2X2Icon'">
-                    <Squares2X2Icon
-                        class="mySmallIcon py-0 m-0"
-                    ></Squares2X2Icon>
+                    <span class="myMediumIcon material-symbols-outlined">
+                        category
+                    </span>
                 </template>
 
                 <template v-if="props.icon === 'GlobeAmericasIcon'">
-                    <GlobeAmericasIcon
-                        class="mySmallIcon py-0 m-0"
-                    ></GlobeAmericasIcon>
+                    <span class="myMediumIcon material-symbols-outlined">
+                        globe
+                    </span>
                 </template>
 
                 <template v-if="props.icon === 'MapPinIcon'">
-                    <MapPinIcon class="mySmallIcon py-0 m-0"></MapPinIcon>
+                    <span class="myMediumIcon material-symbols-outlined">
+                        location_on
+                    </span>
                 </template>
 
                 <template v-if="props.icon === 'NewspaperIcon'">
-                    <NewspaperIcon class="mySmallIcon py-0 m-0"></NewspaperIcon>
+                    <span class="myMediumIcon material-symbols-outlined">
+                        book_4
+                    </span>
                 </template>
 
                 {{ item.name }}

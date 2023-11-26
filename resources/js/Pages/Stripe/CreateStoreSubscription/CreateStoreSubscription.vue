@@ -37,9 +37,7 @@ const breadcrumbsLinks = [
                 title="Create Subscription
 "
             />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Create Subscription</h2>
-            </template>
+            <template #header> Create Subscription </template>
 
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

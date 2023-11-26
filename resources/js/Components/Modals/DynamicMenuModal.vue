@@ -89,9 +89,10 @@ const handleLogout = () => {
                                 $page.props.user.current_team.id
                             )
                         "
+                        class="myPrimaryParagraph"
                     >
                         <div
-                            class="group relative flex gap-x-6 rounded-lg px-4 py-2 items-center bg-gray-50 hover:underline"
+                            class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-gray-50 cursor-pointer"
                             :class="[
                                 route().current('teams.show') ||
                                 route().current('team.update.information') ||
@@ -105,9 +106,11 @@ const handleLogout = () => {
                                 type="button"
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <AdjustmentsHorizontalIcon
-                                    class="mySmallIcon"
-                                />
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    settings
+                                </span>
                             </button>
                             <div>Team Settings</div>
                         </div>
@@ -126,9 +129,10 @@ const handleLogout = () => {
                         route().current('user.profile.password') ||
                         route().current('user.profile.security')
                     "
+                    class="myPrimaryParagraph"
                 >
                     <div
-                        class="group relative flex gap-x-6 rounded-lg px-4 py-2 items-center bg-gray-50 hover:underline"
+                        class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-gray-50 cursor-pointer"
                         :class="[
                             route().current('profile.show') ||
                             route().current('user.profile.update') ||
@@ -166,7 +170,11 @@ const handleLogout = () => {
                                     type="button"
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 >
-                                    <UserIcon class="mySmallIcon" />
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        person
+                                    </span>
                                 </button>
                             </template>
                         </div>
@@ -177,13 +185,17 @@ const handleLogout = () => {
                 <form @submit.prevent="handleLogout">
                     <div
                         @click="handleLogout"
-                        class="hover:bg-gray-50 group relative flex gap-x-6 rounded-lg px-4 py-2 cursor-pointer bg-gray-50 items-center hover:underline"
+                        class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-gray-50 cursor-pointer"
                     >
                         <button
                             type="button"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         >
-                            <ArrowRightIcon class="mySmallIcon" />
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                arrow_forward
+                            </span>
                         </button>
                         <div>Log out</div>
                     </div>

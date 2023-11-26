@@ -147,24 +147,11 @@ const notificationsSlideOverButton = function () {
                     <div
                         class="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-3"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                            />
-                        </svg>
+                        <span class="material-symbols-outlined"> search </span>
                     </div>
                     <input
                         id="search-field"
-                        class="text-sm cursor-pointer block w-full h-full pl-8 pr-3 border-transparent placeholder-gray-500 focus:outline-none border-0 focus:ring-0 font-normal text-myPrimaryDarkGrayColor rounded-md py-4 px-3"
+                        class="text-sm cursor-pointer block w-full h-full pl-10 pr-3 border-transparent placeholder-gray-500 focus:outline-none border-0 focus:ring-0 font-normal text-myPrimaryDarkGrayColor rounded-md py-4 px-3"
                         @click.prevent="handleSearchAnything"
                         placeholder="Search anything..."
                         readonly
@@ -186,7 +173,9 @@ const notificationsSlideOverButton = function () {
                 <div
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
                 >
-                    <HomeIcon class="myMediumIcon"></HomeIcon>
+                    <span class="myMediumIcon material-symbols-outlined">
+                        home
+                    </span>
                 </div>
             </Link>
 
@@ -225,7 +214,9 @@ const notificationsSlideOverButton = function () {
                 type="button"
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
-                <UserIcon class="myMediumIcon" aria-hidden="true" />
+                <span class="myMediumIcon material-symbols-outlined">
+                    person
+                </span>
             </button>
 
             <button
@@ -234,7 +225,9 @@ const notificationsSlideOverButton = function () {
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
             >
                 <span class="sr-only">View notifications</span>
-                <BellIcon class="myMediumIcon"></BellIcon>
+                <span class="myMediumIcon material-symbols-outlined">
+                    notifications
+                </span>
             </button>
 
             <button
@@ -243,7 +236,9 @@ const notificationsSlideOverButton = function () {
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
                 <span class="sr-only">View Menu</span>
-                <Bars2Icon class="myMediumIcon" aria-hidden="true" />
+                <span class="myMediumIcon material-symbols-outlined">
+                    drag_handle
+                </span>
             </button>
         </nav>
     </header>

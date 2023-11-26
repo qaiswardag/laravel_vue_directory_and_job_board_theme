@@ -93,16 +93,10 @@ const breadcrumbsLinks = [
         <LoggedInLayout>
             <Head title="Payments and invoices" />
 
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Payments and invoices</h2>
-            </template>
+            <template #header> Payments and invoices </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
-
-            <div>
-                <h1 class="myPrimaryHeaderMessage">Payments and invoices</h1>
-            </div>
 
             <!-- error # start -->
             <template
@@ -138,9 +132,12 @@ const breadcrumbsLinks = [
                         fetchedPayments.payments.invoices.length === 0)
                 "
             >
-                <p class="myPrimaryParagraph">
-                    Looks like there are no payments and invoices!
-                </p>
+                <div>
+                    <h1 class="myQuaternaryHeader">Payments and invoices</h1>
+                    <p class="myPrimaryParagraph">
+                        Looks like there are no payments and invoices!
+                    </p>
+                </div>
             </template>
 
             <template v-if="!isLoadingPayments && !isErrorPayments">

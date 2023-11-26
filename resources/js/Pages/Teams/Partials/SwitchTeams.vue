@@ -187,7 +187,7 @@ const switchTeam = function (team) {
                                                     scope="col"
                                                     class="myPrimaryTableTh"
                                                 >
-                                                    Team Name
+                                                    Switch to Company
                                                 </th>
 
                                                 <th
@@ -202,12 +202,7 @@ const switchTeam = function (team) {
                                                 >
                                                     Your Role
                                                 </th>
-                                                <th
-                                                    scope="col"
-                                                    class="myPrimaryTableTh"
-                                                >
-                                                    Switch Team
-                                                </th>
+
                                                 <th
                                                     scope="col"
                                                     class="myPrimaryTableTh"
@@ -309,93 +304,6 @@ const switchTeam = function (team) {
                                                         "
                                                     >
                                                         <div
-                                                            class="flex items-center myPrimaryGap justify-start"
-                                                            v-if="
-                                                                $page.props.user
-                                                                    .all_teams
-                                                                    .length > 0
-                                                            "
-                                                        >
-                                                            <button
-                                                                class="myPrimaryButtonNoBackground text-myPrimaryDarkGrayColor flex items-center gap-2"
-                                                                :class="{
-                                                                    'text-myPrimaryBrandColor cursor-default':
-                                                                        team.id ===
-                                                                        $page
-                                                                            .props
-                                                                            .user
-                                                                            .current_team_id,
-                                                                }"
-                                                            >
-                                                                <div>
-                                                                    {{
-                                                                        team.name
-                                                                    }}
-                                                                </div>
-                                                                <div
-                                                                    v-if="
-                                                                        team.id ===
-                                                                        $page
-                                                                            .props
-                                                                            .user
-                                                                            .current_team_id
-                                                                    "
-                                                                >
-                                                                    <CheckIcon
-                                                                        class="h-5 w-5"
-                                                                    ></CheckIcon>
-                                                                </div>
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </td>
-
-                                                <td
-                                                    class="myPrimaryTableTBodyTd"
-                                                >
-                                                    <div
-                                                        class="myPrimaryTag"
-                                                        :class="
-                                                            team.public
-                                                                ? 'bg-myPrimaryLinkColor text-white'
-                                                                : 'bg-myPrimaryErrorColor text-white'
-                                                        "
-                                                    >
-                                                        {{
-                                                            team.public
-                                                                ? "Public"
-                                                                : "Private"
-                                                        }}
-                                                    </div>
-                                                </td>
-
-                                                <td
-                                                    class="myPrimaryTableTBodyTd"
-                                                >
-                                                    {{
-                                                        team.membership
-                                                            ? team.membership.role
-                                                                  .charAt(0)
-                                                                  .toUpperCase() +
-                                                              team.membership.role.slice(
-                                                                  1
-                                                              )
-                                                            : "Owner"
-                                                    }}
-                                                </td>
-                                                <td
-                                                    class="myPrimaryTableTBodyTd"
-                                                >
-                                                    <form
-                                                        @submit.prevent="
-                                                            handleSwitchToTeam(
-                                                                team,
-                                                                $page.props.user
-                                                                    .current_team_id
-                                                            )
-                                                        "
-                                                    >
-                                                        <div
                                                             class="flex items-center myPrimaryGap"
                                                             v-if="
                                                                 $page.props.user
@@ -435,27 +343,77 @@ const switchTeam = function (team) {
                                                                 }"
                                                             >
                                                                 <div>
-                                                                    {{
-                                                                        team.name
-                                                                    }}
+                                                                    <span>
+                                                                        {{
+                                                                            team.name
+                                                                        }}
+                                                                    </span>
                                                                 </div>
-                                                                <div
-                                                                    v-if="
-                                                                        team.id ===
-                                                                        $page
-                                                                            .props
-                                                                            .user
-                                                                            .current_team_id
-                                                                    "
-                                                                >
-                                                                    <CheckIcon
-                                                                        class="w-5 h-5"
-                                                                    ></CheckIcon>
+                                                                <div>
+                                                                    <span
+                                                                        v-if="
+                                                                            team.id ===
+                                                                            $page
+                                                                                .props
+                                                                                .user
+                                                                                .current_team_id
+                                                                        "
+                                                                        class="myMediumIcon material-symbols-outlined"
+                                                                    >
+                                                                        check
+                                                                    </span>
+                                                                    <span
+                                                                        v-if="
+                                                                            team.id !==
+                                                                            $page
+                                                                                .props
+                                                                                .user
+                                                                                .current_team_id
+                                                                        "
+                                                                        class="myMediumIcon material-symbols-outlined"
+                                                                    >
+                                                                        refresh
+                                                                    </span>
                                                                 </div>
                                                             </button>
                                                         </div>
                                                     </form>
                                                 </td>
+
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    <div
+                                                        class="myPrimaryTag"
+                                                        :class="
+                                                            team.public
+                                                                ? 'bg-myPrimaryLinkColor text-white'
+                                                                : 'bg-myPrimaryErrorColor text-white'
+                                                        "
+                                                    >
+                                                        {{
+                                                            team.public
+                                                                ? "Public"
+                                                                : "Private"
+                                                        }}
+                                                    </div>
+                                                </td>
+
+                                                <td
+                                                    class="myPrimaryTableTBodyTd"
+                                                >
+                                                    {{
+                                                        team.membership
+                                                            ? team.membership.role
+                                                                  .charAt(0)
+                                                                  .toUpperCase() +
+                                                              team.membership.role.slice(
+                                                                  1
+                                                              )
+                                                            : "Owner"
+                                                    }}
+                                                </td>
+
                                                 <td
                                                     class="myPrimaryTableTBodyTd"
                                                 >
@@ -474,12 +432,27 @@ const switchTeam = function (team) {
                                                                 team.id
                                                             )
                                                         "
-                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                        class="h-10 w-10 text-myPrimaryDarkGrayColor cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                     >
-                                                        <PencilIcon
-                                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                        ></PencilIcon>
+                                                        <span
+                                                            class="material-symbols-outlined"
+                                                        >
+                                                            edit
+                                                        </span>
                                                     </Link>
+                                                    <span
+                                                        v-if="
+                                                            $page.props.user
+                                                                .all_teams
+                                                                .length > 0 &&
+                                                            team.id !==
+                                                                $page.props.user
+                                                                    .current_team_id
+                                                        "
+                                                    >
+                                                        Switch to Company for
+                                                        edit
+                                                    </span>
                                                 </td>
                                             </tr>
                                         </tbody>

@@ -117,9 +117,7 @@ const faqs = [
                         class="mx-auto max-w-7xl px-6 py-32 text-center sm:py-40 lg:px-8 z-20"
                     >
                         <div>
-                            <h1
-                                class="myPrimaryMainPageHeaderNotLoggedIn text-white"
-                            >
+                            <h1 class="myPrimaryHeader text-white">
                                 myself fashion &amp; jobs <br />
                             </h1>
                             <p
@@ -149,17 +147,19 @@ const faqs = [
                             alt="/"
                         />
                         <div
-                            class="bg-black/10 absolute top-0 left-0 w-full h-[32rem]"
+                            class="bg-black/20 absolute top-0 left-0 w-full h-[32rem]"
                         ></div>
                         <div
-                            class="absolute text-2xl text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                            class="absolute text-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                         >
-                            <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
+                            <h1 class="myPrimaryHeader text-white text-center">
                                 myself fashion & jobs
                                 <br />
                             </h1>
 
-                            <p class="myPrimaryMainPageParagraphNotLoggedIn">
+                            <p
+                                class="myPrimaryParagraph text-white text-center font-medium"
+                            >
                                 Discover Fashion in the United Arab Emirates.
                             </p>
                         </div>
@@ -201,10 +201,10 @@ const faqs = [
                             class="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
                         >
                             <div
-                                class="w-full h-[30rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                                class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
                             >
                                 <img
-                                    class="top-0 left-0 w-full object-cover h-[30rem] rounded-lg"
+                                    class="top-0 left-0 w-full object-cover lg:h-[30rem] h-[22rem] rounded-lg"
                                     src="https://images.unsplash.com/photo-1543728069-a3f97c5a2f32?auto=format&fit=crop&q=80&w=3269&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                                     alt="/"
                                 />
@@ -223,10 +223,10 @@ const faqs = [
                                 </div>
                             </div>
                             <div
-                                class="w-full h-[30rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                                class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
                             >
                                 <img
-                                    class="top-0 left-0 w-full object-cover h-[30rem] rounded-lg"
+                                    class="top-0 left-0 w-full object-cover lg:h-[30rem] h-[22rem] rounded-lg"
                                     src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/64e8fb8601b9e5823dfede12_wys-1.webp"
                                     alt="/"
                                 />
@@ -245,10 +245,10 @@ const faqs = [
                                 </div>
                             </div>
                             <div
-                                class="w-full h-[30rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                                class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
                             >
                                 <img
-                                    class="top-0 left-0 w-full object-cover h-[30rem] rounded-lg"
+                                    class="top-0 left-0 w-full object-cover lg:h-[30rem] h-[22rem] rounded-lg"
                                     src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/64e8fba35806093b06741fe8_wys-2.webp"
                                     alt="/"
                                 />
@@ -267,10 +267,10 @@ const faqs = [
                                 </div>
                             </div>
                             <div
-                                class="w-full h-[30rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                                class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
                             >
                                 <img
-                                    class="top-0 left-0 w-full object-cover h-[30rem] rounded-lg"
+                                    class="top-0 left-0 w-full object-cover lg:h-[30rem] h-[22rem] rounded-lg"
                                     src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/64e8fccaba3cd3a0f6992383_wys-3.webp"
                                     alt="/"
                                 />
@@ -327,16 +327,18 @@ const faqs = [
                                             <span
                                                 class="ml-6 flex h-7 items-center"
                                             >
-                                                <PlusSmallIcon
+                                                <span
                                                     v-if="!open"
-                                                    class="h-5 w-5"
-                                                    aria-hidden="true"
-                                                />
-                                                <MinusSmallIcon
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    add
+                                                </span>
+                                                <span
                                                     v-else
-                                                    class="h-5 w-5"
-                                                    aria-hidden="true"
-                                                />
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    remove
+                                                </span>
                                             </span>
                                         </DisclosureButton>
                                     </dt>

@@ -29,9 +29,7 @@ const breadcrumbsLinks = [
     <MainLayout>
         <LoggedInLayout>
             <Head title="Create Component" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Create a New Component</h2>
-            </template>
+            <template #header> Create a New Component </template>
 
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

@@ -16,7 +16,7 @@ defineProps({
     <!-- chimp start -->
     <div class="myPrimaryWidthScreenModule">
         <template v-if="headerArea">
-            <div class="myHeaderParagraphSection">
+            <div class="myPrimaryContentSection">
                 <h2 class="mySecondaryHeader">
                     <slot name="title" />
                 </h2>

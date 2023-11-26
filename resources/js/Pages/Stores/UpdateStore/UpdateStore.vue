@@ -44,9 +44,7 @@ const breadcrumbsLinks = [
     <MainLayout>
         <LoggedInLayout>
             <Head title="Update Store" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Update Store</h2>
-            </template>
+            <template #header> Update Store </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>

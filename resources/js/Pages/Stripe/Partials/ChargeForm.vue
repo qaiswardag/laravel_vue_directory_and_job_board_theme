@@ -492,10 +492,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <PlusIcon
-                                                        class="h-3 w-3"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                 </span>
                                                 <span
                                                     v-if="selected"
@@ -506,10 +507,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <CheckIcon
-                                                        class="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ComboboxOption>
@@ -692,10 +694,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <PlusIcon
-                                                        class="h-3 w-3"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                 </span>
                                                 <span
                                                     v-if="selected"
@@ -706,10 +709,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <CheckIcon
-                                                        class="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ComboboxOption>
@@ -866,10 +870,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <PlusIcon
-                                                        class="h-3 w-3"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                 </span>
                                                 <span
                                                     v-if="selected"
@@ -880,10 +885,11 @@ onMounted(() => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <CheckIcon
-                                                        class="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ComboboxOption>
@@ -915,225 +921,210 @@ onMounted(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeader">
                     Select product
+                    <p class="pb-4 pt-2">Select one of below products</p>
                 </div>
 
-                <div
-                    class="flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
-                >
-                    <div class="space-y-4">
-                        <div
-                            as="template"
-                            v-for="product in products"
-                            :key="product.id"
-                        >
-                            <div
-                                class="flex flex-col gap-2 border border-gray-200 hover:border-myPrimaryLinkColor shadow-sm sm:flex sm:justify-between rounded-lg myPrimaryTag bg-white w-max min-w-full"
-                            >
-                                <div>
-                                    <div class="flex items-center">
-                                        <div class="flex flex-col text-sm">
-                                            <div
-                                                as="span"
-                                                class="font-medium text-gray-900"
+                <div class="flex flex-col gap-6">
+                    <div v-for="product in products" :key="product.id">
+                        <div class="px-2 py-8 rounded border border-gray-200">
+                            <div>
+                                <div class="flex items-center">
+                                    <div class="flex flex-col text-sm">
+                                        <div
+                                            as="span"
+                                            class="font-medium text-gray-900"
+                                        >
+                                            <p
+                                                :id="product.id"
+                                                class="myQuaternaryHeader"
                                             >
-                                                <h3
-                                                    :id="product.id"
-                                                    class="text-gray-900 text-lg font-semibold leading-8"
-                                                >
-                                                    {{ product.name }}
-                                                </h3>
+                                                {{ product.name }}
+                                            </p>
 
-                                                <div
-                                                    class="mt-2 flex items-baseline gap-x-1"
+                                            <div
+                                                class="mt-2 flex items-baseline gap-x-1"
+                                            >
+                                                <span
+                                                    class="text-2xl font-bold tracking-tight text-gray-900"
+                                                    >{{ product.price }}</span
                                                 >
-                                                    <span
-                                                        class="text-2xl font-bold tracking-tight text-gray-900"
-                                                        >{{
-                                                            product.price
-                                                        }}</span
-                                                    >
-                                                    <span
-                                                        class="text-sm font-semibold leading-6 text-gray-600"
-                                                        >{{
-                                                            product.frequencies
-                                                        }}</span
-                                                    >
-                                                </div>
-                                                <template
-                                                    v-if="
-                                                        !product.dynamic_product
-                                                    "
+                                                <span
+                                                    class="text-sm font-semibold leading-6 text-gray-600"
+                                                    >{{
+                                                        product.frequencies
+                                                    }}</span
                                                 >
-                                                    <p>
-                                                        Total: ${{
-                                                            product.totalPrice
-                                                        }}
-                                                    </p>
-                                                </template>
-                                                <template
-                                                    v-if="
-                                                        product.dynamic_product
-                                                    "
-                                                >
-                                                    <p>
-                                                        Total: ${{
-                                                            fullDynamicPrice
-                                                        }}
-                                                    </p>
-                                                </template>
-                                                <div
-                                                    class="block text-[10px] leading-6 text-gray-600 italic mt-1"
-                                                >
-                                                    {{ product.billed }}
-                                                </div>
+                                            </div>
+                                            <template
+                                                v-if="!product.dynamic_product"
+                                            >
+                                                <p>
+                                                    Total: ${{
+                                                        product.totalPrice
+                                                    }}
+                                                </p>
+                                            </template>
+                                            <template
+                                                v-if="product.dynamic_product"
+                                            >
+                                                <p>
+                                                    Total: ${{
+                                                        fullDynamicPrice
+                                                    }}
+                                                </p>
+                                            </template>
+                                            <div
+                                                class="block text-[10px] leading-6 text-gray-600 italic mt-1"
+                                            >
+                                                {{ product.billed }}
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <p
-                                        class="text-xs text-red-400 font-medium my-4"
-                                    >
-                                        formCharge.product_quantity:
-                                        {{
-                                            JSON.stringify(
-                                                formCharge.product_quantity
-                                            )
-                                        }}
-                                    </p>
-                                    <div
-                                        class="flex justify-between items-center my-2 gap-4 text-xs font-medium myPrimaryTag"
-                                    >
-                                        <div>
-                                            <!-- product quantity # start  -->
+                                <p
+                                    class="text-xs text-red-400 font-medium my-4"
+                                >
+                                    formCharge.product_quantity:
+                                    {{
+                                        JSON.stringify(
+                                            formCharge.product_quantity
+                                        )
+                                    }}
+                                </p>
+                                <div
+                                    class="flex justify-between items-center gap-4 text-xs font-medium myPrimaryTag my-0"
+                                >
+                                    <div>
+                                        <!-- product quantity # start  -->
+                                        <div
+                                            v-if="
+                                                product.dynamic_product &&
+                                                selectedProduct?.id ===
+                                                    product.id
+                                            "
+                                        >
+                                            <!-- Input Number -->
                                             <div
-                                                v-if="
-                                                    product.dynamic_product &&
-                                                    selectedProduct?.id ===
-                                                        product.id
-                                                "
+                                                class="myPrimaryInput p-0 mt-0"
+                                                data-hs-input-number
                                             >
-                                                <!-- Input Number -->
                                                 <div
-                                                    class="myPrimaryInput p-0 mt-0"
-                                                    data-hs-input-number
+                                                    class="w-full flex gap-2 justify-between items-center"
                                                 >
+                                                    <input
+                                                        placeholder="Store quantity.."
+                                                        id="product_quantity"
+                                                        @input="
+                                                            changeInProductQuantity(
+                                                                product
+                                                            )
+                                                        "
+                                                        v-model="
+                                                            productQuantity
+                                                        "
+                                                        class="myPrimaryInputNoBorder mt-0"
+                                                        autocomplete="off"
+                                                    />
                                                     <div
-                                                        class="w-full flex gap-2 justify-between items-center"
+                                                        class="flex items-center"
                                                     >
-                                                        <input
-                                                            placeholder="Store quantity.."
-                                                            id="product_quantity"
-                                                            @input="
-                                                                changeInProductQuantity(
+                                                        <button
+                                                            @click="
+                                                                removeFromProductQuantity(
                                                                     product
                                                                 )
                                                             "
-                                                            v-model="
-                                                                productQuantity
-                                                            "
-                                                            class="myPrimaryInputNoBorder mt-0"
-                                                            autocomplete="off"
-                                                        />
-                                                        <div
-                                                            class="flex items-center"
+                                                            type="button"
+                                                            class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
                                                         >
-                                                            <button
-                                                                @click="
-                                                                    removeFromProductQuantity(
-                                                                        product
-                                                                    )
-                                                                "
-                                                                type="button"
-                                                                class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                            <span
+                                                                class="myMediumIcon material-symbols-outlined"
                                                             >
-                                                                <MinusIcon
-                                                                    class="mySmallIcon"
-                                                                ></MinusIcon>
-                                                            </button>
-                                                            <button
-                                                                @click="
-                                                                    addToProductQuantity(
-                                                                        product
-                                                                    )
-                                                                "
-                                                                type="button"
-                                                                class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                                remove
+                                                            </span>
+                                                        </button>
+                                                        <button
+                                                            @click="
+                                                                addToProductQuantity(
+                                                                    product
+                                                                )
+                                                            "
+                                                            type="button"
+                                                            class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                                        >
+                                                            <span
+                                                                class="myMediumIcon material-symbols-outlined"
                                                             >
-                                                                <PlusIcon
-                                                                    class="mySmallIcon"
-                                                                ></PlusIcon>
-                                                            </button>
-                                                        </div>
+                                                                add
+                                                            </span>
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <!-- End Input Number -->
                                             </div>
-                                            <!-- product quantity # end  -->
+                                            <!-- End Input Number -->
                                         </div>
-
-                                        <!-- select product # start -->
-                                        <div
-                                            class="flex gap-2 justify-end items-end self-start justify-self-end"
-                                        >
-                                            <div>
-                                                <button
-                                                    class="myPrimaryTag transition mt-0 mb-0 break-keep w-max bg-white"
-                                                    v-if="
-                                                        selectedProduct?.id !==
-                                                        product.id
-                                                    "
-                                                    type="button"
-                                                    @click="
-                                                        handleSelectProduct(
-                                                            product
-                                                        )
-                                                    "
-                                                >
-                                                    <span> Select </span>
-                                                </button>
-                                                <button
-                                                    class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0 mb-0 break-keep w-max"
-                                                    v-if="
-                                                        selectedProduct?.id ===
-                                                        product.id
-                                                    "
-                                                    type="button"
-                                                    @click="
-                                                        handleSelectProduct(
-                                                            product
-                                                        )
-                                                    "
-                                                >
-                                                    <div
-                                                        class="flex items-center justify-center gap-2"
-                                                    >
-                                                        <span> Selected</span>
-                                                        <CheckIcon
-                                                            class="w-3 h-3 stroke-1.5"
-                                                        ></CheckIcon>
-                                                    </div>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <!-- select product # end -->
+                                        <!-- product quantity # end  -->
                                     </div>
+
+                                    <!-- select product # start -->
+                                    <div
+                                        class="flex gap-2 justify-end items-end self-start justify-self-end"
+                                    >
+                                        <div>
+                                            <button
+                                                class="myPrimaryTag transition mt-0 mb-0 break-keep w-max bg-white"
+                                                v-if="
+                                                    selectedProduct?.id !==
+                                                    product.id
+                                                "
+                                                type="button"
+                                                @click="
+                                                    handleSelectProduct(product)
+                                                "
+                                            >
+                                                <span> Select </span>
+                                            </button>
+                                            <button
+                                                class="myPrimaryTag transition bg-myPrimaryLinkColor text-white mt-0 mb-0 break-keep w-max"
+                                                v-if="
+                                                    selectedProduct?.id ===
+                                                    product.id
+                                                "
+                                                type="button"
+                                                @click="
+                                                    handleSelectProduct(product)
+                                                "
+                                            >
+                                                <div
+                                                    class="flex items-center justify-center gap-2"
+                                                >
+                                                    <span> Selected</span>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- select product # end -->
                                 </div>
                             </div>
-                            <div class="min-h-[1.5rem]">
-                                <template
-                                    v-if="selectedProduct?.id === product.id"
-                                >
-                                    <InputError
-                                        :message="formCharge.errors.product_id"
-                                    />
-                                </template>
-                            </div>
+                        </div>
+                        <div class="min-h-[1.5rem]">
+                            <template v-if="selectedProduct?.id === product.id">
+                                <InputError
+                                    :message="formCharge.errors.product_id"
+                                />
+                            </template>
                         </div>
                     </div>
-                    <template v-if="!selectedProduct?.id">
-                        <InputError :message="formCharge.errors.product_id" />
-                    </template>
                 </div>
+                <template v-if="!selectedProduct?.id">
+                    <InputError :message="formCharge.errors.product_id" />
+                </template>
             </div>
 
             <div class="myInputsOrganization">

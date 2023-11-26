@@ -275,9 +275,7 @@ const routesArray = [
                 <main></main>
             </DynamicModal>
             <Head title="Components" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">List of Components</h2>
-            </template>
+            <template #header> List of Components </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
@@ -285,7 +283,7 @@ const routesArray = [
             <template #description>deeeeeeeee</template>
             <div>
                 <div>
-                    <h1 class="myPrimaryHeaderMessage">No Team selected</h1>
+                    <h1 class="myTertiaryHeader">No Team selected</h1>
                 </div>
                 <p class="myPrimaryParagraph">
                     Looks like no Team is Selected!
@@ -529,10 +527,11 @@ const routesArray = [
                                                         :key="category"
                                                         class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                     >
-                                                        <Squares2X2Icon
-                                                            class="w-3 h-3 stroke-1.5"
-                                                        ></Squares2X2Icon>
-
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            category
+                                                        </span>
                                                         <span>
                                                             {{ category.name }}
                                                         </span>
@@ -577,10 +576,11 @@ const routesArray = [
                                                         <MenuButton
                                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                         >
-                                                            <EllipsisVerticalIcon
-                                                                class="mySmallIcon"
-                                                                aria-hidden="true"
-                                                            />
+                                                            <span
+                                                                class="myMediumIcon material-symbols-outlined"
+                                                            >
+                                                                more_vert
+                                                            </span>
                                                         </MenuButton>
                                                     </div>
                                                     <transition
@@ -595,7 +595,7 @@ const routesArray = [
                                                             class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                                         >
                                                             <MenuItem
-                                                                class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
+                                                                class="w-full flex justify-start text-sm leading-5 text-myPrimaryDarkGrayColor py-4 px-4 z-30 rounded hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
                                                             >
                                                                 <button
                                                                     class="flex gap-1 items-center"
@@ -606,9 +606,11 @@ const routesArray = [
                                                                         )
                                                                     "
                                                                 >
-                                                                    <CheckIcon
-                                                                        class="w-4 h-4"
-                                                                    ></CheckIcon>
+                                                                    <span
+                                                                        class="myMediumIcon material-symbols-outlined"
+                                                                    >
+                                                                        check
+                                                                    </span>
                                                                     Duplicate
                                                                     Component
                                                                 </button>
@@ -642,9 +644,11 @@ const routesArray = [
                                                     "
                                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                                 >
-                                                    <TrashIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                    ></TrashIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        delete
+                                                    </span>
                                                 </button>
                                             </td>
                                         </tr>

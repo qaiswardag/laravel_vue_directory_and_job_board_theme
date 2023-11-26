@@ -61,6 +61,7 @@ const breadcrumbsLinks = [
 const linksTopMenu = [
     {
         label: "Running Jobs",
+        icon: "work",
         route: {
             name: "team.jobs.index",
             parameters: [props.currentUserTeam.id],
@@ -68,6 +69,7 @@ const linksTopMenu = [
     },
     {
         label: "Drafts & Unpiad Jobs",
+        icon: "draw",
         route: {
             name: "team.jobs.index.unpaid",
             parameters: [props.currentUserTeam.id],
@@ -75,6 +77,7 @@ const linksTopMenu = [
     },
     {
         label: "Paid Expired Jobs",
+        icon: "schedule",
         route: {
             name: "team.jobs.index.expired",
             parameters: [props.currentUserTeam.id],
@@ -82,6 +85,7 @@ const linksTopMenu = [
     },
     {
         label: "Trash",
+        icon: "delete",
         route: {
             name: "team.jobs.index.trash",
             parameters: [props.currentUserTeam.id],
@@ -241,10 +245,8 @@ onMounted(() => {
                 <main></main>
             </DynamicModal>
             <template #header>
-                <h2 class="myPrimaryMainPageHeader">
-                    Jobs for
-                    {{ $page.props.user && $page.props.currentUserTeam.name }}
-                </h2>
+                Jobs for
+                {{ $page.props.user && $page.props.currentUserTeam.name }}
             </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
@@ -261,6 +263,7 @@ onMounted(() => {
                         type="button"
                         :href="route('team.jobs.create', currentUserTeam.id)"
                     >
+                        <span class="material-symbols-outlined"> add </span>
                         Create Job
                     </Link>
                 </template>
@@ -304,7 +307,7 @@ onMounted(() => {
                         <button
                             @click="handleSearch"
                             type="button"
-                            class="myPrimaryButton"
+                            class="myPrimarySearchButton"
                         >
                             Search
                         </button>
@@ -313,7 +316,7 @@ onMounted(() => {
             </form>
 
             <template v-if="posts && posts.data.length <= 0">
-                <h1 class="myPrimaryHeaderMessage">No Jobs</h1>
+                <h1 class="myQuaternaryHeader">No Jobs</h1>
                 <p class="myPrimaryParagraph">Looks like there are no jobs!</p>
             </template>
 
@@ -359,6 +362,12 @@ onMounted(() => {
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Paid at
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Status
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Application status
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Job publish date
@@ -475,7 +484,29 @@ onMounted(() => {
                                                 }}
                                             </template>
                                         </td>
-
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
+                                                class="myPrimaryTag"
+                                                :class="
+                                                    post.published
+                                                        ? 'bg-myPrimaryLinkColor text-white'
+                                                        : 'bg-myPrimaryErrorColor text-white'
+                                                "
+                                                >{{
+                                                    post.published
+                                                        ? "Published"
+                                                        : "Unpublished"
+                                                }}</span
+                                            >
+                                        </td>
+                                        <td class="myPrimaryTableTBodyTd">
+                                            <span
+                                                v-if="post.is_filled"
+                                                class="myPrimaryTag bg-myPrimaryErrorColor text-white"
+                                            >
+                                                Closed for new applications
+                                            </span>
+                                        </td>
                                         <td class="myPrimaryTableTBodyTd">
                                             <template v-if="post.started_at">
                                                 {{
@@ -509,9 +540,11 @@ onMounted(() => {
                                                     :key="jobCountry"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <GlobeAmericasIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></GlobeAmericasIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        globe
+                                                    </span>
                                                     <span>
                                                         {{ jobCountry.name }}
                                                     </span>
@@ -529,9 +562,11 @@ onMounted(() => {
                                                     :key="jobState"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <MapPinIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></MapPinIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        location_on
+                                                    </span>
                                                     <span>
                                                         {{ jobState.name }}
                                                     </span>
@@ -549,10 +584,11 @@ onMounted(() => {
                                                     :key="jobType"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <NewspaperIcon
-                                                        class="w-3 h-3 stroke-1.5"
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                    </NewspaperIcon>
+                                                        book_4
+                                                    </span>
                                                     <span>
                                                         {{ jobType.name }}
                                                     </span>
@@ -590,10 +626,11 @@ onMounted(() => {
                                                     :key="category"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <Squares2X2Icon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></Squares2X2Icon>
-
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        category
+                                                    </span>
                                                     <span>
                                                         {{ category.name }}
                                                     </span>
@@ -615,9 +652,11 @@ onMounted(() => {
                                                     :key="tag"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <TagIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></TagIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        loyalty
+                                                    </span>
                                                     <span>
                                                         {{ tag }}
                                                     </span>
@@ -640,9 +679,11 @@ onMounted(() => {
                                                 "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <ArrowPathIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></ArrowPathIcon>
+                                                <span
+                                                    class="material-symbols-outlined"
+                                                >
+                                                    undo
+                                                </span>
                                             </button>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
@@ -653,9 +694,11 @@ onMounted(() => {
                                                 "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                             >
-                                                <TrashIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></TrashIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    delete
+                                                </span>
                                             </button>
                                         </td>
                                     </tr>

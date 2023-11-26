@@ -135,10 +135,9 @@ const notificationsSlideOverButton = function () {
                         type="button"
                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
-                        <AdjustmentsVerticalIcon
-                            class="myMediumIcon"
-                            aria-hidden="true"
-                        />
+                        <span class="myMediumIcon material-symbols-outlined">
+                            interests
+                        </span>
                     </button>
                 </Link>
             </template>
@@ -195,7 +194,9 @@ const notificationsSlideOverButton = function () {
                     type="button"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                 >
-                    <UserIcon class="myMediumIcon" aria-hidden="true" />
+                    <span class="myMediumIcon material-symbols-outlined">
+                        person
+                    </span>
                 </button>
             </template>
 
@@ -206,7 +207,9 @@ const notificationsSlideOverButton = function () {
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
                 >
                     <span class="sr-only">View notifications</span>
-                    <BellIcon class="myMediumIcon"></BellIcon>
+                    <span class="myMediumIcon material-symbols-outlined">
+                        notifications
+                    </span>
                 </button>
             </template>
 
@@ -216,7 +219,9 @@ const notificationsSlideOverButton = function () {
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
                 <span class="sr-only">View Menu</span>
-                <Bars2Icon class="myMediumIcon" aria-hidden="true" />
+                <span class="myMediumIcon material-symbols-outlined">
+                    drag_handle
+                </span>
             </button>
         </nav>
     </header>

@@ -62,6 +62,7 @@ const breadcrumbsLinks = [
 const linksTopMenu = [
     {
         label: "All Stores",
+        icon: "storefront",
         route: {
             name: "team.stores.index",
             parameters: [props.currentUserTeam.id],
@@ -69,6 +70,7 @@ const linksTopMenu = [
     },
     {
         label: "Trash",
+        icon: "delete",
         route: {
             name: "team.stores.index.trash",
             parameters: [props.currentUserTeam.id],
@@ -237,11 +239,37 @@ onMounted(() => {
 
                 <main></main>
             </DynamicModal>
+
+            <template v-if="true">
+                <div class="rounded px-4 py-6 bg-gray-100">
+                    <div>
+                        <p class="myPrimaryParagraph leading-8 font-medium">
+                            Total stores which can be created
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <div
+                            class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
+                        >
+                            <p class="myPrimaryParagraph leading-8">
+                                Subscription name: Up to 6 stores with this
+                                subscription
+                            </p>
+                        </div>
+                        <div
+                            class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
+                        >
+                            <p class="myPrimaryParagraph leading-8">
+                                Subscription name: Up to 8 stores with this
+                                subscription
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </template>
             <template #header>
-                <h2 class="myPrimaryMainPageHeader">
-                    Stores for
-                    {{ $page.props.user && $page.props.currentUserTeam.name }}
-                </h2>
+                Stores for
+                {{ $page.props.user && $page.props.currentUserTeam.name }}
             </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
@@ -258,6 +286,7 @@ onMounted(() => {
                         type="button"
                         :href="route('team.stores.create', currentUserTeam.id)"
                     >
+                        <span class="material-symbols-outlined"> add </span>
                         Create Store
                     </Link>
                 </template>
@@ -301,7 +330,7 @@ onMounted(() => {
                         <button
                             @click="handleSearch"
                             type="button"
-                            class="myPrimaryButton"
+                            class="myPrimarySearchButton"
                         >
                             Search
                         </button>
@@ -310,7 +339,7 @@ onMounted(() => {
             </form>
 
             <template v-if="posts && posts.data.length <= 0">
-                <h1 class="myPrimaryHeaderMessage">No Stores</h1>
+                <h1 class="myQuaternaryHeader">No Stores</h1>
                 <p class="myPrimaryParagraph">
                     Looks like there are no stores!
                 </p>
@@ -573,9 +602,11 @@ onMounted(() => {
                                                     :key="storeState"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <MapPinIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></MapPinIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        location_on
+                                                    </span>
                                                     <span>
                                                         {{ storeState.name }}
                                                     </span>
@@ -612,10 +643,11 @@ onMounted(() => {
                                                     :key="category"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <Squares2X2Icon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></Squares2X2Icon>
-
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        category
+                                                    </span>
                                                     <span>
                                                         {{ category.name }}
                                                     </span>
@@ -636,9 +668,11 @@ onMounted(() => {
                                                     :key="tag"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <TagIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></TagIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        loyalty
+                                                    </span>
                                                     <span>
                                                         {{ tag }}
                                                     </span>
@@ -678,10 +712,11 @@ onMounted(() => {
                                                     <MenuButton
                                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                     >
-                                                        <EllipsisVerticalIcon
-                                                            class="mySmallIcon"
-                                                            aria-hidden="true"
-                                                        />
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            more_vert
+                                                        </span>
                                                     </MenuButton>
                                                 </div>
                                                 <transition
@@ -696,7 +731,7 @@ onMounted(() => {
                                                         class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                                     >
                                                         <MenuItem
-                                                            class="w-full flex justify-start px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
+                                                            class="w-full flex justify-start text-sm leading-5 text-myPrimaryDarkGrayColor py-4 px-4 z-30 rounded hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
                                                         >
                                                             <button
                                                                 class="flex gap-1 items-center"
@@ -707,9 +742,11 @@ onMounted(() => {
                                                                     )
                                                                 "
                                                             >
-                                                                <CheckIcon
-                                                                    class="w-4 h-4"
-                                                                ></CheckIcon>
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
+                                                                >
+                                                                    check
+                                                                </span>
                                                                 Duplicate Store
                                                             </button>
                                                         </MenuItem>
@@ -723,9 +760,11 @@ onMounted(() => {
                                                 @click="handleEdit(post.id)"
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
-                                                <PencilIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></PencilIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    edit
+                                                </span>
                                             </button>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
@@ -736,9 +775,11 @@ onMounted(() => {
                                                 "
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                             >
-                                                <TrashIcon
-                                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                ></TrashIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    delete
+                                                </span>
                                             </button>
                                         </td>
                                     </tr>

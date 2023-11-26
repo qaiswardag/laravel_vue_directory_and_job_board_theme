@@ -38,7 +38,7 @@ const updateCurrentTab = function (tab) {
         <div
             class="flex items-left flex-col myPrimaryGap border-myPrimaryMediumGrayColor"
         >
-            <h4 class="myFourthHeader">Selected HTML</h4>
+            <h4 class="myQuaternaryHeader">Selected HTML</h4>
             <p class="myPrimaryParagraph text-xs">
                 Overview of Selected Element, Component, and Components. This
                 section provides real-time updates based on your HTML selection.

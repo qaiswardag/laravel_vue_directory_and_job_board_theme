@@ -427,10 +427,11 @@ onMounted(async () => {
                                                                 !active,
                                                         }"
                                                     >
-                                                        <PlusIcon
-                                                            class="h-3 w-3"
-                                                            aria-hidden="true"
-                                                        />
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            add
+                                                        </span>
                                                     </span>
                                                     <span
                                                         v-if="selected"
@@ -442,10 +443,11 @@ onMounted(async () => {
                                                                 !active,
                                                         }"
                                                     >
-                                                        <CheckIcon
-                                                            class="h-5 w-5"
-                                                            aria-hidden="true"
-                                                        />
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            check
+                                                        </span>
                                                     </span>
                                                 </li>
                                             </ComboboxOption>

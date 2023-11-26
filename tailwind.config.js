@@ -34,6 +34,7 @@ module.exports = {
                 sans: [
                     "Jost",
                     "Raleway",
+                    "'Cormorant'",
                     "sans-serif",
                     ...defaultTheme.fontFamily.sans,
                 ],

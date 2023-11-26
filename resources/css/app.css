@@ -4,31 +4,11 @@
 @layer components {
     /*
     |--------------------------------------------------------------------------
-    | PageBuilder 
-    |--------------------------------------------------------------------------
-    */
-    .myPrimaryComponentToDrag {
-        @apply border border-gray-200 rounded-md py-4 px-2 cursor-grabbing;
-    }
-    .myPrimaryComponentName {
-        @apply text-center myPrimaryParagraph text-xs italic mb-1;
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Main Header
-    |--------------------------------------------------------------------------
-    */
-    .myPrimaryMainPageHeaderParagraph {
-        @apply md:py-24 py-12 md:px-8 px-4;
-    }
-    /*
-    |--------------------------------------------------------------------------
     | Widgets
     |--------------------------------------------------------------------------
     */
     .myPrimaryWidget {
-        @apply py-8 px-4 border border-myPrimaryLightGrayColor;
+        @apply py-8 px-4 border border-myPrimaryLightGrayColor rounded-md;
     }
 
     /*
@@ -50,11 +30,8 @@
     .myPrimaryModule {
         @apply max-w-7xl mx-auto myModulePyMargin myModulePadding;
     }
-    .myHeaderParagraphSection {
-        @apply max-w-7xl mx-auto md:pb-10 pb-8 md:px-8 px-4;
-    }
     .myPrimaryContentSection {
-        @apply max-w-7xl mx-auto  md:px-8 px-4;
+        @apply max-w-7xl mx-auto md:px-4 px-4 lg:pb-10 md:pb-8 pb-6;
     }
 
     /*
@@ -65,11 +42,9 @@
     .myPrimarySection {
         @apply lg:py-8 md:py-8 py-8;
     }
-    .myPrimaryHeaderMessage {
-        @apply myPrimarySection myPrimaryHeader text-myPrimaryDarkGrayColor text-center;
-    }
+
     .myPrimaryWarningAlertMessage {
-        @apply myPrimarySection myPrimaryHeader text-yellow-400 text-center;
+        @apply myPrimarySection myTertiaryHeader text-yellow-400 text-center;
     }
     .myFocus {
         @apply focus-within:border-2 focus-within:border-myPrimaryBrandColor;
@@ -88,26 +63,15 @@
     }
     /*
     |--------------------------------------------------------------------------
-    | Lists
-    |--------------------------------------------------------------------------
-    */
-    .myPrimaryBorderFullRoundedUsers {
-        @apply px-2 flex w-full items-center justify-between space-x-3 p-0 text-left focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2;
-    }
-
-    /*
-    |--------------------------------------------------------------------------
     | Thumbnail
     |--------------------------------------------------------------------------
     */
-
     .myPrimarythumbnailLogo {
         @apply mx-auto block mt-2 mb-6 w-40 transition-all rounded-md object-cover cursor-pointer;
     }
     .myPrimarythumbnailInsertPreview {
         @apply block md:h-16 md:w-16 h-16 w-16 hover:shadow-sm transition-all cursor-pointer rounded-full object-cover;
     }
-
     /*
     |--------------------------------------------------------------------------
     | Primary paragraphs
@@ -130,26 +94,21 @@
     | Headers
     |--------------------------------------------------------------------------
     */
-    .myPrimaryMainPageHeader {
-        @apply mySecondaryHeader text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor my-0;
-    }
-    .myPrimaryMainPageHeaderNotLoggedIn {
-        @apply text-6xl leading-tight mb-6 font-medium text-center;
-    }
-    .myPrimaryMainPageParagraphNotLoggedIn {
-        @apply lg:max-w-3xl text-xl mx-auto text-center font-medium;
-    }
 
     .myPrimaryHeader {
-        @apply text-3xl mb-2 font-medium text-myPrimaryDarkGrayColor;
+        @apply lg:text-7xl md:text-6xl text-5xl font-medium break-words lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
     }
 
     .mySecondaryHeader {
-        @apply text-2xl mb-2 font-medium text-myPrimaryDarkGrayColor;
+        @apply font-['Cormorant'] font-semibold break-words lg:text-5xl md:text-4xl text-3xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
     }
 
     .myTertiaryHeader {
-        @apply text-lg mb-2 font-medium text-myPrimaryDarkGrayColor;
+        @apply font-medium break-words lg:text-3xl md:text-2xl text-2xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
+    }
+
+    .myQuaternaryHeader {
+        @apply font-medium break-words lg:text-xl md:text-lg text-base lg:mb-4 md:mb-2 mb-2 text-myPrimaryDarkGrayColor;
     }
 
     h2 {
@@ -158,11 +117,6 @@
     h3 {
         @apply text-xl mb-2 font-medium;
     }
-
-    .myFourthHeader {
-        @apply text-base mb-2 font-medium text-myPrimaryDarkGrayColor;
-    }
-
     /*
     |--------------------------------------------------------------------------
     | Links
@@ -227,10 +181,10 @@
     |--------------------------------------------------------------------------
     */
     .mySmallIcon {
-        @apply shrink-0 h-4 w-4 m-2 stroke-[1.5px];
+        @apply shrink-0 h-4 w-4 m-2 stroke-[1.5px] flex justify-center items-center;
     }
     .myMediumIcon {
-        @apply shrink-0 h-6 w-6 m-2 stroke-[1.5px];
+        @apply shrink-0 h-6 w-6 stroke-[1.5px] flex justify-center items-center;
     }
 
     /*
@@ -252,7 +206,7 @@
         @apply min-w-full align-middle;
     }
     .myPrimaryTable {
-        @apply text-sm divide-y divide-myPrimaryLightGrayColor table-fixed min-w-full text-left;
+        @apply text-sm divide-y divide-myPrimaryLightGrayColor table-fixed min-w-full text-left mb-20;
     }
     .myPrimaryTableCaption {
         @apply bg-white myPrimaryParagraph py-4;
@@ -305,7 +259,15 @@
     */
 
     .mysearchBarWithOptions {
-        @apply flex gap-2 py-2 px-4 rounded-full border border-gray-200 bg-gray-100;
+        @apply flex gap-2 pl-4 rounded-full border border-gray-200 bg-gray-100;
+    }
+
+    .myPrimarySearchInput {
+        @apply myPrimaryInput text-sm py-4 border-none outline-none pl-10 h-full bg-transparent focus:ring-0 focus:ring-offset-0 focus:border-none focus:bg-transparent focus:outline-none shadow-none;
+    }
+
+    .myPrimarySearchButton {
+        @apply rounded-r-full text-sm lg:pl-8 lg:pr-10 pl-4 pr-4 text-center border-l border-gray-300 font-medium hover:bg-gray-200;
     }
 
     /*
@@ -342,7 +304,7 @@
         @apply mb-4;
     }
     .myPrimaryFormOrganizationHeader {
-        @apply myFourthHeader m-0 pt-4;
+        @apply myQuaternaryHeader m-0 pt-4;
     }
 
     .myInputsFamily {
@@ -371,10 +333,6 @@
     }
     .myPrimaryInputReadonly {
         @apply myPrimaryInput bg-gray-50 focus:ring-0 focus:bg-gray-100 focus:border-myPrimaryMediumGrayColor;
-    }
-
-    .myPrimarySearchInput {
-        @apply myPrimaryInput pl-10 h-full;
     }
 
     .myPrimaryInputError {

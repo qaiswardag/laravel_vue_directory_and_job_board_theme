@@ -431,10 +431,11 @@ onMounted(async () => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <PlusIcon
-                                                        class="h-3 w-3"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                 </span>
                                                 <span
                                                     v-if="selected"
@@ -445,10 +446,11 @@ onMounted(async () => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <CheckIcon
-                                                        class="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ComboboxOption>
@@ -630,10 +632,11 @@ onMounted(async () => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <PlusIcon
-                                                        class="h-3 w-3"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                 </span>
                                                 <span
                                                     v-if="selected"
@@ -644,10 +647,11 @@ onMounted(async () => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <CheckIcon
-                                                        class="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ComboboxOption>
@@ -848,10 +852,11 @@ onMounted(async () => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <PlusIcon
-                                                        class="h-3 w-3"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        add
+                                                    </span>
                                                 </span>
                                                 <span
                                                     v-if="selected"
@@ -862,10 +867,11 @@ onMounted(async () => {
                                                             !active,
                                                     }"
                                                 >
-                                                    <CheckIcon
-                                                        class="h-5 w-5"
-                                                        aria-hidden="true"
-                                                    />
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </span>
                                             </li>
                                         </ComboboxOption>
@@ -978,9 +984,11 @@ onMounted(async () => {
                                                     class="flex items-center justify-center gap-2"
                                                 >
                                                     <span> Selected</span>
-                                                    <CheckIcon
-                                                        class="w-3 h-3 stroke-1.5"
-                                                    ></CheckIcon>
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
                                                 </div>
                                             </button>
                                         </div>

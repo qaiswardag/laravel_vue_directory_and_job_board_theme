@@ -22,9 +22,7 @@ const breadcrumbsLinks = [
     <MainLayout>
         <LoggedInLayout>
             <Head title="Switch Team" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Switch Teams</h2>
-            </template>
+            <template #header> Switch Teams </template>
             <template #description>
                 This is Team index page ipsum dolor sit, amet consectetur
                 adipisicing elit. Animi, distinctio.
@@ -39,7 +37,7 @@ const breadcrumbsLinks = [
                     $page.props.jetstream.hasTeamFeatures
                 "
             >
-                <h1 class="myPrimaryHeaderMessage">No Teams</h1>
+                <h1 class="myTertiaryHeader">No Teams</h1>
                 <p class="myPrimaryParagraph">Looks like there are no Teams!</p>
             </div>
 

@@ -39,9 +39,9 @@ const getRestoredElement = computed(() => {
                     type="button"
                     class="myPrimaryDeleteButton gap-2 items-center w-full"
                 >
-                    <TrashIcon
-                        class="w-4 h-4 text-white stroke-1.5"
-                    ></TrashIcon>
+                    <span class="myMediumIcon material-symbols-outlined">
+                        delete
+                    </span>
                     Delete Element
                 </button>
             </div>

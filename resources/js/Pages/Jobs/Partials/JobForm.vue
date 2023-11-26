@@ -1175,6 +1175,13 @@ const pageBuilder = new PageBuilder(store);
     >
         <PageBuilderView :user="user" :team="postForm.team"></PageBuilderView>
     </PageBuilderModal>
+
+    <template v-if="user.superadmin">
+        <p class="my-4">
+            You are posting jobs for free as superadmin for
+            {{ currentUserTeam.name }}
+        </p>
+    </template>
     <FormSection @submitted="handleCreatePost">
         <template #title>Job details</template>
         <template #description> Create a new Job. </template>
@@ -1423,65 +1430,59 @@ const pageBuilder = new PageBuilder(store);
             <!-- Job options # start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Job options
-                    </div>
-                    <div class="pt-4 pb-4">
-                        <button
-                            type="button"
-                            class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
-                            @click="jobOptions = !jobOptions"
-                        >
-                            <span class="font-medium text-gray-900"
-                                >Options</span
-                            >
-                            <span class="ml-6 flex items-center">
-                                <PlusIcon
-                                    v-if="!jobOptions"
-                                    class="mySmallIcon"
-                                ></PlusIcon>
-                                <MinusIcon
-                                    v-if="jobOptions"
-                                    class="mySmallIcon"
-                                ></MinusIcon>
-                            </span>
-                        </button>
-
+                    <button
+                        type="button"
+                        @click="jobOptions = !jobOptions"
+                        class="w-full"
+                    >
                         <div
-                            v-if="jobOptions"
-                            class="border-t border-gray-200 py-6"
+                            class="myPrimaryFormOrganizationHeader flex w-full items-center justify-between pb-2"
                         >
-                            <!-- post is filled - start -->
-
-                            <div class="relative flex items-start">
-                                <div class="flex h-6 items-center">
-                                    <input
-                                        id="is_filled"
-                                        name="is_filled"
-                                        v-model="postForm.is_filled"
-                                        type="checkbox"
-                                        class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
-                                    />
-                                </div>
-                                <div
-                                    class="ml-3 min-w-0 flex-1 text-sm leading-6"
+                            <div>Job options</div>
+                            <div class="ml-auto flex items-center">
+                                <span
+                                    v-if="!jobOptions"
+                                    class="myMediumIcon material-symbols-outlined"
                                 >
-                                    <label
-                                        for="is_filled"
-                                        class="select-none font-medium text-gray-900"
-                                    >
-                                        {{
-                                            postForm.is_filled
-                                                ? "Job is displayed with is filled tag."
-                                                : "Job is open for new applications."
-                                        }}
-                                    </label>
-                                </div>
+                                    add
+                                </span>
+                                <span
+                                    v-if="jobOptions"
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    remove
+                                </span>
                             </div>
                         </div>
+                    </button>
 
-                        <!-- post is filled - end -->
+                    <div
+                        v-if="jobOptions"
+                        class="border-t border-gray-200 py-6"
+                    >
+                        <!-- post is filled - start -->
+
+                        <div class="relative flex items-center">
+                            <div class="flex h-6 items-center">
+                                <input
+                                    id="is_filled"
+                                    name="is_filled"
+                                    v-model="postForm.is_filled"
+                                    type="checkbox"
+                                    class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                                />
+                            </div>
+                            <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                                <label
+                                    for="is_filled"
+                                    class="select-none font-medium text-gray-900"
+                                    >Closed for new applications
+                                </label>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- post is filled - end -->
                 </div>
             </div>
             <!-- Job options # end -->
@@ -1519,10 +1520,9 @@ const pageBuilder = new PageBuilder(store);
                             @click="setStartedAtDate"
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                         >
-                            <ArrowPathIcon
-                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                            >
-                            </ArrowPathIcon>
+                            <span class="material-symbols-outlined">
+                                undo
+                            </span>
                         </button>
                     </template>
                 </div>
@@ -1607,7 +1607,7 @@ const pageBuilder = new PageBuilder(store);
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
+                                    class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
@@ -1636,9 +1636,11 @@ const pageBuilder = new PageBuilder(store);
                                                 class="flex items-center justify-center gap-2"
                                             >
                                                 <span> Primary </span>
-                                                <CheckIcon
-                                                    class="w-3 h-3 stroke-1.5"
-                                                ></CheckIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    check
+                                                </span>
                                             </div>
                                         </button>
                                         <button
@@ -1663,9 +1665,11 @@ const pageBuilder = new PageBuilder(store);
                                         "
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
-                                        <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></TrashIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            delete
+                                        </span>
                                     </button>
                                 </div>
                             </div>
@@ -1689,9 +1693,11 @@ const pageBuilder = new PageBuilder(store);
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadCoverImage"
                             >
-                                <PlusIcon
-                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                ></PlusIcon>
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    add
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -1766,7 +1772,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="country.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
                             >
                                 <div
                                     @click="handleAddCountries"
@@ -1776,9 +1782,11 @@ const pageBuilder = new PageBuilder(store);
                                         type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
-                                        <GlobeAmericasIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></GlobeAmericasIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            globe
+                                        </span>
                                     </button>
                                     <div>
                                         {{ country?.name }}
@@ -1794,9 +1802,11 @@ const pageBuilder = new PageBuilder(store);
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
-                                    <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                    ></TrashIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -1860,7 +1870,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="state?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
                             >
                                 <div
                                     @click="handleAddStates"
@@ -1870,9 +1880,11 @@ const pageBuilder = new PageBuilder(store);
                                         type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
-                                        <MapPinIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></MapPinIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            location_on
+                                        </span>
                                     </button>
                                     <div>
                                         {{ state?.name }}
@@ -1886,9 +1898,11 @@ const pageBuilder = new PageBuilder(store);
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
-                                    <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                    ></TrashIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -1966,7 +1980,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="category?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
                             >
                                 <div
                                     @click="handleAddCategories"
@@ -1976,9 +1990,11 @@ const pageBuilder = new PageBuilder(store);
                                         type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
-                                        <Squares2X2Icon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></Squares2X2Icon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            category
+                                        </span>
                                     </button>
                                     <div>
                                         {{ category?.name }}
@@ -1993,9 +2009,11 @@ const pageBuilder = new PageBuilder(store);
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
-                                    <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                    ></TrashIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -2061,7 +2079,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="jobType?.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
                             >
                                 <div
                                     @click="handleAddJobTypes"
@@ -2071,9 +2089,11 @@ const pageBuilder = new PageBuilder(store);
                                         type="button"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
-                                        <NewspaperIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></NewspaperIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            book_4
+                                        </span>
                                     </button>
                                     <div>
                                         {{ jobType?.name }}
@@ -2087,9 +2107,11 @@ const pageBuilder = new PageBuilder(store);
                                     "
                                     class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
-                                    <TrashIcon
-                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                    ></TrashIcon>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -2320,9 +2342,11 @@ const pageBuilder = new PageBuilder(store);
                                         "
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
-                                        <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></TrashIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            delete
+                                        </span>
                                     </button>
                                 </div>
                             </div>

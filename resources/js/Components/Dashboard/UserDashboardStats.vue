@@ -107,7 +107,7 @@ onMounted(() => {
 <template>
     <div v-if="$page.props && !$page.props.currentUserTeam">
         <div>
-            <h1 class="myPrimaryHeaderMessage">No Team selected</h1>
+            <h1 class="myTertiaryHeader">No Team selected</h1>
         </div>
         <p class="myPrimaryParagraph">Looks like no Team is Selected!</p>
     </div>
@@ -525,16 +525,18 @@ onMounted(() => {
                                         <span
                                             class="ml-6 flex h-7 items-center"
                                         >
-                                            <PlusSmallIcon
+                                            <span
                                                 v-if="!open"
-                                                class="h-5 w-5"
-                                                aria-hidden="true"
-                                            />
-                                            <MinusSmallIcon
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                add
+                                            </span>
+                                            <span
                                                 v-else
-                                                class="h-5 w-5"
-                                                aria-hidden="true"
-                                            />
+                                                class="myMediumIcon material-symbols-outlined"
+                                            >
+                                                remove
+                                            </span>
                                         </span>
                                     </DisclosureButton>
                                 </dt>

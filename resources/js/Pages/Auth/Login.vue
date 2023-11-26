@@ -45,14 +45,8 @@ const submit = () => {
             <GuestsLayout>
                 <Head title="Login" />
                 <template #header>
-                    <div
-                        class="myPrimaryMainPageHeaderParagraph pb-8 text-center"
-                    >
-                        <h1
-                            class="myPrimaryMainPageHeaderNotLoggedIn text-white"
-                        >
-                            Sign in
-                        </h1>
+                    <div class="pb-8 text-center">
+                        <h1 class="myPrimaryHeader text-white">Sign in</h1>
                     </div>
                 </template>
 
@@ -69,7 +63,7 @@ const submit = () => {
 
                     <form @submit.prevent="submit">
                         <div class="mt-4 mb-8">
-                            <h1 class="mySecondaryHeader text-center">
+                            <h1 class="myTertiaryHeader text-center">
                                 Sign in
                             </h1>
                         </div>

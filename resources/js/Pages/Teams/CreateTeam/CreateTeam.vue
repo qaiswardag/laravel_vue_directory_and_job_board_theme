@@ -22,9 +22,7 @@ const breadcrumbsLinks = [
     <MainLayout>
         <LoggedInLayout>
             <Head title="Create Team" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Create Team</h2>
-            </template>
+            <template #header> Create Team </template>
             <template #description>
                 This is Team index page ipsum dolor sit, amet consectetur
                 adipisicing elit. Animi, distinctio.

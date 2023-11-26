@@ -29,9 +29,7 @@ const breadcrumbsLinks = [
     <MainLayout>
         <LoggedInLayout>
             <Head title="Delete Team" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Delete Team</h2>
-            </template>
+            <template #header> Delete Team </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>

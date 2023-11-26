@@ -191,9 +191,11 @@ onMounted(async () => {
                                 @click="handleAddComponent"
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <Square3Stack3DIcon
-                                    class="mySmallIcon"
-                                ></Square3Stack3DIcon>
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    category
+                                </span>
                             </button>
                             <button
                                 type="button"
@@ -214,9 +216,11 @@ onMounted(async () => {
                                 "
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <Squares2X2Icon
-                                    class="mySmallIcon"
-                                ></Squares2X2Icon>
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    category
+                                </span>
                             </button>
                         </div>
                     </div>

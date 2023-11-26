@@ -18,14 +18,19 @@
         href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&display=swap"
         rel="stylesheet"
         />
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" 
+        rel="stylesheet">
+        <!-- Fonts -->
+        
+        <!-- Google icons # start -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <!-- Google icons # end -->
 
-        <!-- Google start-->
-        <!-- The callback parameter is required, so we use console.debug as a noop -->
+        <!-- Google maps start-->
         <script
         async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzutbgFidPQIG0Gkaqx8DmiwiB0pUFyeE&libraries=places&callback=console.debug"></script>
-        <!-- Google end -->
+        <!-- Google maps end -->
 
-        <!-- Fonts -->
         <!-- Favicon start -->
         <link
         rel="icon"

@@ -149,10 +149,11 @@ const selectedUpdated = function (chosen) {
                                             'absolute inset-y-0 left-0 flex items-center pl-1.5',
                                         ]"
                                     >
-                                        <CheckIcon
-                                            class="h-5 w-5"
-                                            aria-hidden="true"
-                                        />
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            check
+                                        </span>
                                     </span>
                                 </li>
                             </ListboxOption>
@@ -163,7 +164,7 @@ const selectedUpdated = function (chosen) {
             <button
                 @click="firstButtonClick"
                 type="button"
-                class="myPrimaryButton"
+                class="myPrimarySearchButton"
             >
                 {{ placeholderButton }}
             </button>

@@ -76,25 +76,25 @@ const sidebarOpen = ref(false);
                             leave-from="opacity-100"
                             leave-to="opacity-0"
                         >
-                            <div class="absolute top-0 right-0 -mr-12 pt-2">
+                            <div class="flex items-center justify-between pr-4">
+                                <div
+                                    class="flex flex-shrink-0 items-center px-4 justify-between"
+                                >
+                                    <ApplicationLogo></ApplicationLogo>
+                                </div>
                                 <button
                                     type="button"
-                                    class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     @click="sidebarOpen = false"
                                 >
                                     <span class="sr-only">Close sidebar</span>
                                     <XMarkIcon
-                                        class="h-6 w-6 text-white"
+                                        class="myMediumIcon"
                                         aria-hidden="true"
                                     />
                                 </button>
                             </div>
                         </TransitionChild>
-                        <div
-                            class="flex flex-shrink-0 items-center px-4 justify-between"
-                        >
-                            <ApplicationLogo></ApplicationLogo>
-                        </div>
                         <div class="mt-5 h-0 flex-1 overflow-y-auto">
                             <LoggedInSidebar></LoggedInSidebar>
                         </div>
@@ -139,16 +139,18 @@ const sidebarOpen = ref(false);
                 @click="sidebarOpen = true"
             >
                 <span class="sr-only">Open sidebar</span>
-                <Bars3BottomLeftIcon class="h-6 w-6" aria-hidden="true" />
+                <span class="material-symbols-outlined"> drag_handle </span>
             </button>
             <LoggedInNavbar></LoggedInNavbar>
         </div>
 
         <main class="flex-1 bg-gray-50 relative">
+            <slot name="breadcrumbs" />
             <Banner />
             <header v-if="$slots.header">
-                <slot name="header" />
-                <slot name="breadcrumbs" />
+                <h2 class="myTertiaryHeader text-center py-12 pb-8">
+                    <slot name="header" />
+                </h2>
             </header>
             <div
                 class="mx-auto max-w-7xl min-h-screen px-4 sm:px-6 md:px-8 md:pb-16 pb-12"

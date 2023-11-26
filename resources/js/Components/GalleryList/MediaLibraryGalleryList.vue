@@ -112,7 +112,7 @@ onMounted(() => {
                 <button
                     @click="handleSearch(1)"
                     type="button"
-                    class="myPrimaryButton"
+                    class="myPrimarySearchButton"
                 >
                     Search
                 </button>
@@ -222,7 +222,7 @@ onMounted(() => {
         >
             <div v-if="getCurrentMedia?.fetchedMedia?.total_results === 0">
                 <div class="pt-6 py-b px-4">
-                    <h2 class="mySecondaryHeader">No images</h2>
+                    <h2 class="myQuaternaryHeader">No images</h2>
                     <p class="myPrimaryParagraph">
                         It looks like there are no images..
                     </p>
@@ -278,8 +278,8 @@ onMounted(() => {
                                         >
                                             <SmallUniversalSpinner
                                                 class="h-40"
-                                                width="w-2"
-                                                height="h-2"
+                                                width="w-3"
+                                                height="h-3"
                                                 border="border-2"
                                             ></SmallUniversalSpinner>
                                         </div>
@@ -300,10 +300,15 @@ onMounted(() => {
                                         <div
                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                         >
-                                            <EllipsisVerticalIcon
-                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                            <span
+                                                v-if="
+                                                    getCurrentImage &&
+                                                    !getCurrentImage.isLoading
+                                                "
+                                                class="myMediumIcon material-symbols-outlined"
                                             >
-                                            </EllipsisVerticalIcon>
+                                                more_vert
+                                            </span>
                                         </div>
                                     </div>
                                 </dd>
@@ -322,10 +327,15 @@ onMounted(() => {
                                         <div
                                             class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                         >
-                                            <CheckIcon
-                                                class="shrink-0 w-4 h-4 m-2 stroke-1.5"
+                                            <span
+                                                v-if="
+                                                    getCurrentImage &&
+                                                    !getCurrentImage.isLoading
+                                                "
+                                                class="myMediumIcon material-symbols-outlined"
                                             >
-                                            </CheckIcon>
+                                                check
+                                            </span>
                                         </div>
                                     </div>
                                 </dd>

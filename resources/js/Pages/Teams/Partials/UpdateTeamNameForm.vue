@@ -221,12 +221,6 @@ const handleRemoveLogo = function (imageId) {
     postForm.logo = postForm.logo.filter((image) => image.id !== imageId);
 };
 
-//
-//
-//
-//
-//
-//
 const handleUploadCoverImage = function () {
     // handle show media library modal
     showMediaLibraryModal.value = true;
@@ -312,7 +306,7 @@ onBeforeMount(() => {
 
         // slug logic
         // slug is editable when editing an existing post
-        isSlugEditable.value = true;
+        isSlugEditable.value = false;
         slugValueCustom.value = props.team.slug;
 
         postForm.public = props.team.public ? true : false;
@@ -559,7 +553,7 @@ onBeforeMount(() => {
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
+                                    class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
@@ -588,9 +582,11 @@ onBeforeMount(() => {
                                                 class="flex items-center justify-center gap-2"
                                             >
                                                 <span> Primary </span>
-                                                <CheckIcon
-                                                    class="w-3 h-3 stroke-1.5"
-                                                ></CheckIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    check
+                                                </span>
                                             </div>
                                         </button>
                                         <button
@@ -611,9 +607,11 @@ onBeforeMount(() => {
                                         @click="handleRemoveLogo(image?.id)"
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
-                                        <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></TrashIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            delete
+                                        </span>
                                     </button>
                                 </div>
                             </div>
@@ -634,9 +632,11 @@ onBeforeMount(() => {
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadLogo"
                             >
-                                <PlusIcon
-                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                ></PlusIcon>
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    add
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -721,7 +721,7 @@ onBeforeMount(() => {
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max min-w-[20rem]"
+                                    class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
@@ -750,9 +750,11 @@ onBeforeMount(() => {
                                                 class="flex items-center justify-center gap-2"
                                             >
                                                 <span> Primary </span>
-                                                <CheckIcon
-                                                    class="w-3 h-3 stroke-1.5"
-                                                ></CheckIcon>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    check
+                                                </span>
                                             </div>
                                         </button>
                                         <button
@@ -777,9 +779,11 @@ onBeforeMount(() => {
                                         "
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
-                                        <TrashIcon
-                                            class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                        ></TrashIcon>
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            delete
+                                        </span>
                                     </button>
                                 </div>
                             </div>
@@ -803,9 +807,11 @@ onBeforeMount(() => {
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadCoverImage"
                             >
-                                <PlusIcon
-                                    class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                ></PlusIcon>
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    add
+                                </span>
                             </button>
                         </div>
                     </div>

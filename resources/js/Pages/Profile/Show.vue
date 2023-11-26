@@ -102,9 +102,7 @@ const updatePaymentMethod = function () {
     <MainLayout>
         <LoggedInLayout>
             <Head title="Your Profile" />
-            <template #header>
-                <h2 class="myPrimaryMainPageHeader">Your Profile</h2>
-            </template>
+            <template #header> Your Profile </template>
             <template #description> Profile Settings </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
@@ -121,20 +119,9 @@ const updatePaymentMethod = function () {
                             <span
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="myMediumIcon"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                                    />
-                                </svg>
+                                <span class="material-symbols-outlined">
+                                    person
+                                </span>
                             </span>
                         </div>
                         <div class="mt-8">
@@ -151,25 +138,20 @@ const updatePaymentMethod = function () {
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
-                                Doloribus dolores nostrum quia qui natus officia
-                                quod et dolorem. Sit repellendus qui ut at
-                                blanditiis et quo et molestiae.
+                                Navigate to the page and discover a range of
+                                settings crafted to suit your needs. Whether
+                                it's personalizing your account details,
+                                adjusting security preferences, or fine-tuning
+                                company settings.
                             </p>
                         </div>
                         <span
                             class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
                             aria-hidden="true"
                         >
-                            <svg
-                                class="h-6 w-6"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z"
-                                />
-                            </svg>
+                            <span class="material-symbols-outlined">
+                                arrow_forward
+                            </span>
                         </span>
                     </div>
 
@@ -180,20 +162,9 @@ const updatePaymentMethod = function () {
                             <span
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="myMediumIcon"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
-                                    />
-                                </svg>
+                                <span class="material-symbols-outlined">
+                                    shield_person
+                                </span>
                             </span>
                         </div>
                         <div class="mt-8">
@@ -217,16 +188,9 @@ const updatePaymentMethod = function () {
                             class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
                             aria-hidden="true"
                         >
-                            <svg
-                                class="h-6 w-6"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z"
-                                />
-                            </svg>
+                            <span class="material-symbols-outlined">
+                                arrow_forward
+                            </span>
                         </span>
                     </div>
                     <!-- password -->
@@ -237,20 +201,9 @@ const updatePaymentMethod = function () {
                             <span
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="myMediumIcon"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
-                                    />
-                                </svg>
+                                <span class="material-symbols-outlined">
+                                    key
+                                </span>
                             </span>
                         </div>
                         <div class="mt-8">
@@ -267,25 +220,20 @@ const updatePaymentMethod = function () {
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
-                                Doloribus dolores nostrum quia qui natus officia
-                                quod et dolorem. Sit repellendus qui ut at
-                                blanditiis et quo et molestiae.
+                                Navigate to the page and discover a range of
+                                settings crafted to suit your needs. Whether
+                                it's personalizing your account details,
+                                adjusting security preferences, or fine-tuning
+                                company settings.
                             </p>
                         </div>
                         <span
                             class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
                             aria-hidden="true"
                         >
-                            <svg
-                                class="h-6 w-6"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z"
-                                />
-                            </svg>
+                            <span class="material-symbols-outlined">
+                                arrow_forward
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -303,9 +251,9 @@ const updatePaymentMethod = function () {
                             <span
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <BanknotesIcon
-                                    class="myMediumIcon"
-                                ></BanknotesIcon>
+                                <span class="material-symbols-outlined">
+                                    receipt_long
+                                </span>
                             </span>
                         </div>
                         <div class="mt-8">
@@ -322,25 +270,20 @@ const updatePaymentMethod = function () {
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
-                                Doloribus dolores nostrum quia qui natus officia
-                                quod et dolorem. Sit repellendus qui ut at
-                                blanditiis et quo et molestiae.
+                                Navigate to the page and discover a range of
+                                settings crafted to suit your needs. Whether
+                                it's personalizing your account details,
+                                adjusting security preferences, or fine-tuning
+                                company settings.
                             </p>
                         </div>
                         <span
                             class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
                             aria-hidden="true"
                         >
-                            <svg
-                                class="h-6 w-6"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z"
-                                />
-                            </svg>
+                            <span class="material-symbols-outlined">
+                                arrow_forward
+                            </span>
                         </span>
                     </div>
                     <!-- Payments and invoices # end -->
@@ -352,9 +295,9 @@ const updatePaymentMethod = function () {
                             <span
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <ArrowPathIcon
-                                    class="myMediumIcon"
-                                ></ArrowPathIcon>
+                                <span class="material-symbols-outlined">
+                                    done
+                                </span>
                             </span>
                         </div>
                         <div class="mt-8">
@@ -375,25 +318,20 @@ const updatePaymentMethod = function () {
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
-                                Doloribus dolores nostrum quia qui natus officia
-                                quod et dolorem. Sit repellendus qui ut at
-                                blanditiis et quo et molestiae.
+                                Navigate to the page and discover a range of
+                                settings crafted to suit your needs. Whether
+                                it's personalizing your account details,
+                                adjusting security preferences, or fine-tuning
+                                company settings.
                             </p>
                         </div>
                         <span
                             class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
                             aria-hidden="true"
                         >
-                            <svg
-                                class="h-6 w-6"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z"
-                                />
-                            </svg>
+                            <span class="material-symbols-outlined">
+                                arrow_forward
+                            </span>
                         </span>
                     </div>
                     <!-- subscriptions # end -->
@@ -411,9 +349,9 @@ const updatePaymentMethod = function () {
                             <span
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
-                                <CreditCardIcon
-                                    class="myMediumIcon"
-                                ></CreditCardIcon>
+                                <span class="material-symbols-outlined">
+                                    credit_card
+                                </span>
                             </span>
                         </div>
                         <div class="mt-8">
@@ -431,25 +369,20 @@ const updatePaymentMethod = function () {
                                 </button>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
-                                Doloribus dolores nostrum quia qui natus officia
-                                quod et dolorem. Sit repellendus qui ut at
-                                blanditiis et quo et molestiae.
+                                Navigate to the page and discover a range of
+                                settings crafted to suit your needs. Whether
+                                it's personalizing your account details,
+                                adjusting security preferences, or fine-tuning
+                                company settings.
                             </p>
                         </div>
                         <span
                             class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
                             aria-hidden="true"
                         >
-                            <svg
-                                class="h-6 w-6"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z"
-                                />
-                            </svg>
+                            <span class="material-symbols-outlined">
+                                arrow_forward
+                            </span>
                         </span>
                     </div>
                     <!-- Update payment methods # end -->
