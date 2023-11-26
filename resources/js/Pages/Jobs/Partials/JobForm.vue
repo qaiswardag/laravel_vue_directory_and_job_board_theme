@@ -910,7 +910,9 @@ onBeforeMount(() => {
             //
             postForm.title = formLocalStorage.title;
 
-            jobStartedAt.value = formLocalStorage.started_at;
+            if (formLocalStorage.started_at) {
+                jobStartedAt.value = formLocalStorage.started_at;
+            }
 
             postForm.content = formLocalStorage.content;
 
