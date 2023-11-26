@@ -215,9 +215,11 @@ onMounted(() => {
                                             @click="secondButton"
                                             type="button"
                                         >
-                                            <BookmarkIcon
-                                                class="mySmallIcon p-0 m-0"
-                                            ></BookmarkIcon>
+                                            <span
+                                                class="material-symbols-outlined"
+                                            >
+                                                photo_album
+                                            </span>
                                             Save & Close
                                         </button>
                                         <button
@@ -229,9 +231,11 @@ onMounted(() => {
                                             @click="handleDraftForUpdate"
                                             type="button"
                                         >
-                                            <PencilIcon
-                                                class="mySmallIcon p-0 m-0"
-                                            ></PencilIcon>
+                                            <span
+                                                class="material-symbols-outlined"
+                                            >
+                                                edit
+                                            </span>
                                             Draft
                                         </button>
                                     </div>

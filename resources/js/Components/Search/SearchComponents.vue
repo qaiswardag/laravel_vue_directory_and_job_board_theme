@@ -373,35 +373,6 @@ onMounted(async () => {
                                             :imageClickable="true"
                                         ></ThumbnailSmallImageSlider>
                                     </template>
-
-                                    <div class="px-2 pt-2 absolute top-0">
-                                        <div>
-                                            <div
-                                                class="myPrimaryTag text-white shadow bg-opacity-60"
-                                                :class="[
-                                                    {
-                                                        'bg-myPrimaryLinkColor':
-                                                            component.published,
-                                                    },
-                                                    {
-                                                        'bg-myPrimaryErrorColor':
-                                                            !component.published,
-                                                    },
-                                                ]"
-                                            >
-                                                {{
-                                                    component.published
-                                                        ? "Published"
-                                                        : "Unpublished"
-                                                }}
-                                                <span
-                                                    class="block text-[8px] font-bold"
-                                                    >Only visible for
-                                                    superadmin</span
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="pt-4 pb-4 px-2">
                                     <p

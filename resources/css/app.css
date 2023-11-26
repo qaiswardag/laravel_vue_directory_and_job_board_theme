@@ -480,7 +480,6 @@
 #previewContent ol,
 #previewContent ul {
     list-style: disc !important;
-    padding: 2.2rem 0rem;
 }
 #previewContent li {
     line-height: 2.2rem;
@@ -493,7 +492,6 @@
 #pagebuilder ol,
 #pagebuilder ul {
     list-style: disc !important;
-    padding: 2.2rem 0rem;
 }
 #pagebuilder li {
     line-height: 2.2rem;

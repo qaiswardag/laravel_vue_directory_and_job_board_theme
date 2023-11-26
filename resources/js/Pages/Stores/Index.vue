@@ -245,12 +245,7 @@ onMounted(() => {
             </FriendlyAlert>
 
             <template v-if="true">
-                <div class="rounded px-4 py-6 bg-gray-100 mt-4">
-                    <div>
-                        <p class="myPrimaryParagraph leading-8 font-medium">
-                            Total stores which can be created
-                        </p>
-                    </div>
+                <div class="rounded px-4 py-6 bg-gray-100 mt-4 shadow">
                     <div class="flex flex-col gap-2">
                         <div
                             class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
