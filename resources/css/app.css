@@ -82,7 +82,7 @@
     }
 
     p {
-        @apply font-normal lg:text-base text-sm mb-2;
+        @apply font-normal lg:text-base text-sm;
     }
 
     .myPrimaryParagraphError {
@@ -470,6 +470,19 @@
     padding: 1rem 0rem;
 }
 #defined-page-content li {
+    line-height: 2.2rem;
+}
+
+/* preview page builder */
+#previewContent {
+    padding: 0 2rem;
+}
+#previewContent ol,
+#previewContent ul {
+    list-style: disc !important;
+    padding: 2.2rem 0rem;
+}
+#previewContent li {
     line-height: 2.2rem;
 }
 

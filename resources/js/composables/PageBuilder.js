@@ -70,6 +70,8 @@ class PageBuilder {
         );
 
         this.headerTags = ["P", "H1", "H2", "H3", "H4", "H5", "H6"];
+        this.additionalTagsNoneListernes = ["UL", "LI", "EM", "STRONG"];
+
         this.structuringTags = [
             "DIV",
             "HEADER",
@@ -250,6 +252,7 @@ class PageBuilder {
         if (this.showRunningMethodLogs) {
             console.log("setEventListenersForElements");
         }
+        //
 
         //
         const pagebuilder = document.querySelector("#pagebuilder");
@@ -258,7 +261,10 @@ class PageBuilder {
         pagebuilder.querySelectorAll("section *").forEach(async (element) => {
             //
             // exclude headerTags
-            if (!this.headerTags.includes(element.tagName)) {
+            if (
+                !this.headerTags.includes(element.tagName) &&
+                !this.additionalTagsNoneListernes.includes(element.tagName)
+            ) {
                 if (
                     this.elementsWithListeners &&
                     !this.elementsWithListeners.has(element)
