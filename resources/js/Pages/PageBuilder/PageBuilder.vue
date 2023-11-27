@@ -240,6 +240,7 @@ onMounted(async () => {
                                     getComponents
                                 ) && getComponents"
                                 :key="component"
+                                id="page-builder-editor"
                                 class="bg-white grow"
                             >
                                 <div

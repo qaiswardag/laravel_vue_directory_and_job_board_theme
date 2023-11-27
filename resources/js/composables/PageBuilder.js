@@ -70,7 +70,7 @@ class PageBuilder {
         );
 
         this.headerTags = ["P", "H1", "H2", "H3", "H4", "H5", "H6"];
-        this.additionalTagsNoneListernes = ["UL", "LI", "EM", "STRONG"];
+        this.additionalTagsNoneListernes = ["UL", "LI", "EM", "STRONG", "LINK"];
 
         this.structuringTags = [
             "DIV",
@@ -216,6 +216,10 @@ class PageBuilder {
         e.stopPropagation();
 
         const pagebuilder = document.querySelector("#pagebuilder");
+
+        //
+        //
+        //
         if (!pagebuilder) return;
 
         if (pagebuilder.querySelector("[hovered]") !== null) {
@@ -930,6 +934,7 @@ class PageBuilder {
         }
     };
 
+    //
     handleTextInput = async (textContentVueModel) => {
         if (this.showRunningMethodLogs) {
             console.log("handleTextInput");
@@ -1320,8 +1325,6 @@ class PageBuilder {
     }
 
     handlePageBuilderMethods() {
-        console.log("handlePageBuilderMethods ran");
-
         if (!this.shouldRunMethods()) return;
 
         this.store.commit("pageBuilderState/setParentElement", null);

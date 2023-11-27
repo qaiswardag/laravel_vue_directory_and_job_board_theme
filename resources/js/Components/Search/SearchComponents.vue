@@ -342,7 +342,7 @@ onMounted(async () => {
                             class="overflow-scroll min-h-[25rem] max-h-[25rem] grid myPrimaryGap md:grid-cols-2 grid-cols-2 w-full myPrimaryGap px-2 p-4 border border-myPrimaryLightGrayColor rounded"
                         >
                             <div
-                                class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded bg-gray-100"
+                                class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded border py-4 px-2"
                                 v-for="component in getFetchedComponents &&
                                 getFetchedComponents.fetchedData &&
                                 getFetchedComponents.fetchedData.components &&
@@ -373,14 +373,6 @@ onMounted(async () => {
                                             :imageClickable="true"
                                         ></ThumbnailSmallImageSlider>
                                     </template>
-                                </div>
-                                <div class="pt-4 pb-4 px-2">
-                                    <p
-                                        @click="handleDropComponent(component)"
-                                        class="text-sm font-medium mt-2 mb-2 cursor-pointer"
-                                    >
-                                        {{ component.title }}
-                                    </p>
                                 </div>
                             </div>
                         </div>
