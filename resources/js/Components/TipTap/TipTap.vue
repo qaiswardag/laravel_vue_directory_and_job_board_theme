@@ -115,6 +115,7 @@ const handleModalPreviewTiptap = function () {
 
     // handle click
     firstModalButtonFunction.value = function () {
+        console.log(`køre den 1`);
         // set open modal
         showModalTipTap.value = false;
     };
@@ -137,13 +138,14 @@ const handleURL = function () {
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = "Enter URL";
-    descriptionModal.value = "Enter url";
+    descriptionModal.value = null;
     firstButtonModal.value = "Close";
     secondButtonModal.value = urlEnteret.value ? "Remove url" : null;
     thirdButtonModal.value = "Save";
 
     // handle click
     firstModalButtonFunction.value = function () {
+        console.log(`køre den 2`);
         // set open modal
         showModalUrl.value = false;
     };
@@ -252,7 +254,7 @@ onMounted(() => {});
     </DynamicModal>
 
     <DynamicModal
-        v-if="showModalTipTap"
+        v-if="showModalTipTap && !showModalUrl"
         :show="showModalTipTap"
         maxWidth="5xl"
         :type="typeModal"

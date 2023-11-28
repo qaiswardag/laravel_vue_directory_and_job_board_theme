@@ -1179,12 +1179,30 @@ const pageBuilder = new PageBuilder(store);
         <PageBuilderView :user="user" :team="postForm.team"></PageBuilderView>
     </PageBuilderModal>
 
+    <template v-if="post">
+        <FriendlyAlert>
+            <p>
+                <span
+                    class="myPrimaryTag"
+                    :class="
+                        post.is_paid
+                            ? 'bg-myPrimaryLinkColor text-white'
+                            : 'bg-myPrimaryErrorColor text-white'
+                    "
+                >
+                    {{ post.is_paid ? "Paid" : "Unpaid" }}</span
+                >
+            </p>
+        </FriendlyAlert>
+    </template>
+
     <template v-if="user.superadmin">
         <FriendlyAlert
             :message="`You are posting jobs for free as superadmin for ${currentUserTeam.name}.`"
         >
         </FriendlyAlert>
     </template>
+
     <FormSection @submitted="handleCreatePost">
         <template #title>Job details</template>
         <template #description> Create a new Job. </template>
