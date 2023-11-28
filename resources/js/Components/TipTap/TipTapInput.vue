@@ -33,7 +33,9 @@ const getElement = computed(() => {
 const textContentVueModel = ref("");
 
 const textContent = computed(() => {
-    return editor.value?.getHTML();
+    if (editor.value) {
+        return editor.value.getHTML();
+    }
 });
 
 const getElementtextContentLength = ref(0);
@@ -84,11 +86,11 @@ watch(textContent, (newValue) => {
     }
 });
 
-watch(getElement, (getElementNewValue) => {
+const checkAndSetEditorContent = function () {
     if (editor.value) {
         // Get all child elements of the parentDiv
-        const childElements = getElementNewValue?.children;
-        if (getElementNewValue?.tagName === "IMG") {
+        const childElements = getElement.value?.children;
+        if (getElement.value?.tagName === "IMG") {
             containsInvalidTags.value = true;
             return;
         }
@@ -98,10 +100,13 @@ watch(getElement, (getElementNewValue) => {
                 containsInvalidTags.value = true;
             } else {
                 containsInvalidTags.value = false;
-                editor.value.commands.setContent(getElementNewValue.innerHTML);
+                editor.value.commands.setContent(getElement.value.innerHTML);
             }
         });
     }
+};
+watch(getElement, () => {
+    checkAndSetEditorContent();
 });
 
 // Manage URL
@@ -189,7 +194,9 @@ onBeforeMount(() => {
     editor.value?.destroy();
 });
 
-onMounted(() => {});
+onMounted(() => {
+    checkAndSetEditorContent();
+});
 </script>
 <template>
     <DynamicModal

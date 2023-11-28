@@ -26,14 +26,13 @@ const handleModalPreviewTiptap = function () {
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = "Manage Content";
-    descriptionModal.value = "Manage content";
+    descriptionModal.value = null;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = null;
 
     // handle click
     firstModalButtonFunction.value = function () {
-        console.log(`den køøre`);
         // set open modal
         showModalTipTap.value = false;
     };
@@ -59,7 +58,6 @@ const handleModalPreviewTiptap = function () {
             <main>
                 <TipTapInput></TipTapInput>
             </main>
-            <TipTapInput></TipTapInput>
         </DynamicModal>
 
         <div
@@ -76,7 +74,7 @@ const handleModalPreviewTiptap = function () {
                     </span>
                 </button>
             </div>
-            <TipTapInput></TipTapInput>
+            <TipTapInput v-if="!showModalTipTap"> </TipTapInput>
         </div>
     </div>
 </template>
