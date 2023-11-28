@@ -413,7 +413,7 @@ class JobController extends Controller
 
 
         // job paid logic # start
-        if ($request->published && !Auth::user()->superadmin) {
+        if ($request->published && Auth::user()->superadmin === null) {
             return redirect()->route("stripe.single.charge.job.create", [
                 "team" => $team->id,
                 "job" => $job->id
@@ -991,12 +991,24 @@ class JobController extends Controller
         }
 
         // job paid logic # start
-        if (!$job->is_paid && $request->published) {
+        if (!$job->is_paid && $request->published && Auth::user()->superadmin === null) {
             return redirect()->route("stripe.single.charge.job.create", [
                 "team" => $team->id,
                 "job" => $job->id
             ]);
         }
+
+        if (!$job->is_paid && $request->published && Auth::user()->superadmin) {
+            $job->update([
+                "is_paid" => true,
+                "paid_at" => Carbon::now(),
+            ]);
+
+            return redirect()->route("team.jobs.index", [
+                "teamId" => $team->id,
+            ]);
+        }
+
         // job unpaid logic # start
         if (!$job->is_paid && !$request->published) {
             return redirect()->route("team.jobs.index.unpaid", [
