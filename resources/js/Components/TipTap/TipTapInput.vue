@@ -5,7 +5,6 @@ import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import PageBuilder from "@/composables/PageBuilder";
 import Link from "@tiptap/extension-link";
-import { LinkIcon, ListBulletIcon } from "@heroicons/vue/24/outline";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 
 const showModalUrl = ref(false);
@@ -40,11 +39,6 @@ const textContent = computed(() => {
 
 const getElementtextContentLength = ref(0);
 
-const getElementOuterHTML = computed(() => {
-    if (getElement.value === null) return;
-    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
-});
-
 watch(getElement, (newVal) => {
     const tempContainer = document.createElement("div");
 
@@ -56,7 +50,6 @@ watch(getElement, (newVal) => {
 });
 
 // Check if any of the child elements have the tagName "IMG"
-const containsInvalidTags = ref(false);
 
 const editor = useEditor({
     content: "",
@@ -68,7 +61,7 @@ const editor = useEditor({
     ],
     editorProps: {
         attributes: {
-            class: "prose-sm sm:prose-sm lg:prose-sm m-5 focus:outline-none",
+            class: "prose-sm sm:prose-sm lg:prose-sm focus:outline-none",
         },
     },
 });
@@ -86,37 +79,30 @@ watch(textContent, (newValue) => {
     }
 });
 
-const checkAndSetEditorContent = function () {
+// pageBuilder.textElementClick(newValue);
+
+const TipTapSetContent = function () {
+    if (!pageBuilder.textElementClick()) return;
+
     if (editor.value) {
-        // Get all child elements of the parentDiv
-        const childElements = getElement.value?.children;
-        if (getElement.value?.tagName === "IMG") {
-            containsInvalidTags.value = true;
-            return;
-        }
-        if (!childElements) return;
-        Array.from(childElements).forEach((element) => {
-            if (element?.tagName === "IMG" || element?.tagName === "DIV") {
-                containsInvalidTags.value = true;
-            } else {
-                containsInvalidTags.value = false;
-                editor.value.commands.setContent(getElement.value.innerHTML);
-            }
-        });
+        editor.value.commands.setContent(getElement.value.innerHTML);
     }
 };
+
 watch(getElement, () => {
-    checkAndSetEditorContent();
+    TipTapSetContent();
 });
 
 // Manage URL
-const previousUrl = ref(false);
 const urlEnteret = ref("");
+const newUpdatedExistingURL = ref("");
 const urlError = ref();
 
+watch(urlEnteret, (newVal) => {
+    newUpdatedExistingURL.value = newVal;
+});
 const handleURL = function () {
-    previousUrl.value = editor.value.getAttributes("link").href;
-    urlEnteret.value = previousUrl.value;
+    urlEnteret.value = editor.value.getAttributes("link").href;
 
     // set modal standards
     showModalUrl.value = true;
@@ -132,6 +118,7 @@ const handleURL = function () {
     firstModalButtonFunction.value = function () {
         // set open modal
         showModalUrl.value = false;
+        urlError.value = null;
     };
 
     // handle click
@@ -147,8 +134,7 @@ const handleURL = function () {
             return;
         }
         if (!isNotValidated) {
-            editor.value;
-            setLink();
+            setEnteretURL();
         }
         showModalUrl.value = false;
     };
@@ -164,12 +150,12 @@ const validateURL = function () {
     // url validation
     const urlRegex = /^https?:\/\//;
     const isValidURL = ref(true);
-    isValidURL.value = urlRegex.test(urlEnteret.value);
+    isValidURL.value = urlRegex.test(newUpdatedExistingURL.value);
 
-    if (previousUrl.value) {
-        urlEnteret.value = previousUrl.value;
-    }
-
+    console.log(
+        `validate this: newUpdatedExistingURL.value:`,
+        newUpdatedExistingURL.value
+    );
     // cancelled
     if (isValidURL.value === false) {
         urlError.value =
@@ -179,14 +165,13 @@ const validateURL = function () {
 
     return false;
 };
-const setLink = function () {
-    console.log(" urlEnteret.value :", urlEnteret.value);
+const setEnteretURL = function () {
     // update link
     editor.value
         .chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: urlEnteret.value })
+        .setLink({ href: newUpdatedExistingURL.value })
         .run();
 };
 
@@ -195,7 +180,7 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-    checkAndSetEditorContent();
+    TipTapSetContent();
 });
 </script>
 <template>
@@ -213,13 +198,32 @@ onMounted(() => {
         @thirdModalButtonFunction="thirdModalButtonFunction"
     >
         <header></header>
-        <main></main>
+        <main>
+            <div class="myInputGroup">
+                <label class="myPrimaryInputLabel" for="roles"
+                    ><span>Enter URL</span></label
+                ><input
+                    v-model="urlEnteret"
+                    class="myPrimaryInput mt-1"
+                    type="url"
+                    placeholder="url"
+                />
+                <div
+                    v-if="urlError"
+                    class="min-h-[2.5rem] flex items-center justify-start"
+                >
+                    <p class="myPrimaryInputError mt-2 mb-0 py-0 self-start">
+                        {{ urlError }}
+                    </p>
+                </div>
+            </div>
+        </main>
     </DynamicModal>
 
     <div
         class="mt-2 mb-10 blockease-linear duration-200 block px-2 ease-linear"
     >
-        <div v-if="!containsInvalidTags && editor">
+        <div v-if="pageBuilder.textElementClick() && editor">
             <div class="relative rounded-lg">
                 <div
                     class="h-16 px-2 bg-black rounded-t-lg sticky top-0 z-20 flex gap-4 flex-shrink-0 justify-start items-center border-b-2 border-gray-100 overflow-x-scroll"
@@ -308,7 +312,7 @@ onMounted(() => {
                 <editor-content
                     id="page-builder-editor"
                     :editor="editor"
-                    class="myPrimaryTextArea p-0 m-0 rounded-lg border-none"
+                    class="myPrimaryTextArea m-0 rounded-lg border-none lg:min-h-[20rem] lg:max-h-[40rem] md:min-h-[20rem] md:max-h-[20rem] min-h-[20rem] max-h-[20rem] overflow-y-scroll"
                 />
             </div>
         </div>

@@ -91,17 +91,17 @@ const deleteComponent = function (e) {
         <div class="flex gap-2 items-center justify-center">
             <button
                 type="button"
-                @click="pageBuilder.moveComponent(1)"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-            >
-                <span class="material-symbols-outlined"> arrow_downward </span>
-            </button>
-            <button
-                type="button"
                 @click="pageBuilder.moveComponent(-1)"
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
-                <span class="material-symbols-outlined"> arrow_upward </span>
+                <span class="material-symbols-outlined"> move_up </span>
+            </button>
+            <button
+                type="button"
+                @click="pageBuilder.moveComponent(1)"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+            >
+                <span class="material-symbols-outlined"> move_down </span>
             </button>
         </div>
     </div>

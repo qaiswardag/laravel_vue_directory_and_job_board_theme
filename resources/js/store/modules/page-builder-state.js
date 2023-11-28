@@ -21,6 +21,7 @@ export default {
     state: {
         localStorageItemName: null,
         localStorageItemNameUpdate: null,
+        showModalTipTap: false,
         menuRight: true,
         // border style, width & color / start
         borderStyle: null,
@@ -80,6 +81,10 @@ export default {
         getLocalStorageItemNameUpdate(state) {
             return state.localStorageItemNameUpdate;
         },
+        getShowModalTipTap(state) {
+            return state.showModalTipTap;
+        },
+
         getMenuRight(state) {
             return state.menuRight;
         },
@@ -220,6 +225,9 @@ export default {
         },
         setLocalStorageItemNameUpdate(state, payload) {
             state.localStorageItemNameUpdate = payload;
+        },
+        setShowModalTipTap(state, payload) {
+            state.showModalTipTap = payload;
         },
         setMenuRight(state, payload) {
             state.menuRight = payload;

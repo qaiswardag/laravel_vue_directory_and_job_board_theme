@@ -608,7 +608,7 @@ onMounted(() => {
                                                                 <span
                                                                     class="myMediumIcon material-symbols-outlined"
                                                                 >
-                                                                    book_4
+                                                                    sell
                                                                 </span>
                                                             </div>
                                                         </button>
@@ -812,7 +812,7 @@ onMounted(() => {
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                        book_4
+                                                        sell
                                                     </span>
                                                 </div>
                                             </button>

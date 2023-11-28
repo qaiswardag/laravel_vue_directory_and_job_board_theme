@@ -2113,7 +2113,7 @@ const pageBuilder = new PageBuilder(store);
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
                                         >
-                                            book_4
+                                            sell
                                         </span>
                                     </button>
                                     <div>

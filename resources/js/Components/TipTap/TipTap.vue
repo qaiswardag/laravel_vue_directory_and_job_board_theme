@@ -5,7 +5,18 @@ import PageBuilder from "@/composables/PageBuilder";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import TipTapInput from "@/Components/TipTap/TipTapInput.vue";
 
-const showModalTipTap = ref(false);
+const store = useStore();
+const toggleTipTap = ref(true);
+
+const getShowModalTipTap = computed(() => {
+    const result = store.getters["pageBuilderState/getShowModalTipTap"];
+
+    if (result) {
+        handleModalPreviewTiptap();
+    }
+    return result;
+});
+
 //
 // use dynamic model
 const typeModal = ref("");
@@ -22,7 +33,6 @@ const thirdModalButtonFunction = ref(null);
 
 const handleModalPreviewTiptap = function () {
     // set modal standards
-    showModalTipTap.value = true;
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = "Manage Content";
@@ -34,14 +44,14 @@ const handleModalPreviewTiptap = function () {
     // handle click
     firstModalButtonFunction.value = function () {
         // set open modal
-        showModalTipTap.value = false;
+        store.commit("pageBuilderState/setShowModalTipTap", false);
     };
 };
 </script>
 <template>
     <div>
         <DynamicModal
-            :show="showModalTipTap"
+            :show="getShowModalTipTap"
             maxWidth="5xl"
             :type="typeModal"
             :gridColumnAmount="gridColumnModal"
@@ -55,7 +65,9 @@ const handleModalPreviewTiptap = function () {
             @thirdModalButtonFunction="thirdModalButtonFunction"
         >
             <header></header>
-            <main>
+            <main
+                class="lg:min-h-[30rem] lg:max-h-[40rem] md:min-h-[20rem] md:max-h-[30rem] min-h-[20rem] max-h-[20rem] overflow-y-scroll"
+            >
                 <TipTapInput></TipTapInput>
             </main>
         </DynamicModal>
@@ -63,18 +75,46 @@ const handleModalPreviewTiptap = function () {
         <div
             class="mt-2 mb-10 blockease-linear duration-200 block px-2 ease-linear"
         >
-            <div class="flex items-center gap-2 my-2 bg-transparent py-2">
-                <button
-                    @click="handleModalPreviewTiptap"
-                    type="button"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+            <div class="px-2">
+                <div
+                    class="h-14 px-2 bg-gray-100 rounded-full sticky top-0 z-20 flex gap-4 flex-shrink-0 justify-start items-center border-gray-100 shadow"
                 >
-                    <span class="material-symbols-outlined">
-                        pinch_zoom_out
-                    </span>
-                </button>
+                    <button
+                        @click="
+                            store.commit(
+                                'pageBuilderState/setShowModalTipTap',
+                                true
+                            )
+                        "
+                        type="button"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <span class="material-symbols-outlined">
+                            open_in_full
+                        </span>
+                    </button>
+                    <button
+                        @click="toggleTipTap = !toggleTipTap"
+                        type="button"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <span
+                            v-if="toggleTipTap"
+                            class="material-symbols-outlined"
+                        >
+                            collapse_content
+                        </span>
+                        <span
+                            v-if="!toggleTipTap"
+                            class="material-symbols-outlined"
+                        >
+                            expand_content
+                        </span>
+                    </button>
+                </div>
             </div>
-            <TipTapInput v-if="!showModalTipTap"> </TipTapInput>
+            <TipTapInput v-if="!getShowModalTipTap && toggleTipTap">
+            </TipTapInput>
         </div>
     </div>
 </template>

@@ -287,9 +287,7 @@ import {
                     route().current('team.stores.store.show')
                 "
             >
-                <span class="myMediumIcon material-symbols-outlined">
-                    storefront
-                </span>
+                <span class="material-symbols-outlined"> local_mall </span>
                 Stores
             </SideBarLink>
         </template>
@@ -324,8 +322,7 @@ import {
                 route().current('teams.create.team')
             "
         >
-            <span class="myMediumIcon material-symbols-outlined"> layers </span>
-            All Teams
+            <span class="material-symbols-outlined"> stacks </span> All Teams
         </SideBarLink>
         <SideBarLink
             v-if="$page.props.user.superadmin !== null"

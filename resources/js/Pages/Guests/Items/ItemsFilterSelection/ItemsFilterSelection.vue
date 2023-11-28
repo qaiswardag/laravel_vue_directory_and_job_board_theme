@@ -129,7 +129,7 @@ const handleRemoveItem = function (selectedItem) {
 
                                 <template v-if="props.icon === 'NewspaperIcon'">
                                     <span class="material-symbols-outlined">
-                                        book_4
+                                        sell
                                     </span>
                                 </template>
                                 <div class="w-max">
@@ -213,7 +213,7 @@ const handleRemoveItem = function (selectedItem) {
                                         v-if="props.icon === 'NewspaperIcon'"
                                     >
                                         <span class="material-symbols-outlined">
-                                            book_4
+                                            sell
                                         </span>
                                     </template>
                                     {{ item.name }}
