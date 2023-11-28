@@ -115,7 +115,6 @@ const handleModalPreviewTiptap = function () {
 
     // handle click
     firstModalButtonFunction.value = function () {
-        console.log(`køre den 1`);
         // set open modal
         showModalTipTap.value = false;
     };
@@ -145,7 +144,6 @@ const handleURL = function () {
 
     // handle click
     firstModalButtonFunction.value = function () {
-        console.log(`køre den 2`);
         // set open modal
         showModalUrl.value = false;
     };
@@ -254,7 +252,7 @@ onMounted(() => {});
     </DynamicModal>
 
     <DynamicModal
-        v-if="showModalTipTap && !showModalUrl"
+        v-if="showModalTipTap"
         :show="showModalTipTap"
         maxWidth="5xl"
         :type="typeModal"
