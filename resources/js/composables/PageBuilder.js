@@ -70,7 +70,14 @@ class PageBuilder {
         );
 
         this.headerTags = ["P", "H1", "H2", "H3", "H4", "H5", "H6"];
-        this.additionalTagsNoneListernes = ["UL", "LI", "EM", "STRONG"];
+        this.additionalTagsNoneListernes = [
+            "UL",
+            "LI",
+            "EM",
+            "STRONG",
+            "A",
+            "SPAN",
+        ];
 
         this.structuringTags = [
             "DIV",
@@ -184,12 +191,7 @@ class PageBuilder {
     }
 
     #handleElementClick = (e, element) => {
-        if (this.showRunningMethodLogs) {
-            console.log("#handleElementClick");
-        }
         e.stopPropagation();
-        e.stopPropagation();
-
         const pagebuilder = document.querySelector("#pagebuilder");
         if (!pagebuilder) return;
 
@@ -204,6 +206,10 @@ class PageBuilder {
         element.setAttribute("selected", "");
 
         this.store.commit("pageBuilderState/setElement", element);
+
+        if (this.textElementClick()) {
+            this.store.commit("pageBuilderState/setShowModalTipTap", true);
+        }
     };
 
     #handleMouseOver = (e, element) => {
@@ -216,6 +222,10 @@ class PageBuilder {
         e.stopPropagation();
 
         const pagebuilder = document.querySelector("#pagebuilder");
+
+        //
+        //
+        //
         if (!pagebuilder) return;
 
         if (pagebuilder.querySelector("[hovered]") !== null) {
@@ -259,7 +269,6 @@ class PageBuilder {
         if (!pagebuilder) return;
 
         pagebuilder.querySelectorAll("section *").forEach(async (element) => {
-            //
             // exclude headerTags
             if (
                 !this.headerTags.includes(element.tagName) &&
@@ -930,6 +939,7 @@ class PageBuilder {
         }
     };
 
+    //
     handleTextInput = async (textContentVueModel) => {
         if (this.showRunningMethodLogs) {
             console.log("handleTextInput");
@@ -958,6 +968,30 @@ class PageBuilder {
 
         this.ensureTextAreaHasContent();
     };
+
+    //
+    textElementClick() {
+        let reachedElseStatement = false;
+
+        // Get all child elements of the parentDiv
+        const childElements = this.getElement.value?.children;
+        if (this.getElement.value?.tagName === "IMG") {
+            return;
+        }
+        if (!childElements) {
+            return;
+        }
+
+        Array.from(childElements).forEach((element) => {
+            if (element?.tagName === "IMG" || element?.tagName === "DIV") {
+                reachedElseStatement = false;
+            } else {
+                reachedElseStatement = true;
+            }
+        });
+
+        return reachedElseStatement;
+    }
 
     previewCurrentDesign() {
         if (this.showRunningMethodLogs) {
@@ -1320,8 +1354,6 @@ class PageBuilder {
     }
 
     handlePageBuilderMethods() {
-        console.log("handlePageBuilderMethods ran");
-
         if (!this.shouldRunMethods()) return;
 
         this.store.commit("pageBuilderState/setParentElement", null);

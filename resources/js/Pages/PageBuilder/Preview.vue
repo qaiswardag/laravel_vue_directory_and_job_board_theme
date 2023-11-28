@@ -2,7 +2,7 @@
     <div
         class="w-full bg-white inset-x-0 h-[90vh] lg:pt-0 pt-0-z-10 overflow-x-scroll px-4"
     >
-        <div id="previewContent">
+        <div id="page-builder-editor">
             <div v-html="htmlPage"></div>
         </div>
     </div>

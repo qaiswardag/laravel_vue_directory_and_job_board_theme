@@ -587,7 +587,7 @@ onMounted(() => {
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                        book_4
+                                                        sell
                                                     </span>
                                                     <span>
                                                         {{ jobType.name }}

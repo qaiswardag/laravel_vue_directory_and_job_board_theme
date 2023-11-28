@@ -60,7 +60,7 @@ const breadcrumbsLinks = [
 const linksTopMenu = [
     {
         label: "All Stores",
-        icon: "storefront",
+        icon: "local_mall",
         route: {
             name: "team.stores.index",
             parameters: [props.currentUserTeam.id],

@@ -142,11 +142,11 @@ class StoreJobRequest extends FormRequest
                     );
             }
 
-            // The Started at date must be in the future
+            // If job is unpaid make sure job started at date is now or in the future
             if (
                 $this->job && $this->job->id &&
                 $this->started_at &&
-                !$this->is_paid &&
+                !$this->job->is_paid &&
                 Carbon::parse($this->started_at)->isValid() &&
                 !Carbon::parse($this->started_at)->addDays(1)->isFuture()
             ) {
@@ -154,7 +154,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "started_at",
-                        "The started at date must be from today and in the future."
+                        "When updating a job, the started at date must be set to today or a future date."
                     );
             }
             //

@@ -26,7 +26,6 @@
         "@heroicons/vue": "^2.0.18",
         "@sentry/vue": "^7.40.0",
         "@tiptap/extension-bold": "^2.1.10",
-        "@tiptap/extension-hard-break": "^2.1.10",
         "@tiptap/extension-heading": "^2.1.10",
         "@tiptap/extension-link": "^2.1.10",
         "@tiptap/extension-list-item": "^2.1.10",

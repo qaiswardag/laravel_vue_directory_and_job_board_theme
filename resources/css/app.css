@@ -464,37 +464,15 @@
 }
 
 /* CSS for content inside page builder # start */
-#defined-page-content ol,
-#defined-page-content ul {
+#page-builder-editor ol,
+#page-builder-editor ul {
     list-style: disc !important;
     padding: 1rem 0rem;
 }
-#defined-page-content li {
-    line-height: 2.2rem;
-}
 
-/* preview page builder */
-#previewContent {
-    padding: 0 2rem;
-}
-#previewContent ol,
-#previewContent ul {
-    list-style: disc !important;
-}
-#previewContent li {
+#page-builder-editor li {
     line-height: 2.2rem;
-}
-
-/* Insdie page builder */
-#pagebuilder {
-    padding: 0 2rem;
-}
-#pagebuilder ol,
-#pagebuilder ul {
-    list-style: disc !important;
-}
-#pagebuilder li {
-    line-height: 2.2rem;
+    margin-left: 1.5em; /* Adjust this value as needed */
 }
 /* CSS for content inside page builder #end*/
 

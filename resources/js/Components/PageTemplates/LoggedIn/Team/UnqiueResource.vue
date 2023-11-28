@@ -60,7 +60,7 @@ defineProps({
             <h1 class="myPrimaryHeader text-center">
                 {{ post.title }}
             </h1>
-            <div id="defined-page-content">
+            <div id="page-builder-editor">
                 <section v-html="post.content"></section>
             </div>
         </template>
@@ -306,7 +306,7 @@ defineProps({
                             <span
                                 class="myMediumIcon material-symbols-outlined"
                             >
-                                book_4
+                                sell
                             </span>
                             <span>
                                 {{ state.name }}

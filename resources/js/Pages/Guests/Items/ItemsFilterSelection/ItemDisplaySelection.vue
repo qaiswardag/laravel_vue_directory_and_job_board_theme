@@ -80,7 +80,7 @@ const handleRemoveItem = function (selectedItem) {
 
                 <template v-if="props.icon === 'NewspaperIcon'">
                     <span class="myMediumIcon material-symbols-outlined">
-                        book_4
+                        sell
                     </span>
                 </template>
 
