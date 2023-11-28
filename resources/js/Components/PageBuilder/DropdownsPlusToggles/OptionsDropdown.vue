@@ -41,6 +41,7 @@ const showSettingsSlideOverRight = ref(false);
 const titleSettingsSlideOverRight = ref(null);
 const openDesignerPreviewModal = ref(false);
 const firstDesignerPreviewModalButtonFunction = ref(null);
+
 const handleDesignerPreview = function () {
     emit("previewCurrentDesign");
     // set modal standards
