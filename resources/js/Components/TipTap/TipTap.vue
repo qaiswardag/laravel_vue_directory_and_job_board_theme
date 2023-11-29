@@ -6,6 +6,9 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import TipTapInput from "@/Components/TipTap/TipTapInput.vue";
 
 const store = useStore();
+
+const pageBuilder = new PageBuilder(store);
+
 const toggleTipTap = ref(true);
 
 const getShowModalTipTap = computed(() => {
@@ -75,7 +78,7 @@ const handleModalPreviewTiptap = function () {
         <div
             class="mt-2 mb-10 blockease-linear duration-200 block px-2 ease-linear"
         >
-            <div class="px-2">
+            <template v-if="pageBuilder.clickOnTextElement()">
                 <div
                     class="h-14 px-2 bg-gray-100 rounded-full sticky top-0 z-20 flex gap-4 flex-shrink-0 justify-start items-center border-gray-100 shadow"
                 >
@@ -112,7 +115,7 @@ const handleModalPreviewTiptap = function () {
                         </span>
                     </button>
                 </div>
-            </div>
+            </template>
             <TipTapInput v-if="!getShowModalTipTap && toggleTipTap">
             </TipTapInput>
         </div>

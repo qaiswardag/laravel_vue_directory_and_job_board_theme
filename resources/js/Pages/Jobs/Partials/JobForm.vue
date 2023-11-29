@@ -1326,10 +1326,12 @@ const pageBuilder = new PageBuilder(store);
                 <div
                     class="rounded-lg mt-4 border-2 border-dashed border-gray-300 p-8 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    <FolderPlusIcon
-                        @click="handlePageBuilder"
-                        class="mx-auto h-12 w-12 text-gray-400 cursor-pointer"
-                    ></FolderPlusIcon>
+                    <button type="button" @click="handlePageBuilder">
+                        <span class="myMediumIcon material-symbols-outlined">
+                            stacks
+                        </span>
+                    </button>
+
                     <h3 class="mt-2 text-sm font-semibold text-gray-900">
                         Build your Job by adding Components
                     </h3>
@@ -1343,9 +1345,11 @@ const pageBuilder = new PageBuilder(store);
                             type="button"
                             class="myPrimaryButton"
                         >
-                            <FolderPlusIcon
-                                class="-ml-0.5 mr-1.5 h-5 w-5"
-                            ></FolderPlusIcon>
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                stacks
+                            </span>
                             Add content
                         </button>
                     </div>

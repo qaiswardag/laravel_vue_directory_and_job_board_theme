@@ -194,7 +194,7 @@ onMounted(async () => {
                                 <span
                                     class="myMediumIcon material-symbols-outlined"
                                 >
-                                    category
+                                    stacks
                                 </span>
                             </button>
                             <button
@@ -257,29 +257,29 @@ onMounted(async () => {
                         <div
                             class="rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 my-12 mx-8"
                         >
-                            <FolderPlusIcon
-                                @click="handleAddComponent"
-                                class="mx-auto h-12 w-12 text-gray-400 cursor-pointer"
-                            ></FolderPlusIcon>
                             <h3
                                 class="mt-2 text-sm font-semibold text-gray-900"
                             >
-                                Add Component
+                                Add Components
                             </h3>
                             <p class="mt-1 text-sm text-gray-500">
                                 Get started by adding components using the drag
                                 & drop Page Builder.
                             </p>
-                            <div class="mt-6">
+                            <div
+                                class="mt-6 flex items-center gap-2 justify-center"
+                            >
                                 <button
                                     @click="handleAddComponent"
                                     type="button"
-                                    class="myPrimaryButton"
+                                    class="myPrimaryButton flex items-center gap-2 justify-center"
                                 >
-                                    <FolderPlusIcon
-                                        class="-ml-0.5 mr-1.5 h-5 w-5"
-                                    ></FolderPlusIcon>
-                                    New Component
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        add
+                                    </span>
+                                    Add component
                                 </button>
                             </div>
                         </div>
