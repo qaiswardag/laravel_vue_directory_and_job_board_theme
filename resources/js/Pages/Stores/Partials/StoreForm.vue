@@ -1035,17 +1035,6 @@ onMounted(async () => {
     //
     //
     google.maps.event.addListener(autocomplete, "place_changed", () => {
-        console.log(
-            `Address could be:`,
-            `${autocomplete.getPlace().address_components[0].long_name}, ${
-                autocomplete.getPlace().address_components[1].long_name
-            }`
-        );
-        console.log(`changed..:`, autocomplete.getPlace());
-
-        //
-        //
-        //
         postForm.address = `${
             autocomplete.getPlace().address_components[0].long_name
         }, ${autocomplete.getPlace().address_components[1].long_name}`;

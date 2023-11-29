@@ -68,6 +68,8 @@ const editor = useEditor({
 
 // watch for changes in textContent and update store and textContentVueModel
 watch(textContent, (newValue) => {
+    if (!pageBuilder.clickOnTextElement()) return;
+
     if (getElement.value) {
         store.commit("pageBuilderState/setTextAreaVueModel", newValue);
         if (
@@ -79,10 +81,10 @@ watch(textContent, (newValue) => {
     }
 });
 
-// pageBuilder.textElementClick(newValue);
+// pageBuilder.clickOnTextElement(newValue);
 
 const TipTapSetContent = function () {
-    if (!pageBuilder.textElementClick()) return;
+    if (!pageBuilder.clickOnTextElement()) return;
 
     if (editor.value) {
         editor.value.commands.setContent(getElement.value.innerHTML);
@@ -152,10 +154,6 @@ const validateURL = function () {
     const isValidURL = ref(true);
     isValidURL.value = urlRegex.test(newUpdatedExistingURL.value);
 
-    console.log(
-        `validate this: newUpdatedExistingURL.value:`,
-        newUpdatedExistingURL.value
-    );
     // cancelled
     if (isValidURL.value === false) {
         urlError.value =
@@ -223,7 +221,7 @@ onMounted(() => {
     <div
         class="mt-2 mb-10 blockease-linear duration-200 block px-2 ease-linear"
     >
-        <div v-if="pageBuilder.textElementClick() && editor">
+        <div v-if="pageBuilder.clickOnTextElement() && editor">
             <div class="relative rounded-lg">
                 <div
                     class="h-16 px-2 bg-black rounded-t-lg sticky top-0 z-20 flex gap-4 flex-shrink-0 justify-start items-center border-b-2 border-gray-100 overflow-x-scroll"

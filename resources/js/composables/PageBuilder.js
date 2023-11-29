@@ -207,7 +207,7 @@ class PageBuilder {
 
         this.store.commit("pageBuilderState/setElement", element);
 
-        if (this.textElementClick()) {
+        if (this.clickOnTextElement()) {
             this.store.commit("pageBuilderState/setShowModalTipTap", true);
         }
     };
@@ -970,7 +970,7 @@ class PageBuilder {
     };
 
     //
-    textElementClick() {
+    clickOnTextElement() {
         let reachedElseStatement = false;
 
         // Get all child elements of the parentDiv
