@@ -13,6 +13,7 @@ import { parseISO, format } from "date-fns";
 import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import TopMenu from "@/Components/Menues/TopMenu.vue";
+import PricingForJob from "@/Pages/Jobs/Components/PricingForJob.vue";
 
 import {
     EllipsisVerticalIcon,
@@ -307,6 +308,7 @@ onMounted(() => {
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
+            <PricingForJob :currentUserTeam="currentUserTeam"></PricingForJob>
             <CardHeadings :routesArray="routesArray">
                 <template #title
                     >Jobs for

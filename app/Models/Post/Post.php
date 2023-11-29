@@ -23,6 +23,7 @@ class Post extends Model
         "slug",
         "content",
         "published",
+        "featured",
         "tags",
         "show_author",
         "trash",

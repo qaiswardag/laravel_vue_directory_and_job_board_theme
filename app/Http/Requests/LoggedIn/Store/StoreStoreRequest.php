@@ -25,6 +25,7 @@ class StoreStoreRequest extends FormRequest
     {
         $rules = [
             "published" => ["boolean"],
+            "featured" => ["boolean", "nullable"],
             "show_author" => ["boolean"],
             // If you do not include the string validation rule for a text input like title.
             // it may allow non-string values to be submitted and saved in the database.

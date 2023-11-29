@@ -26,6 +26,7 @@ class Job extends Model
         "ended_at",
         "content",
         "published",
+        "featured",
         "tags",
         "show_author",
         "trash",

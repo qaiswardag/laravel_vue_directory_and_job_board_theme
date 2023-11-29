@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean("is_paid")->nullable();
             $table->timestamp("paid_at")->nullable();
             $table->boolean("published")->nullable();
+            $table->boolean("featured")->nullable();
             $table->boolean("is_filled")->nullable();
             $table->string("apply_via_email")->nullable();
             $table->string("apply_via_link")->nullable();
