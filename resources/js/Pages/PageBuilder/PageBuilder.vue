@@ -90,23 +90,22 @@ const getElement = computed(() => {
 });
 
 const getElementAttributes = computed(() => {
-    const element = getElement.value;
-
-    if (element === null) return;
+    if (!getElement.value) {
+        return new Object();
+    }
 
     // Extract the attributes you want to watch
     const attributesToWatch = {
-        src: element.getAttribute("src"),
-        href: element.getAttribute("href"),
-        style: element.getAttribute("style"),
-        class: element.getAttribute("class"),
+        src: getElement.value.getAttribute("src"),
+        href: getElement.value.getAttribute("href"),
+        style: getElement.value.getAttribute("style"),
+        class: getElement.value.getAttribute("class"),
     };
 
     return attributesToWatch;
 });
 
 watch(getElementAttributes, (newAttributes, oldAttributes) => {
-    if (!oldAttributes) return;
     // Check if any of the specified attributes have changed
     if (
         newAttributes?.src !== oldAttributes?.src ||
@@ -249,13 +248,11 @@ onMounted(async () => {
                                     @mouseup="handleSelectComponent(component)"
                                     class="relative group"
                                 >
-                                    <!-- øø -->
                                     <div class="flex items-center gap-4">
                                         <div
                                             class="py-4 px-4 my-4 mx-4 bg-gray-800 text-white"
                                         >
-                                            get element is:
-                                            {{ JSON.stringify(getElement) }}
+                                            test her
                                         </div>
                                     </div>
                                     <div v-html="component.html_code"></div>

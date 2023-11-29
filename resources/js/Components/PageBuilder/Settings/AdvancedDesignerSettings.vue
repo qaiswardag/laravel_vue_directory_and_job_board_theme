@@ -147,17 +147,9 @@ const updateCurrentTab = function (tab) {
                     </div>
                     <div class="px-4 pb-8 pt-4 text-white text-xs break-all">
                         <div v-if="current === 'element'">
-                            <p class="pb-2">
-                                {{
-                                    getElement === null
-                                        ? "NULL"
-                                        : typeof getElement
-                                }}
-                            </p>
-
                             <div v-if="getElement">
                                 <p class="whitespace-pre-line leading-5">
-                                    {{ JSON.stringify(getElement) }}
+                                    {{ getElement?.outerHTML }}
                                 </p>
                             </div>
                         </div>
