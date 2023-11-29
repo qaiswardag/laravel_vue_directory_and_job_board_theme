@@ -660,7 +660,7 @@ const categoriesSorted = computed(() => {
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
                                         >
-                                            category
+                                            interests
                                         </span>
                                     </button>
                                     <div>
@@ -975,7 +975,7 @@ const categoriesSorted = computed(() => {
                     secondModalButtonSearchItemsFunction
                 "
                 :displayIcon="true"
-                icon="Squares2X2Icon"
+                icon="interests"
                 :show="modalShowSearchItemsModal"
             >
             </SearchUsersOrItems>

@@ -81,7 +81,7 @@ class TeamsUsers extends Command
         if (!Team::where("id", 2)->exists()) {
             Team::factory()->create([
                 "id" => 2,
-                "user_id" => User::find(2)->id,
+                "user_id" => User::find(1)->id,
                 "name" => "Dubai Mall",
                 "slug" => "Dubai Mall",
                 "public" => true,

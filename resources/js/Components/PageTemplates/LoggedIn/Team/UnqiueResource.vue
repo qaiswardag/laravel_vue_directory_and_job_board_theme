@@ -271,7 +271,7 @@ defineProps({
                             <span
                                 class="myMediumIcon material-symbols-outlined"
                             >
-                                category
+                                interests
                             </span>
                             <span>
                                 {{
@@ -330,17 +330,17 @@ defineProps({
                         class="flex flex-wrap justify-start items-center gap-2"
                     >
                         <p
-                            v-for="state in categories && categories"
-                            :key="state"
+                            v-for="category in categories && categories"
+                            :key="category.id"
                             class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"
                             >
-                                category
+                                interests
                             </span>
                             <span>
-                                {{ state.name }}
+                                {{ category.name }}
                             </span>
                         </p>
                     </div>
@@ -476,7 +476,7 @@ defineProps({
                                     class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
                                 >
                                     <span>
-                                        {{ author.first_name }}
+                                        {{ author.id }}
                                         {{ author.last_name }}
                                     </span>
                                 </p>

@@ -1317,7 +1317,7 @@ const pageBuilder = new PageBuilder(store);
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
                                         >
-                                            category
+                                            interests
                                         </span>
                                     </button>
                                     <div>
@@ -1722,7 +1722,7 @@ const pageBuilder = new PageBuilder(store);
                     secondModalButtonSearchItemsFunction
                 "
                 :displayIcon="true"
-                icon="Squares2X2Icon"
+                icon="interests"
                 :show="showSearchPostCategoriesModal"
             >
             </SearchUsersOrItems>

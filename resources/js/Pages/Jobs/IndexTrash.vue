@@ -799,7 +799,7 @@ onMounted(() => {
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                        category
+                                                        interests
                                                     </span>
                                                     <span>
                                                         {{ category.name }}

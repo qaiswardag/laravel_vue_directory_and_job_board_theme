@@ -8,6 +8,7 @@ import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
 import { CheckIcon } from "@heroicons/vue/20/solid";
 import { usePage } from "@inertiajs/vue3";
 import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
+import PageHeader from "@/Components/Headers/PageHeader.vue";
 </script>
 
 <template>
@@ -15,31 +16,7 @@ import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
         <GuestsLayout>
             <Head title="Professional" />
             <template #header>
-                <div class="w-full relative h-[32rem]">
-                    <img
-                        class="top-0 left-0 w-full object-cover h-[32rem]"
-                        src="/brand-images/pink-lady-high-resolution.jpg"
-                        alt="/"
-                    />
-                    <div
-                        class="bg-black/20 absolute top-0 left-0 w-full h-[32rem]"
-                    ></div>
-                    <div
-                        class="absolute text-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                    >
-                        <h1 class="myPrimaryHeader text-white text-center">
-                            Professional
-                        </h1>
-                        <p
-                            class="myPrimaryParagraph text-white text-center font-medium"
-                        >
-                            myself.ae brings fashion to where the consumers are.
-                            <br />
-                            Join Fashion's most comprehensive marketing platform
-                            in the U.A.E. Showcase stores to local consumers.
-                        </p>
-                    </div>
-                </div>
+                <PageHeader title="Professional" class="bg-red-50"></PageHeader>
             </template>
 
             <FullWidthElement :descriptionArea="true" class="bg-red-50">

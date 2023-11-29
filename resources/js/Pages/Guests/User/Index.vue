@@ -13,6 +13,7 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/vue/24/outline";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import DefaultElement from "@/Components/Layouts/DefaultElement.vue";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
+import PageHeader from "@/Components/Headers/PageHeader.vue";
 
 defineProps({
     posts: {
@@ -25,9 +26,7 @@ defineProps({
         <GuestsLayout>
             <Head title="Users" />
             <template #header>
-                <div>
-                    <h1 class="myPrimaryHeader">Users</h1>
-                </div>
+                <PageHeader title="Users"></PageHeader>
             </template>
         </GuestsLayout>
     </MainLayout>

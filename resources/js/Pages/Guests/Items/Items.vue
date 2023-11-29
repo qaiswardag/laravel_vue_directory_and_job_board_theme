@@ -396,7 +396,7 @@ onMounted(() => {
                                 nameOfList="Categories"
                                 :list="fetchedDataPosts.categories"
                                 :listSelected="categorySelected"
-                                icon="Squares2X2Icon"
+                                icon="interests"
                                 @removeItem="handleRemoveCategory"
                                 @selectItem="handleSelectCategory"
                             ></ItemsFilterSelection>
@@ -652,7 +652,7 @@ onMounted(() => {
                                         <ItemDisplaySelection
                                             :list="post.categories"
                                             :listSelected="categorySelected"
-                                            icon="Squares2X2Icon"
+                                            icon="interests"
                                             @removeItem="handleRemoveCategory"
                                             @selectItem="handleSelectCategory"
                                         ></ItemDisplaySelection>

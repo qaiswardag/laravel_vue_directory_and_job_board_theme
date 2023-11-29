@@ -105,11 +105,9 @@ const handleRemoveItem = function (selectedItem) {
                             class="bg-gray-200 py-2 px-2 rounded-full hover:bg-myPrimaryErrorColor hover:text-white my-0"
                         >
                             <div class="flex justify-center items-center gap-2">
-                                <template
-                                    v-if="props.icon === 'Squares2X2Icon'"
-                                >
+                                <template v-if="props.icon === 'interests'">
                                     <span class="material-symbols-outlined">
-                                        category
+                                        interests
                                     </span>
                                 </template>
 
@@ -183,11 +181,9 @@ const handleRemoveItem = function (selectedItem) {
                                 <div
                                     class="flex justify-left items-center gap-2"
                                 >
-                                    <template
-                                        v-if="props.icon === 'Squares2X2Icon'"
-                                    >
+                                    <template v-if="props.icon === 'interests'">
                                         <span class="material-symbols-outlined">
-                                            category
+                                            interests
                                         </span>
                                     </template>
 
