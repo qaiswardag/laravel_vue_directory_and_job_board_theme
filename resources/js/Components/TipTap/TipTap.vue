@@ -78,7 +78,7 @@ const handleModalPreviewTiptap = function () {
         <div
             class="mt-2 mb-10 blockease-linear duration-200 block px-2 ease-linear"
         >
-            <template v-if="pageBuilder.clickOnTextElement()">
+            <template v-if="pageBuilder.selectedElementIsValidText()">
                 <div
                     class="h-14 px-2 bg-gray-100 rounded-full sticky top-0 z-20 flex gap-4 flex-shrink-0 justify-start items-center border-gray-100 shadow"
                 >

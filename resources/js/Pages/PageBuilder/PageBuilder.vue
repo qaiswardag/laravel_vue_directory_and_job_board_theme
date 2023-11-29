@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed, ref, watch } from "vue";
+import { onMounted, computed, ref, watch, nextTick } from "vue";
 import PageBuilder from "@/composables/PageBuilder";
 import PageBuilderPreviewModal from "@/Components/Modals/PageBuilderPreviewModal.vue";
 import Preview from "@/Pages/PageBuilder/Preview.vue";
@@ -88,10 +88,11 @@ const getComponent = computed(() => {
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
+
 const getElementAttributes = computed(() => {
     const element = getElement.value;
 
-    if (element === null) return {};
+    if (element === null) return;
 
     // Extract the attributes you want to watch
     const attributesToWatch = {
@@ -105,12 +106,13 @@ const getElementAttributes = computed(() => {
 });
 
 watch(getElementAttributes, (newAttributes, oldAttributes) => {
+    if (!oldAttributes) return;
     // Check if any of the specified attributes have changed
     if (
-        newAttributes.src !== oldAttributes.src ||
-        newAttributes.href !== oldAttributes.href ||
-        newAttributes.style !== oldAttributes.style ||
-        newAttributes.class !== oldAttributes.class
+        newAttributes?.src !== oldAttributes?.src ||
+        newAttributes?.href !== oldAttributes?.href ||
+        newAttributes?.style !== oldAttributes?.style ||
+        newAttributes?.class !== oldAttributes?.class
     ) {
         // Trigger your method when any of the specified attributes change
         pageBuilder.handlePageBuilderMethods();
@@ -247,6 +249,15 @@ onMounted(async () => {
                                     @mouseup="handleSelectComponent(component)"
                                     class="relative group"
                                 >
+                                    <!-- øø -->
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="py-4 px-4 my-4 mx-4 bg-gray-800 text-white"
+                                        >
+                                            get element is:
+                                            {{ JSON.stringify(getElement) }}
+                                        </div>
+                                    </div>
                                     <div v-html="component.html_code"></div>
                                 </div>
                             </div>

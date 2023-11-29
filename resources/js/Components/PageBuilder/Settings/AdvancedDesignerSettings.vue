@@ -4,8 +4,6 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
-const reactiveGetElement = ref(null);
-
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
@@ -16,17 +14,7 @@ const getComponent = computed(() => {
 const getComponents = computed(() => {
     return store.getters["pageBuilderState/getComponents"];
 });
-
 const current = ref("element");
-
-const getElementOuterHTML = computed(() => {
-    if (getElement.value === null) return;
-    return getElement.value.outerHTML ? getElement.value.outerHTML : null;
-});
-
-watch(getElementOuterHTML, (newComponent) => {
-    reactiveGetElement.value = newComponent;
-});
 
 const updateCurrentTab = function (tab) {
     current.value = tab;
@@ -46,9 +34,6 @@ const updateCurrentTab = function (tab) {
 
             <!-- Types - start -->
             <div>
-                <p class="my-4">
-                    getElement is: {{ JSON.stringify(getElement) }}
-                </p>
                 <h4 class="myPrimaryParagraph text-sm pb-2">Types</h4>
                 <div class="text-white overflow-hidden bg-gray-900 max-w-2xl">
                     <div class="flex bg-gray-800/40 ring-1 ring-white/5">
@@ -64,12 +49,7 @@ const updateCurrentTab = function (tab) {
                                 getElement === null || getElement === undefined
                             "
                             class="text-xs pb-2"
-                        >
-                            <span
-                                >Element type:
-                                {{ JSON.stringify(getElement) }}
-                            </span>
-                        </p>
+                        ></p>
                         <p
                             v-if="
                                 getElement !== null && getElement !== undefined
@@ -81,6 +61,7 @@ const updateCurrentTab = function (tab) {
                                 {{ typeof getElement }}
                             </span>
                         </p>
+
                         <p
                             v-if="
                                 getComponent === null ||
@@ -166,18 +147,17 @@ const updateCurrentTab = function (tab) {
                     </div>
                     <div class="px-4 pb-8 pt-4 text-white text-xs break-all">
                         <div v-if="current === 'element'">
-                            <div v-if="!reactiveGetElement">
-                                <p class="pb-2">
-                                    {{
-                                        reactiveGetElement === null
-                                            ? "NULL"
-                                            : typeof reactiveGetElement
-                                    }}
-                                </p>
-                            </div>
-                            <div v-if="reactiveGetElement">
+                            <p class="pb-2">
+                                {{
+                                    getElement === null
+                                        ? "NULL"
+                                        : typeof getElement
+                                }}
+                            </p>
+
+                            <div v-if="getElement">
                                 <p class="whitespace-pre-line leading-5">
-                                    {{ reactiveGetElement }}
+                                    {{ JSON.stringify(getElement) }}
                                 </p>
                             </div>
                         </div>
