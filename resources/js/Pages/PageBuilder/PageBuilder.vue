@@ -4,6 +4,7 @@ import PageBuilder from "@/composables/PageBuilder";
 import PageBuilderPreviewModal from "@/Components/Modals/PageBuilderPreviewModal.vue";
 import Preview from "@/Pages/PageBuilder/Preview.vue";
 import ComponentTopMenu from "@/Components/PageBuilder/EditorMenu/Editables/ComponentTopMenu.vue";
+import EditGetElement from "@/Components/PageBuilder/EditorMenu/Editables/EditGetElement.vue";
 
 import {
     Bars3Icon,
@@ -229,6 +230,7 @@ onMounted(async () => {
                     </div>
                 </div>
 
+                <EditGetElement></EditGetElement>
                 <div
                     @click="store.commit('pageBuilderState/setComponent', null)"
                     class="p-2 overflow-y-auto h-screen"
@@ -248,13 +250,6 @@ onMounted(async () => {
                                     @mouseup="handleSelectComponent(component)"
                                     class="relative group"
                                 >
-                                    <div class="flex items-center gap-4">
-                                        <div
-                                            class="py-4 px-4 my-4 mx-4 bg-gray-800 text-white"
-                                        >
-                                            test her
-                                        </div>
-                                    </div>
                                     <div v-html="component.html_code"></div>
                                 </div>
                             </div>

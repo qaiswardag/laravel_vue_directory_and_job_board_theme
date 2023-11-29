@@ -28,9 +28,7 @@ const getRestoredElement = computed(() => {
                     type="button"
                     class="myPrimaryButton gap-2 items-center w-full"
                 >
-                    <ArrowPathRoundedSquareIcon
-                        class="w-4 h-4 text-white stroke-1.5"
-                    ></ArrowPathRoundedSquareIcon>
+                    <span class="material-symbols-outlined"> refresh </span>
                     Restore Element
                 </button>
                 <button

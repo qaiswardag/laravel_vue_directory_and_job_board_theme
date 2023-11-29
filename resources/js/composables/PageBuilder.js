@@ -467,6 +467,14 @@ class PageBuilder {
         // Get the element to be deleted
         const element = this.getElement.value;
 
+        if (!element) return;
+
+        if (!element?.parentNode) {
+            this.store.commit("pageBuilderState/setComponent", null);
+            this.store.commit("pageBuilderState/setElement", null);
+            return;
+        }
+
         // Store the parent of the deleted element
         this.store.commit(
             "pageBuilderState/setParentElement",
