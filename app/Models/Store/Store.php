@@ -24,6 +24,7 @@ class Store extends Model
         "floor",
         "content",
         "published",
+        "featured",
         "tags",
         "show_author",
         "trash",

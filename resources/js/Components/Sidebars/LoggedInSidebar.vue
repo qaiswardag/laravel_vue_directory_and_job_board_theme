@@ -165,9 +165,7 @@ import {
             :href="route('dashboard')"
             :active="route().current('dashboard')"
         >
-            <span class="myMediumIcon material-symbols-outlined">
-                interests
-            </span>
+            <span class="material-symbols-outlined"> play_shapes </span>
 
             Dashboard
         </SideBarLink>

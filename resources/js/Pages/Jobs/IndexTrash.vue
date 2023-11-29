@@ -13,6 +13,7 @@ import { parseISO, format } from "date-fns";
 import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import TopMenu from "@/Components/Menues/TopMenu.vue";
+import PricingForJob from "@/Pages/Jobs/Components/PricingForJob.vue";
 
 import {
     EllipsisVerticalIcon,
@@ -307,6 +308,7 @@ onMounted(() => {
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
+            <PricingForJob :currentUserTeam="currentUserTeam"></PricingForJob>
             <CardHeadings :routesArray="routesArray">
                 <template #title
                     >Jobs for
@@ -799,7 +801,7 @@ onMounted(() => {
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                        category
+                                                        interests
                                                     </span>
                                                     <span>
                                                         {{ category.name }}
@@ -864,7 +866,7 @@ onMounted(() => {
                                                 @click="
                                                     handleRestore(post.id, post)
                                                 "
-                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
                                                 <span
                                                     class="material-symbols-outlined"
@@ -879,7 +881,7 @@ onMounted(() => {
                                                 @click="
                                                     handleDelete(post.id, post)
                                                 "
-                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                             >
                                                 <span
                                                     class="myMediumIcon material-symbols-outlined"

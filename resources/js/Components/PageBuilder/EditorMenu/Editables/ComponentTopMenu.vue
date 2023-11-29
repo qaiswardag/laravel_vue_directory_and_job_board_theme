@@ -36,8 +36,8 @@ const deleteComponent = function (e) {
     showModalDeleteComponent.value = true;
     typeModal.value = "delete";
     gridColumnModal.value = 2;
-    titleModal.value = "Delete entire component?";
-    descriptionModal.value = "Are you sure you want to delete this component?";
+    titleModal.value = "Remove section?";
+    descriptionModal.value = "Are you sure you want to remove this section?";
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Delete";
@@ -80,7 +80,7 @@ const deleteComponent = function (e) {
         <div class="flex gap-2 items-center justify-center">
             <div
                 @click="deleteComponent()"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white text-myPrimaryErrorColor"
             >
                 <span class="myMediumIcon material-symbols-outlined">
                     delete
@@ -92,14 +92,14 @@ const deleteComponent = function (e) {
             <button
                 type="button"
                 @click="pageBuilder.moveComponent(-1)"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
                 <span class="material-symbols-outlined"> move_up </span>
             </button>
             <button
                 type="button"
                 @click="pageBuilder.moveComponent(1)"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
                 <span class="material-symbols-outlined"> move_down </span>
             </button>

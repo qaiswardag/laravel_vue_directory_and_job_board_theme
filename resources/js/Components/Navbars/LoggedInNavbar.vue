@@ -171,7 +171,7 @@ const notificationsSlideOverButton = function () {
         >
             <Link :href="route('home')">
                 <div
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
                 >
                     <span class="myMediumIcon material-symbols-outlined">
                         home
@@ -186,7 +186,7 @@ const notificationsSlideOverButton = function () {
                 "
                 type="button"
                 @click="handleMenuUserTeamModal"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
                 <div
                     class="h-10 w-10 flex-shrink-0"
@@ -212,7 +212,7 @@ const notificationsSlideOverButton = function () {
                 "
                 @click="handleMenuUserTeamModal"
                 type="button"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
                 <span class="myMediumIcon material-symbols-outlined">
                     person
@@ -222,7 +222,7 @@ const notificationsSlideOverButton = function () {
             <button
                 @click="handleNotificationsSlideOver"
                 type="button"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
             >
                 <span class="sr-only">View notifications</span>
                 <span class="myMediumIcon material-symbols-outlined">
@@ -233,7 +233,7 @@ const notificationsSlideOverButton = function () {
             <button
                 @click="handlePrimaryMenuSlideOver"
                 type="button"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
                 <span class="sr-only">View Menu</span>
                 <span class="myMediumIcon material-symbols-outlined">

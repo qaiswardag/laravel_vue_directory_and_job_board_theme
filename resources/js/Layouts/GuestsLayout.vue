@@ -19,7 +19,6 @@ import { ref } from "vue";
             </div>
             <GuestsNavbar></GuestsNavbar>
         </nav>
-
         <slot name="header" />
 
         <div class="mx-auto min-h-screen">

@@ -605,7 +605,7 @@ onBeforeMount(() => {
                                     <button
                                         type="button"
                                         @click="handleRemoveLogo(image?.id)"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
@@ -629,7 +629,7 @@ onBeforeMount(() => {
                             </p>
                             <button
                                 type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadLogo"
                             >
                                 <span
@@ -777,7 +777,7 @@ onBeforeMount(() => {
                                         @click="
                                             handleRemoveCoverImage(image?.id)
                                         "
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
@@ -804,7 +804,7 @@ onBeforeMount(() => {
                             </p>
                             <button
                                 type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadCoverImage"
                             >
                                 <span

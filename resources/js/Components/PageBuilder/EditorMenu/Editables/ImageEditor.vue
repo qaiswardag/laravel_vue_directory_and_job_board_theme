@@ -3,7 +3,6 @@ import { computed, watch, ref } from "vue";
 import { useStore } from "vuex";
 import EditorAccordion from "@/Components/PageBuilder/EditorMenu/EditorAccordion.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
-import { PhotoIcon } from "@heroicons/vue/24/outline";
 import PageBuilder from "@/composables/PageBuilder";
 
 const props = defineProps({
@@ -79,17 +78,6 @@ const handleAddImage = function () {
             @click="handleAddImage"
             alt="image"
         />
-
-        <div class="my-4 px-4">
-            <button
-                @click="handleAddImage"
-                type="button"
-                class="myPrimaryButton gap-2 items-center w-full"
-            >
-                <PhotoIcon class="w-4 h-4 stroke-1.5"></PhotoIcon>
-                Update image
-            </button>
-        </div>
     </div>
     <MediaLibraryModal
         :user="user"

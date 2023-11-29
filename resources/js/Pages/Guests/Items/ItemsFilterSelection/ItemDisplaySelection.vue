@@ -60,9 +60,9 @@ const handleRemoveItem = function (selectedItem) {
                 ]"
                 :disabled="listSelected.name === item.name"
             >
-                <template v-if="props.icon === 'Squares2X2Icon'">
+                <template v-if="props.icon === 'interests'">
                     <span class="myMediumIcon material-symbols-outlined">
-                        category
+                        interests
                     </span>
                 </template>
 

@@ -1,9 +1,10 @@
 <script setup>
-import { onMounted, computed, ref, watch } from "vue";
+import { onMounted, computed, ref, watch, nextTick } from "vue";
 import PageBuilder from "@/composables/PageBuilder";
 import PageBuilderPreviewModal from "@/Components/Modals/PageBuilderPreviewModal.vue";
 import Preview from "@/Pages/PageBuilder/Preview.vue";
 import ComponentTopMenu from "@/Components/PageBuilder/EditorMenu/Editables/ComponentTopMenu.vue";
+import EditGetElement from "@/Components/PageBuilder/EditorMenu/Editables/EditGetElement.vue";
 
 import {
     Bars3Icon,
@@ -88,17 +89,18 @@ const getComponent = computed(() => {
 const getElement = computed(() => {
     return store.getters["pageBuilderState/getElement"];
 });
-const getElementAttributes = computed(() => {
-    const element = getElement.value;
 
-    if (element === null) return {};
+const getElementAttributes = computed(() => {
+    if (!getElement.value) {
+        return new Object();
+    }
 
     // Extract the attributes you want to watch
     const attributesToWatch = {
-        src: element.getAttribute("src"),
-        href: element.getAttribute("href"),
-        style: element.getAttribute("style"),
-        class: element.getAttribute("class"),
+        src: getElement.value.getAttribute("src"),
+        href: getElement.value.getAttribute("href"),
+        style: getElement.value.getAttribute("style"),
+        class: getElement.value.getAttribute("class"),
     };
 
     return attributesToWatch;
@@ -107,10 +109,10 @@ const getElementAttributes = computed(() => {
 watch(getElementAttributes, (newAttributes, oldAttributes) => {
     // Check if any of the specified attributes have changed
     if (
-        newAttributes.src !== oldAttributes.src ||
-        newAttributes.href !== oldAttributes.href ||
-        newAttributes.style !== oldAttributes.style ||
-        newAttributes.class !== oldAttributes.class
+        newAttributes?.src !== oldAttributes?.src ||
+        newAttributes?.href !== oldAttributes?.href ||
+        newAttributes?.style !== oldAttributes?.style ||
+        newAttributes?.class !== oldAttributes?.class
     ) {
         // Trigger your method when any of the specified attributes change
         pageBuilder.handlePageBuilderMethods();
@@ -189,18 +191,18 @@ onMounted(async () => {
                             <button
                                 type="button"
                                 @click="handleAddComponent"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <span
                                     class="myMediumIcon material-symbols-outlined"
                                 >
-                                    category
+                                    stacks
                                 </span>
                             </button>
                             <button
                                 type="button"
                                 @click="handleDesignerPreview"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <span class="material-symbols-outlined">
                                     visibility
@@ -216,7 +218,7 @@ onMounted(async () => {
                                         true
                                     )
                                 "
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <span
                                     class="myMediumIcon material-symbols-outlined"
@@ -228,11 +230,12 @@ onMounted(async () => {
                     </div>
                 </div>
 
+                <EditGetElement></EditGetElement>
                 <div
                     @click="store.commit('pageBuilderState/setComponent', null)"
                     class="p-2 overflow-y-auto h-screen"
                 >
-                    <div id="pagebuilder">
+                    <div id="pagebuilder" class="pt-20">
                         <div ref="draggableZone">
                             <!-- Added Components to DOM # start -->
                             <div
@@ -257,29 +260,29 @@ onMounted(async () => {
                         <div
                             class="rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 my-12 mx-8"
                         >
-                            <FolderPlusIcon
-                                @click="handleAddComponent"
-                                class="mx-auto h-12 w-12 text-gray-400 cursor-pointer"
-                            ></FolderPlusIcon>
                             <h3
                                 class="mt-2 text-sm font-semibold text-gray-900"
                             >
-                                Add Component
+                                Add Components
                             </h3>
                             <p class="mt-1 text-sm text-gray-500">
                                 Get started by adding components using the drag
                                 & drop Page Builder.
                             </p>
-                            <div class="mt-6">
+                            <div
+                                class="mt-6 flex items-center gap-2 justify-center"
+                            >
                                 <button
                                     @click="handleAddComponent"
                                     type="button"
-                                    class="myPrimaryButton"
+                                    class="myPrimaryButton flex items-center gap-2 justify-center"
                                 >
-                                    <FolderPlusIcon
-                                        class="-ml-0.5 mr-1.5 h-5 w-5"
-                                    ></FolderPlusIcon>
-                                    New Component
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        add
+                                    </span>
+                                    Add component
                                 </button>
                             </div>
                         </div>

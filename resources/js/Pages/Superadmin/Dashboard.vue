@@ -89,7 +89,7 @@ const actions = [
                                 :class="[
                                     action.iconBackground,
                                     action.iconForeground,
-                                    'h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0',
+                                    'h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0',
                                 ]"
                             >
                                 <template v-if="action.icon === 'users'">

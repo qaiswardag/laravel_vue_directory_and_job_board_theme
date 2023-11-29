@@ -206,10 +206,6 @@ class PageBuilder {
         element.setAttribute("selected", "");
 
         this.store.commit("pageBuilderState/setElement", element);
-
-        if (this.textElementClick()) {
-            this.store.commit("pageBuilderState/setShowModalTipTap", true);
-        }
     };
 
     #handleMouseOver = (e, element) => {
@@ -466,6 +462,14 @@ class PageBuilder {
 
         // Get the element to be deleted
         const element = this.getElement.value;
+
+        if (!element) return;
+
+        if (!element?.parentNode) {
+            this.store.commit("pageBuilderState/setComponent", null);
+            this.store.commit("pageBuilderState/setElement", null);
+            return;
+        }
 
         // Store the parent of the deleted element
         this.store.commit(
@@ -970,7 +974,7 @@ class PageBuilder {
     };
 
     //
-    textElementClick() {
+    selectedElementIsValidText() {
         let reachedElseStatement = false;
 
         // Get all child elements of the parentDiv

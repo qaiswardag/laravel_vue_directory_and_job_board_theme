@@ -655,12 +655,12 @@ const categoriesSorted = computed(() => {
                                 >
                                     <button
                                         type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
                                         >
-                                            category
+                                            interests
                                         </span>
                                     </button>
                                     <div>
@@ -675,7 +675,7 @@ const categoriesSorted = computed(() => {
                                             category.id
                                         )
                                     "
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
@@ -822,7 +822,7 @@ const categoriesSorted = computed(() => {
                                         @click="
                                             handleRemoveCoverImage(image?.id)
                                         "
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
@@ -849,7 +849,7 @@ const categoriesSorted = computed(() => {
                             </p>
                             <button
                                 type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadCoverImage"
                             >
                                 <span
@@ -975,7 +975,7 @@ const categoriesSorted = computed(() => {
                     secondModalButtonSearchItemsFunction
                 "
                 :displayIcon="true"
-                icon="Squares2X2Icon"
+                icon="interests"
                 :show="modalShowSearchItemsModal"
             >
             </SearchUsersOrItems>

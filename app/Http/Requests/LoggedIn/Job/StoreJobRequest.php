@@ -29,6 +29,7 @@ class StoreJobRequest extends FormRequest
         // dd(Carbon::parse($this->started_at)->diffForHumans());
         $rules = [
             "published" => ["boolean"],
+            "featured" => ["boolean", "nullable"],
             "is_filled" => ["boolean"],
             "show_author" => ["boolean"],
             // If you do not include the string validation rule for a text input like title.
