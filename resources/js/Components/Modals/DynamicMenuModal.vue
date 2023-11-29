@@ -56,7 +56,7 @@ const handleLogout = () => {
             >
                 <button
                     type="button"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
                 >
                     <span class="material-symbols-outlined"> close </span>
                 </button>
@@ -104,7 +104,7 @@ const handleLogout = () => {
                         >
                             <button
                                 type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <span
                                     class="myMediumIcon material-symbols-outlined"
@@ -168,7 +168,7 @@ const handleLogout = () => {
                             >
                                 <button
                                     type="button"
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 >
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
@@ -189,7 +189,7 @@ const handleLogout = () => {
                     >
                         <button
                             type="button"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"

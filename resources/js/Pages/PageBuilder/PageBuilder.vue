@@ -191,7 +191,7 @@ onMounted(async () => {
                             <button
                                 type="button"
                                 @click="handleAddComponent"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <span
                                     class="myMediumIcon material-symbols-outlined"
@@ -202,7 +202,7 @@ onMounted(async () => {
                             <button
                                 type="button"
                                 @click="handleDesignerPreview"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <span class="material-symbols-outlined">
                                     visibility
@@ -218,7 +218,7 @@ onMounted(async () => {
                                         true
                                     )
                                 "
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <span
                                     class="myMediumIcon material-symbols-outlined"
@@ -235,7 +235,7 @@ onMounted(async () => {
                     @click="store.commit('pageBuilderState/setComponent', null)"
                     class="p-2 overflow-y-auto h-screen"
                 >
-                    <div id="pagebuilder">
+                    <div id="pagebuilder" class="pt-20">
                         <div ref="draggableZone">
                             <!-- Added Components to DOM # start -->
                             <div

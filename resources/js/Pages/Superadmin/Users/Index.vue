@@ -521,13 +521,13 @@ onMounted(() => {
                 <div class="myScrollButtonContainer">
                     <button
                         @click="handleLeft"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
                         <ArrowLeftIcon class="mySmallIcon"></ArrowLeftIcon>
                     </button>
                     <button
                         @click="handleRight"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
                         <ArrowRightIcon class="mySmallIcon"></ArrowRightIcon>
                     </button>
@@ -691,7 +691,7 @@ onMounted(() => {
                                             <button
                                                 type="button"
                                                 @click="handleEdit(user.id)"
-                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
                                                 <span
                                                     class="myMediumIcon material-symbols-outlined"
@@ -706,7 +706,7 @@ onMounted(() => {
                                                 @click="
                                                     handleDelete(user.id, user)
                                                 "
-                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                             >
                                                 <span
                                                     class="myMediumIcon material-symbols-outlined"

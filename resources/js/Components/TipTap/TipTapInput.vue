@@ -6,6 +6,7 @@ import { useStore } from "vuex";
 import PageBuilder from "@/composables/PageBuilder";
 import Link from "@tiptap/extension-link";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import TextColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/TextColorEditor.vue";
 
 const showModalUrl = ref(false);
 //
@@ -224,11 +225,11 @@ onMounted(() => {
         <div v-if="pageBuilder.selectedElementIsValidText() && editor">
             <div class="relative rounded-lg">
                 <div
-                    class="h-16 px-2 bg-black rounded-t-lg sticky top-0 z-20 flex gap-4 flex-shrink-0 justify-start items-center border-b-2 border-gray-100 overflow-x-scroll"
+                    class="h-16 px-2 bg-black rounded-t-lg sticky top-0 z-10 flex gap-4 flex-shrink-0 justify-start items-center border-b-2 border-gray-100 overflow-x-scroll"
                 >
                     <button
                         @click="editor.chain().focus().setHardBreak().run()"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
                         <span class="material-symbols-outlined">
                             subdirectory_arrow_left
@@ -236,7 +237,7 @@ onMounted(() => {
                     </button>
                     <button
                         @click="editor.chain().focus().toggleBold().run()"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         :class="{
                             'bg-myPrimaryLinkColor text-white':
                                 editor.isActive('bold'),
@@ -254,7 +255,7 @@ onMounted(() => {
                                 .toggleHeading({ level: 2 })
                                 .run()
                         "
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         :class="{
                             'bg-myPrimaryLinkColor text-white': editor.isActive(
                                 'heading',
@@ -274,7 +275,7 @@ onMounted(() => {
                                 .toggleHeading({ level: 3 })
                                 .run()
                         "
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         :class="{
                             'bg-myPrimaryLinkColor text-white': editor.isActive(
                                 'heading',
@@ -287,7 +288,7 @@ onMounted(() => {
                         </span>
                     </button>
                     <button
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         @click="editor.chain().focus().toggleBulletList().run()"
                         :class="{
                             'bg-myPrimaryLinkColor text-white':
@@ -298,7 +299,7 @@ onMounted(() => {
                     </button>
                     <button
                         @click="handleURL"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                         :class="{
                             'bg-myPrimaryLinkColor text-white':
                                 editor.isActive('link'),

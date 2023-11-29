@@ -244,7 +244,7 @@ onMounted(() => {
                             @click="
                                 handleDeleteSingleImage(image.image_upload_id)
                             "
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"

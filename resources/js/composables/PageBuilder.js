@@ -206,10 +206,6 @@ class PageBuilder {
         element.setAttribute("selected", "");
 
         this.store.commit("pageBuilderState/setElement", element);
-
-        if (this.selectedElementIsValidText()) {
-            this.store.commit("pageBuilderState/setShowModalTipTap", true);
-        }
     };
 
     #handleMouseOver = (e, element) => {

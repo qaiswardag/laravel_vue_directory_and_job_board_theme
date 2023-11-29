@@ -11,7 +11,6 @@ import PaddingPlusMargin from "@/Components/PageBuilder/EditorMenu/Editables/Pad
 import DeleteElement from "@/Components/PageBuilder/EditorMenu/Editables/DeleteElement.vue";
 import BorderRadius from "@/Components/PageBuilder/EditorMenu/Editables/BorderRadius.vue";
 import BackgroundColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/BackgroundColorEditor.vue";
-import TextColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/TextColorEditor.vue";
 import Borders from "@/Components/PageBuilder/EditorMenu/Editables/Borders.vue";
 import LinkEditor from "@/Components/PageBuilder/EditorMenu/Editables/LinkEditor.vue";
 import TipTap from "@/Components/TipTap/TipTap.vue";
@@ -64,7 +63,7 @@ const isHeadingElement = computed(() => {
                 <button
                     type="button"
                     @click="$emit('closeEditor')"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                 >
                     <span class="material-symbols-outlined"> close </span>
                 </button>
@@ -99,9 +98,6 @@ const isHeadingElement = computed(() => {
                         "
                     >
                         <Typography></Typography>
-                    </article>
-                    <article>
-                        <TextColorEditor></TextColorEditor>
                     </article>
                     <article>
                         <BackgroundColorEditor></BackgroundColorEditor>

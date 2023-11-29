@@ -1543,7 +1543,7 @@ const pageBuilder = new PageBuilder(store);
                         <button
                             type="button"
                             @click="setStartedAtDate"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                         >
                             <span class="material-symbols-outlined">
                                 undo
@@ -1688,7 +1688,7 @@ const pageBuilder = new PageBuilder(store);
                                         @click="
                                             handleRemoveCoverImage(image?.id)
                                         "
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
@@ -1715,7 +1715,7 @@ const pageBuilder = new PageBuilder(store);
                             </p>
                             <button
                                 type="button"
-                                class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                 @click="handleUploadCoverImage"
                             >
                                 <span
@@ -1805,7 +1805,7 @@ const pageBuilder = new PageBuilder(store);
                                 >
                                     <button
                                         type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
@@ -1825,7 +1825,7 @@ const pageBuilder = new PageBuilder(store);
                                             country?.id
                                         )
                                     "
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
@@ -1903,7 +1903,7 @@ const pageBuilder = new PageBuilder(store);
                                 >
                                     <button
                                         type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
@@ -1921,7 +1921,7 @@ const pageBuilder = new PageBuilder(store);
                                     @click="
                                         handleRemoveAttachedStates(state?.id)
                                     "
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
@@ -2013,7 +2013,7 @@ const pageBuilder = new PageBuilder(store);
                                 >
                                     <button
                                         type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
@@ -2032,7 +2032,7 @@ const pageBuilder = new PageBuilder(store);
                                             category?.id
                                         )
                                     "
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
@@ -2112,7 +2112,7 @@ const pageBuilder = new PageBuilder(store);
                                 >
                                     <button
                                         type="button"
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
@@ -2130,7 +2130,7 @@ const pageBuilder = new PageBuilder(store);
                                     @click="
                                         handleRemoveAttachedJobType(jobType?.id)
                                     "
-                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                 >
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
@@ -2365,7 +2365,7 @@ const pageBuilder = new PageBuilder(store);
                                         @click="
                                             handleRemoveAttachedUser(user.id)
                                         "
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
