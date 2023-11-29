@@ -148,9 +148,62 @@ const updateCurrentTab = function (tab) {
                     <div class="px-4 pb-8 pt-4 text-white text-xs break-all">
                         <div v-if="current === 'element'">
                             <div v-if="getElement">
-                                <p class="whitespace-pre-line leading-5">
-                                    {{ getElement?.outerHTML }}
-                                </p>
+                                <div
+                                    class="flex flex-col gap-4 border-b border-white mb-4 pb-4"
+                                >
+                                    <p>Selected element outerHTML:</p>
+                                    <p class="whitespace-pre-line leading-5">
+                                        {{ getElement?.outerHTML }}
+                                    </p>
+                                </div>
+                                <div
+                                    class="flex flex-col gap-2 mt-4 border-b border-white mb-4 pb-4"
+                                >
+                                    <p>Selected element src:</p>
+                                    <p class="whitespace-pre-line leading-5">
+                                        {{
+                                            getElement?.src
+                                                ? getElement?.src
+                                                : typeof getElement?.src
+                                        }}
+                                    </p>
+                                </div>
+                                <div
+                                    class="flex flex-col gap-2 mt-4 border-b border-white mb-4 pb-4"
+                                >
+                                    <p>Selected element href:</p>
+                                    <p class="whitespace-pre-line leading-5">
+                                        {{
+                                            getElement?.href
+                                                ? getElement?.href
+                                                : typeof getElement?.href
+                                        }}
+                                    </p>
+                                </div>
+                                <div
+                                    class="flex flex-col gap-2 mt-4 border-b border-white mb-4 pb-4"
+                                >
+                                    <p>Selected element class:</p>
+                                    <p class="whitespace-pre-line leading-5">
+                                        {{
+                                            getElement?.classList
+                                                ? getElement?.classList
+                                                : typeof getElement?.classList
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="flex flex-col gap-2 mt-4">
+                                    <p>Selected element style:</p>
+                                    <p class="whitespace-pre-line leading-5">
+                                        {{
+                                            getElement?.style
+                                                ? JSON.stringify(
+                                                      getElement?.style
+                                                  )
+                                                : typeof getElement?.style
+                                        }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <div v-if="current === 'component'">
