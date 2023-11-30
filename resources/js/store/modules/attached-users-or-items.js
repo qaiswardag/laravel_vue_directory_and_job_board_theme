@@ -25,6 +25,9 @@ export default {
         postCategories: [],
         attachedPostCategories: [],
 
+        postStores: [],
+        attachedPostStores: [],
+
         jobStates: [],
         attachedJobStates: [],
 
@@ -66,6 +69,13 @@ export default {
         },
         getCurrentAttachedPostCategories(state) {
             return state.attachedPostCategories;
+        },
+
+        getCurrentPostStores(state) {
+            return state.postStores;
+        },
+        getCurrentAttachedPostStores(state) {
+            return state.attachedPostStores;
         },
 
         getCurrentJobCountries(state) {
@@ -122,6 +132,9 @@ export default {
         },
         setCurrentPostCategories(state, payload) {
             state.postCategories = payload;
+        },
+        setCurrentPostStores(state, payload) {
+            state.postStores = payload;
         },
         setCurrentJobCountries(state, payload) {
             state.jobCountries = payload;
@@ -204,6 +217,27 @@ export default {
         },
         setRemoveAttachedPostCategories(state, payload) {
             state.attachedPostCategories = payload;
+        },
+        // post store
+        // post store
+        // post store
+        // post store
+        setCurrentAttachedPostStores(state, payload) {
+            // check if user already exists in the array
+            const itemExists = state.attachedPostStores.some(
+                (item) => item.id === payload.id
+            );
+
+            // if user does not exist, push to array
+            if (itemExists === false) {
+                state.attachedPostStores.unshift(payload);
+            }
+        },
+        setCurrentAttachedPostStoresToEmptyArray(state, payload) {
+            state.attachedPostStores = payload;
+        },
+        setRemoveAttachedPostStores(state, payload) {
+            state.attachedPostStores = payload;
         },
         // job countries
         // job countries
@@ -412,6 +446,34 @@ export default {
 
             // context & send to mutation
             context.commit("setCurrentPostCategories", {
+                fetchedData: fetchedItems,
+                isError: isErrorItems,
+                error: errorItems,
+                errors: errorsItems,
+                isLoading: isLoadingItems,
+                isSuccess: isSuccessItems,
+            });
+        },
+
+        // get post stores
+        async fetchPostStores(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
+            handleGetItems(
+                route(data.apiUrlRouteName, {
+                    team: data.teamId,
+                    search_query: data.search_query,
+                    page: data.page,
+                })
+            );
+
+            // context & send to mutation
+            context.commit("setCurrentPostStores", {
                 fetchedData: fetchedItems,
                 isError: isErrorItems,
                 error: errorItems,

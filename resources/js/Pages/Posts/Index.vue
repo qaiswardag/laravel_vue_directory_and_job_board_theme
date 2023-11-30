@@ -43,7 +43,7 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All In-store sales",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
@@ -53,8 +53,8 @@ const breadcrumbsLinks = [
 
 const linksTopMenu = [
     {
-        label: "All Post",
-        icon: "hub",
+        label: "All In-store sales",
+        icon: "shopping_bag",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
@@ -72,7 +72,7 @@ const linksTopMenu = [
 
 const routesArray = [
     {
-        label: "All Posts",
+        label: "All In-store sales",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
@@ -352,11 +352,14 @@ onMounted(() => {
                                     </th>
 
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Show Authors
+                                        Campaign start date
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Campaign end date
                                     </th>
 
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Authors
+                                        Stores
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Categories
@@ -468,96 +471,66 @@ onMounted(() => {
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    post.show_author
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                            >
+                                            <template v-if="post.started_at">
                                                 {{
-                                                    post.show_author
-                                                        ? "Visible"
-                                                        : "Hidden"
+                                                    format(
+                                                        parseISO(
+                                                            post.started_at
+                                                        ),
+                                                        "dd. MMMM yyyy"
+                                                    )
                                                 }}
-                                            </div>
+                                            </template>
                                         </td>
                                         <td class="myPrimaryTableTBodyTd">
+                                            <template v-if="post.ended_at">
+                                                {{
+                                                    format(
+                                                        parseISO(post.ended_at),
+                                                        "dd. MMMM yyyy"
+                                                    )
+                                                }}
+                                            </template>
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
                                             <div
-                                                class="flex flex-wrap justify-start items-center gap-1"
+                                                class="flex flex-wrap justify-start items-center gap-2"
                                             >
-                                                <div
-                                                    v-for="author in post.authors &&
-                                                    post.authors"
-                                                    :key="author"
+                                                <p
+                                                    v-for="store in post.stores &&
+                                                    Array.isArray(
+                                                        post.stores
+                                                    ) &&
+                                                    post.stores.sort((a, b) => {
+                                                        const nameA = a.title;
+                                                        const nameB = b.title;
+
+                                                        if (nameA < nameB) {
+                                                            return -1;
+                                                        } else if (
+                                                            nameA > nameB
+                                                        ) {
+                                                            return 1;
+                                                        } else {
+                                                            return 0;
+                                                        }
+                                                    })"
+                                                    :key="store"
                                                     class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <div
-                                                        v-if="
-                                                            author.profile_photo_path !==
-                                                            null
-                                                        "
-                                                    >
-                                                        <div
-                                                            class="h-5 w-5 flex-shrink-0"
-                                                        >
-                                                            <img
-                                                                class="object-cover h-5 w-5 rounded-full"
-                                                                :src="`/storage/${author.profile_photo_path}`"
-                                                                alt="avatar"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div
-                                                        style="
-                                                            font-size: 9px;
-                                                            gap: 2px;
-                                                        "
-                                                        v-if="
-                                                            author.profile_photo_path ===
-                                                            null
-                                                        "
-                                                        class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
-                                                    >
-                                                        <span>
-                                                            {{
-                                                                author.first_name
-                                                                    .charAt(0)
-                                                                    .toUpperCase()
-                                                            }}
-                                                        </span>
-                                                        <span>
-                                                            {{
-                                                                author.last_name
-                                                                    .charAt(0)
-                                                                    .toUpperCase()
-                                                            }}
-                                                        </span>
-                                                    </div>
                                                     <span
-                                                        class="flex flex-col items-left gap-1 myPrimaryParagraph"
+                                                        class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                        <p
-                                                            style="
-                                                                font-size: 10px;
-                                                            "
-                                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
-                                                        >
-                                                            <span>
-                                                                {{
-                                                                    author.first_name
-                                                                }}
-                                                                {{
-                                                                    author.last_name
-                                                                }}
-                                                            </span>
-                                                        </p>
+                                                        local_mall
                                                     </span>
-                                                </div>
+                                                    <span>
+                                                        {{ store.title }}
+                                                    </span>
+                                                </p>
                                             </div>
                                         </td>
+
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
                                                 class="flex flex-wrap justify-start items-center gap-2"
@@ -599,6 +572,7 @@ onMounted(() => {
                                                 </p>
                                             </div>
                                         </td>
+
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
                                                 class="flex flex-wrap justify-start items-center gap-2"

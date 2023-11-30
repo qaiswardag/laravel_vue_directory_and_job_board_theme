@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobCountriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobStatesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobTypesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachPostCategoriesController;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachPostStoresController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachStoreCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachStoreStatesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
@@ -166,13 +167,13 @@ Route::middleware([])->group(function () {
         "posts.guest.index"
     );
 
-    Route::get("{teamSlug}/posts/{postSlug}/view/{postId}/", [
+    Route::get("{teamSlug}/in_store_sales/{postSlug}/view/{postId}/", [
         PostPostController::class,
         "show",
     ])->name("posts.guest.show");
     //
     //
-    Route::get("/api/guest/posts/index", [
+    Route::get("/api/guest/in_store_sales/index", [
         PostsGuestIndexController::class,
         "index",
     ])->name("api.guest.posts.index");
@@ -554,14 +555,14 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("/team/posts/{teamId}", [PostController::class, "index"])->name(
+    Route::get("/team/in_store_sales/{teamId}", [PostController::class, "index"])->name(
         "team.posts.index"
     );
-    Route::get("/team/posts/trash/{teamId}", [PostDeletedController::class, "index"])->name(
+    Route::get("/team/in_store_sales/trash/{teamId}", [PostDeletedController::class, "index"])->name(
         "team.posts.index.trash"
     );
     // unique post
-    Route::get("/team/{teamId}/posts/{slug}/view{postId}/", [
+    Route::get("/team/{teamId}/in_store_sales/{slug}/view{postId}/", [
         PostController::class,
         "show",
     ])->name("team.posts.post.show");
@@ -654,10 +655,16 @@ Route::middleware([
     ])->name("attach.component.categories.index");
 
     // POST CATEGORIES
-    Route::get("/team/attach/post/categories/index/{team}", [
+    Route::get("/team/attach/in_store_sales/categories/index/{team}", [
         AttachPostCategoriesController::class,
         "index",
     ])->name("attach.post.categories.index");
+
+    // POST STORES
+    Route::get("/team/attach/in_store_sales/stores/index/{team}", [
+        AttachPostStoresController::class,
+        "index",
+    ])->name("attach.post.stores.index");
 
     // JOB COUNTRIES
     Route::get("/team/attach/job/countries/index/{team}", [
@@ -805,32 +812,32 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("/team/posts/post/{teamId}/{post}", [
+    Route::get("/team/in_store_sales/sale/{teamId}/{post}", [
         PostController::class,
         "edit",
     ])->name("team.posts.post.edit");
 
-    Route::post("/team/posts/post/update/{post}", [
+    Route::post("/team/in_store_sales/sale/update/{post}", [
         PostController::class,
         "update",
     ])->name("team.posts.update");
 
-    Route::get("/team/posts/create/{teamId}", [
+    Route::get("/team/in_store_sales/create/{teamId}", [
         PostController::class,
         "create",
     ])->name("team.posts.create");
 
-    Route::post("/team/posts/post/store", [
+    Route::post("/team/in_store_sales/sale/store", [
         PostController::class,
         "store",
     ])->name("team.posts.store");
 
-    Route::post("/team/posts/post/restore/{postId}/{team}", [
+    Route::post("/team/in_store_sales/sale/restore/{postId}/{team}", [
         PostDeletedController::class,
         "restore",
     ])->name("team.posts.restore");
 
-    Route::post("/team/posts/duplicate", [
+    Route::post("/team/in_store_sales/duplicate", [
         PostController::class,
         "duplicate",
     ])->name("team.posts.duplicate");
@@ -1024,12 +1031,12 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::delete("/team/posts/post/{post}/{team}", [
+    Route::delete("/team/in_store_sales/sale/{post}/{team}", [
         PostController::class,
         "destroy",
     ])->name("team.posts.post.destroy");
 
-    Route::delete("/team/posts/trash/{post}/{team}", [
+    Route::delete("/team/in_store_sales/trash/{post}/{team}", [
         PostDeletedController::class,
         "destroy",
     ])->name("team.posts.post.destroy.force");

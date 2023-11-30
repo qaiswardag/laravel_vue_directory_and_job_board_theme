@@ -544,7 +544,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                     <div class="md:px-3 px-2">
                                                         <div>
                                                             <h2
-                                                                class="mySecondaryHeader py-2 break-words"
+                                                                class="myTertiaryHeader py-2 break-words"
                                                             >
                                                                 {{
                                                                     getCurrentImage
@@ -888,7 +888,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                 <div class="md:px-3 px-2">
                                                     <div>
                                                         <h2
-                                                            class="mySecondaryHeader py-2 break-words"
+                                                            class="myTertiaryHeader py-2 break-words"
                                                         >
                                                             {{
                                                                 getCurrentPreviewImage.file_name

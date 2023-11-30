@@ -214,7 +214,7 @@ const handleAddCategories = function () {
         const currentAttachedPostCategories = [
             ...getCurrentAttachedComponentCategories.value,
         ];
-        // Set post form author to the non-reactive copy
+        // Set post form to the non-reactive copy
         postForm.categories = currentAttachedPostCategories;
 
         // handle show modal for unique content
@@ -376,7 +376,7 @@ onBeforeMount(() => {
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
                 const arrayContainsOnlyNull =
-                    formLocalStorage.cover_image.every((element) => {
+                    formLocalStorage.cover_image?.every((element) => {
                         return element === null;
                     });
 
@@ -401,11 +401,10 @@ onBeforeMount(() => {
                 // Determine whether all elements in an array are null.
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.categories.every(
-                    (element) => {
+                const arrayContainsOnlyNull =
+                    formLocalStorage.categories?.every((element) => {
                         return element === null;
-                    }
-                );
+                    });
 
                 if (arrayContainsOnlyNull === true) {
                     postForm.categories = [];

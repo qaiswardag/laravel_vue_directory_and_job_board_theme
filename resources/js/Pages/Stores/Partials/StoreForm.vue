@@ -852,7 +852,7 @@ onBeforeMount(async () => {
                 formLocalStorage.author !== null
             ) {
                 // Determine whether all elements in an array are null.
-                const arrayContainsOnlyNull = formLocalStorage.author.every(
+                const arrayContainsOnlyNull = formLocalStorage.author?.every(
                     (element) => {
                         return element === null;
                     }
@@ -877,7 +877,7 @@ onBeforeMount(async () => {
                 formLocalStorage.cover_image !== null
             ) {
                 const arrayContainsOnlyNull =
-                    formLocalStorage.cover_image.every((element) => {
+                    formLocalStorage.cover_image?.every((element) => {
                         return element === null;
                     });
 
@@ -902,7 +902,7 @@ onBeforeMount(async () => {
                 // Determine whether all elements in an array are null.
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.states.every(
+                const arrayContainsOnlyNull = formLocalStorage.states?.every(
                     (element) => {
                         return element === null;
                     }
@@ -929,11 +929,10 @@ onBeforeMount(async () => {
                 // Determine whether all elements in an array are null.
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.categories.every(
-                    (element) => {
+                const arrayContainsOnlyNull =
+                    formLocalStorage.categories?.every((element) => {
                         return element === null;
-                    }
-                );
+                    });
 
                 if (arrayContainsOnlyNull === true) {
                     postForm.categories = [];

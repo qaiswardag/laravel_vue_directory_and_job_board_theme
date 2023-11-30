@@ -100,7 +100,9 @@ const getCurrentAttachedItems = computed(() => {
         const filteredItems = items.filter(
             (item) =>
                 item &&
-                (item.name !== undefined || item.first_name !== undefined)
+                (item.name !== undefined ||
+                    item.title !== undefined ||
+                    item.first_name !== undefined)
         );
 
         return filteredItems.sort((a, b) => {
@@ -440,7 +442,7 @@ onMounted(() => {
                                     class="flex justify-between items-center my-2 myPrimaryTag w-max gap-4"
                                 >
                                     <p class="myPrimaryParagraph">
-                                        It looks like there are no items..
+                                        Sorry, no results found.
                                     </p>
                                 </div>
                                 <div
@@ -448,7 +450,7 @@ onMounted(() => {
                                         getCurrentItems.fetchedData.items.data
                                             .length !== 0
                                     "
-                                    class="rounded divide-y divide-gray-200 flex flex-col w-full gap-2 px-2 p-4 border border-myPrimaryLightGrayColor"
+                                    class="min-w-full w-max rounded divide-y divide-gray-200 flex flex-col gap-2 px-2 p-4 border border-myPrimaryLightGrayColor"
                                 >
                                     <div
                                         v-for="item in getCurrentItems
@@ -544,7 +546,10 @@ onMounted(() => {
                                                             )
                                                         "
                                                         class="flex items-center gap-4 my-2"
-                                                        v-if="item.name"
+                                                        v-if="
+                                                            item.name ||
+                                                            item.title
+                                                        "
                                                     >
                                                         <button
                                                             type="button"
@@ -572,6 +577,18 @@ onMounted(() => {
                                                                     class="myMediumIcon material-symbols-outlined"
                                                                 >
                                                                     check
+                                                                </span>
+                                                            </div>
+                                                            <div
+                                                                v-if="
+                                                                    props.icon ===
+                                                                    'shopping_bag'
+                                                                "
+                                                            >
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
+                                                                >
+                                                                    shopping_bag
                                                                 </span>
                                                             </div>
                                                             <div
@@ -612,11 +629,24 @@ onMounted(() => {
                                                                 </span>
                                                             </div>
                                                         </button>
-                                                        <span
-                                                            class="font-medium"
+                                                        <template
+                                                            v-if="item.name"
                                                         >
-                                                            {{ item.name }}
-                                                        </span>
+                                                            <span
+                                                                class="font-medium"
+                                                            >
+                                                                {{ item.name }}
+                                                            </span>
+                                                        </template>
+                                                        <template
+                                                            v-if="item.title"
+                                                        >
+                                                            <span
+                                                                class="font-medium"
+                                                            >
+                                                                {{ item.title }}
+                                                            </span>
+                                                        </template>
                                                     </div>
                                                 </div>
                                             </div>
@@ -748,8 +778,8 @@ onMounted(() => {
                                         class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
                                     >
                                         <div
-                                            class="flex items-center gap-4 my-2"
-                                            v-if="item.name"
+                                            class="flex items-center gap-2 my-2"
+                                            v-if="item.name || item.title"
                                         >
                                             <button
                                                 type="button"
@@ -765,6 +795,18 @@ onMounted(() => {
                                                         class="myMediumIcon material-symbols-outlined"
                                                     >
                                                         interests
+                                                    </span>
+                                                </div>
+                                                <div
+                                                    v-if="
+                                                        props.icon ===
+                                                        'shopping_bag'
+                                                    "
+                                                >
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        shopping_bag
                                                     </span>
                                                 </div>
                                                 <div
@@ -818,6 +860,9 @@ onMounted(() => {
                                             </button>
                                             <span class="font-medium">
                                                 {{ item.name }}
+                                            </span>
+                                            <span class="font-medium">
+                                                {{ item.title }}
                                             </span>
                                         </div>
                                         <div

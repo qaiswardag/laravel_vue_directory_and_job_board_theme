@@ -39,9 +39,9 @@ const props = defineProps({
                 <template v-if="link.icon === 'local_mall'">
                     <span class="material-symbols-outlined"> local_mall </span>
                 </template>
-                <template v-if="link.icon === 'hub'">
+                <template v-if="link.icon === 'shopping_bag'">
                     <span class="myMediumIcon material-symbols-outlined">
-                        hub
+                        shopping_bag
                     </span>
                 </template>
                 <span>

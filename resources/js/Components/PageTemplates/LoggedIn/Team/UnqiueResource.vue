@@ -48,6 +48,9 @@ defineProps({
     categories: {
         required: false,
     },
+    stores: {
+        required: false,
+    },
     coverImages: {
         required: false,
     },
@@ -150,9 +153,7 @@ defineProps({
                 <!-- started_at # start -->
                 <template v-if="post.started_at && post.ended_at">
                     <div class="myPrimaryWidget">
-                        <h4 class="myQuaternaryHeader">
-                            Job publish & end date
-                        </h4>
+                        <h4 class="myQuaternaryHeader">Start & end date</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div class="flex flex-col gap-2">
                             <template v-if="post.started_at">
@@ -271,7 +272,7 @@ defineProps({
                             <span
                                 class="myMediumIcon material-symbols-outlined"
                             >
-                                interests
+                                floor
                             </span>
                             <span>
                                 {{
@@ -346,6 +347,97 @@ defineProps({
                     </div>
                 </div>
                 <!-- categories # end -->
+
+                <!-- In-store sales - stores # start -->
+                <div
+                    v-if="
+                        stores && Array.isArray(stores) && stores.length !== 0
+                    "
+                    class="myPrimaryWidget"
+                >
+                    <h4 class="myQuaternaryHeader">Stores</h4>
+                    <WidgetSectionBorder></WidgetSectionBorder>
+
+                    <div class="flex flex-col myPrimaryGap">
+                        <div v-for="store in stores && stores" :key="store.id">
+                            <div
+                                class="bg-red-200 p-4 border-2 border-black flex flex-col gap-6 w-full"
+                            >
+                                <div>
+                                    <p class="text-sm flex items-center gap-1">
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            local_mall
+                                        </span>
+                                        <span>
+                                            {{ store.title }}
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p
+                                        v-if="store.address"
+                                        class="text-sm flex items-center gap-1"
+                                    >
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            location_on
+                                        </span>
+                                        <span>
+                                            {{ store.address }}
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <p
+                                        v-if="store.floor"
+                                        class="text-sm flex items-center gap-1"
+                                    >
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            floor
+                                        </span>
+                                        <span>
+                                            {{
+                                                store.floor === 0 ||
+                                                store.floor === "0"
+                                                    ? "Ground floor"
+                                                    : `Floor ${store.floor}`
+                                            }}
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div
+                                    class="flex flex-wrap justify-start items-center gap-2"
+                                >
+                                    <p
+                                        v-for="state in store.states"
+                                        :key="state"
+                                        class="text-sm flex justify-center items-center gap-1"
+                                    >
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            location_on
+                                        </span>
+                                        <span>
+                                            {{ state.name }}
+                                        </span>
+                                    </p>
+                                    <!-- address -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- In-store sales - stores # end -->
+
                 <!-- tags # start -->
                 <template v-if="post.tags">
                     <div class="myPrimaryWidget">

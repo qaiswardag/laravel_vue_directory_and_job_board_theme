@@ -242,7 +242,7 @@ class JobController extends Controller
         // slug
         $slug = Str::lower(Str::slug($request->slug, "_"));
 
-        $endedAd =  Carbon::parse($startedAt)->addDays(30);
+        $endedAt =  Carbon::parse($startedAt)->addDays(30);
 
         // Create the job and store it in a variable
         $job = Job::create([
@@ -252,7 +252,7 @@ class JobController extends Controller
             "slug" => $slug,
             "published" => $request->published,
             "started_at" => $startedAt,
-            "ended_at" => $endedAd,
+            "ended_at" => $endedAt,
             "is_filled" => $request->is_filled,
             "apply_via_link" => $request->apply_via_link,
             "apply_via_email" => $request->apply_via_email,
@@ -739,14 +739,14 @@ class JobController extends Controller
         // Initialize the $authorId variable to null
         $authorId = null;
 
-        $endedAd =  Carbon::parse($startedAt)->addDays(30);
+        $endedAt =  Carbon::parse($startedAt)->addDays(30);
 
         // Create the job and store it in a variable
         $job->update([
             "user_id" => $userId,
             "team_id" => $teamId,
             "started_at" => $startedAt,
-            "ended_at" => $endedAd,
+            "ended_at" => $endedAt,
             "is_filled" => $request->is_filled,
             "apply_via_link" => $request->apply_via_link,
             "apply_via_email" => $request->apply_via_email,

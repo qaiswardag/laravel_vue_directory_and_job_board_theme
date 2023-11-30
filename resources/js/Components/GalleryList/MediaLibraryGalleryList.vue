@@ -222,10 +222,13 @@ onMounted(() => {
         >
             <div v-if="getCurrentMedia?.fetchedMedia?.total_results === 0">
                 <div class="pt-6 py-b px-4">
-                    <h2 class="myQuaternaryHeader">No images</h2>
-                    <p class="myPrimaryParagraph">
-                        It looks like there are no images..
-                    </p>
+                    <div
+                        class="flex justify-between items-center my-2 myPrimaryTag w-max gap-4"
+                    >
+                        <p class="myPrimaryParagraph">
+                            Sorry, no results found.
+                        </p>
+                    </div>
                 </div>
             </div>
 

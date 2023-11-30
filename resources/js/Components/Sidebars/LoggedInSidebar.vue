@@ -231,11 +231,13 @@ import {
                     route().current('team.posts.post.show')
                 "
             >
-                <span class="myMediumIcon material-symbols-outlined">
-                    hub
-                </span>
-
-                Blog
+                <span class="material-symbols-outlined"> shopping_bag </span>
+                <div class="flex flex-col gap-2">
+                    <span class="block"> In-store sales </span>
+                    <span class="block text-xs font-normal">
+                        Manage or create product sales campaigns
+                    </span>
+                </div>
             </SideBarLink>
         </template>
         <template
@@ -286,7 +288,12 @@ import {
                 "
             >
                 <span class="material-symbols-outlined"> local_mall </span>
-                Stores
+                <div class="flex flex-col gap-2">
+                    <span class="block"> Stores </span>
+                    <span class="block text-xs font-normal">
+                        Manage or create stores
+                    </span>
+                </div>
             </SideBarLink>
         </template>
         <template

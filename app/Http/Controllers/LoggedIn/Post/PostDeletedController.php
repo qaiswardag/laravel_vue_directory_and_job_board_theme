@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Post\StorePostRequest;
 use App\Models\Job\JobCategory;
 use App\Models\MediaLibrary\MediaLibrary;
-use App\Models\Post\AuthorPost;
 use App\Models\Post\Post;
 use App\Models\Post\PostCategoryRelation;
 use App\Models\Post\PostCoverImageRelation;
@@ -60,6 +59,7 @@ class PostDeletedController extends Controller
             ->onlyTrashed()
             ->with("coverImages")
             ->with("categories")
+            ->with("stores")
             ->with("authors")
             ->where(function ($query) use ($searchQuery) {
                 $query

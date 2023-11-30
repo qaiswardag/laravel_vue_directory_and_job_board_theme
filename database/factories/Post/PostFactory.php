@@ -69,10 +69,11 @@ class PostFactory extends Factory
         return [
             "team_id" => 2,
             "user_id" => 1,
-            "show_author" => 0,
             "deleted_at" => null,
             "title" => $title,
             "slug" => $slug,
+            "started_at" => Carbon::now(),
+            "ended_at" => Carbon::now()->addDays(30),
             "content" => $factoriesPageBuilderContent->index(),
             "published" => 1,
             "tags" => $selectedTagsList,

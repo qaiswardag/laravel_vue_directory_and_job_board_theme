@@ -14,10 +14,10 @@ const props = defineProps({
     post: {
         required: true,
     },
-    postAuthor: {
+    categories: {
         required: true,
     },
-    categories: {
+    stores: {
         required: true,
     },
     coverImages: {
@@ -27,7 +27,7 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All In-store sales",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
@@ -49,8 +49,8 @@ const breadcrumbsLinks = [
                 :currentUserTeam="currentUserTeam"
                 :user="user"
                 :post="post"
-                :postAuthor="postAuthor"
                 :categories="categories"
+                :stores="stores"
                 :coverImages="coverImages"
             ></PostForm>
         </LoggedInLayout>

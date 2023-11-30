@@ -9,12 +9,15 @@ const props = defineProps({
         required: true,
     },
     authors: {
-        required: true,
+        required: false,
     },
     currentUserTeam: {
         required: true,
     },
     categories: {
+        required: true,
+    },
+    stores: {
         required: true,
     },
     coverImages: {
@@ -24,7 +27,7 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All In-store sales",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
@@ -44,8 +47,8 @@ const breadcrumbsLinks = [
             <!-- Show Unique Resorce - start -->
             <UnqiueResource
                 :post="post"
-                :authors="authors"
                 :categories="categories"
+                :stores="stores"
                 :coverImages="coverImages"
                 :onlyForCurrentTeam="true"
             ></UnqiueResource>

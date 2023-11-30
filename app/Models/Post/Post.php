@@ -4,6 +4,7 @@ namespace App\Models\Post;
 
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\PostCoverImageRelation;
+use App\Models\Store\Store;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,9 +26,11 @@ class Post extends Model
         "published",
         "featured",
         "tags",
-        "show_author",
         "trash",
-        "author_id",
+        "started_at",
+        "ended_at",
+        "is_paid",
+        "paid_at"
     ];
 
     // Define the relationship with the Team model
@@ -40,15 +43,11 @@ class Post extends Model
         return $this->belongsTo(User::class, "user_id");
     }
 
-    public function authors()
+    public function stores()
     {
-        return $this->belongsToMany(User::class, "author_post")->select(
-            "users.first_name",
-            "users.last_name",
-            "users.profile_photo_path",
-            "users.id"
-        );
+        return $this->belongsToMany(Store::class, "post_store_relations");
     }
+
 
     public function categories()
     {

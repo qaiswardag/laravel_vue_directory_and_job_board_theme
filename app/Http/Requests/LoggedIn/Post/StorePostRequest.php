@@ -29,7 +29,6 @@ class StorePostRequest extends FormRequest
         $rules = [
             "published" => ["boolean"],
             "featured" => ["boolean", "nullable"],
-            "show_author" => ["boolean"],
             // If you do not include the string validation rule for a text input like title.
             // it may allow non-string values to be submitted and saved in the database.
             // This could potentially cause security issues or errors in your application,
@@ -67,6 +66,22 @@ class StorePostRequest extends FormRequest
             "content" => ["required", "string", "min:2", "max:65535"],
 
             "tags" => ["string", "max:255", "nullable"],
+
+            //
+            //
+            //
+            //
+            // started_at
+            // ended_at
+            // is_paid
+            // paid_at
+            //
+            //
+            "started_at" => ["required", "date_format:Y-m-d H:i:s"],
+            "ended_at" => ["required", "date_format:Y-m-d H:i:s"],
+            //
+            "paid_at" => ["date_format:Y-m-d H:i:s", "nullable"],
+            "is_paid" => ["boolean", "nullable"],
         ];
 
         return $rules;
@@ -80,13 +95,15 @@ class StorePostRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $maxAuthors = 18;
+        $maxStores = 18;
+        $minStores = 1;
         $maxCategories = 2;
         $minCoverImages = 1;
         $maxCoverImages = 6;
 
         $validator->after(function ($validator) use (
-            $maxAuthors,
+            $maxStores,
+            $minStores,
             $maxCategories,
             $minCoverImages,
             $maxCoverImages
@@ -141,7 +158,7 @@ class StorePostRequest extends FormRequest
             }
             // Check if the "primary" key exists, or provide a default value of false
             if (!empty($this->cover_image)) {
-                // Loop through the array and attach each category to the post
+                // Loop through the array and attach each item to the post
                 foreach ($this->cover_image as $image) {
                     // Check if the "id" key exists in the $image array
                     if (array_key_exists("id", $image)) {
@@ -228,39 +245,34 @@ class StorePostRequest extends FormRequest
             }
             // validation for categories # end
 
-            // validation for author # start
+            // validation for stores # start
             if (
-                ($this->show_author === true && $this->author === null) ||
-                ($this->show_author === true &&
-                    gettype($this->author) === "array" &&
-                    count($this->author) === 0)
+                $this->stores === null ||
+                (gettype($this->stores) === "array" &&
+                    count($this->stores) === 0)
             ) {
                 $validator
                     ->errors()
-                    ->add(
-                        "author",
-                        "The author field is required, when show author is set to true."
-                    );
+                    ->add("stores", "The stores field is required.");
             }
 
-            if ($this->author !== null && gettype($this->author) !== "array") {
+            if (gettype($this->stores) !== "array") {
                 $validator
                     ->errors()
-                    ->add("author", "Author field must be an array.");
+                    ->add("stores", "stores field must be an array.");
             }
             if (
-                $this->author !== null &&
-                gettype($this->author) === "array" &&
-                count($this->author) > $maxAuthors
+                gettype($this->stores) === "array" &&
+                count($this->stores) > $maxStores
             ) {
                 $validator
                     ->errors()
                     ->add(
-                        "author",
-                        "Author is limited to a maximum of {$maxAuthors} people."
+                        "stores",
+                        "Stores field is limited to a maximum of {$maxStores} selection(s)."
                     );
             }
-            // validation for author # end
+            // validation for stores # end
         });
 
         // if validator fails
@@ -314,16 +326,15 @@ class StorePostRequest extends FormRequest
                 }
             }
         }
-        // author
-        if ($this->show_author && gettype($this->author) === "array") {
-            foreach ($this->author as $item) {
-                // $this->show_author === true && $this->author === null
+        // stores
+        if (gettype($this->stores) === "array") {
+            foreach ($this->stores as $item) {
                 if (isset($item["id"]) === false) {
                     $validator
                         ->errors()
                         ->add(
-                            "author",
-                            "The 'ID' for at least one selected person is missing. To resolve this issue, please click the 'Clear form' button and then try again."
+                            "stores",
+                            "The 'ID' for at least one selected store is missing. To resolve this issue, please click the 'Clear form' button and then try again."
                         );
                 }
             }

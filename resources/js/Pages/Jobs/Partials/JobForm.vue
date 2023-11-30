@@ -938,7 +938,7 @@ onBeforeMount(() => {
                 // Determine whether all elements in an array are null.
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.author.every(
+                const arrayContainsOnlyNull = formLocalStorage.author?.every(
                     (element) => {
                         return element === null;
                     }
@@ -966,7 +966,7 @@ onBeforeMount(() => {
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
                 const arrayContainsOnlyNull =
-                    formLocalStorage.cover_image.every((element) => {
+                    formLocalStorage.cover_image?.every((element) => {
                         return element === null;
                     });
 
@@ -991,7 +991,7 @@ onBeforeMount(() => {
                 // Determine whether all elements in an array are null.
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.countries.every(
+                const arrayContainsOnlyNull = formLocalStorage.countries?.every(
                     (element) => {
                         return element === null;
                     }
@@ -1018,7 +1018,7 @@ onBeforeMount(() => {
                 // Determine whether all elements in an array are null.
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.states.every(
+                const arrayContainsOnlyNull = formLocalStorage.states?.every(
                     (element) => {
                         return element === null;
                     }
@@ -1045,11 +1045,10 @@ onBeforeMount(() => {
                 // Determine whether all elements in an array are null. åå
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.categories.every(
-                    (element) => {
+                const arrayContainsOnlyNull =
+                    formLocalStorage.categories?.every((element) => {
                         return element === null;
-                    }
-                );
+                    });
 
                 if (arrayContainsOnlyNull === true) {
                     postForm.categories = [];
@@ -1072,7 +1071,7 @@ onBeforeMount(() => {
                 // Determine whether all elements in an array are null.
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.types.every(
+                const arrayContainsOnlyNull = formLocalStorage.types?.every(
                     (element) => {
                         return element === null;
                     }

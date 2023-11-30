@@ -28,6 +28,7 @@ class PostsGuestIndexController extends Controller
         $query = Post::latest()
             ->with("team")
             ->with("categories")
+            ->with("stores")
             ->with("coverImages")
             ->with("authors")
             ->where("published", true)
