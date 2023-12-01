@@ -57,6 +57,7 @@ class PostController extends Controller
     {
         $post = Post::where("id", $postId)
             ->where("published", true)
+            ->with('coverImages')
             ->firstOrFail();
 
         $postRenderView = "Guests/Items/SingleItem";
@@ -66,10 +67,9 @@ class PostController extends Controller
         $states = $post->states;
 
         $stores = $post->stores()->with('states')
-            ->with('cover_images')
-            ->with('logos')
             ->get();
 
+        $team = $post->team();
         // Render
         return Inertia::render($postRenderView, [
             "post" => $post,
@@ -78,6 +78,7 @@ class PostController extends Controller
             "states" => $states,
             "categories" => $categories,
             "stores" => $stores,
+            "team" => $team,
         ]);
     }
 

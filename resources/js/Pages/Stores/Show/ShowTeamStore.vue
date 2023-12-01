@@ -23,9 +23,6 @@ const props = defineProps({
     states: {
         required: true,
     },
-    coverImages: {
-        required: true,
-    },
 });
 
 const breadcrumbsLinks = [
@@ -54,7 +51,6 @@ const breadcrumbsLinks = [
                 :authors="authors"
                 :categories="categories"
                 :states="states"
-                :coverImages="coverImages"
                 :onlyForCurrentTeam="true"
             ></UnqiueResource>
             <!-- sShow Unique Post - end -->

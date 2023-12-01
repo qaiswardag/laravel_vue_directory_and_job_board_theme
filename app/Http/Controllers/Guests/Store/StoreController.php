@@ -43,6 +43,7 @@ class StoreController extends Controller
     {
         $post = Store::where("id", $postId)
             ->where("published", true)
+            ->with('coverImages')
             ->firstOrFail();
 
         $postRenderView = "Guests/Items/SingleItem";
@@ -50,7 +51,8 @@ class StoreController extends Controller
         $authors = $post->authors;
         $categories = $post->categories;
         $states = $post->states;
-        $coverImages = $post->coverImages;
+
+        $team = $post->team();
 
         // Render
         return Inertia::render($postRenderView, [
@@ -59,7 +61,7 @@ class StoreController extends Controller
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,
-            "coverImages" => $coverImages,
+            "team" => $team,
         ]);
     }
 

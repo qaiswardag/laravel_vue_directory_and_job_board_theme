@@ -42,6 +42,7 @@ class JobController extends Controller
         $post = Job::where("id", $postId)
             ->where("published", true)
             ->where("is_paid", true)
+            ->with('coverImages')
             ->where(function ($query) {
                 $query
                     ->whereNotNull("started_at")
@@ -59,7 +60,8 @@ class JobController extends Controller
         $countries = $post->countries;
         $jobTypes = $post->types;
         $states = $post->states;
-        $coverImages = $post->coverImages;
+
+        $team = $post->team();
 
         // Render the store
         return Inertia::render($postRenderView, [
@@ -70,7 +72,8 @@ class JobController extends Controller
             "jobTypes" => $jobTypes,
             "states" => $states,
             "categories" => $categories,
-            "coverImages" => $coverImages,
+            "team" => $team,
+
         ]);
     }
 

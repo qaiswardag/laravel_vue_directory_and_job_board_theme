@@ -489,7 +489,6 @@ class JobController extends Controller
         $countries = $job->countries;
         $states = $job->states;
         $jobTypes = $job->types;
-        $coverImages = $job->coverImages;
 
         // Render the job
         return Inertia::render($jobRenderView, [
@@ -499,7 +498,7 @@ class JobController extends Controller
             "states" => $states,
             "jobTypes" => $jobTypes,
             "categories" => $categories,
-            "coverImages" => $coverImages,
+            "team" => $team,
         ]);
     }
 

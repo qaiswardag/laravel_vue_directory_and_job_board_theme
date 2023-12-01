@@ -341,7 +341,7 @@ class StoreController extends Controller
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,
-            "coverImages" => $coverImages,
+            "team" => $team,
         ]);
     }
 

@@ -29,9 +29,6 @@ const props = defineProps({
     categories: {
         required: true,
     },
-    coverImages: {
-        required: true,
-    },
 });
 
 const breadcrumbsLinks = [
@@ -62,7 +59,6 @@ const breadcrumbsLinks = [
                 :countries="countries"
                 :jobTypes="jobTypes"
                 :categories="categories"
-                :coverImages="coverImages"
             ></UnqiueResource>
             <!-- sShow Unique Post - end -->
         </LoggedInLayout>
