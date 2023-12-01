@@ -28,7 +28,6 @@ class Store extends Model
         "tags",
         "show_author",
         "trash",
-        "author_id",
         "contact_page_url",
     ];
 

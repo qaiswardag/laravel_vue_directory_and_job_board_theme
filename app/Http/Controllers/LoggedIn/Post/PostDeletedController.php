@@ -60,7 +60,6 @@ class PostDeletedController extends Controller
             ->with("coverImages")
             ->with("categories")
             ->with("stores")
-            ->with("authors")
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")

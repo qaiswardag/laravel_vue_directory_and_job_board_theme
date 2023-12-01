@@ -582,13 +582,13 @@ onMounted(() => {
                                                             <div
                                                                 v-if="
                                                                     props.icon ===
-                                                                    'shopping_bag'
+                                                                    'local_mall'
                                                                 "
                                                             >
                                                                 <span
                                                                     class="myMediumIcon material-symbols-outlined"
                                                                 >
-                                                                    shopping_bag
+                                                                    local_mall
                                                                 </span>
                                                             </div>
                                                             <div
@@ -800,13 +800,13 @@ onMounted(() => {
                                                 <div
                                                     v-if="
                                                         props.icon ===
-                                                        'shopping_bag'
+                                                        'local_mall'
                                                     "
                                                 >
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
                                                     >
-                                                        shopping_bag
+                                                        local_mall
                                                     </span>
                                                 </div>
                                                 <div

@@ -64,7 +64,11 @@ class PostController extends Controller
         $authors = $post->authors;
         $categories = $post->categories;
         $states = $post->states;
-        $coverImages = $post->coverImages;
+
+        $stores = $post->stores()->with('states')
+            ->with('cover_images')
+            ->with('logos')
+            ->get();
 
         // Render
         return Inertia::render($postRenderView, [
@@ -73,7 +77,7 @@ class PostController extends Controller
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,
-            "coverImages" => $coverImages,
+            "stores" => $stores,
         ]);
     }
 

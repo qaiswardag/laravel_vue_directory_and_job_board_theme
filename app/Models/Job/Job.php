@@ -30,7 +30,6 @@ class Job extends Model
         "tags",
         "show_author",
         "trash",
-        "author_id",
         "is_filled",
         "apply_via_email",
         "apply_via_link",

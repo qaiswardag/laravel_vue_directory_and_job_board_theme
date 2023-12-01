@@ -8,6 +8,9 @@ const props = defineProps({
     post: {
         required: true,
     },
+    team: {
+        required: true,
+    },
     authors: {
         required: true,
     },
@@ -54,6 +57,7 @@ const breadcrumbsLinks = [
             <UnqiueResource
                 :onlyForCurrentTeam="true"
                 :post="post"
+                :team="team"
                 :authors="authors"
                 :countries="countries"
                 :jobTypes="jobTypes"

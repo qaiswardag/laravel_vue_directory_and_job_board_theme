@@ -216,7 +216,7 @@ onMounted(() => {
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Posts" />
+            <Head title="Sales" />
             <DynamicModal
                 :show="modalShowDeletePost"
                 :type="typeModal"
@@ -517,16 +517,35 @@ onMounted(() => {
                                                         }
                                                     })"
                                                     :key="store"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                 >
-                                                    <span
-                                                        class="myMediumIcon material-symbols-outlined"
+                                                    <Link
+                                                        class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                        :href="
+                                                            route(
+                                                                'team.stores.store.show',
+                                                                [
+                                                                    $page.props
+                                                                        .user
+                                                                        .current_team
+                                                                        .id,
+                                                                    store.slug,
+                                                                    store.id,
+                                                                ]
+                                                            )
+                                                        "
                                                     >
-                                                        local_mall
-                                                    </span>
-                                                    <span>
-                                                        {{ store.title }}
-                                                    </span>
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            local_mall
+                                                        </span>
+
+                                                        <span
+                                                            class="text-myPrimaryLinkColor"
+                                                        >
+                                                            {{ store.title }}
+                                                        </span>
+                                                    </Link>
                                                 </p>
                                             </div>
                                         </td>

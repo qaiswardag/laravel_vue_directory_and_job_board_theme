@@ -7,6 +7,9 @@ const props = defineProps({
     post: {
         required: false,
     },
+    team: {
+        required: true,
+    },
     postType: {
         required: false,
     },
@@ -39,6 +42,7 @@ const props = defineProps({
                 <UnqiueResource
                     :onlyForCurrentTeam="false"
                     :post="post"
+                    :team="team"
                     :authors="authors"
                     :countries="countries"
                     :states="states"

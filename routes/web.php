@@ -163,7 +163,7 @@ Route::middleware([])->group(function () {
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("/blog", [PostPostController::class, "index"])->name(
+    Route::get("/in_store_sales", [PostPostController::class, "index"])->name(
         "posts.guest.index"
     );
 

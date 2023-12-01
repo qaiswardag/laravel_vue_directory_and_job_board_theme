@@ -30,7 +30,6 @@ class PostsGuestIndexController extends Controller
             ->with("categories")
             ->with("stores")
             ->with("coverImages")
-            ->with("authors")
             ->where("published", true)
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("title", "LIKE", "%" . $term . "%");

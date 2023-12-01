@@ -1507,10 +1507,28 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">Stores</div>
-                    <p class="myPrimaryParagraph">
-                        At least one store is needed for creating in-store
-                        campaigns
-                    </p>
+                    <template
+                        v-if="
+                            $page.props.user.all_teams.length > 0 &&
+                            $page.props.user.current_team &&
+                            $page.props.jetstream.hasTeamFeatures
+                        "
+                    >
+                        <p class="myPrimaryParagraph">
+                            At least one
+                            <Link
+                                :href="
+                                    route(
+                                        'team.stores.index',
+                                        $page.props.user.current_team.id
+                                    )
+                                "
+                            >
+                                store
+                            </Link>
+                            is needed for creating in-store campaigns
+                        </p>
+                    </template>
                 </div>
                 <!-- select - start -->
                 <div @click="handleAddStores" class="myPrimaryFakeSelect">
@@ -1575,7 +1593,7 @@ const pageBuilder = new PageBuilder(store);
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
                                         >
-                                            shopping_bag
+                                            local_mall
                                         </span>
                                     </button>
                                     <div>
@@ -1758,7 +1776,7 @@ const pageBuilder = new PageBuilder(store);
                     secondModalButtonSearchItemsFunction
                 "
                 :displayIcon="true"
-                icon="shopping_bag"
+                icon="local_mall"
                 :show="showSearchPostStoresModal"
             >
             </SearchUsersOrItems>

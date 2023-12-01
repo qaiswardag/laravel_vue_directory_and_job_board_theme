@@ -8,6 +8,9 @@ const props = defineProps({
     post: {
         required: true,
     },
+    team: {
+        required: true,
+    },
     authors: {
         required: false,
     },
@@ -18,9 +21,6 @@ const props = defineProps({
         required: true,
     },
     stores: {
-        required: true,
-    },
-    coverImages: {
         required: true,
     },
 });
@@ -38,8 +38,8 @@ const breadcrumbsLinks = [
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head :title="`Post | ${post.title}`" />
-            <template #header> Post </template>
+            <Head :title="`Sale | ${post.title}`" />
+            <template #header> Sale </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
@@ -47,9 +47,9 @@ const breadcrumbsLinks = [
             <!-- Show Unique Resorce - start -->
             <UnqiueResource
                 :post="post"
+                :team="team"
                 :categories="categories"
                 :stores="stores"
-                :coverImages="coverImages"
                 :onlyForCurrentTeam="true"
             ></UnqiueResource>
             <!-- Show Unique Post - end -->

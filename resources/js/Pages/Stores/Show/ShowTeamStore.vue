@@ -8,6 +8,9 @@ const props = defineProps({
     post: {
         required: true,
     },
+    team: {
+        required: true,
+    },
     authors: {
         required: true,
     },
@@ -47,6 +50,7 @@ const breadcrumbsLinks = [
             <!-- Show Unique Resorce - start -->
             <UnqiueResource
                 :post="post"
+                :team="team"
                 :authors="authors"
                 :categories="categories"
                 :states="states"

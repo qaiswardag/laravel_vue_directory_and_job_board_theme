@@ -39,90 +39,84 @@ const submit = () => {
 
 <template>
     <MainLayout>
-        <div
-            class="bg-[url('https://images.unsplash.com/photo-1543728069-a3f97c5a2f32?auto=format&fit=crop&q=80&w=3269&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] w-full min-h-screen bg-cover"
-        >
-            <GuestsLayout>
-                <Head title="Login" />
-                <template #header>
-                    <div class="pb-8 text-center">
-                        <h1 class="myPrimaryHeader text-white">Sign in</h1>
-                    </div>
+        <GuestsLayout>
+            <Head title="Login" />
+            <template #header>
+                <div class="pb-8 text-center">
+                    <h1 class="myPrimaryHeader text-white">Sign in</h1>
+                </div>
+            </template>
+
+            <AuthenticationCard :css="'opacity-100'">
+                <template #logo>
+                    <AuthenticationCardLogo />
                 </template>
+                <div
+                    v-if="status"
+                    class="mb-4 font-normal text-sm text-myPrimaryLinkColor"
+                >
+                    {{ status }}
+                </div>
 
-                <AuthenticationCard :css="'opacity-100'">
-                    <template #logo>
-                        <AuthenticationCardLogo />
-                    </template>
-                    <div
-                        v-if="status"
-                        class="mb-4 font-normal text-sm text-myPrimaryLinkColor"
-                    >
-                        {{ status }}
+                <form @submit.prevent="submit">
+                    <div class="mt-4 mb-8">
+                        <h1 class="myTertiaryHeader text-center">Sign in</h1>
+                    </div>
+                    <div>
+                        <InputLabel for="email" value="Email" />
+                        <TextInput
+                            id="email"
+                            v-model="form.email"
+                            type="email"
+                            autofocus
+                        />
+
+                        <InputError :message="form.errors.email" />
                     </div>
 
-                    <form @submit.prevent="submit">
-                        <div class="mt-4 mb-8">
-                            <h1 class="myTertiaryHeader text-center">
-                                Sign in
-                            </h1>
-                        </div>
-                        <div>
-                            <InputLabel for="email" value="Email" />
-                            <TextInput
-                                id="email"
-                                v-model="form.email"
-                                type="email"
-                                autofocus
+                    <div class="mt-4">
+                        <InputLabel for="password" value="Password" />
+                        <TextInput
+                            id="password"
+                            v-model="form.password"
+                            type="password"
+                            autocomplete="current-password"
+                        />
+
+                        <InputError :message="form.errors.password" />
+                    </div>
+
+                    <div class="block mt-4">
+                        <label class="flex items-center">
+                            <Checkbox
+                                v-model:checked="form.remember"
+                                name="remember"
                             />
-
-                            <InputError :message="form.errors.email" />
-                        </div>
-
-                        <div class="mt-4">
-                            <InputLabel for="password" value="Password" />
-                            <TextInput
-                                id="password"
-                                v-model="form.password"
-                                type="password"
-                                autocomplete="current-password"
-                            />
-
-                            <InputError :message="form.errors.password" />
-                        </div>
-
-                        <div class="block mt-4">
-                            <label class="flex items-center">
-                                <Checkbox
-                                    v-model:checked="form.remember"
-                                    name="remember"
-                                />
-                                <span
-                                    class="ml-2 text-sm text-myPrimaryDarkGrayColor"
-                                    >Remember me</span
-                                >
-                            </label>
-                        </div>
-
-                        <div class="flex items-center justify-between mt-4">
-                            <Link
-                                v-if="canResetPassword"
-                                :href="route('password.request')"
-                                class="myPrimaryLink"
+                            <span
+                                class="ml-2 text-sm text-myPrimaryDarkGrayColor"
+                                >Remember me</span
                             >
-                                Forgot your password?
-                            </Link>
+                        </label>
+                    </div>
 
-                            <SubmitButton
-                                :disabled="form.processing"
-                                buttonText="Log in"
-                            >
-                            </SubmitButton>
-                        </div>
-                    </form>
-                </AuthenticationCard>
-                <EmptySectionBorder></EmptySectionBorder>
-            </GuestsLayout>
-        </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <Link
+                            v-if="canResetPassword"
+                            :href="route('password.request')"
+                            class="myPrimaryLink"
+                        >
+                            Forgot your password?
+                        </Link>
+
+                        <SubmitButton
+                            :disabled="form.processing"
+                            buttonText="Log in"
+                        >
+                        </SubmitButton>
+                    </div>
+                </form>
+            </AuthenticationCard>
+            <EmptySectionBorder></EmptySectionBorder>
+        </GuestsLayout>
     </MainLayout>
 </template>

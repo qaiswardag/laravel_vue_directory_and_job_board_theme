@@ -33,6 +33,9 @@ defineProps({
     post: {
         required: true,
     },
+    team: {
+        required: true,
+    },
     authors: {
         required: false,
     },
@@ -51,10 +54,16 @@ defineProps({
     stores: {
         required: false,
     },
-    coverImages: {
-        required: false,
-    },
 });
+
+const goToSingleStoreFromInSale = function (
+    routeName,
+    currentTeamId,
+    storeSlug,
+    storeId
+) {
+    router.get(route(routeName, [currentTeamId, storeSlug, storeId]));
+};
 </script>
 <template>
     <div class="my-0 py-0"></div>
@@ -69,6 +78,45 @@ defineProps({
         </template>
         <template #sidebar>
             <aside class="flex gap-8 flex-col">
+                <!-- team related to this resource # start -->
+                <template v-if="team">
+                    <div class="myPrimaryWidget">
+                        <h4 class="myQuaternaryHeader">
+                            TEAM NAME HERE:
+                            <br />
+                            {{ team?.name }}
+                        </h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+
+                        <template v-if="team.coverImagesWithLogos?.logos">
+                            <ThumbnailSmallImageSlider
+                                :images="team.coverImagesWithLogos?.logos"
+                                imageSize="large_path"
+                                imageHeight="h-24"
+                                imageWidth="w-24 mb-4"
+                                :roundedFull="false"
+                                :squareButtons="true"
+                            ></ThumbnailSmallImageSlider>
+                        </template>
+                        <template
+                            v-if="team.coverImagesWithLogos?.cover_images"
+                        >
+                            <ThumbnailSmallImageSlider
+                                v-if="team.coverImagesWithLogos?.cover_images"
+                                :images="
+                                    team.coverImagesWithLogos?.cover_images
+                                "
+                                imageSize="large_path"
+                                imageHeight="h-auto"
+                                imageWidth="w-full"
+                                :roundedFull="false"
+                                :squareButtons="true"
+                            ></ThumbnailSmallImageSlider>
+                        </template>
+                    </div>
+                </template>
+                <!-- team related to this resource # start -->
+
                 <!-- Post updated by - start -->
                 <template v-if="onlyForCurrentTeam">
                     <div class="myPrimaryWidget">
@@ -355,31 +403,74 @@ defineProps({
                     "
                     class="myPrimaryWidget"
                 >
-                    <h4 class="myQuaternaryHeader">Stores</h4>
+                    <h4 class="myQuaternaryHeader">Applies for Stores</h4>
                     <WidgetSectionBorder></WidgetSectionBorder>
 
-                    <div class="flex flex-col myPrimaryGap">
-                        <div v-for="store in stores && stores" :key="store.id">
-                            <div
-                                class="bg-red-200 p-4 border-2 border-black flex flex-col gap-6 w-full"
+                    <div class="flex flex-col gap-8">
+                        <div
+                            v-for="store in stores && stores"
+                            :key="store.id"
+                            class="border-b border-gray-200 py-4 rounded bg-gray-50 hover:bg-red-50"
+                        >
+                            <!-- store cover image -->
+                            <p
+                                @click="
+                                    goToSingleStoreFromInSale(
+                                        'stores.guest.show',
+                                        $page.props.user.current_team.id,
+                                        store.slug,
+                                        store.id
+                                    )
+                                "
+                                class="mb-6 block myQuaternaryHeader text-myPrimaryDarkGrayColor cursor-pointer"
                             >
-                                <div>
-                                    <p class="text-sm flex items-center gap-1">
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            local_mall
-                                        </span>
-                                        <span>
-                                            {{ store.title }}
-                                        </span>
-                                    </p>
-                                </div>
+                                {{ store.title }}
+                            </p>
 
-                                <div>
+                            <ThumbnailSmallImageSlider
+                                v-if="store.cover_images"
+                                :images="store.cover_images"
+                                imageSize="medium_path"
+                                imageHeight="h-auto"
+                                imageWidth="w-full"
+                                :roundedFull="false"
+                                :squareButtons="true"
+                                :imageClickable="true"
+                                @firstButtonClick="
+                                    goToSingleStoreFromInSale(
+                                        'stores.guest.show',
+                                        $page.props.user.current_team.id,
+                                        store.slug,
+                                        store.id
+                                    )
+                                "
+                            ></ThumbnailSmallImageSlider>
+                            <!-- store cover image -->
+
+                            <!-- Store details -->
+
+                            <!-- address # start -->
+                            <div class="flex flex-col gap-6 w-full mt-4">
+                                <div
+                                    v-if="store.address"
+                                    class="text-sm flex items-center gap-1"
+                                >
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        location_on
+                                    </span>
+                                    <span>
+                                        {{ store.address }}
+                                    </span>
+                                </div>
+                                <div
+                                    class="flex flex-wrap justify-start items-center gap-2"
+                                >
                                     <p
-                                        v-if="store.address"
-                                        class="text-sm flex items-center gap-1"
+                                        v-for="state in store.states"
+                                        :key="state.id"
+                                        class="text-sm flex justify-center items-center gap-1"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
@@ -387,11 +478,10 @@ defineProps({
                                             location_on
                                         </span>
                                         <span>
-                                            {{ store.address }}
+                                            {{ state.name }}
                                         </span>
                                     </p>
                                 </div>
-
                                 <div>
                                     <p
                                         v-if="store.floor"
@@ -412,27 +502,8 @@ defineProps({
                                         </span>
                                     </p>
                                 </div>
-
-                                <div
-                                    class="flex flex-wrap justify-start items-center gap-2"
-                                >
-                                    <p
-                                        v-for="state in store.states"
-                                        :key="state"
-                                        class="text-sm flex justify-center items-center gap-1"
-                                    >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            location_on
-                                        </span>
-                                        <span>
-                                            {{ state.name }}
-                                        </span>
-                                    </p>
-                                    <!-- address -->
-                                </div>
                             </div>
+                            <!-- address -->
                         </div>
                     </div>
                 </div>
@@ -578,16 +649,24 @@ defineProps({
                 </div>
                 <!-- authors # end -->
                 <!-- cover images - start -->
-                <ThumbnailSmallImageSlider
-                    v-if="post.cover_images"
-                    :images="post.cover_images"
-                    imageSize="large_path"
-                    imageHeight="h-auto"
-                    imageWidth="w-full rounded-md"
-                    :roundedFull="false"
-                    :squareButtons="true"
-                ></ThumbnailSmallImageSlider>
-                <!-- cover images - end -->
+
+                <!-- cover images for resource # start -->
+                <template v-if="post.cover_images">
+                    <div class="myPrimaryWidget">
+                        <h4 class="myQuaternaryHeader">Cover images</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <ThumbnailSmallImageSlider
+                            v-if="post.cover_images"
+                            :images="post.cover_images"
+                            imageSize="large_path"
+                            imageHeight="h-auto"
+                            imageWidth="w-full"
+                            :roundedFull="false"
+                            :squareButtons="true"
+                        ></ThumbnailSmallImageSlider>
+                    </div>
+                </template>
+                <!-- cover images for resource # end -->
             </aside>
         </template>
     </ArticleTemplate>

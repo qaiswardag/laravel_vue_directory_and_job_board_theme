@@ -283,15 +283,24 @@ class PostController extends Controller
         }
 
         $categories = $post->categories;
-        $stores = $post->stores()->with('states')->get();
         $coverImages = $post->coverImages;
+
+
+        $stores = $post
+            ->stores()
+            ->with('states')
+            ->with("coverImages")
+            ->get();
+
+
 
         // Render the post
         return Inertia::render($postRenderView, [
             "post" => $post,
             "categories" => $categories,
-            "stores" => $stores,
             "coverImages" => $coverImages,
+            "stores" => $stores,
+            "team" => $team,
         ]);
     }
 
@@ -361,8 +370,8 @@ class PostController extends Controller
                     "title" => $newPost->title . " " . "copy",
                     "is_paid" => null,
                     "paid_at" => null,
-                    "started_at" => null,
-                    "ended_at" => null,
+                    "started_at" => Carbon::now(),
+                    "ended_at" => Carbon::now(),
                     "published" => false,
                     "created_at" => Carbon::now(),
                     "updated_at" => Carbon::now(),
