@@ -933,7 +933,7 @@ const pageBuilder = new PageBuilder(store);
         <PageBuilderView :user="user" :team="postForm.team"></PageBuilderView>
     </PageBuilderModal>
     <FormSection @submitted="handleCreatePost">
-        <template #title> Post details</template>
+        <template #title> Campaign details</template>
         <template #description> Create a new Post. </template>
         <template #main>
             <div class="myInputsOrganization">

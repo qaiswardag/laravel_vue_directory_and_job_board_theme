@@ -54,7 +54,7 @@ const breadcrumbsLinks = [
 const linksTopMenu = [
     {
         label: "All In-store sales",
-        icon: "campaign",
+        icon: "campagin",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
@@ -79,7 +79,7 @@ const routesArray = [
         },
     },
     {
-        label: "Create Post",
+        label: " Create Campaign",
         route: {
             name: "team.posts.create",
             parameters: [props.currentUserTeam.id],
@@ -236,7 +236,7 @@ onMounted(() => {
                 <main></main>
             </DynamicModal>
             <template #header>
-                Posts for
+                In-store sales
                 {{ $page.props.user && $page.props.currentUserTeam.name }}
             </template>
             <template #breadcrumbs>
@@ -244,8 +244,8 @@ onMounted(() => {
             </template>
 
             <CardHeadings :routesArray="routesArray">
-                <template #title
-                    >Posts for
+                <template #title>
+                    In-store sales
                     {{ $page.props.user && $page.props.user.current_team.name }}
                 </template>
                 <template #buttons>
@@ -255,7 +255,7 @@ onMounted(() => {
                         :href="route('team.posts.create', currentUserTeam.id)"
                     >
                         <span class="material-symbols-outlined"> add </span>
-                        Create Post
+                        Create Campaign
                     </Link>
                 </template>
             </CardHeadings>

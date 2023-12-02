@@ -33,15 +33,15 @@ const breadcrumbsLinks = [
             parameters: [props.currentUserTeam.id],
         },
     },
-    { label: "Update Post" },
+    { label: "Update Campaign" },
 ];
 </script>
 
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Update Post" />
-            <template #header> Update Post </template>
+            <Head title="Update Campaign" />
+            <template #header> Update Campaign </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
