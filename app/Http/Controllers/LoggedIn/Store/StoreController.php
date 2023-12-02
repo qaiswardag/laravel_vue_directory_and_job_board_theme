@@ -333,7 +333,8 @@ class StoreController extends Controller
 
         $categories = $store->categories;
         $states = $store->states;
-        $coverImages = $store->coverImages;
+
+        $storeTeam = Team::find($store->team_id);
 
         // Render the store
         return Inertia::render($storeRenderView, [
@@ -341,7 +342,7 @@ class StoreController extends Controller
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,
-            "team" => $team,
+            "team" => $storeTeam,
         ]);
     }
 

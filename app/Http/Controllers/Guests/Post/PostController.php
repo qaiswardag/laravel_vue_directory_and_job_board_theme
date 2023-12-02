@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guests\Post;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post\Post;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,7 +70,8 @@ class PostController extends Controller
         $stores = $post->stores()->with('states')
             ->get();
 
-        $team = $post->team();
+        $postTeam = Team::find($post->team_id);
+
         // Render
         return Inertia::render($postRenderView, [
             "post" => $post,
@@ -78,7 +80,7 @@ class PostController extends Controller
             "states" => $states,
             "categories" => $categories,
             "stores" => $stores,
-            "team" => $team,
+            "team" => $postTeam,
         ]);
     }
 

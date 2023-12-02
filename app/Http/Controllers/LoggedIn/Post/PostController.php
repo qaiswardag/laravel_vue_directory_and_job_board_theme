@@ -61,7 +61,9 @@ class PostController extends Controller
             ->posts()
             ->with("coverImages")
             ->with("categories")
-            ->with("stores")
+            ->with(["stores" => function ($query) {
+                $query->with("states");
+            }])
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
@@ -283,8 +285,6 @@ class PostController extends Controller
         }
 
         $categories = $post->categories;
-        $coverImages = $post->coverImages;
-
 
         $stores = $post
             ->stores()
@@ -293,13 +293,14 @@ class PostController extends Controller
             ->get();
 
 
+        $postTeam = Team::find($post->team_id);
 
         // Render the post
         return Inertia::render($postRenderView, [
             "post" => $post,
             "categories" => $categories,
             "stores" => $stores,
-            "team" => $team,
+            "team" => $postTeam,
         ]);
     }
 

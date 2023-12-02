@@ -490,6 +490,8 @@ class JobController extends Controller
         $states = $job->states;
         $jobTypes = $job->types;
 
+        $jobTeam = Team::find($job->team_id);
+
         // Render the job
         return Inertia::render($jobRenderView, [
             "post" => $job,
@@ -498,7 +500,7 @@ class JobController extends Controller
             "states" => $states,
             "jobTypes" => $jobTypes,
             "categories" => $categories,
-            "team" => $team,
+            "team" => $jobTeam,
         ]);
     }
 

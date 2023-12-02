@@ -82,8 +82,6 @@ const goToSingleStoreFromInSale = function (
                 <template v-if="team">
                     <div class="myPrimaryWidget">
                         <h4 class="myQuaternaryHeader">
-                            TEAM NAME HERE:
-                            <br />
                             {{ team?.name }}
                         </h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
@@ -260,7 +258,7 @@ const goToSingleStoreFromInSale = function (
                         <p
                             v-for="jobCountry in countries && countries"
                             :key="jobCountry"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"
@@ -286,36 +284,35 @@ const goToSingleStoreFromInSale = function (
                     <div
                         class="flex flex-wrap justify-start items-center gap-2"
                     >
-                        <p
+                        <div
                             v-for="state in states"
                             :key="state"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2"
                         >
-                            <span
-                                class="myMediumIcon material-symbols-outlined"
-                            >
-                                location_on
-                            </span>
-                            <span>
-                                {{ state.name }}
-                            </span>
-                        </p>
-                        <p
-                            v-if="post.address"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
-                        >
-                            <span
-                                class="myMediumIcon material-symbols-outlined"
-                            >
-                                location_on
-                            </span>
-                            <span>
-                                {{ post.address }}
-                            </span>
-                        </p>
+                            <div class="flex items-center gap-2">
+                                <div>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        location_on
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>
+                                        {{ state.name
+                                        }}{{ post.address ? ", " : "" }}
+                                    </span>
+
+                                    <span v-if="post.address">
+                                        <span> {{ post.address }}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
                         <p
                             v-if="post.floor"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"
@@ -350,7 +347,7 @@ const goToSingleStoreFromInSale = function (
                         <p
                             v-for="state in jobTypes && jobTypes"
                             :key="state"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"
@@ -381,7 +378,7 @@ const goToSingleStoreFromInSale = function (
                         <p
                             v-for="category in categories && categories"
                             :key="category.id"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"
@@ -410,7 +407,7 @@ const goToSingleStoreFromInSale = function (
                         <div
                             v-for="store in stores && stores"
                             :key="store.id"
-                            class="border-b border-gray-200 py-4 rounded bg-gray-50 hover:bg-red-50"
+                            class="border border-gray-200 py-4 rounded px-2"
                         >
                             <!-- store cover image -->
                             <p
@@ -450,42 +447,74 @@ const goToSingleStoreFromInSale = function (
                             <!-- Store details -->
 
                             <!-- address # start -->
-                            <div class="flex flex-col gap-6 w-full mt-4">
-                                <div
-                                    v-if="store.address"
-                                    class="text-sm flex items-center gap-1"
-                                >
+
+                            <!-- <div
+                            v-for="state in states"
+                            :key="state"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2"
+                        >
+                            <div class="flex items-center gap-2">
+                                <div>
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
                                     >
                                         location_on
                                     </span>
+                                </div>
+                                <div>
                                     <span>
-                                        {{ store.address }}
+                                        {{ state.name
+                                        }}{{ post.address ? ", " : "" }}
+                                    </span>
+
+                                    <span v-if="post.address">
+                                        <span> {{ post.address }} </span>
                                     </span>
                                 </div>
+                            </div>
+                        </div> -->
+
+                            <div class="flex flex-col gap-6 w-full mt-4">
                                 <div
                                     class="flex flex-wrap justify-start items-center gap-2"
                                 >
-                                    <p
+                                    <div
                                         v-for="state in store.states"
                                         :key="state.id"
-                                        class="text-sm flex justify-center items-center gap-1"
+                                        class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2"
                                     >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            location_on
-                                        </span>
-                                        <span>
-                                            {{ state.name }}
-                                        </span>
-                                    </p>
+                                        <div class="flex items-center gap-2">
+                                            <div>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    location_on
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span>
+                                                    {{ state.name
+                                                    }}{{
+                                                        store.address
+                                                            ? ", "
+                                                            : ""
+                                                    }}
+                                                </span>
+                                                <span v-if="store.address">
+                                                    <span>
+                                                        {{
+                                                            store.address
+                                                        }}</span
+                                                    >
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div>
                                     <p
                                         v-if="store.floor"
-                                        class="text-sm flex items-center gap-1"
+                                        class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                                     >
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
@@ -526,7 +555,7 @@ const goToSingleStoreFromInSale = function (
                                         .split(',')
                                         .sort((a, b) => a.localeCompare(b))"
                                     :key="tag"
-                                    class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                    class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                                 >
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
@@ -601,7 +630,7 @@ const goToSingleStoreFromInSale = function (
                         <div
                             v-for="author in authors"
                             :key="author"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                         >
                             <div v-if="author.profile_photo_path !== null">
                                 <div class="h-5 w-5 flex-shrink-0">

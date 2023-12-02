@@ -495,7 +495,7 @@ onMounted(() => {
 
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
-                                                class="flex flex-wrap justify-start items-center gap-2"
+                                                class="flex flex-col justify-start gap-2"
                                             >
                                                 <p
                                                     v-for="store in post.stores &&
@@ -516,10 +516,9 @@ onMounted(() => {
                                                             return 0;
                                                         }
                                                     })"
-                                                    :key="store"
+                                                    :key="store.id"
                                                 >
                                                     <Link
-                                                        class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
                                                         :href="
                                                             route(
                                                                 'team.stores.store.show',
@@ -534,17 +533,98 @@ onMounted(() => {
                                                             )
                                                         "
                                                     >
-                                                        <span
-                                                            class="myMediumIcon material-symbols-outlined"
+                                                        <div
+                                                            class="border border-2-gray-400 rounded block py-4 px-4 hover:bg-red-300"
                                                         >
-                                                            local_mall
-                                                        </span>
+                                                            <p
+                                                                class="myPrimaryParagraph"
+                                                            >
+                                                                {{
+                                                                    store.title
+                                                                }}
+                                                            </p>
 
-                                                        <span
-                                                            class="text-myPrimaryLinkColor"
-                                                        >
-                                                            {{ store.title }}
-                                                        </span>
+                                                            <!-- address # start -->
+                                                            <div
+                                                                class="flex flex-col gap-6 w-full mt-4"
+                                                            >
+                                                                <div
+                                                                    class="myPrimaryTag"
+                                                                >
+                                                                    <div
+                                                                        v-for="state in store.states"
+                                                                        :key="
+                                                                            state.id
+                                                                        "
+                                                                        class="myPrimaryParagraph text-sm flex justify-center items-center gap-1"
+                                                                    >
+                                                                        <div
+                                                                            class="flex gap-2 items-center"
+                                                                        >
+                                                                            <div>
+                                                                                <span
+                                                                                    class="myMediumIcon material-symbols-outlined"
+                                                                                >
+                                                                                    location_on
+                                                                                </span>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <span>
+                                                                                    {{
+                                                                                        state.name
+                                                                                    }}{{
+                                                                                        store.address
+                                                                                            ? ", "
+                                                                                            : ""
+                                                                                    }}
+                                                                                </span>
+
+                                                                                <span
+                                                                                    v-if="
+                                                                                        store.address
+                                                                                    "
+                                                                                    class="text-sm flex items-center gap-1"
+                                                                                >
+                                                                                    <span>
+                                                                                        {{
+                                                                                            store.address
+                                                                                        }}
+                                                                                    </span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="myPrimaryTag"
+                                                                >
+                                                                    <p
+                                                                        v-if="
+                                                                            store.floor
+                                                                        "
+                                                                        class="myPrimaryParagraph text-sm flex items-center gap-1"
+                                                                    >
+                                                                        <span
+                                                                            class="myMediumIcon material-symbols-outlined"
+                                                                        >
+                                                                            floor
+                                                                        </span>
+                                                                        <span>
+                                                                            {{
+                                                                                store.floor ===
+                                                                                    0 ||
+                                                                                store.floor ===
+                                                                                    "0"
+                                                                                    ? "Ground floor"
+                                                                                    : `Floor ${store.floor}`
+                                                                            }}
+                                                                        </span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <!-- address -->
+                                                        </div>
                                                     </Link>
                                                 </p>
                                             </div>
