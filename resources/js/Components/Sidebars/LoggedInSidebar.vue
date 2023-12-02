@@ -231,7 +231,7 @@ import {
                     route().current('team.posts.post.show')
                 "
             >
-                <span class="material-symbols-outlined"> shopping_bag </span>
+                <span class="material-symbols-outlined"> campaign </span>
                 <div class="flex flex-col gap-2">
                     <span class="block"> In-store sales </span>
                     <span class="block text-xs font-normal">

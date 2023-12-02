@@ -61,7 +61,7 @@ const breadcrumbsLinks = [
 const linksTopMenu = [
     {
         label: "All In-store sales",
-        icon: "shopping_bag",
+        icon: "campaign",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
