@@ -226,16 +226,18 @@ import {
                 :active="
                     route().current('team.posts.index') ||
                     route().current('team.posts.index.trash') ||
+                    route().current('team.posts.index.expired') ||
+                    route().current('team.posts.index.draft') ||
                     route().current('team.posts.create') ||
                     route().current('team.posts.post.edit') ||
                     route().current('team.posts.post.show')
                 "
             >
-                <span class="material-symbols-outlined"> campagin </span>
+                <span class="material-symbols-outlined"> campaign </span>
                 <div class="flex flex-col gap-2">
-                    <span class="block"> In-store sales </span>
+                    <span class="block"> In-store campaigns </span>
                     <span class="block text-xs font-normal">
-                        Manage or create product sales campaigns
+                        Manage or create new in-store campaigns
                     </span>
                 </div>
             </SideBarLink>

@@ -14,23 +14,16 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import TopMenu from "@/Components/Menues/TopMenu.vue";
 
 import {
-    ArrowLeftIcon,
-    ArrowRightIcon,
-    CheckIcon,
-    ChevronDownIcon,
-    DocumentDuplicateIcon,
     EllipsisVerticalIcon,
-    PlusCircleIcon,
-    PlusIcon,
-    MapPinIcon,
+    CheckIcon,
     TagIcon,
     TrashIcon,
     Squares2X2Icon,
     UserIcon,
     PencilIcon,
-    ArrowPathIcon,
+    ArrowLeftIcon,
+    ArrowRightIcon,
 } from "@heroicons/vue/24/outline";
-
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
 
@@ -92,7 +85,6 @@ const linksTopMenu = [
         },
     },
 ];
-
 const routesArray = [
     {
         label: "All Running campaigns",
@@ -132,8 +124,8 @@ const handleDelete = function (postId, post) {
     // set modal standards
     typeModal.value = "delete";
     gridColumnModal.value = 3;
-    titleModal.value = `Permanently delete ${post.title}?`;
-    descriptionModal.value = `Are you sure you want to permanently delete post with title ${post.title}?`;
+    titleModal.value = `Delete ${post.title}?`;
+    descriptionModal.value = `Are you sure you want to delete post with title ${post.title}?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Delete Post";
@@ -160,10 +152,7 @@ const deletePostForm = useForm({});
 // form action
 const deletePost = (postId) => {
     deletePostForm.delete(
-        route("team.posts.post.destroy.force", [
-            postId,
-            props.currentUserTeam.id,
-        ]),
+        route("team.posts.post.destroy", [postId, props.currentUserTeam.id]),
         {
             preserveScroll: true,
             onSuccess: () => (modalShowDeletePost.value = false),
@@ -176,49 +165,27 @@ const deletePost = (postId) => {
 };
 
 // handle action
-const modalShowRestorePost = ref(false);
-
-const handleRestore = function (postId, post) {
-    modalShowRestorePost.value = true;
-
-    // set modal standards
-    typeModal.value = "success";
-    gridColumnModal.value = 3;
-    titleModal.value = `Restore post ${post.title}?`;
-    descriptionModal.value = `Are you sure you want to restore this post?`;
-    firstButtonModal.value = "Close";
-    secondButtonModal.value = null;
-    thirdButtonModal.value = "Restore post";
-
-    // handle click
-    firstModalButtonFunction.value = function () {
-        // handle show modal for unique content
-        modalShowRestorePost.value = false;
-    };
-    // handle click
-    thirdModalButtonFunction.value = function () {
-        handleRestorePost(postId);
-    };
-    // end modal
+const handleEdit = function (postId) {
+    router.get(
+        route("team.posts.post.edit", [props.currentUserTeam.id, postId])
+    );
 };
 
-const restoreForm = useForm({});
+const duplicateForm = useForm({
+    teamId: props.currentUserTeam.id,
+    postId: "",
+});
 
-const handleRestorePost = function (postId) {
-    restoreForm.post(
-        route("team.posts.restore", [
-            postId,
-            props.currentUserTeam.id,
-            //
-        ]),
-        {
-            onSuccess: () => (modalShowRestorePost.value = false),
-            onError: (err) => {},
-            onFinish: (log) => {
-                modalShowRestorePost.value = false;
-            },
-        }
-    );
+// handle action
+const handleDuplicate = function (postId) {
+    duplicateForm.postId = postId;
+    //
+    duplicateForm.post(route("team.posts.duplicate"), {
+        preserveScroll: false,
+        onSuccess: () => {},
+        onError: () => {},
+        onFinish: () => {},
+    });
 };
 
 // form
@@ -227,15 +194,12 @@ const searchForm = useForm({
 });
 
 const handleSearch = function () {
-    searchForm.get(
-        route("team.posts.index.trash", [props.currentUserTeam.id]),
-        {
-            preserveScroll: true,
-            onSuccess: () => {},
-            onError: (err) => {},
-            onFinish: () => {},
-        }
-    );
+    searchForm.get(route("team.posts.index", [props.currentUserTeam.id]), {
+        preserveScroll: true,
+        onSuccess: () => {},
+        onError: (err) => {},
+        onFinish: () => {},
+    });
 };
 
 const scrolTableContainer = ref("scrolTableContainer");
@@ -267,27 +231,9 @@ onMounted(() => {
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Posts" />
+            <Head title="Sales" />
             <DynamicModal
                 :show="modalShowDeletePost"
-                :type="typeModal"
-                :disabled="deletePostForm.processing"
-                disabledWhichButton="thirdButton"
-                :gridColumnAmount="gridColumnModal"
-                :title="titleModal"
-                :description="descriptionModal"
-                :firstButtonText="firstButtonModal"
-                :secondButtonText="secondButtonModal"
-                :thirdButtonText="thirdButtonModal"
-                @firstModalButtonFunction="firstModalButtonFunction"
-                @secondModalButtonFunction="secondModalButtonFunction"
-                @thirdModalButtonFunction="thirdModalButtonFunction"
-            >
-                <header></header>
-                <main></main>
-            </DynamicModal>
-            <DynamicModal
-                :show="modalShowRestorePost"
                 :type="typeModal"
                 :disabled="deletePostForm.processing"
                 disabledWhichButton="thirdButton"
@@ -313,8 +259,8 @@ onMounted(() => {
             </template>
 
             <CardHeadings :routesArray="routesArray">
-                <template #title
-                    >Posts for
+                <template #title>
+                    Running campaigns
                     {{ $page.props.user && $page.props.user.current_team.name }}
                 </template>
                 <template #buttons>
@@ -430,7 +376,6 @@ onMounted(() => {
                                     <th scope="col" class="myPrimaryTableTh">
                                         Stores
                                     </th>
-
                                     <th scope="col" class="myPrimaryTableTh">
                                         Categories
                                     </th>
@@ -451,7 +396,10 @@ onMounted(() => {
                                         Created Date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Restore
+                                        Options
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
+                                        Edit
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Delete
@@ -562,7 +510,7 @@ onMounted(() => {
 
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
-                                                class="flex flex-wrap justify-start items-center gap-2"
+                                                class="flex flex-col justify-start gap-2"
                                             >
                                                 <p
                                                     v-for="store in post.stores &&
@@ -583,17 +531,116 @@ onMounted(() => {
                                                             return 0;
                                                         }
                                                     })"
-                                                    :key="store"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                    :key="store.id"
                                                 >
-                                                    <span
-                                                        class="myMediumIcon material-symbols-outlined"
+                                                    <Link
+                                                        :href="
+                                                            route(
+                                                                'team.stores.store.show',
+                                                                [
+                                                                    $page.props
+                                                                        .user
+                                                                        .current_team
+                                                                        .id,
+                                                                    store.slug,
+                                                                    store.id,
+                                                                ]
+                                                            )
+                                                        "
                                                     >
-                                                        local_mall
-                                                    </span>
-                                                    <span>
-                                                        {{ store.title }}
-                                                    </span>
+                                                        <div
+                                                            class="border border-2-gray-400 rounded block py-4 px-4 hover:bg-red-300"
+                                                        >
+                                                            <p
+                                                                class="myPrimaryParagraph"
+                                                            >
+                                                                {{
+                                                                    store.title
+                                                                }}
+                                                            </p>
+
+                                                            <!-- address # start -->
+                                                            <div
+                                                                class="flex flex-col gap-6 w-full mt-4"
+                                                            >
+                                                                <div
+                                                                    class="myPrimaryTag"
+                                                                >
+                                                                    <div
+                                                                        v-for="state in store.states"
+                                                                        :key="
+                                                                            state.id
+                                                                        "
+                                                                        class="myPrimaryParagraph text-sm flex justify-center items-center gap-1"
+                                                                    >
+                                                                        <div
+                                                                            class="flex gap-2 items-center"
+                                                                        >
+                                                                            <div>
+                                                                                <span
+                                                                                    class="myMediumIcon material-symbols-outlined"
+                                                                                >
+                                                                                    location_on
+                                                                                </span>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <span>
+                                                                                    {{
+                                                                                        state.name
+                                                                                    }}{{
+                                                                                        store.address
+                                                                                            ? ", "
+                                                                                            : ""
+                                                                                    }}
+                                                                                </span>
+
+                                                                                <span
+                                                                                    v-if="
+                                                                                        store.address
+                                                                                    "
+                                                                                    class="text-sm flex items-center gap-1"
+                                                                                >
+                                                                                    <span>
+                                                                                        {{
+                                                                                            store.address
+                                                                                        }}
+                                                                                    </span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="myPrimaryTag"
+                                                                >
+                                                                    <p
+                                                                        v-if="
+                                                                            store.floor
+                                                                        "
+                                                                        class="myPrimaryParagraph text-sm flex items-center gap-1"
+                                                                    >
+                                                                        <span
+                                                                            class="myMediumIcon material-symbols-outlined"
+                                                                        >
+                                                                            floor
+                                                                        </span>
+                                                                        <span>
+                                                                            {{
+                                                                                store.floor ===
+                                                                                    0 ||
+                                                                                store.floor ===
+                                                                                    "0"
+                                                                                    ? "Ground floor"
+                                                                                    : `Floor ${store.floor}`
+                                                                            }}
+                                                                        </span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <!-- address -->
+                                                        </div>
+                                                    </Link>
                                                 </p>
                                             </div>
                                         </td>
@@ -639,6 +686,7 @@ onMounted(() => {
                                                 </p>
                                             </div>
                                         </td>
+
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
                                                 class="flex flex-wrap justify-start items-center gap-2"
@@ -690,17 +738,67 @@ onMounted(() => {
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
+                                            <Menu
+                                                as="div"
+                                                class="relative inline-block text-left"
+                                            >
+                                                <div>
+                                                    <MenuButton
+                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                    >
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            more_vert
+                                                        </span>
+                                                    </MenuButton>
+                                                </div>
+                                                <transition
+                                                    enter-active-class="transition ease-out duration-100"
+                                                    enter-from-class="transform opacity-0 scale-95"
+                                                    enter-to-class="transform opacity-100 scale-100"
+                                                    leave-active-class="transition ease-in duration-75"
+                                                    leave-from-class="transform opacity-100 scale-100"
+                                                    leave-to-class="transform opacity-0 scale-95"
+                                                >
+                                                    <MenuItems
+                                                        class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                                    >
+                                                        <MenuItem
+                                                            class="w-full flex justify-start text-sm leading-5 text-myPrimaryDarkGrayColor py-4 px-4 z-30 rounded hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
+                                                        >
+                                                            <button
+                                                                class="flex gap-1 items-center"
+                                                                type="button"
+                                                                @click="
+                                                                    handleDuplicate(
+                                                                        post.id
+                                                                    )
+                                                                "
+                                                            >
+                                                                <span
+                                                                    class="myMediumIcon material-symbols-outlined"
+                                                                >
+                                                                    check
+                                                                </span>
+                                                                Duplicate Post
+                                                            </button>
+                                                        </MenuItem>
+                                                    </MenuItems>
+                                                </transition>
+                                            </Menu>
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
                                             <button
                                                 type="button"
-                                                @click="
-                                                    handleRestore(post.id, post)
-                                                "
+                                                @click="handleEdit(post.id)"
                                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                             >
                                                 <span
-                                                    class="material-symbols-outlined"
+                                                    class="myMediumIcon material-symbols-outlined"
                                                 >
-                                                    undo
+                                                    edit
                                                 </span>
                                             </button>
                                         </td>

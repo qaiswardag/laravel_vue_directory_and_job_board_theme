@@ -393,7 +393,7 @@ const goToSingleStoreFromInSale = function (
                 </div>
                 <!-- categories # end -->
 
-                <!-- In-store sales - stores # start -->
+                <!-- Running campaigns - stores # start -->
                 <div
                     v-if="
                         stores && Array.isArray(stores) && stores.length !== 0
@@ -536,7 +536,7 @@ const goToSingleStoreFromInSale = function (
                         </div>
                     </div>
                 </div>
-                <!-- In-store sales - stores # end -->
+                <!-- Running campaigns - stores # end -->
 
                 <!-- tags # start -->
                 <template v-if="post.tags">

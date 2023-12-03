@@ -312,7 +312,7 @@ onMounted(() => {
                             "
                             class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                         >
-                            Latest In-store sales
+                            Latest Running campaigns
                         </Link>
                     </div>
 
