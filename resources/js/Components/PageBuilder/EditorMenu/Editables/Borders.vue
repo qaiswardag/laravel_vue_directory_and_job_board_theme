@@ -100,13 +100,12 @@ watch(
                 <div class="relative mt-2">
                     <ListboxButton class="myPrimarySelect">
                         <span class="flex items-center gap-2">
-                            <div
-                                v-if="getBorderColor === 'none'"
-                                class="w-6 h-6 cursor-default border border-gray-200 rounded-sm"
-                            >
-                                <span class="material-symbols-outlined">
-                                    close
-                                </span>
+                            <div v-if="getBorderColor === 'none'">
+                                <div class="myPrimaryColorPreview border-none">
+                                    <span class="material-symbols-outlined">
+                                        ev_shadow
+                                    </span>
+                                </div>
                             </div>
                             <div
                                 v-if="borderColor !== 'none'"
@@ -156,33 +155,37 @@ watch(
                                         'relative cursor-default select-none py-2 pl-3 pr-9',
                                     ]"
                                 >
-                                    <div
-                                        v-if="color === 'none'"
-                                        class="flex items-center"
-                                    >
-                                        <div
-                                            class="w-6 h-6 cursor-default border border-gray-200 rounded-sm bg-white"
-                                        >
-                                            <span
-                                                class="material-symbols-outlined"
+                                    <div class="flex items-center">
+                                        <div v-if="color === 'none'">
+                                            <div
+                                                class="myPrimaryColorPreview border-none"
                                             >
-                                                close
-                                            </span>
+                                                <span
+                                                    class="material-symbols-outlined"
+                                                >
+                                                    ev_shadow
+                                                </span>
+                                            </div>
                                         </div>
-                                        <span class="ml-3">{{ color }}</span>
-                                    </div>
-                                    <div
-                                        v-if="color !== 'none'"
-                                        class="flex items-center"
-                                    >
+
                                         <div
-                                            class="aspect-square w-6 h-6 border border-gray-100 rounded-sm"
+                                            v-if="color !== 'none'"
+                                            class="aspect-square w-6 h-6 bg-gray-950"
                                             :class="`bg-${color.replace(
                                                 'border-',
                                                 ''
                                             )}`"
                                         ></div>
-                                        <span class="ml-3">{{ color }}</span>
+                                        <span
+                                            v-if="color === 'none'"
+                                            class="ml-3"
+                                            >Transparent</span
+                                        >
+                                        <span
+                                            v-if="color !== 'none'"
+                                            class="ml-3"
+                                            >{{ color }}</span
+                                        >
                                     </div>
                                 </li>
                             </ListboxOption>

@@ -40,9 +40,14 @@ const handleAddClasses = function () {
                     class="myPrimaryTag cursor-pointer hover:bg-myPrimaryErrorColor hover:text-white"
                     @click="pageBuilder.handleRemoveClasses(className)"
                 >
-                    <span class="mr-1">
-                        {{ className }}
-                    </span>
+                    <div class="flex items-center gap-1">
+                        <span class="mr-1">
+                            {{ className }}
+                        </span>
+                        <span class="material-symbols-outlined">
+                            close_small
+                        </span>
+                    </div>
                 </div>
             </div>
 
