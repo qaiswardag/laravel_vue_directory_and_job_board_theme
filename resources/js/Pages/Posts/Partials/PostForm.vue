@@ -944,7 +944,7 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <InputLabel for="title" value="Your Post title" />
+                    <InputLabel for="title" value="Campaign title" />
                     <TextInput
                         placeholder="Enter your title.."
                         id="title"

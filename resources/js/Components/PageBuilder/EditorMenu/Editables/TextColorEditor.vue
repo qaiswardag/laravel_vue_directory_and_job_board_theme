@@ -39,29 +39,20 @@ watch(
 <template>
     <Listbox as="div" v-model="textColor">
         <div class="relative">
-            <ListboxButton class="myPrimarySelect">
-                <span class="flex items-center gap-2">
+            <ListboxButton class="w-max min-w-[12rem] flex items-center">
+                <div v-if="getTextColor === 'none'" class="flex gap-2">
+                    <span class="block truncate">Text color</span>
+                </div>
+                <div
+                    v-if="textColor !== 'none'"
+                    class="flex items-center gap-2"
+                >
                     <div
-                        v-if="getTextColor === 'none'"
-                        class="w-6 h-6 cursor-default border border-gray-200 rounded-sm"
-                    >
-                        <span class="material-symbols-outlined"> close </span>
-                    </div>
-                    <div
-                        v-if="textColor !== 'none'"
                         class="aspect-square w-6 h-6 border border-gray-100 rounded-sm"
                         :class="`bg-${textColor?.replace('text-', '')}`"
                     ></div>
                     <span class="block truncate">{{ textColor }}</span>
-                </span>
-                <span
-                    class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2"
-                >
-                    <ChevronUpDownIcon
-                        class="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                    />
-                </span>
+                </div>
             </ListboxButton>
 
             <transition
