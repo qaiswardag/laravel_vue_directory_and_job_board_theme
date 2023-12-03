@@ -184,7 +184,7 @@ const handleAddImage = function () {
                 </div>
             </template>
 
-            <template v-if="getElement">
+            <template v-if="getElement && !getBasePrimaryImage">
                 <div class="px-2">
                     <BackgroundColorEditor></BackgroundColorEditor>
                 </div>
