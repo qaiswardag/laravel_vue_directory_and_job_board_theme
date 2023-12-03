@@ -1063,7 +1063,7 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Title & description
+                        Store name & description
                     </div>
                 </div>
                 <!-- post title start -->
@@ -1134,7 +1134,6 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post slug end -->
                 <!-- post address and floor start -->
-                <p class="my-4">send with post: {{ postForm.address }}</p>
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup md:w-2/3">
                         <InputLabel for="address" value="Store address" />

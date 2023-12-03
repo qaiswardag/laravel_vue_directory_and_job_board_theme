@@ -46,7 +46,7 @@ const navigation = [
             route().current("jobs.guest.show"),
     },
     {
-        label: "Running campaigns",
+        label: "In-store campaigns",
         route: {
             name: "posts.guest.index",
             parameters: [],
