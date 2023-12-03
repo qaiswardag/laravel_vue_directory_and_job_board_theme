@@ -64,7 +64,7 @@ const linksTopMenu = [
         label: "Draft Campaigns",
         icon: "draw",
         route: {
-            name: "team.posts.draft.index",
+            name: "team.posts.index.draft",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -72,7 +72,7 @@ const linksTopMenu = [
         label: "Expired Campaigns",
         icon: "schedule",
         route: {
-            name: "team.posts.expired.index",
+            name: "team.posts.index.expired",
             parameters: [props.currentUserTeam.id],
         },
     },

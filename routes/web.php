@@ -562,11 +562,11 @@ Route::middleware([
     );
 
     Route::get("/team/campaigns/expired/{teamId}", [PostExpiredController::class, "index"])->name(
-        "team.posts.expired.index"
+        "team.posts.index.expired"
     );
 
     Route::get("/team/campaigns/draft/{teamId}", [PostDraftController::class, "index"])->name(
-        "team.posts.draft.index"
+        "team.posts.index.draft"
     );
     Route::get("/team/campaigns/trash/{teamId}", [PostDeletedController::class, "index"])->name(
         "team.posts.index.trash"
