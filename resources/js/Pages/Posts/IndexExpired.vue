@@ -85,7 +85,6 @@ const linksTopMenu = [
         },
     },
 ];
-
 const routesArray = [
     {
         label: "All Running campaigns",

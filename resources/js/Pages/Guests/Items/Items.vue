@@ -582,16 +582,19 @@ onMounted(() => {
                                                 ?.logos.length !== 0
                                         "
                                     >
-                                        <ThumbnailSmallImageSlider
-                                            :images="
-                                                post.team?.coverImagesWithLogos
-                                                    ?.logos
-                                            "
-                                            imageSize="medium_path"
-                                            imageHeight="h-16"
-                                            imageWidth="w-16"
-                                            :roundedFull="true"
-                                        ></ThumbnailSmallImageSlider>
+                                        <div class="my-2">
+                                            <ThumbnailSmallImageSlider
+                                                :images="
+                                                    post.team
+                                                        ?.coverImagesWithLogos
+                                                        ?.logos
+                                                "
+                                                imageSize="medium_path"
+                                                imageHeight="h-16"
+                                                imageWidth="w-16"
+                                                :roundedFull="false"
+                                            ></ThumbnailSmallImageSlider>
+                                        </div>
                                     </template>
 
                                     <template

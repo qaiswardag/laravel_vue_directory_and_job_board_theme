@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guests\Job;
 
 use App\Http\Controllers\Controller;
 use App\Models\Job\Job;
+use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -39,9 +40,10 @@ class JobController extends Controller
      */
     public function show($teamSlug, $postSlug, $postId)
     {
-        $post = Job::where("id", $postId)
+        $job = Job::where("id", $postId)
             ->where("published", true)
             ->where("is_paid", true)
+            ->with('coverImages')
             ->where(function ($query) {
                 $query
                     ->whereNotNull("started_at")
@@ -54,23 +56,25 @@ class JobController extends Controller
 
         $postRenderView = "Guests/Items/SingleItem";
 
-        $authors = $post->authors;
-        $categories = $post->categories;
-        $countries = $post->countries;
-        $jobTypes = $post->types;
-        $states = $post->states;
-        $coverImages = $post->coverImages;
+        $authors = $job->authors;
+        $categories = $job->categories;
+        $countries = $job->countries;
+        $jobTypes = $job->types;
+        $states = $job->states;
+
+        $jobTeam = Team::find($job->team_id);
 
         // Render the store
         return Inertia::render($postRenderView, [
             "postType" => "Job",
-            "post" => $post,
+            "post" => $job,
             "authors" => $authors,
             "countries" => $countries,
             "jobTypes" => $jobTypes,
             "states" => $states,
             "categories" => $categories,
-            "coverImages" => $coverImages,
+            "team" => $jobTeam,
+
         ]);
     }
 

@@ -14,11 +14,11 @@ const props = defineProps({
     },
 });
 
-const goToSinglePost = function (current_teamId, postId, postSlug) {
+const goToSinglePost = function (currentTeamId, postId, postSlug) {
     router.get(
         route(
             `team.${props.postListPathName}.${props.postSinglePathName}.show`,
-            [current_teamId, postSlug, postId]
+            [currentTeamId, postSlug, postId]
         )
     );
 };

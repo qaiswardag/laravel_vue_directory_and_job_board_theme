@@ -25,38 +25,21 @@ const getShowModalTipTap = computed(() => {
                     class="h-16 py-2 pl-4 pr-4 bg-gray-100 rounded-full flex gap-4 flex-shrink-0 justify-start items-center border-gray-100 shadow"
                 >
                     <button
-                        @click="
-                            store.commit(
-                                'pageBuilderState/setShowModalTipTap',
-                                true
-                            )
-                        "
-                        type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                    >
-                        <span class="material-symbols-outlined">
-                            open_in_full
-                        </span>
-                    </button>
-                    <button
                         @click="toggleTipTap = !toggleTipTap"
                         type="button"
                         class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
-                        <span
-                            v-if="toggleTipTap"
-                            class="material-symbols-outlined"
-                        >
-                            collapse_content
-                        </span>
-                        <span
-                            v-if="!toggleTipTap"
-                            class="material-symbols-outlined"
-                        >
-                            expand_content
-                        </span>
+                        <template v-if="toggleTipTap">
+                            <span class="material-symbols-outlined">
+                                collapse_content
+                            </span>
+                        </template>
+                        <template v-if="!toggleTipTap">
+                            <span class="material-symbols-outlined">
+                                expand_content
+                            </span>
+                        </template>
                     </button>
-                    <TextColorEditor class="w-full"></TextColorEditor>
                 </div>
             </template>
             <TipTapInput v-if="!getShowModalTipTap && toggleTipTap">

@@ -99,9 +99,7 @@ const isHeadingElement = computed(() => {
                     >
                         <Typography></Typography>
                     </article>
-                    <article>
-                        <BackgroundColorEditor></BackgroundColorEditor>
-                    </article>
+
                     <article>
                         <OpacityEditor> </OpacityEditor>
                     </article>
@@ -119,17 +117,7 @@ const isHeadingElement = computed(() => {
                     </article>
                 </div>
 
-                <article>
-                    <div
-                        v-show="
-                            isHeadingElement === true ||
-                            getRestoredElement !== null
-                        "
-                    >
-                        <DeleteElement> </DeleteElement>
-                    </div>
-                </article>
-                <article class="min-h-[20em]"></article>
+                <article class="min-h-[12em]"></article>
             </div>
         </div>
     </div>

@@ -233,9 +233,9 @@ onMounted(async () => {
                 <EditGetElement></EditGetElement>
                 <div
                     @click="store.commit('pageBuilderState/setComponent', null)"
-                    class="p-2 overflow-y-auto h-screen"
+                    class="pl-4 pr-4 pb-4 overflow-y-auto h-screen"
                 >
-                    <div id="pagebuilder" class="pt-20">
+                    <div id="pagebuilder" class="">
                         <div ref="draggableZone">
                             <!-- Added Components to DOM # start -->
                             <div

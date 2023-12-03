@@ -14,10 +14,10 @@ const props = defineProps({
     post: {
         required: true,
     },
-    postAuthor: {
+    categories: {
         required: true,
     },
-    categories: {
+    stores: {
         required: true,
     },
     coverImages: {
@@ -27,21 +27,21 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All Running campaigns",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
         },
     },
-    { label: "Update Post" },
+    { label: "Update Campaign" },
 ];
 </script>
 
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Update Post" />
-            <template #header> Update Post </template>
+            <Head title="Update Campaign" />
+            <template #header> Update Campaign </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
@@ -49,8 +49,8 @@ const breadcrumbsLinks = [
                 :currentUserTeam="currentUserTeam"
                 :user="user"
                 :post="post"
-                :postAuthor="postAuthor"
                 :categories="categories"
+                :stores="stores"
                 :coverImages="coverImages"
             ></PostForm>
         </LoggedInLayout>

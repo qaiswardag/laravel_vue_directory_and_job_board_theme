@@ -3,6 +3,7 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
+import PageHeader from "@/Components/Headers/PageHeader.vue";
 
 defineProps({
     terms: String,
@@ -15,9 +16,7 @@ defineProps({
             <Head title="Home" />
             <template #header>
                 <div>
-                    <h1 class="myPrimaryHeader text-center">
-                        Terms of Service
-                    </h1>
+                    <PageHeader title="Terms of Service"></PageHeader>
                     <div class="myPrimaryContentSection" v-html="terms" />
                 </div>
             </template>

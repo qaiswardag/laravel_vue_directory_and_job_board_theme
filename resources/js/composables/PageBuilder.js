@@ -1127,6 +1127,8 @@ class PageBuilder {
             console.log("updateBasePrimaryImage");
         }
 
+        if (!this.getElement.value) return;
+
         if (this.getCurrentImage.value.currentImage?.mediaLibrary?.path) {
             await this.nextTick;
             this.store.commit(

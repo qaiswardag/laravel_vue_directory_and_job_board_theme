@@ -8,6 +8,9 @@ const props = defineProps({
     post: {
         required: true,
     },
+    team: {
+        required: true,
+    },
     authors: {
         required: true,
     },
@@ -18,9 +21,6 @@ const props = defineProps({
         required: true,
     },
     states: {
-        required: true,
-    },
-    coverImages: {
         required: true,
     },
 });
@@ -47,10 +47,10 @@ const breadcrumbsLinks = [
             <!-- Show Unique Resorce - start -->
             <UnqiueResource
                 :post="post"
+                :team="team"
                 :authors="authors"
                 :categories="categories"
                 :states="states"
-                :coverImages="coverImages"
                 :onlyForCurrentTeam="true"
             ></UnqiueResource>
             <!-- sShow Unique Post - end -->

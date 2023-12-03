@@ -76,6 +76,12 @@ class StoreJobRequest extends FormRequest
             "tags" => ["nullable", "min:2", "string", "max:255"],
 
             "started_at" => ["required", "date_format:Y-m-d H:i:s"],
+            "ended_at" => ["date_format:Y-m-d H:i:s", "nullable"],
+            //
+            //
+            //
+            "paid_at" => ["date_format:Y-m-d H:i:s", "nullable"],
+            "is_paid" => ["boolean", "nullable"],
         ];
 
         return $rules;

@@ -226,16 +226,20 @@ import {
                 :active="
                     route().current('team.posts.index') ||
                     route().current('team.posts.index.trash') ||
+                    route().current('team.posts.index.expired') ||
+                    route().current('team.posts.index.draft') ||
                     route().current('team.posts.create') ||
                     route().current('team.posts.post.edit') ||
                     route().current('team.posts.post.show')
                 "
             >
-                <span class="myMediumIcon material-symbols-outlined">
-                    hub
-                </span>
-
-                Blog
+                <span class="material-symbols-outlined"> campaign </span>
+                <div class="flex flex-col gap-2">
+                    <span class="block"> In-store campaigns </span>
+                    <span class="block text-xs font-normal">
+                        Manage or create new in-store campaigns
+                    </span>
+                </div>
             </SideBarLink>
         </template>
         <template
@@ -251,7 +255,7 @@ import {
                 "
                 :active="
                     route().current('team.jobs.index') ||
-                    route().current('team.jobs.index.unpaid') ||
+                    route().current('team.jobs.index.draft') ||
                     route().current('team.jobs.index.expired') ||
                     route().current('team.jobs.index.trash') ||
                     route().current('team.jobs.create') ||
@@ -286,7 +290,12 @@ import {
                 "
             >
                 <span class="material-symbols-outlined"> local_mall </span>
-                Stores
+                <div class="flex flex-col gap-2">
+                    <span class="block"> Stores </span>
+                    <span class="block text-xs font-normal">
+                        Manage or create stores
+                    </span>
+                </div>
             </SideBarLink>
         </template>
         <template

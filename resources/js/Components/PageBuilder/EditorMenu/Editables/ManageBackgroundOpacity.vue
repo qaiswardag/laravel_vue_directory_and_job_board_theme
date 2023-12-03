@@ -43,14 +43,11 @@ watch(
         <Listbox as="div" v-model="opacityVueModel">
             <div class="relative">
                 <ListboxButton class="myPrimarySelect">
-                    <span class="flex items-center">
-                        <div
-                            v-if="opacityVueModel === 'none'"
-                            class="aspect-square w-6 h-6"
-                        >
-                            <div class="myPrimaryColorPreview bg-gray-100">
+                    <span class="flex items-center gap-2">
+                        <div v-if="opacityVueModel === 'none'">
+                            <div class="myPrimaryColorPreview border-none">
                                 <span class="material-symbols-outlined">
-                                    close
+                                    ev_shadow
                                 </span>
                             </div>
                         </div>
@@ -62,11 +59,11 @@ watch(
                         ></div>
 
                         <span
-                            class="block truncate ml-3"
+                            class="block truncate"
                             :class="[opacityVueModel !== 'none' ? '' : '']"
                             >{{
                                 opacityVueModel === "none"
-                                    ? "none"
+                                    ? "Transparent"
                                     : opacityVueModel
                             }}</span
                         >
@@ -115,12 +112,12 @@ watch(
                                         class="aspect-square w-6 h-6"
                                     >
                                         <div
-                                            class="myPrimaryColorPreview bg-gray-100"
+                                            class="myPrimaryColorPreview border-none"
                                         >
                                             <span
                                                 class="material-symbols-outlined"
                                             >
-                                                close
+                                                ev_shadow
                                             </span>
                                         </div>
                                     </div>
@@ -130,9 +127,16 @@ watch(
                                         class="aspect-square w-6 h-6 bg-gray-950"
                                         :class="`${backgroundOpacity}`"
                                     ></div>
-                                    <span class="ml-3">{{
-                                        backgroundOpacity
-                                    }}</span>
+                                    <span
+                                        v-if="backgroundOpacity !== 'none'"
+                                        class="ml-3"
+                                        >{{ backgroundOpacity }}</span
+                                    >
+                                    <span
+                                        v-if="backgroundOpacity === 'none'"
+                                        class="ml-3"
+                                        >Transparent</span
+                                    >
                                 </div>
                             </li>
                         </ListboxOption>

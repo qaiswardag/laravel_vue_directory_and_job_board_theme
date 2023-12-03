@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guests\Store;
 
 use App\Http\Controllers\Controller;
 use App\Models\Store\Store;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -41,25 +42,28 @@ class StoreController extends Controller
      */
     public function show($teamSlug, $postSlug, $postId)
     {
-        $post = Store::where("id", $postId)
+        $store = Store::where("id", $postId)
             ->where("published", true)
+            ->with('coverImages')
             ->firstOrFail();
 
         $postRenderView = "Guests/Items/SingleItem";
 
-        $authors = $post->authors;
-        $categories = $post->categories;
-        $states = $post->states;
-        $coverImages = $post->coverImages;
+        $authors = $store->authors;
+        $categories = $store->categories;
+        $states = $store->states;
+
+        $storeTeam = Team::find($store->team_id);
+
 
         // Render
         return Inertia::render($postRenderView, [
             "postType" => "Store",
-            "post" => $post,
+            "post" => $store,
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,
-            "coverImages" => $coverImages,
+            "team" => $storeTeam,
         ]);
     }
 

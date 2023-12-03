@@ -7,6 +7,9 @@ const props = defineProps({
     post: {
         required: false,
     },
+    team: {
+        required: true,
+    },
     postType: {
         required: false,
     },
@@ -25,9 +28,6 @@ const props = defineProps({
     categories: {
         required: false,
     },
-    coverImages: {
-        required: false,
-    },
 });
 </script>
 <template>
@@ -39,12 +39,12 @@ const props = defineProps({
                 <UnqiueResource
                     :onlyForCurrentTeam="false"
                     :post="post"
+                    :team="team"
                     :authors="authors"
                     :countries="countries"
                     :states="states"
                     :jobTypes="jobTypes"
                     :categories="categories"
-                    :coverImages="coverImages"
                 ></UnqiueResource>
             </main>
             <!-- sShow Unique Post - end -->

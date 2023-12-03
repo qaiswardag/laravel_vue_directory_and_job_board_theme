@@ -20,6 +20,9 @@ import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import { delay } from "@/helpers/delay";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import { parseISO, formatISO, format } from "date-fns";
 
 import {
     Listbox,
@@ -60,11 +63,11 @@ const props = defineProps({
         default: null,
         required: false,
     },
-    postAuthor: {
+    categories: {
         default: null,
         required: false,
     },
-    categories: {
+    stores: {
         default: null,
         required: false,
     },
@@ -102,6 +105,10 @@ const getCurrentAttachedPostCategories = computed(() => {
     return store.getters[
         "attachedUsersOrItems/getCurrentAttachedPostCategories"
     ];
+});
+
+const getCurrentAttachedPostStores = computed(() => {
+    return store.getters["attachedUsersOrItems/getCurrentAttachedPostStores"];
 });
 
 const formType = ref("create");
@@ -219,37 +226,6 @@ const secondButtonModalSearchItems = ref(null);
 const firstModalButtonSearchItemsFunction = ref(null);
 const secondModalButtonSearchItemsFunction = ref(null);
 
-const handleAddAuthor = function () {
-    // handle show modal for unique content
-    showSearchUserModal.value = true;
-    // set modal standards
-    titleModalSearchItems.value = "Assign contributor";
-    descriptionModalSearchItems.value = "Assign contributor to this post.";
-    firstButtonModalSearchItems.value = "Close";
-    secondButtonModalSearchItems.value = "Save";
-    // handle click
-    firstModalButtonSearchItemsFunction.value = function () {
-        // handle show modal for unique content
-        showSearchUserModal.value = false;
-    };
-    // handle click
-    secondModalButtonSearchItemsFunction.value = function () {
-        const currentAttachedUsers = [...getCurrentAttachedUsers.value];
-        // Set post form author to the non-reactive copy
-        postForm.author = currentAttachedUsers;
-
-        // handle show modal for unique content
-        showSearchUserModal.value = false;
-    };
-
-    // end modal
-};
-
-const handleRemoveAttachedUser = function (userId) {
-    // filter the array to exclude item with matching ID
-    postForm.author = postForm.author.filter((user) => user.id !== userId);
-};
-
 const handleRemoveAttachedCategory = function (itemId) {
     // filter the array to exclude item with matching ID
     postForm.categories = postForm.categories.filter(
@@ -274,7 +250,7 @@ const handleAddCategories = function () {
         const currentAttachedPostCategories = [
             ...getCurrentAttachedPostCategories.value,
         ];
-        // Set post form author to the non-reactive copy
+        // Set post form to the non-reactive copy
         postForm.categories = currentAttachedPostCategories;
 
         // handle show modal for unique content
@@ -284,6 +260,40 @@ const handleAddCategories = function () {
     // end modal
 };
 
+const showSearchPostStoresModal = ref();
+
+const handleAddStores = function () {
+    // handle show modal for unique content
+    showSearchPostStoresModal.value = true;
+    // set modal standards
+    titleModalSearchItems.value = "Add Post Stores";
+    descriptionModalSearchItems.value = "Add Post Stores";
+    firstButtonModalSearchItems.value = "Close";
+    secondButtonModalSearchItems.value = "Save";
+    // handle click
+    firstModalButtonSearchItemsFunction.value = function () {
+        // handle show modal for unique content
+        showSearchPostStoresModal.value = false;
+    };
+    // handle click
+    secondModalButtonSearchItemsFunction.value = function () {
+        const currentAttachedPostStores = [
+            ...getCurrentAttachedPostStores.value,
+        ];
+        // Set post form to the non-reactive copy
+        postForm.stores = currentAttachedPostStores;
+
+        // handle show modal for unique content
+        showSearchPostStoresModal.value = false;
+    };
+
+    // end modal
+};
+
+const handleRemoveAttachedStores = function (itemId) {
+    // filter the array to exclude item with matching ID
+    postForm.stores = postForm.stores.filter((item) => item.id !== itemId);
+};
 const showErrorNotifications = ref(false);
 
 const notificationsModalButton = function () {
@@ -297,15 +307,16 @@ const slugValueCustom = ref("");
 const postForm = useForm({
     title: "",
     slug: "",
+    started_at: "",
+    ended_at: "",
     content: "",
     published: true,
     team: props.currentUserTeam,
     user_id: props.user.id,
 
     tags: "",
-    show_author: false,
-    author: [],
     categories: [],
+    stores: [],
     cover_image: [],
 });
 
@@ -364,6 +375,9 @@ const handleCreatePost = function () {
 
 const submittedOnUpdate = ref(true);
 
+const postStartedAt = ref(formatISO(new Date()));
+const postEndedAt = ref(formatISO(new Date()));
+
 const createPost = () => {
     if (formType.value === "create") {
         postForm.post(route("team.posts.store"), {
@@ -417,9 +431,16 @@ const handleClearForm = function () {
 const clearTags = ref(0);
 // clear form
 const clearForm = function () {
+    postStartedAt.value = formatISO(new Date());
+    postEndedAt.value = formatISO(new Date());
+    //
+    //
+    //
     postForm.title = "";
     // slug
     postForm.slug = "";
+    postForm.started_at = null;
+    postForm.ended_at = null;
     isSlugEditable.value = false;
     slugValueTitle.value = "";
     slugValueCustom.value = "";
@@ -435,15 +456,62 @@ const clearForm = function () {
     //
     //
     //
-    postForm.show_author = false;
-    postForm.author = [];
     postForm.categories = [];
+    postForm.stores = [];
     postForm.cover_image = [];
 
     localStorage.removeItem(pathLocalStorage);
     localStorage.removeItem(pathPageBuilderLocalStorageCreate);
     store.commit("pageBuilderState/setComponents", []);
 };
+
+// started at
+const setStartedAtDate = function () {
+    if (props.post) {
+        postStartedAt.value = props.post?.started_at;
+    }
+    if (!props.post) {
+        postStartedAt.value = formatISO(new Date());
+    }
+};
+watch(
+    () => postStartedAt.value,
+    (newValue) => {
+        if (newValue) {
+            const parsedDate = new Date(newValue);
+            const formattedDate = format(parsedDate, "yyyy-MM-dd HH:mm:ss");
+            postForm.started_at = formattedDate;
+        }
+        if (newValue === null) {
+            postForm.started_at = null;
+        }
+    },
+    { immediate: true }
+);
+
+// ended at
+const setEndedAtDate = function () {
+    if (props.post) {
+        postEndedAt.value = props.post?.ended_at;
+    }
+    if (!props.post) {
+        postEndedAt.value = formatISO(new Date());
+    }
+};
+watch(
+    () => postEndedAt.value,
+    (newValue) => {
+        if (newValue) {
+            const parsedDate = new Date(newValue);
+            const formattedDate = format(parsedDate, "yyyy-MM-dd HH:mm:ss");
+            postForm.ended_at = formattedDate;
+        }
+        if (newValue === null) {
+            postForm.ended_at = null;
+        }
+    },
+    { immediate: true }
+);
 
 const clearPageBuilderOnSuccessUpdate = function () {
     pageBuilder.removeItemComponentsLocalStorageUpdate();
@@ -513,20 +581,6 @@ window.addEventListener("beforeunload", async function () {
     store.commit("user/setIsLoading", false);
 });
 
-const authorSorted = computed(() => {
-    return postForm.author.sort((a, b) => {
-        const firstNameA = a.first_name;
-        const firstNameB = b.first_name;
-
-        if (firstNameA < firstNameB) {
-            return -1;
-        } else if (firstNameA > firstNameB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
-});
 const categoriesSorted = computed(() => {
     return postForm.categories.sort((a, b) => {
         const nameA = a.name;
@@ -541,6 +595,31 @@ const categoriesSorted = computed(() => {
         }
     });
 });
+const storesSorted = computed(() => {
+    return postForm.stores.sort((a, b) => {
+        const nameA = a.title;
+        const nameB = b.title;
+
+        if (nameA < nameB) {
+            return -1;
+        } else if (nameA > nameB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+});
+//
+//
+const dp1 = ref();
+const dp2 = ref();
+
+const selectStartDate = function () {
+    dp1.value.selectDate();
+};
+const selectEndDate = function () {
+    dp2.value.selectDate();
+};
 //
 // Builder # Start
 const getComponents = computed(() => {
@@ -682,39 +761,19 @@ onBeforeMount(() => {
             //
             postForm.title = formLocalStorage.title;
 
+            if (formLocalStorage.started_at) {
+                postStartedAt.value = formLocalStorage.started_at;
+            }
+
+            if (formLocalStorage.ended_at) {
+                postEndedAt.value = formLocalStorage.ended_at;
+            }
+
             postForm.content = formLocalStorage.content;
 
             postForm.published = formLocalStorage.published;
-            postForm.show_author = formLocalStorage.show_author;
             postForm.tags = formLocalStorage.tags;
 
-            // Authors
-            if (
-                formLocalStorage.author === undefined ||
-                formLocalStorage.author === null
-            ) {
-                postForm.author = [];
-            }
-            if (
-                formLocalStorage.author !== undefined ||
-                formLocalStorage.author !== null
-            ) {
-                // Determine whether all elements in an array are null.
-                // Checks if each element is equal to null.
-                // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.author.every(
-                    (element) => {
-                        return element === null;
-                    }
-                );
-
-                if (arrayContainsOnlyNull === true) {
-                    postForm.author = [];
-                }
-                if (arrayContainsOnlyNull === false) {
-                    postForm.author = formLocalStorage.author;
-                }
-            }
             // Cover image
             if (
                 formLocalStorage.cover_image === undefined ||
@@ -730,7 +789,7 @@ onBeforeMount(() => {
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
                 const arrayContainsOnlyNull =
-                    formLocalStorage.cover_image.every((element) => {
+                    formLocalStorage.cover_image?.every((element) => {
                         return element === null;
                     });
 
@@ -755,17 +814,43 @@ onBeforeMount(() => {
                 // Determine whether all elements in an array are null.
                 // Checks if each element is equal to null.
                 // If every element in the array is indeed null, the function returns true,
-                const arrayContainsOnlyNull = formLocalStorage.categories.every(
-                    (element) => {
+                const arrayContainsOnlyNull =
+                    formLocalStorage.categories?.every((element) => {
                         return element === null;
-                    }
-                );
+                    });
 
                 if (arrayContainsOnlyNull === true) {
                     postForm.categories = [];
                 }
                 if (arrayContainsOnlyNull === false) {
                     postForm.categories = formLocalStorage.categories;
+                }
+            }
+            // Stores
+            if (
+                formLocalStorage.stores === undefined ||
+                formLocalStorage.stores === null
+            ) {
+                postForm.stores = [];
+            }
+            if (
+                formLocalStorage.stores !== undefined ||
+                formLocalStorage.stores !== null
+            ) {
+                // Determine whether all elements in an array are null.
+                // Checks if each element is equal to null.
+                // If every element in the array is indeed null, the function returns true,
+                const arrayContainsOnlyNull = formLocalStorage.stores?.every(
+                    (element) => {
+                        return element === null;
+                    }
+                );
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.stores = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.stores = formLocalStorage.stores;
                 }
             }
         }
@@ -800,6 +885,10 @@ onBeforeMount(() => {
         store.commit("pageBuilderState/setComponents", extractedSections);
 
         postForm.title = props.post.title;
+
+        postStartedAt.value = props.post.started_at;
+        postEndedAt.value = props.post.ended_at;
+
         // slug logic
         // slug is editable when editing an existing post
         isSlugEditable.value = true;
@@ -807,19 +896,11 @@ onBeforeMount(() => {
 
         postForm.content = props.post.content;
         postForm.published = props.post.published === 1 ? true : false;
-        postForm.show_author = props.post.show_author === 1 ? true : false;
 
         postForm.tags = props.post.tags;
 
-        // check if the post author is available and should be displayed
-        if (props.post.show_author === 1 && props.postAuthor !== null) {
-            // add the author to the postForm
-            postForm.author = props.postAuthor;
-        }
-
-        postForm.author = props.postAuthor;
-
         postForm.categories = props.categories;
+        postForm.stores = props.stores;
         postForm.cover_image = props.coverImages;
     }
 
@@ -852,7 +933,7 @@ const pageBuilder = new PageBuilder(store);
         <PageBuilderView :user="user" :team="postForm.team"></PageBuilderView>
     </PageBuilderModal>
     <FormSection @submitted="handleCreatePost">
-        <template #title> Post details</template>
+        <template #title> Campaign details</template>
         <template #description> Create a new Post. </template>
         <template #main>
             <div class="myInputsOrganization">
@@ -863,7 +944,7 @@ const pageBuilder = new PageBuilder(store);
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
-                    <InputLabel for="title" value="Your Post title" />
+                    <InputLabel for="title" value="Campaign title" />
                     <TextInput
                         placeholder="Enter your title.."
                         id="title"
@@ -1064,6 +1145,76 @@ const pageBuilder = new PageBuilder(store);
             </div>
             <!-- post status - end -->
 
+            <!-- started at - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Campaign start date
+                    </div>
+                </div>
+                <!-- select - start -->
+
+                <div class="flex items-center gap-2">
+                    <VueDatePicker
+                        :enable-time-picker="false"
+                        v-model="postStartedAt"
+                        ref="dp"
+                    >
+                        <template #calendar-icon> Back </template>
+                    </VueDatePicker>
+
+                    <template v-if="postForm.errors.started_at">
+                        <button
+                            type="button"
+                            @click="setStartedAtDate"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                        >
+                            <span class="material-symbols-outlined">
+                                undo
+                            </span>
+                        </button>
+                    </template>
+                </div>
+
+                <InputError :message="postForm.errors.started_at" />
+            </div>
+            <!-- started at - end -->
+
+            <!-- ended at - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Campaign end date
+                    </div>
+                </div>
+                <!-- select - start -->
+
+                <div class="flex items-center gap-2">
+                    <VueDatePicker
+                        :enable-time-picker="false"
+                        v-model="postEndedAt"
+                        ref="dp"
+                    >
+                        <template #calendar-icon> Back </template>
+                    </VueDatePicker>
+
+                    <template v-if="postForm.errors.ended_at">
+                        <button
+                            type="button"
+                            @click="setEndedAtDate"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                        >
+                            <span class="material-symbols-outlined">
+                                undo
+                            </span>
+                        </button>
+                    </template>
+                </div>
+
+                <InputError :message="postForm.errors.ended_at" />
+            </div>
+            <!-- ended at - end -->
+
             <!-- cover image - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -1239,6 +1390,7 @@ const pageBuilder = new PageBuilder(store);
                 <InputError :message="postForm.errors.cover_image" />
             </div>
             <!-- cover image - end -->
+
             <!-- post categories - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -1351,6 +1503,140 @@ const pageBuilder = new PageBuilder(store);
             </div>
             <!-- post categories - end -->
 
+            <!-- post stores - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Stores</div>
+                    <template
+                        v-if="
+                            $page.props.user.all_teams.length > 0 &&
+                            $page.props.user.current_team &&
+                            $page.props.jetstream.hasTeamFeatures
+                        "
+                    >
+                        <p class="myPrimaryParagraph">
+                            At least one
+                            <Link
+                                :href="
+                                    route(
+                                        'team.stores.index',
+                                        $page.props.user.current_team.id
+                                    )
+                                "
+                            >
+                                store
+                            </Link>
+                            is needed for creating in-store campaigns
+                        </p>
+                    </template>
+                </div>
+                <!-- select - start -->
+                <div @click="handleAddStores" class="myPrimaryFakeSelect">
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <span>
+                            {{
+                                postForm.stores && postForm.stores?.length === 0
+                                    ? "Select Store"
+                                    : "Update Store"
+                            }}
+                        </span>
+                    </div>
+                    <div
+                        class="border-none rounded flex items-center justify-center h-full w-8"
+                    >
+                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                    </div>
+                </div>
+                <!-- select - end -->
+
+                <div
+                    v-if="postForm.stores && postForm.stores?.length === 0"
+                    class="space-y-6 mt-2"
+                >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
+                    <p
+                        v-if="postForm.stores && postForm.stores?.length !== 0"
+                        class="py-4"
+                    >
+                        Added
+                        {{ postForm.stores && postForm.stores?.length }}
+                        {{
+                            postForm.stores && postForm.stores?.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+
+                    <div
+                        v-if="postForm.stores && postForm.stores?.length !== 0"
+                        class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                    >
+                        <div
+                            v-for="store in Array.isArray(storesSorted) &&
+                            storesSorted"
+                            :key="store.id"
+                        >
+                            <div
+                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
+                            >
+                                <div
+                                    @click="handleAddStores"
+                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                >
+                                    <button
+                                        type="button"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    >
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            local_mall
+                                        </span>
+                                    </button>
+                                    <div class="flex flex-col gap-1">
+                                        <span class="font-medium">
+                                            {{ store?.title }}
+                                        </span>
+                                        <span class="font-normal">
+                                            {{ store?.address }}
+                                        </span>
+                                        <span class="font-normal">
+                                            <span v-if="store.floor">
+                                                {{
+                                                    store.floor === 0 ||
+                                                    store.floor === "0"
+                                                        ? "Ground floor"
+                                                        : `Floor ${store.floor}`
+                                                }}
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    @click="
+                                        handleRemoveAttachedStores(store?.id)
+                                    "
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                >
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        delete
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <InputError :message="postForm.errors.stores" />
+            </div>
+            <!-- post stores - end -->
+
             <!-- tags - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -1366,227 +1652,6 @@ const pageBuilder = new PageBuilder(store);
                 </div>
             </div>
             <!-- tags - end -->
-
-            <!-- post author - start -->
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Show Authors
-                    </div>
-                </div>
-                <div
-                    class="myInputGroup flex myPrimaryGap flex-row-reverse justify-end"
-                >
-                    <InputLabel
-                        :value="postForm.show_author ? 'Show' : 'Hide'"
-                        :class="{
-                            'text-myPrimaryLinkColor': postForm.show_author,
-                            'text-myPrimaryErrorColor': !postForm.show_author,
-                        }"
-                    />
-                    <Switch
-                        v-model="postForm.show_author"
-                        :class="[
-                            postForm.show_author
-                                ? 'bg-myPrimaryLinkColor'
-                                : 'bg-gray-200',
-                            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
-                        ]"
-                    >
-                        <span class="sr-only">Use setting</span>
-                        <span
-                            :class="[
-                                postForm.show_author
-                                    ? 'translate-x-5'
-                                    : 'translate-x-0',
-                                'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-                            ]"
-                        >
-                            <span
-                                :class="[
-                                    postForm.show_author
-                                        ? 'opacity-0 ease-out duration-100'
-                                        : 'opacity-100 ease-in duration-200',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-gray-400"
-                                    fill="none"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
-                                        stroke="currentColor"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </span>
-                            <span
-                                :class="[
-                                    postForm.show_author
-                                        ? 'opacity-100 ease-in duration-200'
-                                        : 'opacity-0 ease-out duration-100',
-                                    'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
-                                ]"
-                                aria-hidden="true"
-                            >
-                                <svg
-                                    class="h-3 w-3 text-myPrimaryLinkColor"
-                                    fill="currentColor"
-                                    viewBox="0 0 12 12"
-                                >
-                                    <path
-                                        d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"
-                                    />
-                                </svg>
-                            </span>
-                        </span>
-                    </Switch>
-                </div>
-                <InputError :message="postForm.errors.show_author" />
-
-                <!-- authors - start -->
-                <div v-if="postForm.show_author === true">
-                    <div @click="handleAddAuthor" class="myPrimaryFakeSelect">
-                        <div class="relative flex items-center w-full py-0 p-0">
-                            <span>
-                                {{
-                                    postForm.author &&
-                                    postForm.author?.length === 0
-                                        ? "Select Authors"
-                                        : "Update Authors"
-                                }}
-                            </span>
-                        </div>
-                        <div
-                            class="border-none rounded flex items-center justify-center h-full w-8"
-                        >
-                            <ChevronUpDownIcon
-                                class="w-4 h-4"
-                            ></ChevronUpDownIcon>
-                        </div>
-                    </div>
-                    <!-- select - end -->
-
-                    <div
-                        v-if="postForm.author && postForm.author?.length === 0"
-                        class="space-y-6 mt-2"
-                    >
-                        <p class="myPrimaryParagraph">
-                            No people have been selected.
-                        </p>
-                    </div>
-
-                    <div>
-                        <p
-                            v-if="
-                                postForm.author && postForm.author?.length !== 0
-                            "
-                            class="py-4"
-                        >
-                            Added
-                            {{ postForm.author && postForm.author?.length }}
-                            {{
-                                postForm.author && postForm.author?.length === 1
-                                    ? "person"
-                                    : "people"
-                            }}
-                        </p>
-
-                        <div
-                            v-if="
-                                postForm.author && postForm.author?.length !== 0
-                            "
-                            class="p-2 min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
-                        >
-                            <div
-                                v-for="user in Array.isArray(authorSorted) &&
-                                authorSorted"
-                                :key="user.id"
-                            >
-                                <div
-                                    class="flex justify-between items-center rounded"
-                                >
-                                    <div
-                                        @click="handleAddAuthor"
-                                        class="flex items-center gap-2 my-4 cursor-pointer"
-                                    >
-                                        <!-- start photo -->
-                                        <div
-                                            class="flex-shrink-0"
-                                            v-if="
-                                                user &&
-                                                user.profile_photo_path !== null
-                                            "
-                                        >
-                                            <img
-                                                class="object-cover h-12 w-12 rounded-full"
-                                                :src="`/storage/${user.profile_photo_path}`"
-                                                :alt="
-                                                    user.first_name +
-                                                    user.last_name
-                                                "
-                                            />
-                                        </div>
-
-                                        <div
-                                            v-if="
-                                                user &&
-                                                user.profile_photo_path === null
-                                            "
-                                            class="flex-shrink-0 myPrimaryParagraph h-12 w-12 gap-0.5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                                        >
-                                            <span>
-                                                {{
-                                                    user.first_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-                                                }}
-                                            </span>
-                                            <span>
-                                                {{
-                                                    user.last_name
-                                                        .charAt(0)
-                                                        .toUpperCase()
-                                                }}
-                                            </span>
-                                        </div>
-
-                                        <!-- end photo -->
-                                        <span
-                                            class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"
-                                        >
-                                            <span class="font-medium">
-                                                {{ user.first_name }}
-                                                {{ user.last_name }}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <button
-                                        type="button"
-                                        @click="
-                                            handleRemoveAttachedUser(user.id)
-                                        "
-                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
-                                    >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            delete
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <InputError :message="postForm.errors.author" />
-                </div>
-            </div>
-            <!-- post author - end -->
         </template>
 
         <template #actions>
@@ -1676,33 +1741,6 @@ const pageBuilder = new PageBuilder(store);
             </MediaLibraryModal>
 
             <SearchUsersOrItems
-                v-if="showSearchUserModal"
-                apiUrlRouteName="attach.user.index"
-                :existingItems="postForm.author"
-                vuexActionMethod="attachedUsersOrItems/fetchUsers"
-                vuexGetCurrentItems="attachedUsersOrItems/getCurrentUsers"
-                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedUsers"
-                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedUsers"
-                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedUser"
-                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedUsersToEmptyArray"
-                :user="user"
-                :team="postForm.team"
-                :title="titleModalSearchItems"
-                :description="descriptionModalSearchItems"
-                :firstButtonText="firstButtonModalSearchItems"
-                :secondButtonText="secondButtonModalSearchItems"
-                @firstModalButtonSearchItemsFunction="
-                    firstModalButtonSearchItemsFunction
-                "
-                @secondModalButtonSearchItemsFunction="
-                    secondModalButtonSearchItemsFunction
-                "
-                :displayIcon="false"
-                :show="showSearchUserModal"
-            >
-            </SearchUsersOrItems>
-
-            <SearchUsersOrItems
                 v-if="showSearchPostCategoriesModal"
                 apiUrlRouteName="attach.post.categories.index"
                 :existingItems="postForm.categories"
@@ -1727,6 +1765,34 @@ const pageBuilder = new PageBuilder(store);
                 :displayIcon="true"
                 icon="interests"
                 :show="showSearchPostCategoriesModal"
+            >
+            </SearchUsersOrItems>
+
+            <SearchUsersOrItems
+                v-if="showSearchPostStoresModal"
+                apiUrlRouteName="attach.post.stores.index"
+                :existingItems="postForm.stores"
+                vuexActionMethod="attachedUsersOrItems/fetchPostStores"
+                vuexGetCurrentItems="attachedUsersOrItems/getCurrentPostStores"
+                vuexGetCurrentAttachedItems="attachedUsersOrItems/getCurrentAttachedPostStores"
+                vuexSetCurrentAttachedItems="attachedUsersOrItems/setCurrentAttachedPostStores"
+                vuexSetRemoveAttachedItem="attachedUsersOrItems/setRemoveAttachedPostStores"
+                vuexSetCurrentAttachedItemsToEmptyArray="attachedUsersOrItems/setCurrentAttachedPostStoresToEmptyArray"
+                :user="user"
+                :team="postForm.team"
+                :title="titleModalSearchItems"
+                :description="descriptionModalSearchItems"
+                :firstButtonText="firstButtonModalSearchItems"
+                :secondButtonText="secondButtonModalSearchItems"
+                @firstModalButtonSearchItemsFunction="
+                    firstModalButtonSearchItemsFunction
+                "
+                @secondModalButtonSearchItemsFunction="
+                    secondModalButtonSearchItemsFunction
+                "
+                :displayIcon="true"
+                icon="local_mall"
+                :show="showSearchPostStoresModal"
             >
             </SearchUsersOrItems>
 

@@ -5,11 +5,12 @@ namespace App\Http\Controllers\LoggedIn\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Post\StorePostRequest;
 use App\Models\MediaLibrary\MediaLibrary;
-use App\Models\Post\AuthorPost;
 use App\Models\Post\Post;
 use App\Models\Post\PostCategory;
 use App\Models\Post\PostCategoryRelation;
 use App\Models\Post\PostCoverImageRelation;
+use App\Models\Post\PostStoreRelation;
+use App\Models\Store\Store;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
@@ -60,7 +61,9 @@ class PostController extends Controller
             ->posts()
             ->with("coverImages")
             ->with("categories")
-            ->with("authors")
+            ->with(["stores" => function ($query) {
+                $query->with("states");
+            }])
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
@@ -130,6 +133,8 @@ class PostController extends Controller
         $this->authorize("can-create-and-update", $team);
 
         $title = $request->title;
+        $startedAt = $request->started_at;
+        $endedAt = $request->ended_at;
         $content = $request->content;
         $userId = $request->user_id;
 
@@ -143,38 +148,14 @@ class PostController extends Controller
             "title" => $title,
             "slug" => $slug,
             "published" => $request->published,
+            "started_at" => $startedAt,
+            "ended_at" => $endedAt,
             "content" => $content,
             "tags" => $request->tags,
-            "show_author" => $request->show_author,
         ]);
 
         $postId = $post->id;
 
-        // authors
-        // Check if the "show_author" property of the $request object is true
-        // and the "author" property of the $request object is not null
-        if (
-            $request->show_author === true &&
-            $request->author !== null &&
-            gettype($request->author) === "array" &&
-            count($request->author) !== 0
-        ) {
-            // Loop through the authors array and attach each author to the post
-            foreach ($request->author as $author) {
-                $authorId = $author["id"];
-
-                // Check if a user record with this ID exists
-                $userModel = User::find($authorId);
-
-                if ($userModel) {
-                    // Create a new record in the author_post table
-                    AuthorPost::create([
-                        "user_id" => $authorId,
-                        "post_id" => $postId,
-                    ]);
-                }
-            }
-        }
 
         // cover images
         if (
@@ -233,6 +214,32 @@ class PostController extends Controller
             }
         }
 
+        // stores
+        if (
+            $request->stores !== null &&
+            is_array($request->stores) &&
+            count($request->stores) !== 0
+        ) {
+            // Loop through the stores array and attach each store to the post
+            foreach ($request->stores as $store) {
+                // Check if the "id" key exists in the $store array
+                if (array_key_exists("id", $store)) {
+                    $storeId = $store["id"];
+
+                    // Check if a store record with this ID exists
+                    $storeModel = Store::find($storeId);
+
+                    if ($storeModel) {
+                        // Create a new record in the table
+                        PostStoreRelation::create([
+                            "store_id" => $storeId,
+                            "post_id" => $postId,
+                        ]);
+                    }
+                }
+            }
+        }
+
         return redirect()->route("team.posts.index", [
             "teamId" => $team->id,
         ]);
@@ -277,21 +284,23 @@ class PostController extends Controller
             $post->updatedBy = null;
         }
 
-        $authors = [];
-
-        if ($post->show_author) {
-            $authors = $post->authors()->get();
-        }
-
         $categories = $post->categories;
-        $coverImages = $post->coverImages;
+
+        $stores = $post
+            ->stores()
+            ->with('states')
+            ->with("coverImages")
+            ->get();
+
+
+        $postTeam = Team::find($post->team_id);
 
         // Render the post
         return Inertia::render($postRenderView, [
             "post" => $post,
-            "authors" => $authors,
             "categories" => $categories,
-            "coverImages" => $coverImages,
+            "stores" => $stores,
+            "team" => $postTeam,
         ]);
     }
 
@@ -315,34 +324,16 @@ class PostController extends Controller
         // Authorize the team that the user has selected to store the post for, rather than the team that the user is currently on.
         $this->authorize("can-create-and-update", $team);
 
-        $authors = null;
-
-        if ($post->authors !== null) {
-            // Fetch related authors
-            $relatedAuthors = $post->authors;
-
-            // Loop through related authors and create an array of authors with the required information
-            foreach ($relatedAuthors as $user) {
-                $authors[] = [
-                    "id" => $user->id,
-                    "first_name" => $user->first_name,
-                    "last_name" => $user->last_name,
-                    "username" => $user->username,
-                    "email" => $user->email,
-                    "profile_photo_path" => $user->profile_photo_path,
-                    "profile_photo_url" => $user->profile_photo_url,
-                ];
-            }
-        }
 
         $coverImages = $post->coverImages;
         $categories = $post->categories;
+        $stores = $post->stores;
 
         return Inertia::render("Posts/UpdatePost/UpdatePost", [
             "post" => $post,
-            "postAuthor" => $authors,
             "coverImages" => $coverImages,
             "categories" => $categories,
+            "stores" => $stores,
         ]);
     }
 
@@ -377,6 +368,10 @@ class PostController extends Controller
                 $newPost->save();
                 $newPost->update([
                     "title" => $newPost->title . " " . "copy",
+                    "is_paid" => null,
+                    "paid_at" => null,
+                    "started_at" => Carbon::now(),
+                    "ended_at" => Carbon::now(),
                     "published" => false,
                     "created_at" => Carbon::now(),
                     "updated_at" => Carbon::now(),
@@ -400,6 +395,21 @@ class PostController extends Controller
                 }
                 // replicate new categories # end
 
+                // replicate new stores # start
+                if ($post->stores !== null) {
+                    foreach ($post->stores as $store) {
+                        // Create a new instance of the pivot model
+                        $newStoresPivotData = new PostStoreRelation([
+                            'post_id' => $newPost->id,
+                            'store_id' => $store->id,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newStoresPivotData->save();
+                    }
+                }
+                // replicate new stores # end
+
                 // replicate new cover images # start
                 if ($post->coverImages !== null) {
                     foreach ($post->coverImages as $coverImage) {
@@ -415,21 +425,6 @@ class PostController extends Controller
                     }
                 }
                 // replicate new cover images # start
-
-                // replicate new cover images # start
-                if ($post->authors !== null) {
-                    foreach ($post->authors as $author) {
-                        // Create a new instance of the pivot model
-                        $newPostAuthorsPivotData = new AuthorPost([
-                            'post_id' => $newPost->id,
-                            'user_id' => $author->id,
-                            // Add any other attributes if needed
-                        ]);
-                        // Save the new pivot data
-                        $newPostAuthorsPivotData->save();
-                    }
-                }
-                // replicate new cover images # end
 
             });
         } catch (Exception $e) {
@@ -475,65 +470,25 @@ class PostController extends Controller
         $teamId = $request->team["id"];
         $userId = $request->user_id;
 
-        // Initialize the $authorId variable to null
-        $authorId = null;
+        $startedAt = $request->started_at;
+        $endedAt = $request->ended_at;
 
         // Create the post and store it in a variable
         $post->update([
             "user_id" => $userId,
             "team_id" => $teamId,
+            "started_at" => $startedAt,
+            "ended_at" => $endedAt,
             "title" => $title,
             "slug" => $slug,
             "published" => $request->published,
             "content" => $content,
             "tags" => $request->tags,
-            "show_author" => $request->show_author,
         ]);
 
         // Get the post ID
         $postId = $post->id;
 
-        // Update authors
-        if (
-            $post->show_author === true &&
-            $request->author !== null &&
-            gettype($request->author) === "array" &&
-            count($request->author) !== 0
-        ) {
-            // Retrieve the existing author IDs for the post
-            $existingAuthorIds = AuthorPost::where("post_id", $postId)
-                ->pluck("user_id")
-                ->toArray();
-
-            // Loop through the authors array and update or create a record in the author_post table
-            $updatedAuthorIds = [];
-            foreach ($request->author as $author) {
-                $authorId = $author["id"];
-                $updatedAuthorIds[] = $authorId;
-
-                // Check if a user record with this ID exists
-                $userModel = User::find($authorId);
-
-                if ($userModel) {
-                    // Update or create the record in the AuthorPost table
-                    AuthorPost::updateOrCreate([
-                        "user_id" => $authorId,
-                        "post_id" => $postId,
-                    ]);
-                }
-            }
-
-            // Delete the AuthorPost records that are not present in the request
-            $authorsToDelete = array_diff(
-                $existingAuthorIds,
-                $updatedAuthorIds
-            );
-            AuthorPost::where("post_id", $postId)
-                ->whereIn("user_id", $authorsToDelete)
-                ->delete();
-        }
-
-        // Update cover images # start
 
         // Retrieve the existing cover image relationships for the post
         $existingCoverImages = PostCoverImageRelation::where(
@@ -618,6 +573,43 @@ class PostController extends Controller
             );
             PostCategoryRelation::where("post_id", $postId)
                 ->whereIn("category_id", $resourcesToDelete)
+                ->delete();
+        }
+        // Update stores relations
+        if (
+            $request->stores !== null &&
+            gettype($request->stores) === "array" &&
+            count($request->stores) !== 0
+        ) {
+            // Retrieve the existing resource IDs for the resource
+            $existingResourceIds = PostStoreRelation::where(
+                "post_id",
+                $postId
+            )
+                ->pluck("store_id")
+                ->toArray();
+
+            // Loop through the items array and update or create a record in the table
+            $updatedResourceIds = [];
+
+            foreach ($request->stores as $store) {
+                $storeId = $store["id"];
+                $updatedResourceIds[] = $storeId;
+
+                // Update or create  record in the table
+                PostStoreRelation::updateOrCreate([
+                    "store_id" => $storeId,
+                    "post_id" => $postId,
+                ]);
+            }
+
+            // Delete records that are not present in the request
+            $resourcesToDelete = array_diff(
+                $existingResourceIds,
+                $updatedResourceIds
+            );
+            PostStoreRelation::where("post_id", $postId)
+                ->whereIn("store_id", $resourcesToDelete)
                 ->delete();
         }
 

@@ -5,6 +5,8 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import TipTapInput from "@/Components/TipTap/TipTapInput.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
+import TextColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/TextColorEditor.vue";
+import BackgroundColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/BackgroundColorEditor.vue";
 
 // store
 const store = useStore();
@@ -149,93 +151,80 @@ const handleAddImage = function () {
     >
     </MediaLibraryModal>
 
-    <template v-if="getElement || getRestoredElement">
+    <div
+        class="z-20 py-1 px-2 h-20 flex items-center justify-center border-b border-gray-200"
+    >
         <div
-            class="fixed top-36 left-10 z-20 bg-gray-200 py-1 px-2 rounded shadow"
+            class="flex items-center justify-center divide-x divide-gray-200 py-1"
         >
-            <div
-                class="flex items-center border border-gray-300 rounded divide-x divide-gray-300 py-1"
+            <template v-if="pageBuilder.selectedElementIsValidText()">
+                <div class="px-2">
+                    <button
+                        @click="handleModalPreviewTiptap"
+                        type="button"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <span class="material-symbols-outlined"> edit </span>
+                    </button>
+                </div>
+                <div class="px-2">
+                    <TextColorEditor></TextColorEditor>
+                </div>
+            </template>
+
+            <template v-if="getBasePrimaryImage && getElement">
+                <div class="px-2">
+                    <button
+                        @click="handleAddImage"
+                        type="button"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <span class="material-symbols-outlined">
+                            add_photo_alternate
+                        </span>
+                    </button>
+                </div>
+            </template>
+
+            <template
+                v-if="
+                    getElement &&
+                    !getBasePrimaryImage &&
+                    !pageBuilder.selectedElementIsValidText()
+                "
             >
-                <template v-if="pageBuilder.selectedElementIsValidText()">
-                    <div class="px-2">
-                        <button
-                            @click="handleModalPreviewTiptap"
-                            type="button"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        >
-                            <span class="material-symbols-outlined">
-                                edit
-                            </span>
-                        </button>
-                    </div>
-                </template>
+                <div class="px-2">
+                    <BackgroundColorEditor></BackgroundColorEditor>
+                </div>
+            </template>
 
-                <template v-if="getBasePrimaryImage">
-                    <div class="px-2">
-                        <button
-                            @click="handleAddImage"
-                            type="button"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        >
-                            <span class="material-symbols-outlined">
-                                add_photo_alternate
-                            </span>
-                        </button>
-                    </div>
-                </template>
+            <!-- delete & restore element # start -->
+            <template v-if="getRestoredElement">
+                <div class="px-2">
+                    <button
+                        @click="pageBuilder.handleRestoreElement"
+                        type="button"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <span class="material-symbols-outlined"> refresh </span>
+                    </button>
+                </div>
+            </template>
 
-                <template v-if="true">
-                    <div class="px-2">
-                        <button
-                            @click="
-                                store.commit(
-                                    'pageBuilderState/setComponent',
-                                    null
-                                )
-                            "
-                            type="button"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        >
-                            <span class="material-symbols-outlined">
-                                Close
-                            </span>
-                        </button>
-                    </div>
-                </template>
-
-                <!-- delete & restore element # start -->
-
-                <template v-if="getRestoredElement">
-                    <div class="px-2">
-                        <button
-                            @click="pageBuilder.handleRestoreElement"
-                            type="button"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        >
-                            <span class="material-symbols-outlined">
-                                refresh
-                            </span>
-                        </button>
-                    </div>
-                </template>
-
-                <template v-if="getElement && !getRestoredElement">
-                    <div class="px-2">
-                        <button
-                            @click="pageBuilder.handleDeleteElement"
-                            type="button"
-                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white focus-visible:ring-0 text-myPrimaryErrorColor"
-                        >
-                            <span
-                                class="myMediumIcon material-symbols-outlined"
-                            >
-                                delete
-                            </span>
-                        </button>
-                    </div>
-                </template>
-                <!-- delete & restore element # end -->
-            </div>
+            <template v-if="getElement && !getRestoredElement">
+                <div class="px-2">
+                    <button
+                        @click="pageBuilder.handleDeleteElement"
+                        type="button"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white focus-visible:ring-0 text-myPrimaryErrorColor"
+                    >
+                        <span class="myMediumIcon material-symbols-outlined">
+                            delete
+                        </span>
+                    </button>
+                </div>
+            </template>
+            <!-- delete & restore element # end -->
         </div>
-    </template>
+    </div>
 </template>

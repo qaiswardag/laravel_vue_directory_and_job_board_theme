@@ -33,6 +33,9 @@ defineProps({
     post: {
         required: true,
     },
+    team: {
+        required: true,
+    },
     authors: {
         required: false,
     },
@@ -48,10 +51,19 @@ defineProps({
     categories: {
         required: false,
     },
-    coverImages: {
+    stores: {
         required: false,
     },
 });
+
+const goToSingleStoreFromInSale = function (
+    routeName,
+    currentTeamId,
+    storeSlug,
+    storeId
+) {
+    router.get(route(routeName, [currentTeamId, storeSlug, storeId]));
+};
 </script>
 <template>
     <div class="my-0 py-0"></div>
@@ -66,6 +78,43 @@ defineProps({
         </template>
         <template #sidebar>
             <aside class="flex gap-8 flex-col">
+                <!-- team related to this resource # start -->
+                <template v-if="team">
+                    <div class="myPrimaryWidget">
+                        <h4 class="myQuaternaryHeader">
+                            {{ team?.name }}
+                        </h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+
+                        <template v-if="team.coverImagesWithLogos?.logos">
+                            <ThumbnailSmallImageSlider
+                                :images="team.coverImagesWithLogos?.logos"
+                                imageSize="large_path"
+                                imageHeight="h-24"
+                                imageWidth="w-24 mb-4"
+                                :roundedFull="false"
+                                :squareButtons="true"
+                            ></ThumbnailSmallImageSlider>
+                        </template>
+                        <template
+                            v-if="team.coverImagesWithLogos?.cover_images"
+                        >
+                            <ThumbnailSmallImageSlider
+                                v-if="team.coverImagesWithLogos?.cover_images"
+                                :images="
+                                    team.coverImagesWithLogos?.cover_images
+                                "
+                                imageSize="large_path"
+                                imageHeight="h-auto"
+                                imageWidth="w-full"
+                                :roundedFull="false"
+                                :squareButtons="true"
+                            ></ThumbnailSmallImageSlider>
+                        </template>
+                    </div>
+                </template>
+                <!-- team related to this resource # start -->
+
                 <!-- Post updated by - start -->
                 <template v-if="onlyForCurrentTeam">
                     <div class="myPrimaryWidget">
@@ -150,9 +199,7 @@ defineProps({
                 <!-- started_at # start -->
                 <template v-if="post.started_at && post.ended_at">
                     <div class="myPrimaryWidget">
-                        <h4 class="myQuaternaryHeader">
-                            Job publish & end date
-                        </h4>
+                        <h4 class="myQuaternaryHeader">Start & end date</h4>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div class="flex flex-col gap-2">
                             <template v-if="post.started_at">
@@ -211,7 +258,7 @@ defineProps({
                         <p
                             v-for="jobCountry in countries && countries"
                             :key="jobCountry"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"
@@ -237,41 +284,40 @@ defineProps({
                     <div
                         class="flex flex-wrap justify-start items-center gap-2"
                     >
-                        <p
+                        <div
                             v-for="state in states"
                             :key="state"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2"
                         >
-                            <span
-                                class="myMediumIcon material-symbols-outlined"
-                            >
-                                location_on
-                            </span>
-                            <span>
-                                {{ state.name }}
-                            </span>
-                        </p>
-                        <p
-                            v-if="post.address"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
-                        >
-                            <span
-                                class="myMediumIcon material-symbols-outlined"
-                            >
-                                location_on
-                            </span>
-                            <span>
-                                {{ post.address }}
-                            </span>
-                        </p>
+                            <div class="flex items-center gap-2">
+                                <div>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        location_on
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>
+                                        {{ state.name
+                                        }}{{ post.address ? ", " : "" }}
+                                    </span>
+
+                                    <span v-if="post.address">
+                                        <span> {{ post.address }}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
                         <p
                             v-if="post.floor"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"
                             >
-                                interests
+                                floor
                             </span>
                             <span>
                                 {{
@@ -301,7 +347,7 @@ defineProps({
                         <p
                             v-for="state in jobTypes && jobTypes"
                             :key="state"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"
@@ -332,7 +378,7 @@ defineProps({
                         <p
                             v-for="category in categories && categories"
                             :key="category.id"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                         >
                             <span
                                 class="myMediumIcon material-symbols-outlined"
@@ -346,6 +392,152 @@ defineProps({
                     </div>
                 </div>
                 <!-- categories # end -->
+
+                <!-- Running campaigns - stores # start -->
+                <div
+                    v-if="
+                        stores && Array.isArray(stores) && stores.length !== 0
+                    "
+                    class="myPrimaryWidget"
+                >
+                    <h4 class="myQuaternaryHeader">Applies for Stores</h4>
+                    <WidgetSectionBorder></WidgetSectionBorder>
+
+                    <div class="flex flex-col gap-8">
+                        <div
+                            v-for="store in stores && stores"
+                            :key="store.id"
+                            class="border border-gray-200 py-4 rounded px-2"
+                        >
+                            <!-- store cover image -->
+                            <p
+                                @click="
+                                    goToSingleStoreFromInSale(
+                                        'stores.guest.show',
+                                        $page.props.user.current_team.id,
+                                        store.slug,
+                                        store.id
+                                    )
+                                "
+                                class="mb-6 block myQuaternaryHeader text-myPrimaryDarkGrayColor cursor-pointer"
+                            >
+                                {{ store.title }}
+                            </p>
+
+                            <ThumbnailSmallImageSlider
+                                v-if="store.cover_images"
+                                :images="store.cover_images"
+                                imageSize="medium_path"
+                                imageHeight="h-auto"
+                                imageWidth="w-full"
+                                :roundedFull="false"
+                                :squareButtons="true"
+                                :imageClickable="true"
+                                @firstButtonClick="
+                                    goToSingleStoreFromInSale(
+                                        'stores.guest.show',
+                                        $page.props.user.current_team.id,
+                                        store.slug,
+                                        store.id
+                                    )
+                                "
+                            ></ThumbnailSmallImageSlider>
+                            <!-- store cover image -->
+
+                            <!-- Store details -->
+
+                            <!-- address # start -->
+
+                            <!-- <div
+                            v-for="state in states"
+                            :key="state"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2"
+                        >
+                            <div class="flex items-center gap-2">
+                                <div>
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        location_on
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>
+                                        {{ state.name
+                                        }}{{ post.address ? ", " : "" }}
+                                    </span>
+
+                                    <span v-if="post.address">
+                                        <span> {{ post.address }} </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div> -->
+
+                            <div class="flex flex-col gap-6 w-full mt-4">
+                                <div
+                                    class="flex flex-wrap justify-start items-center gap-2"
+                                >
+                                    <div
+                                        v-for="state in store.states"
+                                        :key="state.id"
+                                        class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2"
+                                    >
+                                        <div class="flex items-center gap-2">
+                                            <div>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    location_on
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span>
+                                                    {{ state.name
+                                                    }}{{
+                                                        store.address
+                                                            ? ", "
+                                                            : ""
+                                                    }}
+                                                </span>
+                                                <span v-if="store.address">
+                                                    <span>
+                                                        {{
+                                                            store.address
+                                                        }}</span
+                                                    >
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p
+                                        v-if="store.floor"
+                                        class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
+                                    >
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            floor
+                                        </span>
+                                        <span>
+                                            {{
+                                                store.floor === 0 ||
+                                                store.floor === "0"
+                                                    ? "Ground floor"
+                                                    : `Floor ${store.floor}`
+                                            }}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- address -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Running campaigns - stores # end -->
+
                 <!-- tags # start -->
                 <template v-if="post.tags">
                     <div class="myPrimaryWidget">
@@ -363,7 +555,7 @@ defineProps({
                                         .split(',')
                                         .sort((a, b) => a.localeCompare(b))"
                                     :key="tag"
-                                    class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                    class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                                 >
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
@@ -438,7 +630,7 @@ defineProps({
                         <div
                             v-for="author in authors"
                             :key="author"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
                         >
                             <div v-if="author.profile_photo_path !== null">
                                 <div class="h-5 w-5 flex-shrink-0">
@@ -486,16 +678,24 @@ defineProps({
                 </div>
                 <!-- authors # end -->
                 <!-- cover images - start -->
-                <ThumbnailSmallImageSlider
-                    v-if="post.cover_images"
-                    :images="post.cover_images"
-                    imageSize="large_path"
-                    imageHeight="h-auto"
-                    imageWidth="w-full rounded-md"
-                    :roundedFull="false"
-                    :squareButtons="true"
-                ></ThumbnailSmallImageSlider>
-                <!-- cover images - end -->
+
+                <!-- cover images for resource # start -->
+                <template v-if="post.cover_images">
+                    <div class="myPrimaryWidget">
+                        <h4 class="myQuaternaryHeader">Cover images</h4>
+                        <WidgetSectionBorder></WidgetSectionBorder>
+                        <ThumbnailSmallImageSlider
+                            v-if="post.cover_images"
+                            :images="post.cover_images"
+                            imageSize="large_path"
+                            imageHeight="h-auto"
+                            imageWidth="w-full"
+                            :roundedFull="false"
+                            :squareButtons="true"
+                        ></ThumbnailSmallImageSlider>
+                    </div>
+                </template>
+                <!-- cover images for resource # end -->
             </aside>
         </template>
     </ArticleTemplate>

@@ -1,0 +1,13 @@
+# SET PAGE BACKGROUND OR BG IMAGE 
+ <MainLayout>
+	<div class="bg-[url('https://images.unsplash.com/example')] w-full min-h-screen bg-cover">
+		<GuestsLayout>
+  		<Head title="Login"></Head>
+      	<template #header>
+        	<div class="pb-8 text-center">
+           <h1 class="myPrimaryHeader text-white">Sign in</h1>
+          </div>
+        </template>
+		</GuestsLayout>
+		</div>
+  </MainLayout>

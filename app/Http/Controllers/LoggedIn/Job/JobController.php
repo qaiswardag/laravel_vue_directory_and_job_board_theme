@@ -122,7 +122,7 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexUnpaid(Request $request, $teamId)
+    public function indexDraft(Request $request, $teamId)
     {
         $team = Team::find($teamId);
 
@@ -194,7 +194,7 @@ class JobController extends Controller
 
 
 
-        return Inertia::render("Jobs/IndexUnpaid", [
+        return Inertia::render("Jobs/IndexDraft", [
             "posts" => $jobs,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
@@ -242,7 +242,7 @@ class JobController extends Controller
         // slug
         $slug = Str::lower(Str::slug($request->slug, "_"));
 
-        $endedAd =  Carbon::parse($startedAt)->addDays(30);
+        $endedAt =  Carbon::parse($startedAt)->addDays(30);
 
         // Create the job and store it in a variable
         $job = Job::create([
@@ -252,7 +252,7 @@ class JobController extends Controller
             "slug" => $slug,
             "published" => $request->published,
             "started_at" => $startedAt,
-            "ended_at" => $endedAd,
+            "ended_at" => $endedAt,
             "is_filled" => $request->is_filled,
             "apply_via_link" => $request->apply_via_link,
             "apply_via_email" => $request->apply_via_email,
@@ -433,7 +433,7 @@ class JobController extends Controller
         //
         // if published is false. User just created a draft
         if (!$request->published) {
-            return redirect()->route("team.jobs.index.unpaid", [
+            return redirect()->route("team.jobs.index.draft", [
                 "teamId" => $team->id,
             ]);
         }
@@ -489,7 +489,8 @@ class JobController extends Controller
         $countries = $job->countries;
         $states = $job->states;
         $jobTypes = $job->types;
-        $coverImages = $job->coverImages;
+
+        $jobTeam = Team::find($job->team_id);
 
         // Render the job
         return Inertia::render($jobRenderView, [
@@ -499,7 +500,7 @@ class JobController extends Controller
             "states" => $states,
             "jobTypes" => $jobTypes,
             "categories" => $categories,
-            "coverImages" => $coverImages,
+            "team" => $jobTeam,
         ]);
     }
 
@@ -705,7 +706,7 @@ class JobController extends Controller
         }
 
         if ($newJob !== null) {
-            return redirect()->route("team.jobs.index.unpaid", [
+            return redirect()->route("team.jobs.index.draft", [
                 "teamId" => $team->id,
             ]);
         }
@@ -739,14 +740,14 @@ class JobController extends Controller
         // Initialize the $authorId variable to null
         $authorId = null;
 
-        $endedAd =  Carbon::parse($startedAt)->addDays(30);
+        $endedAt =  Carbon::parse($startedAt)->addDays(30);
 
         // Create the job and store it in a variable
         $job->update([
             "user_id" => $userId,
             "team_id" => $teamId,
             "started_at" => $startedAt,
-            "ended_at" => $endedAd,
+            "ended_at" => $endedAt,
             "is_filled" => $request->is_filled,
             "apply_via_link" => $request->apply_via_link,
             "apply_via_email" => $request->apply_via_email,
@@ -1011,7 +1012,7 @@ class JobController extends Controller
 
         // job unpaid logic # start
         if (!$job->is_paid && !$request->published) {
-            return redirect()->route("team.jobs.index.unpaid", [
+            return redirect()->route("team.jobs.index.draft", [
                 "teamId" => $team->id,
             ]);
         }

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobCountriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobStatesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachJobTypesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachPostCategoriesController;
+use App\Http\Controllers\Api\Internal\LoggedIn\AttachPostStoresController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachStoreCategoriesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachStoreStatesController;
 use App\Http\Controllers\Api\Internal\LoggedIn\AttachUserController;
@@ -34,6 +35,8 @@ use App\Http\Controllers\LoggedIn\Job\JobDeletedController;
 use App\Http\Controllers\LoggedIn\Job\JobExpiredController;
 use App\Http\Controllers\LoggedIn\MediaLibrary\MediaLibraryController;
 use App\Http\Controllers\LoggedIn\Post\PostDeletedController;
+use App\Http\Controllers\LoggedIn\Post\PostDraftController;
+use App\Http\Controllers\LoggedIn\Post\PostExpiredController;
 use App\Http\Controllers\LoggedIn\Store\StoreController;
 use App\Http\Controllers\LoggedIn\Store\StoreDeletedController;
 use App\Http\Controllers\LoggedIn\Team\TeamController as TeamTeamController;
@@ -162,17 +165,17 @@ Route::middleware([])->group(function () {
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("/blog", [PostPostController::class, "index"])->name(
+    Route::get("/campaigns", [PostPostController::class, "index"])->name(
         "posts.guest.index"
     );
 
-    Route::get("{teamSlug}/posts/{postSlug}/view/{postId}/", [
+    Route::get("{teamSlug}/campaigns/{postSlug}/view/{postId}/", [
         PostPostController::class,
         "show",
     ])->name("posts.guest.show");
     //
     //
-    Route::get("/api/guest/posts/index", [
+    Route::get("/api/guest/campaigns/index", [
         PostsGuestIndexController::class,
         "index",
     ])->name("api.guest.posts.index");
@@ -554,14 +557,22 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("/team/posts/{teamId}", [PostController::class, "index"])->name(
+    Route::get("/team/campaigns/{teamId}", [PostController::class, "index"])->name(
         "team.posts.index"
     );
-    Route::get("/team/posts/trash/{teamId}", [PostDeletedController::class, "index"])->name(
+
+    Route::get("/team/campaigns/expired/{teamId}", [PostExpiredController::class, "index"])->name(
+        "team.posts.index.expired"
+    );
+
+    Route::get("/team/campaigns/draft/{teamId}", [PostDraftController::class, "index"])->name(
+        "team.posts.index.draft"
+    );
+    Route::get("/team/campaigns/trash/{teamId}", [PostDeletedController::class, "index"])->name(
         "team.posts.index.trash"
     );
     // unique post
-    Route::get("/team/{teamId}/posts/{slug}/view{postId}/", [
+    Route::get("/team/{teamId}/campaigns/{slug}/view{postId}/", [
         PostController::class,
         "show",
     ])->name("team.posts.post.show");
@@ -577,8 +588,8 @@ Route::middleware([
     Route::get("/team/jobs/{teamId}", [JobController::class, "index"])->name(
         "team.jobs.index"
     );
-    Route::get("/team/jobs/unpaid/{teamId}", [JobController::class, "indexUnpaid"])->name(
-        "team.jobs.index.unpaid"
+    Route::get("/team/jobs/draft/{teamId}", [JobController::class, "IndexDraft"])->name(
+        "team.jobs.index.draft"
     );
     Route::get("/team/jobs/expired/{teamId}", [JobExpiredController::class, "index"])->name(
         "team.jobs.index.expired"
@@ -654,10 +665,16 @@ Route::middleware([
     ])->name("attach.component.categories.index");
 
     // POST CATEGORIES
-    Route::get("/team/attach/post/categories/index/{team}", [
+    Route::get("/team/attach/campaigns/categories/index/{team}", [
         AttachPostCategoriesController::class,
         "index",
     ])->name("attach.post.categories.index");
+
+    // POST STORES
+    Route::get("/team/attach/campaigns/stores/index/{team}", [
+        AttachPostStoresController::class,
+        "index",
+    ])->name("attach.post.stores.index");
 
     // JOB COUNTRIES
     Route::get("/team/attach/job/countries/index/{team}", [
@@ -805,32 +822,32 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("/team/posts/post/{teamId}/{post}", [
+    Route::get("/team/campaigns/sale/{teamId}/{post}", [
         PostController::class,
         "edit",
     ])->name("team.posts.post.edit");
 
-    Route::post("/team/posts/post/update/{post}", [
+    Route::post("/team/campaigns/sale/update/{post}", [
         PostController::class,
         "update",
     ])->name("team.posts.update");
 
-    Route::get("/team/posts/create/{teamId}", [
+    Route::get("/team/campaigns/create/{teamId}", [
         PostController::class,
         "create",
     ])->name("team.posts.create");
 
-    Route::post("/team/posts/post/store", [
+    Route::post("/team/campaigns/sale/store", [
         PostController::class,
         "store",
     ])->name("team.posts.store");
 
-    Route::post("/team/posts/post/restore/{postId}/{team}", [
+    Route::post("/team/campaigns/sale/restore/{postId}/{team}", [
         PostDeletedController::class,
         "restore",
     ])->name("team.posts.restore");
 
-    Route::post("/team/posts/duplicate", [
+    Route::post("/team/campaigns/duplicate", [
         PostController::class,
         "duplicate",
     ])->name("team.posts.duplicate");
@@ -1024,12 +1041,12 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::delete("/team/posts/post/{post}/{team}", [
+    Route::delete("/team/campaigns/sale/{post}/{team}", [
         PostController::class,
         "destroy",
     ])->name("team.posts.post.destroy");
 
-    Route::delete("/team/posts/trash/{post}/{team}", [
+    Route::delete("/team/campaigns/trash/{post}/{team}", [
         PostDeletedController::class,
         "destroy",
     ])->name("team.posts.post.destroy.force");

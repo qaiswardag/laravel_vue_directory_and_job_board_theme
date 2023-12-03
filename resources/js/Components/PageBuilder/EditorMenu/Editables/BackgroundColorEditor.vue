@@ -37,106 +37,74 @@ watch(
 </script>
 
 <template>
-    <EditorAccordion>
-        <template #title>Background Color</template>
-        <template #content>
-            <label class="myPrimaryInputLabel"> Background color </label>
-            <Listbox as="div" v-model="backgroundColor">
-                <div class="relative mt-2">
-                    <ListboxButton class="myPrimarySelect">
-                        <span class="flex items-center gap-2">
+    <Listbox as="div" v-model="backgroundColor">
+        <div class="relative">
+            <ListboxButton class="w-max min-w-[10rem] flex items-center px-2">
+                <div v-if="getBackgroundColor === 'none'" class="flex gap-2">
+                    <span class="material-symbols-outlined"> ev_shadow </span>
+                    <span class="block truncate">Background color</span>
+                </div>
+                <div
+                    v-if="backgroundColor !== 'none'"
+                    class="flex items-center gap-2"
+                >
+                    <div
+                        class="aspect-square w-6 h-6 border border-gray-100 rounded-sm"
+                        :class="`bg-${backgroundColor?.replace('bg-', '')}`"
+                    ></div>
+                    <span class="block truncate">{{ backgroundColor }}</span>
+                </div>
+            </ListboxButton>
+
+            <transition
+                leave-active-class="transition ease-in duration-100"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
+            >
+                <ListboxOptions
+                    class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                >
+                    <ListboxOption
+                        as="template"
+                        v-for="color in tailwindColors.backgroundColorVariables"
+                        @click="
+                            pageBuilder.handleBackgroundColor(backgroundColor)
+                        "
+                        :key="color"
+                        :value="color"
+                        v-slot="{ active, backgroundColor }"
+                    >
+                        <li
+                            :class="[
+                                active
+                                    ? 'bg-myPrimaryLinkColor text-white'
+                                    : 'text-myPrimaryDarkGrayColor',
+                                'relative cursor-default select-none py-2 pl-3 pr-9',
+                            ]"
+                        >
                             <div
-                                v-if="getBackgroundColor === 'none'"
-                                class="w-6 h-6 cursor-default border border-gray-200 rounded-sm"
+                                v-if="color === 'none'"
+                                class="flex items-center"
                             >
                                 <span class="material-symbols-outlined">
-                                    close
+                                    ev_shadow
                                 </span>
+                                <span class="ml-3">Transparent</span>
                             </div>
                             <div
-                                v-if="backgroundColor !== 'none'"
-                                class="aspect-square w-6 h-6 border border-gray-100 rounded-sm"
-                                :class="`bg-${backgroundColor?.replace(
-                                    'bg-',
-                                    ''
-                                )}`"
-                            ></div>
-                            <span class="block truncate">{{
-                                backgroundColor
-                            }}</span>
-                        </span>
-                        <span
-                            class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2"
-                        >
-                            <ChevronUpDownIcon
-                                class="h-5 w-5 text-gray-400"
-                                aria-hidden="true"
-                            />
-                        </span>
-                    </ListboxButton>
-
-                    <transition
-                        leave-active-class="transition ease-in duration-100"
-                        leave-from-class="opacity-100"
-                        leave-to-class="opacity-0"
-                    >
-                        <ListboxOptions
-                            class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                        >
-                            <ListboxOption
-                                as="template"
-                                v-for="color in tailwindColors.backgroundColorVariables"
-                                @click="
-                                    pageBuilder.handleBackgroundColor(
-                                        backgroundColor
-                                    )
-                                "
-                                :key="color"
-                                :value="color"
-                                v-slot="{ active, backgroundColor }"
+                                v-if="color !== 'none'"
+                                class="flex items-center"
                             >
-                                <li
-                                    :class="[
-                                        active
-                                            ? 'bg-myPrimaryLinkColor text-white'
-                                            : 'text-myPrimaryDarkGrayColor',
-                                        'relative cursor-default select-none py-2 pl-3 pr-9',
-                                    ]"
-                                >
-                                    <div
-                                        v-if="color === 'none'"
-                                        class="flex items-center"
-                                    >
-                                        <div
-                                            class="w-6 h-6 cursor-default border border-gray-200 rounded-sm bg-white"
-                                        >
-                                            <span
-                                                class="material-symbols-outlined"
-                                            >
-                                                close
-                                            </span>
-                                        </div>
-                                        <span class="ml-3">{{ color }}</span>
-                                    </div>
-                                    <div
-                                        v-if="color !== 'none'"
-                                        class="flex items-center"
-                                    >
-                                        <div
-                                            class="aspect-square w-6 h-6 border border-gray-100 rounded-sm"
-                                            :class="`bg-${color.replace(
-                                                'bg-',
-                                                ''
-                                            )}`"
-                                        ></div>
-                                        <span class="ml-3">{{ color }}</span>
-                                    </div>
-                                </li>
-                            </ListboxOption>
-                        </ListboxOptions>
-                    </transition>
-                </div>
-            </Listbox>
-        </template>
-    </EditorAccordion>
+                                <div
+                                    class="aspect-square w-6 h-6 border border-gray-100 rounded-sm"
+                                    :class="`bg-${color.replace('bg-', '')}`"
+                                ></div>
+                                <span class="ml-3">{{ color }}</span>
+                            </div>
+                        </li>
+                    </ListboxOption>
+                </ListboxOptions>
+            </transition>
+        </div>
+    </Listbox>
 </template>

@@ -8,8 +8,11 @@ const props = defineProps({
     post: {
         required: true,
     },
-    authors: {
+    team: {
         required: true,
+    },
+    authors: {
+        required: false,
     },
     currentUserTeam: {
         required: true,
@@ -17,14 +20,14 @@ const props = defineProps({
     categories: {
         required: true,
     },
-    coverImages: {
+    stores: {
         required: true,
     },
 });
 
 const breadcrumbsLinks = [
     {
-        label: "All Posts",
+        label: "All Running campaigns",
         route: {
             name: "team.posts.index",
             parameters: [props.currentUserTeam.id],
@@ -35,8 +38,8 @@ const breadcrumbsLinks = [
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head :title="`Post | ${post.title}`" />
-            <template #header> Post </template>
+            <Head :title="`Sale | ${post.title}`" />
+            <template #header> Sale </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
@@ -44,9 +47,9 @@ const breadcrumbsLinks = [
             <!-- Show Unique Resorce - start -->
             <UnqiueResource
                 :post="post"
-                :authors="authors"
+                :team="team"
                 :categories="categories"
-                :coverImages="coverImages"
+                :stores="stores"
                 :onlyForCurrentTeam="true"
             ></UnqiueResource>
             <!-- Show Unique Post - end -->

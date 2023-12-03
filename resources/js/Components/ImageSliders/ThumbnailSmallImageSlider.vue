@@ -93,7 +93,7 @@ const sortedImages = computed(() => {
                 >
                     <!-- image #start -->
                     <div
-                        class="relative shrink-0 duration-200 ease-linear"
+                        class="relative shrink-0 duration-200 ease-linear rounded"
                         :class="[
                             `${imageHeight}`,
                             `${imageWidth}`,
@@ -105,7 +105,7 @@ const sortedImages = computed(() => {
                             @click="firstButtonClick"
                             :src="`/storage/uploads/${image[imageSize]}`"
                             alt="image"
-                            class="object-cover"
+                            class="object-cover rounded"
                             :class="[
                                 `${imageHeight}`,
                                 `${imageWidth}`,

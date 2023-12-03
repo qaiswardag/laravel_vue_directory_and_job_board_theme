@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guests\Post;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post\Post;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,7 @@ class PostController extends Controller
     {
         $post = Post::where("id", $postId)
             ->where("published", true)
+            ->with('coverImages')
             ->firstOrFail();
 
         $postRenderView = "Guests/Items/SingleItem";
@@ -64,7 +66,11 @@ class PostController extends Controller
         $authors = $post->authors;
         $categories = $post->categories;
         $states = $post->states;
-        $coverImages = $post->coverImages;
+
+        $stores = $post->stores()->with('states')
+            ->get();
+
+        $postTeam = Team::find($post->team_id);
 
         // Render
         return Inertia::render($postRenderView, [
@@ -73,7 +79,8 @@ class PostController extends Controller
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,
-            "coverImages" => $coverImages,
+            "stores" => $stores,
+            "team" => $postTeam,
         ]);
     }
 

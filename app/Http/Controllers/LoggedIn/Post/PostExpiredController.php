@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\LoggedIn\Post;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Post\StorePostRequest;
-use App\Models\Job\JobCategory;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Post\Post;
+use App\Models\Post\PostCategory;
 use App\Models\Post\PostCategoryRelation;
 use App\Models\Post\PostCoverImageRelation;
+use App\Models\Post\PostStoreRelation;
+use App\Models\Store\Store;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
@@ -24,10 +25,10 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use SoftDeletes;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
-
-class PostDeletedController extends Controller
+class PostExpiredController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -56,7 +57,6 @@ class PostDeletedController extends Controller
 
         $posts = $team
             ->posts()
-            ->onlyTrashed()
             ->with("coverImages")
             ->with("categories")
             ->with(["stores" => function ($query) {
@@ -89,7 +89,7 @@ class PostDeletedController extends Controller
             }
         }
 
-        return Inertia::render("Posts/IndexTrash", [
+        return Inertia::render("Posts/IndexExpired", [
             "posts" => $posts,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
@@ -108,21 +108,9 @@ class PostDeletedController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function restore($postId, Team $team)
+    public function store(Request $request)
     {
-        $this->authorize("can-create-and-update", $team);
-
-
-        $post = Post::withTrashed()->findOrFail($postId);
-
-        $post->restore();
-
-        return redirect()
-            ->back()
-            ->with(
-                "success",
-                "Successfully restored."
-            );
+        //
     }
 
     /**
@@ -152,19 +140,8 @@ class PostDeletedController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($postId, Team $team)
+    public function destroy(string $id)
     {
-        $this->authorize("can-destroy", $team);
-
-        $post = Post::withTrashed()->findOrFail($postId);
-
-        $post->forceDelete();
-
-        return redirect()
-            ->back()
-            ->with(
-                "success",
-                "Successfully deleted the Post."
-            );
+        //
     }
 }

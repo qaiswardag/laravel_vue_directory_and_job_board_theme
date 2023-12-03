@@ -59,8 +59,8 @@ const deleteAllComponents = function () {
     showModalDeleteAllComponents.value = true;
     typeModal.value = "delete";
     gridColumnModal.value = 2;
-    titleModal.value = "Delete Components";
-    descriptionModal.value = "Are you sure you want to delete all Components?";
+    titleModal.value = "Delete Sections";
+    descriptionModal.value = "Are you sure you want to delete all sections?";
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Delete";
@@ -123,10 +123,7 @@ const settingsSlideOverButton = function () {
                     check
                 </span>
                 Options
-                <ChevronDownIcon
-                    class="h-3 w-3 stroke-1.5"
-                    aria-hidden="true"
-                />
+                <span class="material-symbols-outlined"> unfold_more </span>
             </MenuButton>
         </div>
 
@@ -154,7 +151,9 @@ const settingsSlideOverButton = function () {
                             ]"
                         >
                             <div class="flex items-center justify-left gap-2">
-                                <div class="flex gap-2 items-center">
+                                <div
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                >
                                     <span class="material-symbols-outlined">
                                         visibility
                                     </span>
@@ -176,9 +175,11 @@ const settingsSlideOverButton = function () {
                             ]"
                         >
                             <div class="flex items-center justify-left gap-2">
-                                <div class="flex gap-2 items-center">
+                                <div
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                >
                                     <span class="material-symbols-outlined">
-                                        tune
+                                        gesture
                                     </span>
                                 </div>
                                 Settings
@@ -197,7 +198,9 @@ const settingsSlideOverButton = function () {
                             ]"
                         >
                             <div class="flex items-center justify-left gap-2">
-                                <div class="flex gap-2 items-center">
+                                <div
+                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                >
                                     <span
                                         class="myMediumIcon material-symbols-outlined"
                                     >
@@ -205,7 +208,7 @@ const settingsSlideOverButton = function () {
                                     </span>
                                 </div>
                                 <span class="group-hover:text-white">
-                                    Delete all Components
+                                    Clear page
                                 </span>
                             </div>
                         </div>

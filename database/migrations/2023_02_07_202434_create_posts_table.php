@@ -24,12 +24,19 @@ return new class extends Migration
                 ->on("teams")
                 ->onDelete("cascade")
                 ->constrained();
+
+            //
+            //
+            $table->timestamp("started_at")->index();
+            $table->timestamp("ended_at")->index();
+            $table->boolean("is_paid")->nullable();
+            $table->timestamp("paid_at")->nullable();
+            //
             //
             $table->string("title")->index();
             $table->string("slug");
             $table->boolean("published")->nullable();
             $table->boolean("featured")->nullable();
-            $table->boolean("show_author");
             $table->longText("content");
             $table
                 ->string("tags")
