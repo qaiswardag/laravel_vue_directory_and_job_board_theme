@@ -10,11 +10,14 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
 <template>
     <MainLayout>
         <GuestsLayout>
-            <Head title="In store sales" />
+            <Head title="In store campaigns" />
             <template #header>
-                <PageHeader title="In store sales"></PageHeader>
+                <PageHeader title="In store campaigns"></PageHeader>
             </template>
-            <Items pathList="api.guest.posts.index" nameList="posts"></Items>
+            <Items
+                pathList="api.guest.posts.index"
+                nameList="campaigns"
+            ></Items>
         </GuestsLayout>
     </MainLayout>
 </template>

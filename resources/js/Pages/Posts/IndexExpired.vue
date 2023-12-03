@@ -322,8 +322,10 @@ onMounted(() => {
             </form>
 
             <template v-if="posts && posts.data.length <= 0">
-                <h1 class="myQuaternaryHeader">No Posts</h1>
-                <p class="myPrimaryParagraph">Looks like there are no posts!</p>
+                <h1 class="myQuaternaryHeader">No Campaigns</h1>
+                <p class="myPrimaryParagraph">
+                    Looks like there are no campaigns!
+                </p>
             </template>
 
             <!-- table start -->
