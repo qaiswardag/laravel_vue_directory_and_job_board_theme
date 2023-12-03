@@ -27,8 +27,8 @@ return new class extends Migration
 
             //
             //
-            $table->timestamp("started_at")->index();
-            $table->timestamp("ended_at")->index();
+            $table->timestamp("started_at")->nullable()->index();
+            $table->timestamp("ended_at")->nullable()->index();
             $table->boolean("is_paid")->nullable();
             $table->timestamp("paid_at")->nullable();
             //
