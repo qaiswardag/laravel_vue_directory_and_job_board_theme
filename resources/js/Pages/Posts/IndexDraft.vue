@@ -53,7 +53,7 @@ const breadcrumbsLinks = [
 
 const linksTopMenu = [
     {
-        label: "Running campaigns",
+        label: "Running Campaigns",
         icon: "campaign",
         route: {
             name: "team.posts.index",
@@ -61,7 +61,7 @@ const linksTopMenu = [
         },
     },
     {
-        label: "Draft campaigns",
+        label: "Draft Campaigns",
         icon: "draw",
         route: {
             name: "team.posts.draft.index",
@@ -69,7 +69,7 @@ const linksTopMenu = [
         },
     },
     {
-        label: "Expired campaigns",
+        label: "Expired Campaigns",
         icon: "schedule",
         route: {
             name: "team.posts.expired.index",
