@@ -151,7 +151,7 @@ const handleAddImage = function () {
     >
     </MediaLibraryModal>
 
-    <div class="z-20 py-1 px-2 h-20 bg-red-50 flex items-center justify-center">
+    <div class="z-20 py-1 px-2 h-20 flex items-center justify-center">
         <div
             class="flex items-center justify-center divide-x divide-gray-200 py-1"
         >
@@ -184,7 +184,13 @@ const handleAddImage = function () {
                 </div>
             </template>
 
-            <template v-if="getElement && !getBasePrimaryImage">
+            <template
+                v-if="
+                    getElement &&
+                    !getBasePrimaryImage &&
+                    !pageBuilder.selectedElementIsValidText()
+                "
+            >
                 <div class="px-2">
                     <BackgroundColorEditor></BackgroundColorEditor>
                 </div>

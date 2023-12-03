@@ -235,7 +235,7 @@ onMounted(async () => {
                     @click="store.commit('pageBuilderState/setComponent', null)"
                     class="p-2 overflow-y-auto h-screen"
                 >
-                    <div id="pagebuilder" class="pt-20">
+                    <div id="pagebuilder" class="">
                         <div ref="draggableZone">
                             <!-- Added Components to DOM # start -->
                             <div

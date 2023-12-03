@@ -641,11 +641,42 @@ onMounted(() => {
                                                         <template
                                                             v-if="item.title"
                                                         >
-                                                            <span
-                                                                class="font-medium"
+                                                            <div
+                                                                class="flex flex-col gap-1"
                                                             >
-                                                                {{ item.title }}
-                                                            </span>
+                                                                <span
+                                                                    class="font-medium"
+                                                                >
+                                                                    {{
+                                                                        item.title
+                                                                    }}
+                                                                </span>
+                                                                <span
+                                                                    class="font-normal"
+                                                                >
+                                                                    {{
+                                                                        item?.address
+                                                                    }}
+                                                                </span>
+                                                                <span
+                                                                    class="font-normal"
+                                                                >
+                                                                    <span
+                                                                        v-if="
+                                                                            item.floor
+                                                                        "
+                                                                    >
+                                                                        {{
+                                                                            item.floor ===
+                                                                                0 ||
+                                                                            item.floor ===
+                                                                                "0"
+                                                                                ? "Ground floor"
+                                                                                : `Floor ${item.floor}`
+                                                                        }}
+                                                                    </span>
+                                                                </span>
+                                                            </div>
                                                         </template>
                                                     </div>
                                                 </div>
@@ -861,9 +892,25 @@ onMounted(() => {
                                             <span class="font-medium">
                                                 {{ item.name }}
                                             </span>
-                                            <span class="font-medium">
-                                                {{ item.title }}
-                                            </span>
+
+                                            <div class="flex flex-col gap-1">
+                                                <span class="font-medium">
+                                                    {{ item.title }}
+                                                </span>
+                                                <span class="font-normal">
+                                                    {{ item?.address }}
+                                                </span>
+                                                <span class="font-normal">
+                                                    <span v-if="item.floor">
+                                                        {{
+                                                            item.floor === 0 ||
+                                                            item.floor === "0"
+                                                                ? "Ground floor"
+                                                                : `Floor ${item.floor}`
+                                                        }}
+                                                    </span>
+                                                </span>
+                                            </div>
                                         </div>
                                         <div
                                             class="flex flex-col items-left gap-0.5 myPrimaryParagraph text-xs"

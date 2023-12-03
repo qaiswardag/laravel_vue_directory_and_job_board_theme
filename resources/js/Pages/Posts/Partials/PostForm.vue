@@ -1596,8 +1596,23 @@ const pageBuilder = new PageBuilder(store);
                                             local_mall
                                         </span>
                                     </button>
-                                    <div>
-                                        {{ store?.title }}
+                                    <div class="flex flex-col gap-1">
+                                        <span class="font-medium">
+                                            {{ store?.title }}
+                                        </span>
+                                        <span class="font-normal">
+                                            {{ store?.address }}
+                                        </span>
+                                        <span class="font-normal">
+                                            <span v-if="store.floor">
+                                                {{
+                                                    store.floor === 0 ||
+                                                    store.floor === "0"
+                                                        ? "Ground floor"
+                                                        : `Floor ${store.floor}`
+                                                }}
+                                            </span>
+                                        </span>
                                     </div>
                                 </div>
 

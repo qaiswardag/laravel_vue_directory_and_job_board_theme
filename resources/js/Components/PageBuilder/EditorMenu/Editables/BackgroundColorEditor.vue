@@ -39,8 +39,9 @@ watch(
 <template>
     <Listbox as="div" v-model="backgroundColor">
         <div class="relative">
-            <ListboxButton class="w-max min-w-[12rem] flex items-center">
+            <ListboxButton class="w-max min-w-[10rem] flex items-center px-2">
                 <div v-if="getBackgroundColor === 'none'" class="flex gap-2">
+                    <span class="material-symbols-outlined"> ev_shadow </span>
                     <span class="block truncate">Background color</span>
                 </div>
                 <div
@@ -85,14 +86,10 @@ watch(
                                 v-if="color === 'none'"
                                 class="flex items-center"
                             >
-                                <div
-                                    class="w-6 h-6 cursor-default border border-gray-200 rounded-sm bg-white"
-                                >
-                                    <span class="material-symbols-outlined">
-                                        close
-                                    </span>
-                                </div>
-                                <span class="ml-3">{{ color }}</span>
+                                <span class="material-symbols-outlined">
+                                    ev_shadow
+                                </span>
+                                <span class="ml-3">Transparent</span>
                             </div>
                             <div
                                 v-if="color !== 'none'"
