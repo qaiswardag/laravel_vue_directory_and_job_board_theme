@@ -71,7 +71,7 @@ const linksTopMenu = [
         label: "Drafts & Unpiad Jobs",
         icon: "draw",
         route: {
-            name: "team.jobs.index.unpaid",
+            name: "team.jobs.index.draft",
             parameters: [props.currentUserTeam.id],
         },
     },
@@ -200,15 +200,12 @@ const searchForm = useForm({
 });
 
 const handleSearch = function () {
-    searchForm.get(
-        route("team.jobs.index.unpaid", [props.currentUserTeam.id]),
-        {
-            preserveScroll: true,
-            onSuccess: () => {},
-            onError: (err) => {},
-            onFinish: () => {},
-        }
-    );
+    searchForm.get(route("team.jobs.index.draft", [props.currentUserTeam.id]), {
+        preserveScroll: true,
+        onSuccess: () => {},
+        onError: (err) => {},
+        onFinish: () => {},
+    });
 };
 
 const scrolTableContainer = ref("scrolTableContainer");

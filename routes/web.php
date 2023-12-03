@@ -588,8 +588,8 @@ Route::middleware([
     Route::get("/team/jobs/{teamId}", [JobController::class, "index"])->name(
         "team.jobs.index"
     );
-    Route::get("/team/jobs/unpaid/{teamId}", [JobController::class, "indexUnpaid"])->name(
-        "team.jobs.index.unpaid"
+    Route::get("/team/jobs/draft/{teamId}", [JobController::class, "IndexDraft"])->name(
+        "team.jobs.index.draft"
     );
     Route::get("/team/jobs/expired/{teamId}", [JobExpiredController::class, "index"])->name(
         "team.jobs.index.expired"

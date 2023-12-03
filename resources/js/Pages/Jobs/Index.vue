@@ -71,7 +71,7 @@ const linksTopMenu = [
         label: "Drafts & Unpiad Jobs",
         icon: "draw",
         route: {
-            name: "team.jobs.index.unpaid",
+            name: "team.jobs.index.draft",
             parameters: [props.currentUserTeam.id],
         },
     },
