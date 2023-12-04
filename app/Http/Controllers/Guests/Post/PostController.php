@@ -63,7 +63,7 @@ class PostController extends Controller
                 $query
                     ->whereNotNull("started_at")
                     ->whereNotNull("ended_at")
-                    ->where("started_at", "<", now()->addDays(1))
+                    ->where("started_at", ">=", now()->subDays(30))
                     ->where("ended_at", ">", now());
             })
             ->firstOrFail();
