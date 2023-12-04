@@ -494,10 +494,11 @@ onMounted(() => {
                     "
                 >
                     <h1 class="myTertiaryHeader text-center">
-                        No {{ nameList }}
+                        No {{ nameList === "posts" ? "campaigns" : nameList }}
                     </h1>
                     <p class="myPrimaryParagraph text-center">
-                        Looks like there are no {{ nameList }}!
+                        Looks like there are no
+                        {{ nameList === "posts" ? "campaigns" : nameList }}!
                     </p>
                 </template>
                 <!-- If posts is empty array # end -->
