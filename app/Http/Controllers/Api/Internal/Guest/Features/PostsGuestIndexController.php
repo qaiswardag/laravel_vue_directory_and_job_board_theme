@@ -33,6 +33,15 @@ class PostsGuestIndexController extends Controller
             ->where("published", true)
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("title", "LIKE", "%" . $term . "%");
+            })
+            // Add a condition to filter posts where ended_at is
+            ->where(function ($query) {
+                // Include posts where ended_at is not null
+                $query
+                    ->whereNotNull("started_at")
+                    ->whereNotNull("ended_at")
+                    ->where("started_at", "<", now()->addDays(1))
+                    ->where("ended_at", ">", now());
             });
 
         // categories filter logic # start

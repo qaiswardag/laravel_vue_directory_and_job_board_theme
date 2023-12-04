@@ -69,6 +69,15 @@ class PostController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
+            ->where(function ($query) {
+                $query
+                    ->where('published', true)
+                    ->where(function ($query) {
+                        $query
+                            ->where('ended_at', '>', Carbon::now())
+                            ->orWhereNull('ended_at');
+                    });
+            })
             ->orderBy('updated_at', 'desc')
             ->paginate(12);
 
@@ -291,7 +300,6 @@ class PostController extends Controller
             ->with('states')
             ->with("coverImages")
             ->get();
-
 
         $postTeam = Team::find($post->team_id);
 
