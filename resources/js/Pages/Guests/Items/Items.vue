@@ -13,6 +13,7 @@ import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
 import ItemsFilterSelection from "@/Pages/Guests/Items/ItemsFilterSelection/ItemsFilterSelection.vue";
 import ItemDisplaySelection from "@/Pages/Guests/Items/ItemsFilterSelection/ItemDisplaySelection.vue";
+import { parseISO, format } from "date-fns";
 
 import {
     GlobeAmericasIcon,
@@ -494,10 +495,11 @@ onMounted(() => {
                     "
                 >
                     <h1 class="myTertiaryHeader text-center">
-                        No {{ nameList }}
+                        No {{ nameList === "posts" ? "campaigns" : nameList }}
                     </h1>
                     <p class="myPrimaryParagraph text-center">
-                        Looks like there are no {{ nameList }}!
+                        Looks like there are no
+                        {{ nameList === "posts" ? "campaigns" : nameList }}!
                     </p>
                 </template>
                 <!-- If posts is empty array # end -->
@@ -570,6 +572,30 @@ onMounted(() => {
                                         >
                                             {{ post.title }}
                                         </p>
+                                        <template v-if="post.started_at">
+                                            <p class="text-xs pt-2">
+                                                Start:
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.started_at
+                                                        ),
+                                                        "dd. MMMM yyyy"
+                                                    )
+                                                }}
+                                            </p>
+                                        </template>
+                                        <template v-if="post.ended_at">
+                                            <p class="text-xs pb-2">
+                                                End:
+                                                {{
+                                                    format(
+                                                        parseISO(post.ended_at),
+                                                        "dd. MMMM yyyy"
+                                                    )
+                                                }}
+                                            </p>
+                                        </template>
                                     </button>
 
                                     <template

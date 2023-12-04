@@ -322,8 +322,10 @@ onMounted(() => {
             </form>
 
             <template v-if="posts && posts.data.length <= 0">
-                <h1 class="myQuaternaryHeader">No Posts</h1>
-                <p class="myPrimaryParagraph">Looks like there are no posts!</p>
+                <h1 class="myQuaternaryHeader">No Campaigns</h1>
+                <p class="myPrimaryParagraph">
+                    Looks like there are no campaigns!
+                </p>
             </template>
 
             <!-- table start -->
@@ -548,96 +550,88 @@ onMounted(() => {
                                                             )
                                                         "
                                                     >
+                                                        <!-- address # start -->
                                                         <div
-                                                            class="border border-2-gray-400 rounded block py-4 px-4 hover:bg-red-300"
+                                                            class="flex flex-col gap-6 w-full mt-4"
                                                         >
-                                                            <p
-                                                                class="myPrimaryParagraph"
-                                                            >
-                                                                {{
-                                                                    store.title
-                                                                }}
-                                                            </p>
-
-                                                            <!-- address # start -->
                                                             <div
-                                                                class="flex flex-col gap-6 w-full mt-4"
+                                                                class="myPrimaryTag hover:bg-white"
                                                             >
                                                                 <div
-                                                                    class="myPrimaryTag"
+                                                                    v-for="state in store.states"
+                                                                    :key="
+                                                                        state.id
+                                                                    "
+                                                                    class="flex items-center gap-4 my-2 cursor-pointer"
                                                                 >
-                                                                    <div
-                                                                        v-for="state in store.states"
-                                                                        :key="
-                                                                            state.id
-                                                                        "
-                                                                        class="myPrimaryParagraph text-sm flex justify-center items-center gap-1"
-                                                                    >
-                                                                        <div
-                                                                            class="flex gap-2 items-center"
-                                                                        >
-                                                                            <div>
-                                                                                <span
-                                                                                    class="myMediumIcon material-symbols-outlined"
-                                                                                >
-                                                                                    location_on
-                                                                                </span>
-                                                                            </div>
-
-                                                                            <div>
-                                                                                <span>
-                                                                                    {{
-                                                                                        state.name
-                                                                                    }}{{
-                                                                                        store.address
-                                                                                            ? ", "
-                                                                                            : ""
-                                                                                    }}
-                                                                                </span>
-
-                                                                                <span
-                                                                                    v-if="
-                                                                                        store.address
-                                                                                    "
-                                                                                    class="text-sm flex items-center gap-1"
-                                                                                >
-                                                                                    <span>
-                                                                                        {{
-                                                                                            store.address
-                                                                                        }}
-                                                                                    </span>
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="myPrimaryTag"
-                                                                >
-                                                                    <p
-                                                                        v-if="
-                                                                            store.floor
-                                                                        "
-                                                                        class="myPrimaryParagraph text-sm flex items-center gap-1"
+                                                                    <button
+                                                                        type="button"
+                                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                                     >
                                                                         <span
-                                                                            class="myMediumIcon material-symbols-outlined"
+                                                                            class="material-symbols-outlined"
                                                                         >
-                                                                            floor
+                                                                            local_mall
                                                                         </span>
-                                                                        <span>
+                                                                    </button>
+                                                                    <div
+                                                                        class="flex flex-col gap-2"
+                                                                    >
+                                                                        <p
+                                                                            class="myPrimaryParagraph font-medium"
+                                                                        >
                                                                             {{
-                                                                                store.floor ===
-                                                                                    0 ||
-                                                                                store.floor ===
-                                                                                    "0"
-                                                                                    ? "Ground floor"
-                                                                                    : `Floor ${store.floor}`
+                                                                                store.title
                                                                             }}
-                                                                        </span>
-                                                                    </p>
+                                                                        </p>
+                                                                        <div
+                                                                            class="flex items-center gap-1"
+                                                                        >
+                                                                            <span>
+                                                                                {{
+                                                                                    state.name
+                                                                                }}{{
+                                                                                    store.address
+                                                                                        ? ", "
+                                                                                        : ""
+                                                                                }}
+                                                                            </span>
+
+                                                                            <span
+                                                                                v-if="
+                                                                                    store.address
+                                                                                "
+                                                                                class="text-sm flex items-center gap-1"
+                                                                            >
+                                                                                <span>
+                                                                                    {{
+                                                                                        store.address
+                                                                                    }}
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <p
+                                                                            v-if="
+                                                                                store.floor
+                                                                            "
+                                                                            class="myPrimaryParagraph text-sm flex items-center gap-1"
+                                                                        >
+                                                                            <span>
+                                                                                {{
+                                                                                    store.floor ===
+                                                                                        0 ||
+                                                                                    store.floor ===
+                                                                                        "0"
+                                                                                        ? "Ground floor"
+                                                                                        : `Floor ${store.floor}`
+                                                                                }}
+                                                                            </span>
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
+
                                                             <!-- address -->
                                                         </div>
                                                     </Link>

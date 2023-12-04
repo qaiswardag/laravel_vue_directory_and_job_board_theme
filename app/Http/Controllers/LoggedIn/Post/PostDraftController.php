@@ -67,6 +67,10 @@ class PostDraftController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
+            ->where(function ($query) {
+                $query
+                    ->where('published', false);
+            })
             ->orderBy('updated_at', 'desc')
             ->paginate(12);
 

@@ -59,6 +59,13 @@ class PostController extends Controller
         $post = Post::where("id", $postId)
             ->where("published", true)
             ->with('coverImages')
+            ->where(function ($query) {
+                $query
+                    ->whereNotNull("started_at")
+                    ->whereNotNull("ended_at")
+                    ->where("started_at", ">=", now()->subDays(30))
+                    ->where("ended_at", ">", now());
+            })
             ->firstOrFail();
 
         $postRenderView = "Guests/Items/SingleItem";
@@ -67,7 +74,10 @@ class PostController extends Controller
         $categories = $post->categories;
         $states = $post->states;
 
-        $stores = $post->stores()->with('states')
+        $stores = $post
+            ->stores()
+            ->with('states')
+            ->with("coverImages")
             ->get();
 
         $postTeam = Team::find($post->team_id);

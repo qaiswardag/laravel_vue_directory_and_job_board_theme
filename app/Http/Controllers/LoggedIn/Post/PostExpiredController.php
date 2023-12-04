@@ -67,6 +67,11 @@ class PostExpiredController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
+            ->where(function ($query) {
+                $query
+                    ->whereNotNull("ended_at");
+                $query->where("ended_at", "<", Carbon::now());
+            })
             ->orderBy('updated_at', 'desc')
             ->paginate(12);
 

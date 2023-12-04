@@ -28,6 +28,9 @@ const props = defineProps({
     categories: {
         required: false,
     },
+    stores: {
+        required: false,
+    },
 });
 </script>
 <template>
@@ -45,6 +48,7 @@ const props = defineProps({
                     :states="states"
                     :jobTypes="jobTypes"
                     :categories="categories"
+                    :stores="stores"
                 ></UnqiueResource>
             </main>
             <!-- sShow Unique Post - end -->

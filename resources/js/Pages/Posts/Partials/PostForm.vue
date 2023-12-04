@@ -1150,6 +1150,11 @@ const pageBuilder = new PageBuilder(store);
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Campaign start date
+                        <p class="myPrimaryParagraph">
+                            For branding purposes, the campaign becomes
+                            accessible to consumers up to 30 days prior to the
+                            campaign start date.
+                        </p>
                     </div>
                 </div>
                 <!-- select - start -->

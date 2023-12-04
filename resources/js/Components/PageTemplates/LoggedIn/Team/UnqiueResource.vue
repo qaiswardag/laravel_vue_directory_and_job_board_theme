@@ -442,37 +442,6 @@ const goToSingleStoreFromInSale = function (
                                     )
                                 "
                             ></ThumbnailSmallImageSlider>
-                            <!-- store cover image -->
-
-                            <!-- Store details -->
-
-                            <!-- address # start -->
-
-                            <!-- <div
-                            v-for="state in states"
-                            :key="state"
-                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2"
-                        >
-                            <div class="flex items-center gap-2">
-                                <div>
-                                    <span
-                                        class="myMediumIcon material-symbols-outlined"
-                                    >
-                                        location_on
-                                    </span>
-                                </div>
-                                <div>
-                                    <span>
-                                        {{ state.name
-                                        }}{{ post.address ? ", " : "" }}
-                                    </span>
-
-                                    <span v-if="post.address">
-                                        <span> {{ post.address }} </span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div> -->
 
                             <div class="flex flex-col gap-6 w-full mt-4">
                                 <div
@@ -500,6 +469,7 @@ const goToSingleStoreFromInSale = function (
                                                             : ""
                                                     }}
                                                 </span>
+
                                                 <span v-if="store.address">
                                                     <span>
                                                         {{
@@ -511,11 +481,11 @@ const goToSingleStoreFromInSale = function (
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <p
-                                        v-if="store.floor"
-                                        class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-2"
-                                    >
+                                <div
+                                    v-if="store.floor"
+                                    class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2"
+                                >
+                                    <div class="flex items-center gap-2">
                                         <span
                                             class="myMediumIcon material-symbols-outlined"
                                         >
@@ -529,7 +499,7 @@ const goToSingleStoreFromInSale = function (
                                                     : `Floor ${store.floor}`
                                             }}
                                         </span>
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                             <!-- address -->
