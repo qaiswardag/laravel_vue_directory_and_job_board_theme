@@ -563,7 +563,7 @@ onMounted(() => {
 
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
-                                                class="flex flex-wrap justify-start items-center gap-2"
+                                                class="flex flex-col justify-start gap-2"
                                             >
                                                 <p
                                                     v-for="store in post.stores &&
@@ -584,17 +584,108 @@ onMounted(() => {
                                                             return 0;
                                                         }
                                                     })"
-                                                    :key="store"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                    :key="store.id"
                                                 >
-                                                    <span
-                                                        class="myMediumIcon material-symbols-outlined"
+                                                    <Link
+                                                        :href="
+                                                            route(
+                                                                'team.stores.store.show',
+                                                                [
+                                                                    $page.props
+                                                                        .user
+                                                                        .current_team
+                                                                        .id,
+                                                                    store.slug,
+                                                                    store.id,
+                                                                ]
+                                                            )
+                                                        "
                                                     >
-                                                        local_mall
-                                                    </span>
-                                                    <span>
-                                                        {{ store.title }}
-                                                    </span>
+                                                        <!-- address # start -->
+                                                        <div
+                                                            class="flex flex-col gap-6 w-full mt-4"
+                                                        >
+                                                            <div
+                                                                class="myPrimaryTag hover:bg-white"
+                                                            >
+                                                                <div
+                                                                    v-for="state in store.states"
+                                                                    :key="
+                                                                        state.id
+                                                                    "
+                                                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                                                >
+                                                                    <button
+                                                                        type="button"
+                                                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                                    >
+                                                                        <span
+                                                                            class="material-symbols-outlined"
+                                                                        >
+                                                                            local_mall
+                                                                        </span>
+                                                                    </button>
+                                                                    <div
+                                                                        class="flex flex-col gap-2"
+                                                                    >
+                                                                        <p
+                                                                            class="myPrimaryParagraph font-medium"
+                                                                        >
+                                                                            {{
+                                                                                store.title
+                                                                            }}
+                                                                        </p>
+                                                                        <div
+                                                                            class="flex items-center gap-1"
+                                                                        >
+                                                                            <span>
+                                                                                {{
+                                                                                    state.name
+                                                                                }}{{
+                                                                                    store.address
+                                                                                        ? ", "
+                                                                                        : ""
+                                                                                }}
+                                                                            </span>
+
+                                                                            <span
+                                                                                v-if="
+                                                                                    store.address
+                                                                                "
+                                                                                class="text-sm flex items-center gap-1"
+                                                                            >
+                                                                                <span>
+                                                                                    {{
+                                                                                        store.address
+                                                                                    }}
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <p
+                                                                            v-if="
+                                                                                store.floor
+                                                                            "
+                                                                            class="myPrimaryParagraph text-sm flex items-center gap-1"
+                                                                        >
+                                                                            <span>
+                                                                                {{
+                                                                                    store.floor ===
+                                                                                        0 ||
+                                                                                    store.floor ===
+                                                                                        "0"
+                                                                                        ? "Ground floor"
+                                                                                        : `Floor ${store.floor}`
+                                                                                }}
+                                                                            </span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- address -->
+                                                        </div>
+                                                    </Link>
                                                 </p>
                                             </div>
                                         </td>

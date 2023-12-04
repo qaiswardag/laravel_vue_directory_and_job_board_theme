@@ -334,10 +334,10 @@ onMounted(() => {
                             class="w-full"
                             :class="[
                                 {
-                                    'md:w-1/3': nameList !== 'campaigns',
+                                    'md:w-1/3': nameList !== 'posts',
                                 },
                                 {
-                                    'md:w-1/2': nameList === 'campaigns',
+                                    'md:w-1/2': nameList === 'posts',
                                 },
                             ]"
                         >
@@ -379,10 +379,10 @@ onMounted(() => {
                             class="w-full"
                             :class="[
                                 {
-                                    'md:w-1/3': nameList !== 'campaigns',
+                                    'md:w-1/3': nameList !== 'posts',
                                 },
                                 {
-                                    'md:w-1/2': nameList === 'campaigns',
+                                    'md:w-1/2': nameList === 'posts',
                                 },
                             ]"
                             v-if="
