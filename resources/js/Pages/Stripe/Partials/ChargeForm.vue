@@ -1003,7 +1003,6 @@ onMounted(() => {
                                             <!-- Input Number -->
                                             <div
                                                 class="myPrimaryInput p-0 mt-0"
-                                                data-hs-input-number
                                             >
                                                 <div
                                                     class="w-full flex gap-2 justify-between items-center"

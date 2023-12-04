@@ -1152,7 +1152,7 @@ const pageBuilder = new PageBuilder(store);
                     <div class="myInputGroup md:w-1/3">
                         <InputLabel for="floor" value="Store floor" />
                         <!-- Input Number -->
-                        <div class="myPrimaryInput p-0" data-hs-input-number>
+                        <div class="myPrimaryInput p-0">
                             <div
                                 class="w-full flex gap-2 justify-between items-center"
                             >

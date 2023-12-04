@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post\Post;
 use App\Models\Post\PostCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PostsGuestIndexController extends Controller
@@ -40,9 +41,11 @@ class PostsGuestIndexController extends Controller
                 $query
                     ->whereNotNull("started_at")
                     ->whereNotNull("ended_at")
-                    ->where("started_at", ">=", now()->subDays(30))
+                    ->where("ended_at", ">", now()->addDays(DB::raw('days_before_campaign_visibility')))
                     ->where("ended_at", ">", now());
             });
+
+
 
         // categories filter logic # start
         $categoryIDs = [];

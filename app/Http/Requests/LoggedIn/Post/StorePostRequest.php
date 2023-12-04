@@ -82,6 +82,8 @@ class StorePostRequest extends FormRequest
             //
             "paid_at" => ["date_format:Y-m-d H:i:s", "nullable"],
             "is_paid" => ["boolean", "nullable"],
+
+            "days_before_campaign_visibility" => ["required", "integer", "digits_between:1,2", "nullable"],
         ];
 
         return $rules;

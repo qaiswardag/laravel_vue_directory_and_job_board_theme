@@ -29,6 +29,7 @@ class Post extends Model
         "trash",
         "started_at",
         "ended_at",
+        "days_before_campaign_visibility",
         "is_paid",
         "paid_at"
     ];

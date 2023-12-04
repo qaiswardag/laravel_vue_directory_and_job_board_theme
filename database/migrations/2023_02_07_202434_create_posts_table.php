@@ -29,6 +29,8 @@ return new class extends Migration
             //
             $table->timestamp("started_at")->nullable()->index();
             $table->timestamp("ended_at")->nullable()->index();
+
+            $table->string("days_before_campaign_visibility");
             $table->boolean("is_paid")->nullable();
             $table->timestamp("paid_at")->nullable();
             //

@@ -74,6 +74,7 @@ class PostFactory extends Factory
             "slug" => $slug,
             "started_at" => Carbon::now(),
             "ended_at" => Carbon::now()->addDays(30),
+            "days_before_campaign_visibility" => 10,
             "content" => $factoriesPageBuilderContent->index(),
             "published" => 1,
             "tags" => $selectedTagsList,
