@@ -462,7 +462,8 @@ class JobController extends Controller
         $this->authorize("can-read", $team);
 
         // Retrieve the post, including soft-deleted posts
-        $job = Job::withTrashed()->findOrFail($jobId);
+        $job = Job::withTrashed()->with('coverImages')->findOrFail($jobId);
+
 
         // Retrieve the user associated with the job
         $user = User::find($job->user_id);

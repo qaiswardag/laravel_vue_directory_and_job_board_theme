@@ -308,7 +308,7 @@ class StoreController extends Controller
         $this->authorize("can-read", $team);
 
         // Retrieve the post, including soft-deleted posts
-        $store = Store::withTrashed()->findOrFail($storeId);
+        $store = Store::withTrashed()->with('coverImages')->findOrFail($storeId);
 
         // Retrieve the user associated with the store
         $user = User::find($store->user_id);

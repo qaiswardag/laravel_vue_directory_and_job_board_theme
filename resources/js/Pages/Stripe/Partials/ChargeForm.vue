@@ -988,16 +988,6 @@ onMounted(() => {
                                     </div>
                                 </div>
 
-                                <p
-                                    class="text-xs text-red-400 font-medium my-4"
-                                >
-                                    formCharge.product_quantity:
-                                    {{
-                                        JSON.stringify(
-                                            formCharge.product_quantity
-                                        )
-                                    }}
-                                </p>
                                 <div
                                     class="flex justify-between items-center gap-4 text-xs font-medium myPrimaryTag my-0"
                                 >

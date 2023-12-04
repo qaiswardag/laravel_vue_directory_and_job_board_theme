@@ -267,7 +267,7 @@ class PostController extends Controller
         $this->authorize("can-read", $team);
 
         // Retrieve the post, including soft-deleted posts
-        $post = Post::withTrashed()->findOrFail($postId);
+        $post = Post::withTrashed()->with('coverImages')->findOrFail($postId);
 
         // Retrieve the user associated with the post
         $user = User::find($post->user_id);
