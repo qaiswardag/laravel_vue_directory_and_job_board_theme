@@ -14,10 +14,7 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
             <template #header>
                 <PageHeader title="In store campaigns"></PageHeader>
             </template>
-            <Items
-                pathList="api.guest.posts.index"
-                nameList="campaigns"
-            ></Items>
+            <Items pathList="api.guest.posts.index" nameList="posts"></Items>
         </GuestsLayout>
     </MainLayout>
 </template>
