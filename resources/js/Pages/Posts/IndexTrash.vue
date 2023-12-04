@@ -304,7 +304,7 @@ onMounted(() => {
                 <main></main>
             </DynamicModal>
             <template #header>
-                Running campaigns
+                Campaigns
                 {{ $page.props.user && $page.props.currentUserTeam.name }}
             </template>
             <template #breadcrumbs>
@@ -313,7 +313,7 @@ onMounted(() => {
 
             <CardHeadings :routesArray="routesArray">
                 <template #title
-                    >Posts for
+                    >Campaigns for
                     {{ $page.props.user && $page.props.user.current_team.name }}
                 </template>
                 <template #buttons>
