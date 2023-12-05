@@ -1078,7 +1078,7 @@ const pageBuilder = new PageBuilder(store);
                             stacks
                         </span>
                     </button>
-                    <h3 class="mt-2 text-sm font-semibold text-gray-900">
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">
                         Build your Post by adding Components
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">

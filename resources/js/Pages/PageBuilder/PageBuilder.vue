@@ -190,7 +190,19 @@ onMounted(async () => {
                         <div class="flex items-center justify-center gap-2">
                             <button
                                 type="button"
-                                @click="handleAddComponent"
+                                @click="
+                                    () => {
+                                        store.commit(
+                                            'pageBuilderState/setMenuRight',
+                                            false
+                                        );
+                                        store.commit(
+                                            'pageBuilderState/setComponentArrayAddMethod',
+                                            'unshift'
+                                        );
+                                        handleAddComponent();
+                                    }
+                                "
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <span
@@ -201,7 +213,15 @@ onMounted(async () => {
                             </button>
                             <button
                                 type="button"
-                                @click="handleDesignerPreview"
+                                @click="
+                                    () => {
+                                        store.commit(
+                                            'pageBuilderState/setMenuRight',
+                                            false
+                                        );
+                                        handleDesignerPreview();
+                                    }
+                                "
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                             >
                                 <span class="material-symbols-outlined">
@@ -260,9 +280,7 @@ onMounted(async () => {
                         <div
                             class="rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 my-12 mx-8"
                         >
-                            <h3
-                                class="mt-2 text-sm font-semibold text-gray-900"
-                            >
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">
                                 Add Components
                             </h3>
                             <p class="mt-1 text-sm text-gray-500">
@@ -273,7 +291,19 @@ onMounted(async () => {
                                 class="mt-6 flex items-center gap-2 justify-center"
                             >
                                 <button
-                                    @click="handleAddComponent"
+                                    @click="
+                                        () => {
+                                            store.commit(
+                                                'pageBuilderState/setMenuRight',
+                                                false
+                                            );
+                                            store.commit(
+                                                'pageBuilderState/setComponentArrayAddMethod',
+                                                'push'
+                                            );
+                                            handleAddComponent();
+                                        }
+                                    "
                                     type="button"
                                     class="myPrimaryButton flex items-center gap-2 justify-center"
                                 >

@@ -955,7 +955,7 @@ onMounted(() => {
                                                     >{{ product.price }}</span
                                                 >
                                                 <span
-                                                    class="text-sm font-semibold leading-6 text-gray-600"
+                                                    class="text-sm font-medium leading-6 text-gray-600"
                                                     >{{
                                                         product.frequencies
                                                     }}</span

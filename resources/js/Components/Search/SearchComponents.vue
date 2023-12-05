@@ -58,6 +58,10 @@ const getFetchedComponents = computed(() => {
     return store.getters["pageBuilderState/getFetchedComponents"];
 });
 
+const getComponentArrayAddMethod = computed(() => {
+    return store.getters["pageBuilderState/getComponentArrayAddMethod"];
+});
+
 const handleDropComponent = async function (componentObject) {
     await nextTick();
     const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion({
@@ -66,7 +70,10 @@ const handleDropComponent = async function (componentObject) {
     });
 
     await nextTick();
-    store.commit("pageBuilderState/setPushComponents", clonedComponent);
+    store.commit("pageBuilderState/setPushComponents", {
+        component: clonedComponent,
+        componentArrayAddMethod: getComponentArrayAddMethod.value,
+    });
 
     await nextTick();
     pageBuilder.setEventListenersForElements();
@@ -83,7 +90,10 @@ const handleAddHelperComponent = async function (helperComponentObject) {
     });
 
     await nextTick();
-    store.commit("pageBuilderState/setPushComponents", clonedComponent);
+    store.commit("pageBuilderState/setPushComponents", {
+        component: clonedComponent,
+        componentArrayAddMethod: getComponentArrayAddMethod.value,
+    });
 
     await nextTick();
     pageBuilder.setEventListenersForElements();

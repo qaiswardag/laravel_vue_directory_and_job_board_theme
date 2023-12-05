@@ -100,7 +100,7 @@
     }
 
     .mySecondaryHeader {
-        @apply font-['Cormorant'] font-semibold break-words lg:text-5xl md:text-4xl text-3xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
+        @apply font-['Cormorant'] font-medium break-words lg:text-5xl md:text-4xl text-3xl lg:mb-8 md:mb-4 mb-2 text-myPrimaryDarkGrayColor;
     }
 
     .myTertiaryHeader {
