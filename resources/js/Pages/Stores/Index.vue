@@ -241,31 +241,54 @@ onMounted(() => {
                 <main></main>
             </DynamicModal>
 
-            <FriendlyAlert message="Total stores which can be created.">
-            </FriendlyAlert>
-
             <template v-if="true">
-                <div class="rounded px-4 py-6 bg-gray-100 mt-4 shadow">
-                    <div class="flex flex-col gap-2">
-                        <div
-                            class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
-                        >
-                            <p class="myPrimaryParagraph leading-8">
-                                Subscription name: Up to 6 stores with this
-                                subscription
-                            </p>
-                        </div>
-                        <div
-                            class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
-                        >
-                            <p class="myPrimaryParagraph leading-8">
-                                Subscription name: Up to 8 stores with this
-                                subscription
-                            </p>
+                <div class="mb-4">
+                    <CardHeadings>
+                        <template #title
+                            >You do not have subscription
+                        </template>
+                        <template #buttons>
+                            <Link
+                                class="myPrimaryButton"
+                                type="button"
+                                :href="
+                                    route('stripe.stores.create.subscription')
+                                "
+                            >
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                                Create Subscription
+                            </Link>
+                        </template>
+                    </CardHeadings>
+
+                    <FriendlyAlert message="Total stores which can be created.">
+                    </FriendlyAlert>
+
+                    <div class="rounded px-4 py-6 bg-gray-100 mt-4 shadow">
+                        <div class="flex flex-col gap-2">
+                            <div
+                                class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
+                            >
+                                <p class="myPrimaryParagraph leading-8">
+                                    Subscription name: Up to 6 stores with this
+                                    subscription
+                                </p>
+                            </div>
+                            <div
+                                class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
+                            >
+                                <p class="myPrimaryParagraph leading-8">
+                                    Subscription name: Up to 8 stores with this
+                                    subscription
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </template>
+
             <template #header>
                 Stores for
                 {{ $page.props.user && $page.props.currentUserTeam.name }}
@@ -274,22 +297,29 @@ onMounted(() => {
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
-            <CardHeadings :routesArray="routesArray">
-                <template #title
-                    >Stores for
-                    {{ $page.props.user && $page.props.user.current_team.name }}
-                </template>
-                <template #buttons>
-                    <Link
-                        class="myPrimaryButton"
-                        type="button"
-                        :href="route('team.stores.create', currentUserTeam.id)"
-                    >
-                        <span class="material-symbols-outlined"> add </span>
-                        Create Store
-                    </Link>
-                </template>
-            </CardHeadings>
+            <template v-if="true">
+                <CardHeadings :routesArray="routesArray">
+                    <template #title
+                        >Stores for
+                        {{
+                            $page.props.user &&
+                            $page.props.user.current_team.name
+                        }}
+                    </template>
+                    <template #buttons>
+                        <Link
+                            class="myPrimaryButton"
+                            type="button"
+                            :href="
+                                route('team.stores.create', currentUserTeam.id)
+                            "
+                        >
+                            <span class="material-symbols-outlined"> add </span>
+                            Create Store
+                        </Link>
+                    </template>
+                </CardHeadings>
+            </template>
 
             <TopMenu :links="linksTopMenu"></TopMenu>
 
@@ -300,21 +330,9 @@ onMounted(() => {
                             <div
                                 class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
                             >
-                                <svg
-                                    aria-hidden="true"
-                                    class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="1.5"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    ></path>
-                                </svg>
+                                <span class="material-symbols-outlined">
+                                    search
+                                </span>
                             </div>
                             <input
                                 v-model="searchForm.search_query"

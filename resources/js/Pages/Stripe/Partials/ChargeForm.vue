@@ -955,7 +955,7 @@ onMounted(() => {
                                                     >{{ product.price }}</span
                                                 >
                                                 <span
-                                                    class="text-sm font-semibold leading-6 text-gray-600"
+                                                    class="text-sm font-medium leading-6 text-gray-600"
                                                     >{{
                                                         product.frequencies
                                                     }}</span
@@ -1003,7 +1003,6 @@ onMounted(() => {
                                             <!-- Input Number -->
                                             <div
                                                 class="myPrimaryInput p-0 mt-0"
-                                                data-hs-input-number
                                             >
                                                 <div
                                                     class="w-full flex gap-2 justify-between items-center"

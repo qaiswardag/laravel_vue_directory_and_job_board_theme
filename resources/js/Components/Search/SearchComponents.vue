@@ -58,6 +58,10 @@ const getFetchedComponents = computed(() => {
     return store.getters["pageBuilderState/getFetchedComponents"];
 });
 
+const getComponentArrayAddMethod = computed(() => {
+    return store.getters["pageBuilderState/getComponentArrayAddMethod"];
+});
+
 const handleDropComponent = async function (componentObject) {
     await nextTick();
     const clonedComponent = pageBuilder.cloneCompObjForDOMInsertion({
@@ -66,7 +70,10 @@ const handleDropComponent = async function (componentObject) {
     });
 
     await nextTick();
-    store.commit("pageBuilderState/setPushComponents", clonedComponent);
+    store.commit("pageBuilderState/setPushComponents", {
+        component: clonedComponent,
+        componentArrayAddMethod: getComponentArrayAddMethod.value,
+    });
 
     await nextTick();
     pageBuilder.setEventListenersForElements();
@@ -83,7 +90,10 @@ const handleAddHelperComponent = async function (helperComponentObject) {
     });
 
     await nextTick();
-    store.commit("pageBuilderState/setPushComponents", clonedComponent);
+    store.commit("pageBuilderState/setPushComponents", {
+        component: clonedComponent,
+        componentArrayAddMethod: getComponentArrayAddMethod.value,
+    });
 
     await nextTick();
     pageBuilder.setEventListenersForElements();
@@ -204,21 +214,9 @@ onMounted(async () => {
                             <div
                                 class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
                             >
-                                <svg
-                                    aria-hidden="true"
-                                    class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="1.5"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    ></path>
-                                </svg>
+                                <span class="material-symbols-outlined">
+                                    search
+                                </span>
                             </div>
                             <input
                                 type="search"

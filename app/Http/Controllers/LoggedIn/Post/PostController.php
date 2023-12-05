@@ -159,6 +159,7 @@ class PostController extends Controller
             "published" => $request->published,
             "started_at" => $startedAt,
             "ended_at" => $endedAt,
+            "days_before_campaign_visibility" => $request->days_before_campaign_visibility,
             "content" => $content,
             "tags" => $request->tags,
         ]);
@@ -487,6 +488,7 @@ class PostController extends Controller
             "team_id" => $teamId,
             "started_at" => $startedAt,
             "ended_at" => $endedAt,
+            "days_before_campaign_visibility" => $request->days_before_campaign_visibility,
             "title" => $title,
             "slug" => $slug,
             "published" => $request->published,

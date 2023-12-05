@@ -35,7 +35,7 @@ class StoreMediaLibraryRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        $maxImageSize = 5000; //kilobytes
+        $maxImageSize = 2000; //kilobytes
         $maxImageUploads = 12;
         $validator->after(function ($validator) use (
             $maxImageUploads,
@@ -78,8 +78,7 @@ class StoreMediaLibraryRequest extends FormRequest
                         "png",
                         "gif",
                         "webp",
-                        "avif",
-                        // "avif", // ERROR: Unsupported image type is image/avif. GD driver is only able to decode JPG, PNG, GIF, BMP or WebP files.
+                        // "avif", GD driver is only able to decode JPG, PNG, GIF, BMP or WebP files.
                     ]) ||
                     !$image->isValid()
                 ) {

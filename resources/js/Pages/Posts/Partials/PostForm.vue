@@ -309,6 +309,7 @@ const postForm = useForm({
     slug: "",
     started_at: "",
     ended_at: "",
+    days_before_campaign_visibility: "30",
     content: "",
     published: true,
     team: props.currentUserTeam,
@@ -441,6 +442,7 @@ const clearForm = function () {
     postForm.slug = "";
     postForm.started_at = null;
     postForm.ended_at = null;
+    postForm.days_before_campaign_visibility = 30;
     isSlugEditable.value = false;
     slugValueTitle.value = "";
     slugValueCustom.value = "";
@@ -646,6 +648,49 @@ const handleDraftForUpdate = async function () {
 };
 
 //
+//
+const addToCampaignVisibilitySubDays = function () {
+    postForm.days_before_campaign_visibility = Number(
+        postForm.days_before_campaign_visibility
+    );
+    if (isNaN(postForm.days_before_campaign_visibility)) {
+        postForm.days_before_campaign_visibility = 0;
+    }
+
+    if (typeof postForm.days_before_campaign_visibility !== "number") {
+        postForm.days_before_campaign_visibility = 0;
+    }
+    if (
+        typeof postForm.days_before_campaign_visibility === "number" &&
+        postForm.days_before_campaign_visibility < 1
+    ) {
+        postForm.days_before_campaign_visibility = 0;
+    }
+    postForm.days_before_campaign_visibility++;
+};
+
+const removeFromCampaignVisibilitySubDays = function () {
+    postForm.days_before_campaign_visibility = Number(
+        postForm.days_before_campaign_visibility
+    );
+    if (isNaN(postForm.days_before_campaign_visibility)) {
+        postForm.days_before_campaign_visibility = 1;
+    }
+
+    if (typeof postForm.days_before_campaign_visibility !== "number") {
+        postForm.days_before_campaign_visibility = 1;
+    }
+
+    if (
+        typeof postForm.days_before_campaign_visibility === "number" &&
+        postForm.days_before_campaign_visibility < 1
+    ) {
+        postForm.days_before_campaign_visibility = 1;
+    }
+    postForm.days_before_campaign_visibility--;
+};
+//
+//
 const handlePageBuilder = async function () {
     // set modal standards
     store.commit("user/setIsLoading", true);
@@ -768,6 +813,12 @@ onBeforeMount(() => {
             if (formLocalStorage.ended_at) {
                 postEndedAt.value = formLocalStorage.ended_at;
             }
+            if (formLocalStorage.days_before_campaign_visibility) {
+                postForm.value =
+                    formLocalStorage.days_before_campaign_visibility;
+            } else {
+                postForm.days_before_campaign_visibility = 30;
+            }
 
             postForm.content = formLocalStorage.content;
 
@@ -888,6 +939,8 @@ onBeforeMount(() => {
 
         postStartedAt.value = props.post.started_at;
         postEndedAt.value = props.post.ended_at;
+        postForm.days_before_campaign_visibility =
+            props.post.days_before_campaign_visibility;
 
         // slug logic
         // slug is editable when editing an existing post
@@ -1025,7 +1078,7 @@ const pageBuilder = new PageBuilder(store);
                             stacks
                         </span>
                     </button>
-                    <h3 class="mt-2 text-sm font-semibold text-gray-900">
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">
                         Build your Post by adding Components
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">
@@ -1150,11 +1203,6 @@ const pageBuilder = new PageBuilder(store);
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Campaign start date
-                        <p class="myPrimaryParagraph">
-                            For branding purposes, the campaign becomes
-                            accessible to consumers up to 30 days prior to the
-                            campaign start date.
-                        </p>
                     </div>
                 </div>
                 <!-- select - start -->
@@ -1182,6 +1230,72 @@ const pageBuilder = new PageBuilder(store);
                 </div>
 
                 <InputError :message="postForm.errors.started_at" />
+
+                <!-- days before campaign visibility # start -->
+                <div class="myInputGroup mt-8">
+                    <div
+                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                    >
+                        <div class="myPrimaryFormOrganizationHeader">
+                            <p class="myPrimaryParagraph">
+                                Campaign Visibility for public. We recommend 30
+                                days prior to the campaign start date.
+                            </p>
+                        </div>
+                    </div>
+                    <InputLabel
+                        for="days_before_campaign_visibility"
+                        value="Days before campaign visibility"
+                    />
+                    <!-- Input Number -->
+                    <div class="myPrimaryInput p-0">
+                        <div
+                            class="w-full flex gap-2 justify-between items-center"
+                        >
+                            <input
+                                placeholder="Days.."
+                                id="days_before_campaign_visibility"
+                                v-model="
+                                    postForm.days_before_campaign_visibility
+                                "
+                                class="myPrimaryInputNoBorder mt-0"
+                                autocomplete="off"
+                            />
+                            <div class="flex items-center">
+                                <button
+                                    @click="removeFromCampaignVisibilitySubDays"
+                                    øø
+                                    type="button"
+                                    class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                >
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        remove
+                                    </span>
+                                </button>
+                                <button
+                                    @click="addToCampaignVisibilitySubDays"
+                                    type="button"
+                                    class="h-10 w-10 cursor-pointer rounded flex items-center justify-center hover:bg-gray-50 aspect-square focus-visible:ring-0"
+                                >
+                                    <span
+                                        class="myMediumIcon material-symbols-outlined"
+                                    >
+                                        add
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Input Number -->
+                    <InputError
+                        :message="
+                            postForm.errors.days_before_campaign_visibility
+                        "
+                    />
+                </div>
+                <!-- days before campaign visibility # end -->
             </div>
             <!-- started at - end -->
 

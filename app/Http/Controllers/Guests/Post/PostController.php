@@ -8,6 +8,7 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\File;
 
@@ -63,7 +64,8 @@ class PostController extends Controller
                 $query
                     ->whereNotNull("started_at")
                     ->whereNotNull("ended_at")
-                    ->where("started_at", ">=", now()->subDays(30))
+                    ->whereNotNull("days_before_campaign_visibility")
+                    ->where("started_at", ">=", now()->subDays(DB::raw("days_before_campaign_visibility")))
                     ->where("ended_at", ">", now());
             })
             ->firstOrFail();

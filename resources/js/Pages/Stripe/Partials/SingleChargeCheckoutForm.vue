@@ -925,7 +925,7 @@ onMounted(async () => {
                                             >
                                                 <h3
                                                     :id="product.id"
-                                                    class="text-gray-900 text-lg font-semibold leading-8"
+                                                    class="text-gray-900 text-lg font-medium leading-8"
                                                 >
                                                     {{ product.name }}
                                                 </h3>
@@ -940,7 +940,7 @@ onMounted(async () => {
                                                         }}</span
                                                     >
                                                     <span
-                                                        class="text-sm font-semibold leading-6 text-gray-600"
+                                                        class="text-sm font-medium leading-6 text-gray-600"
                                                         >{{
                                                             product.frequencies
                                                         }}</span

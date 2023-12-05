@@ -55,7 +55,7 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
                                     product.mostPopular
                                         ? 'text-myPrimaryLinkColor'
                                         : 'text-myPrimaryDarkGrayColor',
-                                    'text-lg font-semibold leading-8',
+                                    'text-lg font-medium leading-8',
                                 ]"
                             >
                                 {{ product.name }}
@@ -69,7 +69,7 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
                                     >{{ product.price }}</span
                                 >
                                 <span
-                                    class="text-sm font-semibold leading-6 text-gray-600"
+                                    class="text-sm font-medium leading-6 text-gray-600"
                                     >{{ product.frequencies }}</span
                                 >
                             </p>
@@ -106,7 +106,7 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
                                     product.mostPopular
                                         ? 'bg-myPrimaryLinkColor text-white shadow-sm hover:bg-myPrimaryLinkColor'
                                         : 'text-myPrimaryLinkColor ring-1 ring-inset ring-myPrimaryLinkColor hover:ring-myPrimaryLinkColor',
-                                    'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-myPrimaryLinkColor cursor-pointer',
+                                    'mt-6 block rounded-md py-2 px-3 text-center text-sm font-medium leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-myPrimaryLinkColor cursor-pointer',
                                 ]"
                                 href="register"
                                 >Sign up
@@ -162,7 +162,7 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
                                         product.mostPopular
                                             ? 'text-myPrimaryLinkColor'
                                             : 'text-myPrimaryDarkGrayColor',
-                                        'text-lg font-semibold leading-8',
+                                        'text-lg font-medium leading-8',
                                     ]"
                                 >
                                     {{ product.name }}
@@ -223,7 +223,7 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
                                         product.mostPopular
                                             ? 'bg-myPrimaryLinkColor text-white shadow-sm hover:bg-myPrimaryLinkColor'
                                             : 'text-myPrimaryLinkColor ring-1 ring-inset ring-myPrimaryLinkColor hover:ring-myPrimaryLinkColor',
-                                        'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-myPrimaryLinkColor cursor-pointer',
+                                        'mt-6 block rounded-md py-2 px-3 text-center text-sm font-medium leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-myPrimaryLinkColor cursor-pointer',
                                     ]"
                                     href="register"
                                     >Sign up

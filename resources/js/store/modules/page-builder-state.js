@@ -1,4 +1,4 @@
-import { vueFetch } from "use-lightweight-fetch";
+import { vueFetch } from "@/composables/vueFetch";
 import PageBuilder from "@/composables/PageBuilder";
 
 // get images
@@ -19,6 +19,7 @@ export default {
 
     // state
     state: {
+        componentArrayAddMethod: null,
         localStorageItemName: null,
         localStorageItemNameUpdate: null,
         showModalTipTap: false,
@@ -75,6 +76,9 @@ export default {
 
     // getters
     getters: {
+        getComponentArrayAddMethod(state) {
+            return state.componentArrayAddMethod;
+        },
         getLocalStorageItemName(state) {
             return state.localStorageItemName;
         },
@@ -220,6 +224,9 @@ export default {
     },
 
     mutations: {
+        setComponentArrayAddMethod(state, payload) {
+            state.componentArrayAddMethod = payload;
+        },
         setLocalStorageItemName(state, payload) {
             state.localStorageItemName = payload;
         },
@@ -372,7 +379,13 @@ export default {
         },
 
         setPushComponents(state, payload) {
-            state.components.push(payload);
+            // unshift or push array add method
+            const componentArrayAddMethod = payload.componentArrayAddMethod
+                ? payload.componentArrayAddMethod
+                : "push";
+
+            // payload
+            state.components[componentArrayAddMethod](payload.component);
         },
 
         setBasePrimaryImage(state, payload) {

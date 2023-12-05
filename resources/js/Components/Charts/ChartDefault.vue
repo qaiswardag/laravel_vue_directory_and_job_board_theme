@@ -171,7 +171,7 @@ onMounted(async () => {
                     </p>
                     <p class="mt-2 flex items-baseline gap-x-2">
                         <span
-                            class="text-4xl font-semibold tracking-tight text-white"
+                            class="text-4xl font-medium tracking-tight text-white"
                             >{{ stat.value }}</span
                         >
                         <span v-if="stat.unit" class="text-sm text-gray-400">{{

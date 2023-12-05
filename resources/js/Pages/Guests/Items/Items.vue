@@ -1,6 +1,6 @@
 <script setup>
 import { useStore } from "vuex";
-import { vueFetch } from "use-lightweight-fetch";
+import { vueFetch } from "@/composables/vueFetch";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import { onMounted, ref } from "vue";
@@ -329,6 +329,14 @@ onMounted(() => {
                 <div
                     class="flex flex-col myPrimaryGap border-b border-gray-200 pb-8 mb-8"
                 >
+                    <!-- error # start -->
+                    <template v-if="!isLoadingPosts && isErrorPosts">
+                        <p class="myPrimaryParagraphError">
+                            {{ errorPosts }}
+                        </p>
+                    </template>
+                    <!-- error # end -->
+
                     <div class="flex md:flex-row flex-col myPrimaryGap">
                         <div
                             v-if="fetchedDataPosts && fetchedDataPosts.posts"
@@ -347,21 +355,9 @@ onMounted(() => {
                                     <div
                                         class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
                                     >
-                                        <svg
-                                            aria-hidden="true"
-                                            class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="1.5"
-                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                            ></path>
-                                        </svg>
+                                        <span class="material-symbols-outlined">
+                                            search
+                                        </span>
                                     </div>
                                     <input
                                         v-model="searchForm.search_query"
@@ -527,168 +523,186 @@ onMounted(() => {
                             role="list"
                             class="grid myPrimaryGap lg:grid-cols-4 sm:grid-cols-2"
                         >
-                            <li
-                                v-for="post in fetchedDataPosts.posts.data"
-                                :key="post.id"
-                                class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded bg-gray-100"
-                            >
-                                <!-- start photo -->
-
-                                <template
-                                    v-if="post && post.cover_images !== null"
+                            <TransitionGroup>
+                                <li
+                                    v-for="post in fetchedDataPosts.posts.data"
+                                    :key="post.id"
+                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded bg-gray-100"
                                 >
-                                    <ThumbnailSmallImageSlider
-                                        :images="post.cover_images"
-                                        imageSize="large_path"
-                                        imageHeight="max-h-96"
-                                        imageWidth="w-full object-cover"
-                                        :roundedFull="false"
-                                        :squareButtons="true"
-                                        @firstButtonClick="
-                                            goToSinglePost(
-                                                post.team.slug,
-                                                post.slug,
-                                                post.id
-                                            )
-                                        "
-                                        :imageClickable="true"
-                                    ></ThumbnailSmallImageSlider>
-                                </template>
-
-                                <section class="pt-4 pb-4 px-2">
-                                    <button
-                                        @click="
-                                            goToSinglePost(
-                                                post.team.slug,
-                                                post.slug,
-                                                post.id
-                                            )
-                                        "
-                                        type="button"
-                                        class="w-full text-left"
-                                    >
-                                        <p
-                                            class="text-sm font-medium mt-2 mb-2"
-                                        >
-                                            {{ post.title }}
-                                        </p>
-                                        <template v-if="post.started_at">
-                                            <p class="text-xs pt-2">
-                                                Start:
-                                                {{
-                                                    format(
-                                                        parseISO(
-                                                            post.started_at
-                                                        ),
-                                                        "dd. MMMM yyyy"
-                                                    )
-                                                }}
-                                            </p>
-                                        </template>
-                                        <template v-if="post.ended_at">
-                                            <p class="text-xs pb-2">
-                                                End:
-                                                {{
-                                                    format(
-                                                        parseISO(post.ended_at),
-                                                        "dd. MMMM yyyy"
-                                                    )
-                                                }}
-                                            </p>
-                                        </template>
-                                    </button>
+                                    <!-- start photo -->
 
                                     <template
                                         v-if="
-                                            Array.isArray(
-                                                post.team?.coverImagesWithLogos
-                                                    ?.logos
-                                            ) &&
-                                            post.team?.coverImagesWithLogos
-                                                ?.logos.length !== 0
+                                            post && post.cover_images !== null
                                         "
                                     >
-                                        <div class="my-2">
-                                            <ThumbnailSmallImageSlider
-                                                :images="
+                                        <ThumbnailSmallImageSlider
+                                            :images="post.cover_images"
+                                            :isLoading="isLoadingPosts"
+                                            imageSize="medium_path"
+                                            imageHeight="max-h-96"
+                                            imageWidth="w-full object-cover"
+                                            :roundedFull="false"
+                                            :squareButtons="true"
+                                            @firstButtonClick="
+                                                goToSinglePost(
+                                                    post.team.slug,
+                                                    post.slug,
+                                                    post.id
+                                                )
+                                            "
+                                            :imageClickable="true"
+                                        ></ThumbnailSmallImageSlider>
+                                    </template>
+
+                                    <section class="pt-4 pb-4 px-2">
+                                        <button
+                                            @click="
+                                                goToSinglePost(
+                                                    post.team.slug,
+                                                    post.slug,
+                                                    post.id
+                                                )
+                                            "
+                                            type="button"
+                                            class="w-full text-left"
+                                        >
+                                            <p
+                                                class="text-sm font-medium mt-2 mb-2"
+                                            >
+                                                {{ post.title }}
+                                            </p>
+                                            <template v-if="post.started_at">
+                                                <p class="text-xs pt-2">
+                                                    Start:
+                                                    {{
+                                                        format(
+                                                            parseISO(
+                                                                post.started_at
+                                                            ),
+                                                            "dd. MMMM yyyy"
+                                                        )
+                                                    }}
+                                                </p>
+                                            </template>
+                                            <template v-if="post.ended_at">
+                                                <p class="text-xs pb-2">
+                                                    End:
+                                                    {{
+                                                        format(
+                                                            parseISO(
+                                                                post.ended_at
+                                                            ),
+                                                            "dd. MMMM yyyy"
+                                                        )
+                                                    }}
+                                                </p>
+                                            </template>
+                                        </button>
+
+                                        <template
+                                            v-if="
+                                                Array.isArray(
                                                     post.team
                                                         ?.coverImagesWithLogos
                                                         ?.logos
-                                                "
-                                                imageSize="medium_path"
-                                                imageHeight="h-16"
-                                                imageWidth="w-16"
-                                                :roundedFull="false"
-                                            ></ThumbnailSmallImageSlider>
-                                        </div>
-                                    </template>
-
-                                    <template
-                                        v-if="
-                                            Array.isArray(
+                                                ) &&
                                                 post.team?.coverImagesWithLogos
-                                                    ?.logos
-                                            ) &&
-                                            post.team?.coverImagesWithLogos
-                                                ?.logos.length === 0
-                                        "
-                                    >
-                                        <div
-                                            class="text-xs h-16 flex items-center justify-center font-medium"
+                                                    ?.logos.length !== 0
+                                            "
                                         >
-                                            {{ post.team.name }}
-                                        </div>
-                                    </template>
+                                            <div class="my-2">
+                                                <ThumbnailSmallImageSlider
+                                                    :images="
+                                                        post.team
+                                                            ?.coverImagesWithLogos
+                                                            ?.logos
+                                                    "
+                                                    :isLoading="isLoadingPosts"
+                                                    imageSize="medium_path"
+                                                    imageHeight="h-16"
+                                                    imageWidth="w-16"
+                                                    :roundedFull="false"
+                                                ></ThumbnailSmallImageSlider>
+                                            </div>
+                                        </template>
 
-                                    <!-- Country # start -->
-                                    <template v-if="post.countries">
-                                        <ItemDisplaySelection
-                                            :list="post.countries"
-                                            :listSelected="countrySelected"
-                                            icon="GlobeAmericasIcon"
-                                            @removeItem="handleRemoveCountry"
-                                            @selectItem="handleSelectCountry"
-                                        ></ItemDisplaySelection>
-                                    </template>
-                                    <!-- Country # end -->
+                                        <template
+                                            v-if="
+                                                Array.isArray(
+                                                    post.team
+                                                        ?.coverImagesWithLogos
+                                                        ?.logos
+                                                ) &&
+                                                post.team?.coverImagesWithLogos
+                                                    ?.logos.length === 0
+                                            "
+                                        >
+                                            <div
+                                                class="text-xs h-16 flex items-center justify-center font-medium"
+                                            >
+                                                {{ post.team.name }}
+                                            </div>
+                                        </template>
 
-                                    <!-- State # start -->
-                                    <template v-if="post.states">
-                                        <ItemDisplaySelection
-                                            :list="post.states"
-                                            :listSelected="stateSelected"
-                                            icon="MapPinIcon"
-                                            @removeItem="handleRemoveState"
-                                            @selectItem="handleSelectState"
-                                        ></ItemDisplaySelection>
-                                    </template>
-                                    <!-- State # end -->
+                                        <!-- Country # start -->
+                                        <template v-if="post.countries">
+                                            <ItemDisplaySelection
+                                                :list="post.countries"
+                                                :listSelected="countrySelected"
+                                                icon="GlobeAmericasIcon"
+                                                @removeItem="
+                                                    handleRemoveCountry
+                                                "
+                                                @selectItem="
+                                                    handleSelectCountry
+                                                "
+                                            ></ItemDisplaySelection>
+                                        </template>
+                                        <!-- Country # end -->
 
-                                    <!-- Type # start -->
-                                    <template v-if="post.types">
-                                        <ItemDisplaySelection
-                                            :list="post.types"
-                                            :listSelected="typeSelected"
-                                            icon="NewspaperIcon"
-                                            @removeItem="handleRemoveType"
-                                            @selectItem="handleSelectType"
-                                        ></ItemDisplaySelection>
-                                    </template>
-                                    <!-- Type # end -->
+                                        <!-- State # start -->
+                                        <template v-if="post.states">
+                                            <ItemDisplaySelection
+                                                :list="post.states"
+                                                :listSelected="stateSelected"
+                                                icon="MapPinIcon"
+                                                @removeItem="handleRemoveState"
+                                                @selectItem="handleSelectState"
+                                            ></ItemDisplaySelection>
+                                        </template>
+                                        <!-- State # end -->
 
-                                    <!-- Category # start -->
-                                    <template v-if="post.categories">
-                                        <ItemDisplaySelection
-                                            :list="post.categories"
-                                            :listSelected="categorySelected"
-                                            icon="interests"
-                                            @removeItem="handleRemoveCategory"
-                                            @selectItem="handleSelectCategory"
-                                        ></ItemDisplaySelection>
-                                    </template>
-                                    <!-- Category # end -->
-                                </section>
-                            </li>
+                                        <!-- Type # start -->
+                                        <template v-if="post.types">
+                                            <ItemDisplaySelection
+                                                :list="post.types"
+                                                :listSelected="typeSelected"
+                                                icon="NewspaperIcon"
+                                                @removeItem="handleRemoveType"
+                                                @selectItem="handleSelectType"
+                                            ></ItemDisplaySelection>
+                                        </template>
+                                        <!-- Type # end -->
+
+                                        <!-- Category # start -->
+                                        <template v-if="post.categories">
+                                            <ItemDisplaySelection
+                                                :list="post.categories"
+                                                :listSelected="categorySelected"
+                                                icon="interests"
+                                                @removeItem="
+                                                    handleRemoveCategory
+                                                "
+                                                @selectItem="
+                                                    handleSelectCategory
+                                                "
+                                            ></ItemDisplaySelection>
+                                        </template>
+                                        <!-- Category # end -->
+                                    </section>
+                                </li>
+                            </TransitionGroup>
                         </ul>
                     </div>
                     <!-- List Grid # end -->
@@ -738,3 +752,15 @@ onMounted(() => {
         </FullWidthElement>
     </div>
 </template>
+
+<style scoped>
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}
+</style>

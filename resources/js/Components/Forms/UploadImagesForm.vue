@@ -161,7 +161,7 @@ onMounted(() => {
                         <p
                             class="myPrimaryParagraph text-sm pt-2 leading-5 text-gray-600"
                         >
-                            PNG, JPG and more up to 3MB
+                            PNG, JPG and more up to 2MB
                         </p>
                     </InputLabel>
 
