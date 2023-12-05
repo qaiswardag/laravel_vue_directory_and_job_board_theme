@@ -5,6 +5,6 @@ import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
 
 <template>
     <div class="flex flex-shrink-0 items-center px-4 justify-between">
-        <img class="h-10" src="/myself_text_logo_black.svg" alt="Logo" />
+        <img class="h-10" src="/logo/myself_icon_logo_black.svg" alt="Logo" />
     </div>
 </template>
