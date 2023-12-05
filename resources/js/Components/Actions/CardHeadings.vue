@@ -15,7 +15,7 @@ import {
 defineProps({
     routesArray: {
         type: Array,
-        required: true,
+        required: false,
     },
 });
 </script>
@@ -36,11 +36,17 @@ defineProps({
                         </p>
                     </template>
                 </div>
+
                 <div
                     class="flex flex-shrink-0 items-center self-center myPrimaryGap"
                 >
                     <slot name="buttons" />
-                    <Menu as="div" class="relative inline-block text-left">
+
+                    <Menu
+                        v-if="routesArray"
+                        as="div"
+                        class="relative inline-block text-left"
+                    >
                         <div>
                             <MenuButton
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
