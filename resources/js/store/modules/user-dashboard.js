@@ -1,5 +1,4 @@
-import { vueFetch } from "use-lightweight-fetch";
-
+import { vueFetch } from "@/composables/vueFetch";
 // get images
 const {
     handleData: handleGetDashboardStats,

@@ -15,7 +15,7 @@ import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { useStore } from "vuex";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
-import { vueFetch } from "use-lightweight-fetch";
+import { vueFetch } from "@/composables/vueFetch";
 
 import {
     ArrowLeftIcon,

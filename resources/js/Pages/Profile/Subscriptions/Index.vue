@@ -17,7 +17,7 @@ import { useStore } from "vuex";
 import { delay } from "@/helpers/delay";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
-import { vueFetch } from "use-lightweight-fetch";
+import { vueFetch } from "@/composables/vueFetch";
 
 import {
     TrashIcon,

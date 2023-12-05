@@ -1,6 +1,6 @@
 <script setup>
 import { useStore } from "vuex";
-import { vueFetch } from "use-lightweight-fetch";
+import { vueFetch } from "@/composables/vueFetch";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import { onMounted, ref } from "vue";
@@ -329,6 +329,14 @@ onMounted(() => {
                 <div
                     class="flex flex-col myPrimaryGap border-b border-gray-200 pb-8 mb-8"
                 >
+                    <!-- error # start -->
+                    <template v-if="!isLoadingPosts && isErrorPosts">
+                        <p class="myPrimaryParagraphError">
+                            {{ errorPosts }}
+                        </p>
+                    </template>
+                    <!-- error # end -->
+
                     <div class="flex md:flex-row flex-col myPrimaryGap">
                         <div
                             v-if="fetchedDataPosts && fetchedDataPosts.posts"

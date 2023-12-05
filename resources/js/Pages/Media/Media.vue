@@ -24,16 +24,6 @@ import {
 } from "@headlessui/vue";
 
 //
-const breadcrumbsLinks = [
-    {
-        label: "Media",
-        route: {
-            name: "media.index",
-            parameters: props.currentUserTeam.id,
-        },
-    },
-];
-
 const props = defineProps({
     currentUserTeam: {
         required: true,
@@ -45,6 +35,16 @@ const props = defineProps({
         required: true,
     },
 });
+
+const breadcrumbsLinks = [
+    {
+        label: "Media",
+        route: {
+            name: "media.index",
+            parameters: props.currentUserTeam.id,
+        },
+    },
+];
 
 // media library modal
 

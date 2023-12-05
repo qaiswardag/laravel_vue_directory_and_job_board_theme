@@ -15,8 +15,7 @@ import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import { useStore } from "vuex";
 import ModalPaymentMethodForm from "@/Pages/Stripe/Partials/ModalPaymentMethodForm.vue";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
-
-import { vueFetch } from "use-lightweight-fetch";
+import { vueFetch } from "@/composables/vueFetch";
 import { PlusIcon } from "@heroicons/vue/20/solid";
 import { CheckIcon, TrashIcon } from "@heroicons/vue/24/outline";
 

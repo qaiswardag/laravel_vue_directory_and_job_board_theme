@@ -1,4 +1,4 @@
-import { vueFetch } from "use-lightweight-fetch";
+import { vueFetch } from "@/composables/vueFetch";
 
 // get image
 const {
