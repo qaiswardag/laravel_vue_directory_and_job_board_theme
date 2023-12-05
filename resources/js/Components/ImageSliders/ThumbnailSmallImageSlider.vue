@@ -36,6 +36,9 @@ const props = defineProps({
         required: false,
         type: Boolean,
     },
+    isLoading: {
+        required: false,
+    },
 });
 
 const emit = defineEmits(["firstButtonClick"]);
@@ -73,6 +76,12 @@ const sortedImages = computed(() => {
     // If no primary image is found, return the original array
     return props.images;
 });
+
+const showArrowsOnMounted = ref(false);
+
+onMounted(() => {
+    showArrowsOnMounted.value = true;
+});
 </script>
 
 <template>
@@ -93,7 +102,7 @@ const sortedImages = computed(() => {
                 >
                     <!-- image #start -->
                     <div
-                        class="relative shrink-0 duration-200 ease-linear rounded"
+                        class="min-h-[12rem] relative shrink-0 duration-200 ease-linear rounded"
                         :class="[
                             `${imageHeight}`,
                             `${imageWidth}`,
@@ -102,10 +111,11 @@ const sortedImages = computed(() => {
                         ]"
                     >
                         <img
+                            loading="lazy"
                             @click="firstButtonClick"
+                            class="object-cover rounded"
                             :src="`/storage/uploads/${image[imageSize]}`"
                             alt="image"
-                            class="object-cover rounded"
                             :class="[
                                 `${imageHeight}`,
                                 `${imageWidth}`,
@@ -113,6 +123,12 @@ const sortedImages = computed(() => {
                                 { 'cursor-pointer': imageClickable === true },
                             ]"
                         />
+                        <div
+                            v-if="!showArrowsOnMounted"
+                            class="w-full relative shrink-0 duration-200 ease-linear rounded animate-pulse bg-red-300"
+                        >
+                            <div class="max-h-96 w-full"></div>
+                        </div>
                     </div>
                     <!-- image #end -->
                 </template>
@@ -123,6 +139,7 @@ const sortedImages = computed(() => {
                 class="flex gap-[60%] items-center justify-center z-30"
             >
                 <button
+                    v-if="showArrowsOnMounted"
                     type="button"
                     @click="prevSlide"
                     class="bg-opacity-20 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
@@ -137,10 +154,13 @@ const sortedImages = computed(() => {
                         },
                     ]"
                 >
-                    <ChevronLeftIcon class="mySmallIcon"></ChevronLeftIcon>
+                    <span class="material-symbols-outlined">
+                        keyboard_arrow_left
+                    </span>
                 </button>
 
                 <button
+                    v-if="showArrowsOnMounted"
                     type="button"
                     @click="nextSlide"
                     class="bg-opacity-20 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
@@ -155,7 +175,9 @@ const sortedImages = computed(() => {
                         },
                     ]"
                 >
-                    <ChevronRightIcon class="mySmallIcon"></ChevronRightIcon>
+                    <span class="material-symbols-outlined">
+                        keyboard_arrow_right
+                    </span>
                 </button>
             </div>
         </div>

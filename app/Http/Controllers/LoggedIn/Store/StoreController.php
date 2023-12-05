@@ -543,6 +543,21 @@ class StoreController extends Controller
         $userId = $request->user_id;
         $contactPageUrl = $request->contact_page_url;
 
+        // set team address if team address is null
+        if (!is_null($address)) {
+            $team->update([
+                "address" => $address,
+            ]);
+        }
+
+        // set team contact page url if null
+        if (!is_null($contactPageUrl)) {
+            $team->update([
+                "contact_page_url" => $contactPageUrl,
+            ]);
+        }
+
+
         // Initialize the $authorId variable to null
         $authorId = null;
 
