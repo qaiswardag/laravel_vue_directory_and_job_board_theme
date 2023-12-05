@@ -80,12 +80,15 @@ const sortedImages = computed(() => {
 const showArrowsOnMounted = ref(false);
 
 onMounted(() => {
-    showArrowsOnMounted.value = true;
+    setTimeout(() => {
+        showArrowsOnMounted.value = true;
+    }, 500);
 });
 </script>
 
 <template>
     <div
+        loading="lazy"
         v-if="Array.isArray(images)"
         class="relative flex justify-center items-center"
     >
@@ -102,7 +105,8 @@ onMounted(() => {
                 >
                     <!-- image #start -->
                     <div
-                        class="min-h-[12rem] relative shrink-0 duration-200 ease-linear rounded"
+                        id="imagePlaceholder"
+                        class="relative shrink-0 duration-200 ease-linear rounded"
                         :class="[
                             `${imageHeight}`,
                             `${imageWidth}`,
@@ -111,7 +115,6 @@ onMounted(() => {
                         ]"
                     >
                         <img
-                            loading="lazy"
                             @click="firstButtonClick"
                             class="object-cover rounded"
                             :src="`/storage/uploads/${image[imageSize]}`"
@@ -124,7 +127,6 @@ onMounted(() => {
                             ]"
                         />
                         <div
-                            v-if="!showArrowsOnMounted"
                             class="w-full relative shrink-0 duration-200 ease-linear rounded animate-pulse bg-red-300"
                         >
                             <div class="max-h-96 w-full"></div>
@@ -139,7 +141,6 @@ onMounted(() => {
                 class="flex gap-[60%] items-center justify-center z-30"
             >
                 <button
-                    v-if="showArrowsOnMounted"
                     type="button"
                     @click="prevSlide"
                     class="bg-opacity-20 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
@@ -154,13 +155,15 @@ onMounted(() => {
                         },
                     ]"
                 >
-                    <span class="material-symbols-outlined">
+                    <span
+                        v-if="showArrowsOnMounted"
+                        class="material-symbols-outlined"
+                    >
                         keyboard_arrow_left
                     </span>
                 </button>
 
                 <button
-                    v-if="showArrowsOnMounted"
                     type="button"
                     @click="nextSlide"
                     class="bg-opacity-20 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
@@ -175,7 +178,10 @@ onMounted(() => {
                         },
                     ]"
                 >
-                    <span class="material-symbols-outlined">
+                    <span
+                        v-if="showArrowsOnMounted"
+                        class="material-symbols-outlined"
+                    >
                         keyboard_arrow_right
                     </span>
                 </button>

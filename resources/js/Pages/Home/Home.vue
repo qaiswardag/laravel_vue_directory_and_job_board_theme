@@ -179,7 +179,7 @@ const faqs = [
                             <img
                                 class="top-0 left-0 w-full object-cover rounded-lg"
                                 src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/6502f8c0d2d28543f52f901e_prod-hero-ds.webp"
-                                alt="/"
+                                alt="image"
                             />
                             <div
                                 class="bg-black/0 absolute top-0 left-0 w-full h-full rounded-lg"
@@ -292,6 +292,7 @@ const faqs = [
                     </template>
                 </FullWidthElement>
                 <!-- 4 images # end -->
+
                 <!-- FAQ # start -->
                 <FullWidthElement :descriptionArea="true" class="bg-red-50">
                     <template #title>Frequently asked questions</template>
@@ -308,7 +309,7 @@ const faqs = [
                             class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-12"
                         >
                             <dl
-                                class="divide-y divide-myPrimaryMediumGrayColor lg:col-span-4"
+                                class="divide-y divide-myPrimaryMediumGrayColor lg:col-span-6"
                             >
                                 <Disclosure
                                     as="div"
@@ -353,7 +354,7 @@ const faqs = [
                                 </Disclosure>
                             </dl>
                             <img
-                                class="w-full object-cover lg:col-span-8 rounded-lg"
+                                class="w-full object-cover lg:col-span-6 rounded-lg"
                                 src="/app-images/pages/frequently_asked_questions.jpg"
                                 alt="image"
                             />
