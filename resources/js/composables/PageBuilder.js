@@ -345,6 +345,12 @@ class PageBuilder {
         // Deep clone clone component
         const clonedComponent = { ...componentObject };
 
+        // TODO: Scroll to the cloned component
+        // Scroll to the cloned component
+        clonedComponent.scrollIntoView({
+            behavior: "smooth",
+        });
+
         // Create a DOMParser instance
         const parser = new DOMParser();
 

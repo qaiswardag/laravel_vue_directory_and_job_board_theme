@@ -193,10 +193,6 @@ onMounted(async () => {
                                 @click="
                                     () => {
                                         store.commit(
-                                            'pageBuilderState/setMenuRight',
-                                            false
-                                        );
-                                        store.commit(
                                             'pageBuilderState/setComponentArrayAddMethod',
                                             'unshift'
                                         );
@@ -293,10 +289,6 @@ onMounted(async () => {
                                 <button
                                     @click="
                                         () => {
-                                            store.commit(
-                                                'pageBuilderState/setMenuRight',
-                                                false
-                                            );
                                             store.commit(
                                                 'pageBuilderState/setComponentArrayAddMethod',
                                                 'push'
