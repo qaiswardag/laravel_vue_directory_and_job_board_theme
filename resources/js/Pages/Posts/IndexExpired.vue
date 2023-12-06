@@ -61,7 +61,7 @@ const linksTopMenu = [
         },
     },
     {
-        label: "Draft Campaigns",
+        label: "Draft",
         icon: "draw",
         route: {
             name: "team.posts.index.draft",

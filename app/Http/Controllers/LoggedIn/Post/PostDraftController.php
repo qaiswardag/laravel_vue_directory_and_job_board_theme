@@ -69,7 +69,8 @@ class PostDraftController extends Controller
             })
             ->where(function ($query) {
                 $query
-                    ->where('published', false);
+                    ->where('published', false)
+                    ->orWhereNull('published');
             })
             ->orderBy('updated_at', 'desc')
             ->paginate(12);

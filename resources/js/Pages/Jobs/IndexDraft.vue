@@ -68,7 +68,7 @@ const linksTopMenu = [
         },
     },
     {
-        label: "Drafts & Unpiad Jobs",
+        label: "Draft & Unpiad Jobs",
         icon: "draw",
         route: {
             name: "team.jobs.index.draft",

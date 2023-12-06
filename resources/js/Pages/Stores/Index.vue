@@ -70,6 +70,14 @@ const linksTopMenu = [
         },
     },
     {
+        label: "Draft",
+        icon: "draw",
+        route: {
+            name: "team.stores.index.draft",
+            parameters: [props.currentUserTeam.id],
+        },
+    },
+    {
         label: "Trash",
         icon: "delete",
         route: {

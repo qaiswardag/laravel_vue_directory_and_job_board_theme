@@ -283,6 +283,7 @@ import {
                 "
                 :active="
                     route().current('team.stores.index') ||
+                    route().current('team.stores.index.draft') ||
                     route().current('team.stores.index.trash') ||
                     route().current('team.stores.create') ||
                     route().current('team.stores.store.edit') ||
