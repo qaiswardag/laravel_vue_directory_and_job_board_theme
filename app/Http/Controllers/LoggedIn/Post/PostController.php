@@ -250,9 +250,16 @@ class PostController extends Controller
             }
         }
 
-        return redirect()->route("team.posts.index", [
-            "teamId" => $team->id,
-        ]);
+        if (!$request->published) {
+            return redirect()->route("team.posts.index.draft", [
+                "teamId" => $team->id,
+            ]);
+        }
+        if ($request->published) {
+            return redirect()->route("team.posts.index", [
+                "teamId" => $team->id,
+            ]);
+        }
     }
 
     /**
@@ -623,9 +630,16 @@ class PostController extends Controller
                 ->delete();
         }
 
-        return redirect()->route("team.posts.index", [
-            "teamId" => $team->id,
-        ]);
+        if (!$request->published) {
+            return redirect()->route("team.posts.index.draft", [
+                "teamId" => $team->id,
+            ]);
+        }
+        if ($request->published) {
+            return redirect()->route("team.posts.index", [
+                "teamId" => $team->id,
+            ]);
+        }
     }
 
     /**

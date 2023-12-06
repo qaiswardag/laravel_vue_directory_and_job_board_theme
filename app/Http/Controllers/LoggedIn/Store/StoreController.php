@@ -352,9 +352,17 @@ class StoreController extends Controller
             }
         }
 
-        return redirect()->route("team.stores.index", [
-            "teamId" => $team->id,
-        ]);
+
+        if (!$request->published) {
+            return redirect()->route("team.stores.index.draft", [
+                "teamId" => $team->id,
+            ]);
+        }
+        if ($request->published) {
+            return redirect()->route("team.stores.index", [
+                "teamId" => $team->id,
+            ]);
+        }
     }
 
     /**
@@ -816,9 +824,16 @@ class StoreController extends Controller
                 ->delete();
         }
 
-        return redirect()->route("team.stores.index", [
-            "teamId" => $team->id,
-        ]);
+        if (!$request->published) {
+            return redirect()->route("team.stores.index.draft", [
+                "teamId" => $team->id,
+            ]);
+        }
+        if ($request->published) {
+            return redirect()->route("team.stores.index", [
+                "teamId" => $team->id,
+            ]);
+        }
     }
 
     /**
