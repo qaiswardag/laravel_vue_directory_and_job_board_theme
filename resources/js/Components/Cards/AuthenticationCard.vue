@@ -2,16 +2,13 @@
 defineProps({
     css: {
         type: String,
-        required: true,
+        required: false,
     },
 });
 </script>
 
 <template>
-    <div
-        :class="css"
-        class="flex flex-col sm:justify-center items-center md:px-6 px-4"
-    >
+    <div :class="css" class="flex flex-col sm:justify-center items-center">
         <div>
             <slot name="logo" />
         </div>

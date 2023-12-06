@@ -20,12 +20,11 @@ defineProps({
                 <h2 class="mySecondaryHeader">
                     <slot name="title" />
                 </h2>
-                <p
-                    v-if="descriptionArea === true"
-                    class="myPrimaryParagraph font-medium"
-                >
-                    <slot name="description" />
-                </p>
+                <template v-if="descriptionArea === true">
+                    <p class="myPrimaryParagraph font-medium">
+                        <slot name="description" />
+                    </p>
+                </template>
             </div>
         </template>
         <div class="myPrimaryContentSection">
