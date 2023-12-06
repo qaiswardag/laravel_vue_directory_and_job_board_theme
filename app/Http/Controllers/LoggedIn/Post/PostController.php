@@ -74,7 +74,7 @@ class PostController extends Controller
                     ->where('published', true)
                     ->where(function ($query) {
                         $query
-                            ->where('ended_at', '>', Carbon::now())
+                            ->where('ended_at', '>=', Carbon::now())
                             ->orWhereNull('ended_at');
                     });
             })
@@ -158,7 +158,7 @@ class PostController extends Controller
             "slug" => $slug,
             "published" => $request->published,
             "started_at" => $startedAt,
-            "ended_at" => $endedAt,
+            "ended_at" => $endedAt->addHours(6),
             "days_before_campaign_visibility" => $request->days_before_campaign_visibility,
             "content" => $content,
             "tags" => $request->tags,

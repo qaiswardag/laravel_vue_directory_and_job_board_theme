@@ -69,6 +69,11 @@ class PostDraftController extends Controller
             })
             ->where(function ($query) {
                 $query
+                    ->where(function ($query) {
+                        $query
+                            ->where('ended_at', '>=', Carbon::now())
+                            ->orWhereNull('ended_at');
+                    })
                     ->where('published', false)
                     ->orWhereNull('published');
             })
