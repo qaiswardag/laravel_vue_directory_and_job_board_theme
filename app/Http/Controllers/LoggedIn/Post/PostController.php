@@ -158,7 +158,7 @@ class PostController extends Controller
             "slug" => $slug,
             "published" => $request->published,
             "started_at" => $startedAt,
-            "ended_at" => $endedAt->addHours(6),
+            "ended_at" => $endedAt,
             "days_before_campaign_visibility" => $request->days_before_campaign_visibility,
             "content" => $content,
             "tags" => $request->tags,
