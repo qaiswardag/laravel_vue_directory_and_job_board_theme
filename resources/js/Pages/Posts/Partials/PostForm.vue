@@ -377,7 +377,10 @@ const handleCreatePost = function () {
 const submittedOnUpdate = ref(true);
 
 const postStartedAt = ref(formatISO(new Date()));
-const postEndedAt = ref(formatISO(new Date()));
+
+const postEndedAt = ref(
+    formatISO(new Date(new Date().getTime() + 24 * 60 * 60 * 10000))
+);
 
 const createPost = () => {
     if (formType.value === "create") {
@@ -433,7 +436,9 @@ const clearTags = ref(0);
 // clear form
 const clearForm = function () {
     postStartedAt.value = formatISO(new Date());
-    postEndedAt.value = formatISO(new Date());
+    postEndedAt.value = formatISO(
+        new Date(new Date().getTime() + 24 * 60 * 60 * 10000)
+    );
     //
     //
     //
@@ -497,7 +502,9 @@ const setEndedAtDate = function () {
         postEndedAt.value = props.post?.ended_at;
     }
     if (!props.post) {
-        postEndedAt.value = formatISO(new Date());
+        postEndedAt.value = formatISO(
+            new Date(new Date().getTime() + 24 * 60 * 60 * 10000)
+        );
     }
 };
 watch(
