@@ -32,8 +32,6 @@ class PageBuilder {
             "#contains-pagebuilder"
         );
 
-        this.pagebuilder = document.querySelector("#pagebuilder");
-
         this.timer = null;
         this.store = store;
         this.getTextAreaVueModel = computed(
@@ -207,14 +205,14 @@ class PageBuilder {
     #handleElementClick = (e, element) => {
         e.stopPropagation();
 
-        if (!this.pagebuilder) return;
+        const pagebuilder = document.querySelector("#pagebuilder");
+
+        if (!pagebuilder) return;
 
         this.store.commit("pageBuilderState/setMenuRight", true);
 
-        if (this.pagebuilder.querySelector("[selected]") !== null) {
-            this.pagebuilder
-                .querySelector("[selected]")
-                .removeAttribute("selected");
+        if (pagebuilder.querySelector("[selected]") !== null) {
+            pagebuilder.querySelector("[selected]").removeAttribute("selected");
         }
 
         element.removeAttribute("hovered");
@@ -232,15 +230,13 @@ class PageBuilder {
 
         e.preventDefault();
         e.stopPropagation();
-        //
-        //
-        //
-        if (!this.pagebuilder) return;
 
-        if (this.pagebuilder.querySelector("[hovered]") !== null) {
-            this.pagebuilder
-                .querySelector("[hovered]")
-                .removeAttribute("hovered");
+        const pagebuilder = document.querySelector("#pagebuilder");
+
+        if (!pagebuilder) return;
+
+        if (pagebuilder.querySelector("[hovered]") !== null) {
+            pagebuilder.querySelector("[hovered]").removeAttribute("hovered");
         }
 
         if (!element.hasAttribute("selected")) {
@@ -252,17 +248,15 @@ class PageBuilder {
         if (this.showRunningMethodLogs) {
             console.log("#handleMouseLeave");
         }
-        // console.log("YOU MOUSE LEAVE ME!");
 
         e.preventDefault();
         e.stopPropagation();
 
-        if (!this.pagebuilder) return;
+        const pagebuilder = document.querySelector("#pagebuilder");
+        if (!pagebuilder) return;
 
-        if (this.pagebuilder.querySelector("[hovered]") !== null) {
-            this.pagebuilder
-                .querySelector("[hovered]")
-                .removeAttribute("hovered");
+        if (pagebuilder.querySelector("[hovered]") !== null) {
+            pagebuilder.querySelector("[hovered]").removeAttribute("hovered");
         }
     };
 
@@ -275,36 +269,36 @@ class PageBuilder {
             console.log("setEventListenersForElements");
         }
 
-        if (!this.pagebuilder) return;
+        const pagebuilder = document.querySelector("#pagebuilder");
 
-        this.pagebuilder
-            .querySelectorAll("section *")
-            .forEach(async (element) => {
-                // exclude headerTags
+        if (!pagebuilder) return;
+
+        pagebuilder.querySelectorAll("section *").forEach(async (element) => {
+            // exclude headerTags
+            if (
+                !this.headerTags.includes(element.tagName) &&
+                !this.additionalTagsNoneListernes.includes(element.tagName)
+            ) {
                 if (
-                    !this.headerTags.includes(element.tagName) &&
-                    !this.additionalTagsNoneListernes.includes(element.tagName)
+                    this.elementsWithListeners &&
+                    !this.elementsWithListeners.has(element)
                 ) {
-                    if (
-                        this.elementsWithListeners &&
-                        !this.elementsWithListeners.has(element)
-                    ) {
-                        this.elementsWithListeners.add(element);
-                        // Attach event listeners directly to individual elements
-                        element.addEventListener("click", (e) =>
-                            this.#handleElementClick(e, element)
-                        );
-                        element.addEventListener("mouseover", (e) =>
-                            this.#handleMouseOver(e, element)
-                        );
-                        element.addEventListener("mouseleave", (e) =>
-                            this.#handleMouseLeave(e, element)
-                        );
-                    }
+                    this.elementsWithListeners.add(element);
+                    // Attach event listeners directly to individual elements
+                    element.addEventListener("click", (e) =>
+                        this.#handleElementClick(e, element)
+                    );
+                    element.addEventListener("mouseover", (e) =>
+                        this.#handleMouseOver(e, element)
+                    );
+                    element.addEventListener("mouseleave", (e) =>
+                        this.#handleMouseLeave(e, element)
+                    );
                 }
+            }
 
-                // end for each iterating over elements
-            });
+            // end for each iterating over elements
+        });
     };
 
     /**
