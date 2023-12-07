@@ -69,7 +69,13 @@ class PostDraftController extends Controller
             })
             ->where(function ($query) {
                 $query
-                    ->where('published', false);
+                    ->where(function ($query) {
+                        $query
+                            ->where('ended_at', '>=', Carbon::now())
+                            ->orWhereNull('ended_at');
+                    })
+                    ->where('published', false)
+                    ->orWhereNull('published');
             })
             ->orderBy('updated_at', 'desc')
             ->paginate(12);

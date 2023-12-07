@@ -28,6 +28,12 @@ class PageBuilder {
 
         this.nextTick = nextTick();
 
+        this.containsPagebuilder = document.querySelector(
+            "#contains-pagebuilder"
+        );
+
+        this.pagebuilder = document.querySelector("#pagebuilder");
+
         this.timer = null;
         this.store = store;
         this.getTextAreaVueModel = computed(
@@ -49,15 +55,16 @@ class PageBuilder {
         this.getHyberlinkEnable = computed(
             () => this.store.getters["pageBuilderState/getHyberlinkEnable"]
         );
-        this.getElement = computed(
-            () => this.store.getters["pageBuilderState/getElement"]
-        );
-
         this.getComponents = computed(
             () => this.store.getters["pageBuilderState/getComponents"]
         );
+
         this.getComponent = computed(
             () => this.store.getters["pageBuilderState/getComponent"]
+        );
+
+        this.getElement = computed(
+            () => this.store.getters["pageBuilderState/getElement"]
         );
         this.getNextSibling = computed(
             () => this.store.getters["pageBuilderState/getNextSibling"]
@@ -67,6 +74,13 @@ class PageBuilder {
         );
         this.getRestoredElement = computed(
             () => this.store.getters["pageBuilderState/getRestoredElement"]
+        );
+
+        this.getComponentArrayAddMethod = computed(
+            () =>
+                this.store.getters[
+                    "pageBuilderState/getComponentArrayAddMethod"
+                ]
         );
 
         this.headerTags = ["P", "H1", "H2", "H3", "H4", "H5", "H6"];
@@ -192,13 +206,15 @@ class PageBuilder {
 
     #handleElementClick = (e, element) => {
         e.stopPropagation();
-        const pagebuilder = document.querySelector("#pagebuilder");
-        if (!pagebuilder) return;
+
+        if (!this.pagebuilder) return;
 
         this.store.commit("pageBuilderState/setMenuRight", true);
 
-        if (pagebuilder.querySelector("[selected]") !== null) {
-            pagebuilder.querySelector("[selected]").removeAttribute("selected");
+        if (this.pagebuilder.querySelector("[selected]") !== null) {
+            this.pagebuilder
+                .querySelector("[selected]")
+                .removeAttribute("selected");
         }
 
         element.removeAttribute("hovered");
@@ -216,16 +232,15 @@ class PageBuilder {
 
         e.preventDefault();
         e.stopPropagation();
-
-        const pagebuilder = document.querySelector("#pagebuilder");
-
         //
         //
         //
-        if (!pagebuilder) return;
+        if (!this.pagebuilder) return;
 
-        if (pagebuilder.querySelector("[hovered]") !== null) {
-            pagebuilder.querySelector("[hovered]").removeAttribute("hovered");
+        if (this.pagebuilder.querySelector("[hovered]") !== null) {
+            this.pagebuilder
+                .querySelector("[hovered]")
+                .removeAttribute("hovered");
         }
 
         if (!element.hasAttribute("selected")) {
@@ -242,11 +257,12 @@ class PageBuilder {
         e.preventDefault();
         e.stopPropagation();
 
-        const pagebuilder = document.querySelector("#pagebuilder");
-        if (!pagebuilder) return;
+        if (!this.pagebuilder) return;
 
-        if (pagebuilder.querySelector("[hovered]") !== null) {
-            pagebuilder.querySelector("[hovered]").removeAttribute("hovered");
+        if (this.pagebuilder.querySelector("[hovered]") !== null) {
+            this.pagebuilder
+                .querySelector("[hovered]")
+                .removeAttribute("hovered");
         }
     };
 
@@ -258,38 +274,37 @@ class PageBuilder {
         if (this.showRunningMethodLogs) {
             console.log("setEventListenersForElements");
         }
-        //
 
-        //
-        const pagebuilder = document.querySelector("#pagebuilder");
-        if (!pagebuilder) return;
+        if (!this.pagebuilder) return;
 
-        pagebuilder.querySelectorAll("section *").forEach(async (element) => {
-            // exclude headerTags
-            if (
-                !this.headerTags.includes(element.tagName) &&
-                !this.additionalTagsNoneListernes.includes(element.tagName)
-            ) {
+        this.pagebuilder
+            .querySelectorAll("section *")
+            .forEach(async (element) => {
+                // exclude headerTags
                 if (
-                    this.elementsWithListeners &&
-                    !this.elementsWithListeners.has(element)
+                    !this.headerTags.includes(element.tagName) &&
+                    !this.additionalTagsNoneListernes.includes(element.tagName)
                 ) {
-                    this.elementsWithListeners.add(element);
-                    // Attach event listeners directly to individual elements
-                    element.addEventListener("click", (e) =>
-                        this.#handleElementClick(e, element)
-                    );
-                    element.addEventListener("mouseover", (e) =>
-                        this.#handleMouseOver(e, element)
-                    );
-                    element.addEventListener("mouseleave", (e) =>
-                        this.#handleMouseLeave(e, element)
-                    );
+                    if (
+                        this.elementsWithListeners &&
+                        !this.elementsWithListeners.has(element)
+                    ) {
+                        this.elementsWithListeners.add(element);
+                        // Attach event listeners directly to individual elements
+                        element.addEventListener("click", (e) =>
+                            this.#handleElementClick(e, element)
+                        );
+                        element.addEventListener("mouseover", (e) =>
+                            this.#handleMouseOver(e, element)
+                        );
+                        element.addEventListener("mouseleave", (e) =>
+                            this.#handleMouseLeave(e, element)
+                        );
+                    }
                 }
-            }
 
-            // end for each iterating over elements
-        });
+                // end for each iterating over elements
+            });
     };
 
     /**
@@ -344,6 +359,31 @@ class PageBuilder {
 
         // Deep clone clone component
         const clonedComponent = { ...componentObject };
+
+        //  scoll to top or bottom # end
+        if (this.containsPagebuilder) {
+            if (
+                this.getComponentArrayAddMethod.value === "unshift" ||
+                this.getComponentArrayAddMethod.value === "push"
+            ) {
+                // push to top
+                if (this.getComponentArrayAddMethod.value === "unshift") {
+                    this.containsPagebuilder.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                    });
+                }
+
+                // push to bottom
+                if (this.getComponentArrayAddMethod.value === "push") {
+                    const maxHeight = this.containsPagebuilder.scrollHeight;
+                    this.containsPagebuilder.scrollTo({
+                        top: maxHeight,
+                        behavior: "smooth",
+                    });
+                }
+            }
+        }
 
         // Create a DOMParser instance
         const parser = new DOMParser();

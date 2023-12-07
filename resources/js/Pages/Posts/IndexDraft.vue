@@ -61,7 +61,7 @@ const linksTopMenu = [
         },
     },
     {
-        label: "Draft Campaigns",
+        label: "Draft",
         icon: "draw",
         route: {
             name: "team.posts.index.draft",
@@ -136,12 +136,7 @@ const handleDelete = function (postId, post) {
         // handle show modal for unique content
         modalShowDeletePost.value = false;
     };
-    // handle click
-    // secondModalButtonFunction.value = function () {
-    //     // handle show modal for unique content
-    //     modalShowDeletePost.value = false;
-    // };
-    // handle click
+
     thirdModalButtonFunction.value = function () {
         deletePost(postId);
     };
@@ -195,12 +190,15 @@ const searchForm = useForm({
 });
 
 const handleSearch = function () {
-    searchForm.get(route("team.posts.index", [props.currentUserTeam.id]), {
-        preserveScroll: true,
-        onSuccess: () => {},
-        onError: (err) => {},
-        onFinish: () => {},
-    });
+    searchForm.get(
+        route("team.posts.index.draft", [props.currentUserTeam.id]),
+        {
+            preserveScroll: true,
+            onSuccess: () => {},
+            onError: (err) => {},
+            onFinish: () => {},
+        }
+    );
 };
 
 const scrolTableContainer = ref("scrolTableContainer");

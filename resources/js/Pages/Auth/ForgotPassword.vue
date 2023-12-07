@@ -10,6 +10,8 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import SubmitButton from "../../Components/Buttons/SubmitButton.vue";
 import EmptySectionBorder from "../../Components/Sections/EmptySectionBorder.vue";
+import PageHeader from "@/Components/Headers/PageHeader.vue";
+import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 
 defineProps({
     status: String,
@@ -26,59 +28,66 @@ const submit = () => {
 
 <template>
     <MainLayout>
-        <GuestsLayout>
-            <Head title="Forgot password" />
-            <template #header>
-                <div class="pb-8 text-center">
-                    <h1 class="myTertiaryHeader text-white">Forgot password</h1>
-                </div>
-            </template>
-
-            <AuthenticationCard :css="'opacity-100'">
-                <template #logo>
-                    <AuthenticationCardLogo />
+        <div class="bg-gradient-to-t from-red-50 via-pink-100 to-pink-50">
+            <GuestsLayout>
+                <Head title="Forgot password" />
+                <template #header>
+                    <PageHeader title="Forgot password"></PageHeader>
                 </template>
 
-                <div class="mt-4 mb-8">
-                    <h1 class="myTertiaryHeader text-center">
-                        Forgot password
-                    </h1>
-                    <p class="myPrimaryParagraph text-center">
-                        Forgot your password? No problem. Just let us know your
-                        email address and we will email you a password reset
-                        link that will allow you to choose a new one.
-                    </p>
-                </div>
+                <FullWidthElement :descriptionArea="false" :headerArea="false">
+                    <template #title>Lorem ipsum</template>
+                    <template #content>
+                        <AuthenticationCard>
+                            <template #logo>
+                                <AuthenticationCardLogo />
+                            </template>
 
-                <div
-                    v-if="status"
-                    class="mb-4 font-normal text-sm text-myPrimaryLinkColor"
-                >
-                    {{ status }}
-                </div>
+                            <div class="mt-4 mb-8">
+                                <h1 class="myTertiaryHeader text-center">
+                                    Forgot password
+                                </h1>
+                                <p class="myPrimaryParagraph text-center">
+                                    Forgot your password? No problem. Just let
+                                    us know your email address and we will email
+                                    you a password reset link that will allow
+                                    you to choose a new one.
+                                </p>
+                            </div>
 
-                <form @submit.prevent="submit">
-                    <div class="myInputGroup">
-                        <InputLabel for="email" value="Email" />
-                        <TextInput
-                            id="email"
-                            v-model="form.email"
-                            type="email"
-                            autofocus
-                        />
-                        <InputError :message="form.errors.email" />
-                    </div>
+                            <div
+                                v-if="status"
+                                class="mb-4 font-normal text-sm text-myPrimaryLinkColor"
+                            >
+                                {{ status }}
+                            </div>
 
-                    <div class="flex items-center justify-end mt-4">
-                        <SubmitButton
-                            :disabled="form.processing"
-                            buttonText="Email Password Reset Link"
-                        >
-                        </SubmitButton>
-                    </div>
-                </form>
-            </AuthenticationCard>
-            <EmptySectionBorder></EmptySectionBorder>
-        </GuestsLayout>
+                            <form @submit.prevent="submit">
+                                <div class="myInputGroup">
+                                    <InputLabel for="email" value="Email" />
+                                    <TextInput
+                                        id="email"
+                                        v-model="form.email"
+                                        type="email"
+                                        autofocus
+                                    />
+                                    <InputError :message="form.errors.email" />
+                                </div>
+
+                                <div class="flex items-center justify-end mt-4">
+                                    <SubmitButton
+                                        :disabled="form.processing"
+                                        buttonText="Reset password"
+                                    >
+                                    </SubmitButton>
+                                </div>
+                            </form>
+                        </AuthenticationCard>
+                    </template>
+                </FullWidthElement>
+
+                <EmptySectionBorder></EmptySectionBorder>
+            </GuestsLayout>
+        </div>
     </MainLayout>
 </template>

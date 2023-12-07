@@ -616,6 +616,11 @@ Route::middleware([
         "index",
     ])->name("team.stores.index");
 
+    Route::get("/team/stores/draft/{teamId}", [
+        StoreController::class,
+        "IndexDraft",
+    ])->name("team.stores.index.draft");
+
     Route::get("/team/stores/trash/{teamId}", [StoreDeletedController::class, "index"])->name(
         "team.stores.index.trash"
     );

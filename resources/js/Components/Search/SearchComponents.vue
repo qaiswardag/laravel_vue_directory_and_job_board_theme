@@ -70,6 +70,7 @@ const handleDropComponent = async function (componentObject) {
     });
 
     await nextTick();
+
     store.commit("pageBuilderState/setPushComponents", {
         component: clonedComponent,
         componentArrayAddMethod: getComponentArrayAddMethod.value,

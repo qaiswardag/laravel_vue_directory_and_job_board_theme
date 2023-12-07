@@ -193,10 +193,6 @@ onMounted(async () => {
                                 @click="
                                     () => {
                                         store.commit(
-                                            'pageBuilderState/setMenuRight',
-                                            false
-                                        );
-                                        store.commit(
                                             'pageBuilderState/setComponentArrayAddMethod',
                                             'unshift'
                                         );
@@ -253,6 +249,7 @@ onMounted(async () => {
                 <EditGetElement></EditGetElement>
                 <div
                     @click="store.commit('pageBuilderState/setComponent', null)"
+                    id="contains-pagebuilder"
                     class="pl-4 pr-4 pb-4 overflow-y-auto h-screen pt-1"
                 >
                     <div id="pagebuilder" class="">
@@ -293,10 +290,6 @@ onMounted(async () => {
                                 <button
                                     @click="
                                         () => {
-                                            store.commit(
-                                                'pageBuilderState/setMenuRight',
-                                                false
-                                            );
                                             store.commit(
                                                 'pageBuilderState/setComponentArrayAddMethod',
                                                 'push'
