@@ -404,7 +404,7 @@ const goToSingleStoreFromInSale = function (
                     <WidgetSectionBorder></WidgetSectionBorder>
 
                     <div
-                        class="p-2 min-h-[4rem] max-h-[40rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        class="min-h-[4rem] max-h-[40rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
                     >
                         <div v-for="store in stores && stores" :key="store.id">
                             <!-- store cover image -->
@@ -429,7 +429,7 @@ const goToSingleStoreFromInSale = function (
                                     "
                                 ></ThumbnailSmallImageSlider>
 
-                                <div class="flex flex-col gap-6 w-full mt-4">
+                                <div class="flex flex-col">
                                     <p
                                         @click="
                                             goToSingleStoreFromInSale(
@@ -440,7 +440,7 @@ const goToSingleStoreFromInSale = function (
                                                 store.id
                                             )
                                         "
-                                        class="mb-6 block myQuaternaryHeader text-myPrimaryDarkGrayColor cursor-pointer"
+                                        class="myPrimaryParagraph"
                                     >
                                         {{ store.title }}
                                     </p>
