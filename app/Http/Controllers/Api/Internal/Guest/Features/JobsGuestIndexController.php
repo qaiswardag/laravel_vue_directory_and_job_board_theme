@@ -52,8 +52,8 @@ class JobsGuestIndexController extends Controller
                 $query
                     ->whereNotNull("started_at")
                     ->whereNotNull("ended_at")
-                    ->where("started_at", "<", now()->addDays(1))
-                    ->where("ended_at", ">", now());
+                    ->where("started_at", "<=", now()->addDays(1))
+                    ->where("ended_at", ">=", now());
             });
 
 

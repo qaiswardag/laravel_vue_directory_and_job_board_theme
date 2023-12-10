@@ -57,20 +57,24 @@ class PostController extends Controller
      */
     public function show($teamSlug, $postSlug, $postId)
     {
+        $postRenderView = "Guests/Items/SingleItem";
+
+        $post = Post::findOrFail($postId);
+        $startCampaignVisibility = $post->days_before_campaign_visibility;
+
         $post = Post::where("id", $postId)
             ->where("published", true)
             ->with('coverImages')
-            ->where(function ($query) {
+            ->where(function ($query) use ($startCampaignVisibility) {
                 $query
                     ->whereNotNull("started_at")
                     ->whereNotNull("ended_at")
                     ->whereNotNull("days_before_campaign_visibility")
-                    ->where("started_at", ">=", now()->subDays(DB::raw("days_before_campaign_visibility")))
-                    ->where("ended_at", ">", now());
+
+                    ->where("started_at", "<=", now()->addDays($startCampaignVisibility))
+                    ->where("ended_at", ">=", now());
             })
             ->firstOrFail();
-
-        $postRenderView = "Guests/Items/SingleItem";
 
         $authors = $post->authors;
         $categories = $post->categories;

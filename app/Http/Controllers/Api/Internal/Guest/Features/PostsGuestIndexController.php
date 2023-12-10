@@ -35,17 +35,15 @@ class PostsGuestIndexController extends Controller
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("title", "LIKE", "%" . $term . "%");
             })
-            // Add a condition to filter posts where ended_at is
             ->where(function ($query) {
-                // Include posts where ended_at is not null
                 $query
                     ->whereNotNull("started_at")
                     ->whereNotNull("ended_at")
-                    ->where("ended_at", ">", now()->addDays(DB::raw('days_before_campaign_visibility')))
-                    ->where("ended_at", ">", now());
-            });
-
-
+                    ->whereNotNull("days_before_campaign_visibility");
+            })
+            ->whereRaw(
+                "started_at <= NOW() + INTERVAL days_before_campaign_visibility DAY"
+            );
 
         // categories filter logic # start
         $categoryIDs = [];
@@ -68,7 +66,6 @@ class PostsGuestIndexController extends Controller
                 $query->whereIn("post_categories.id", $categoryIDs);
             });
         }
-        // categories filter logic # start
 
         $posts = $query->paginate(20);
 

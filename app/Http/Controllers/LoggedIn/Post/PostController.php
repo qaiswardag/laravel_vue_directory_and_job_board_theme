@@ -61,24 +61,24 @@ class PostController extends Controller
             ->posts()
             ->with("coverImages")
             ->with("categories")
-            ->with(["stores" => function ($query) {
-                $query->with("states");
-            }])
+            ->with([
+                "stores" => function ($query) {
+                    $query->with("states");
+                },
+            ])
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
             ->where(function ($query) {
-                $query
-                    ->where('published', true)
-                    ->where(function ($query) {
-                        $query
-                            ->where('ended_at', '>=', Carbon::now())
-                            ->orWhereNull('ended_at');
-                    });
+                $query->where("published", true)->where(function ($query) {
+                    $query
+                        ->where("ended_at", ">=", Carbon::now())
+                        ->orWhereNull("ended_at");
+                });
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $posts->appends($request->all());
@@ -159,13 +159,13 @@ class PostController extends Controller
             "published" => $request->published,
             "started_at" => $startedAt,
             "ended_at" => $endedAt,
-            "days_before_campaign_visibility" => $request->days_before_campaign_visibility,
+            "days_before_campaign_visibility" =>
+                $request->days_before_campaign_visibility,
             "content" => $content,
             "tags" => $request->tags,
         ]);
 
         $postId = $post->id;
-
 
         // cover images
         if (
@@ -284,7 +284,9 @@ class PostController extends Controller
         $this->authorize("can-read", $team);
 
         // Retrieve the post, including soft-deleted posts
-        $post = Post::withTrashed()->with('coverImages')->findOrFail($postId);
+        $post = Post::withTrashed()
+            ->with("coverImages")
+            ->findOrFail($postId);
 
         // Retrieve the user associated with the post
         $user = User::find($post->user_id);
@@ -305,7 +307,7 @@ class PostController extends Controller
 
         $stores = $post
             ->stores()
-            ->with('states')
+            ->with("states")
             ->with("coverImages")
             ->get();
 
@@ -340,7 +342,6 @@ class PostController extends Controller
         // Authorize the team that the user has selected to store the post for, rather than the team that the user is currently on.
         $this->authorize("can-create-and-update", $team);
 
-
         $coverImages = $post->coverImages;
         $categories = $post->categories;
         $stores = $post->stores;
@@ -374,7 +375,6 @@ class PostController extends Controller
         // Authorize the team that the user has selected
         $this->authorize("can-create-and-update", $team);
 
-
         $newPost = null;
 
         try {
@@ -387,22 +387,20 @@ class PostController extends Controller
                     "is_paid" => null,
                     "paid_at" => null,
                     "started_at" => Carbon::now(),
-                    "ended_at" => Carbon::now(),
+                    "ended_at" => Carbon::now()->addDays(10),
                     "published" => false,
                     "created_at" => Carbon::now(),
                     "updated_at" => Carbon::now(),
                 ]);
                 // replicate new post # end
 
-
-
                 // replicate new categories # start
                 if ($post->categories !== null) {
                     foreach ($post->categories as $category) {
                         // Create a new instance of the pivot model
                         $newCategoriesPivotData = new PostCategoryRelation([
-                            'post_id' => $newPost->id,
-                            'category_id' => $category->id,
+                            "post_id" => $newPost->id,
+                            "category_id" => $category->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -416,8 +414,8 @@ class PostController extends Controller
                     foreach ($post->stores as $store) {
                         // Create a new instance of the pivot model
                         $newStoresPivotData = new PostStoreRelation([
-                            'post_id' => $newPost->id,
-                            'store_id' => $store->id,
+                            "post_id" => $newPost->id,
+                            "store_id" => $store->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -431,8 +429,8 @@ class PostController extends Controller
                     foreach ($post->coverImages as $coverImage) {
                         // Create a new instance of the pivot model
                         $newCoverImagePivotData = new PostCoverImageRelation([
-                            'post_id' => $newPost->id,
-                            'media_library_id' => $coverImage->id,
+                            "post_id" => $newPost->id,
+                            "media_library_id" => $coverImage->id,
                             "primary" => $coverImage->pivot->primary ?? null,
                             // Add any other attributes if needed
                         ]);
@@ -441,12 +439,9 @@ class PostController extends Controller
                     }
                 }
                 // replicate new cover images # start
-
             });
         } catch (Exception $e) {
-            Log::error(
-                "Oops! Something went wrong. {$e->getMessage()}."
-            );
+            Log::error("Oops! Something went wrong. {$e->getMessage()}.");
 
             return Inertia::render("Error", [
                 "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG, // Error message for the user.
@@ -455,7 +450,7 @@ class PostController extends Controller
         }
 
         if ($newPost !== null) {
-            return redirect()->route("team.posts.index", [
+            return redirect()->route("team.posts.index.draft", [
                 "teamId" => $team->id,
             ]);
         }
@@ -495,7 +490,8 @@ class PostController extends Controller
             "team_id" => $teamId,
             "started_at" => $startedAt,
             "ended_at" => $endedAt,
-            "days_before_campaign_visibility" => $request->days_before_campaign_visibility,
+            "days_before_campaign_visibility" =>
+                $request->days_before_campaign_visibility,
             "title" => $title,
             "slug" => $slug,
             "published" => $request->published,
@@ -505,7 +501,6 @@ class PostController extends Controller
 
         // Get the post ID
         $postId = $post->id;
-
 
         // Retrieve the existing cover image relationships for the post
         $existingCoverImages = PostCoverImageRelation::where(
@@ -599,10 +594,7 @@ class PostController extends Controller
             count($request->stores) !== 0
         ) {
             // Retrieve the existing resource IDs for the resource
-            $existingResourceIds = PostStoreRelation::where(
-                "post_id",
-                $postId
-            )
+            $existingResourceIds = PostStoreRelation::where("post_id", $postId)
                 ->pluck("store_id")
                 ->toArray();
 
@@ -635,6 +627,7 @@ class PostController extends Controller
                 "teamId" => $team->id,
             ]);
         }
+
         if ($request->published) {
             return redirect()->route("team.posts.index", [
                 "teamId" => $team->id,
