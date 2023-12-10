@@ -33,9 +33,7 @@ const handleRemoveItem = function (selectedItem) {
 
 <template>
     <template v-if="list">
-        <div
-            class="flex flex-wrap gap-2 items-center justify-left py-4 border-t border-gray-300"
-        >
+        <div class="flex flex-wrap gap-2 items-center justify-left py-4">
             <button
                 @click="
                     listSelected.some((cat) => cat.id === item.id)

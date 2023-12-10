@@ -541,7 +541,7 @@ onMounted(() => {
                                             :isLoading="isLoadingPosts"
                                             imageSize="medium_path"
                                             imageHeight="max-h-96"
-                                            imageWidth="w-full object-cover"
+                                            imageWidth="w-full object-cover rounded-b-none"
                                             :roundedFull="false"
                                             :squareButtons="true"
                                             @firstButtonClick="
@@ -555,7 +555,7 @@ onMounted(() => {
                                         ></ThumbnailSmallImageSlider>
                                     </template>
 
-                                    <section class="pt-4 pb-4 px-2">
+                                    <section class="pt-8 pb-4 px-4">
                                         <button
                                             @click="
                                                 goToSinglePost(
@@ -567,37 +567,9 @@ onMounted(() => {
                                             type="button"
                                             class="w-full text-left"
                                         >
-                                            <p
-                                                class="text-sm font-medium mt-2 mb-2"
-                                            >
+                                            <p class="myQuaternaryHeader">
                                                 {{ post.title }}
                                             </p>
-                                            <template v-if="post.started_at">
-                                                <p class="text-xs pt-2">
-                                                    Start:
-                                                    {{
-                                                        format(
-                                                            parseISO(
-                                                                post.started_at
-                                                            ),
-                                                            "dd. MMMM yyyy"
-                                                        )
-                                                    }}
-                                                </p>
-                                            </template>
-                                            <template v-if="post.ended_at">
-                                                <p class="text-xs pb-2">
-                                                    End:
-                                                    {{
-                                                        format(
-                                                            parseISO(
-                                                                post.ended_at
-                                                            ),
-                                                            "dd. MMMM yyyy"
-                                                        )
-                                                    }}
-                                                </p>
-                                            </template>
                                         </button>
 
                                         <template
@@ -624,6 +596,42 @@ onMounted(() => {
                                                     imageWidth="w-16"
                                                     :roundedFull="false"
                                                 ></ThumbnailSmallImageSlider>
+                                            </div>
+                                        </template>
+
+                                        <template
+                                            v-if="
+                                                post.started_at &&
+                                                post.ended_at &&
+                                                nameList === 'posts'
+                                            "
+                                        >
+                                            <div class="flex gap-4">
+                                                <div
+                                                    class="myPrimaryTag text-[10px] py-1 px-2"
+                                                >
+                                                    {{
+                                                        format(
+                                                            parseISO(
+                                                                post.started_at
+                                                            ),
+                                                            "dd. MMMM yyyy"
+                                                        )
+                                                    }}
+                                                </div>
+
+                                                <div
+                                                    class="myPrimaryTag text-[10px] py-1 px-2"
+                                                >
+                                                    {{
+                                                        format(
+                                                            parseISO(
+                                                                post.ended_at
+                                                            ),
+                                                            "dd. MMMM yyyy"
+                                                        )
+                                                    }}
+                                                </div>
                                             </div>
                                         </template>
 

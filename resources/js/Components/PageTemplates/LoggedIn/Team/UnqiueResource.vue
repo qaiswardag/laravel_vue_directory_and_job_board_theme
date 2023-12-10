@@ -404,12 +404,14 @@ const goToSingleStoreFromInSale = function (
                     <WidgetSectionBorder></WidgetSectionBorder>
 
                     <div
-                        class="min-h-[4rem] max-h-[40rem] flex flex-col w-full overflow-y-scroll border border-myPrimaryLightGrayColor divide-y divide-gray-200"
+                        class="min-h-[4rem] max-h-[40rem] flex flex-col gap-4 w-full overflow-y-scroll"
                     >
                         <div v-for="store in stores && stores" :key="store.id">
                             <!-- store cover image -->
 
-                            <div class="flex justify-left items-center gap-2">
+                            <div
+                                class="flex justify-left items-center gap-2 bg-red-50 rounded overflow-x-scroll py-8 px-2"
+                            >
                                 <ThumbnailSmallImageSlider
                                     v-if="store.cover_images"
                                     :images="store.cover_images"
@@ -429,8 +431,8 @@ const goToSingleStoreFromInSale = function (
                                     "
                                 ></ThumbnailSmallImageSlider>
 
-                                <div class="flex flex-col">
-                                    <p
+                                <div class="flex flex-col gap-2">
+                                    <div
                                         @click="
                                             goToSingleStoreFromInSale(
                                                 'stores.guest.show',
@@ -440,55 +442,56 @@ const goToSingleStoreFromInSale = function (
                                                 store.id
                                             )
                                         "
-                                        class="myPrimaryParagraph"
+                                        class="myQuaternaryHeader cursor-pointer mb-0"
                                     >
                                         {{ store.title }}
-                                    </p>
-
-                                    <div
-                                        class="flex flex-wrap justify-start items-center gap-2"
-                                    >
+                                    </div>
+                                    <div class="flex flex-col gap-2">
                                         <div
-                                            v-for="state in store.states"
-                                            :key="state.id"
-                                            class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2"
+                                            class="flex flex-wrap justify-start items-center gap-2 myPrimaryTag w-max"
                                         >
                                             <div
-                                                class="flex items-center gap-2"
+                                                v-for="state in store.states"
+                                                :key="state.id"
                                             >
-                                                <div>
-                                                    <span
-                                                        class="myMediumIcon material-symbols-outlined"
-                                                    >
-                                                        location_on
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span>
-                                                        {{ state.name
-                                                        }}{{
-                                                            store.address
-                                                                ? ", "
-                                                                : ""
-                                                        }}
-                                                    </span>
-
-                                                    <span v-if="store.address">
-                                                        <span>
-                                                            {{
-                                                                store.address
-                                                            }}</span
+                                                <div
+                                                    class="flex items-center gap-2"
+                                                >
+                                                    <div>
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
                                                         >
-                                                    </span>
+                                                            location_on
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span>
+                                                            {{ state.name
+                                                            }}{{
+                                                                store.address
+                                                                    ? ", "
+                                                                    : ""
+                                                            }}
+                                                        </span>
+
+                                                        <span
+                                                            v-if="store.address"
+                                                        >
+                                                            <span>
+                                                                {{
+                                                                    store.address
+                                                                }}</span
+                                                            >
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div
-                                        v-if="store.floor"
-                                        class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2"
-                                    >
-                                        <div class="flex items-center gap-2">
+
+                                        <div
+                                            v-if="store.floor"
+                                            class="flex items-center gap-2 myPrimaryTag w-max"
+                                        >
                                             <span
                                                 class="myMediumIcon material-symbols-outlined"
                                             >
