@@ -297,7 +297,7 @@
     }
 
     .myInputsOrganization {
-        @apply px-4 pt-4 pb-4 bg-white rounded border border-gray-200;
+        @apply px-4 pt-4 pb-4 bg-white rounded border border-gray-200 overflow-x-auto;
     }
 
     .myPrimaryFormOrganizationHeaderDescriptionSection {
@@ -355,7 +355,7 @@
         @apply relative myPrimaryInput w-full;
     }
     .myPrimaryFakeSelect {
-        @apply hover:ring-opacity-20 hover:ring-purple-500 border border-gray-300 flex flex-row justify-between items-center myPrimaryGap py-2.5 pl-3 pr-1 cursor-pointer hover:border-transparent hover:ring-4 rounded-md;
+        @apply w-max min-w-full hover:ring-opacity-20 hover:ring-purple-500 border border-gray-300 flex flex-row justify-between items-center myPrimaryGap py-2.5 pl-3 pr-1 cursor-pointer hover:border-transparent hover:ring-4 rounded-md;
     }
     .myPrimaryFakeSelectNoHover {
         @apply myPrimaryFakeSelect focus:outline-none focus:border-transparent hover:border-transparent;

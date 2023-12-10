@@ -1382,7 +1382,9 @@ const pageBuilder = new PageBuilder(store);
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                        <span class="material-symbols-outlined">
+                            unfold_more
+                        </span>
                     </div>
                 </div>
                 <!-- select - end -->
@@ -1551,7 +1553,9 @@ const pageBuilder = new PageBuilder(store);
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                        <span class="material-symbols-outlined">
+                            unfold_more
+                        </span>
                     </div>
                 </div>
                 <!-- select - end -->
@@ -1650,7 +1654,9 @@ const pageBuilder = new PageBuilder(store);
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                        <span class="material-symbols-outlined">
+                            unfold_more
+                        </span>
                     </div>
                 </div>
                 <!-- select - end -->
@@ -1853,9 +1859,9 @@ const pageBuilder = new PageBuilder(store);
                         <div
                             class="border-none rounded flex items-center justify-center h-full w-8"
                         >
-                            <ChevronUpDownIcon
-                                class="w-4 h-4"
-                            ></ChevronUpDownIcon>
+                            <span class="material-symbols-outlined">
+                                unfold_more
+                            </span>
                         </div>
                     </div>
                     <!-- select - end -->

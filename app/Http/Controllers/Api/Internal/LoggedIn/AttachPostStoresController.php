@@ -23,7 +23,8 @@ class AttachPostStoresController extends Controller
         }
 
         $items = Store::query()
-            ->where('team_id', $team->id)
+            ->where("team_id", $team->id)
+            ->with("states")
             ->when($request->query("search_query"), function (
                 $query,
                 $searchQuery
@@ -48,7 +49,6 @@ class AttachPostStoresController extends Controller
             ],
         ];
     }
-
 
     /**
      * Show the form for creating a new resource.

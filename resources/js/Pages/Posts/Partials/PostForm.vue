@@ -1366,7 +1366,9 @@ const pageBuilder = new PageBuilder(store);
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                        <span class="material-symbols-outlined">
+                            unfold_more
+                        </span>
                     </div>
                 </div>
                 <!-- select - end -->
@@ -1539,7 +1541,9 @@ const pageBuilder = new PageBuilder(store);
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                        <span class="material-symbols-outlined">
+                            unfold_more
+                        </span>
                     </div>
                 </div>
                 <!-- select - end -->
@@ -1670,7 +1674,9 @@ const pageBuilder = new PageBuilder(store);
                     <div
                         class="border-none rounded flex items-center justify-center h-full w-8"
                     >
-                        <ChevronUpDownIcon class="w-4 h-4"></ChevronUpDownIcon>
+                        <span class="material-symbols-outlined">
+                            unfold_more
+                        </span>
                     </div>
                 </div>
                 <!-- select - end -->
@@ -1726,11 +1732,45 @@ const pageBuilder = new PageBuilder(store);
                                         <span class="font-medium">
                                             {{ store?.title }}
                                         </span>
-                                        <span class="font-normal">
-                                            {{ store?.address }}
-                                        </span>
-                                        <span class="font-normal">
-                                            <span v-if="store.floor">
+                                        <div
+                                            v-if="store.states"
+                                            class="flex flex-wrap justify-start items-center gap-2 w-max"
+                                        >
+                                            <div
+                                                v-for="state in store.states"
+                                                :key="state.id"
+                                            >
+                                                <div
+                                                    class="flex items-center gap-2"
+                                                >
+                                                    <div>
+                                                        <span>
+                                                            {{ state.name
+                                                            }}{{
+                                                                store.address
+                                                                    ? ", "
+                                                                    : ""
+                                                            }}
+                                                        </span>
+
+                                                        <span
+                                                            v-if="store.address"
+                                                        >
+                                                            <span>
+                                                                {{
+                                                                    store.address
+                                                                }}</span
+                                                            >
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            v-if="store.floor"
+                                            class="flex stores-center gap-2 w-max"
+                                        >
+                                            <span>
                                                 {{
                                                     store.floor === 0 ||
                                                     store.floor === "0"
@@ -1738,7 +1778,7 @@ const pageBuilder = new PageBuilder(store);
                                                         : `Floor ${store.floor}`
                                                 }}
                                             </span>
-                                        </span>
+                                        </div>
                                     </div>
                                 </div>
 
