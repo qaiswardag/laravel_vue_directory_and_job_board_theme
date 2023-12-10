@@ -344,15 +344,7 @@ class DatabaseSeeder extends Seeder
         Job::factory($numbersOffakeResources)->create();
         $totalJobs = Job::count();
 
-        $jobCountries = [
-            "Other",
-            "Bahrain",
-            "Kuwait",
-            "Qatar",
-            "Saudi Arabia",
-            "Turkey",
-            "United Arab Emirates",
-        ];
+        $jobCountries = ["Other", "United Arab Emirates"];
 
         foreach ($jobCountries as $jobCountry) {
             JobCountry::factory()->create([
@@ -714,7 +706,7 @@ class DatabaseSeeder extends Seeder
             PostCoverImageRelation::factory()->create([
                 "media_library_id" => $randomMediaLibraryId,
                 "post_id" => $number,
-                "primary" => 0
+                "primary" => 0,
             ]);
         }
 
@@ -758,7 +750,7 @@ class DatabaseSeeder extends Seeder
             JobCoverImageRelation::factory()->create([
                 "media_library_id" => $randomMediaLibraryId,
                 "job_id" => $number,
-                "primary" => 0
+                "primary" => 0,
             ]);
         }
 
@@ -805,7 +797,7 @@ class DatabaseSeeder extends Seeder
             StoreCoverImageRelation::factory()->create([
                 "media_library_id" => $randomMediaLibraryId,
                 "store_id" => $number,
-                "primary" => 0
+                "primary" => 0,
             ]);
         }
 

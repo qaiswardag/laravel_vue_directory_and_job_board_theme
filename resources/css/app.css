@@ -494,14 +494,14 @@
 }
 .dp__today {
     background: transparent !important;
-    border: 2px solid green !important;
-    color: #000 !important;
+    border: 2px solid #ff5252 !important;
+    color: #ff5252 !important;
     border-radius: 100% !important;
 }
 
 .dp__active_date {
-    background: #000 !important;
-    border: #000 !important;
+    background: #ff5252 !important;
+    border: #ff5252 !important;
     color: #fff !important;
     border-radius: 100% !important;
 }
@@ -511,6 +511,20 @@
     border: #f1f1f1 !important;
     color: #000 !important;
     border-radius: 100% !important;
+}
+
+.dp__action_button {
+    background: #ff5252 !important;
+    border: #000 !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 1rem 1rem !important;
+    font-weight: 500;
+}
+.dp__overlay_cell_active {
+    background: #ff5252 !important;
+    border: #000 !important;
+    color: #fff !important;
 }
 
 /* CSS for Vue datepicker # end */

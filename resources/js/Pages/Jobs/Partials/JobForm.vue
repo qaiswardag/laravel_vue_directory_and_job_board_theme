@@ -768,11 +768,6 @@ const jobTypesSorted = computed(() => {
     });
 });
 
-const dp = ref();
-
-const selectDate = function () {
-    dp.value.selectDate();
-};
 // Builder # Start
 const getComponents = computed(() => {
     return store.getters["pageBuilderState/getComponents"];
@@ -1526,15 +1521,6 @@ const pageBuilder = new PageBuilder(store);
                         v-model="jobStartedAt"
                         ref="dp"
                     >
-                        <template #action-buttons>
-                            <button
-                                type="button"
-                                class="myPrimaryButton text-xs py-2 cursor-pointer"
-                                @click="selectDate"
-                            >
-                                Select
-                            </button>
-                        </template>
                         <template #calendar-icon> Back </template>
                     </VueDatePicker>
 

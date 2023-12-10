@@ -26,15 +26,7 @@ class JobCountries extends Command
      */
     public function handle()
     {
-        $countries = [
-            "Other",
-            "Bahrain",
-            "Kuwait",
-            "Qatar",
-            "Saudi Arabia",
-            "Turkey",
-            "United Arab Emirates",
-        ];
+        $countries = ["Other", "United Arab Emirates"];
 
         foreach ($countries as $jobCountry) {
             JobCountry::factory()->create([

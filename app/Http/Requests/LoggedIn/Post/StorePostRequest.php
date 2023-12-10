@@ -143,25 +143,6 @@ class StorePostRequest extends FormRequest
                         "The started at date must be from today and in the future."
                     );
             }
-
-            // If job is unpaid make sure job started at date is now or in the future
-            if (
-                $this->post &&
-                $this->post->id &&
-                $this->started_at &&
-                !$this->post->is_paid &&
-                Carbon::parse($this->started_at)->isValid() &&
-                !Carbon::parse($this->started_at)
-                    ->addDays(1)
-                    ->isFuture()
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "started_at",
-                        "When updating a job, the started at date must be set to today or a future date."
-                    );
-            }
             //
             //
             //
@@ -197,6 +178,61 @@ class StorePostRequest extends FormRequest
                     );
             }
             // Startet at date validation # end
+
+            // Ended at date validation # start
+
+            // The Started at date must be in the future
+            if (
+                !$this->post &&
+                $this->started_at &&
+                Carbon::parse($this->ended_at)->isValid() &&
+                Carbon::parse($this->ended_at)->isPast() &&
+                !Carbon::parse($this->ended_at)
+                    ->addDays(1)
+                    ->isFuture()
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "ended_at",
+                        "The started at date must be from today and in the future."
+                    );
+            }
+
+            //
+            //
+            //
+            // The started at date must be in the past and can be up to 30 days old from today.
+            if (
+                $this->post &&
+                $this->post->id &&
+                $this->ended_at &&
+                Carbon::parse($this->ended_at)->isValid() &&
+                Carbon::parse($this->ended_at)->isPast() &&
+                Carbon::parse($this->ended_at)->diffInDays(Carbon::now()) > 29
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "ended_at",
+                        "The started at date must be in the past and can be up to 30 days old from today."
+                    );
+            }
+
+            // The started at date must not be more than 1 year in the future.
+            if (
+                $this->ended_at &&
+                Carbon::parse($this->ended_at)->isFuture() &&
+                Carbon::parse($this->ended_at)->diffInDays(Carbon::now()) > 365
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "ended_at",
+                        "The started at date must not be more than 1 year in the future."
+                    );
+            }
+            // Ended at date validation # end
 
             // validation for cover image # start
             if (
