@@ -112,6 +112,12 @@ const getCurrentAttachedItems = computed(() => {
                 const nameB = b.name;
                 return nameA.localeCompare(nameB);
             }
+            if (a.title !== undefined && b.title !== undefined) {
+                // Sort by 'name' if both 'name' properties are defined.
+                const nameA = a.title;
+                const nameB = b.title;
+                return nameA.localeCompare(nameB);
+            }
             if (a.first_name !== undefined && b.first_name !== undefined) {
                 // Sort by 'first_name' if both 'first_name' properties are defined.
                 const firstNameA = a.first_name;
