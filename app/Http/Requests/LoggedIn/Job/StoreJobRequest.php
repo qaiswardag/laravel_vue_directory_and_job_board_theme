@@ -45,10 +45,8 @@ class StoreJobRequest extends FormRequest
             "title" => ["required", "string", "min:2", "max:255"],
             "slug" => ["required", "string", "min:2", "max:255"],
 
-
             "apply_via_link" => ["min:2", "max:255", "url:https", "nullable"],
             "apply_via_email" => ["min:2", "max:255", "email", "nullable"],
-
 
             // If user_id is a foreign key column that references the id column of the users table,
             // you can use the exists validation rule to ensure that the value of user_id exists in
@@ -124,11 +122,16 @@ class StoreJobRequest extends FormRequest
 
                 if ($this->job->started_at !== $this->started_at) {
                     // Calculate the difference in days between the job's creation date and the 'started_at' date
-                    $daysDifference = Carbon::parse($this->job->paid_at)->diffInDays(Carbon::now());                    // Check if the difference is greater than or equal to 5 days
+                    $daysDifference = Carbon::parse(
+                        $this->job->paid_at
+                    )->diffInDays(Carbon::now()); // Check if the difference is greater than or equal to 5 days
                     if ($daysDifference >= 5) {
                         $validator
                             ->errors()
-                            ->add("started_at", "Sorry, the started at is unchangeable after 5 days from payment.");
+                            ->add(
+                                "started_at",
+                                "Sorry, the started at is unchangeable after 5 days from payment."
+                            );
                     }
                 }
             }
@@ -139,7 +142,9 @@ class StoreJobRequest extends FormRequest
                 $this->started_at &&
                 Carbon::parse($this->started_at)->isValid() &&
                 Carbon::parse($this->started_at)->isPast() &&
-                !Carbon::parse($this->started_at)->addDays(1)->isFuture()
+                !Carbon::parse($this->started_at)
+                    ->addDays(1)
+                    ->isFuture()
             ) {
                 $validator
                     ->errors()
@@ -151,11 +156,14 @@ class StoreJobRequest extends FormRequest
 
             // If job is unpaid make sure job started at date is now or in the future
             if (
-                $this->job && $this->job->id &&
+                $this->job &&
+                $this->job->id &&
                 $this->started_at &&
                 !$this->job->is_paid &&
                 Carbon::parse($this->started_at)->isValid() &&
-                !Carbon::parse($this->started_at)->addDays(1)->isFuture()
+                !Carbon::parse($this->started_at)
+                    ->addDays(1)
+                    ->isFuture()
             ) {
                 $validator
                     ->errors()
@@ -169,13 +177,12 @@ class StoreJobRequest extends FormRequest
             //
             // The started at date must be in the past and can be up to 30 days old from today.
             if (
-                $this->job && $this->job->id &&
+                $this->job &&
+                $this->job->id &&
                 $this->started_at &&
                 Carbon::parse($this->started_at)->isValid() &&
                 Carbon::parse($this->started_at)->isPast() &&
-                Carbon::parse($this->started_at)->diffInDays(
-                    Carbon::now()
-                ) > 29
+                Carbon::parse($this->started_at)->diffInDays(Carbon::now()) > 29
             ) {
                 $validator
                     ->errors()
@@ -190,7 +197,7 @@ class StoreJobRequest extends FormRequest
                 $this->started_at &&
                 Carbon::parse($this->started_at)->isFuture() &&
                 Carbon::parse($this->started_at)->diffInDays(Carbon::now()) >
-                365
+                    365
             ) {
                 $validator
                     ->errors()

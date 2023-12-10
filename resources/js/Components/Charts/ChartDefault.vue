@@ -159,7 +159,7 @@ onMounted(async () => {
             impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis
             ratione.
         </p>
-        <div class="mt-8 bg-gray-900 rounded">
+        <div class="mt-8 rounded">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
                 <div
                     v-for="stat in stats"
@@ -170,10 +170,9 @@ onMounted(async () => {
                         {{ stat.name }}
                     </p>
                     <p class="mt-2 flex items-baseline gap-x-2">
-                        <span
-                            class="text-4xl font-medium tracking-tight text-white"
-                            >{{ stat.value }}</span
-                        >
+                        <span class="text-4xl font-medium tracking-tight">{{
+                            stat.value
+                        }}</span>
                         <span v-if="stat.unit" class="text-sm text-gray-400">{{
                             stat.unit
                         }}</span>

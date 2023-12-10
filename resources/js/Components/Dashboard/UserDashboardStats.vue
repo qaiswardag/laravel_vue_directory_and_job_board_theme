@@ -461,7 +461,7 @@ onMounted(() => {
 
                 <!-- column charts # start -->
                 <div
-                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    class="lg:col-span-12 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                 >
                     <div class="border-b border-gray-200 mb-8 pb-2">
                         <div
@@ -474,102 +474,7 @@ onMounted(() => {
                     <ChartDefault></ChartDefault>
                 </div>
                 <!-- column charts # end -->
-                <!-- column stats # start -->
-                <div
-                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                >
-                    <div class="border-b border-gray-200 mb-8 pb-2">
-                        <div
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
-                        >
-                            Latest Team Stats
-                        </div>
-                    </div>
-
-                    <ChartDefault></ChartDefault>
-                </div>
-                <!-- column stats # end -->
             </div>
         </div>
-
-        <!-- user object # start -->
-        <FullWidthElement :descriptionArea="true" class="bg-indigo-50">
-            <template #title
-                >Details about the logged-in user and team insights</template
-            >
-            <template #description>
-                Retrieve details about the logged-in user and team insights for
-                current user. Discover insights about the logged-in user and the
-                team.
-            </template>
-            <template #content>
-                <div class="grid grid-cols-1 md:grid-cols-12 lg:gap-12 gap-18">
-                    <div class="col-span-1 md:col-span-12">
-                        <h2 class="my-2 mb-4 myPrimaryParagraph font-medium">
-                            Details about the logged-in user
-                        </h2>
-                        <dl class="divide-y divide-myPrimaryMediumGrayColor">
-                            <Disclosure
-                                as="div"
-                                v-for="faq in faqs"
-                                :key="faq.question"
-                                v-slot="{ open }"
-                            >
-                                <dt>
-                                    <DisclosureButton
-                                        class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
-                                    >
-                                        <span class="myPrimaryParagraph"
-                                            >{{ faq.question }}
-                                        </span>
-                                        <span
-                                            class="ml-6 flex h-7 items-center"
-                                        >
-                                            <span
-                                                v-if="!open"
-                                                class="myMediumIcon material-symbols-outlined"
-                                            >
-                                                add
-                                            </span>
-                                            <span
-                                                v-else
-                                                class="myMediumIcon material-symbols-outlined"
-                                            >
-                                                remove
-                                            </span>
-                                        </span>
-                                    </DisclosureButton>
-                                </dt>
-                                <DisclosurePanel
-                                    as="dd"
-                                    class="mt-2 pr-12 pb-16"
-                                >
-                                    <p
-                                        class="myPrimaryParagraph whitespace-pre-line"
-                                    >
-                                        {{ faq.answer }}
-                                    </p>
-                                </DisclosurePanel>
-                            </Disclosure>
-                        </dl>
-                    </div>
-                </div>
-                <MediaLibraryModal
-                    :user="user"
-                    :team="currentUserTeam"
-                    :open="showMediaLibraryModal"
-                    :title="titleMedia"
-                    :description="descriptionMedia"
-                    :firstButtonText="firstButtonMedia"
-                    :secondButtonText="secondButtonMedia"
-                    :thirdButtonText="thirdButtonMedia"
-                    @firstMediaButtonFunction="firstMediaButtonFunction"
-                    @secondMediaButtonFunction="secondMediaButtonFunction"
-                    @thirdMediaButtonFunction="thirdMediaButtonFunction"
-                >
-                </MediaLibraryModal>
-            </template>
-        </FullWidthElement>
-        <!-- user object # end -->
     </template>
 </template>
