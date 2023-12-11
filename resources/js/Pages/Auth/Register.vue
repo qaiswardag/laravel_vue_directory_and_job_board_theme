@@ -51,19 +51,11 @@ const submit = () => {
                     <template #title>Lorem ipsum</template>
                     <template #content>
                         <AuthenticationCard>
-                            <template #logo>
-                                <AuthenticationCardLogo />
-                            </template>
                             <form @submit.prevent="submit">
-                                <div class="mt-4 mb-8">
-                                    <h1 class="myTertiaryHeader text-center">
-                                        Sign up and get started today
-                                    </h1>
-                                    <p class="myPrimaryParagraph text-center">
-                                        Join a community of thousands of daily
-                                        shoppers.
-                                    </p>
+                                <div class="mt-4 mb-8 flex justify-center">
+                                    <AuthenticationCardLogo />
                                 </div>
+
                                 <div class="myInputsFamily">
                                     <div class="myInputGroup">
                                         <InputLabel

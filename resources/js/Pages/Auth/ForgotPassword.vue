@@ -39,21 +39,15 @@ const submit = () => {
                     <template #title>Lorem ipsum</template>
                     <template #content>
                         <AuthenticationCard>
-                            <template #logo>
+                            <div class="mt-4 mb-8 flex justify-center">
                                 <AuthenticationCardLogo />
-                            </template>
-
-                            <div class="mt-4 mb-8">
-                                <h1 class="myTertiaryHeader text-center">
-                                    Forgot password
-                                </h1>
-                                <p class="myPrimaryParagraph text-center">
-                                    Forgot your password? No problem. Just let
-                                    us know your email address and we will email
-                                    you a password reset link that will allow
-                                    you to choose a new one.
-                                </p>
                             </div>
+                            <p class="myPrimaryParagraph text-center mt-4 mb-6">
+                                Forgot your password? No problem. Just let us
+                                know your email address and we will email you a
+                                password reset link that will allow you to
+                                choose a new one.
+                            </p>
 
                             <div
                                 v-if="status"

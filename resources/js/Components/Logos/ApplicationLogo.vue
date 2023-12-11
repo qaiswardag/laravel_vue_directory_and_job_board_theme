@@ -2,6 +2,6 @@
 
 <template>
     <Link :href="route('home')" class="myPrimaryParagraph">
-        <img class="h-7" src="/logo/myself_icon_logo_black.svg" alt="Logo" />
+        <img class="h-10" src="/logo/myself_text_logo_black.svg" alt="Logo" />
     </Link>
 </template>

@@ -934,55 +934,61 @@ onMounted(() => {
                                                     {{ item.title }}
                                                 </span>
                                                 <div
-                                                    v-if="item.states"
-                                                    class="flex flex-wrap justify-start items-center gap-2 w-max"
+                                                    class="flex flex-col gap-2"
                                                 >
                                                     <div
-                                                        v-for="state in item.states"
-                                                        :key="state.id"
+                                                        v-if="item.states"
+                                                        class="flex flex-wrap justify-start items-center gap-2 w-max"
                                                     >
                                                         <div
-                                                            class="flex items-center gap-2"
+                                                            v-for="state in item?.states"
+                                                            :key="state.id"
                                                         >
-                                                            <div>
-                                                                <span>
-                                                                    {{
-                                                                        state.name
-                                                                    }}{{
-                                                                        item.address
-                                                                            ? ", "
-                                                                            : ""
-                                                                    }}
-                                                                </span>
-
-                                                                <span
-                                                                    v-if="
-                                                                        item.address
-                                                                    "
-                                                                >
+                                                            <div
+                                                                class="flex items-center gap-2"
+                                                            >
+                                                                <div>
                                                                     <span>
                                                                         {{
+                                                                            state.name
+                                                                        }}{{
                                                                             item.address
-                                                                        }}</span
+                                                                                ? ", "
+                                                                                : ""
+                                                                        }}
+                                                                    </span>
+
+                                                                    <span
+                                                                        v-if="
+                                                                            item.address
+                                                                        "
                                                                     >
-                                                                </span>
+                                                                        <span>
+                                                                            {{
+                                                                                item.address
+                                                                            }}</span
+                                                                        >
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <div
-                                                    v-if="item.floor"
-                                                    class="flex items-center gap-2 w-max"
-                                                >
-                                                    <span>
-                                                        {{
-                                                            item.floor === 0 ||
-                                                            item.floor === "0"
-                                                                ? "Ground floor"
-                                                                : `Floor ${item.floor}`
-                                                        }}
-                                                    </span>
+                                                    <div
+                                                        v-if="item.floor"
+                                                        class="flex items-center gap-2 w-max"
+                                                    >
+                                                        <span>
+                                                            {{
+                                                                item.floor ===
+                                                                    0 ||
+                                                                item.floor ===
+                                                                    "0"
+                                                                    ? "Ground floor"
+                                                                    : `Floor ${item.floor}`
+                                                            }}
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

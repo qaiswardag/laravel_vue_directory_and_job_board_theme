@@ -1419,7 +1419,7 @@ const pageBuilder = new PageBuilder(store);
                                 :key="image?.id"
                             >
                                 <div
-                                    class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
+                                    class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
                                 >
                                     <div
                                         class="flex justify-left items-center gap-2"
@@ -1589,7 +1589,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="category.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
+                                class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
                             >
                                 <div
                                     @click="handleAddCategories"
@@ -1712,7 +1712,7 @@ const pageBuilder = new PageBuilder(store);
                             :key="store.id"
                         >
                             <div
-                                class="flex justify-between items-center my-2 gap-4 font-medium myPrimaryTag w-max"
+                                class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
                             >
                                 <div
                                     @click="handleAddStores"
@@ -1737,7 +1737,7 @@ const pageBuilder = new PageBuilder(store);
                                             class="flex flex-wrap justify-start items-center gap-2 w-max"
                                         >
                                             <div
-                                                v-for="state in store.states"
+                                                v-for="state in store?.states"
                                                 :key="state.id"
                                             >
                                                 <div

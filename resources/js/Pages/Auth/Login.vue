@@ -51,9 +51,6 @@ const submit = () => {
                 <FullWidthElement :descriptionArea="false" :headerArea="false">
                     <template #content>
                         <AuthenticationCard>
-                            <template #logo>
-                                <AuthenticationCardLogo />
-                            </template>
                             <div
                                 v-if="status"
                                 class="mb-4 font-normal text-sm text-myPrimaryLinkColor"
@@ -62,10 +59,8 @@ const submit = () => {
                             </div>
 
                             <form @submit.prevent="submit">
-                                <div class="mt-4 mb-8">
-                                    <h1 class="myTertiaryHeader text-center">
-                                        Sign in
-                                    </h1>
+                                <div class="mt-4 mb-8 flex justify-center">
+                                    <AuthenticationCardLogo />
                                 </div>
                                 <div>
                                     <InputLabel for="email" value="Email" />

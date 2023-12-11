@@ -410,7 +410,7 @@ const goToSingleStoreFromInSale = function (
                             <!-- store cover image -->
 
                             <div
-                                class="flex justify-left items-center gap-2 bg-red-50 rounded overflow-x-scroll py-8 px-2"
+                                class="flex justify-left items-center gap-2 bg-gray-50 rounded-full overflow-x-scroll py-2 px-8"
                             >
                                 <ThumbnailSmallImageSlider
                                     v-if="store.cover_images"
@@ -442,7 +442,7 @@ const goToSingleStoreFromInSale = function (
                                                 store.id
                                             )
                                         "
-                                        class="myQuaternaryHeader cursor-pointer mb-0"
+                                        class="myPrimaryParagraph font-medium cursor-pointer mb-0"
                                     >
                                         {{ store.title }}
                                     </div>

@@ -64,14 +64,18 @@ class PostController extends Controller
 
         $post = Post::where("id", $postId)
             ->where("published", true)
-            ->with('coverImages')
+            ->with("coverImages")
             ->where(function ($query) use ($startCampaignVisibility) {
                 $query
                     ->whereNotNull("started_at")
                     ->whereNotNull("ended_at")
                     ->whereNotNull("days_before_campaign_visibility")
 
-                    ->where("started_at", "<=", now()->addDays($startCampaignVisibility))
+                    ->where(
+                        "started_at",
+                        "<=",
+                        now()->addDays($startCampaignVisibility)
+                    )
                     ->where("ended_at", ">=", now());
             })
             ->firstOrFail();
@@ -82,7 +86,7 @@ class PostController extends Controller
 
         $stores = $post
             ->stores()
-            ->with('states')
+            ->with("states")
             ->with("coverImages")
             ->get();
 
@@ -91,7 +95,7 @@ class PostController extends Controller
         // Render
         return Inertia::render($postRenderView, [
             "post" => $post,
-            "postType" => "Post",
+            "postType" => "Campaign",
             "authors" => $authors,
             "states" => $states,
             "categories" => $categories,
