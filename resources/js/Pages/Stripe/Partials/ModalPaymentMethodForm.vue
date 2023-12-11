@@ -183,9 +183,6 @@ const filteredCountries = computed(() =>
 
 const selectedCountry = ref(null);
 
-const handleRemoveInput = function () {
-    selectedCountry.value = null;
-};
 //
 //
 onMounted(async () => {
@@ -333,24 +330,14 @@ onMounted(async () => {
                                             <div
                                                 class="flex items-center justify-center gap-2"
                                             >
-                                                <button
-                                                    type="button"
-                                                    @click="handleRemoveInput"
-                                                    class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                <ComboboxButton
+                                                    class="h-8 w-8 cursor-pointer rounded flex items-center justify-center"
                                                 >
                                                     <span
                                                         class="material-symbols-outlined"
                                                     >
-                                                        close
+                                                        unfold_more
                                                     </span>
-                                                </button>
-                                                <ComboboxButton
-                                                    class="h-8 w-8 cursor-pointer rounded flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                                >
-                                                    <ChevronUpDownIcon
-                                                        class="shrink-0 w-4 h-4 m-2 stroke-1.5"
-                                                        aria-hidden="true"
-                                                    />
                                                 </ComboboxButton>
                                             </div>
                                         </div>
@@ -402,15 +389,6 @@ onMounted(async () => {
                                                         <div
                                                             class="flex items-center gap-2"
                                                         >
-                                                            <div
-                                                                class="flex-shrink-0 h-3 w-5"
-                                                            >
-                                                                <img
-                                                                    :src="`/app-images/flags/${country.code.toLowerCase()}.svg`"
-                                                                    class="object-cover object-center h-3 w-5 rounded-full drop-shadow-sm"
-                                                                    alt="flag"
-                                                                />
-                                                            </div>
                                                             {{
                                                                 country.country
                                                                     ? country.country
@@ -419,22 +397,6 @@ onMounted(async () => {
                                                         </div>
                                                     </span>
 
-                                                    <span
-                                                        v-if="!selected"
-                                                        class="absolute inset-y-0 left-0 flex items-center pl-3"
-                                                        :class="{
-                                                            'text-gray-200':
-                                                                active,
-                                                            'text-gray-200':
-                                                                !active,
-                                                        }"
-                                                    >
-                                                        <span
-                                                            class="myMediumIcon material-symbols-outlined"
-                                                        >
-                                                            add
-                                                        </span>
-                                                    </span>
                                                     <span
                                                         v-if="selected"
                                                         class="absolute inset-y-0 left-0 flex items-center pl-3"

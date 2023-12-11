@@ -30,8 +30,6 @@ class PageBuilderComponentCategories extends Command
             "Articles & Contents",
             // "Call to Actions",
             // "Contact",
-            "Headers",
-            "Opening Hours",
             "Products & Sale",
             // "Features",
             // "About Us",
