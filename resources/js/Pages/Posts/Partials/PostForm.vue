@@ -1245,7 +1245,7 @@ const pageBuilder = new PageBuilder(store);
                     >
                         <div class="myPrimaryFormOrganizationHeader">
                             <p class="myPrimaryParagraph">
-                                Campaign Visibility for public. We recommend 30
+                                Days before campaign visibility. We recommend 30
                                 days prior to the campaign start date.
                             </p>
                         </div>
