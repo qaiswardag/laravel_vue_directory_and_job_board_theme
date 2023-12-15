@@ -355,7 +355,7 @@ const faqs = [
                             </dl>
                             <img
                                 class="w-full object-cover lg:col-span-6 rounded-lg"
-                                src="/app-images/pages/frequently_asked_questions.jpg"
+                                src="/app-images/pages/home/frequently_asked_questions.jpg"
                                 alt="image"
                             />
                         </div>
