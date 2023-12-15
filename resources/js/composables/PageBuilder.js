@@ -84,11 +84,15 @@ class PageBuilder {
         this.headerTags = ["P", "H1", "H2", "H3", "H4", "H5", "H6"];
         this.additionalTagsNoneListernes = [
             "UL",
+            "OL",
             "LI",
             "EM",
             "STRONG",
+            "B",
             "A",
             "SPAN",
+            "BLOCKQUOTE",
+            "BR",
         ];
 
         this.structuringTags = [
@@ -203,6 +207,7 @@ class PageBuilder {
     }
 
     #handleElementClick = (e, element) => {
+        console.log(`element øø:`, element.tagName);
         e.stopPropagation();
 
         const pagebuilder = document.querySelector("#pagebuilder");

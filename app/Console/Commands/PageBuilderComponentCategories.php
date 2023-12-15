@@ -30,7 +30,7 @@ class PageBuilderComponentCategories extends Command
             "Articles & Contents",
             // "Call to Actions",
             // "Contact",
-            "Products & Sale",
+            // "Products & Sale",
             // "Features",
             // "About Us",
             // "Links & Buttons",
@@ -38,6 +38,7 @@ class PageBuilderComponentCategories extends Command
             // "Social Media",
             // "Footers",
             "Images",
+            "Images with Text",
         ];
 
         // Sort the categories alphabetically

@@ -584,6 +584,7 @@ class DatabaseSeeder extends Seeder
             // "Social Media",
             // "Footers",
             "Images",
+            "Images with Text",
         ];
 
         // Sort the categories alphabetically

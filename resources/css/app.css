@@ -464,6 +464,13 @@
 }
 
 /* CSS for content inside page builder # start */
+#page-builder-editor a {
+    text-decoration: underline;
+}
+#page-builder-editor strong {
+    font-weight: 500;
+}
+
 #page-builder-editor ol,
 #page-builder-editor ul {
     list-style: disc !important;
