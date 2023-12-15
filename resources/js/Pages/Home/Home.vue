@@ -178,7 +178,7 @@ const faqs = [
                         <div class="w-full relative">
                             <img
                                 class="top-0 left-0 w-full object-cover rounded-lg"
-                                src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/6502f8c0d2d28543f52f901e_prod-hero-ds.webp"
+                                src="/app-images/pages/home/edit_or_add_designs.jpg"
                                 alt="image"
                             />
                             <div
@@ -205,8 +205,8 @@ const faqs = [
                             >
                                 <img
                                     class="top-0 left-0 w-full object-cover lg:h-[30rem] h-[22rem] rounded-lg"
-                                    src="https://images.unsplash.com/photo-1543728069-a3f97c5a2f32?auto=format&fit=crop&q=80&w=3269&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                    alt="/"
+                                    src="/app-images/pages/home/fashion_show.jpg"
+                                    alt="image"
                                 />
                                 <div
                                     class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
@@ -227,7 +227,7 @@ const faqs = [
                             >
                                 <img
                                     class="top-0 left-0 w-full object-cover lg:h-[30rem] h-[22rem] rounded-lg"
-                                    src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/64e8fb8601b9e5823dfede12_wys-1.webp"
+                                    src="/app-images/pages/home/orange_bg.jpg"
                                     alt="/"
                                 />
                                 <div
@@ -249,7 +249,7 @@ const faqs = [
                             >
                                 <img
                                     class="top-0 left-0 w-full object-cover lg:h-[30rem] h-[22rem] rounded-lg"
-                                    src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/64e8fba35806093b06741fe8_wys-2.webp"
+                                    src="/app-images/pages/home/girl_light_bg.jpg"
                                     alt="/"
                                 />
                                 <div
@@ -271,7 +271,7 @@ const faqs = [
                             >
                                 <img
                                     class="top-0 left-0 w-full object-cover lg:h-[30rem] h-[22rem] rounded-lg"
-                                    src="https://assets-global.website-files.com/64e38a3a25593ef3c6e7968a/64e8fccaba3cd3a0f6992383_wys-3.webp"
+                                    src="/app-images/pages/home/three.jpg"
                                     alt="/"
                                 />
                                 <div
