@@ -208,19 +208,25 @@ const faqs = [
                                     src="/app-images/pages/home/fashion_show.jpg"
                                     alt="image"
                                 />
-                                <div
-                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
-                                ></div>
-                                <div class="px-2 pt-8 absolute top-0 w-full">
-                                    <p class="text-white mySecondaryHeader">
-                                        Populate the image
-                                    </p>
-                                    <p class="myPrimaryParagrapg text-white">
-                                        Control every aspect of your assets with
-                                        generative editing, flexible setting and
-                                        useful filters.
-                                    </p>
-                                </div>
+                                <Link :href="route('stores.guest.index')">
+                                    <div
+                                        class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                    ></div>
+                                    <div
+                                        class="px-2 pt-8 absolute top-0 w-full"
+                                    >
+                                        <p class="text-white mySecondaryHeader">
+                                            Find stores
+                                        </p>
+                                        <p
+                                            class="myPrimaryParagrapg text-white"
+                                        >
+                                            Control every aspect of your assets
+                                            with generative editing, flexible
+                                            setting and useful filters.
+                                        </p>
+                                    </div>
+                                </Link>
                             </div>
                             <div
                                 class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
@@ -230,19 +236,26 @@ const faqs = [
                                     src="/app-images/pages/home/orange_bg.jpg"
                                     alt="/"
                                 />
-                                <div
-                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
-                                ></div>
-                                <div class="px-2 pt-8 absolute top-0 w-full">
-                                    <p class="text-white mySecondaryHeader">
-                                        Architecture & Design
-                                    </p>
-                                    <p class="myPrimaryParagrapg text-white">
-                                        No special hardware or technical skills
-                                        required—only the web app, your idea and
-                                        a sketch.
-                                    </p>
-                                </div>
+                                <Link :href="route('posts.guest.index')">
+                                    <div
+                                        class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                    ></div>
+
+                                    <div
+                                        class="px-2 pt-8 absolute top-0 w-full"
+                                    >
+                                        <p class="text-white mySecondaryHeader">
+                                            Campaigns
+                                        </p>
+                                        <p
+                                            class="myPrimaryParagrapg text-white"
+                                        >
+                                            No special hardware or technical
+                                            skills required—only the web app,
+                                            your idea and a sketch.
+                                        </p>
+                                    </div>
+                                </Link>
                             </div>
                             <div
                                 class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
@@ -252,19 +265,25 @@ const faqs = [
                                     src="/app-images/pages/home/girl_light_bg.jpg"
                                     alt="/"
                                 />
-                                <div
-                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
-                                ></div>
-                                <div class="px-2 pt-8 absolute top-0 w-full">
-                                    <p class="text-white mySecondaryHeader">
-                                        Easy to use
-                                    </p>
-                                    <p class="myPrimaryParagrapg text-white">
-                                        Eliminate render time. Skip browsing
-                                        though countless asset libraries.
-                                        Iterate in an instant.
-                                    </p>
-                                </div>
+                                <Link :href="route('jobs.guest.index')">
+                                    <div
+                                        class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                    ></div>
+                                    <div
+                                        class="px-2 pt-8 absolute top-0 w-full"
+                                    >
+                                        <p class="text-white mySecondaryHeader">
+                                            Jobs in UAE
+                                        </p>
+                                        <p
+                                            class="myPrimaryParagrapg text-white"
+                                        >
+                                            Eliminate render time. Skip browsing
+                                            though countless asset libraries.
+                                            Iterate in an instant.
+                                        </p>
+                                    </div>
+                                </Link>
                             </div>
                             <div
                                 class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
@@ -274,19 +293,25 @@ const faqs = [
                                     src="/app-images/pages/home/three.jpg"
                                     alt="/"
                                 />
-                                <div
-                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
-                                ></div>
-                                <div class="px-2 pt-8 absolute top-0 w-full">
-                                    <p class="text-white mySecondaryHeader">
-                                        Professional output
-                                    </p>
-                                    <p class="myPrimaryParagrapg text-white">
-                                        Get high quality assets and images, with
-                                        a suite of tools dedicated to architects
-                                        and designers.
-                                    </p>
-                                </div>
+                                <Link :href="route('professional.index')">
+                                    <div
+                                        class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                    ></div>
+                                    <div
+                                        class="px-2 pt-8 absolute top-0 w-full"
+                                    >
+                                        <p class="text-white mySecondaryHeader">
+                                            Professional
+                                        </p>
+                                        <p
+                                            class="myPrimaryParagrapg text-white"
+                                        >
+                                            Get high quality assets and images,
+                                            with a suite of tools dedicated to
+                                            architects and designers.
+                                        </p>
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     </template>
