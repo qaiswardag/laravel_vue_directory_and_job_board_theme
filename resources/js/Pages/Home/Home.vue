@@ -167,12 +167,22 @@ const faqs = [
                 </template>
 
                 <!-- Builder # start -->
-                <FullWidthElement :descriptionArea="true" class="bg-red-50">
-                    <template #title>Edit or add designs</template>
+                <FullWidthElement
+                    :descriptionArea="true"
+                    class="bg-red-50 lg:block hidden"
+                >
+                    <template #title
+                        >Customize the design the way you want.</template
+                    >
                     <template #description>
-                        Add generated cutouts to your image, with
-                        representation. Specify clothing, position, camera angle
-                        and more to occupy your image perfectly.
+                        Design stores, jobs or campaigns your way with our
+                        intuitive page builder. Customize layouts, colors, and
+                        fonts to achieve the perfect design.
+                        <br />
+                        myself is like a digital shopping window, focusing on
+                        your brand image, authenticity and credibility! Just
+                        like on a shopping site customers can search for
+                        anything they are looking for.
                     </template>
                     <template #content>
                         <div class="w-full relative">
@@ -190,11 +200,11 @@ const faqs = [
                 <!-- Builder # end -->
                 <!-- 4 images # start -->
                 <FullWidthElement :descriptionArea="true" class="bg-gray-50">
-                    <template #title>How it works </template>
+                    <template #title>How does it work? </template>
                     <template #description>
-                        Let users and teams elevate their administrative
-                        abilities to new heights. Designed to streamline
-                        operations and enhance productivity.
+                        myself is the largest and most exclusive fashion
+                        directory in the United Arab Emirates, gathering all
+                        fashion brands and stores in one searchable solution.
                     </template>
                     <template #content>
                         <div
@@ -319,15 +329,19 @@ const faqs = [
                 <!-- 4 images # end -->
 
                 <!-- FAQ # start -->
-                <FullWidthElement :descriptionArea="true" class="bg-red-50">
+                <FullWidthElement
+                    :descriptionArea="true"
+                    class="bg-red-50 lg:block hidden"
+                >
                     <template #title>Frequently asked questions</template>
                     <template #description>
-                        Minimalist Admin Panel empowered with advanced Team
-                        Management capabilities, Blog, and a beautiful Media
-                        Library. Offers control and efficiency. Let users and
-                        teams elevate their administrative abilities to new
-                        heights. Designed to streamline operations and enhance
-                        productivity.
+                        Shopping has become an experience, and store performance
+                        must keep up to meet customer expectations. On the
+                        individual store profile customers can therefore comment
+                        on their experience with both the store and the brand.
+                        This feature makes it possible to measure the individual
+                        store’s performance based on the customer's assessments
+                        and likes.
                     </template>
                     <template #content>
                         <div
