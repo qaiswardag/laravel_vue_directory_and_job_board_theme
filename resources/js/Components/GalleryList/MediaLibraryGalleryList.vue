@@ -204,7 +204,7 @@ onMounted(() => {
         "
     >
         <div
-            class="border border-gray-200 overflow-y-scroll md:min-h-[33rem] md:max-h-[33rem] min-h-[15rem] max-h-[15rem] p-2 rounded"
+            class="p-2 rounded pb-40 mb-40 border border-gray-200 overflow-y-scroll md:min-h-[40rem] md:max-h-[40rem] min-h-[40rem] max-h-[40rem]"
         >
             <div v-if="getCurrentMedia?.fetchedMedia?.total_results === 0">
                 <div class="pt-6 py-b px-4">
@@ -240,13 +240,15 @@ onMounted(() => {
                     >
                         <div
                             @click="handleImageClick(image.id)"
-                            class="bg-gray-50 min-h-[15rem] px-0 pb-2 cursor-pointer rounded-sm"
+                            class="bg-gray-50 px-0 pb-2 cursor-pointer rounded-sm"
                         >
-                            <img
-                                class="group min-h-[4rem] aspect-w-10 aspect-h-7 block w-full overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
-                                :src="`/storage/uploads/${image?.medium_path}`"
-                                alt="image"
-                            />
+                            <div class="flex-shrink-0">
+                                <img
+                                    class="group block w-full aspect-auto overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
+                                    :src="`/storage/uploads/${image?.medium_path}`"
+                                    alt="image"
+                                />
+                            </div>
 
                             <dl
                                 class="myPrimaryParagraph text-xs mt-2 px-1 border-gray-200 divide-y divide-gray-200"

@@ -135,9 +135,9 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
             <FullWidthElement :descriptionArea="true" class="bg-gray-50">
                 <template #title>Pricing for jobs</template>
                 <template #description>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Odit deleniti ipsam sit reprehenderit? Similique dicta
-                    exercitationem tempore ex beatae voluptatem.
+                    Finding the best fit for the job shouldn’t be a full-time
+                    job. myself is like a digital shopping window, focusing on
+                    your brand image, authenticity and credibility!
                 </template>
                 <template #content>
                     <div

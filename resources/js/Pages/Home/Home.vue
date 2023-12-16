@@ -200,11 +200,13 @@ const faqs = [
                 <!-- Builder # end -->
                 <!-- 4 images # start -->
                 <FullWidthElement :descriptionArea="true" class="bg-gray-50">
-                    <template #title>How does it work? </template>
+                    <template #title
+                        >Fashion brands in one searchable solution</template
+                    >
                     <template #description>
                         myself is the largest and most exclusive fashion
                         directory in the United Arab Emirates, gathering all
-                        fashion brands and stores in one searchable solution.
+                        fashion brands in one searchable solution.
                     </template>
                     <template #content>
                         <div
@@ -336,12 +338,10 @@ const faqs = [
                     <template #title>Frequently asked questions</template>
                     <template #description>
                         Shopping has become an experience, and store performance
-                        must keep up to meet customer expectations. On the
-                        individual store profile customers can therefore comment
-                        on their experience with both the store and the brand.
-                        This feature makes it possible to measure the individual
-                        store’s performance based on the customer's assessments
-                        and likes.
+                        must keep up to meet customer expectations. myself is a
+                        powerful branding and marketing tool connection brands
+                        and stores with consumers. Our platform enables you to
+                        build local brand awareness online.
                     </template>
                     <template #content>
                         <div

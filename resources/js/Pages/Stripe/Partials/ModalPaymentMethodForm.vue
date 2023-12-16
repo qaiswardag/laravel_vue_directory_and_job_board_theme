@@ -212,7 +212,7 @@ onMounted(async () => {
         maxHeight="max-h-auto"
     >
         <div
-            class="mb-24 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
+            class="mb-40 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
             <div
                 class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
