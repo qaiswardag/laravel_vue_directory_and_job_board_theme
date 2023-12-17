@@ -269,7 +269,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="relative w-full min-h-screen max-h-screen inline-block align-bottom bg-white rounded px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
+                            class="relative w-full min-h-[98vh] max-h-[65rem] my-2 inline-block align-bottom bg-white rounded px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
                         >
                             <div
                                 class="flex gap-2 justify-between items-center border-b border-gray-200 pb-2 mb-2"
@@ -457,10 +457,10 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                         <aside
                                             v-if="selected === 'Media library'"
                                             aria-label="sidebar"
-                                            class="md:w-72 md:min-h-[55rem] md:max-h-[55rem] min-h-[22rem] max-h-[22rem]"
+                                            class="md:w-72"
                                         >
                                             <div
-                                                class="rounded md:w-72 md:min-h-[49rem] md:max-h-[49rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
+                                                class="rounded md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
                                             >
                                                 <div
                                                     v-if="
@@ -786,13 +786,72 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- Actions # start -->
+                                            <div
+                                                v-if="
+                                                    getCurrentImage &&
+                                                    getCurrentImage.currentImage &&
+                                                    getCurrentImage.currentImage
+                                                        .mediaLibrary
+                                                "
+                                                class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
+                                            >
+                                                <div
+                                                    class="sm:grid-cols-3 sm:items-end justify-end flex sm:flex-row myPrimaryGap sm:w-5/6 w-full"
+                                                >
+                                                    <div v-if="firstButtonText">
+                                                        <button
+                                                            ref="firstButtonRef"
+                                                            class="mySecondaryButton"
+                                                            type="button"
+                                                            @click="firstButton"
+                                                        >
+                                                            {{
+                                                                firstButtonText
+                                                            }}
+                                                        </button>
+                                                    </div>
+
+                                                    <div
+                                                        v-if="secondButtonText"
+                                                    >
+                                                        <button
+                                                            class="myPrimaryButton"
+                                                            type="button"
+                                                            @click="
+                                                                secondButton
+                                                            "
+                                                        >
+                                                            {{
+                                                                secondButtonText
+                                                            }}
+                                                        </button>
+                                                    </div>
+
+                                                    <div
+                                                        v-if="thirdButtonText"
+                                                        class="w-full"
+                                                    >
+                                                        <button
+                                                            class="myPrimaryDeleteButton"
+                                                            type="button"
+                                                            @click="thirdButton"
+                                                        >
+                                                            {{
+                                                                thirdButtonText
+                                                            }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Actions # end -->
                                         </aside>
                                         <!-- Details sidebar - media library end-->
                                         <!-- Details sidebar - upload start-->
                                         <aside
                                             v-if="selected === 'Upload'"
                                             aria-label="sidebar"
-                                            class="rounded md:w-72 md:min-h-[49rem] md:max-h-[49rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
+                                            class="rounded md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
                                         >
                                             <div
                                                 v-if="
@@ -873,55 +932,6 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                     <!--content media library - end-->
                                 </div>
                             </div>
-
-                            <!-- Actions # start -->
-                            <div
-                                v-if="
-                                    getCurrentImage &&
-                                    getCurrentImage.currentImage &&
-                                    getCurrentImage.currentImage.mediaLibrary &&
-                                    getCurrentImage.isLoading === false &&
-                                    (getCurrentImage.isError === null ||
-                                        getCurrentImage.isError === false)
-                                "
-                                class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
-                            >
-                                <div
-                                    class="sm:grid-cols-3 sm:items-end justify-end flex sm:flex-row myPrimaryGap sm:w-5/6 w-full"
-                                >
-                                    <div v-if="firstButtonText">
-                                        <button
-                                            ref="firstButtonRef"
-                                            class="mySecondaryButton"
-                                            type="button"
-                                            @click="firstButton"
-                                        >
-                                            {{ firstButtonText }}
-                                        </button>
-                                    </div>
-
-                                    <div v-if="secondButtonText">
-                                        <button
-                                            class="myPrimaryButton"
-                                            type="button"
-                                            @click="secondButton"
-                                        >
-                                            {{ secondButtonText }}
-                                        </button>
-                                    </div>
-
-                                    <div v-if="thirdButtonText" class="w-full">
-                                        <button
-                                            class="myPrimaryDeleteButton"
-                                            type="button"
-                                            @click="thirdButton"
-                                        >
-                                            {{ thirdButtonText }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Actions # end -->
                         </div>
                     </TransitionChild>
                 </div>

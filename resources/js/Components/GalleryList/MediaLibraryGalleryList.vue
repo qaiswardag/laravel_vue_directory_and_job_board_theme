@@ -204,7 +204,7 @@ onMounted(() => {
         "
     >
         <div
-            class="p-2 rounded pb-40 mb-40 border border-gray-200 overflow-y-scroll md:min-h-[40rem] md:max-h-[40rem] min-h-[40rem] max-h-[40rem]"
+            class="border p-2 rounded border-gray-200 overflow-y-scroll md:min-h-[32.5em] md:max-h-[32.5rem] min-h-[15rem] max-h-[15rem]"
         >
             <div v-if="getCurrentMedia?.fetchedMedia?.total_results === 0">
                 <div class="pt-6 py-b px-4">
@@ -230,7 +230,7 @@ onMounted(() => {
                 "
             >
                 <div
-                    class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 myPrimaryGap"
+                    class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 myPrimaryGap"
                 >
                     <template
                         v-for="image in Array.isArray(
@@ -244,7 +244,7 @@ onMounted(() => {
                         >
                             <div class="flex-shrink-0">
                                 <img
-                                    class="group block w-full aspect-auto overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
+                                    class="group block object-cover aspect-auto overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer rounded-t-sm"
                                     :src="`/storage/uploads/${image?.medium_path}`"
                                     alt="image"
                                 />
@@ -253,30 +253,6 @@ onMounted(() => {
                             <dl
                                 class="myPrimaryParagraph text-xs mt-2 px-1 border-gray-200 divide-y divide-gray-200"
                             >
-                                <!-- Loading # start -->
-                                <dd
-                                    v-if="
-                                        getCurrentImage &&
-                                        getCurrentImage.isLoading
-                                    "
-                                >
-                                    <div
-                                        class="pb-2 flex justify-between items-center text-xs"
-                                    >
-                                        <dt></dt>
-                                        <div
-                                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                        >
-                                            <SmallUniversalSpinner
-                                                class="h-40"
-                                                width="w-3"
-                                                height="h-3"
-                                                border="border-2"
-                                            ></SmallUniversalSpinner>
-                                        </div>
-                                    </div>
-                                </dd>
-                                <!-- Loading # end -->
                                 <dd
                                     v-if="
                                         image.id !==

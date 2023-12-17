@@ -199,7 +199,7 @@ onMounted(() => {
         </div>
 
         <div
-            class="overflow-y-scroll rounded md:min-h-[30.2rem] md:max-h-[30.2rem] min-h-[15rem] max-h-[15rem] p-2 border border-myPrimaryLightGrayColor"
+            class="rounded p-2 border border-myPrimaryLightGrayColor overflow-y-scroll md:min-h-[29rem] md:max-h-[29rem] min-h-[15rem] max-h-[15rem]"
         >
             <div v-if="isLoading === true">
                 <div class="flex items-center justify-center">
@@ -246,9 +246,7 @@ onMounted(() => {
                             "
                             class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                         >
-                            <span
-                                class="myMediumIcon material-symbols-outlined"
-                            >
+                            <span class="material-symbols-outlined">
                                 delete
                             </span>
                         </button>

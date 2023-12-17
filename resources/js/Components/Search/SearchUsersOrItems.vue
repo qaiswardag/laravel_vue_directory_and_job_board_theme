@@ -238,8 +238,8 @@ onMounted(() => {
         :show="show"
         @close="firstButton"
         maxWidth="4xl"
-        minHeight="min-h-[50rem]"
-        maxHeight="max-h-[50rem]"
+        minHeight="min-h-[90vh]"
+        maxHeight="max-h-[65rem]"
     >
         <div
             class="mb-40 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
