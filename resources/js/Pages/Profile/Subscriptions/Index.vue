@@ -332,6 +332,12 @@ const notificationsModalButton = function () {
                                                     scope="col"
                                                     class="myPrimaryTableTh"
                                                 >
+                                                    Company
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="myPrimaryTableTh"
+                                                >
                                                     Name
                                                 </th>
                                                 <th
@@ -424,6 +430,22 @@ const notificationsModalButton = function () {
                                                                 post.stripe_status
                                                             }}
                                                         </div>
+                                                    </td>
+                                                    <td
+                                                        class="myPrimaryTableTBodyTd"
+                                                    >
+                                                        <template
+                                                            v-if="post.team"
+                                                        >
+                                                            <div
+                                                                class="myPrimaryTag"
+                                                            >
+                                                                {{
+                                                                    post.team
+                                                                        .name
+                                                                }}
+                                                            </div>
+                                                        </template>
                                                     </td>
                                                     <td
                                                         class="myPrimaryTableTBodyTd"

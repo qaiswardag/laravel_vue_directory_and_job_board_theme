@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
 use App\Models\Subscription;
+use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 class SubscriptionController extends Controller
 {
@@ -33,6 +34,17 @@ class SubscriptionController extends Controller
                 ->subscriptions()
                 ->active()
                 ->get();
+
+            // Iterate through subscriptions and find team for each
+            foreach ($subscriptionsActive as $subscription) {
+                $teamId = $subscription->team_id;
+
+                // Use find() to retrieve the team based on team_id
+                $team = Team::find($teamId);
+
+                // Attach the found team to the subscription
+                $subscription->team = $team;
+            }
 
             $subscriptionsIncomplete = $stripeCustomer
                 ->subscriptions()

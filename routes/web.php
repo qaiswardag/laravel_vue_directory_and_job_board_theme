@@ -20,6 +20,8 @@ use App\Http\Controllers\Api\Internal\LoggedIn\PageBuilderComponentsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\PaymentMethodsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\PaymentsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\SubscriptionController as StripeSubscriptionController;
+use App\Http\Controllers\Api\Internal\LoggedIn\Teams\AttachTeamsController;
+use App\Http\Controllers\Api\Internal\LoggedIn\Teams\SuperadminAttachTeamsController;
 use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
@@ -417,7 +419,12 @@ Route::middleware([
         "index",
     ])->name("stripe.api.internal.subscriptions.index");
 
-
+    // Fetch All Users Teams # start
+    Route::get("/user/api/internal/teams/index", [
+        AttachTeamsController::class,
+        "index",
+    ])->name("user.api.internal.teams.index");
+    // Fetch All Users Teams # end
 
     // single charge
     // single charge
@@ -557,20 +564,24 @@ Route::middleware([
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("/team/campaigns/{teamId}", [PostController::class, "index"])->name(
-        "team.posts.index"
-    );
+    Route::get("/team/campaigns/{teamId}", [
+        PostController::class,
+        "index",
+    ])->name("team.posts.index");
 
-    Route::get("/team/campaigns/expired/{teamId}", [PostExpiredController::class, "index"])->name(
-        "team.posts.index.expired"
-    );
+    Route::get("/team/campaigns/expired/{teamId}", [
+        PostExpiredController::class,
+        "index",
+    ])->name("team.posts.index.expired");
 
-    Route::get("/team/campaigns/draft/{teamId}", [PostDraftController::class, "index"])->name(
-        "team.posts.index.draft"
-    );
-    Route::get("/team/campaigns/trash/{teamId}", [PostDeletedController::class, "index"])->name(
-        "team.posts.index.trash"
-    );
+    Route::get("/team/campaigns/draft/{teamId}", [
+        PostDraftController::class,
+        "index",
+    ])->name("team.posts.index.draft");
+    Route::get("/team/campaigns/trash/{teamId}", [
+        PostDeletedController::class,
+        "index",
+    ])->name("team.posts.index.trash");
     // unique post
     Route::get("/team/{teamId}/campaigns/{slug}/view{postId}/", [
         PostController::class,
@@ -588,15 +599,18 @@ Route::middleware([
     Route::get("/team/jobs/{teamId}", [JobController::class, "index"])->name(
         "team.jobs.index"
     );
-    Route::get("/team/jobs/draft/{teamId}", [JobController::class, "IndexDraft"])->name(
-        "team.jobs.index.draft"
-    );
-    Route::get("/team/jobs/expired/{teamId}", [JobExpiredController::class, "index"])->name(
-        "team.jobs.index.expired"
-    );
-    Route::get("/team/jobs/trash/{teamId}", [JobDeletedController::class, "index"])->name(
-        "team.jobs.index.trash"
-    );
+    Route::get("/team/jobs/draft/{teamId}", [
+        JobController::class,
+        "IndexDraft",
+    ])->name("team.jobs.index.draft");
+    Route::get("/team/jobs/expired/{teamId}", [
+        JobExpiredController::class,
+        "index",
+    ])->name("team.jobs.index.expired");
+    Route::get("/team/jobs/trash/{teamId}", [
+        JobDeletedController::class,
+        "index",
+    ])->name("team.jobs.index.trash");
     // unique job
     Route::get("/team/{teamId}/jobs/{slug}/view/{jobId}/", [
         JobController::class,
@@ -621,9 +635,10 @@ Route::middleware([
         "IndexDraft",
     ])->name("team.stores.index.draft");
 
-    Route::get("/team/stores/trash/{teamId}", [StoreDeletedController::class, "index"])->name(
-        "team.stores.index.trash"
-    );
+    Route::get("/team/stores/trash/{teamId}", [
+        StoreDeletedController::class,
+        "index",
+    ])->name("team.stores.index.trash");
 
     // unique store
     Route::get("/team/{teamId}/stores/{slug}/view/{storeId}", [
@@ -889,9 +904,10 @@ Route::middleware([
         "team.jobs.store"
     );
 
-    Route::post("/team/jobs/job/restore/{jobId}/{team}", [JobDeletedController::class, "restore"])->name(
-        "team.jobs.restore"
-    );
+    Route::post("/team/jobs/job/restore/{jobId}/{team}", [
+        JobDeletedController::class,
+        "restore",
+    ])->name("team.jobs.restore");
 
     Route::post("/team/jobs/duplicate", [
         JobController::class,
@@ -1192,10 +1208,16 @@ Route::middleware([
     Route::get("/admin/dashboard", [DashboardController::class, "index"])->name(
         "admin.dashboard"
     );
+
+    // ADMIN FETCH ALL USERS # START
+    // ADMIN FETCH ALL USERS # START
+    // ADMIN FETCH ALL USERS # START
+    // ADMIN FETCH ALL USERS # START
     Route::get("/admin/users", [
         SuperadminUserController::class,
         "index",
     ])->name("admin.users");
+
     Route::delete("/admin/users/user/{user}", [
         SuperadminUserController::class,
         "destroy",
@@ -1213,6 +1235,25 @@ Route::middleware([
         SuperadminManageRoles::class,
         "destroy",
     ])->name("admin.users.user.remove.superadmin");
+    // ADMIN FETCH ALL USERS # END
+    // ADMIN FETCH ALL USERS # END
+    // ADMIN FETCH ALL USERS # END
+    // ADMIN FETCH ALL USERS # END
+
+    // ADMIN FETCH ALL TEAMS # START
+    // ADMIN FETCH ALL TEAMS # START
+    // ADMIN FETCH ALL TEAMS # START
+    // ADMIN FETCH ALL TEAMS # START
+    // Fetch all Teams # start
+    Route::get("/superadmin/api/internal/teams/index", [
+        SuperadminAttachTeamsController::class,
+        "index",
+    ])->name("superadmin.api.internal.teams.index");
+    // Fetch all Teams # end
+    // ADMIN FETCH ALL TEAMS # END
+    // ADMIN FETCH ALL TEAMS # END
+    // ADMIN FETCH ALL TEAMS # END
+    // ADMIN FETCH ALL TEAMS # END
 
     // ADMIN ONLY #PAGE BUILDER #START
     // ADMIN ONLY #PAGE BUILDER #START

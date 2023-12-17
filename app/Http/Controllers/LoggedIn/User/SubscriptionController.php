@@ -47,15 +47,17 @@ class SubscriptionController extends Controller
             return Inertia::render(
                 "Stripe/CreateStoreSubscription/CreateStoreSubscription",
                 [
-                    "intent" => $stripeUserDetails['intent'],
-                    "paymentMethods" => $stripeUserDetails['paymentMethods'],
-                    "publishableKey" => $stripeUserDetails['publishableKey'],
+                    "intent" => $stripeUserDetails["intent"],
+                    "paymentMethods" => $stripeUserDetails["paymentMethods"],
+                    "publishableKey" => $stripeUserDetails["publishableKey"],
                 ]
             );
         } catch (Exception $e) {
-
             return Inertia::render("Error", [
-                "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG . " " . $e->getMessage(),
+                "customError" =>
+                    self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                    " " .
+                    $e->getMessage(),
                 "status" => 422,
             ]);
         }
@@ -110,11 +112,11 @@ class SubscriptionController extends Controller
         } catch (Exception $e) {
             throw ValidationException::withMessages([
                 "vat_id" =>
-                "Oops! We were unable to process the VAT number." .
+                    "Oops! We were unable to process the VAT number." .
                     " " .
                     $e->getMessage(),
                 "vat_number" =>
-                "Oops! We were unable to process the VAT number." .
+                    "Oops! We were unable to process the VAT number." .
                     " " .
                     $e->getMessage(),
             ]);
@@ -124,7 +126,6 @@ class SubscriptionController extends Controller
         // try charge
         try {
             $updateUserLocallyPlusOnStripe->update($request);
-
 
             // when dynamic product pass quantity to subscription
             if ($request->dynamic_product) {
@@ -158,7 +159,7 @@ class SubscriptionController extends Controller
 
             throw ValidationException::withMessages([
                 "error" =>
-                "Oops! Something went wrong creating the subscription." .
+                    "Oops! Something went wrong creating the subscription." .
                     " " .
                     $e->getMessage(),
             ]);
@@ -174,9 +175,14 @@ class SubscriptionController extends Controller
      */
     public function edit($subscriptionId)
     {
+        $team = null;
+
         $user = Auth::user();
 
         $subscription = Subscription::findOrFail($subscriptionId);
+
+        $subscriptionTeam = Team::find($subscription->team_id);
+
         $publishableKey = config("services.stripe.key");
 
         $intent = null;
@@ -225,6 +231,7 @@ class SubscriptionController extends Controller
                 "paymentMethods" => $paymentMethods,
                 "publishableKey" => $publishableKey,
                 "post" => $subscription,
+                "subscriptionTeam" => $subscriptionTeam,
             ]
         );
     }
@@ -232,13 +239,15 @@ class SubscriptionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreChargeFormRequest $request, $subscriptionId, UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe)
-    {
+    public function update(
+        StoreChargeFormRequest $request,
+        $subscriptionId,
+        UpdateUserLocallyPlusOnStripe $updateUserLocallyPlusOnStripe
+    ) {
         $user = Auth::user();
         $newProductId = $request->product_id;
 
-        $newpriceIdentifierStripe =
-            $request->price_identifier_stripe;
+        $newpriceIdentifierStripe = $request->price_identifier_stripe;
 
         $subscription = Subscription::findOrFail($subscriptionId);
 
@@ -246,11 +255,17 @@ class SubscriptionController extends Controller
             $updateUserLocallyPlusOnStripe->update($request);
 
             if ($request->dynamic_product) {
-                $updatedSubscription = $subscription->swap($newpriceIdentifierStripe);
-                $updatedSubscription->updateQuantity($request->product_quantity);
+                $updatedSubscription = $subscription->swap(
+                    $newpriceIdentifierStripe
+                );
+                $updatedSubscription->updateQuantity(
+                    $request->product_quantity
+                );
             }
             if (!$request->dynamic_product) {
-                $updatedSubscription = $subscription->swap($newpriceIdentifierStripe);
+                $updatedSubscription = $subscription->swap(
+                    $newpriceIdentifierStripe
+                );
                 $updatedSubscription->updateQuantity(1);
             }
 
@@ -264,7 +279,7 @@ class SubscriptionController extends Controller
 
             throw ValidationException::withMessages([
                 "error" =>
-                "Oops! Something went wrong updating the subscription." .
+                    "Oops! Something went wrong updating the subscription." .
                     " " .
                     $e->getMessage(),
             ]);
@@ -293,7 +308,7 @@ class SubscriptionController extends Controller
 
             throw ValidationException::withMessages([
                 "error" =>
-                "Oops! Something went wrong." . " " . $e->getMessage(),
+                    "Oops! Something went wrong." . " " . $e->getMessage(),
             ]);
         }
 
@@ -323,7 +338,7 @@ class SubscriptionController extends Controller
 
             throw ValidationException::withMessages([
                 "error" =>
-                "Oops! Something went wrong." . " " . $e->getMessage(),
+                    "Oops! Something went wrong." . " " . $e->getMessage(),
             ]);
         }
 

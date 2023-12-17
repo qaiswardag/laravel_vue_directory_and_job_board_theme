@@ -302,17 +302,17 @@ onMounted(async () => {
                                 </div>
                             </div>
 
-                            <InputLabel for="country123" value="Country" />
+                            <InputLabel for="laacountry" value="Country" />
                             <!-- Headless UI select # start -->
 
                             <Combobox v-model="selectedCountry">
                                 <div class="relative mt-1">
                                     <div class="relative">
                                         <ComboboxInput
-                                            name="country123"
-                                            id="country123"
+                                            name="laacountry"
+                                            id="laacountry"
                                             class="myPrimarySelect"
-                                            autocomplete="country123"
+                                            autocomplete="laacountry"
                                             placeholder="Search.."
                                             :displayValue="
                                                 (country) => {
@@ -427,29 +427,31 @@ onMounted(async () => {
                             class="md:flex items-center justify-center myPrimaryGap"
                         >
                             <div class="myInputGroup">
-                                <InputLabel for="payment_city" value="City" />
+                                <InputLabel for="laacity" value="City" />
                                 <TextInput
-                                    placeholder="City.."
-                                    id="payment_city"
                                     v-model="form.city"
-                                    type="text"
-                                    autocomplete="off"
                                     class="block w-full"
+                                    type="text"
+                                    id="laacity"
+                                    name="laacity"
+                                    autocomplete="laacity"
+                                    placeholder="City.."
                                 />
                                 <InputError :message="form.errors.city" />
                             </div>
                             <div class="myInputGroup">
                                 <InputLabel
-                                    for="payment_postal_code"
+                                    for="laapostal_code"
                                     value="Postal code  "
                                 />
                                 <TextInput
-                                    placeholder="Postal code.."
-                                    id="payment_postal_code"
                                     v-model="form.postal_code"
-                                    type="text"
-                                    autocomplete="off"
                                     class="block w-full"
+                                    placeholder="Postal code.."
+                                    type="text"
+                                    id="laapostal_code"
+                                    name="laapostal_code"
+                                    autocomplete="laapostal_code"
                                 />
                                 <InputError
                                     :message="form.errors.postal_code"

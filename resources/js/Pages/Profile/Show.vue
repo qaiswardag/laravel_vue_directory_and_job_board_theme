@@ -12,7 +12,7 @@ import {
     CreditCardIcon,
 } from "@heroicons/vue/24/outline";
 import { ref } from "vue";
-import SectionBorder from "../../Components/Sections/SectionBorder.vue";
+import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 
 const props = defineProps({
     sessions: Array,

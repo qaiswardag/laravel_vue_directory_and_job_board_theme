@@ -12,6 +12,9 @@ import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBott
 import { useStore } from "vuex";
 import countryListAllIsoData from "@/utils/country-list-all-iso-data";
 import vatIdList from "@/utils/vat-id-list";
+import DynamicModal from "@/Components/Modals/DynamicModal.vue";
+import { vueFetch } from "@/composables/vueFetch";
+import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 
 import {
     TrashIcon,
@@ -41,6 +44,9 @@ const props = defineProps({
     user: {
         required: true,
     },
+    subscriptionTeam: {
+        required: false,
+    },
     intent: {
         required: true,
     },
@@ -67,6 +73,57 @@ const props = defineProps({
     },
 });
 
+const modalShowTeams = ref(false);
+
+// modal content
+const typeModal = ref("");
+const gridColumnModal = ref(Number(1));
+const titleModal = ref("");
+const descriptionModal = ref("");
+const firstButtonModal = ref("");
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+
+// get teams
+const {
+    handleData: handleGetTeams,
+    fetchedData: fetchedTeams,
+    isError: isErrorTeams,
+    error: errorTeams,
+    errors: errorsTeams,
+    isLoading: isLoadingTeams,
+    isSuccess: isSuccessTeams,
+} = vueFetch();
+
+const handleSwitchTeam = function () {
+    handleGetTeams(route("user.api.internal.teams.index"));
+
+    modalShowTeams.value = true;
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 3;
+    titleModal.value = `Switch Team`;
+    descriptionModal.value = `Are you sure you want to switch Team?`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = "Switch Team";
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowTeams.value = false;
+    };
+
+    // handle click
+    thirdModalButtonFunction.value = function () {
+        modalShowTeams.value = false;
+    };
+};
+
 const formType = ref("create");
 
 const handleSubmit = async () => {
@@ -77,7 +134,11 @@ const selectedProduct = ref(null);
 const productQuantity = ref(null);
 const fullDynamicPrice = ref(0);
 
+const showProductError = ref(false);
+
 const handleSelectProduct = function (product) {
+    showProductError.value = false;
+
     if (!product.dynamic_product) {
         formCharge.product_quantity = null;
     }
@@ -185,6 +246,7 @@ const removeFromProductQuantity = function (product) {
 };
 
 const createOrUpdate = async () => {
+    showProductError.value = true;
     if (!formCharge.dynamic_product) {
         formCharge.product_quantity = null;
         formCharge.minimum_quantity = null;
@@ -320,6 +382,47 @@ onMounted(() => {
 </script>
 
 <template>
+    <DynamicModal
+        :show="modalShowTeams"
+        :type="typeModal"
+        :gridColumnAmount="gridColumnModal"
+        :title="titleModal"
+        :description="descriptionModal"
+        :firstButtonText="firstButtonModal"
+        :secondButtonText="secondButtonModal"
+        :thirdButtonText="thirdButtonModal"
+        @firstModalButtonFunction="firstModalButtonFunction"
+        @secondModalButtonFunction="secondModalButtonFunction"
+        @thirdModalButtonFunction="thirdModalButtonFunction"
+    >
+        <header></header>
+        <main>
+            <!-- error # start -->
+            <template v-if="!isLoadingTeams && isErrorTeams && !isSuccessTeams">
+                <p class="myPrimaryParagraphError">
+                    {{ errorTeams }}
+                </p>
+            </template>
+            <!-- error # end -->
+
+            <!-- Loading # start -->
+            <template v-if="isLoadingTeams">
+                <SmallUniversalSpinner
+                    width="w-8"
+                    height="h-8"
+                    border="border-4"
+                ></SmallUniversalSpinner>
+            </template>
+            <!-- Loading # end -->
+
+            <!-- Data # start -->
+            <template v-if="fetchedTeams && Array.isArray(fetchedTeams)">
+                <p class="py-8">fetchedTeams er:</p>
+                <p class="py-8">{{ JSON.stringify(fetchedTeams) }}</p>
+            </template>
+            <!-- Data # end -->
+        </main>
+    </DynamicModal>
     <FormSection @submitted="handleSubmit">
         <template #title>
             {{ title }} {{ resource ? resource.title : "" }}
@@ -334,30 +437,30 @@ onMounted(() => {
 
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
-                        <InputLabel for="line1" value="Street address" />
+                        <InputLabel for="laaline1" value="Street address" />
                         <TextInput
                             v-model="formCharge.line1"
-                            type="text"
-                            id="line1"
-                            name="line1"
                             placeholder="Street address.."
-                            autocomplete="line1off123"
+                            type="text"
+                            id="laaline1"
+                            name="laaline1"
+                            autocomplete="laaline1"
                         />
                         <InputError :message="formCharge.errors.line1" />
                     </div>
 
                     <div class="myInputGroup">
                         <InputLabel
-                            for="line2"
-                            value="Apt, suite, building etc. "
+                            for="laaline2"
+                            value="Apt, suite, building etc."
                         />
                         <TextInput
                             v-model="formCharge.line2"
-                            type="text"
-                            id="line2"
-                            name="line2"
                             placeholder="Apt, suite, building.."
-                            autocomplete="line2off123"
+                            type="text"
+                            id="laaline2"
+                            name="laaline2"
+                            autocomplete="laaline2"
                         />
                         <InputError :message="formCharge.errors.line2" />
                     </div>
@@ -366,16 +469,16 @@ onMounted(() => {
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
-                        <InputLabel for="countryoff123" value="Country" />
+                        <InputLabel for="laacountry" value="Country" />
                         <!-- Headless UI select # start -->
                         <Combobox v-model="selectedCountry">
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="countryoff123"
-                                        id="countryoff123"
+                                        name="laacountry"
+                                        id="laacountry"
                                         class="myPrimarySelect"
-                                        autocomplete="countryoff123"
+                                        autocomplete="laacountry"
                                         placeholder="Search.."
                                         :displayValue="
                                             (country) => {
@@ -481,13 +584,14 @@ onMounted(() => {
                         <InputError :message="formCharge.errors.country" />
                     </div>
                     <div class="myInputGroup">
-                        <InputLabel for="city" value="City" />
+                        <InputLabel for="laacity" value="City" />
                         <TextInput
-                            id="city"
                             v-model="formCharge.city"
-                            placeholder="City.."
-                            autocomplete="cityoff123"
                             type="text"
+                            id="laacity"
+                            name="laacity"
+                            autocomplete="laacity"
+                            placeholder="City.."
                         />
                         <InputError :message="formCharge.errors.city" />
                     </div>
@@ -495,28 +599,31 @@ onMounted(() => {
 
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
-                        <InputLabel for="state" value="Province or region " />
+                        <InputLabel
+                            for="laastate"
+                            value="Province or region "
+                        />
                         <TextInput
                             v-model="formCharge.state"
-                            type="text"
-                            id="state"
-                            name="state"
                             placeholder="Province or region.."
-                            autocomplete="stateoff123"
+                            type="text"
+                            id="laastate"
+                            name="laastate"
+                            autocomplete="laastate"
                         />
                         <InputError :message="formCharge.errors.state" />
                     </div>
 
                     <!-- postal code and phone # start -->
                     <div class="myInputGroup">
-                        <InputLabel for="postal_code" value="Postal code " />
+                        <InputLabel for="laapostal_code" value="Postal code " />
                         <TextInput
                             v-model="formCharge.postal_code"
-                            type="text"
-                            id="postal_code"
-                            name="postal_code"
                             placeholder="Postal code.."
-                            autocomplete="postal_code_off123"
+                            type="text"
+                            id="laapostal_code"
+                            name="laapostal_code"
+                            autocomplete="laapostal_code"
                         />
                         <InputError :message="formCharge.errors.postal_code" />
                     </div>
@@ -527,7 +634,7 @@ onMounted(() => {
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
                         <InputLabel
-                            for="phone_codeoff123"
+                            for="laaphone_code"
                             value="Phone country code"
                         />
                         <!-- Headless UI select # start -->
@@ -535,9 +642,9 @@ onMounted(() => {
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="phone_codeoff123"
-                                        id="phone_codeoff123"
-                                        autocomplete="phone_codeoff123"
+                                        name="laaphone_code"
+                                        id="laaphone_code"
+                                        autocomplete="laaphone_code"
                                         class="myPrimarySelect"
                                         placeholder="Search.."
                                         :displayValue="
@@ -650,14 +757,14 @@ onMounted(() => {
                     </div>
                     <!-- phone code end -->
                     <div class="myInputGroup">
-                        <InputLabel for="phone" value="Phone" />
+                        <InputLabel for="laaphone" value="Phone" />
                         <TextInput
                             v-model="formCharge.phone"
                             type="text"
-                            id="phone"
-                            name="phone"
+                            id="laaphone"
+                            name="laaphone"
+                            autocomplete="laaphone"
                             placeholder="Phone.."
-                            autocomplete="phoneoff123"
                         />
                         <InputError :message="formCharge.errors.phone" />
                     </div>
@@ -676,16 +783,16 @@ onMounted(() => {
                 <div class="md:flex items-center justify-center myPrimaryGap">
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
-                        <InputLabel for="vat_idoff123" value="Vat id " />
+                        <InputLabel for="laavat_id" value="Vat id " />
                         <!-- Headless UI select # start -->
                         <Combobox v-model="selectedVatId">
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="vat_idoff123"
-                                        id="vat_idoff123"
+                                        name="laavat_id"
+                                        id="laavat_id"
                                         class="myPrimarySelect"
-                                        autocomplete="vat_idoff123"
+                                        autocomplete="laavat_id"
                                         placeholder="Search.."
                                         :displayValue="
                                             (country) => {
@@ -794,14 +901,14 @@ onMounted(() => {
                     </div>
 
                     <div class="myInputGroup">
-                        <InputLabel for="vat_number" value="Vat number " />
+                        <InputLabel for="laavat_number" value="Vat number" />
                         <TextInput
                             v-model="formCharge.vat_number"
                             type="text"
-                            id="vat_number"
-                            name="vat_number"
+                            id="laavat_number"
+                            name="laavat_number"
+                            autocomplete="laavat_number"
                             placeholder="Vat number.."
-                            autocomplete="vat_numberoff123"
                         />
                         <InputError :message="formCharge.errors.vat_number" />
                     </div>
@@ -811,6 +918,74 @@ onMounted(() => {
         </template>
 
         <template #sidebar>
+            <!-- Team # start -->
+            <template v-if="subscriptionTeam">
+                <div class="myInputsOrganization">
+                    <div class="myPrimaryFormOrganizationHeader">Team</div>
+                    <div class="myPrimaryFormOrganizationHeader">
+                        <p class="pb-4 pt-2">Subscription for Team</p>
+                    </div>
+
+                    <div @click="handleSwitchTeam" class="myPrimaryFakeSelect">
+                        <div class="relative flex items-center w-full py-0 p-0">
+                            <span> Change Team </span>
+                        </div>
+                        <div
+                            class="border-none rounded flex items-center justify-center h-full w-8"
+                        >
+                            <span class="material-symbols-outlined">
+                                unfold_more
+                            </span>
+                        </div>
+                    </div>
+
+                    <p class="py-4">Team added</p>
+
+                    <div class="p-2 border border-myPrimaryLightGrayColor">
+                        <div
+                            class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
+                        >
+                            <div class="flex justify-left items-center gap-2">
+                                <template
+                                    v-if="
+                                        subscriptionTeam?.coverImagesWithLogos
+                                            .logos &&
+                                        Array.isArray(
+                                            subscriptionTeam
+                                                ?.coverImagesWithLogos.logos
+                                        ) === true
+                                    "
+                                >
+                                    <div
+                                        v-for="logo in subscriptionTeam
+                                            ?.coverImagesWithLogos.logos"
+                                        :key="logo.id"
+                                    >
+                                        <div class="flex-shrink-0">
+                                            <img
+                                                @click="handleSwitchTeam"
+                                                :src="`/storage/uploads/${logo.thumbnail_path}`"
+                                                alt="image"
+                                                class="myPrimarythumbnailInsertPreview"
+                                            />
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <p
+                                    @click="handleSwitchTeam"
+                                    class="myPriamryParagraph font-medium cursor-pointer"
+                                >
+                                    {{ subscriptionTeam?.name }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <InputError :message="formCharge.errors.team" />
+                </div>
+            </template>
+            <!-- Team # end -->
+
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeader">
                     Select product
@@ -876,7 +1051,7 @@ onMounted(() => {
                                 </div>
 
                                 <div
-                                    class="flex justify-between items-center gap-4 text-xs font-medium myPrimaryTag my-0"
+                                    class="mt-4 flex justify-between items-center gap-4 text-xs font-medium myPrimaryTag my-0"
                                 >
                                     <div>
                                         <!-- product quantity # start  -->
@@ -996,7 +1171,12 @@ onMounted(() => {
                             </div>
                         </div>
                         <div class="min-h-[1.5rem]">
-                            <template v-if="selectedProduct?.id === product.id">
+                            <template
+                                v-if="
+                                    selectedProduct?.id === product.id &&
+                                    showProductError
+                                "
+                            >
                                 <InputError
                                     :message="formCharge.errors.product_id"
                                 />

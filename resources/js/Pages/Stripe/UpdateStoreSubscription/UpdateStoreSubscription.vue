@@ -19,6 +19,9 @@ const props = defineProps({
     post: {
         required: true,
     },
+    subscriptionTeam: {
+        required: false,
+    },
 });
 
 const breadcrumbsLinks = [
@@ -51,6 +54,7 @@ const breadcrumbsLinks = [
                 :intent="intent"
                 :publishableKey="publishableKey"
                 :post="post"
+                :subscriptionTeam="subscriptionTeam"
                 :products="storeSubscriptionPrices"
                 updatePath="stripe.stores.update.subscription"
             ></ChargeForm>

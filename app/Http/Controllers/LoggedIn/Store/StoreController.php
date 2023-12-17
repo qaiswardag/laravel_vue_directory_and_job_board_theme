@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\LoggedIn\Store;
 
+use App\Actions\LoggedIn\Stripe\TeamHasActiveSubscriptions;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -37,9 +38,14 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $teamId)
-    {
+    public function index(
+        Request $request,
+        $teamId,
+        TeamHasActiveSubscriptions $teamHasActiveSubscriptions
+    ) {
         $team = Team::find($teamId);
+
+        dd("den bliver:", $teamHasActiveSubscriptions->show($team));
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -71,10 +77,9 @@ class StoreController extends Controller
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
             ->where(function ($query) {
-                $query
-                    ->where('published', true);
+                $query->where("published", true);
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $stores->appends($request->all());
@@ -137,11 +142,9 @@ class StoreController extends Controller
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
             ->where(function ($query) {
-                $query
-                    ->where('published', false)
-                    ->orWhereNull('published');
+                $query->where("published", false)->orWhereNull("published");
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $stores->appends($request->all());
@@ -352,7 +355,6 @@ class StoreController extends Controller
             }
         }
 
-
         if (!$request->published) {
             return redirect()->route("team.stores.index.draft", [
                 "teamId" => $team->id,
@@ -387,7 +389,9 @@ class StoreController extends Controller
         $this->authorize("can-read", $team);
 
         // Retrieve the post, including soft-deleted posts
-        $store = Store::withTrashed()->with('coverImages')->findOrFail($storeId);
+        $store = Store::withTrashed()
+            ->with("coverImages")
+            ->findOrFail($storeId);
 
         // Retrieve the user associated with the store
         $user = User::find($store->user_id);
@@ -513,15 +517,13 @@ class StoreController extends Controller
                 ]);
                 // replicate new job # end
 
-
-
                 // replicate new categories # start
                 if ($store->categories !== null) {
                     foreach ($store->categories as $category) {
                         // Create a new instance of the pivot model
                         $newCategoriesPivotData = new StoreCategoryRelation([
-                            'store_id' => $newStore->id,
-                            'category_id' => $category->id,
+                            "store_id" => $newStore->id,
+                            "category_id" => $category->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -535,8 +537,8 @@ class StoreController extends Controller
                     foreach ($store->coverImages as $coverImage) {
                         // Create a new instance of the pivot model
                         $newCoverImagePivotData = new StoreCoverImageRelation([
-                            'store_id' => $newStore->id,
-                            'media_library_id' => $coverImage->id,
+                            "store_id" => $newStore->id,
+                            "media_library_id" => $coverImage->id,
                             "primary" => $coverImage->pivot->primary ?? null,
                             // Add any other attributes if needed
                         ]);
@@ -551,8 +553,8 @@ class StoreController extends Controller
                     foreach ($store->authors as $author) {
                         // Create a new instance of the pivot model
                         $newJobAuthorsPivotData = new AuthorStore([
-                            'store_id' => $newStore->id,
-                            'user_id' => $author->id,
+                            "store_id" => $newStore->id,
+                            "user_id" => $author->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -566,8 +568,8 @@ class StoreController extends Controller
                     foreach ($store->states as $state) {
                         // Create a new instance of the pivot model
                         $newJobStatePivotData = new StoreStateRelation([
-                            'store_id' => $newStore->id,
-                            'state_id' => $state->id,
+                            "store_id" => $newStore->id,
+                            "state_id" => $state->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -577,9 +579,7 @@ class StoreController extends Controller
                 // replicate new states # end
             });
         } catch (Exception $e) {
-            Log::error(
-                "Oops! Something went wrong. {$e->getMessage()}."
-            );
+            Log::error("Oops! Something went wrong. {$e->getMessage()}.");
 
             return Inertia::render("Error", [
                 "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG, // Error message for the user.
@@ -635,7 +635,6 @@ class StoreController extends Controller
                 "contact_page_url" => $contactPageUrl,
             ]);
         }
-
 
         // Initialize the $authorId variable to null
         $authorId = null;

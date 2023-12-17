@@ -12,6 +12,15 @@ return new class extends Migration {
     {
         Schema::table("subscriptions", function (Blueprint $table) {
             $table
+                ->foreignId("team_id")
+                ->nullable()
+                ->after("user_id")
+                ->references("id")
+                ->on("teams")
+                ->onDelete("set null") // Set team_id to NULL when the corresponding team is deleted
+                ->constrained();
+
+            $table
                 ->string("updated_subscription_name")
                 ->nullable()
                 ->after("name");

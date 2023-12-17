@@ -89,17 +89,6 @@ class StoreTeamUpdateRequest extends FormRequest
 
             $this->validateProperties($validator);
 
-            // validation for cover image # start
-            if (
-                $this->cover_image === null ||
-                (gettype($this->cover_image) === "array" &&
-                    count($this->cover_image) === 0)
-            ) {
-                $validator
-                    ->errors()
-                    ->add("cover_image", "The cover image field is required.");
-            }
-
             if (gettype($this->cover_image) !== "array") {
                 $validator
                     ->errors()

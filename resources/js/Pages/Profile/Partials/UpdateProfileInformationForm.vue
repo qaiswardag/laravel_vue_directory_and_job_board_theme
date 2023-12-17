@@ -359,7 +359,7 @@ onMounted(() => {
                     <div class="myInputGroup">
                         <!-- Headless UI select # start -->
                         <InputLabel
-                            for="phone_code123"
+                            for="laaphone_code"
                             value="Phone country code"
                         />
                         <!-- Headless UI select # start -->
@@ -367,9 +367,9 @@ onMounted(() => {
                             <div class="relative mt-1">
                                 <div class="relative">
                                     <ComboboxInput
-                                        name="phone_code123"
-                                        id="phone_code123"
-                                        autocomplete="phone_code123"
+                                        name="laaphone_code"
+                                        id="laaphone_code"
+                                        autocomplete="laaphone_code"
                                         class="myPrimarySelect"
                                         placeholder="Search.."
                                         :displayValue="
@@ -482,14 +482,14 @@ onMounted(() => {
                     </div>
                     <!-- phone code end -->
                     <div class="myInputGroup">
-                        <InputLabel for="phone" value="Phone" />
+                        <InputLabel for="laaphone" value="Phone" />
                         <TextInput
                             v-model="form.phone"
                             type="text"
-                            id="phone"
-                            name="phone"
+                            id="laaphone"
+                            name="laaphone"
+                            autocomplete="laaphone"
                             placeholder="Phone.."
-                            autocomplete="off"
                         />
                         <InputError :message="form.errors.phone" />
                     </div>
@@ -723,45 +723,45 @@ onMounted(() => {
                 </div>
 
                 <div class="myInputGroup">
-                    <InputLabel for="line1" value="Street address" />
+                    <InputLabel for="laaline1" value="Street address" />
                     <TextInput
                         v-model="form.line1"
-                        type="text"
-                        id="line1"
-                        name="line1"
                         placeholder="Street address.."
-                        autocomplete="off"
+                        type="text"
+                        id="laaline1"
+                        name="laaline1"
+                        autocomplete="laaline1"
                     />
                     <InputError :message="form.errors.line1" />
                 </div>
 
                 <div class="myInputGroup">
                     <InputLabel
-                        for="line2"
-                        value="Apt, suite, building etc. "
+                        for="laaline2"
+                        value="Apt, suite, building etc."
                     />
                     <TextInput
                         v-model="form.line2"
-                        type="text"
-                        id="line2"
-                        name="line2"
                         placeholder="Apt, suite, building.."
-                        autocomplete="off"
+                        type="text"
+                        id="laaline2"
+                        name="laaline2"
+                        autocomplete="laaline2"
                     />
                     <InputError :message="form.errors.line2" />
                 </div>
 
                 <div class="myInputGroup">
                     <!-- Headless UI select # start -->
-                    <InputLabel for="country123" value="Country" />
+                    <InputLabel for="laacountry" value="Country" />
                     <!-- Headless UI select # start -->
                     <Combobox v-model="selectedCountry">
                         <div class="relative mt-1">
                             <div class="relative">
                                 <ComboboxInput
-                                    name="country123"
-                                    id="country123"
-                                    autocomplete="country123"
+                                    name="laacountry"
+                                    id="laacountry"
+                                    autocomplete="laacountry"
                                     class="myPrimarySelect"
                                     placeholder="Search.."
                                     :displayValue="
@@ -866,38 +866,38 @@ onMounted(() => {
                     <InputError :message="form.errors.country" />
                 </div>
                 <div class="myInputGroup">
-                    <InputLabel for="city" value="City" />
+                    <InputLabel for="laacity" value="City" />
                     <TextInput
                         v-model="form.city"
                         type="text"
-                        id="city"
-                        name="city"
+                        id="laacity"
+                        name="laacity"
+                        autocomplete="laacity"
                         placeholder="City.."
-                        autocomplete="off"
                     />
                     <InputError :message="form.errors.city" />
                 </div>
                 <div class="myInputGroup">
-                    <InputLabel for="state" value="Province or region " />
+                    <InputLabel for="laastate" value="Province or region" />
                     <TextInput
                         v-model="form.state"
-                        type="text"
-                        id="state"
-                        name="state"
                         placeholder="Province or region.."
-                        autocomplete="off"
+                        type="text"
+                        id="laastate"
+                        name="laastate"
+                        autocomplete="laastate"
                     />
                     <InputError :message="form.errors.state" />
                 </div>
                 <div class="myInputGroup">
-                    <InputLabel for="postal_code" value="Postal code " />
+                    <InputLabel for="laapostal_code" value="Postal code " />
                     <TextInput
                         v-model="form.postal_code"
-                        type="text"
-                        id="postal_code"
-                        name="postal_code"
                         placeholder="Postal code.."
-                        autocomplete="off"
+                        type="text"
+                        id="laapostal_code"
+                        name="laapostal_code"
+                        autocomplete="laapostal_code"
                     />
                     <InputError :message="form.errors.postal_code" />
                 </div>
