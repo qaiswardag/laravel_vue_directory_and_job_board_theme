@@ -15,6 +15,7 @@ import vatIdList from "@/utils/vat-id-list";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import { vueFetch } from "@/composables/vueFetch";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
+import { TailwindPagination } from "laravel-vue-pagination";
 
 import {
     TrashIcon,
@@ -88,42 +89,6 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
-// get teams
-const {
-    handleData: handleGetTeams,
-    fetchedData: fetchedTeams,
-    isError: isErrorTeams,
-    error: errorTeams,
-    errors: errorsTeams,
-    isLoading: isLoadingTeams,
-    isSuccess: isSuccessTeams,
-} = vueFetch();
-
-const handleSwitchTeam = function () {
-    handleGetTeams(route("user.api.internal.teams.index"));
-
-    modalShowTeams.value = true;
-    // set modal standards
-    typeModal.value = "success";
-    gridColumnModal.value = 3;
-    titleModal.value = `Switch Team`;
-    descriptionModal.value = `Are you sure you want to switch Team?`;
-    firstButtonModal.value = "Close";
-    secondButtonModal.value = null;
-    thirdButtonModal.value = "Switch Team";
-
-    // handle click
-    firstModalButtonFunction.value = function () {
-        // handle show modal for unique content
-        modalShowTeams.value = false;
-    };
-
-    // handle click
-    thirdModalButtonFunction.value = function () {
-        modalShowTeams.value = false;
-    };
-};
-
 const formType = ref("create");
 
 const handleSubmit = async () => {
@@ -188,6 +153,8 @@ const formCharge = useForm({
     vat_id: props.user.vat_id,
     tax_id: props.user.tax_id,
     vat_number: props.user.vat_number,
+
+    subscription_team: null,
 });
 
 const changeInProductQuantity = function (product) {
@@ -378,7 +345,80 @@ onMounted(() => {
                 return country.code === props.user.vat_id;
             }) || null;
     }
+
+    if (props.subscriptionTeam) {
+        formCharge.subscription_team = props.subscriptionTeam;
+    }
 });
+
+// Search teams
+const searchForm = useForm({
+    search_query: "",
+});
+
+const selectedTeam = ref(null);
+
+// get teams
+const {
+    handleData: handleGetTeams,
+    fetchedData: fetchedTeams,
+    isError: isErrorTeams,
+    error: errorTeams,
+    errors: errorsTeams,
+    isLoading: isLoadingTeams,
+    isSuccess: isSuccessTeams,
+} = vueFetch();
+
+const handleShowAllTeams = function () {
+    handleGetTeams(
+        route("user.api.internal.teams.index", {
+            page: 1,
+            search_query: searchForm.search_query,
+        })
+    );
+
+    modalShowTeams.value = true;
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 3;
+    titleModal.value = `Switch Team`;
+    descriptionModal.value = `Are you sure you want to switch Team?`;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = null;
+    thirdButtonModal.value = null;
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // handle show modal for unique content
+        modalShowTeams.value = false;
+    };
+};
+
+// get result for "laravel pagination" package
+const getResultsForPage = (page = 1) => {
+    handleGetTeams(
+        route("user.api.internal.teams.index", {
+            page: page,
+            search_query: searchForm.search_query,
+        })
+    );
+};
+
+const search_query = ref("");
+// handle search
+const handleSearch = function (page) {
+    handleGetTeams(
+        route("user.api.internal.teams.index", {
+            page: page,
+            search_query: searchForm.search_query,
+        })
+    );
+};
+
+const handleSwitchTeam = function (team) {
+    formCharge.subscription_team = team;
+    modalShowTeams.value = false;
+};
 </script>
 
 <template>
@@ -397,6 +437,72 @@ onMounted(() => {
     >
         <header></header>
         <main>
+            <div
+                v-if="
+                    fetchedTeams &&
+                    fetchedTeams.teams &&
+                    fetchedTeams.teams.data
+                "
+            >
+                <!-- Search # start -->
+                <form @submit.prevent="handleSearch">
+                    <div class="relative w-full mb-12">
+                        <div
+                            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                        >
+                            <span class="material-symbols-outlined">
+                                search
+                            </span>
+                        </div>
+                        <input
+                            v-model="searchForm.search_query"
+                            type="search"
+                            id="search_query"
+                            class="myPrimaryInput pl-10 shadow-none min-h-[3.5rem] h-[3.5rem]"
+                            autocomplete="off"
+                            :placeholder="`Search..`"
+                        />
+                    </div>
+                </form>
+                <!-- Search # end -->
+
+                <!-- Pagination # start -->
+                <TailwindPagination
+                    :limit="1"
+                    :keepLength="true"
+                    :class="[
+                        'space-x-1',
+                        'shadow-none',
+                        'tailwind-pagination-package',
+                    ]"
+                    :active-classes="[
+                        'bg-myPrimaryLinkColor',
+                        'text-white',
+                        'rounded-full',
+                    ]"
+                    :item-classes="[
+                        'p-0',
+                        'm-0',
+                        'border-none',
+                        'bg-myPrimaryLightGrayColor',
+                        'shadow-sm',
+                        'hover:bg-gray-300',
+                        'text-myPrimaryDarkGrayColor',
+                        'rounded-full',
+                    ]"
+                    :data="fetchedTeams.teams"
+                    @pagination-change-page="getResultsForPage"
+                >
+                    <template #prev-nav>
+                        <span> Prev </span>
+                    </template>
+                    <template #next-nav>
+                        <span>Next</span>
+                    </template>
+                </TailwindPagination>
+            </div>
+            <!-- Pagination # end -->
+
             <!-- error # start -->
             <template v-if="!isLoadingTeams && isErrorTeams && !isSuccessTeams">
                 <p class="myPrimaryParagraphError">
@@ -405,22 +511,88 @@ onMounted(() => {
             </template>
             <!-- error # end -->
 
-            <!-- Loading # start -->
-            <template v-if="isLoadingTeams">
-                <SmallUniversalSpinner
-                    width="w-8"
-                    height="h-8"
-                    border="border-4"
-                ></SmallUniversalSpinner>
-            </template>
-            <!-- Loading # end -->
+            <div class="mt-8">
+                <div
+                    class="min-h-[25rem] max-h-[25rem] overflow-y-scroll flex flex-col myPrimaryGap"
+                >
+                    <!-- Loading # start -->
+                    <template v-if="isLoadingTeams">
+                        <SmallUniversalSpinner
+                            width="w-8"
+                            height="h-8"
+                            border="border-4"
+                        ></SmallUniversalSpinner>
+                    </template>
+                    <!-- Loading # end -->
 
-            <!-- Data # start -->
-            <template v-if="fetchedTeams && Array.isArray(fetchedTeams)">
-                <p class="py-8">fetchedTeams er:</p>
-                <p class="py-8">{{ JSON.stringify(fetchedTeams) }}</p>
-            </template>
-            <!-- Data # end -->
+                    <!-- Data # start -->
+                    <template
+                        v-if="
+                            fetchedTeams &&
+                            fetchedTeams.teams &&
+                            fetchedTeams.teams.data &&
+                            Array.isArray(fetchedTeams.teams.data) &&
+                            !isLoadingTeams
+                        "
+                    >
+                        <template v-if="fetchedTeams.teams.data.length === 0">
+                            <p class="myPrimaryParagraph">
+                                It seems that there are no teams.
+                            </p>
+                        </template>
+                        <div
+                            v-for="team in fetchedTeams.teams.data"
+                            :key="team.id"
+                        >
+                            <div
+                                @click="handleSwitchTeam(team)"
+                                class="p-2 border border-myPrimaryLightGrayColor rounded cursor-pointer"
+                            >
+                                <div
+                                    class="flex justify-between items-center my-2 px-6 gap-4 myPrimaryTag w-max"
+                                >
+                                    <div
+                                        class="flex justify-left items-center gap-2"
+                                    >
+                                        <template
+                                            v-if="
+                                                team?.coverImagesWithLogos
+                                                    .logos &&
+                                                Array.isArray(
+                                                    team?.coverImagesWithLogos
+                                                        .logos
+                                                ) === true
+                                            "
+                                        >
+                                            <div
+                                                v-for="logo in team
+                                                    ?.coverImagesWithLogos
+                                                    .logos"
+                                                :key="logo.id"
+                                            >
+                                                <div class="flex-shrink-0">
+                                                    <img
+                                                        :src="`/storage/uploads/${logo.thumbnail_path}`"
+                                                        alt="image"
+                                                        class="myPrimarythumbnailInsertPreview"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </template>
+
+                                        <p
+                                            class="myPriamryParagraph font-medium cursor-pointer"
+                                        >
+                                            {{ team?.name }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <!-- Data # end -->
+            </div>
         </main>
     </DynamicModal>
     <FormSection @submitted="handleSubmit">
@@ -428,6 +600,7 @@ onMounted(() => {
             {{ title }} {{ resource ? resource.title : "" }}
         </template>
         <template #main>
+            <p class="py-32">formCharge: {{ formCharge }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -919,14 +1092,17 @@ onMounted(() => {
 
         <template #sidebar>
             <!-- Team # start -->
-            <template v-if="subscriptionTeam">
+            <template v-if="formCharge.subscription_team">
                 <div class="myInputsOrganization">
                     <div class="myPrimaryFormOrganizationHeader">Team</div>
                     <div class="myPrimaryFormOrganizationHeader">
                         <p class="pb-4 pt-2">Subscription for Team</p>
                     </div>
 
-                    <div @click="handleSwitchTeam" class="myPrimaryFakeSelect">
+                    <div
+                        @click="handleShowAllTeams"
+                        class="myPrimaryFakeSelect"
+                    >
                         <div class="relative flex items-center w-full py-0 p-0">
                             <span> Change Team </span>
                         </div>
@@ -943,27 +1119,28 @@ onMounted(() => {
 
                     <div class="p-2 border border-myPrimaryLightGrayColor">
                         <div
-                            class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
+                            @click="handleShowAllTeams"
+                            class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max cursor-pointer"
                         >
                             <div class="flex justify-left items-center gap-2">
                                 <template
                                     v-if="
-                                        subscriptionTeam?.coverImagesWithLogos
-                                            .logos &&
+                                        formCharge.subscription_team
+                                            ?.coverImagesWithLogos.logos &&
                                         Array.isArray(
-                                            subscriptionTeam
+                                            formCharge.subscription_team
                                                 ?.coverImagesWithLogos.logos
                                         ) === true
                                     "
                                 >
                                     <div
-                                        v-for="logo in subscriptionTeam
+                                        v-for="logo in formCharge
+                                            .subscription_team
                                             ?.coverImagesWithLogos.logos"
                                         :key="logo.id"
                                     >
                                         <div class="flex-shrink-0">
                                             <img
-                                                @click="handleSwitchTeam"
                                                 :src="`/storage/uploads/${logo.thumbnail_path}`"
                                                 alt="image"
                                                 class="myPrimarythumbnailInsertPreview"
@@ -973,10 +1150,9 @@ onMounted(() => {
                                 </template>
 
                                 <p
-                                    @click="handleSwitchTeam"
                                     class="myPriamryParagraph font-medium cursor-pointer"
                                 >
-                                    {{ subscriptionTeam?.name }}
+                                    {{ formCharge.subscription_team?.name }}
                                 </p>
                             </div>
                         </div>

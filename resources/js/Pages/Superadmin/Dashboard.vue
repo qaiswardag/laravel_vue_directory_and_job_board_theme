@@ -1,6 +1,8 @@
 <script setup>
 import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
+import { TailwindPagination } from "laravel-vue-pagination";
+import { router, useForm, usePage } from "@inertiajs/vue3";
 import {
     AcademicCapIcon,
     BanknotesIcon,
@@ -61,6 +63,10 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
+const searchForm = useForm({
+    search_query: "",
+});
+
 // get teams
 const {
     handleData: handleGetTeams,
@@ -72,8 +78,13 @@ const {
     isSuccess: isSuccessTeams,
 } = vueFetch();
 
-const handleSwitchTeam = function () {
-    handleGetTeams(route("superadmin.api.internal.teams.index"));
+const handleShowAllTeams = function () {
+    handleGetTeams(
+        route("superadmin.api.internal.teams.index", {
+            page: 1,
+            search_query: searchForm.search_query,
+        })
+    );
 
     modalShowTeams.value = true;
     // set modal standards
@@ -89,12 +100,53 @@ const handleSwitchTeam = function () {
     firstModalButtonFunction.value = function () {
         // handle show modal for unique content
         modalShowTeams.value = false;
+
+        switchTeamForm.team = null;
     };
 
     // handle click
     thirdModalButtonFunction.value = function () {
         modalShowTeams.value = false;
+
+        handleSwitchTeam();
     };
+};
+
+// get result for "laravel pagination" package
+const getResultsForPage = (page = 1) => {
+    handleGetTeams(
+        route("superadmin.api.internal.teams.index", {
+            page: page,
+            search_query: searchForm.search_query,
+        })
+    );
+};
+
+const search_query = ref("");
+
+// handle search
+const handleSearch = function (page) {
+    handleGetTeams(
+        route("superadmin.api.internal.teams.index", {
+            page: page,
+            search_query: searchForm.search_query,
+        })
+    );
+};
+
+const switchTeamForm = useForm({
+    team: null,
+});
+
+const handleSwitchTeam = function () {
+    console.log(
+        `make a post request for actual switching the team:`,
+        switchTeamForm.team
+    );
+};
+
+const handleSelectTeam = function (team) {
+    switchTeamForm.team = team;
 };
 </script>
 
@@ -114,6 +166,110 @@ const handleSwitchTeam = function () {
     >
         <header></header>
         <main>
+            <div
+                v-if="
+                    fetchedTeams &&
+                    fetchedTeams.teams &&
+                    fetchedTeams.teams.data
+                "
+            >
+                <!-- Search # start -->
+                <form @submit.prevent="handleSearch">
+                    <div class="relative w-full mb-12">
+                        <div
+                            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                        >
+                            <span class="material-symbols-outlined">
+                                search
+                            </span>
+                        </div>
+                        <input
+                            v-model="searchForm.search_query"
+                            type="search"
+                            id="search_query"
+                            class="myPrimaryInput pl-10 shadow-none min-h-[3.5rem] h-[3.5rem]"
+                            autocomplete="off"
+                            :placeholder="`Search..`"
+                        />
+                    </div>
+                </form>
+                <!-- Search # end -->
+
+                <!-- Pagination # start -->
+
+                <TailwindPagination
+                    :limit="1"
+                    :keepLength="true"
+                    :class="[
+                        'space-x-1',
+                        'shadow-none',
+                        'tailwind-pagination-package',
+                    ]"
+                    :active-classes="[
+                        'bg-myPrimaryLinkColor',
+                        'text-white',
+                        'rounded-full',
+                    ]"
+                    :item-classes="[
+                        'p-0',
+                        'm-0',
+                        'border-none',
+                        'bg-myPrimaryLightGrayColor',
+                        'shadow-sm',
+                        'hover:bg-gray-300',
+                        'text-myPrimaryDarkGrayColor',
+                        'rounded-full',
+                    ]"
+                    :data="fetchedTeams.teams"
+                    @pagination-change-page="getResultsForPage"
+                >
+                    <template #prev-nav>
+                        <span> Prev </span>
+                    </template>
+                    <template #next-nav>
+                        <span>Next</span>
+                    </template>
+                </TailwindPagination>
+
+                <!-- Selected Team # start -->
+                <template v-if="switchTeamForm.team">
+                    <div
+                        class="flex justify-center items-center bg-red-50 my-4"
+                    >
+                        <div
+                            class="flex justify-between items-center my-2 px-6 gap-4 myPrimaryTag w-max"
+                        >
+                            <div class="flex justify-left items-center gap-2">
+                                <div
+                                    v-for="logo in switchTeamForm.team
+                                        ?.coverImagesWithLogos.logos"
+                                    :key="logo.id"
+                                >
+                                    <div class="flex-shrink-0">
+                                        <img
+                                            :src="`/storage/uploads/${logo.thumbnail_path}`"
+                                            alt="image"
+                                            class="myPrimarythumbnailInsertPreview cursor-default"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col gap-1">
+                                    <p class="myPriamryParagraph font-medium">
+                                        {{ switchTeamForm.team?.name }}
+                                    </p>
+                                    <p class="myPriamryParagraph text-xs">
+                                        Id: {{ switchTeamForm.team?.id }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <!-- Selected Team # end -->
+            </div>
+            <!-- Pagination # end -->
+
             <!-- error # start -->
             <template v-if="!isLoadingTeams && isErrorTeams && !isSuccessTeams">
                 <p class="myPrimaryParagraphError">
@@ -122,22 +278,95 @@ const handleSwitchTeam = function () {
             </template>
             <!-- error # end -->
 
-            <!-- Loading # start -->
-            <template v-if="isLoadingTeams">
-                <SmallUniversalSpinner
-                    width="w-8"
-                    height="h-8"
-                    border="border-4"
-                ></SmallUniversalSpinner>
-            </template>
-            <!-- Loading # end -->
+            <div class="mt-8">
+                <div
+                    class="min-h-[25rem] max-h-[25rem] overflow-y-scroll flex flex-col myPrimaryGap"
+                >
+                    <!-- Loading # start -->
+                    <template v-if="isLoadingTeams">
+                        <SmallUniversalSpinner
+                            width="w-8"
+                            height="h-8"
+                            border="border-4"
+                        ></SmallUniversalSpinner>
+                    </template>
+                    <!-- Loading # end -->
 
-            <!-- Data # start -->
-            <template v-if="fetchedTeams && Array.isArray(fetchedTeams)">
-                <p class="py-8">fetchedTeams er:</p>
-                <p class="py-8">{{ JSON.stringify(fetchedTeams) }}</p>
-            </template>
-            <!-- Data # end -->
+                    <!-- Data # start -->
+                    <template
+                        v-if="
+                            fetchedTeams &&
+                            fetchedTeams.teams &&
+                            fetchedTeams.teams.data &&
+                            Array.isArray(fetchedTeams.teams.data) &&
+                            !isLoadingTeams
+                        "
+                    >
+                        <template v-if="fetchedTeams.teams.data.length === 0">
+                            <p class="myPrimaryParagraph">
+                                It seems that there are no teams.
+                            </p>
+                        </template>
+                        <div
+                            v-for="team in fetchedTeams.teams.data"
+                            :key="team.id"
+                        >
+                            <div
+                                @click="handleSelectTeam(team)"
+                                class="p-2 border border-myPrimaryLightGrayColor rounded cursor-pointer"
+                            >
+                                <div
+                                    class="flex justify-between items-center my-2 px-6 gap-4 myPrimaryTag w-max"
+                                >
+                                    <div
+                                        class="flex justify-left items-center gap-2"
+                                    >
+                                        <template
+                                            v-if="
+                                                team?.coverImagesWithLogos
+                                                    .logos &&
+                                                Array.isArray(
+                                                    team?.coverImagesWithLogos
+                                                        .logos
+                                                ) === true
+                                            "
+                                        >
+                                            <div
+                                                v-for="logo in team
+                                                    ?.coverImagesWithLogos
+                                                    .logos"
+                                                :key="logo.id"
+                                            >
+                                                <div class="flex-shrink-0">
+                                                    <img
+                                                        :src="`/storage/uploads/${logo.thumbnail_path}`"
+                                                        alt="image"
+                                                        class="myPrimarythumbnailInsertPreview"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </template>
+
+                                        <div class="flex flex-col gap-1">
+                                            <p
+                                                class="myPriamryParagraph font-medium cursor-pointer"
+                                            >
+                                                {{ team?.name }}
+                                            </p>
+                                            <p
+                                                class="myPriamryParagraph text-xs cursor-pointer"
+                                            >
+                                                Id: {{ team?.id }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <!-- Data # end -->
+            </div>
         </main>
     </DynamicModal>
 
@@ -256,7 +485,7 @@ const handleSwitchTeam = function () {
                             <h3 class="text-lg font-normal">
                                 <button
                                     type="button"
-                                    @click="handleSwitchTeam"
+                                    @click="handleShowAllTeams"
                                     class="focus:outline-none text-myPrimaryLinkColor"
                                 >
                                     <span

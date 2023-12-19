@@ -328,7 +328,7 @@ onMounted(() => {
                         </div>
                     </div>
                     <div
-                        class="flex justify-between items-center gap-4 text-xs font-medium myPrimaryTag w-max min-w-full my-0"
+                        class="mt-4 flex justify-between items-center gap-4 text-xs font-medium myPrimaryTag w-max min-w-full my-0"
                     >
                         <div>
                             <button

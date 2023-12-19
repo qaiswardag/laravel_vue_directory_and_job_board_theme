@@ -11,22 +11,33 @@ class SuperadminAttachTeamsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        sleep(2);
-        return response()->json("En fejl opstod.", 401);
-        return "Kom til super admin og alle teams i app!";
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        $teams = Team::paginate(2);
+        $this->authorize("superadmin-can-read");
 
-        return $teams;
+        $searchQuery = $request->input("search_query");
+
+        if (is_array($searchQuery)) {
+            $searchQuery = implode(",", $searchQuery);
+        }
+
+        $teams = Team::orderBy("name")
+            ->when($request->query("search_query"), function (
+                $query,
+                $searchQuery
+            ) {
+                $query->where(function ($query) use ($searchQuery) {
+                    $query->where("name", "LIKE", "%" . $searchQuery . "%");
+                });
+            })
+            ->paginate(10);
+
+        return [
+            "teams" => $teams,
+            "oldInput" => [
+                "search_query" => $request->input("search_query"),
+            ],
+        ];
     }
 
     /**
