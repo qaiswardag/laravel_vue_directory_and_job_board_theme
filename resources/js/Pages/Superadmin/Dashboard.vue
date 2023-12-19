@@ -3,6 +3,8 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import { TailwindPagination } from "laravel-vue-pagination";
 import { router, useForm, usePage } from "@inertiajs/vue3";
+import InputError from "@/Components/Forms/InputError.vue";
+
 import {
     AcademicCapIcon,
     BanknotesIcon,
@@ -102,12 +104,11 @@ const handleShowAllTeams = function () {
         modalShowTeams.value = false;
 
         switchTeamForm.team = null;
+        switchTeamForm.team_id = null;
     };
 
     // handle click
     thirdModalButtonFunction.value = function () {
-        modalShowTeams.value = false;
-
         handleSwitchTeam();
     };
 };
@@ -136,17 +137,22 @@ const handleSearch = function (page) {
 
 const switchTeamForm = useForm({
     team: null,
+    team_id: null,
 });
 
 const handleSwitchTeam = function () {
-    console.log(
-        `make a post request for actual switching the team:`,
-        switchTeamForm.team
-    );
+    switchTeamForm.put(route("superadmin.switch.team"), {
+        onSuccess: () => {
+            modalShowTeams.value = false;
+        },
+        onError: () => {},
+        onFinish: () => {},
+    });
 };
 
 const handleSelectTeam = function (team) {
     switchTeamForm.team = team;
+    switchTeamForm.team_id = team.id;
 };
 </script>
 
@@ -267,6 +273,7 @@ const handleSelectTeam = function (team) {
                     </div>
                 </template>
                 <!-- Selected Team # end -->
+                <InputError :message="switchTeamForm.errors.team_id" />
             </div>
             <!-- Pagination # end -->
 

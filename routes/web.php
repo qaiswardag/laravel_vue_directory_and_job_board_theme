@@ -49,6 +49,7 @@ use App\Http\Controllers\LoggedIn\User\SubscriptionController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
 use App\Http\Controllers\Superadmin\PageBuilder\PageBuilderController;
 use App\Http\Controllers\Superadmin\SuperadminManageRoles;
+use App\Http\Controllers\Superadmin\SuperadminSwitchTeamController;
 use App\Http\Middleware\isSuperAdmin;
 use App\Models\Post\Post;
 use App\Models\Team;
@@ -1249,6 +1250,11 @@ Route::middleware([
         SuperadminAttachTeamsController::class,
         "index",
     ])->name("superadmin.api.internal.teams.index");
+
+    Route::put("/superadmin/switch/team", [
+        SuperadminSwitchTeamController::class,
+        "update",
+    ])->name("superadmin.switch.team");
     // Fetch all Teams # end
     // ADMIN FETCH ALL TEAMS # END
     // ADMIN FETCH ALL TEAMS # END
