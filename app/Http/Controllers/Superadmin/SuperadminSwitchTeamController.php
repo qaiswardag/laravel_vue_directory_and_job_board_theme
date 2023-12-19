@@ -120,10 +120,21 @@ class SuperadminSwitchTeamController extends Controller
             // superadmin do not own the team and superadmin do not belong to the team
             // create team user relationship for superadmin
             if (!$teamUser) {
-                //
-                dd(
-                    "superadmin do not own the team and superadmin do not belong to the team"
-                );
+                // create team user for superadmin
+                $newTeamUser = TeamUser::create([
+                    "team_id" => $teamId,
+                    "user_id" => $user->id,
+                    "role" => "admin",
+                ]);
+
+                // set new current team
+                $user
+                    ->forceFill([
+                        "current_team_id" => $newTeamUser->team_id,
+                    ])
+                    ->save();
+
+                return back();
             }
             //
             //

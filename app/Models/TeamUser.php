@@ -14,5 +14,7 @@ class TeamUser extends Model
      *
      * @var string
      */
+
+    protected $fillable = ["user_id", "team_id", "role"];
     protected $table = "team_user";
 }

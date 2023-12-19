@@ -513,7 +513,7 @@ const handleSwitchTeam = function (team) {
 
             <div class="mt-8">
                 <div
-                    class="min-h-[25rem] max-h-[25rem] overflow-y-scroll flex flex-col myPrimaryGap"
+                    class="min-h-[25rem] max-h-[25rem] overflow-y-scroll flex flex-col myPrimaryGap border border-gray-200 p-2 divide-y"
                 >
                     <!-- Loading # start -->
                     <template v-if="isLoadingTeams">
@@ -546,7 +546,7 @@ const handleSwitchTeam = function (team) {
                         >
                             <div
                                 @click="handleSwitchTeam(team)"
-                                class="p-2 border border-myPrimaryLightGrayColor rounded cursor-pointer"
+                                class="rounded cursor-pointer"
                             >
                                 <div
                                     class="flex justify-between items-center my-2 px-6 gap-4 myPrimaryTag w-max"

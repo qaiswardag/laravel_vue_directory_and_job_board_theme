@@ -239,9 +239,7 @@ const handleSelectTeam = function (team) {
 
                 <!-- Selected Team # start -->
                 <template v-if="switchTeamForm.team">
-                    <div
-                        class="flex justify-center items-center bg-red-50 my-4"
-                    >
+                    <div class="flex justify-center items-center mt-6">
                         <div
                             class="flex justify-between items-center my-2 px-6 gap-4 myPrimaryTag w-max"
                         >
@@ -287,7 +285,7 @@ const handleSelectTeam = function (team) {
 
             <div class="mt-8">
                 <div
-                    class="min-h-[25rem] max-h-[25rem] overflow-y-scroll flex flex-col myPrimaryGap"
+                    class="min-h-[25rem] max-h-[25rem] overflow-y-scroll flex flex-col myPrimaryGap border border-gray-200 p-2 divide-y"
                 >
                     <!-- Loading # start -->
                     <template v-if="isLoadingTeams">
@@ -320,7 +318,7 @@ const handleSelectTeam = function (team) {
                         >
                             <div
                                 @click="handleSelectTeam(team)"
-                                class="p-2 border border-myPrimaryLightGrayColor rounded cursor-pointer"
+                                class="p-2 rounded cursor-pointer"
                             >
                                 <div
                                     class="flex justify-between items-center my-2 px-6 gap-4 myPrimaryTag w-max"
