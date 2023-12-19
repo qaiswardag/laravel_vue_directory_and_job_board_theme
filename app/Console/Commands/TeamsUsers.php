@@ -89,7 +89,6 @@ class TeamsUsers extends Command
             ]);
         }
 
-
         // Check if the user with ID 1 exists
         if (!User::where("id", 3)->exists()) {
             User::factory()->create([
@@ -108,7 +107,6 @@ class TeamsUsers extends Command
             ]);
         }
 
-
         TeamUser::factory()->create([
             "user_id" => User::find(1)->id,
             "team_id" => Team::find(2)->id,
@@ -126,7 +124,6 @@ class TeamsUsers extends Command
             "team_id" => Team::find(2)->id,
             "role" => "editor",
         ]);
-
 
         TeamUser::factory()->create([
             "user_id" => User::find(3)->id,
