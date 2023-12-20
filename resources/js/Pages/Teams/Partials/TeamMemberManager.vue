@@ -613,122 +613,130 @@ const displayAbleRole = (role) => {
                                                 :key="user.id"
                                                 class="myPrimaryTableTBodyTr"
                                             >
-                                                <td
-                                                    class="myPrimaryTableTBodyTd"
+                                                <template
+                                                    v-if="!user.superadmin"
                                                 >
-                                                    <UserTag
-                                                        :user="user"
-                                                        :showTeamRole="true"
-                                                        :showJobTitle="true"
+                                                    <td
+                                                        class="myPrimaryTableTBodyTd"
                                                     >
-                                                    </UserTag>
-                                                </td>
-                                                <td
-                                                    class="myPrimaryTableTBodyTd"
-                                                >
-                                                    <!-- Manage Team Member Role -->
-                                                    <div
-                                                        v-if="
-                                                            availableRoles.length
-                                                        "
-                                                        class="myPrimaryTag inline-block"
+                                                        <UserTag
+                                                            :user="user"
+                                                            :showTeamRole="true"
+                                                            :showJobTitle="true"
+                                                        >
+                                                        </UserTag>
+                                                    </td>
+                                                    <td
+                                                        class="myPrimaryTableTBodyTd"
                                                     >
+                                                        <!-- Manage Team Member Role -->
+                                                        <div
+                                                            v-if="
+                                                                availableRoles.length
+                                                            "
+                                                            class="myPrimaryTag inline-block"
+                                                        >
+                                                            <div
+                                                                class="flex items-center myPrimaryGap"
+                                                            >
+                                                                <div
+                                                                    class="text-xs font-medium"
+                                                                >
+                                                                    <div
+                                                                        class="font-normal text-xs"
+                                                                    >
+                                                                        role:
+                                                                    </div>
+                                                                    {{
+                                                                        displayAbleRole(
+                                                                            user
+                                                                                .membership
+                                                                                .role
+                                                                        )
+                                                                    }}
+                                                                </div>
+                                                                <button
+                                                                    @click="
+                                                                        manageRole(
+                                                                            user
+                                                                        )
+                                                                    "
+                                                                    type="button"
+                                                                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                                                >
+                                                                    <span
+                                                                        class="material-symbols-outlined"
+                                                                    >
+                                                                        edit
+                                                                    </span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <!-- Cancel Team Invitation -->
+                                                    <td
+                                                        class="myPrimaryTableTBodyTd"
+                                                    >
+                                                        <!-- Leave Team -->
                                                         <div
                                                             class="flex items-center myPrimaryGap"
                                                         >
-                                                            <div
-                                                                class="text-xs font-medium"
-                                                            >
-                                                                <div
-                                                                    class="font-normal text-xs"
-                                                                >
-                                                                    role:
-                                                                </div>
-                                                                {{
-                                                                    displayAbleRole(
-                                                                        user
-                                                                            .membership
-                                                                            .role
-                                                                    )
-                                                                }}
-                                                            </div>
-                                                            <button
+                                                            <DangerButton
+                                                                v-if="
+                                                                    $page.props
+                                                                        .user
+                                                                        .id ===
+                                                                    user.id
+                                                                "
                                                                 @click="
-                                                                    manageRole(
+                                                                    handleLeaveTeam()
+                                                                "
+                                                            >
+                                                                Leave Team
+                                                            </DangerButton>
+                                                            <p
+                                                                class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryLightGrayColor text-black rounded-full py-2 px-4 font-normal"
+                                                                v-if="
+                                                                    $page.props
+                                                                        .user
+                                                                        .id ===
+                                                                    user.id
+                                                                "
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    stroke-width="1.5"
+                                                                    stroke="currentColor"
+                                                                    class="w-4 h-4"
+                                                                >
+                                                                    <path
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                                                                    />
+                                                                </svg>
+
+                                                                <span>
+                                                                    You
+                                                                </span>
+                                                            </p>
+
+                                                            <!-- Remove Team Member -->
+                                                            <DangerButton
+                                                                @click="
+                                                                    handleRemoveTeamMember(
                                                                         user
                                                                     )
                                                                 "
-                                                                type="button"
-                                                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                                                             >
-                                                                <span
-                                                                    class="material-symbols-outlined"
-                                                                >
-                                                                    edit
-                                                                </span>
-                                                            </button>
+                                                                Remove User
+                                                            </DangerButton>
                                                         </div>
-                                                    </div>
-                                                </td>
-
-                                                <!-- Cancel Team Invitation -->
-                                                <td
-                                                    class="myPrimaryTableTBodyTd"
-                                                >
-                                                    <!-- Leave Team -->
-                                                    <div
-                                                        class="flex items-center myPrimaryGap"
-                                                    >
-                                                        <DangerButton
-                                                            v-if="
-                                                                $page.props.user
-                                                                    .id ===
-                                                                user.id
-                                                            "
-                                                            @click="
-                                                                handleLeaveTeam()
-                                                            "
-                                                        >
-                                                            Leave Team
-                                                        </DangerButton>
-                                                        <p
-                                                            class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryLightGrayColor text-black rounded-full py-2 px-4 font-normal"
-                                                            v-if="
-                                                                $page.props.user
-                                                                    .id ===
-                                                                user.id
-                                                            "
-                                                        >
-                                                            <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                stroke-width="1.5"
-                                                                stroke="currentColor"
-                                                                class="w-4 h-4"
-                                                            >
-                                                                <path
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"
-                                                                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                                                                />
-                                                            </svg>
-
-                                                            <span> You </span>
-                                                        </p>
-
-                                                        <!-- Remove Team Member -->
-                                                        <DangerButton
-                                                            @click="
-                                                                handleRemoveTeamMember(
-                                                                    user
-                                                                )
-                                                            "
-                                                        >
-                                                            Remove User
-                                                        </DangerButton>
-                                                    </div>
-                                                </td>
+                                                    </td>
+                                                </template>
                                             </tr>
                                         </TransitionGroup>
                                     </tbody>
