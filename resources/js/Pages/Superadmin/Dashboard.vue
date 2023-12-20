@@ -113,6 +113,11 @@ const handleShowAllTeams = function () {
     };
 };
 
+const removeTeam = function () {
+    switchTeamForm.team = null;
+    switchTeamForm.team_id = null;
+};
+
 // get result for "laravel pagination" package
 const getResultsForPage = (page = 1) => {
     handleGetTeams(
@@ -238,38 +243,51 @@ const handleSelectTeam = function (team) {
                 </TailwindPagination>
 
                 <!-- Selected Team # start -->
-                <template v-if="switchTeamForm.team">
-                    <div class="flex justify-center items-center mt-6">
-                        <div
-                            class="flex justify-between items-center my-2 px-6 gap-4 myPrimaryTag w-max"
-                        >
-                            <div class="flex justify-left items-center gap-2">
-                                <div
-                                    v-for="logo in switchTeamForm.team
-                                        ?.coverImagesWithLogos.logos"
-                                    :key="logo.id"
-                                >
-                                    <div class="flex-shrink-0">
-                                        <img
-                                            :src="`/storage/uploads/${logo.thumbnail_path}`"
-                                            alt="image"
-                                            class="myPrimarythumbnailInsertPreview cursor-default"
-                                        />
-                                    </div>
-                                </div>
 
-                                <div class="flex flex-col gap-1">
-                                    <p class="myPriamryParagraph font-medium">
-                                        {{ switchTeamForm.team?.name }}
-                                    </p>
-                                    <p class="myPriamryParagraph text-xs">
-                                        Id: {{ switchTeamForm.team?.id }}
-                                    </p>
+                <div
+                    class="flex justify-center items-center mt-6 h-20 py-4 border rounded-full bg-gray-50"
+                >
+                    <div
+                        v-if="switchTeamForm.team"
+                        class="flex justify-between items-center my-2 px-6 gap-4 myPrimaryTag w-max"
+                    >
+                        <div
+                            class="flex justify-left items-center myPrimaryGap"
+                        >
+                            <div
+                                v-for="logo in switchTeamForm.team
+                                    ?.coverImagesWithLogos.logos"
+                                :key="logo.id"
+                            >
+                                <div class="flex-shrink-0">
+                                    <img
+                                        :src="`/storage/uploads/${logo.thumbnail_path}`"
+                                        alt="image"
+                                        class="h-10 rounded-full cursor-default"
+                                    />
                                 </div>
+                            </div>
+
+                            <div class="flex flex-col gap-1">
+                                <p class="myPriamryParagraph font-medium">
+                                    {{ switchTeamForm.team?.name }}
+                                </p>
+                                <p class="myPriamryParagraph text-xs">
+                                    Id: {{ switchTeamForm.team?.id }}
+                                </p>
+                            </div>
+                            <div
+                                @click="removeTeam"
+                                class="h-10 w-10 text-myPrimaryDarkGrayColor cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryErrorColor aspect-square text-white hover:text-white focus-visible:ring-0"
+                            >
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
                             </div>
                         </div>
                     </div>
-                </template>
+                </div>
+
                 <!-- Selected Team # end -->
                 <InputError :message="switchTeamForm.errors.team_id" />
             </div>
@@ -283,7 +301,7 @@ const handleSelectTeam = function (team) {
             </template>
             <!-- error # end -->
 
-            <div class="mt-8">
+            <div class="mt-2">
                 <div
                     class="min-h-[25rem] max-h-[25rem] overflow-y-scroll flex flex-col myPrimaryGap border border-gray-200 p-2 divide-y"
                 >
@@ -316,15 +334,12 @@ const handleSelectTeam = function (team) {
                             v-for="team in fetchedTeams.teams.data"
                             :key="team.id"
                         >
-                            <div
-                                @click="handleSelectTeam(team)"
-                                class="p-2 rounded cursor-pointer"
-                            >
+                            <div class="p-2 rounded cursor-pointer">
                                 <div
                                     class="flex justify-between items-center my-2 px-6 gap-4 myPrimaryTag w-max"
                                 >
                                     <div
-                                        class="flex justify-left items-center gap-2"
+                                        class="flex justify-left items-center myPrimaryGap"
                                     >
                                         <template
                                             v-if="
@@ -344,9 +359,14 @@ const handleSelectTeam = function (team) {
                                             >
                                                 <div class="flex-shrink-0">
                                                     <img
+                                                        @click="
+                                                            handleSelectTeam(
+                                                                team
+                                                            )
+                                                        "
                                                         :src="`/storage/uploads/${logo.thumbnail_path}`"
                                                         alt="image"
-                                                        class="myPrimarythumbnailInsertPreview"
+                                                        class="h-10 rounded-full"
                                                     />
                                                 </div>
                                             </div>
@@ -364,6 +384,40 @@ const handleSelectTeam = function (team) {
                                                 Id: {{ team?.id }}
                                             </p>
                                         </div>
+                                        <template
+                                            v-if="
+                                                team.id !==
+                                                switchTeamForm?.team_id
+                                            "
+                                        >
+                                            <div
+                                                @click="handleSelectTeam(team)"
+                                                class="h-10 w-10 text-myPrimaryDarkGrayColor cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined"
+                                                >
+                                                    add
+                                                </span>
+                                            </div>
+                                        </template>
+                                        <template
+                                            v-if="
+                                                team.id ===
+                                                switchTeamForm?.team_id
+                                            "
+                                        >
+                                            <div
+                                                @click="removeTeam"
+                                                class="h-10 w-10 text-myPrimaryDarkGrayColor cursor-pointer rounded-full flex items-center justify-center bg-myPrimaryErrorColor aspect-square text-white hover:text-white focus-visible:ring-0"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined"
+                                                >
+                                                    remove
+                                                </span>
+                                            </div>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
