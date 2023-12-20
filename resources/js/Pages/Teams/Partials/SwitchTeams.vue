@@ -489,17 +489,22 @@ const handleSwitchTeam = function () {
     </div>
 
     <div>
-        <div class="myPrimarySection">
-            <div class="col-span-full">
-                <div class="myQuaternaryHeader">Switch Team</div>
+        <div class="myInputsOrganization">
+            <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                <div class="myPrimaryFormOrganizationHeader">Switch Team</div>
+                <p class="myPrimaryParagraph">
+                    Switch to another team you are part of.
+                </p>
+            </div>
+            <div>
+                <button
+                    type="button"
+                    @click="handleShowAllTeams"
+                    class="myPrimaryButton"
+                >
+                    Switch Team
+                </button>
             </div>
         </div>
-        <button
-            type="button"
-            @click="handleShowAllTeams"
-            class="myPrimaryButton"
-        >
-            Switch Team
-        </button>
     </div>
 </template>

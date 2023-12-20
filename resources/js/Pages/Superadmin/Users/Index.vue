@@ -637,7 +637,7 @@ onMounted(() => {
                                                                 user.last_name
                                                             )
                                                         "
-                                                        class="myPrimaryDeleteButton flex items-center gap-1 text-xs"
+                                                        class="myPrimaryDeleteButton flex items-center gap-1"
                                                     >
                                                         <span
                                                             class="myMediumIcon material-symbols-outlined"
