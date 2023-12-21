@@ -11,87 +11,14 @@ import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
 import EmptySectionBorder from "../../Components/Sections/EmptySectionBorder.vue";
 import { CheckIcon } from "@heroicons/vue/20/solid";
 
-const features = [
-    {
-        name: "Technologies and Frameworks",
-        description:
-            "Cutting-Edge Technologies and Frameworks. Developed with the Latest Stack, Laravel, Vue 3, Vuex, Composition API, Inertia, and Tailwind CSS.",
-    },
-    {
-        name: "Invite Team Members",
-        description:
-            "Unleash the power of Teamwork. Invite and engage Team Members with ease.",
-    },
-    {
-        name: "Teamwork & Collaboration",
-        description:
-            "Unleash the power of Teamwork. Strengthen Teamwork and achieve collective success through collaboration.",
-    },
-    {
-        name: "Media Library",
-        description:
-            "Seamlessly share images within Your Team via the Media Library. Enhancing collaboration and efficiency.",
-    },
-    {
-        name: "Single Page Application",
-        description:
-            "Fast, as most resources are only loaded once. Only data is transmitted back and forth.",
-    },
-    {
-        name: "Superadmin Management",
-        description:
-            "Superadmin Management to effectively Create, Update and Delete. Manage Teams and Users with Custom Superadmin Roles and Privileges.",
-    },
-    {
-        name: "Multiple Post Authors",
-        description:
-            "Multiple Post Authors empowers Users within a Team to Contribute and enrich each Post with a variety of viewpoints.",
-    },
-    {
-        name: "Authorization",
-        description: "Authorization Policies for Superadmins, Teams and Users.",
-    },
-    {
-        name: "Minimal and Intuitive Design",
-        description:
-            "Beautiful, elegant and intuitive design. Enhance user engagement with amazing visual experience.",
-    },
-    {
-        name: "Set Brand and Link Colors one place",
-        description:
-            "Set Brand and Link Colors once and apply them across the entire Platform with ease.",
-    },
-    {
-        name: "Mobile-First Approach",
-        description: "Developed with Mobile-First approach.",
-    },
-];
 const faqs = [
     {
-        question: "How does the team collaboration feature work?",
-        answer: "The app allows team members to share Images, add multiple Post Authors, manage Team Members and determine Users abilities.",
+        question: "Pricing",
+        answer: "For pricing information, visit our professional page.",
     },
     {
-        question: "What is the purpose of the media library?",
-        answer: "The media library simplifies storing, organizing, and managing various media assets, making it easy to share images within Your Team to use them across the platform to enhancing collaboration.",
-    },
-    {
-        question: "Can I manage the blog easily?",
-        answer: "Absolutely! The dashboard includes a comprehensive blog management system, enabling you to create, edit, and publish blog posts with ease, enhancing your content management capabilities.",
-    },
-    {
-        question:
-            "Is it possible to customize the dashboard to match my branding?",
-        answer: "Yes, our Laravel dashboard with Vue offers extensive customization options, allowing you to personalize the user interface, colors, and branding elements to reflect your unique style and identity.",
-    },
-    {
-        question: "How secure is the app?",
-        answer: "We prioritize data security and employ industry-standard measures to safeguard your information. The dashboard comes with robust and multiple security layers, secure authentication, and strict access controls.",
-    },
-    {
-        question:
-            "Can I integrate third-party tools or services with the dashboard?",
-        answer: "Absolutely! Our App is build using Laravel and Vue. Both frameworks provides seamless integration capabilities, allowing you to connect and utilize various third-party tools and services to enhance functionality and streamline your workflow.",
+        question: "Our services",
+        answer: "Our services include job posting, product in-store campaigns, and store posting.",
     },
 ];
 </script>

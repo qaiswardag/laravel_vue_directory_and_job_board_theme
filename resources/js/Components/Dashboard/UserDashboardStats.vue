@@ -467,7 +467,7 @@ onMounted(() => {
                         <div
                             class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                         >
-                            Latest Team Stats
+                            Stats
                         </div>
                     </div>
 

@@ -3,10 +3,12 @@ import { onMounted, ref } from "vue";
 import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/vue/20/solid";
 
 const stats = [
-    { name: "Number of deploys", value: "405+" },
-    { name: "Average deploy time", value: "3.65", unit: "mins" },
-    { name: "Number of servers", value: "3", unit: "mins" },
-    { name: "Success rate", value: "98.5%" },
+    { name: "Number of daily visitors", value: "8000+" },
+    {
+        name: "Average consumers spend time on our platform",
+        value: "2.65",
+        unit: "mins",
+    },
 ];
 
 // create charts
@@ -152,13 +154,9 @@ onMounted(async () => {
 
     <div class="mx-auto">
         <h3 class="myQuaternaryHeader">
-            Trusted by thousands of creators&nbsp;worldwide
+            myself brings fashion to where the consumers are
         </h3>
-        <p class="myPrimaryParagrph">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
-            impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis
-            ratione.
-        </p>
+
         <div class="mt-8 rounded">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
                 <div
