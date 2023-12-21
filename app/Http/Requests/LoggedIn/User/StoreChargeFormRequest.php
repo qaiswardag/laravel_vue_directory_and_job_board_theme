@@ -31,7 +31,12 @@ class StoreChargeFormRequest extends FormRequest
             "minimum_quantity" => ["integer", "digits_between:1,4", "nullable"],
             "maximum_quantity" => ["integer", "digits_between:1,4", "nullable"],
             "product_id" => ["required", "string", "min:2", "max:255"],
-            "price_identifier_stripe" => ["required", "string", "min:2", "max:255"],
+            "price_identifier_stripe" => [
+                "required",
+                "string",
+                "min:2",
+                "max:255",
+            ],
             "country" => ["required", "string", "min:2", "max:255", "nullable"],
             "city" => ["required", "string", "min:2", "max:255", "nullable"],
             "state" => ["string", "min:2", "max:255", "nullable"],
@@ -48,6 +53,7 @@ class StoreChargeFormRequest extends FormRequest
             "vat_id" => ["string", "min:2", "max:255", "nullable"],
             "vat_number" => ["string", "min:2", "max:255", "nullable"],
             "dynamic_product" => ["boolean"],
+            "subscription_team" => ["nullable", "array"],
         ];
 
         return $rules;
@@ -67,15 +73,15 @@ class StoreChargeFormRequest extends FormRequest
         $user = Auth::user();
         $stripeId = $user->stripe_id;
         $stripeCustomer = Cashier::findBillable($stripeId);
-        $defaultPaymentMethodId = $stripeCustomer->defaultPaymentMethod()->id ?? null;
+        $defaultPaymentMethodId =
+            $stripeCustomer->defaultPaymentMethod()->id ?? null;
         $paymentMethods = $stripeCustomer->paymentMethods();
 
         $validator->after(function ($validator) use (
             $noDefaultPaymentMethodError,
             $defaultPaymentMethodId,
-            $paymentMethods,
+            $paymentMethods
         ) {
-
             // payment method validation # start
             if (!$defaultPaymentMethodId) {
                 $validator
@@ -109,9 +115,11 @@ class StoreChargeFormRequest extends FormRequest
                 }
                 // payment method validation # start
 
-
                 // dynamic product validation # start
-                if (!$this->dynamic_product && !is_null($this->product_quantity)) {
+                if (
+                    !$this->dynamic_product &&
+                    !is_null($this->product_quantity)
+                ) {
                     $validator->errors()->add(
                         "product_id",
                         "When product pricing Is dynamic, the product quantity field should be set to null.
@@ -120,7 +128,10 @@ class StoreChargeFormRequest extends FormRequest
                 }
 
                 // when dynamic product product quantity & min & maximum_quantity is required # start
-                if ($this->dynamic_product && is_null($this->product_quantity)) {
+                if (
+                    $this->dynamic_product &&
+                    is_null($this->product_quantity)
+                ) {
                     $validator->errors()->add(
                         "product_id",
                         "Product quantity is required.
@@ -128,14 +139,20 @@ class StoreChargeFormRequest extends FormRequest
                     );
                 }
 
-                if ($this->dynamic_product && is_null($this->minimum_quantity)) {
+                if (
+                    $this->dynamic_product &&
+                    is_null($this->minimum_quantity)
+                ) {
                     $validator->errors()->add(
                         "Minimum_quantity",
                         "Minimum quantity quantity is required.
                         "
                     );
                 }
-                if ($this->dynamic_product && is_null($this->maximum_quantity)) {
+                if (
+                    $this->dynamic_product &&
+                    is_null($this->maximum_quantity)
+                ) {
                     $validator->errors()->add(
                         "maximum_quantity",
                         "Maximum quantity quantity is required.
@@ -144,19 +161,21 @@ class StoreChargeFormRequest extends FormRequest
                 }
                 // when dynamic product product quantity & min & maximum_quantity is required # end
 
-
-
-
-
                 // check if ordered less then minimum_quantity or more than maximum_quantity # start
-                if ($this->dynamic_product && $this->product_quantity < $this->minimum_quantity) {
+                if (
+                    $this->dynamic_product &&
+                    $this->product_quantity < $this->minimum_quantity
+                ) {
                     $validator->errors()->add(
                         "product_id",
                         "Restricted to a minimum of {$this->minimum_quantity} you have selected {$this->product_quantity}.
                         "
                     );
                 }
-                if ($this->dynamic_product && $this->product_quantity > $this->maximum_quantity) {
+                if (
+                    $this->dynamic_product &&
+                    $this->product_quantity > $this->maximum_quantity
+                ) {
                     $validator->errors()->add(
                         "product_id",
                         "Restricted to a maximum of {$this->maximum_quantity} you have selected {$this->product_quantity}.

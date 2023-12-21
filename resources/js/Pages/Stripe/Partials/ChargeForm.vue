@@ -63,6 +63,9 @@ const props = defineProps({
     resource: {
         required: false,
     },
+    nameOfCharge: {
+        required: true,
+    },
     createPath: {
         required: false,
     },
@@ -544,15 +547,12 @@ const handleSwitchTeam = function (team) {
                             v-for="team in fetchedTeams.teams.data"
                             :key="team.id"
                         >
-                            <div
-                                @click="handleSwitchTeam(team)"
-                                class="rounded cursor-pointer"
-                            >
+                            <div class="rounded">
                                 <div
                                     class="flex justify-between items-center my-2 px-6 gap-4 myPrimaryTag w-max"
                                 >
                                     <div
-                                        class="flex justify-left items-center gap-2"
+                                        class="flex justify-left items-center myPrimaryGap"
                                     >
                                         <template
                                             v-if="
@@ -581,10 +581,20 @@ const handleSwitchTeam = function (team) {
                                         </template>
 
                                         <p
-                                            class="myPriamryParagraph font-medium cursor-pointer"
+                                            class="myPriamryParagraph font-medium"
                                         >
                                             {{ team?.name }}
                                         </p>
+                                        <div
+                                            @click="handleSwitchTeam(team)"
+                                            class="h-10 w-10 text-myPrimaryDarkGrayColor cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                        >
+                                            <span
+                                                class="material-symbols-outlined"
+                                            >
+                                                add
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -600,7 +610,6 @@ const handleSwitchTeam = function (team) {
             {{ title }} {{ resource ? resource.title : "" }}
         </template>
         <template #main>
-            <p class="py-32">formCharge: {{ formCharge }}</p>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -1092,7 +1101,8 @@ const handleSwitchTeam = function (team) {
 
         <template #sidebar>
             <!-- Team # start -->
-            <template v-if="formCharge.subscription_team">
+
+            <template v-if="nameOfCharge === 'storeSubscription'">
                 <div class="myInputsOrganization">
                     <div class="myPrimaryFormOrganizationHeader">Team</div>
                     <div class="myPrimaryFormOrganizationHeader">
@@ -1117,47 +1127,53 @@ const handleSwitchTeam = function (team) {
 
                     <p class="py-4">Team added</p>
 
-                    <div class="p-2 border border-myPrimaryLightGrayColor">
-                        <div
-                            @click="handleShowAllTeams"
-                            class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max cursor-pointer"
-                        >
-                            <div class="flex justify-left items-center gap-2">
-                                <template
-                                    v-if="
-                                        formCharge.subscription_team
-                                            ?.coverImagesWithLogos.logos &&
-                                        Array.isArray(
+                    <template v-if="formCharge.subscription_team">
+                        <div class="p-2 border border-myPrimaryLightGrayColor">
+                            <div
+                                @click="handleShowAllTeams"
+                                class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max cursor-pointer"
+                            >
+                                <div
+                                    class="flex justify-left items-center myPrimaryGap"
+                                >
+                                    <template
+                                        v-if="
                                             formCharge.subscription_team
-                                                ?.coverImagesWithLogos.logos
-                                        ) === true
-                                    "
-                                >
-                                    <div
-                                        v-for="logo in formCharge
-                                            .subscription_team
-                                            ?.coverImagesWithLogos.logos"
-                                        :key="logo.id"
+                                                ?.coverImagesWithLogos.logos &&
+                                            Array.isArray(
+                                                formCharge.subscription_team
+                                                    ?.coverImagesWithLogos.logos
+                                            ) === true
+                                        "
                                     >
-                                        <div class="flex-shrink-0">
-                                            <img
-                                                :src="`/storage/uploads/${logo.thumbnail_path}`"
-                                                alt="image"
-                                                class="myPrimarythumbnailInsertPreview"
-                                            />
+                                        <div
+                                            v-for="logo in formCharge
+                                                .subscription_team
+                                                ?.coverImagesWithLogos.logos"
+                                            :key="logo.id"
+                                        >
+                                            <div class="flex-shrink-0">
+                                                <img
+                                                    :src="`/storage/uploads/${logo.thumbnail_path}`"
+                                                    alt="image"
+                                                    class="myPrimarythumbnailInsertPreview"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                </template>
+                                    </template>
 
-                                <p
-                                    class="myPriamryParagraph font-medium cursor-pointer"
-                                >
-                                    {{ formCharge.subscription_team?.name }}
-                                </p>
+                                    <p
+                                        class="myPriamryParagraph font-medium cursor-pointer"
+                                    >
+                                        {{ formCharge.subscription_team?.name }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <InputError :message="formCharge.errors.team" />
+                    </template>
+                    <InputError
+                        :message="formCharge.errors.subscription_team"
+                    />
                 </div>
             </template>
             <!-- Team # end -->

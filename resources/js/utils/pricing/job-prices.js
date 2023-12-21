@@ -15,7 +15,13 @@ const jobPrices = [
         totalPrice: "150",
         title: "Single job",
         description: "Single job post.",
-        features: ["30 days", "Up to 8000 dayly visitors"],
+        features: [
+            "30 days visibility",
+            "Up to 8000 dayly visitors",
+            "Only for Fashion Brands",
+            "Responsive & Mobile-Friendly",
+            "Unlimited Availability",
+        ],
         mostPopular: false,
     },
 ];

@@ -207,7 +207,6 @@ class PageBuilder {
     }
 
     #handleElementClick = (e, element) => {
-        console.log(`element øø:`, element.tagName);
         e.stopPropagation();
 
         const pagebuilder = document.querySelector("#pagebuilder");

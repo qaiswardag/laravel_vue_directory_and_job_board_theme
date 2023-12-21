@@ -53,6 +53,7 @@ const breadcrumbsLinks = [
                 :publishableKey="publishableKey"
                 :products="jobPrices"
                 :resource="job"
+                nameOfCharge="jobPost"
                 createPath="stripe.single.charge.job.store"
             ></ChargeForm>
         </LoggedInLayout>

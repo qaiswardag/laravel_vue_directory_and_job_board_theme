@@ -49,6 +49,7 @@ const breadcrumbsLinks = [
                 :publishableKey="publishableKey"
                 :products="storeSubscriptionPrices"
                 createPath="stripe.stores.store.subscription"
+                nameOfCharge="storeSubscription"
             ></ChargeForm>
         </LoggedInLayout>
     </MainLayout>

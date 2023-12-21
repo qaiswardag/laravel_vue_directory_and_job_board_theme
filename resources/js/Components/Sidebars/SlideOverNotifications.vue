@@ -19,10 +19,10 @@ const props = defineProps({
 // notifications
 const notifications = [
     {
-        title: "Eepteur sint occaecat cupidatat non proident",
-        image: "https://images.unsplash.com/photo-1539778100343-71fcce08a31a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+        title: "New platform",
+        image: "/app-images/pages/home/frequently_asked_questions.jpg",
         description:
-            "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
+            "We're thrilled to announce the launch of our new platform, complete with exciting features.",
     },
 ];
 // emit
@@ -137,18 +137,13 @@ const notificationsSlideOverButton = function () {
                                                         >
                                                             <img
                                                                 alt="notification thumbnail"
-                                                                class="object-cover h-40 w-full xl:h-56 xl:w-full rounded"
+                                                                class="object-cover h-40 w-full xl:h-56 xl:w-full rounded object-bottom"
                                                                 :src="
                                                                     notification.image
                                                                 "
                                                             />
                                                         </div>
 
-                                                        <p
-                                                            class="text-xs text-myPrimaryDarkGrayColor my-2"
-                                                        >
-                                                            Updated: 01/01/2023
-                                                        </p>
                                                         <p
                                                             class="text-sm text-myPrimaryDarkGrayColor mt-4"
                                                         >
@@ -157,7 +152,7 @@ const notificationsSlideOverButton = function () {
                                                                     0,
                                                                     120
                                                                 )
-                                                            }}...
+                                                            }}
                                                         </p>
 
                                                         <div

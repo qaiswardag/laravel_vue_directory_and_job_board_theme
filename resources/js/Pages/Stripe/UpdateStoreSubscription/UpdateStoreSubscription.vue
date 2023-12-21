@@ -57,6 +57,7 @@ const breadcrumbsLinks = [
                 :subscriptionTeam="subscriptionTeam"
                 :products="storeSubscriptionPrices"
                 updatePath="stripe.stores.update.subscription"
+                nameOfCharge="storeSubscription"
             ></ChargeForm>
         </LoggedInLayout>
     </MainLayout>

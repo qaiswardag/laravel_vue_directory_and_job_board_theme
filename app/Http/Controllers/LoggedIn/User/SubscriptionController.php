@@ -273,6 +273,7 @@ class SubscriptionController extends Controller
             // it's only for internal database records
             $subscription->update([
                 "updated_subscription_name" => $newProductId,
+                "team_id" => $request->subscription_team["id"] ?? null,
             ]);
         } catch (Exception $e) {
             Log::error("Something went wrong updating the subscription. {$e}");
