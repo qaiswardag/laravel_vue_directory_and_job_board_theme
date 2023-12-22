@@ -314,8 +314,8 @@ onMounted(() => {
 
             <template
                 v-if="
-                    activeSubscriptions >= numberOfPublishedStores ||
-                    !$page.props.user?.superadmin
+                    activeSubscriptions <= numberOfPublishedStores &&
+                    $page.props.user?.superadmin
                 "
             >
                 <CardHeadings :routesArray="routesArray">
