@@ -124,105 +124,128 @@ const notificationsSlideOverButton = function () {
     >
     </DynamicMenuModal>
 
-    <header class="w-6/1 text-sm">
+    <header class="w-full text-sm">
         <nav
-            class="mx-auto flex gap-4 max-w-7xl items-center justify-end px-6 lg:px-8"
+            class="mx-auto flex myPrimaryGap items-center justify-end px-6 lg:px-8"
             aria-label="Global"
         >
-            <template v-if="$page.props.user !== null">
-                <Link :href="route('dashboard')">
-                    <button
-                        type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                    >
-                        <span class="material-symbols-outlined">
-                            play_shapes
-                        </span>
-                    </button>
+            <div class="flex myPrimaryGap items-center mx-auto">
+                <Link
+                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
+                    :href="route('stores.guest.index')"
+                >
+                    Stores
                 </Link>
-            </template>
+                <Link
+                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
+                    :href="route('jobs.guest.index')"
+                >
+                    Jobs
+                </Link>
+                <Link
+                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
+                    :href="route('posts.guest.index')"
+                >
+                    Campaigns
+                </Link>
+            </div>
 
-            <template v-if="$page.props.user === null">
-                <Link
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
-                    :href="route('login')"
-                >
-                    Login
-                </Link>
-            </template>
-            <template v-if="$page.props.user === null">
-                <Link
-                    class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
-                    :href="route('register')"
-                >
-                    Sign up
-                </Link>
-            </template>
-            <template v-if="$page.props.user !== null">
-                <button
-                    v-if="
-                        $page.props.user &&
-                        $page.props.user.profile_photo_path !== null
-                    "
-                    type="button"
-                    @click="handleMenuUserTeamModal"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                >
-                    <div
-                        class="h-10 w-10 flex-shrink-0"
+            <div class="flex myPrimaryGap items-center">
+                <template v-if="$page.props.user !== null">
+                    <Link :href="route('dashboard')">
+                        <button
+                            type="button"
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        >
+                            <span class="material-symbols-outlined">
+                                play_shapes
+                            </span>
+                        </button>
+                    </Link>
+                </template>
+
+                <template v-if="$page.props.user === null">
+                    <Link
+                        class="text-black focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
+                        :href="route('login')"
+                    >
+                        <span> Login </span>
+                    </Link>
+                </template>
+                <template v-if="$page.props.user === null">
+                    <Link
+                        class="text-black focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
+                        :href="route('register')"
+                    >
+                        <span> Sign up </span>
+                    </Link>
+                </template>
+                <template v-if="$page.props.user !== null">
+                    <button
                         v-if="
                             $page.props.user &&
                             $page.props.user.profile_photo_path !== null
                         "
+                        type="button"
+                        @click="handleMenuUserTeamModal"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                     >
-                        <img
-                            class="object-cover h-10 w-10 rounded-full flex-shrink-0"
-                            :src="`/storage/${$page.props.user.profile_photo_path}`"
-                            :alt="
-                                $page.props.user.first_name +
-                                $page.props.user.last_name
+                        <div
+                            class="h-10 w-10 flex-shrink-0"
+                            v-if="
+                                $page.props.user &&
+                                $page.props.user.profile_photo_path !== null
                             "
-                        />
-                    </div>
-                </button>
+                        >
+                            <img
+                                class="object-cover h-10 w-10 rounded-full flex-shrink-0"
+                                :src="`/storage/${$page.props.user.profile_photo_path}`"
+                                :alt="
+                                    $page.props.user.first_name +
+                                    $page.props.user.last_name
+                                "
+                            />
+                        </div>
+                    </button>
+                    <button
+                        v-if="
+                            $page.props.user &&
+                            $page.props.user.profile_photo_path === null
+                        "
+                        @click="handleMenuUserTeamModal"
+                        type="button"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <span class="myMediumIcon material-symbols-outlined">
+                            person
+                        </span>
+                    </button>
+                </template>
+
+                <template v-if="$page.props.user !== null">
+                    <button
+                        @click="handleNotificationsSlideOver"
+                        type="button"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
+                    >
+                        <span class="sr-only">View notifications</span>
+                        <span class="myMediumIcon material-symbols-outlined">
+                            notifications
+                        </span>
+                    </button>
+                </template>
+
                 <button
-                    v-if="
-                        $page.props.user &&
-                        $page.props.user.profile_photo_path === null
-                    "
-                    @click="handleMenuUserTeamModal"
+                    @click="handlePrimaryMenuSlideOver"
                     type="button"
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
                 >
+                    <span class="sr-only">View Menu</span>
                     <span class="myMediumIcon material-symbols-outlined">
-                        person
+                        drag_handle
                     </span>
                 </button>
-            </template>
-
-            <template v-if="$page.props.user !== null">
-                <button
-                    @click="handleNotificationsSlideOver"
-                    type="button"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
-                >
-                    <span class="sr-only">View notifications</span>
-                    <span class="myMediumIcon material-symbols-outlined">
-                        notifications
-                    </span>
-                </button>
-            </template>
-
-            <button
-                @click="handlePrimaryMenuSlideOver"
-                type="button"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-            >
-                <span class="sr-only">View Menu</span>
-                <span class="myMediumIcon material-symbols-outlined">
-                    drag_handle
-                </span>
-            </button>
+            </div>
         </nav>
     </header>
 </template>

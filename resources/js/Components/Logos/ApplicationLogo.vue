@@ -3,7 +3,7 @@
 <template>
     <Link :href="route('home')" class="myPrimaryParagraph">
         <img
-            class="lg:h-10 h-8"
+            class="lg:w-28 w-24"
             src="/logo/myself_text_logo_black.svg"
             alt="Logo"
         />

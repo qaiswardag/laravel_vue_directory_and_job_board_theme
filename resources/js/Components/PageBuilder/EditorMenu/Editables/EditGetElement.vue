@@ -29,10 +29,6 @@ const getRestoredElement = computed(() => {
     return store.getters["pageBuilderState/getRestoredElement"];
 });
 
-const editText = function () {
-    console.log(`you cliked edit text!`);
-};
-
 // hanlde Tip Tap modal
 //
 // use dynamic model
