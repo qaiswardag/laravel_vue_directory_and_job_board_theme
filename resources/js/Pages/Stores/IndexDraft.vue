@@ -312,7 +312,12 @@ onMounted(() => {
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
-            <template v-if="activeSubscriptions !== 0">
+            <template
+                v-if="
+                    activeSubscriptions >= numberOfPublishedStores ||
+                    !$page.props.user?.superadmin
+                "
+            >
                 <CardHeadings :routesArray="routesArray">
                     <template #title
                         >Stores for
