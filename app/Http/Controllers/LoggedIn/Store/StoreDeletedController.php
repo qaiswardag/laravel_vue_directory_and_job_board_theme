@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\LoggedIn\Store;
 
+use App\Actions\LoggedIn\Stripe\TeamHasActiveSubscriptions;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -29,14 +30,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use SoftDeletes;
 
-
 class StoreDeletedController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, $teamId)
-    {
+    public function index(
+        Request $request,
+        $teamId,
+        TeamHasActiveSubscriptions $teamHasActiveSubscriptions
+    ) {
         $team = Team::find($teamId);
 
         if ($team === null) {
@@ -69,7 +72,7 @@ class StoreDeletedController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $stores->appends($request->all());
@@ -91,7 +94,14 @@ class StoreDeletedController extends Controller
             }
         }
 
+        // Check if the number of published stores
+        $numberOfPublishedStores = Store::where("team_id", $team->id)
+            ->where("published", true)
+            ->count();
+
         return Inertia::render("Stores/IndexTrash", [
+            "numberOfPublishedStores" => $numberOfPublishedStores,
+            "activeSubscriptions" => $teamHasActiveSubscriptions->show($team),
             "posts" => $stores,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
@@ -114,17 +124,13 @@ class StoreDeletedController extends Controller
     {
         $this->authorize("can-create-and-update", $team);
 
-
         $store = Store::withTrashed()->findOrFail($storeId);
 
         $store->restore();
 
         return redirect()
             ->back()
-            ->with(
-                "success",
-                "Successfully restored."
-            );
+            ->with("success", "Successfully restored.");
     }
 
     /**
@@ -164,9 +170,6 @@ class StoreDeletedController extends Controller
 
         return redirect()
             ->back()
-            ->with(
-                "success",
-                "Successfully deleted the Store."
-            );
+            ->with("success", "Successfully deleted the Store.");
     }
 }

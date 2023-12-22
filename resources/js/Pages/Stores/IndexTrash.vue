@@ -14,6 +14,7 @@ import UserTag from "@/Components/Users/UserTag.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
 import TopMenu from "@/Components/Menues/TopMenu.vue";
+import FriendlyAlert from "@/Components/Alerts/FriendlyAlert.vue";
 
 import {
     ArrowLeftIcon,
@@ -34,6 +35,12 @@ import {
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
+    numberOfPublishedStores: {
+        required: true,
+    },
+    activeSubscriptions: {
+        required: true,
+    },
     posts: {
         required: true,
     },
@@ -291,6 +298,52 @@ onMounted(() => {
                 <header></header>
                 <main></main>
             </DynamicModal>
+
+            <template v-if="activeSubscriptions === 0">
+                <div class="mb-20">
+                    <CardHeadings>
+                        <template #title
+                            >You do not have subscription
+                        </template>
+                        <template #buttons>
+                            <Link
+                                class="myPrimaryButton"
+                                type="button"
+                                :href="
+                                    route('stripe.stores.create.subscription')
+                                "
+                            >
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                                Create Subscription
+                            </Link>
+                        </template>
+                    </CardHeadings>
+                </div>
+            </template>
+
+            <div class="flex flex-col myPrimaryGap">
+                <FriendlyAlert
+                    v-if="
+                        typeof activeSubscriptions === 'number' &&
+                        typeof numberOfPublishedStores === 'number'
+                    "
+                    :message="`Number of Published Stores: ${numberOfPublishedStores}`"
+                >
+                </FriendlyAlert>
+                <FriendlyAlert
+                    v-if="
+                        typeof activeSubscriptions === 'number' &&
+                        typeof numberOfPublishedStores === 'number'
+                    "
+                    :message="`Number of Stores remaining for Subscriptions assigned to this company: ${
+                        activeSubscriptions - numberOfPublishedStores
+                    }`"
+                >
+                </FriendlyAlert>
+            </div>
+
             <template #header>
                 Stores for
                 {{ $page.props.user && $page.props.currentUserTeam.name }}
@@ -299,22 +352,29 @@ onMounted(() => {
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
-            <CardHeadings :routesArray="routesArray">
-                <template #title
-                    >Stores for
-                    {{ $page.props.user && $page.props.user.current_team.name }}
-                </template>
-                <template #buttons>
-                    <Link
-                        class="myPrimaryButton"
-                        type="button"
-                        :href="route('team.stores.create', currentUserTeam.id)"
-                    >
-                        <span class="material-symbols-outlined"> add </span>
-                        Create Store
-                    </Link>
-                </template>
-            </CardHeadings>
+            <template v-if="activeSubscriptions !== 0">
+                <CardHeadings :routesArray="routesArray">
+                    <template #title
+                        >Stores for
+                        {{
+                            $page.props.user &&
+                            $page.props.user.current_team.name
+                        }}
+                    </template>
+                    <template #buttons>
+                        <Link
+                            class="myPrimaryButton"
+                            type="button"
+                            :href="
+                                route('team.stores.create', currentUserTeam.id)
+                            "
+                        >
+                            <span class="material-symbols-outlined"> add </span>
+                            Create Store
+                        </Link>
+                    </template>
+                </CardHeadings>
+            </template>
 
             <TopMenu :links="linksTopMenu"></TopMenu>
 

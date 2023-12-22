@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\LoggedIn\Store;
 
+use App\Actions\LoggedIn\Stripe\CreateOrGetStripeCustomer;
 use App\Actions\LoggedIn\Stripe\TeamHasActiveSubscriptions;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -44,8 +45,6 @@ class StoreController extends Controller
         TeamHasActiveSubscriptions $teamHasActiveSubscriptions
     ) {
         $team = Team::find($teamId);
-
-        dd("den bliver:", $teamHasActiveSubscriptions->show($team));
 
         if ($team === null) {
             return Inertia::render("Error", [
@@ -101,15 +100,26 @@ class StoreController extends Controller
             }
         }
 
+        // Check if the number of published stores
+        $numberOfPublishedStores = Store::where("team_id", $team->id)
+            ->where("published", true)
+            ->count();
+
         return Inertia::render("Stores/Index", [
+            "numberOfPublishedStores" => $numberOfPublishedStores,
+            "activeSubscriptions" => $teamHasActiveSubscriptions->show($team),
             "posts" => $stores,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
             ],
         ]);
     }
-    public function IndexDraft(Request $request, $teamId)
-    {
+
+    public function IndexDraft(
+        Request $request,
+        $teamId,
+        TeamHasActiveSubscriptions $teamHasActiveSubscriptions
+    ) {
         $team = Team::find($teamId);
 
         if ($team === null) {
@@ -166,7 +176,14 @@ class StoreController extends Controller
             }
         }
 
+        // Check if the number of published stores
+        $numberOfPublishedStores = Store::where("team_id", $team->id)
+            ->where("published", true)
+            ->count();
+
         return Inertia::render("Stores/IndexDraft", [
+            "numberOfPublishedStores" => $numberOfPublishedStores,
+            "activeSubscriptions" => $teamHasActiveSubscriptions->show($team),
             "posts" => $stores,
             "oldInput" => [
                 "search_query" => $request->input("search_query"),
@@ -179,8 +196,11 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($teamId)
-    {
+    public function create(
+        $teamId,
+        TeamHasActiveSubscriptions $teamHasActiveSubscriptions,
+        CreateOrGetStripeCustomer $createOrGetStripeCustomer
+    ) {
         $team = Team::find($teamId);
 
         if ($team === null) {
@@ -192,6 +212,62 @@ class StoreController extends Controller
 
         $this->authorize("can-create-and-update", $team);
 
+        $user = Auth::user();
+
+        // Logic for subscription quantity # start
+        if (!$user->superadmin) {
+            if ($teamHasActiveSubscriptions->show($team) === 0) {
+                try {
+                    $stripeUserDetails = $createOrGetStripeCustomer->create();
+
+                    return Inertia::render(
+                        "Stripe/CreateStoreSubscription/CreateStoreSubscription",
+                        [
+                            "intent" => $stripeUserDetails["intent"],
+                            "paymentMethods" =>
+                                $stripeUserDetails["paymentMethods"],
+                            "publishableKey" =>
+                                $stripeUserDetails["publishableKey"],
+                        ]
+                    );
+                } catch (Exception $e) {
+                    return Inertia::render("Error", [
+                        "customError" =>
+                            self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                            " " .
+                            $e->getMessage(),
+                        "status" => 422,
+                    ]);
+                }
+            }
+
+            // Number of published stores is bigger than subscription quantity # start.        $numberOfPublishedStores = Store::where("team_id", $team->id)
+            $numberOfPublishedStores = Store::where("team_id", $team->id)
+                ->where("published", true)
+                ->count();
+
+            if (
+                $teamHasActiveSubscriptions->show($team) <=
+                $numberOfPublishedStores
+            ) {
+                try {
+                    $stripeUserDetails = $createOrGetStripeCustomer->create();
+
+                    return Inertia::render("Profile/Subscriptions/Index");
+                } catch (Exception $e) {
+                    return Inertia::render("Error", [
+                        "customError" =>
+                            self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                            " " .
+                            $e->getMessage(),
+                        "status" => 422,
+                    ]);
+                }
+            }
+        }
+        // Number of published stores is bigger than subscription quantity # end.
+        // Logic for subscription quantity # end
+
         return Inertia::render("Stores/CreateStore/CreateStore");
     }
 
@@ -201,11 +277,71 @@ class StoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreStoreRequest $request)
-    {
+    public function store(
+        StoreStoreRequest $request,
+        TeamHasActiveSubscriptions $teamHasActiveSubscriptions,
+        CreateOrGetStripeCustomer $createOrGetStripeCustomer
+    ) {
         // Find the current team that the user is on, rather than the team that the user is storing the job for.
         $team = Team::findOrFail($request->team["id"]);
+
         $this->authorize("can-create-and-update", $team);
+
+        $user = Auth::user();
+
+        // Logic for subscription quantity # start
+        if (!$user->superadmin) {
+            if ($teamHasActiveSubscriptions->show($team) === 0) {
+                try {
+                    $stripeUserDetails = $createOrGetStripeCustomer->create();
+
+                    return Inertia::render(
+                        "Stripe/CreateStoreSubscription/CreateStoreSubscription",
+                        [
+                            "intent" => $stripeUserDetails["intent"],
+                            "paymentMethods" =>
+                                $stripeUserDetails["paymentMethods"],
+                            "publishableKey" =>
+                                $stripeUserDetails["publishableKey"],
+                        ]
+                    );
+                } catch (Exception $e) {
+                    return Inertia::render("Error", [
+                        "customError" =>
+                            self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                            " " .
+                            $e->getMessage(),
+                        "status" => 422,
+                    ]);
+                }
+            }
+
+            // Number of published stores is bigger than subscription quantity # start.        $numberOfPublishedStores = Store::where("team_id", $team->id)
+            $numberOfPublishedStores = Store::where("team_id", $team->id)
+                ->where("published", true)
+                ->count();
+
+            if (
+                $teamHasActiveSubscriptions->show($team) <=
+                $numberOfPublishedStores
+            ) {
+                try {
+                    $stripeUserDetails = $createOrGetStripeCustomer->create();
+
+                    return Inertia::render("Profile/Subscriptions/Index");
+                } catch (Exception $e) {
+                    return Inertia::render("Error", [
+                        "customError" =>
+                            self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                            " " .
+                            $e->getMessage(),
+                        "status" => 422,
+                    ]);
+                }
+            }
+            // Number of published stores is bigger than subscription quantity # end.
+        }
+        // Logic for subscription quantity # end
 
         $title = $request->title;
         $address = $request->address;
@@ -435,8 +571,12 @@ class StoreController extends Controller
      * @param  \App\Models\Store\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function edit($teamId, Store $store)
-    {
+    public function edit(
+        $teamId,
+        Store $store,
+        TeamHasActiveSubscriptions $teamHasActiveSubscriptions,
+        CreateOrGetStripeCustomer $createOrGetStripeCustomer
+    ) {
         $team = Team::find($teamId);
 
         if ($team === null) {
@@ -448,6 +588,62 @@ class StoreController extends Controller
 
         // Authorize the team that the user has selected to store the store for, rather than the team that the user is currently on.
         $this->authorize("can-create-and-update", $team);
+
+        $user = Auth::user();
+
+        // Logic for subscription quantity # start
+        if (!$user->superadmin) {
+            if ($teamHasActiveSubscriptions->show($team) === 0) {
+                try {
+                    $stripeUserDetails = $createOrGetStripeCustomer->create();
+
+                    return Inertia::render(
+                        "Stripe/CreateStoreSubscription/CreateStoreSubscription",
+                        [
+                            "intent" => $stripeUserDetails["intent"],
+                            "paymentMethods" =>
+                                $stripeUserDetails["paymentMethods"],
+                            "publishableKey" =>
+                                $stripeUserDetails["publishableKey"],
+                        ]
+                    );
+                } catch (Exception $e) {
+                    return Inertia::render("Error", [
+                        "customError" =>
+                            self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                            " " .
+                            $e->getMessage(),
+                        "status" => 422,
+                    ]);
+                }
+            }
+
+            // Number of published stores is bigger than subscription quantity # start.        $numberOfPublishedStores = Store::where("team_id", $team->id)
+            $numberOfPublishedStores = Store::where("team_id", $team->id)
+                ->where("published", true)
+                ->count();
+
+            if (
+                $teamHasActiveSubscriptions->show($team) <
+                $numberOfPublishedStores
+            ) {
+                try {
+                    $stripeUserDetails = $createOrGetStripeCustomer->create();
+
+                    return Inertia::render("Profile/Subscriptions/Index");
+                } catch (Exception $e) {
+                    return Inertia::render("Error", [
+                        "customError" =>
+                            self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                            " " .
+                            $e->getMessage(),
+                        "status" => 422,
+                    ]);
+                }
+            }
+            // Number of published stores is bigger than subscription quantity # end.
+        }
+        // Logic for subscription quantity # end
 
         $authors = null;
 
@@ -487,8 +683,11 @@ class StoreController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function duplicate(Request $request)
-    {
+    public function duplicate(
+        Request $request,
+        TeamHasActiveSubscriptions $teamHasActiveSubscriptions,
+        CreateOrGetStripeCustomer $createOrGetStripeCustomer
+    ) {
         $team = Team::findOrFail($request->teamId);
         $store = Store::findOrFail($request->postId);
 
@@ -501,6 +700,62 @@ class StoreController extends Controller
 
         // Authorize the team that the user has selected
         $this->authorize("can-create-and-update", $team);
+
+        $user = Auth::user();
+
+        // Logic for subscription quantity # start
+        if (!$user->superadmin) {
+            if ($teamHasActiveSubscriptions->show($team) === 0) {
+                try {
+                    $stripeUserDetails = $createOrGetStripeCustomer->create();
+
+                    return Inertia::render(
+                        "Stripe/CreateStoreSubscription/CreateStoreSubscription",
+                        [
+                            "intent" => $stripeUserDetails["intent"],
+                            "paymentMethods" =>
+                                $stripeUserDetails["paymentMethods"],
+                            "publishableKey" =>
+                                $stripeUserDetails["publishableKey"],
+                        ]
+                    );
+                } catch (Exception $e) {
+                    return Inertia::render("Error", [
+                        "customError" =>
+                            self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                            " " .
+                            $e->getMessage(),
+                        "status" => 422,
+                    ]);
+                }
+            }
+
+            // Number of published stores is bigger than subscription quantity # start.        $numberOfPublishedStores = Store::where("team_id", $team->id)
+            $numberOfPublishedStores = Store::where("team_id", $team->id)
+                ->where("published", true)
+                ->count();
+
+            if (
+                $teamHasActiveSubscriptions->show($team) <=
+                $numberOfPublishedStores
+            ) {
+                try {
+                    $stripeUserDetails = $createOrGetStripeCustomer->create();
+
+                    return Inertia::render("Profile/Subscriptions/Index");
+                } catch (Exception $e) {
+                    return Inertia::render("Error", [
+                        "customError" =>
+                            self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                            " " .
+                            $e->getMessage(),
+                        "status" => 422,
+                    ]);
+                }
+            }
+            // Number of published stores is bigger than subscription quantity # end.
+        }
+        // Logic for subscription quantity # end
 
         $newStore = null;
 
@@ -606,11 +861,72 @@ class StoreController extends Controller
      * @param  \App\Models\Store\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreStoreRequest $request, Store $store)
-    {
+    public function update(
+        StoreStoreRequest $request,
+        Store $store,
+        TeamHasActiveSubscriptions $teamHasActiveSubscriptions,
+        CreateOrGetStripeCustomer $createOrGetStripeCustomer
+    ) {
         // Find the current team that the user is on, rather than the team that the user is storing the store for.
         $team = Team::findOrFail($request->team["id"]);
+
         $this->authorize("can-create-and-update", $team);
+
+        $user = Auth::user();
+
+        // Logic for subscription quantity # start
+        if (!$user->superadmin) {
+            if ($teamHasActiveSubscriptions->show($team) === 0) {
+                try {
+                    $stripeUserDetails = $createOrGetStripeCustomer->create();
+
+                    return Inertia::render(
+                        "Stripe/CreateStoreSubscription/CreateStoreSubscription",
+                        [
+                            "intent" => $stripeUserDetails["intent"],
+                            "paymentMethods" =>
+                                $stripeUserDetails["paymentMethods"],
+                            "publishableKey" =>
+                                $stripeUserDetails["publishableKey"],
+                        ]
+                    );
+                } catch (Exception $e) {
+                    return Inertia::render("Error", [
+                        "customError" =>
+                            self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                            " " .
+                            $e->getMessage(),
+                        "status" => 422,
+                    ]);
+                }
+            }
+
+            // Number of published stores is bigger than subscription quantity # start.        $numberOfPublishedStores = Store::where("team_id", $team->id)
+            $numberOfPublishedStores = Store::where("team_id", $team->id)
+                ->where("published", true)
+                ->count();
+
+            if (
+                $teamHasActiveSubscriptions->show($team) <
+                $numberOfPublishedStores
+            ) {
+                try {
+                    $stripeUserDetails = $createOrGetStripeCustomer->create();
+
+                    return Inertia::render("Profile/Subscriptions/Index");
+                } catch (Exception $e) {
+                    return Inertia::render("Error", [
+                        "customError" =>
+                            self::TRY_CATCH_SOMETHING_WENT_WRONG .
+                            " " .
+                            $e->getMessage(),
+                        "status" => 422,
+                    ]);
+                }
+            }
+            // Number of published stores is bigger than subscription quantity # end.
+        }
+        // Logic for subscription quantity # end
 
         $slug = $request->slug;
 

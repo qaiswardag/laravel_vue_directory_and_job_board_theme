@@ -37,6 +37,12 @@ import {
 } from "@heroicons/vue/24/outline";
 
 const props = defineProps({
+    numberOfPublishedStores: {
+        required: true,
+    },
+    activeSubscriptions: {
+        required: true,
+    },
     posts: {
         required: true,
     },
@@ -253,8 +259,8 @@ onMounted(() => {
                 <main></main>
             </DynamicModal>
 
-            <template v-if="true">
-                <div class="mb-4">
+            <template v-if="activeSubscriptions === 0">
+                <div class="mb-20">
                     <CardHeadings>
                         <template #title
                             >You do not have subscription
@@ -274,32 +280,29 @@ onMounted(() => {
                             </Link>
                         </template>
                     </CardHeadings>
-
-                    <FriendlyAlert message="Total stores which can be created.">
-                    </FriendlyAlert>
-
-                    <div class="rounded px-4 py-6 bg-gray-100 mt-4 shadow">
-                        <div class="flex flex-col gap-2">
-                            <div
-                                class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
-                            >
-                                <p class="myPrimaryParagraph leading-8">
-                                    Subscription name: Up to 6 stores with this
-                                    subscription
-                                </p>
-                            </div>
-                            <div
-                                class="border border-gray-200 rounded py-2 px-4 hover:border hover:border-myPrimaryLinkColor relative"
-                            >
-                                <p class="myPrimaryParagraph leading-8">
-                                    Subscription name: Up to 8 stores with this
-                                    subscription
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </template>
+
+            <div class="flex flex-col myPrimaryGap">
+                <FriendlyAlert
+                    v-if="
+                        typeof activeSubscriptions === 'number' &&
+                        typeof numberOfPublishedStores === 'number'
+                    "
+                    :message="`Number of Published Stores: ${numberOfPublishedStores}`"
+                >
+                </FriendlyAlert>
+                <FriendlyAlert
+                    v-if="
+                        typeof activeSubscriptions === 'number' &&
+                        typeof numberOfPublishedStores === 'number'
+                    "
+                    :message="`Number of Stores remaining for Subscriptions assigned to this company: ${
+                        activeSubscriptions - numberOfPublishedStores
+                    }`"
+                >
+                </FriendlyAlert>
+            </div>
 
             <template #header>
                 Stores for
@@ -309,7 +312,7 @@ onMounted(() => {
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
-            <template v-if="true">
+            <template v-if="activeSubscriptions !== 0">
                 <CardHeadings :routesArray="routesArray">
                     <template #title
                         >Stores for
