@@ -117,9 +117,10 @@ const faqs = [
                                         Find stores
                                     </p>
                                     <p class="myPrimaryParagrapg text-white">
-                                        Control every aspect of your assets with
-                                        generative editing, flexible setting and
-                                        useful filters.
+                                        myself is the largest and most exclusive
+                                        fashion directory in the United Arab
+                                        Emirates, gathering all fashion brands
+                                        and stores in one searchable solution.
                                     </p>
                                 </div>
                             </Link>
@@ -142,9 +143,9 @@ const faqs = [
                                         Campaigns
                                     </p>
                                     <p class="myPrimaryParagrapg text-white">
-                                        No special hardware or technical skills
-                                        required—only the web app, your idea and
-                                        a sketch.
+                                        Fashion campaigns in the United Arab
+                                        Emirates. Discover new products or get
+                                        inspired.
                                     </p>
                                 </div>
                             </Link>
@@ -166,9 +167,9 @@ const faqs = [
                                         Jobs in UAE
                                     </p>
                                     <p class="myPrimaryParagrapg text-white">
-                                        Eliminate render time. Skip browsing
-                                        though countless asset libraries.
-                                        Iterate in an instant.
+                                        Find the right job for you in the
+                                        fashion industry in the United Arab
+                                        Emirates.
                                     </p>
                                 </div>
                             </Link>
@@ -190,9 +191,9 @@ const faqs = [
                                         Professional
                                     </p>
                                     <p class="myPrimaryParagrapg text-white">
-                                        Get high quality assets and images, with
-                                        a suite of tools dedicated to architects
-                                        and designers.
+                                        myself is like a digital shopping
+                                        window, focusing on your brand image,
+                                        authenticity and credibility.
                                     </p>
                                 </div>
                             </Link>
