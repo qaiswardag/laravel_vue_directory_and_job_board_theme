@@ -81,7 +81,8 @@ class PageBuilder {
                 ]
         );
 
-        this.headerTags = ["P", "H1", "H2", "H3", "H4", "H5", "H6"];
+        this.headerTags = ["P", "H1", "H2", "H3", "H4", "H5", "H6", "IFRAME"];
+
         this.additionalTagsNoneListernes = [
             "UL",
             "OL",
@@ -97,6 +98,7 @@ class PageBuilder {
 
         this.structuringTags = [
             "DIV",
+            "IFRAME",
             "HEADER",
             "NAV",
             "MAIN",
@@ -113,16 +115,14 @@ class PageBuilder {
 
     shouldRunMethods() {
         if (!this.getComponents.value) {
-            console.error("Components have a falsy value.");
             return false;
         }
 
         if (!this.getComponent.value) {
-            console.error("Component have a falsy value.");
             return false;
         }
+
         if (!this.getElement.value) {
-            console.error("Element have a falsy value.");
             return false;
         }
 
@@ -278,7 +278,7 @@ class PageBuilder {
         if (!pagebuilder) return;
 
         pagebuilder.querySelectorAll("section *").forEach(async (element) => {
-            // exclude headerTags
+            // exclude headerTags && additional Tags for not listening
             if (
                 !this.headerTags.includes(element.tagName) &&
                 !this.additionalTagsNoneListernes.includes(element.tagName)
@@ -510,26 +510,35 @@ class PageBuilder {
         }
 
         // Store the parent of the deleted element
-        this.store.commit(
-            "pageBuilderState/setParentElement",
-            element.parentNode
-        );
-        // Store the outerHTML of the deleted element
-        this.store.commit(
-            "pageBuilderState/setRestoredElement",
-            element.outerHTML
-        );
-        // Store the next sibling of the deleted element
-        this.store.commit(
-            "pageBuilderState/setNextSibling",
-            element.nextSibling
-        );
+        // if parent element tag is section remove the hole component
+        if (element.parentElement?.tagName !== "SECTION") {
+            this.deleteComponent();
+            this.store.commit(
+                "pageBuilderState/setParentElement",
+                element.parentNode
+            );
+            // Store the outerHTML of the deleted element
+            this.store.commit(
+                "pageBuilderState/setRestoredElement",
+                element.outerHTML
+            );
+            // Store the next sibling of the deleted element
+            this.store.commit(
+                "pageBuilderState/setNextSibling",
+                element.nextSibling
+            );
+        }
 
-        this.store.commit("pageBuilderState/setComponent", null);
-        this.store.commit("pageBuilderState/setElement", null);
+        // if parent element tag is section remove the hole component
+        if (element.parentElement?.tagName === "SECTION") {
+            this.deleteComponent();
+        }
 
         // Remove the element from the DOM
         element.remove();
+
+        this.store.commit("pageBuilderState/setComponent", null);
+        this.store.commit("pageBuilderState/setElement", null);
     }
 
     handleRestoreElement() {
@@ -1012,12 +1021,29 @@ class PageBuilder {
     };
 
     //
+    //
+    ElOrFirstChildIsIframe() {
+        if (
+            this.getElement.value?.tagName === "IFRAME" ||
+            this.getElement.value?.firstElementChild?.tagName === "IFRAME"
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //
+    //
+    //
     selectedElementIsValidText() {
         let reachedElseStatement = false;
 
         // Get all child elements of the parentDiv
         const childElements = this.getElement.value?.children;
-        if (this.getElement.value?.tagName === "IMG") {
+        if (
+            this.getElement.value?.tagName === "IMG" ||
+            this.getElement.value?.firstElementChild?.tagName === "IFRAME"
+        ) {
             return;
         }
         if (!childElements) {
@@ -1181,6 +1207,7 @@ class PageBuilder {
         }
 
         const currentImageContainer = document.createElement("div");
+
         currentImageContainer.innerHTML = this.getElement.value.outerHTML;
 
         // Get all img and div within the current image container

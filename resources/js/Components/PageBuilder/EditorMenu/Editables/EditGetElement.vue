@@ -108,8 +108,125 @@ const handleAddImage = function () {
         isLoading.value = false;
     };
 };
+
+// Logic for Video Iframe
+
+const urlError = ref(null);
+const iframeSrc = ref("");
+const showModalIframeSrc = ref(false);
+
+const validateURL = function () {
+    // initial value
+    urlError.value = null;
+
+    // url validation
+    const urlRegex = /^https?:\/\//;
+    const isValidURL = ref(true);
+    isValidURL.value = urlRegex.test(iframeSrc.value);
+
+    // cancelled
+    if (isValidURL.value === false) {
+        urlError.value =
+            "The provided URL is invalid. Please ensure that it begins with 'https://' for proper formatting and security.";
+        return true;
+    }
+
+    return false;
+};
+
+const handleModalIframeSrc = function () {
+    urlError.value = null;
+    iframeSrc.value = "";
+    //
+    //
+    // open modal to true
+    showModalIframeSrc.value = true;
+
+    // set modal standards
+    typeModal.value = "success";
+    gridColumnModal.value = 2;
+    titleModal.value = "Add video url";
+    descriptionModal.value = null;
+    firstButtonModal.value = "Close";
+    secondButtonModal.value = "Save";
+    thirdButtonModal.value = null;
+
+    // handle click
+    firstModalButtonFunction.value = function () {
+        // set open modal
+        showModalIframeSrc.value = false;
+    };
+    // handle click
+    secondModalButtonFunction.value = function () {
+        const isNotValidated = validateURL();
+        if (isNotValidated) {
+            return;
+        }
+
+        if (getElement.value.firstElementChild?.tagName === "IFRAME") {
+            // Set the src attribute
+
+            // replace watch with embed
+            iframeSrc.value = iframeSrc.value.replace("watch?v=", "embed/");
+
+            // Remove dynamic parameters (&ab_channel, &list, &start_radio)
+            iframeSrc.value = iframeSrc.value
+                .replace(/&ab_channel=[^&]*/, "")
+                .replace(/&list=[^&]*/, "")
+                .replace(/&start_radio=[^&]*/, "");
+
+            getElement.value.firstElementChild.src = iframeSrc.value;
+        }
+
+        // set open modal
+        showModalIframeSrc.value = false;
+    };
+};
 </script>
 <template>
+    <DynamicModal
+        :show="showModalIframeSrc"
+        maxWidth="2xl"
+        :type="typeModal"
+        :gridColumnAmount="gridColumnModal"
+        :title="titleModal"
+        :description="descriptionModal"
+        :firstButtonText="firstButtonModal"
+        :secondButtonText="secondButtonModal"
+        :thirdButtonText="thirdButtonModal"
+        @firstModalButtonFunction="firstModalButtonFunction"
+        @secondModalButtonFunction="secondModalButtonFunction"
+        @thirdModalButtonFunction="thirdModalButtonFunction"
+    >
+        <header></header>
+        <main>
+            <div class="myInputGroup">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        <label for="video" class="myPrimaryInputLabel"
+                            >Video url:</label
+                        >
+                        <input
+                            v-model="iframeSrc"
+                            type="text"
+                            class="myPrimaryInput"
+                            name="video"
+                        />
+                        <div
+                            v-if="urlError"
+                            class="min-h-[2.5rem] flex items-center justify-start"
+                        >
+                            <p
+                                class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
+                            >
+                                {{ urlError }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </DynamicModal>
     <DynamicModal
         :show="getShowModalTipTap"
         maxWidth="5xl"
@@ -153,7 +270,26 @@ const handleAddImage = function () {
         <div
             class="flex items-center justify-center divide-x divide-gray-200 py-1"
         >
-            <template v-if="pageBuilder.selectedElementIsValidText()">
+            <template v-if="pageBuilder.ElOrFirstChildIsIframe()">
+                <div class="px-2">
+                    <button
+                        @click="handleModalIframeSrc"
+                        type="button"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <span class="material-symbols-outlined">
+                            play_circle
+                        </span>
+                    </button>
+                </div>
+            </template>
+
+            <template
+                v-if="
+                    pageBuilder.selectedElementIsValidText() &&
+                    !pageBuilder.ElOrFirstChildIsIframe()
+                "
+            >
                 <div class="px-2">
                     <button
                         @click="handleModalPreviewTiptap"
@@ -168,7 +304,13 @@ const handleAddImage = function () {
                 </div>
             </template>
 
-            <template v-if="getBasePrimaryImage && getElement">
+            <template
+                v-if="
+                    getBasePrimaryImage &&
+                    getElement &&
+                    !pageBuilder.ElOrFirstChildIsIframe()
+                "
+            >
                 <div class="px-2">
                     <button
                         @click="handleAddImage"
@@ -186,7 +328,8 @@ const handleAddImage = function () {
                 v-if="
                     getElement &&
                     !getBasePrimaryImage &&
-                    !pageBuilder.selectedElementIsValidText()
+                    !pageBuilder.selectedElementIsValidText() &&
+                    !pageBuilder.ElOrFirstChildIsIframe()
                 "
             >
                 <div class="px-2">

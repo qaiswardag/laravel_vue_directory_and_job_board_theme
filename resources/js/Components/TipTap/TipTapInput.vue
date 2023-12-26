@@ -99,7 +99,7 @@ watch(getElement, () => {
 // Manage URL
 const urlEnteret = ref("");
 const newUpdatedExistingURL = ref("");
-const urlError = ref();
+const urlError = ref(null);
 
 watch(urlEnteret, (newVal) => {
     newUpdatedExistingURL.value = newVal;

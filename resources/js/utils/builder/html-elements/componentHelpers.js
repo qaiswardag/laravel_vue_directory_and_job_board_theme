@@ -47,6 +47,32 @@ const componentHelpers = [
         `,
     },
     {
+        html_code: `
+        <section>
+        <div class="py-4">
+        <div class="mx-auto max-w-7xl lg:px-4 px-2">
+        <div class="video-container w-full aspect-video bg-slate-100 border border-slate-200 rounded-xl lg:p-12 p-4">
+     
+        <iframe
+        frameborder="0" 
+        allowfullscreen
+        class="w-full aspect-video bg-gray-600 border border-slate-800 rounded-xl"
+        src="" 
+        allow="accelerometer; autoplay; clipboard-write;" allowfullscreen>
+        </iframe>
+        </div>
+        </div>
+        </div>
+        </section>`,
+        id: null,
+        title: "YouTube Video",
+        icon: `
+        <span class="material-symbols-outlined">
+        play_circle
+        </span>
+        `,
+    },
+    {
         html_code: `<section><div class="relative py-8"><div class="absolute inset-0 flex items-center" aria-hidden="true"><div class="w-full border-4 border-gray-800 leading-none"></div></div><div class="relative flex justify-start"></div></div></section>`,
         id: null,
         title: "Line Break Divider",
