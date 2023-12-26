@@ -19,6 +19,24 @@ class JobController extends Controller
         ]);
     }
 
+    public function jobsFetch()
+    {
+        $jobs = Job::select(
+            "title",
+            "slug",
+            "content",
+            "published",
+            "tags",
+            "is_filled",
+            "apply_via_email",
+            "apply_via_link"
+        )->get();
+        // Render the view
+        return Inertia::render("Guests/Jobs/JobsFetch", [
+            "jobs" => $jobs,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -43,7 +61,7 @@ class JobController extends Controller
         $job = Job::where("id", $postId)
             ->where("published", true)
             ->where("is_paid", true)
-            ->with('coverImages')
+            ->with("coverImages")
             ->where(function ($query) {
                 $query
                     ->whereNotNull("started_at")
@@ -52,7 +70,6 @@ class JobController extends Controller
                     ->where("ended_at", ">=", now());
             })
             ->firstOrFail();
-
 
         $postRenderView = "Guests/Items/SingleItem";
 
@@ -74,7 +91,6 @@ class JobController extends Controller
             "states" => $states,
             "categories" => $categories,
             "team" => $jobTeam,
-
         ]);
     }
 

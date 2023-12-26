@@ -759,6 +759,15 @@ onMounted(() => {
             </template>
         </FullWidthElement>
     </div>
+    <template v-if="nameList === 'jobs'">
+        <div class="lg:flex items-center justify-center hidden py-8 bg-red-50">
+            <Link :href="route('jobs.fetch')">
+                <p class="myPrimaryParagraph text-xs">
+                    Fetch our jobs from: /api/jobs
+                </p>
+            </Link>
+        </div>
+    </template>
 </template>
 
 <style scoped>
