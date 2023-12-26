@@ -512,7 +512,6 @@ class PageBuilder {
         // Store the parent of the deleted element
         // if parent element tag is section remove the hole component
         if (element.parentElement?.tagName !== "SECTION") {
-            this.deleteComponent();
             this.store.commit(
                 "pageBuilderState/setParentElement",
                 element.parentNode
