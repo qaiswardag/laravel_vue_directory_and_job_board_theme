@@ -381,10 +381,10 @@ onMounted(() => {
                                         Job end date
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Show Authors
+                                        Show Job Recruiters
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Authors
+                                        Job Recruiters
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Country

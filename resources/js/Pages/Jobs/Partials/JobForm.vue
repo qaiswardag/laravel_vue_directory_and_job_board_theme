@@ -274,8 +274,8 @@ const handleAddAuthor = function () {
     // handle show modal for unique content
     showSearchUserModal.value = true;
     // set modal standards
-    titleModalSearchItems.value = "Assign contributor";
-    descriptionModalSearchItems.value = "Assign contributor to this job.";
+    titleModalSearchItems.value = "Assign people";
+    descriptionModalSearchItems.value = "Assign people to this job.";
     firstButtonModalSearchItems.value = "Close";
     secondButtonModalSearchItems.value = "Save";
     // handle click
@@ -2160,7 +2160,7 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Show Authors
+                        Add Job Recruiters
                     </div>
                 </div>
                 <div
@@ -2246,8 +2246,8 @@ const pageBuilder = new PageBuilder(store);
                                 {{
                                     postForm.author &&
                                     postForm.author?.length === 0
-                                        ? "Select Authors"
-                                        : "Update Authors"
+                                        ? "Add Job Recruiters"
+                                        : "Update Job Recruiters"
                                 }}
                             </span>
                         </div>

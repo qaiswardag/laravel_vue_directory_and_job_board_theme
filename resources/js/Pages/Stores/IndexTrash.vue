@@ -462,10 +462,10 @@ onMounted(() => {
                                         Status
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Show Authors
+                                        Show Store Staff Members
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Authors
+                                        Store Staff Members
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         State
