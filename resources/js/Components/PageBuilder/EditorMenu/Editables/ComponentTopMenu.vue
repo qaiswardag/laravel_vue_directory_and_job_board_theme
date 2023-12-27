@@ -75,8 +75,7 @@ const deleteComponent = function (e) {
         <header></header>
         <main></main>
     </DynamicModal>
-
-    <div class="flex items-center justify-center gap-2">
+    <div class="flex flex-col items-center justify-center myPrimaryGap">
         <div class="flex gap-2 items-center justify-center">
             <div
                 @click="deleteComponent()"
@@ -88,21 +87,19 @@ const deleteComponent = function (e) {
             </div>
         </div>
 
-        <div class="flex gap-2 items-center justify-center">
-            <button
-                type="button"
-                @click="pageBuilder.moveComponent(-1)"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-            >
-                <span class="material-symbols-outlined"> move_up </span>
-            </button>
-            <button
-                type="button"
-                @click="pageBuilder.moveComponent(1)"
-                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-            >
-                <span class="material-symbols-outlined"> move_down </span>
-            </button>
-        </div>
+        <button
+            type="button"
+            @click="pageBuilder.moveComponent(-1)"
+            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+        >
+            <span class="material-symbols-outlined"> move_up </span>
+        </button>
+        <button
+            type="button"
+            @click="pageBuilder.moveComponent(1)"
+            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+        >
+            <span class="material-symbols-outlined"> move_down </span>
+        </button>
     </div>
 </template>

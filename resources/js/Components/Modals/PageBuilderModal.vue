@@ -205,8 +205,6 @@ onMounted(() => {
                                 class="px-4 h-[10vh] flex items-center justify-between"
                             >
                                 <div class="flex justify-start myPrimaryGap">
-                                    <ApplicationLogo></ApplicationLogo>
-
                                     <div
                                         class="flex justify-start myPrimaryGap"
                                     >

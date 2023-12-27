@@ -5,6 +5,7 @@ import PageBuilderPreviewModal from "@/Components/Modals/PageBuilderPreviewModal
 import Preview from "@/Pages/PageBuilder/Preview.vue";
 import ComponentTopMenu from "@/Components/PageBuilder/EditorMenu/Editables/ComponentTopMenu.vue";
 import EditGetElement from "@/Components/PageBuilder/EditorMenu/Editables/EditGetElement.vue";
+import AuthenticationCardLogo from "@/Components/Logos/AuthenticationCardLogo.vue";
 
 import {
     Bars3Icon,
@@ -155,6 +156,27 @@ onMounted(async () => {
         class="w-full inset-x-0 h-[90vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
     >
         <div class="relative h-full flex ml-4">
+            <div
+                class="py-2 mx-2 bg-myPrimaryLightGrayColor border border-gray-200 px-2 rounded-xl flex flex-col myPrimaryGap"
+            >
+                <div>
+                    <div class="rounded-full mb-8">
+                        <img
+                            class="rounded-full mx-auto w-12"
+                            src="/logo/myself_text_logo_white_bg_black.svg"
+                            alt="Logo"
+                        />
+                    </div>
+                </div>
+
+                <div
+                    @click.self="
+                        store.commit('pageBuilderState/setComponent', null)
+                    "
+                >
+                    <ComponentTopMenu v-if="getElement"></ComponentTopMenu>
+                </div>
+            </div>
             <main
                 class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl"
             >
@@ -165,9 +187,19 @@ onMounted(async () => {
                         @click.self="
                             store.commit('pageBuilderState/setComponent', null)
                         "
-                        class="w-4/12 flex justify-start py-2 pl-2"
+                        class="w-4/12 flex justify-start items-center py-2 pl-2 h-full"
                     >
-                        <ComponentTopMenu v-if="getElement"></ComponentTopMenu>
+                        <div class="flex gap-2">
+                            <span
+                                class="w-2 h-2 rounded-full bg-red-400"
+                            ></span>
+                            <span
+                                class="w-2 h-2 rounded-full bg-yellow-400"
+                            ></span>
+                            <span
+                                class="w-2 h-2 rounded-full bg-green-400"
+                            ></span>
+                        </div>
                     </div>
 
                     <div
