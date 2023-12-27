@@ -155,9 +155,9 @@ onMounted(async () => {
     <div
         class="w-full inset-x-0 h-[90vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
     >
-        <div class="relative h-full flex ml-4">
+        <div class="relative h-full flex">
             <div
-                class="py-2 mx-2 bg-myPrimaryLightGrayColor border border-gray-200 px-2 rounded-xl flex flex-col myPrimaryGap"
+                class="min-w-[3.5rem] py-2 mx-2 px-2 rounded-xl flex flex-col myPrimaryGap"
             >
                 <div>
                     <div class="rounded-full mb-8">

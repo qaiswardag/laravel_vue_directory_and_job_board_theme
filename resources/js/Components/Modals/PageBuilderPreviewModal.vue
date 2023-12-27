@@ -73,7 +73,7 @@ const firstButton = function () {
                             class="inline-block align-bottom text-left transform transition-all sm:align-middle w-full overflow-hidden h-[100vh] top-0 left-0 right-0 absolute"
                         >
                             <div
-                                class="px-4 h-[10vh] flex items-center justify-between bg-myPrimaryLightGrayColor"
+                                class="px-4 h-[10vh] flex items-center justify-between border-b border-gray-200 mb-2"
                             >
                                 <ApplicationLogo></ApplicationLogo>
                                 <div
