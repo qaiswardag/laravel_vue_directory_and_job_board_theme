@@ -13,11 +13,13 @@ defineProps({
 <template>
     <MainLayout>
         <GuestsLayout>
-            <Head title="Home" />
+            <Head title="Privacy Policy" />
             <template #header>
                 <div>
                     <PageHeader title="Privacy Policy"></PageHeader>
-                    <div class="myPrimaryContentSection" v-html="policy" />
+                    <div class="myPrimaryWidthScreenModule">
+                        <div class="myPrimaryContentSection" v-html="policy" />
+                    </div>
                 </div>
             </template>
         </GuestsLayout>
