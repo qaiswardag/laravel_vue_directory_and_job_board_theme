@@ -58,11 +58,11 @@ defineProps({
 
 const goToSingleStoreFromInSale = function (
     routeName,
-    currentTeamId,
+    storeTeamSlug,
     storeSlug,
     storeId
 ) {
-    router.get(route(routeName, [currentTeamId, storeSlug, storeId]));
+    router.get(route(routeName, [storeTeamSlug, storeSlug, storeId]));
 };
 </script>
 <template>
@@ -408,7 +408,6 @@ const goToSingleStoreFromInSale = function (
                     >
                         <div v-for="store in stores && stores" :key="store.id">
                             <!-- store cover image -->
-
                             <div
                                 class="flex justify-left items-center gap-2 bg-gray-50 rounded-full overflow-x-scroll py-2 px-8"
                             >
@@ -424,20 +423,20 @@ const goToSingleStoreFromInSale = function (
                                     @firstButtonClick="
                                         goToSingleStoreFromInSale(
                                             'stores.guest.show',
-                                            $page.props.user.current_team.id,
+                                            store.team.slug,
                                             store.slug,
                                             store.id
                                         )
                                     "
-                                ></ThumbnailSmallImageSlider>
+                                >
+                                </ThumbnailSmallImageSlider>
 
                                 <div class="flex flex-col gap-2">
                                     <div
                                         @click="
                                             goToSingleStoreFromInSale(
                                                 'stores.guest.show',
-                                                $page.props.user.current_team
-                                                    .id,
+                                                store.team.slug,
                                                 store.slug,
                                                 store.id
                                             )
@@ -446,6 +445,7 @@ const goToSingleStoreFromInSale = function (
                                     >
                                         {{ store.title }}
                                     </div>
+
                                     <div class="flex flex-col gap-2">
                                         <div
                                             class="flex flex-wrap justify-start items-center gap-2 myPrimaryTag w-max"

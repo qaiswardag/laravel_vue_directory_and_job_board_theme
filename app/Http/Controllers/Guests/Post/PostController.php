@@ -87,6 +87,7 @@ class PostController extends Controller
         $stores = $post
             ->stores()
             ->with("states")
+            ->with("team")
             ->with("coverImages")
             ->get();
 
