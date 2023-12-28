@@ -173,8 +173,12 @@ const query = ref("");
 const filteredCountries = computed(() =>
     query.value === ""
         ? countryListAllIsoData
-        : countryListAllIsoData.filter((country) =>
-              country.country?.toLowerCase().includes(query.value.toLowerCase())
+        : countryListAllIsoData.filter(
+              (country) =>
+                  country.country !== null &&
+                  country.country
+                      ?.toLowerCase()
+                      .includes(query.value.toLowerCase())
           )
 );
 
@@ -189,10 +193,11 @@ const filteredPhoneCodes = computed(() =>
         ? countryListAllIsoData
         : countryListAllIsoData.filter((country) => {
               return (
-                  country.phone_code.includes(queryPhoneCode.value) ||
-                  country.country
-                      ?.toLowerCase()
-                      .includes(queryPhoneCode.value.toLowerCase())
+                  country.country !== null &&
+                  (country.phone_code.includes(queryPhoneCode.value) ||
+                      country.country
+                          ?.toLowerCase()
+                          .includes(queryPhoneCode.value.toLowerCase()))
               );
           })
 );
@@ -375,7 +380,7 @@ onMounted(() => {
                                         :displayValue="
                                             (country) => {
                                                 return country?.phone_code
-                                                    ? `+ ${country.phone_code} ${country?.country}`
+                                                    ? `${country.phone_code} ${country?.country}`
                                                     : '';
                                             }
                                         "
@@ -448,11 +453,10 @@ onMounted(() => {
                                                     <div
                                                         class="flex items-center gap-2"
                                                     >
-                                                        +
                                                         {{
                                                             country?.phone_code
                                                                 ? country.phone_code
-                                                                : ""
+                                                                : "None"
                                                         }}
                                                     </div>
                                                 </span>
@@ -838,7 +842,7 @@ onMounted(() => {
                                                     {{
                                                         country.country
                                                             ? country.country
-                                                            : ""
+                                                            : "None"
                                                     }}
                                                 </div>
                                             </span>

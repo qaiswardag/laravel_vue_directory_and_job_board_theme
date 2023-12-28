@@ -1,4 +1,5 @@
 const countryListAllcodeData = [
+    { country: null, phone_code: null, code: null },
     { country: "Afghanistan", phone_code: "93", code: "AF" },
     { country: "Albania", phone_code: "355", code: "AL" },
     { country: "Algeria", phone_code: "213", code: "DZ" },

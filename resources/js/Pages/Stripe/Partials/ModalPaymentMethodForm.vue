@@ -176,8 +176,12 @@ const query = ref("");
 const filteredCountries = computed(() =>
     query.value === ""
         ? countryListAllIsoData
-        : countryListAllIsoData.filter((country) =>
-              country.country?.toLowerCase().includes(query.value.toLowerCase())
+        : countryListAllIsoData.filter(
+              (country) =>
+                  country.country !== null &&
+                  country.country
+                      ?.toLowerCase()
+                      .includes(query.value.toLowerCase())
           )
 );
 
@@ -392,7 +396,7 @@ onMounted(async () => {
                                                             {{
                                                                 country.country
                                                                     ? country.country
-                                                                    : ""
+                                                                    : "None"
                                                             }}
                                                         </div>
                                                     </span>
