@@ -3,6 +3,7 @@ import { Link } from "@inertiajs/vue3";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { router } from "@inertiajs/vue3";
 import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
+
 import {
     ArrowLongRightIcon,
     ArrowRightIcon,
@@ -22,7 +23,7 @@ defineProps({
 
 <template>
     <div class="myPrimarySection">
-        <div class="overflow-x-scrollpx-2 py-6 px-4 rounded-full bg-red-50">
+        <div class="overflow-x-scrollpx-2 py-6 px-4 rounded-full bg-gray-100">
             <div
                 class="flex items-center justify-between space-x-3 gap-2 md:flex-row"
             >

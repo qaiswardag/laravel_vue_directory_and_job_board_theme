@@ -256,15 +256,18 @@ onMounted(() => {
                 <header></header>
                 <main></main>
             </DynamicModal>
-            <template #header>
-                Jobs for
-                {{ $page.props.user && $page.props.currentUserTeam.name }}
-            </template>
+
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
+            <template #header>
+                Jobs for
+                {{ $page.props.user && $page.props.currentUserTeam.name }}
+            </template>
+
             <PricingForJob :currentUserTeam="currentUserTeam"></PricingForJob>
+
             <CardHeadings :routesArray="routesArray">
                 <template #title
                     >Jobs for
