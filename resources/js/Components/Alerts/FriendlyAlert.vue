@@ -9,7 +9,7 @@ defineProps({
 <template>
     <template v-if="message">
         <div
-            class="flex items-center gap-4 bg-gray-100 px-4 py-3 rounded-full lg:w-2/3 mx-auto shadow"
+            class="flex items-center gap-4 bg-gray-100 px-4 py-3 rounded-full lg:w-2/3 mx-auto shadow w-full shadow"
             role="alert"
         >
             <span class="material-symbols-outlined"> wb_incandescent </span>

@@ -14,13 +14,19 @@ const props = defineProps({
 
 <template>
     <template v-if="!$page.props.user?.superadmin">
-        <div class="flex flex-col myPrimaryGap">
+        <div
+            class="p-4 my-4 bg-gray-100 rounded-full flex items-center justify-center"
+        >
+            <p class="myPrimaryParagraph font-medium">Subscriptions Status</p>
+        </div>
+
+        <div class="flex lg:flex-row flex-col myPrimaryGap">
             <FriendlyAlert
                 v-if="
                     typeof activeSubscriptions === 'number' &&
                     typeof numberOfPublishedStores === 'number'
                 "
-                :message="`Number of Published Stores: ${numberOfPublishedStores}`"
+                :message="`Published Stores: ${numberOfPublishedStores}`"
             >
             </FriendlyAlert>
             <FriendlyAlert
@@ -28,7 +34,7 @@ const props = defineProps({
                     typeof activeSubscriptions === 'number' &&
                     typeof numberOfPublishedStores === 'number'
                 "
-                :message="`Number of Stores remaining for Subscriptions assigned to this company: ${
+                :message="`Remaining Stores: ${
                     activeSubscriptions - numberOfPublishedStores
                 }`"
             >
@@ -41,7 +47,7 @@ const props = defineProps({
                 activeSubscriptions !== 0
             "
         >
-            <div class="p-4 my-4 bg-yellow-100 rounded">
+            <div class="p-4 my-4 bg-yellow-100 rounded-full">
                 <Link :href="route('stripe.payment.subscription.index')">
                     <p class="myPrimaryParagraph font-medium cursor-pointer">
                         You cannot create more Stores with the current
