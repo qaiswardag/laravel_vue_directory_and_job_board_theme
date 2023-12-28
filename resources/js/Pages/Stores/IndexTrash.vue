@@ -352,9 +352,22 @@ onMounted(() => {
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
+            <template v-if="activeSubscriptions <= numberOfPublishedStores">
+                <div class="p-4 my-4 bg-yellow-100 rounded">
+                    <Link :href="route('stripe.payment.subscription.index')">
+                        <p
+                            class="myPrimaryParagraph font-medium cursor-pointer"
+                        >
+                            You cannot create more Stores with the current
+                            subscriptions. Update your subscription.
+                        </p>
+                    </Link>
+                </div>
+            </template>
+
             <template
                 v-if="
-                    activeSubscriptions <= numberOfPublishedStores &&
+                    activeSubscriptions > numberOfPublishedStores ||
                     $page.props.user?.superadmin
                 "
             >

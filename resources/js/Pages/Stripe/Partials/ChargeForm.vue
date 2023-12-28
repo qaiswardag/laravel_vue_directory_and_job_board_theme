@@ -1268,7 +1268,7 @@ const handleSwitchTeam = function (team) {
                                                     class="w-full flex gap-2 justify-between items-center"
                                                 >
                                                     <input
-                                                        placeholder="Store quantity.."
+                                                        placeholder="Quantity.."
                                                         id="product_quantity"
                                                         @input="
                                                             changeInProductQuantity(

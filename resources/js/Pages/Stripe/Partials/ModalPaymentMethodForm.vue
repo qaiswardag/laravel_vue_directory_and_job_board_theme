@@ -212,7 +212,7 @@ onMounted(async () => {
         maxWidth="xl"
         :show="show"
         @close="firstButton"
-        minHeight="min-h-[30rem]"
+        minHeight="min-h-[98vh]"
         maxHeight="max-h-auto"
     >
         <div
