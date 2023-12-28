@@ -22,7 +22,7 @@ defineProps({
 
 <template>
     <div class="myPrimarySection">
-        <div class="overflow-x-scrollpx-2 pt-3 pb-2 rounded-full">
+        <div class="overflow-x-scrollpx-2 py-6 px-4 rounded-full bg-red-50">
             <div
                 class="flex items-center justify-between space-x-3 gap-2 md:flex-row"
             >

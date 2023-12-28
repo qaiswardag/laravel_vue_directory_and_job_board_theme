@@ -255,30 +255,6 @@ onMounted(() => {
                 <main></main>
             </DynamicModal>
 
-            <template v-if="activeSubscriptions === 0">
-                <div class="mb-20">
-                    <CardHeadings>
-                        <template #title
-                            >You do not have subscription
-                        </template>
-                        <template #buttons>
-                            <Link
-                                class="myPrimaryButton"
-                                type="button"
-                                :href="
-                                    route('stripe.stores.create.subscription')
-                                "
-                            >
-                                <span class="material-symbols-outlined">
-                                    add
-                                </span>
-                                Create Subscription
-                            </Link>
-                        </template>
-                    </CardHeadings>
-                </div>
-            </template>
-
             <div class="flex flex-col myPrimaryGap">
                 <FriendlyAlert
                     v-if="
@@ -308,7 +284,12 @@ onMounted(() => {
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
 
-            <template v-if="activeSubscriptions <= numberOfPublishedStores">
+            <template
+                v-if="
+                    activeSubscriptions <= numberOfPublishedStores &&
+                    activeSubscriptions !== 0
+                "
+            >
                 <div class="p-4 my-4 bg-yellow-100 rounded">
                     <Link :href="route('stripe.payment.subscription.index')">
                         <p
@@ -318,6 +299,29 @@ onMounted(() => {
                             subscriptions. Update your subscription.
                         </p>
                     </Link>
+                </div>
+            </template>
+            <template v-if="activeSubscriptions === 0">
+                <div class="mb-20">
+                    <CardHeadings>
+                        <template #title
+                            >You do not have subscription
+                        </template>
+                        <template #buttons>
+                            <Link
+                                class="myPrimaryButton"
+                                type="button"
+                                :href="
+                                    route('stripe.stores.create.subscription')
+                                "
+                            >
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                                Create Subscription
+                            </Link>
+                        </template>
+                    </CardHeadings>
                 </div>
             </template>
 
