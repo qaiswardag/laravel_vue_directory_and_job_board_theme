@@ -5,7 +5,8 @@ const jobPrices = [
         name: "Single Job Posting",
         id: "single_job_post",
         dynamic_product: false,
-        priceIdentifierStripe: "price_1ODSBgEuESfVmAWoBUMCqqTn",
+        priceIdentifierStripe: "price_1OSa3zEuESfVmAWopRiDA3of",
+        priceIdentifierStripeTest: "price_1ODSBgEuESfVmAWoBUMCqqTn",
         route: {
             name: "dashboard",
             parameters: [],
