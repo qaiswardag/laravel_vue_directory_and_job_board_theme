@@ -21,7 +21,6 @@ const jobPrices = [
             "Up to 8000 dayly visitors",
             "Only for Fashion Brands",
             "Responsive & Mobile-Friendly",
-            "Unlimited Availability",
         ],
         mostPopular: false,
     },
