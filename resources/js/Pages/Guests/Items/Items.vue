@@ -311,9 +311,14 @@ const handleSelectState = function (selectedItem) {
 // handle state # end
 
 const goToSinglePost = function (teamSlug, postSlug, postId) {
-    router.get(
-        route(props.nameList + "." + "guest.show", [teamSlug, postSlug, postId])
-    );
+    const url = route(props.nameList + "." + "guest.show", [
+        teamSlug,
+        postSlug,
+        postId,
+    ]);
+
+    // Open the URL in a new tab
+    window.open(url, "_blank");
 };
 
 onMounted(() => {
