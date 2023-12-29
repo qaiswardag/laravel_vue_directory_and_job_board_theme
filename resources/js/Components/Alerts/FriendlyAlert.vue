@@ -18,7 +18,6 @@ defineProps({
             </p>
         </div>
     </template>
-    <div class="flex items-center gap-4 justify-center">
-        <slot></slot>
-    </div>
+
+    <slot></slot>
 </template>
