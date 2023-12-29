@@ -52,6 +52,7 @@ const breadcrumbsLinks = [
                 :categories="categories"
                 :states="states"
                 :onlyForCurrentTeam="true"
+                postType="Store"
             ></UnqiueResource>
             <!-- sShow Unique Post - end -->
         </LoggedInLayout>

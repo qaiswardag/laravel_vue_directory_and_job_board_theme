@@ -51,6 +51,7 @@ const breadcrumbsLinks = [
                 :categories="categories"
                 :stores="stores"
                 :onlyForCurrentTeam="true"
+                postType="Campaign"
             ></UnqiueResource>
             <!-- Show Unique Post - end -->
         </LoggedInLayout>

@@ -49,6 +49,7 @@ const props = defineProps({
                     :jobTypes="jobTypes"
                     :categories="categories"
                     :stores="stores"
+                    :postType="postType"
                 ></UnqiueResource>
             </main>
             <!-- sShow Unique Post - end -->

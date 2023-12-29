@@ -59,6 +59,7 @@ const breadcrumbsLinks = [
                 :countries="countries"
                 :jobTypes="jobTypes"
                 :categories="categories"
+                postType="Job"
             ></UnqiueResource>
             <!-- sShow Unique Post - end -->
         </LoggedInLayout>

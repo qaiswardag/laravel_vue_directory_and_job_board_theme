@@ -54,6 +54,9 @@ defineProps({
     stores: {
         required: false,
     },
+    postType: {
+        required: true,
+    },
 });
 
 const goToSingleStoreFromInSale = function (
@@ -568,9 +571,18 @@ const goToSingleStoreFromInSale = function (
                 <!-- Url for contact page # end -->
 
                 <!-- show authors # start -->
-                <template v-if="onlyForCurrentTeam">
+                <template v-if="onlyForCurrentTeam && postType !== 'Campaign'">
                     <div v-if="post.show_author" class="myPrimaryWidget">
-                        <h4 class="myQuaternaryHeader">People visibility</h4>
+                        <template v-if="postType === 'Job'">
+                            <h4 class="myQuaternaryHeader">
+                                Show Job Recruiters
+                            </h4>
+                        </template>
+                        <template v-if="postType === 'Store'">
+                            <h4 class="myQuaternaryHeader">
+                                Show Store Staff Members
+                            </h4>
+                        </template>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="myPrimaryTag bg-myPrimaryLinkColor text-white"
@@ -579,7 +591,16 @@ const goToSingleStoreFromInSale = function (
                         </div>
                     </div>
                     <div v-if="!post.show_author" class="myPrimaryWidget">
-                        <h4 class="myQuaternaryHeader">People visibility</h4>
+                        <template v-if="postType === 'Job'">
+                            <h4 class="myQuaternaryHeader">
+                                Show Job Recruiters
+                            </h4>
+                        </template>
+                        <template v-if="postType === 'Store'">
+                            <h4 class="myQuaternaryHeader">
+                                Show Store Staff Members
+                            </h4>
+                        </template>
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <div
                             class="myPrimaryTag bg-myPrimaryErrorColor text-white"
@@ -599,7 +620,12 @@ const goToSingleStoreFromInSale = function (
                     "
                     class="myPrimaryWidget"
                 >
-                    <h4 class="myQuaternaryHeader">People</h4>
+                    <template v-if="postType === 'Job'">
+                        <h4 class="myQuaternaryHeader">Job Recruiters</h4>
+                    </template>
+                    <template v-if="postType === 'Store'">
+                        <h4 class="myQuaternaryHeader">Store Staff Members</h4>
+                    </template>
                     <WidgetSectionBorder></WidgetSectionBorder>
                     <div
                         class="flex flex-wrap justify-start items-center gap-1"
@@ -645,7 +671,7 @@ const goToSingleStoreFromInSale = function (
                                     class="text-sm rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
                                 >
                                     <span>
-                                        {{ author.id }}
+                                        {{ author.first_name }}
                                         {{ author.last_name }}
                                     </span>
                                 </p>
