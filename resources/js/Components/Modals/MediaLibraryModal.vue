@@ -332,7 +332,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                 <div class="flex-1">
                                     <!--content media library - start-->
                                     <div
-                                        class="mb-40 px-4 py-2 h-full flex md:flex-row flex-col myPrimaryGap mt-2 overflow-y-scroll"
+                                        class="px-4 py-2 h-full flex md:flex-row flex-col myPrimaryGap mt-2 overflow-y-scroll"
                                     >
                                         <!-- Main content - start-->
                                         <main class="flex-1 relativ">
@@ -402,7 +402,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                                         "
                                                                         class="material-symbols-outlined"
                                                                     >
-                                                                        arrow_upward
+                                                                        cloud_upload
                                                                     </span>
                                                                     <span
                                                                         v-if="
@@ -424,7 +424,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                     </div>
                                                 </div>
 
-                                                <div
+                                                <template
                                                     v-if="selected === 'Upload'"
                                                 >
                                                     <!-- image upload - start -->
@@ -436,7 +436,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                         "
                                                     ></UploadImagesForm>
                                                     <!-- image upload - end -->
-                                                </div>
+                                                </template>
                                                 <div
                                                     v-if="
                                                         selected ===
@@ -786,65 +786,6 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Actions # start -->
-                                            <div
-                                                v-if="
-                                                    getCurrentImage &&
-                                                    getCurrentImage.currentImage &&
-                                                    getCurrentImage.currentImage
-                                                        .mediaLibrary
-                                                "
-                                                class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
-                                            >
-                                                <div
-                                                    class="sm:grid-cols-3 sm:items-end justify-end flex sm:flex-row myPrimaryGap sm:w-5/6 w-full"
-                                                >
-                                                    <div v-if="firstButtonText">
-                                                        <button
-                                                            ref="firstButtonRef"
-                                                            class="mySecondaryButton"
-                                                            type="button"
-                                                            @click="firstButton"
-                                                        >
-                                                            {{
-                                                                firstButtonText
-                                                            }}
-                                                        </button>
-                                                    </div>
-
-                                                    <div
-                                                        v-if="secondButtonText"
-                                                    >
-                                                        <button
-                                                            class="myPrimaryButton"
-                                                            type="button"
-                                                            @click="
-                                                                secondButton
-                                                            "
-                                                        >
-                                                            {{
-                                                                secondButtonText
-                                                            }}
-                                                        </button>
-                                                    </div>
-
-                                                    <div
-                                                        v-if="thirdButtonText"
-                                                        class="w-full"
-                                                    >
-                                                        <button
-                                                            class="myPrimaryDeleteButton"
-                                                            type="button"
-                                                            @click="thirdButton"
-                                                        >
-                                                            {{
-                                                                thirdButtonText
-                                                            }}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Actions # end -->
                                         </aside>
                                         <!-- Details sidebar - media library end-->
                                         <!-- Details sidebar - upload start-->
@@ -930,6 +871,60 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                         <!-- Details sidebar end-->
                                     </div>
                                     <!--content media library - end-->
+
+                                    <!-- Actions # start -->
+                                    <template
+                                        v-if="selected === 'Media library'"
+                                    >
+                                        <div
+                                            v-if="
+                                                getCurrentImage &&
+                                                getCurrentImage.currentImage &&
+                                                getCurrentImage.currentImage
+                                                    .mediaLibrary
+                                            "
+                                            class="bg-purple-100 px-2 py-4 flex sm:justify-end justify-center h-20"
+                                        >
+                                            <div
+                                                class="sm:grid-cols-3 sm:items-end justify-end flex sm:flex-row myPrimaryGap sm:w-5/6 w-full"
+                                            >
+                                                <div v-if="firstButtonText">
+                                                    <button
+                                                        ref="firstButtonRef"
+                                                        class="mySecondaryButton"
+                                                        type="button"
+                                                        @click="firstButton"
+                                                    >
+                                                        {{ firstButtonText }}
+                                                    </button>
+                                                </div>
+
+                                                <div v-if="secondButtonText">
+                                                    <button
+                                                        class="myPrimaryButton"
+                                                        type="button"
+                                                        @click="secondButton"
+                                                    >
+                                                        {{ secondButtonText }}
+                                                    </button>
+                                                </div>
+
+                                                <div
+                                                    v-if="thirdButtonText"
+                                                    class="w-full"
+                                                >
+                                                    <button
+                                                        class="myPrimaryDeleteButton"
+                                                        type="button"
+                                                        @click="thirdButton"
+                                                    >
+                                                        {{ thirdButtonText }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Actions # end -->
+                                    </template>
                                 </div>
                             </div>
                         </div>

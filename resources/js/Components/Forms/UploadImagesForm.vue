@@ -145,6 +145,7 @@ onMounted(() => {
 
 <template>
     <!-- image upload - start -->
+
     <form @submit.prevent="submit" enctype="multipart/form-data">
         <div class="myInputGroup">
             <div class="col-span-3 mb-4">
@@ -179,6 +180,18 @@ onMounted(() => {
             <InputError :message="form.errors?.images" />
         </div>
 
+        <!-- Actions # start -->
+        <div
+            v-if="isLoading === false && imagesPreview.length !== 0"
+            class="bg-purple-100 px-2 py-4 flex sm:justify-end justify-center"
+        >
+            <button @click="submit" type="button" class="myPrimaryButton">
+                <span class="material-symbols-outlined"> cloud_upload </span>
+                <span> Upload </span>
+            </button>
+        </div>
+        <!-- Actions # end -->
+
         <div class="flex justify-start items-center">
             <p
                 v-if="
@@ -186,7 +199,7 @@ onMounted(() => {
                 "
                 class="myPrimaryTag"
             >
-                <span> Images 0 </span>
+                <span class="font-medium"> Images 0 </span>
             </p>
             <div
                 v-if="
@@ -194,7 +207,9 @@ onMounted(() => {
                 "
                 class="myPrimaryTag"
             >
-                <div>Images {{ imagesPreview && imagesPreview.length }}</div>
+                <div class="font-medium">
+                    Images {{ imagesPreview && imagesPreview.length }}
+                </div>
             </div>
         </div>
 
@@ -265,14 +280,6 @@ onMounted(() => {
                     </template>
                 </div>
             </div>
-        </div>
-
-        <div
-            v-if="isLoading === false && imagesPreview.length !== 0"
-            class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
-        >
-            <SubmitButton :disabled="form.processing" buttonText="Upload">
-            </SubmitButton>
         </div>
     </form>
     <!-- image upload - end -->
