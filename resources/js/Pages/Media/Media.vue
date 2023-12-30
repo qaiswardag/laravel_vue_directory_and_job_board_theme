@@ -134,10 +134,8 @@ const handleMediaLibrary = function (imageID) {
                                         @click="handleMediaLibrary"
                                         class="mb-4 myPrimaryButton gap-2 items-center"
                                     >
-                                        <span
-                                            class="myMediumIcon material-symbols-outlined"
-                                        >
-                                            perm_media
+                                        <span class="material-symbols-outlined">
+                                            cloud_upload
                                         </span>
                                         Manage & Upload Images
                                     </PrimaryButton>
