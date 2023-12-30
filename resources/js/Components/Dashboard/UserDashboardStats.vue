@@ -163,7 +163,7 @@ onMounted(() => {
                                     $page.props.user.current_team.id
                                 )
                             "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
                         >
                             Latest Team Members
                         </Link>
@@ -225,7 +225,7 @@ onMounted(() => {
                                     $page.props.user.current_team.id
                                 )
                             "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
                         >
                             Latest Team Images
                         </Link>
@@ -310,7 +310,7 @@ onMounted(() => {
                                     $page.props.user.current_team.id
                                 )
                             "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
                         >
                             Latest campaigns
                         </Link>
@@ -362,7 +362,7 @@ onMounted(() => {
                                     $page.props.user.current_team.id
                                 )
                             "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
                         >
                             Latest Jobs
                         </Link>
@@ -416,7 +416,7 @@ onMounted(() => {
                                     $page.props.user.current_team.id
                                 )
                             "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
                         >
                             Latest Stores
                         </Link>
@@ -465,7 +465,7 @@ onMounted(() => {
                 >
                     <div class="border-b border-gray-200 mb-8 pb-2">
                         <div
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
                         >
                             Stats
                         </div>
