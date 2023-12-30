@@ -883,7 +883,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                 getCurrentImage.currentImage
                                                     .mediaLibrary
                                             "
-                                            class="bg-violet-100 px-2 py-4 flex sm:justify-end justify-center"
+                                            class="bg-slate-50 px-2 py-4 flex sm:justify-end justify-center"
                                         >
                                             <div
                                                 class="sm:grid-cols-3 sm:items-end justify-end flex sm:flex-row myPrimaryGap sm:w-5/6 w-full"
