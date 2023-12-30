@@ -29,7 +29,7 @@ export const vueFetch = function vueFetch() {
 
         // Provide default values for abortTimeout and additionalTime
         if (additionalTime.value === undefined) additionalTime.value = 0;
-        if (abortTimeout.value === undefined) abortTimeout.value = 8000;
+        if (abortTimeout.value === undefined) abortTimeout.value = 4000;
 
         // Abort fetch operation after the specified timeout
         const timer = setTimeout(() => {
@@ -48,8 +48,11 @@ export const vueFetch = function vueFetch() {
                 isLoading.value = false;
                 isError.value = false;
                 goDirectToError.value = true;
+
+                handleData(url, fetchOptions, customFetchOptions);
+
                 throw new Error(
-                    "Error 500. The loading time has been exceeded. Please refresh this page"
+                    "Error 500. Loading time exceeded. Trying again."
                 );
             }
 
