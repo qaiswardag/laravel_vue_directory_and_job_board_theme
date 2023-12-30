@@ -269,10 +269,10 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="relative w-full min-h-[98vh] max-h-[65rem] my-2 inline-block align-bottom bg-white rounded px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
+                            class="relative w-full min-h-[98vh] max-h-[65rem] my-2 inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full"
                         >
                             <div
-                                class="flex gap-2 justify-between items-center border-b border-gray-200 pb-2 mb-2"
+                                class="flex gap-2 justify-between items-center border-b border-gray-200 p-4 mb-2"
                             >
                                 <DynamicModal
                                     :show="modalShowDeleteImage"
@@ -328,11 +328,11 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                 </div>
                             </div>
 
-                            <div class="flex items-center pb-2 mb-2">
+                            <div class="flex items-center">
                                 <div class="flex-1">
                                     <!--content media library - start-->
                                     <div
-                                        class="px-4 py-2 h-full flex md:flex-row flex-col myPrimaryGap mt-2 overflow-y-scroll"
+                                        class="p-4 h-full flex md:flex-row flex-col myPrimaryGap mt-2 overflow-y-scroll"
                                     >
                                         <!-- Main content - start-->
                                         <main class="flex-1 relativ">
