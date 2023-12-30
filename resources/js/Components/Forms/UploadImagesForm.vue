@@ -185,11 +185,7 @@ onMounted(() => {
             v-if="isLoading === false && imagesPreview.length !== 0"
             class="px-2 py-4 flex sm:justify-center justify-center"
         >
-            <button
-                @click="submit"
-                type="button"
-                class="myPrimaryButton md:w-2/3 w-full"
-            >
+            <button @click="submit" type="button" class="myPrimaryButton">
                 <span class="material-symbols-outlined"> cloud_upload </span>
                 <span> Upload Images </span>
             </button>
