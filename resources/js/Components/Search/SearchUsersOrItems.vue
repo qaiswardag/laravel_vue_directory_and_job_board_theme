@@ -238,40 +238,26 @@ onMounted(() => {
         :show="show"
         @close="firstButton"
         maxWidth="4xl"
-        minHeight="min-h-[90vh]"
+        minHeight=""
         maxHeight="max-h-[65rem]"
     >
         <div
-            class="mb-40 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
+            class="w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
-            <div
-                class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
-            >
-                <h3 class="tertiaryHeader my-0 py-0">
-                    {{ title }}
-                </h3>
-                <div @click="firstButton" class="flex-end">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                        class="myMediumIcon cursor-pointer"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                        ></path>
-                    </svg>
+            <div class="flex items-center border-b border-gray-200 p-4 mb-2">
+                <div class="flex-1">
+                    <h3 class="tertiaryHeader my-0 py-0">
+                        {{ title }}
+                    </h3>
+                </div>
+                <div @click="firstButton" class="flex-end cursor-pointer">
+                    <span class="material-symbols-outlined"> close </span>
                 </div>
             </div>
 
             <!-- content start -->
             <div
-                class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 p-2 overflow-y-scroll"
+                class="p-4 h-full flex md:flex-row flex-col myPrimaryGap overflow-y-scroll"
             >
                 <main class="overflow-y-auto relativ w-full">
                     <div>
@@ -323,7 +309,7 @@ onMounted(() => {
                             "
                         >
                             <div class="flex justify-start items-center">
-                                <div class="myPrimaryTag">
+                                <div class="myPrimaryTag font-medium">
                                     Total
                                     {{ getCurrentItems.fetchedData.count }}
                                     {{
@@ -1026,9 +1012,7 @@ onMounted(() => {
         </div>
         <!-- content end -->
 
-        <div
-            class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
-        >
+        <div class="bg-violet-100 px-2 py-4 flex sm:justify-end justify-center">
             <div class="sm:w-3/6 w-full px-2 my-2 flex gap-2 justify-end">
                 <button
                     v-if="firstButtonText"

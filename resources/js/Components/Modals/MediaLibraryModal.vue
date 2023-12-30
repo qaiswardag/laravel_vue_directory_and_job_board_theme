@@ -233,11 +233,11 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
         <TransitionRoot :show="open" as="template">
             <Dialog
                 as="div"
-                class="fixed z-30 inset-0 overflow-y-auto sm:px-4"
+                class="fixed z-30 inset-0 overflow-y-auto sm:px-4 m-1"
                 @close="firstButton"
             >
                 <div
-                    class="flex items-end justify-center pb-20 text-center sm:block sm:p-0 p-4"
+                    class="flex items-end justify-center text-center sm:block sm:p-0"
                 >
                     <TransitionChild
                         as="template"
@@ -269,7 +269,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="relative w-full min-h-[98vh] max-h-[65rem] my-2 inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full"
+                            class="relative w-full max-h-[65rem] my-2 inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-7xl sm:w-full"
                         >
                             <div
                                 class="flex gap-2 justify-between items-center border-b border-gray-200 p-4 mb-2"
@@ -437,7 +437,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                     ></UploadImagesForm>
                                                     <!-- image upload - end -->
                                                 </template>
-                                                <div
+                                                <template
                                                     v-if="
                                                         selected ===
                                                         'Media library'
@@ -448,7 +448,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                         :team="team"
                                                     ></MediaLibraryGalleryList>
                                                     <!-- image gallary - end -->
-                                                </div>
+                                                </template>
                                             </div>
                                         </main>
                                         <!-- Main content - end-->
@@ -544,7 +544,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                     <div class="md:px-3 px-2">
                                                         <div>
                                                             <h2
-                                                                class="myTertiaryHeader py-2 break-words"
+                                                                class="myPrimaryParagraph font-medium py-2 break-words"
                                                             >
                                                                 {{
                                                                     getCurrentImage
@@ -883,7 +883,7 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                 getCurrentImage.currentImage
                                                     .mediaLibrary
                                             "
-                                            class="bg-purple-100 px-2 py-4 flex sm:justify-end justify-center h-20"
+                                            class="bg-violet-100 px-2 py-4 flex sm:justify-end justify-center"
                                         >
                                             <div
                                                 class="sm:grid-cols-3 sm:items-end justify-end flex sm:flex-row myPrimaryGap sm:w-5/6 w-full"

@@ -54,7 +54,7 @@ const maxWidthClass = computed(() => {
                 @close="close"
             >
                 <div
-                    class="flex items-end justify-center pb-20 text-center sm:block sm:p-0"
+                    class="flex items-end justify-center text-center sm:block sm:p-0"
                 >
                     <TransitionChild
                         as="template"
@@ -85,7 +85,7 @@ const maxWidthClass = computed(() => {
                         leave-to="opacity-0 scale-95"
                     >
                         <div
-                            class="relative w-full inline-block align-bottom bg-white rounded pt-5 text-left overflow-hidden shadow-xl transform transition-all sm:align-top"
+                            class="m-1 relative w-full inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all sm:align-top"
                             :class="[
                                 maxWidthClass ? maxWidthClass : '',
                                 minHeight ? minHeight : '',

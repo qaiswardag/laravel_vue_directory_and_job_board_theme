@@ -80,9 +80,9 @@ const thirdButton = function () {
         <slot name="content" />
 
         <div
-            class="mb-40 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
+            class="w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
-            <div class="flex items-center border-b border-gray-200 pb-2 mb-2">
+            <div class="flex items-center border-b border-gray-200 p-4 mb-2">
                 <div class="flex-1">
                     <div v-if="type === 'default'"></div>
 
@@ -143,30 +143,13 @@ const thirdButton = function () {
                         </h3>
                     </div>
                 </div>
-                <div @click="firstButton" class="flex-end">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                        class="myMediumIcon cursor-pointer"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M6 18L18 6M6 6l12 12"
-                        ></path>
-                    </svg>
+                <div @click="firstButton" class="flex-end cursor-pointer">
+                    <span class="material-symbols-outlined"> close </span>
                 </div>
             </div>
 
-            <div>
-                <div
-                    v-html="description"
-                    class="myPrimaryParagraph mt-4 mb-6"
-                ></div>
+            <div class="p-4">
+                <div v-html="description" class="myPrimaryParagraph mb-6"></div>
 
                 <slot name="header"></slot>
 
@@ -174,9 +157,7 @@ const thirdButton = function () {
             </div>
         </div>
 
-        <div
-            class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
-        >
+        <div class="bg-violet-100 px-2 py-4 flex sm:justify-end justify-center">
             <slot name="footer" />
             <div
                 :class="{

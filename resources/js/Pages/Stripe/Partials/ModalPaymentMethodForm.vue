@@ -212,29 +212,70 @@ onMounted(async () => {
         maxWidth="xl"
         :show="show"
         @close="firstButton"
-        minHeight="min-h-[98vh]"
-        maxHeight="max-h-auto"
+        minHeight=""
+        maxHeight=""
     >
         <div
-            class="mb-40 px-4 w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
+            class="w-full relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle"
         >
-            <div
-                class="flex items-center border-b border-gray-200 pb-2 mb-2 justify-between"
-            >
-                <h3 class="tertiaryHeader my-0 py-0">
-                    {{ title }}
-                </h3>
-                <div @click="firstButton" class="flex-end">
+            <div class="flex items-center border-b border-gray-200 p-4 mb-2">
+                <div class="flex-1">
+                    <h3 class="tertiaryHeader my-0 py-0">
+                        {{ title }}
+                    </h3>
+                </div>
+                <div @click="firstButton" class="flex-end cursor-pointer">
                     <span class="material-symbols-outlined"> close </span>
                 </div>
             </div>
 
             <!-- content start -->
             <main>
-                <div class="mb-4 myPrimaryFormMain w-full">
-                    <div class="myInputsOrganization">
-                        <div class="myInputGroup">
-                            <!-- Email -->
+                <div class="p-4">
+                    <div class="mb-4 myPrimaryFormMain w-full">
+                        <div class="myInputsOrganization">
+                            <div class="myInputGroup">
+                                <!-- Email -->
+                                <div class="myInputGroup">
+                                    <div
+                                        class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                                    >
+                                        <div
+                                            class="myPrimaryFormOrganizationHeader"
+                                        >
+                                            Information
+                                        </div>
+                                    </div>
+                                    <InputLabel
+                                        for="card_holder_name"
+                                        value="Cardholder name"
+                                    />
+                                    <TextInput
+                                        placeholder="Cardholder name.."
+                                        id="card_holder_name"
+                                        v-model="form.name"
+                                        type="text"
+                                        autocomplete="off"
+                                        class="block w-full"
+                                    />
+                                    <InputError :message="form.errors.name" />
+                                </div>
+                            </div>
+
+                            <div class="myInputGroup">
+                                <InputLabel for="payment_email" value="Email" />
+                                <TextInput
+                                    id="payment_email"
+                                    placeholder="Email.."
+                                    v-model="form.email"
+                                    type="email"
+                                    class="block w-full"
+                                />
+                                <InputError :message="form.errors.email" />
+                            </div>
+                        </div>
+
+                        <div class="myInputsOrganization">
                             <div class="myInputGroup">
                                 <div
                                     class="myPrimaryFormOrganizationHeaderDescriptionSection"
@@ -242,224 +283,194 @@ onMounted(async () => {
                                     <div
                                         class="myPrimaryFormOrganizationHeader"
                                     >
-                                        Information
+                                        Card information
                                     </div>
                                 </div>
-                                <InputLabel
-                                    for="card_holder_name"
-                                    value="Cardholder name"
-                                />
-                                <TextInput
-                                    placeholder="Cardholder name.."
-                                    id="card_holder_name"
-                                    v-model="form.name"
-                                    type="text"
-                                    autocomplete="off"
-                                    class="block w-full"
-                                />
-                                <InputError :message="form.errors.name" />
-                            </div>
-                        </div>
-
-                        <div class="myInputGroup">
-                            <InputLabel for="payment_email" value="Email" />
-                            <TextInput
-                                id="payment_email"
-                                placeholder="Email.."
-                                v-model="form.email"
-                                type="email"
-                                class="block w-full"
-                            />
-                            <InputError :message="form.errors.email" />
-                        </div>
-                    </div>
-
-                    <div class="myInputsOrganization">
-                        <div class="myInputGroup">
-                            <div
-                                class="myPrimaryFormOrganizationHeaderDescriptionSection"
-                            >
-                                <div class="myPrimaryFormOrganizationHeader">
-                                    Card information
+                                <div class="pb-6 pt-2" id="card-element"></div>
+                                <div
+                                    class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
+                                    v-if="
+                                        responseStripeCreateSubscription?.error
+                                    "
+                                >
+                                    {{
+                                        responseStripeCreateSubscription.error
+                                            .message
+                                    }}
                                 </div>
                             </div>
-                            <div class="pb-6 pt-2" id="card-element"></div>
-                            <div
-                                class="myPrimaryInputError mt-2 mb-0 py-0 self-start"
-                                v-if="responseStripeCreateSubscription?.error"
-                            >
-                                {{
-                                    responseStripeCreateSubscription.error
-                                        .message
-                                }}
-                            </div>
                         </div>
-                    </div>
 
-                    <div class="myInputsOrganization">
-                        <div class="myInputGroup">
-                            <div
-                                class="myPrimaryFormOrganizationHeaderDescriptionSection"
-                            >
-                                <div class="myPrimaryFormOrganizationHeader">
-                                    Billing address
+                        <div class="myInputsOrganization">
+                            <div class="myInputGroup">
+                                <div
+                                    class="myPrimaryFormOrganizationHeaderDescriptionSection"
+                                >
+                                    <div
+                                        class="myPrimaryFormOrganizationHeader"
+                                    >
+                                        Billing address
+                                    </div>
                                 </div>
-                            </div>
 
-                            <InputLabel for="laacountry" value="Country" />
-                            <!-- Headless UI select # start -->
+                                <InputLabel for="laacountry" value="Country" />
+                                <!-- Headless UI select # start -->
 
-                            <Combobox v-model="selectedCountry">
-                                <div class="relative mt-1">
-                                    <div class="relative">
-                                        <ComboboxInput
-                                            name="laacountry"
-                                            id="laacountry"
-                                            class="myPrimarySelect"
-                                            autocomplete="laacountry"
-                                            placeholder="Search.."
-                                            :displayValue="
-                                                (country) => {
-                                                    return country?.country;
-                                                }
-                                            "
-                                            @change="
-                                                query = $event.target.value
-                                            "
-                                        />
+                                <Combobox v-model="selectedCountry">
+                                    <div class="relative mt-1">
+                                        <div class="relative">
+                                            <ComboboxInput
+                                                name="laacountry"
+                                                id="laacountry"
+                                                class="myPrimarySelect"
+                                                autocomplete="laacountry"
+                                                placeholder="Search.."
+                                                :displayValue="
+                                                    (country) => {
+                                                        return country?.country;
+                                                    }
+                                                "
+                                                @change="
+                                                    query = $event.target.value
+                                                "
+                                            />
 
-                                        <div
-                                            class="absolute inset-y-0 right-0 flex items-center pr-2"
-                                        >
                                             <div
-                                                class="flex items-center justify-center gap-2"
+                                                class="absolute inset-y-0 right-0 flex items-center pr-2"
                                             >
-                                                <ComboboxButton
-                                                    class="h-8 w-8 cursor-pointer rounded flex items-center justify-center"
+                                                <div
+                                                    class="flex items-center justify-center gap-2"
                                                 >
-                                                    <span
-                                                        class="material-symbols-outlined"
+                                                    <ComboboxButton
+                                                        class="h-8 w-8 cursor-pointer rounded flex items-center justify-center"
                                                     >
-                                                        unfold_more
-                                                    </span>
-                                                </ComboboxButton>
+                                                        <span
+                                                            class="material-symbols-outlined"
+                                                        >
+                                                            unfold_more
+                                                        </span>
+                                                    </ComboboxButton>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <TransitionRoot
-                                        leave="transition ease-in duration-100"
-                                        leaveFrom="opacity-100"
-                                        leaveTo="opacity-0"
-                                        @after-leave="query = ''"
-                                    >
-                                        <ComboboxOptions
-                                            class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                        <TransitionRoot
+                                            leave="transition ease-in duration-100"
+                                            leaveFrom="opacity-100"
+                                            leaveTo="opacity-0"
+                                            @after-leave="query = ''"
                                         >
-                                            <div
-                                                v-if="
-                                                    filteredCountries.length ===
-                                                        0 && query !== ''
-                                                "
-                                                class="relative cursor-default select-none py-2 px-4 text-gray-700"
+                                            <ComboboxOptions
+                                                class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                                             >
-                                                Nothing found.
-                                            </div>
+                                                <div
+                                                    v-if="
+                                                        filteredCountries.length ===
+                                                            0 && query !== ''
+                                                    "
+                                                    class="relative cursor-default select-none py-2 px-4 text-gray-700"
+                                                >
+                                                    Nothing found.
+                                                </div>
 
-                                            <ComboboxOption
-                                                v-for="country in filteredCountries"
-                                                as="template"
-                                                :key="country.country"
-                                                :value="country"
-                                                v-slot="{ selected, active }"
-                                            >
-                                                <li
-                                                    class="relative cursor-default select-none py-2 pl-10 pr-4"
-                                                    :class="{
-                                                        'bg-gray-800 text-white':
-                                                            active,
-                                                        'text-myPrimaryDarkGrayColor':
-                                                            !active,
+                                                <ComboboxOption
+                                                    v-for="country in filteredCountries"
+                                                    as="template"
+                                                    :key="country.country"
+                                                    :value="country"
+                                                    v-slot="{
+                                                        selected,
+                                                        active,
                                                     }"
                                                 >
-                                                    <span
-                                                        class="block truncate"
+                                                    <li
+                                                        class="relative cursor-default select-none py-2 pl-10 pr-4"
                                                         :class="{
-                                                            'font-medium':
-                                                                selected,
-                                                            'font-normal':
-                                                                !selected,
-                                                        }"
-                                                    >
-                                                        <div
-                                                            class="flex items-center gap-2"
-                                                        >
-                                                            {{
-                                                                country.country
-                                                                    ? country.country
-                                                                    : "None"
-                                                            }}
-                                                        </div>
-                                                    </span>
-
-                                                    <span
-                                                        v-if="selected"
-                                                        class="absolute inset-y-0 left-0 flex items-center pl-3"
-                                                        :class="{
-                                                            'text-white':
+                                                            'bg-gray-800 text-white':
                                                                 active,
-                                                            'text-gray-800':
+                                                            'text-myPrimaryDarkGrayColor':
                                                                 !active,
                                                         }"
                                                     >
                                                         <span
-                                                            class="myMediumIcon material-symbols-outlined"
+                                                            class="block truncate"
+                                                            :class="{
+                                                                'font-medium':
+                                                                    selected,
+                                                                'font-normal':
+                                                                    !selected,
+                                                            }"
                                                         >
-                                                            check
+                                                            <div
+                                                                class="flex items-center gap-2"
+                                                            >
+                                                                {{
+                                                                    country.country
+                                                                        ? country.country
+                                                                        : "None"
+                                                                }}
+                                                            </div>
                                                         </span>
-                                                    </span>
-                                                </li>
-                                            </ComboboxOption>
-                                        </ComboboxOptions>
-                                    </TransitionRoot>
-                                </div>
-                            </Combobox>
 
-                            <!-- Headless UI select # end -->
-                            <InputError :message="form.errors.country" />
-                        </div>
-                        <div
-                            class="md:flex items-center justify-center myPrimaryGap"
-                        >
-                            <div class="myInputGroup">
-                                <InputLabel for="laacity" value="City" />
-                                <TextInput
-                                    v-model="form.city"
-                                    class="block w-full"
-                                    type="text"
-                                    id="laacity"
-                                    name="laacity"
-                                    autocomplete="laacity"
-                                    placeholder="City.."
-                                />
-                                <InputError :message="form.errors.city" />
+                                                        <span
+                                                            v-if="selected"
+                                                            class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                            :class="{
+                                                                'text-white':
+                                                                    active,
+                                                                'text-gray-800':
+                                                                    !active,
+                                                            }"
+                                                        >
+                                                            <span
+                                                                class="myMediumIcon material-symbols-outlined"
+                                                            >
+                                                                check
+                                                            </span>
+                                                        </span>
+                                                    </li>
+                                                </ComboboxOption>
+                                            </ComboboxOptions>
+                                        </TransitionRoot>
+                                    </div>
+                                </Combobox>
+
+                                <!-- Headless UI select # end -->
+                                <InputError :message="form.errors.country" />
                             </div>
-                            <div class="myInputGroup">
-                                <InputLabel
-                                    for="laapostal_code"
-                                    value="Postal code  "
-                                />
-                                <TextInput
-                                    v-model="form.postal_code"
-                                    class="block w-full"
-                                    placeholder="Postal code.."
-                                    type="text"
-                                    id="laapostal_code"
-                                    name="laapostal_code"
-                                    autocomplete="laapostal_code"
-                                />
-                                <InputError
-                                    :message="form.errors.postal_code"
-                                />
+                            <div
+                                class="md:flex items-center justify-center myPrimaryGap"
+                            >
+                                <div class="myInputGroup">
+                                    <InputLabel for="laacity" value="City" />
+                                    <TextInput
+                                        v-model="form.city"
+                                        class="block w-full"
+                                        type="text"
+                                        id="laacity"
+                                        name="laacity"
+                                        autocomplete="laacity"
+                                        placeholder="City.."
+                                    />
+                                    <InputError :message="form.errors.city" />
+                                </div>
+                                <div class="myInputGroup">
+                                    <InputLabel
+                                        for="laapostal_code"
+                                        value="Postal code  "
+                                    />
+                                    <TextInput
+                                        v-model="form.postal_code"
+                                        class="block w-full"
+                                        placeholder="Postal code.."
+                                        type="text"
+                                        id="laapostal_code"
+                                        name="laapostal_code"
+                                        autocomplete="laapostal_code"
+                                    />
+                                    <InputError
+                                        :message="form.errors.postal_code"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -467,9 +478,7 @@ onMounted(async () => {
             </main>
             <!-- content end -->
         </div>
-        <div
-            class="bg-red-50 px-2 py-4 absolute bottom-0 left-0 right-0 flex sm:justify-end justify-center"
-        >
+        <div class="bg-violet-100 px-2 py-4 flex sm:justify-end justify-center">
             <div class="sm:w-3/6 w-full px-2 my-2 flex gap-2 justify-end">
                 <button
                     v-if="firstButtonTextModalPaymentMethodForm"
