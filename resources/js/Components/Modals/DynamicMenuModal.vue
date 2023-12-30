@@ -43,9 +43,10 @@ const handleLogout = () => {
 
 <template>
     <Modal :show="show" @close="firstButton" maxWidth="md">
-        <div
-            class="px-4 mb-4 flex flex-row-reverse items-center justify-between"
-        >
+        <div class="flex items-center border-b border-gray-200 p-4 mb-2">
+            <div class="flex-1">
+                <h3 class="myQuaternaryHeader my-0 py-0">Menu</h3>
+            </div>
             <button
                 @click="firstButton"
                 aria-label="Close menu"
@@ -54,22 +55,17 @@ const handleLogout = () => {
                 data-headlessui-state="open"
                 tabindex="0"
             >
-                <button
-                    type="button"
-                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
-                >
-                    <span class="material-symbols-outlined"> close </span>
-                </button>
+                <span class="material-symbols-outlined"> close </span>
             </button>
-            <h2 class="text-sm font-normal text-zinc-600 dark:text-zinc-400">
-                Menu
-            </h2>
         </div>
+
         <div
             class="px-4 relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full pb-6"
         >
             <div class="myPrimaryParagraph flex flex-col gap-1">
-                <p class="px-2 py-2 mb-2 rounded-lg bg-gray-50 text-xs">
+                <p
+                    class="px-2 py-2 rounded-lg bg-gray-50 text-xs font-medium mt-4 mb-4"
+                >
                     Logged in as {{ $page.props.user.first_name }}
                     {{ $page.props.user.last_name }}
                 </p>
@@ -81,7 +77,9 @@ const handleLogout = () => {
                         $page.props.jetstream.hasTeamFeatures
                     "
                 >
-                    <p class="py-2 px-2 rounded-lg mt-2">Manage Team</p>
+                    <p class="italic text-xs py-2 px-2 rounded-lg">
+                        Manage Team
+                    </p>
                     <Link
                         :href="
                             route(
@@ -89,7 +87,7 @@ const handleLogout = () => {
                                 $page.props.user.current_team.id
                             )
                         "
-                        class="myPrimaryParagraph"
+                        class="myPrimaryParagraph cursor-pointer"
                     >
                         <div
                             class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-gray-50 cursor-pointer"
@@ -129,7 +127,7 @@ const handleLogout = () => {
                         route().current('user.profile.password') ||
                         route().current('user.profile.security')
                     "
-                    class="myPrimaryParagraph"
+                    class="myPrimaryParagraph cursor-pointer"
                 >
                     <div
                         class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-gray-50 cursor-pointer"
