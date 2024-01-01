@@ -323,22 +323,24 @@ onBeforeMount(() => {
             {{ $page.props.team && $page.props.team.name }}
         </template>
 
-        <template #description> Update team. </template>
+        <template #description> Update Company. </template>
 
         <template #main>
-            <!-- Team Owner Information -->
+            <!-- Company Owner Information -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Team slug</div>
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Company slug
+                    </div>
                 </div>
 
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Team details
+                        Company details
                     </div>
                 </div>
                 <div class="myInputGroup">
-                    <InputLabel for="name" value="Update Team Name" />
+                    <InputLabel for="name" value="Update Company Name" />
                     <TextInput
                         placeholder="Slug.."
                         id="name"

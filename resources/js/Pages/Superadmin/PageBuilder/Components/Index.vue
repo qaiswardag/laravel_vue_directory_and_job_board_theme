@@ -88,7 +88,7 @@ const checkUserTeamAuthorization = function () {
     showModalEditComponentTeamAuth.value = true;
     typeModal.value = "danger";
     gridColumnModal.value = 2;
-    titleModal.value = "No Team selected";
+    titleModal.value = "No Company selected";
     descriptionModal.value =
         "Sorry, you are forbidden from performing this action. Only team members who belong to unique teams can create, update or delete this resource. Please try switching team or contact IT support.";
     firstButtonModal.value = "Close";
@@ -284,10 +284,10 @@ const routesArray = [
             <div>
                 <template v-if="!props.currentUserTeam">
                     <div>
-                        <h1 class="myTertiaryHeader">No Team selected</h1>
+                        <h1 class="myTertiaryHeader">No Company selected</h1>
                     </div>
                     <p class="myPrimaryParagraph">
-                        Looks like no Team is Selected!
+                        Looks like no Company is Selected!
                     </p>
                 </template>
             </div>

@@ -6,14 +6,14 @@ import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 
 const breadcrumbsLinks = [
     {
-        label: "Your Teams",
+        label: "Your Companies",
         route: {
             name: "user.teams",
             parameters: null,
         },
     },
     {
-        label: "Create Team",
+        label: "Create Company",
     },
 ];
 </script>
@@ -21,12 +21,9 @@ const breadcrumbsLinks = [
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Create Team" />
-            <template #header> Create Team </template>
-            <template #description>
-                This is Team index page ipsum dolor sit, amet consectetur
-                adipisicing elit. Animi, distinctio.
-            </template>
+            <Head title="Create Company" />
+            <template #header> Create Company </template>
+            <template #description> Create Company </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>

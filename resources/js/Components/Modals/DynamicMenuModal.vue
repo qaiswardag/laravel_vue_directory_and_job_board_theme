@@ -78,7 +78,7 @@ const handleLogout = () => {
                     "
                 >
                     <p class="italic text-xs py-2 px-2 rounded-lg">
-                        Manage Team
+                        Manage Company
                     </p>
                     <Link
                         :href="
@@ -110,7 +110,7 @@ const handleLogout = () => {
                                     settings
                                 </span>
                             </button>
-                            <div>Team Settings</div>
+                            <div>Company Settings</div>
                         </div>
                     </Link>
                 </template>

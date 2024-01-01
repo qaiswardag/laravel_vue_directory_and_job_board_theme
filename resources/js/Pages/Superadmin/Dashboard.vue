@@ -92,11 +92,11 @@ const handleShowAllTeams = function () {
     // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 3;
-    titleModal.value = `Switch Team`;
-    descriptionModal.value = `Are you sure you want to switch Team?`;
+    titleModal.value = `Switch Company`;
+    descriptionModal.value = `Are you sure you want to switch Company?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
-    thirdButtonModal.value = "Switch Team";
+    thirdButtonModal.value = "Switch Company";
 
     // handle click
     firstModalButtonFunction.value = function () {
@@ -242,7 +242,7 @@ const handleSelectTeam = function (team) {
                     </template>
                 </TailwindPagination>
 
-                <!-- Selected Team # start -->
+                <!-- Selected Company # start -->
 
                 <div
                     class="flex justify-center items-center mt-6 h-20 py-4 border rounded-full bg-gray-50"
@@ -288,7 +288,7 @@ const handleSelectTeam = function (team) {
                     </div>
                 </div>
 
-                <!-- Selected Team # end -->
+                <!-- Selected Company # end -->
                 <InputError :message="switchTeamForm.errors.team_id" />
             </div>
             <!-- Pagination # end -->
@@ -551,7 +551,7 @@ const handleSelectTeam = function (team) {
                                         class="absolute inset-0"
                                         aria-hidden="true"
                                     />
-                                    Change Current Team
+                                    Change Current Company
                                 </button>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">

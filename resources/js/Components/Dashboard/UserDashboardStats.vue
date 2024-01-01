@@ -107,9 +107,9 @@ onMounted(() => {
 <template>
     <div v-if="$page.props && !$page.props.currentUserTeam">
         <div>
-            <h1 class="myTertiaryHeader">No Team selected</h1>
+            <h1 class="myTertiaryHeader">No Company selected</h1>
         </div>
-        <p class="myPrimaryParagraph">Looks like no Team is Selected!</p>
+        <p class="myPrimaryParagraph">Looks like no Company is Selected!</p>
     </div>
 
     <!-- Error # start -->
@@ -165,7 +165,7 @@ onMounted(() => {
                             "
                             class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
                         >
-                            Latest Team Members
+                            Latest Company Members
                         </Link>
                     </div>
 
@@ -181,7 +181,7 @@ onMounted(() => {
                             "
                         >
                             <p class="myPrimaryParagraph">
-                                Looks like there are no Team Members.
+                                Looks like there are no Company Members.
                             </p>
                         </div>
 
@@ -227,7 +227,7 @@ onMounted(() => {
                             "
                             class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
                         >
-                            Latest Team Images
+                            Latest Company Images
                         </Link>
                     </div>
 

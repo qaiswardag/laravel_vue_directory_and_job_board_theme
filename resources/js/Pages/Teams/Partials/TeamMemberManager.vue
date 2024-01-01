@@ -67,9 +67,9 @@ const addTeamMember = () => {
             // set modal standards
             typeModal.value = "success";
             gridColumnModal.value = 1;
-            titleModal.value = `Team member added to ${props.team.name}`;
+            titleModal.value = `Company member added to ${props.team.name}`;
             descriptionModal.value = `
-           New Team Member have been invited to your team and have been sent an invitation email. The new Member may join the team by accepting the email invitation.
+           New Company Member have been invited to your team and have been sent an invitation email. The new Member may join the team by accepting the email invitation.
             `;
             firstButtonModal.value = null;
             secondButtonModal.value = null;
@@ -101,8 +101,8 @@ const handleCancelTeamInvitation = function (invitation) {
     // set modal standards
     typeModal.value = "danger";
     gridColumnModal.value = 2;
-    titleModal.value = "Cancel pending Team Invitation";
-    descriptionModal.value = `Are you sure you want to cancel Pending Team Invitation for: ${invitation.email}`;
+    titleModal.value = "Cancel pending Company Invitation";
+    descriptionModal.value = `Are you sure you want to cancel Pending Company Invitation for: ${invitation.email}`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Cancel invitation";
@@ -285,12 +285,12 @@ const displayAbleRole = (role) => {
 <template>
     <div>
         <div>
-            <!-- Add Team Member -->
+            <!-- Add Company Member -->
             <FormSection @submitted="addTeamMember" :sidebarArea="false">
-                <template #title> Add Team Member </template>
+                <template #title> Add Company Member </template>
 
                 <template #description>
-                    Add a new team member to your Team, allowing them to
+                    Add a new team member to your Company, allowing them to
                     collaborate with you.
                 </template>
 
@@ -422,29 +422,29 @@ const displayAbleRole = (role) => {
         <div>
             <SectionBorder />
 
-            <!-- Team Member Invitations -->
+            <!-- Company Member Invitations -->
             <ActionSection :sidebarArea="false" :actionsArea="false">
-                <template #title> Pending Team Invitations </template>
+                <template #title> Pending Company Invitations </template>
 
                 <template #description>
                     <div v-if="team.team_invitations.length < 1">
-                        No Pending Team Invitations
+                        No Pending Company Invitations
                     </div>
                     <div v-if="team.team_invitations.length > 0">
-                        These people have been invited to your Team and have
-                        been sent an invitation email. They may join the Team by
-                        accepting the email invitation.
+                        These people have been invited to your Company and have
+                        been sent an invitation email. They may join the Company
+                        by accepting the email invitation.
                     </div>
                 </template>
 
-                <!-- Pending Team Member Invitation List -->
+                <!-- Pending Company Member Invitation List -->
                 <template #main>
                     <div class="myInputsOrganization">
                         <div class="myInputGroup">
                             <div class="space-y-6">
                                 <div v-if="team.team_invitations.length < 1">
                                     <p class="myPrimaryParagraph">
-                                        No Pending Team Invitations
+                                        No Pending Company Invitations
                                     </p>
                                 </div>
                             </div>
@@ -456,7 +456,8 @@ const displayAbleRole = (role) => {
                                             <caption
                                                 class="myPrimaryTableCaption"
                                             >
-                                                Manage Pending Team Invitations
+                                                Manage Pending Company
+                                                Invitations
                                             </caption>
                                             <thead class="myPrimaryTableTHead">
                                                 <tr class="myPrimaryTableTr">
@@ -503,7 +504,7 @@ const displayAbleRole = (role) => {
                                                             }}
                                                         </td>
 
-                                                        <!-- Cancel Team Invitation -->
+                                                        <!-- Cancel Company Invitation -->
                                                         <td
                                                             class="myPrimaryTableTBodyTd"
                                                         >
@@ -542,10 +543,10 @@ const displayAbleRole = (role) => {
         <div v-if="team.users.length > 0">
             <SectionBorder />
 
-            <!-- Manage Team Members -->
+            <!-- Manage Company Members -->
             <ActionSection :sidebarArea="false" :actionsArea="false">
                 <template #title>
-                    Team Members at
+                    Company Members at
                     {{ $page.props.user && $page.props.user.current_team.name }}
                 </template>
 
@@ -567,14 +568,14 @@ const displayAbleRole = (role) => {
                     </div>
                 </template>
 
-                <!-- Team Member List -->
+                <!-- Company Member List -->
                 <template #main>
                     <div class="myInputsOrganization">
                         <div class="myTableContainer">
                             <div class="myTableSubContainer">
                                 <table class="myPrimaryTable">
                                     <caption class="myPrimaryTableCaption">
-                                        Team
+                                        Company
                                         <span class="font-normal">
                                             {{
                                                 $page.props.user.current_team
@@ -629,7 +630,7 @@ const displayAbleRole = (role) => {
                                                     <td
                                                         class="myPrimaryTableTBodyTd"
                                                     >
-                                                        <!-- Manage Team Member Role -->
+                                                        <!-- Manage Company Member Role -->
                                                         <div
                                                             v-if="
                                                                 availableRoles.length
@@ -674,11 +675,11 @@ const displayAbleRole = (role) => {
                                                         </div>
                                                     </td>
 
-                                                    <!-- Cancel Team Invitation -->
+                                                    <!-- Cancel Company Invitation -->
                                                     <td
                                                         class="myPrimaryTableTBodyTd"
                                                     >
-                                                        <!-- Leave Team -->
+                                                        <!-- Leave Company -->
                                                         <div
                                                             class="flex items-center myPrimaryGap"
                                                         >
@@ -693,7 +694,7 @@ const displayAbleRole = (role) => {
                                                                     handleLeaveTeam()
                                                                 "
                                                             >
-                                                                Leave Team
+                                                                Leave Company
                                                             </DangerButton>
                                                             <p
                                                                 class="myPrimaryParagraph flex gap-1 items-center bg-myPrimaryLightGrayColor text-black rounded-full py-2 px-4 font-normal"
@@ -724,7 +725,7 @@ const displayAbleRole = (role) => {
                                                                 </span>
                                                             </p>
 
-                                                            <!-- Remove Team Member -->
+                                                            <!-- Remove Company Member -->
                                                             <DangerButton
                                                                 @click="
                                                                     handleRemoveTeamMember(
@@ -750,19 +751,19 @@ const displayAbleRole = (role) => {
                         :on="removeTeamMemberForm.recentlySuccessful"
                         type="success"
                     >
-                        Successfully Updated Team Member List.
+                        Successfully Updated Company Member List.
                     </ActionMessage>
                     <ActionMessage
                         :on="updateRoleForm.recentlySuccessful"
                         type="success"
                     >
-                        Successfully Updated Team Member Role.
+                        Successfully Updated Company Member Role.
                     </ActionMessage>
                 </template>
             </ActionSection>
         </div>
 
-        <!-- Cancel Team Invitation -->
+        <!-- Cancel Company Invitation -->
         <DynamicModal
             :show="modalShowCancelTeamInvitation"
             :type="typeModal"
@@ -782,7 +783,7 @@ const displayAbleRole = (role) => {
             <main></main>
         </DynamicModal>
 
-        <!-- Manage Team Members -->
+        <!-- Manage Company Members -->
         <DynamicModal
             :show="modalShowCurrentlyManagingRole"
             :type="typeModal"
@@ -867,7 +868,7 @@ const displayAbleRole = (role) => {
             </main>
         </DynamicModal>
 
-        <!-- Role Leave Team -->
+        <!-- Role Leave Company -->
         <DynamicModal
             :show="modalShowLeaveTeam"
             :type="typeModal"
@@ -886,7 +887,7 @@ const displayAbleRole = (role) => {
             <header></header>
             <main></main>
         </DynamicModal>
-        <!-- Role Leave Team -->
+        <!-- Role Leave Company -->
         <DynamicModal
             :show="modalShowAddedTeamMember"
             :type="typeModal"

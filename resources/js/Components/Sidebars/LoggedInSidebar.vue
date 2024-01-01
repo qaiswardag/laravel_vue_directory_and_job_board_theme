@@ -135,7 +135,7 @@ import {
                         <span class="myMediumIcon material-symbols-outlined">
                             check
                         </span>
-                        Selected Team
+                        Selected Company
                     </div>
                 </Link>
             </div>
@@ -156,7 +156,7 @@ import {
                     <span class="myMediumIcon material-symbols-outlined">
                         check
                     </span>
-                    <span> Create a Team </span>
+                    <span> Create Company </span>
                 </div>
             </Link>
         </template>
@@ -235,7 +235,7 @@ import {
             >
                 <span class="material-symbols-outlined"> campaign </span>
                 <div class="flex flex-col gap-2">
-                    <span class="block"> In-store campaigns </span>
+                    <span class="block"> Campaigns </span>
                     <span class="block text-xs font-normal">
                         Manage or create new in-store campaigns
                     </span>
@@ -318,7 +318,7 @@ import {
                 <span class="myMediumIcon material-symbols-outlined">
                     settings
                 </span>
-                Team Settings
+                Company Settings
             </SideBarLink>
         </template>
 

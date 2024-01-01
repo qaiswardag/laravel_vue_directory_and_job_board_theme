@@ -412,7 +412,7 @@ onMounted(() => {
                                         Paid at
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
-                                        Team Name
+                                        Company Name
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Status

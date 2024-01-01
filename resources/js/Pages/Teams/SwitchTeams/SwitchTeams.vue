@@ -21,12 +21,9 @@ const breadcrumbsLinks = [
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Switch Team" />
+            <Head title="Switch Company" />
             <template #header> Switch Teams </template>
-            <template #description>
-                This is Team index page ipsum dolor sit, amet consectetur
-                adipisicing elit. Animi, distinctio.
-            </template>
+            <template #description> Switch Company </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>

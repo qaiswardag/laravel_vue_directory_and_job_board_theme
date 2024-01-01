@@ -83,14 +83,14 @@ const deleteTeam = function () {
 
 <template>
     <ActionSection :sidebarArea="false">
-        <template #title> Delete Team </template>
+        <template #title> Delete Company </template>
         <template #description> Delete {{ team.name }}? </template>
 
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Delete Team {{ team.name }}
+                        Delete Company {{ team.name }}
                     </div>
                     <p class="myPrimaryParagraph">
                         Deleting a team is a permanent action and cannot be

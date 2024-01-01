@@ -65,11 +65,11 @@ const handleShowAllTeams = function () {
     // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 3;
-    titleModal.value = `Switch Team`;
-    descriptionModal.value = `Are you sure you want to switch Team?`;
+    titleModal.value = `Switch Company`;
+    descriptionModal.value = `Are you sure you want to switch Company?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
-    thirdButtonModal.value = "Switch Team";
+    thirdButtonModal.value = "Switch Company";
 
     // handle click
     firstModalButtonFunction.value = function () {
@@ -222,7 +222,7 @@ const handleSwitchTeam = function () {
                     </template>
                 </TailwindPagination>
 
-                <!-- Selected Team # start -->
+                <!-- Selected Company # start -->
 
                 <div
                     class="flex justify-center items-center mt-6 h-20 py-4 border rounded-full bg-gray-50"
@@ -268,7 +268,7 @@ const handleSwitchTeam = function () {
                     </div>
                 </div>
 
-                <!-- Selected Team # end -->
+                <!-- Selected Company # end -->
                 <InputError :message="switchTeamForm.errors.team_id" />
             </div>
             <!-- Pagination # end -->
@@ -491,9 +491,11 @@ const handleSwitchTeam = function () {
     <div>
         <div class="myInputsOrganization">
             <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                <div class="myPrimaryFormOrganizationHeader">Switch Team</div>
+                <div class="myPrimaryFormOrganizationHeader">
+                    Switch Company
+                </div>
                 <p class="myPrimaryParagraph">
-                    Switch to another team you are part of.
+                    Switch to another Company you are part of.
                 </p>
             </div>
             <div>
@@ -502,7 +504,7 @@ const handleSwitchTeam = function () {
                     @click="handleShowAllTeams"
                     class="myPrimaryButton"
                 >
-                    Switch Team
+                    Switch Company
                 </button>
             </div>
         </div>

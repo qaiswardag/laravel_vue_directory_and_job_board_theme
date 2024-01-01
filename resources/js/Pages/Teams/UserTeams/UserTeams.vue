@@ -17,12 +17,9 @@ const breadcrumbsLinks = [
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Your Teams" />
-            <template #header> Your Teams </template>
-            <template #description>
-                This is Team index page ipsum dolor sit, amet consectetur
-                adipisicing elit. Animi, distinctio.
-            </template>
+            <Head title="Your Companies" />
+            <template #header> Your Companies </template>
+            <template #description> Companies index page </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
@@ -96,7 +93,7 @@ const breadcrumbsLinks = [
                                         class="absolute inset-0"
                                         aria-hidden="true"
                                     />
-                                    Create Team
+                                    Create Company
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">

@@ -13,7 +13,7 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "Team Settings",
+        label: "Company Settings",
         route: {
             name: "teams.show",
             parameters: [props.team.id],
@@ -25,8 +25,8 @@ const breadcrumbsLinks = [
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Team Settings" />
-            <template #header> Team Settings </template>
+            <Head title="Company Settings" />
+            <template #header> Company Settings </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
@@ -41,7 +41,7 @@ const breadcrumbsLinks = [
                 >
                 </UserTag>
             </div>
-            <!-- Team owner box # end -->
+            <!-- Company owner box # end -->
             <div class="myPrimarySection">
                 <div
                     class="divide-y divide-gray-200 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
@@ -73,7 +73,7 @@ const breadcrumbsLinks = [
                                         class="absolute inset-0"
                                         aria-hidden="true"
                                     />
-                                    Update Team
+                                    Update Company
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
@@ -116,7 +116,7 @@ const breadcrumbsLinks = [
                                         class="absolute inset-0"
                                         aria-hidden="true"
                                     />
-                                    Team Members
+                                    Company Members
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
@@ -155,7 +155,7 @@ const breadcrumbsLinks = [
                                         class="absolute inset-0"
                                         aria-hidden="true"
                                     />
-                                    Delete Team
+                                    Delete Company
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">

@@ -112,10 +112,10 @@ const handleCreateTeam = function () {
     typeModal.value = "success";
     gridColumnModal.value = 2;
     titleModal.value = `Create a new team ${postForm.name}`;
-    descriptionModal.value = `Please confirm creating a new team.`;
+    descriptionModal.value = `Please confirm creating new Company.`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
-    thirdButtonModal.value = "Create Team";
+    thirdButtonModal.value = "Create Company";
     // handle click
     firstModalButtonFunction.value = function () {
         // handle show modal for unique content
@@ -171,19 +171,19 @@ onBeforeMount(() => {});
         :sidebarArea="true"
         :actionsArea="true"
     >
-        <template #title> Create Team </template>
+        <template #title> Create Company </template>
 
-        <template #description> Create a new team. </template>
+        <template #description> Create new company. </template>
 
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Team Information
+                        Company Information
                     </div>
                 </div>
                 <div class="myInputGroup">
-                    <InputLabel for="name" value="Team Name" />
+                    <InputLabel for="name" value="Company Name" />
                     <TextInput
                         placeholder="Name.."
                         id="name"
@@ -344,7 +344,7 @@ onBeforeMount(() => {});
         <template #actions>
             <SubmitButton
                 :disabled="postForm.processing"
-                buttonText="Create Team"
+                buttonText="Create Company"
             >
             </SubmitButton>
             <div
@@ -389,7 +389,7 @@ onBeforeMount(() => {});
                 </div>
             </div>
             <ActionMessage :on="postForm.recentlySuccessful" type="success">
-                Successfully Created your Team.
+                Successfully Created your Company.
             </ActionMessage>
 
             <NotificationsFixedBottom

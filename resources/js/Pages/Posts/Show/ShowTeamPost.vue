@@ -38,8 +38,8 @@ const breadcrumbsLinks = [
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head :title="`Sale | ${post.title}`" />
-            <template #header> Sale </template>
+            <Head :title="`Campaign | ${post.title}`" />
+            <template #header> Campaign </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>

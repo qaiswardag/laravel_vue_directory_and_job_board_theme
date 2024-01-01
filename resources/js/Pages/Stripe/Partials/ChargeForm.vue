@@ -391,8 +391,8 @@ const handleShowAllTeams = function () {
     // set modal standards
     typeModal.value = "success";
     gridColumnModal.value = 3;
-    titleModal.value = `Switch Team`;
-    descriptionModal.value = `Are you sure you want to switch Team?`;
+    titleModal.value = `Switch Company`;
+    descriptionModal.value = `Are you sure you want to switch Company?`;
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = null;
@@ -1106,13 +1106,13 @@ const handleSwitchTeam = function (team) {
         </template>
 
         <template #sidebar>
-            <!-- Team # start -->
+            <!-- Company # start -->
 
             <template v-if="nameOfCharge === 'storeSubscription'">
                 <div class="myInputsOrganization">
-                    <div class="myPrimaryFormOrganizationHeader">Team</div>
+                    <div class="myPrimaryFormOrganizationHeader">Company</div>
                     <div class="myPrimaryFormOrganizationHeader">
-                        <p class="pb-4 pt-2">Subscription for Team</p>
+                        <p class="pb-4 pt-2">Subscription for Company</p>
                     </div>
 
                     <div
@@ -1120,7 +1120,7 @@ const handleSwitchTeam = function (team) {
                         class="myPrimaryFakeSelect"
                     >
                         <div class="relative flex items-center w-full py-0 p-0">
-                            <span> Change Team </span>
+                            <span> Change Company </span>
                         </div>
                         <div
                             class="border-none rounded flex items-center justify-center h-full w-8"
@@ -1131,7 +1131,7 @@ const handleSwitchTeam = function (team) {
                         </div>
                     </div>
 
-                    <p class="py-4">Team added</p>
+                    <p class="py-4">Company added</p>
 
                     <template v-if="formCharge.subscription_team">
                         <div class="p-2 border border-myPrimaryLightGrayColor">
@@ -1182,7 +1182,7 @@ const handleSwitchTeam = function (team) {
                     />
                 </div>
             </template>
-            <!-- Team # end -->
+            <!-- Company # end -->
 
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeader">

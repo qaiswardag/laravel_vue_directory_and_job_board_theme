@@ -13,14 +13,14 @@ const props = defineProps({
 
 const breadcrumbsLinks = [
     {
-        label: "Team Settings",
+        label: "Company Settings",
         route: {
             name: "teams.show",
             parameters: [props.team.id],
         },
     },
     {
-        label: "Delete Team",
+        label: "Delete Company",
     },
 ];
 </script>
@@ -28,8 +28,8 @@ const breadcrumbsLinks = [
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Delete Team" />
-            <template #header> Delete Team </template>
+            <Head title="Delete Company" />
+            <template #header> Delete Company </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>
             </template>
