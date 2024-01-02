@@ -137,7 +137,9 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
                 <template #description>
                     Finding the best fit for the job shouldn’t be a full-time
                     job. myself is like a digital shopping window, focusing on
-                    your brand image, authenticity and credibility!
+                    your brand image, authenticity and credibility. Post your
+                    open roles on myself and easily target, prioritize, and
+                    manage qualified candidates.
                 </template>
                 <template #content>
                     <div
