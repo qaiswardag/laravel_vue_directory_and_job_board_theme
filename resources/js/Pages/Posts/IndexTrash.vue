@@ -266,7 +266,7 @@ onMounted(() => {
 <template>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Posts" />
+            <Head title="Campaigns" />
             <DynamicModal
                 :show="modalShowDeletePost"
                 :type="typeModal"
