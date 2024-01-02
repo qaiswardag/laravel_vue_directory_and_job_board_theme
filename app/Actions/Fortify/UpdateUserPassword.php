@@ -34,10 +34,8 @@ class UpdateUserPassword implements UpdatesUserPasswords
                     "The provided password does not match your current password."
                 ),
             ]
-        )->after(function ($validator) {
-            // TODO: Remove when not in Demo mode
-            $validator->errors()->add('current_password', 'You are not able to reset the password in the demo mode.');
-        })->validateWithBag("updatePassword");
+        )
+        ->validateWithBag("updatePassword");
 
         $user
             ->forceFill([
