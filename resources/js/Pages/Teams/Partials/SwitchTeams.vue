@@ -410,69 +410,77 @@ const handleSwitchTeam = function () {
     </DynamicModal>
 
     <div class="flex justify-center">
-        <div class="myPrimaryTag px-4">
-            <div
-                class="flex items-center justify-center px-2 py-2"
-                v-if="$page.props.user.current_team.coverImagesWithLogos"
-            >
+        <template
+            v-if="
+                $page.props.user.all_teams.length > 0 &&
+                $page.props.user.current_team &&
+                $page.props.jetstream.hasTeamFeatures
+            "
+        >
+            <div class="myPrimaryTag px-4">
                 <div
-                    v-if="
-                        Array.isArray(
-                            $page.props.user.current_team.coverImagesWithLogos
-                                .logos
-                        )
-                    "
+                    class="flex items-center justify-center px-2 py-2"
+                    v-if="$page.props.user.current_team.coverImagesWithLogos"
                 >
-                    <template
+                    <div
                         v-if="
-                            $page.props.user.current_team.coverImagesWithLogos
-                                ?.logos.length !== 0
+                            Array.isArray(
+                                $page.props.user.current_team
+                                    .coverImagesWithLogos.logos
+                            )
                         "
                     >
-                        <ThumbnailSmallImageSlider
-                            :images="
+                        <template
+                            v-if="
                                 $page.props.user.current_team
-                                    .coverImagesWithLogos?.logos
+                                    .coverImagesWithLogos?.logos.length !== 0
                             "
-                            imageSize="medium_path"
-                            imageHeight="h-16"
-                            imageWidth="w-16"
-                            :roundedFull="true"
-                        ></ThumbnailSmallImageSlider>
-
-                        <p
-                            class="myPrimaryParagraph font-medium mt-2 text-center"
                         >
-                            {{ $page.props.currentUserTeam?.name }}
-                        </p>
-                    </template>
+                            <ThumbnailSmallImageSlider
+                                :images="
+                                    $page.props.user.current_team
+                                        .coverImagesWithLogos?.logos
+                                "
+                                imageSize="medium_path"
+                                imageHeight="h-16"
+                                imageWidth="w-16"
+                                :roundedFull="true"
+                            ></ThumbnailSmallImageSlider>
+
+                            <p
+                                class="myPrimaryParagraph font-medium mt-2 text-center"
+                            >
+                                {{ $page.props.currentUserTeam?.name }}
+                            </p>
+                        </template>
+                    </div>
+                </div>
+                <div
+                    v-if="
+                        $page.props.user.current_team.coverImagesWithLogos
+                            ?.logos?.length === 0
+                    "
+                    class="flex items-center justify-center px-2 py-2"
+                >
+                    <p class="myPrimaryParagraph font-medium text-center">
+                        {{ $page.props.currentUserTeam?.name }}
+                    </p>
+                </div>
+                <div class="flex justify-center">
+                    <Link
+                        :href="
+                            route(
+                                'team.update.information',
+                                $page.props.currentUserTeam?.id
+                            )
+                        "
+                        class="h-10 w-10 text-myPrimaryDarkGrayColor cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <span class="material-symbols-outlined"> edit </span>
+                    </Link>
                 </div>
             </div>
-            <div
-                v-if="
-                    $page.props.user.current_team.coverImagesWithLogos?.logos
-                        ?.length === 0
-                "
-                class="flex items-center justify-center px-2 py-2"
-            >
-                <p class="myPrimaryParagraph font-medium text-center">
-                    {{ $page.props.currentUserTeam?.name }}
-                </p>
-            </div>
-            <div class="flex justify-center">
-                <Link
-                    :href="
-                        route(
-                            'team.update.information',
-                            $page.props.currentUserTeam?.id
-                        )
-                    "
-                    class="h-10 w-10 text-myPrimaryDarkGrayColor cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                >
-                    <span class="material-symbols-outlined"> edit </span>
-                </Link>
-            </div>
-        </div>
+        </template>
     </div>
 
     <div class="flex justify-center">
