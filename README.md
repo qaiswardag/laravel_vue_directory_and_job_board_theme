@@ -1,6 +1,6 @@
 <p></p>
 <p align="center" dir="auto">
-<img width="150" style="max-width: 100%;" src="public/logo/logo.png" alt="Logo">
+<img width="150" style="max-width: 100%;" src="public/logo/myself_text_logo_white_bg_black.png" alt="Logo">
 </p>
 
 # Intro

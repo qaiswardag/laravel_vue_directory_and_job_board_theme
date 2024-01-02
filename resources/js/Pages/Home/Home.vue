@@ -1,11 +1,9 @@
 <script setup>
 import MainLayout from "@/Layouts/MainLayout.vue";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
-import { AdjustmentsHorizontalIcon } from "@heroicons/vue/24/outline";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import DefaultElement from "@/Components/Layouts/DefaultElement.vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
-import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/vue/24/outline";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
 import EmptySectionBorder from "../../Components/Sections/EmptySectionBorder.vue";
