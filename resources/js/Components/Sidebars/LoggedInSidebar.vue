@@ -330,7 +330,8 @@ import {
                 route().current('teams.create.team')
             "
         >
-            <span class="material-symbols-outlined"> stacks </span> All Teams
+            <span class="material-symbols-outlined"> stacks </span> All
+            Companies
         </SideBarLink>
         <SideBarLink
             v-if="$page.props.user.superadmin !== null"
