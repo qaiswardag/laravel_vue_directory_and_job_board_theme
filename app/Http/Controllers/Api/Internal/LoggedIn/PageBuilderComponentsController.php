@@ -36,6 +36,7 @@ class PageBuilderComponentsController extends Controller
         $query = PageBuilderComponent::latest()
             ->with("coverImages")
             ->with("categories")
+            ->where("published", true)
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("title", "LIKE", "%" . $term . "%");
             });
@@ -49,7 +50,7 @@ class PageBuilderComponentsController extends Controller
             });
         }
 
-        $components = $query->paginate(8);
+        $components = $query->paginate(10);
 
         $components->appends($request->all());
 
