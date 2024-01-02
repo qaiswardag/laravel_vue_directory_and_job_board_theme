@@ -116,7 +116,9 @@ const faqs = [
                                     <p class="text-white mySecondaryHeader">
                                         Find stores
                                     </p>
-                                    <p class="myPrimaryParagrapg text-white">
+                                    <p
+                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
+                                    >
                                         myself is the largest and most exclusive
                                         fashion directory in the United Arab
                                         Emirates, gathering all fashion brands
@@ -142,7 +144,9 @@ const faqs = [
                                     <p class="text-white mySecondaryHeader">
                                         Campaigns
                                     </p>
-                                    <p class="myPrimaryParagrapg text-white">
+                                    <p
+                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
+                                    >
                                         Fashion campaigns in the United Arab
                                         Emirates. Discover new products or get
                                         inspired.
@@ -166,7 +170,9 @@ const faqs = [
                                     <p class="text-white mySecondaryHeader">
                                         Jobs in UAE
                                     </p>
-                                    <p class="myPrimaryParagrapg text-white">
+                                    <p
+                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
+                                    >
                                         Find the right job for you in the
                                         fashion industry in the United Arab
                                         Emirates.
@@ -190,7 +196,9 @@ const faqs = [
                                     <p class="text-white mySecondaryHeader">
                                         Professional
                                     </p>
-                                    <p class="myPrimaryParagrapg text-white">
+                                    <p
+                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
+                                    >
                                         myself is like a digital shopping
                                         window, focusing on your brand image,
                                         authenticity and credibility.
