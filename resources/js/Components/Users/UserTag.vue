@@ -53,7 +53,7 @@ const props = defineProps({
                 {{ user.last_name.charAt(0).toUpperCase() }}
             </div>
             <div class="flex flex-col items-start justify-start">
-                <p class="text-xs font-medium">
+                <p class="font-medium">
                     {{ user.first_name }}
                     {{ user.last_name }}
                 </p>

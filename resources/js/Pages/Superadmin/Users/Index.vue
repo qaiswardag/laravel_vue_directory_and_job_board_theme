@@ -613,12 +613,15 @@ onMounted(() => {
                                                                 user.last_name
                                                             )
                                                         "
-                                                        class="myPrimaryButton flex items-center gap-1 text-xs"
+                                                        class="myPrimaryButton flex items-center gap-1"
                                                     >
-                                                        <ArrowPathRoundedSquareIcon
-                                                            class="h-4 w-4"
-                                                        ></ArrowPathRoundedSquareIcon>
-                                                        <p>
+                                                        <span
+                                                            class="material-symbols-outlined"
+                                                        >
+                                                            refresh
+                                                        </span>
+
+                                                        <span>
                                                             {{
                                                                 user.superadmin.role
                                                                     .charAt(0)
@@ -627,7 +630,7 @@ onMounted(() => {
                                                                     1
                                                                 )
                                                             }}
-                                                        </p>
+                                                        </span>
                                                     </button>
                                                     <button
                                                         @click="
@@ -644,7 +647,7 @@ onMounted(() => {
                                                         >
                                                             remove
                                                         </span>
-                                                        Remove
+                                                        <span> Remove </span>
                                                     </button>
                                                 </div>
                                             </template>
@@ -659,7 +662,7 @@ onMounted(() => {
                                                             user.last_name
                                                         )
                                                     "
-                                                    class="mySecondaryButton flex items-center gap-1 text-xs"
+                                                    class="mySecondaryButton flex items-center gap-1"
                                                 >
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
