@@ -2,9 +2,8 @@
 import { router } from "@inertiajs/vue3";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import Flash from "@/Components/Actions/Flash.vue";
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
-
 import { useStore } from "vuex";
 
 defineProps({
@@ -20,10 +19,18 @@ const isDOMLoaded = ref(false);
 
 router.on("start", () => {
     isDOMLoaded.value = true;
+    console.log(`START:`, isDOMLoaded.value);
 });
-router.on("finish", () => {
+
+router.on("finish", (event) => {
     isDOMLoaded.value = false;
+    console.log(`FINISH...:`, isDOMLoaded.value);
 });
+//
+//
+//
+//
+//
 
 const shouldShowFlash = ref(false);
 
@@ -56,10 +63,12 @@ watch(flashState, (newValue) => {
         :showCloseButton="false"
         :flash="$page.props.flash"
     ></Flash>
-    <teleport to="body">
+
+    <!-- <teleport to="body">
         <FullScreenSpinner
             v-if="isDOMLoaded || getIsLoading"
         ></FullScreenSpinner>
-    </teleport>
+    </teleport> -->
+
     <slot />
 </template>
