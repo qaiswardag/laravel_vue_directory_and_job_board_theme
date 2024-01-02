@@ -330,13 +330,7 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Company slug
-                    </div>
-                </div>
-
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Company details
+                        Company name
                     </div>
                 </div>
                 <div class="myInputGroup">
@@ -350,58 +344,68 @@ onBeforeMount(() => {
                     <InputError :message="postForm.errors.name" />
                 </div>
             </div>
+            <!-- Company Owner Information -->
             <SectionBorder></SectionBorder>
+
             <!-- post slug start -->
-            <div class="myInputGroup">
-                <div v-show="isSlugEditable === false">
-                    <InputLabel for="slug" value="Slug" />
-                    <div class="relative flex items-center">
-                        <TextInput
-                            placeholder="Slug.."
-                            id="slug"
-                            v-model="slugValueTeamName"
-                            type="text"
-                            class="block w-full myPrimaryInputReadonly"
-                            readonly
-                            autocomplete="off"
-                        />
-                        <div
-                            @click="handleOpenLock"
-                            class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
-                        >
-                            <LockClosedIcon
-                                class="w-5 h-5 text-myPrimaryErrorColor"
-                            >
-                            </LockClosedIcon>
-                        </div>
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Company slug
                     </div>
                 </div>
-                <div v-show="isSlugEditable === true">
-                    <InputLabel for="slug" value="Slug" />
-                    <div class="relative flex items-center cursor-pointer">
-                        <TextInput
-                            placeholder="Slug.."
-                            id="slug"
-                            v-model="slugValueCustom"
-                            type="text"
-                            class="block w-full"
-                            autocomplete="off"
-                        />
-                        <div
-                            @click="handleCloseLock"
-                            class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
-                        >
-                            <LockOpenIcon
-                                class="w-5 h-5 text-myPrimaryLinkColor"
+
+                <div class="myInputGroup">
+                    <div v-show="isSlugEditable === false">
+                        <InputLabel for="slug" value="Slug" />
+                        <div class="relative flex items-center">
+                            <TextInput
+                                placeholder="Slug.."
+                                id="slug"
+                                v-model="slugValueTeamName"
+                                type="text"
+                                class="block w-full myPrimaryInputReadonly"
+                                readonly
+                                autocomplete="off"
+                            />
+                            <div
+                                @click="handleOpenLock"
+                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
                             >
-                            </LockOpenIcon>
+                                <LockClosedIcon
+                                    class="w-5 h-5 text-myPrimaryErrorColor"
+                                >
+                                </LockClosedIcon>
+                            </div>
                         </div>
                     </div>
-                    <div class="myPrimaryTag italic">
-                        Slug: {{ postForm.slug }}
+                    <div v-show="isSlugEditable === true">
+                        <InputLabel for="slug" value="Slug" />
+                        <div class="relative flex items-center cursor-pointer">
+                            <TextInput
+                                placeholder="Slug.."
+                                id="slug"
+                                v-model="slugValueCustom"
+                                type="text"
+                                class="block w-full"
+                                autocomplete="off"
+                            />
+                            <div
+                                @click="handleCloseLock"
+                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
+                            >
+                                <LockOpenIcon
+                                    class="w-5 h-5 text-myPrimaryLinkColor"
+                                >
+                                </LockOpenIcon>
+                            </div>
+                        </div>
+                        <div class="myPrimaryTag italic">
+                            Slug: {{ postForm.slug }}
+                        </div>
                     </div>
+                    <InputError :message="postForm.errors.slug" />
                 </div>
-                <InputError :message="postForm.errors.slug" />
             </div>
             <!-- post slug end -->
         </template>
