@@ -245,7 +245,7 @@ onMounted(async () => {
                     <div class="flex gap-2 flex-wrap">
                         <button
                             @click="handleCategory({ name: 'All', id: null })"
-                            class="myPrimaryTag"
+                            class="myPrimaryTag font-medium"
                             :class="[
                                 {
                                     'bg-myPrimaryLinkColor text-white':
@@ -274,7 +274,7 @@ onMounted(async () => {
                                         id: category.id,
                                     })
                                 "
-                                class="myPrimaryTag"
+                                class="myPrimaryTag font-medium"
                                 :class="[
                                     {
                                         'bg-myPrimaryLinkColor text-white':
