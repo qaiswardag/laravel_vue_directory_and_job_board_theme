@@ -49,10 +49,6 @@ class PageBuilderComponentsController extends Controller
             });
         }
 
-        if (!auth()->user()->superadmin) {
-            $query->where("published", true);
-        }
-
         $components = $query->paginate(8);
 
         $components->appends($request->all());
