@@ -14,17 +14,17 @@ defineProps({
 
 const store = useStore();
 
-// DOM is loaded
-const isDOMLoaded = ref(false);
+const getIsLoading = computed(() => {
+    return store.getters["user/getIsLoading"];
+});
 
+// DOM is loaded
 router.on("start", () => {
-    isDOMLoaded.value = true;
-    console.log(`START:`, isDOMLoaded.value);
+    store.commit("user/setIsLoading", true);
 });
 
 router.on("finish", (event) => {
-    isDOMLoaded.value = false;
-    console.log(`FINISH...:`, isDOMLoaded.value);
+    store.commit("user/setIsLoading", false);
 });
 //
 //
@@ -36,10 +36,6 @@ const shouldShowFlash = ref(false);
 
 const flashState = computed(() => {
     return usePage().props.flash;
-});
-
-const getIsLoading = computed(() => {
-    return store.getters["user/getIsLoading"];
 });
 
 watch(flashState, (newValue) => {
@@ -64,11 +60,9 @@ watch(flashState, (newValue) => {
         :flash="$page.props.flash"
     ></Flash>
 
-    <!-- <teleport to="body">
-        <FullScreenSpinner
-            v-if="isDOMLoaded || getIsLoading"
-        ></FullScreenSpinner>
-    </teleport> -->
+    <teleport to="body">
+        <FullScreenSpinner v-if="getIsLoading"></FullScreenSpinner>
+    </teleport>
 
     <slot />
 </template>
