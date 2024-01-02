@@ -22,6 +22,7 @@ import { vueFetch } from "@/composables/vueFetch";
 import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import { ref } from "vue";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
+import { useStore } from "vuex";
 
 const breadcrumbsLinks = [
     {
@@ -32,6 +33,8 @@ const breadcrumbsLinks = [
         },
     },
 ];
+
+const store = useStore();
 
 const actions = [
     {
@@ -149,6 +152,10 @@ const handleSwitchTeam = function () {
     switchTeamForm.put(route("superadmin.switch.team"), {
         onSuccess: () => {
             modalShowTeams.value = false;
+
+            store.commit("mediaLibrary/setCurrentImage", null);
+            store.commit("mediaLibrary/setCurrentPreviewImage", null);
+            store.commit("attachedUsersOrItems/setRemoveAttachedUser", []);
         },
         onError: () => {},
         onFinish: () => {},
