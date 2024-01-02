@@ -259,7 +259,7 @@ class StorePostRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "At least {$minCoverImages} images are necessary for a store listing."
+                        "At least {$minCoverImages} images are necessary."
                     );
             }
 

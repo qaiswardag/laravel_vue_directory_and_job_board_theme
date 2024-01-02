@@ -41,7 +41,13 @@ class StoreStoreRequest extends FormRequest
             "slug" => ["required", "string", "min:2", "max:255"],
             "address" => ["required", "string", "min:2", "max:255"],
             "floor" => ["integer", "digits_between:1,4", "nullable"],
-            "contact_page_url" => ["required", "min:2", "max:255", "url:https", "nullable"],
+            "contact_page_url" => [
+                "required",
+                "min:2",
+                "max:255",
+                "url:https",
+                "nullable",
+            ],
 
             // If user_id is a foreign key column that references the id column of the users table,
             // you can use the exists validation rule to ensure that the value of user_id exists in
@@ -126,7 +132,7 @@ class StoreStoreRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "At least {$minCoverImages} images are necessary for a store listing."
+                        "At least {$minCoverImages} images are necessary."
                     );
             }
 

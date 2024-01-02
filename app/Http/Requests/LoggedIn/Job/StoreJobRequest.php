@@ -98,7 +98,7 @@ class StoreJobRequest extends FormRequest
         $maxJobStates = 2;
         $maxCategories = 2;
         $maxJobTypes = 2;
-        $minCoverImages = 1;
+        $minCoverImages = 0;
         $maxCoverImages = 6;
 
         $validator->after(function ($validator) use (
@@ -208,17 +208,6 @@ class StoreJobRequest extends FormRequest
             }
             // started at date # end
 
-            // validation for cover image # start
-            if (
-                $this->cover_image === null ||
-                (gettype($this->cover_image) === "array" &&
-                    count($this->cover_image) === 0)
-            ) {
-                $validator
-                    ->errors()
-                    ->add("cover_image", "The cover image field is required.");
-            }
-
             if (gettype($this->cover_image) !== "array") {
                 $validator
                     ->errors()
@@ -233,7 +222,7 @@ class StoreJobRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "At least {$minCoverImages} images are necessary for a store listing."
+                        "At least {$minCoverImages} images are necessary."
                     );
             }
 
