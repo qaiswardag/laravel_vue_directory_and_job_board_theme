@@ -45,7 +45,7 @@ const handleRemoveItem = function (selectedItem) {
                 "
                 v-for="item in list"
                 :key="item.id"
-                class="py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag hover:shadow"
+                class="py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag hover:shadow font-medium"
                 :class="[
                     {
                         'bg-myPrimaryLinkColor text-white': listSelected.some(
