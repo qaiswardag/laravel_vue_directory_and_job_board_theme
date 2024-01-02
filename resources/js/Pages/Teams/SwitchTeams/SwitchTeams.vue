@@ -13,7 +13,7 @@ const breadcrumbsLinks = [
         },
     },
     {
-        label: "Switch Teams",
+        label: "Switch Company",
     },
 ];
 </script>
@@ -22,7 +22,7 @@ const breadcrumbsLinks = [
     <MainLayout>
         <LoggedInLayout>
             <Head title="Switch Company" />
-            <template #header> Switch Teams </template>
+            <template #header> Switch Company </template>
             <template #description> Switch Company </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

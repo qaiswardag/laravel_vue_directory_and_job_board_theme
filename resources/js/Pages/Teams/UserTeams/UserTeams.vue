@@ -50,7 +50,7 @@ const breadcrumbsLinks = [
                                         class="absolute inset-0"
                                         aria-hidden="true"
                                     />
-                                    Switch Teams
+                                    Switch Company
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">
