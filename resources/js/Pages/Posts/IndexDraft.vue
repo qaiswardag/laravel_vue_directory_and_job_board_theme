@@ -228,9 +228,10 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head title="Campaigns" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Campaigns" />
             <DynamicModal
                 :show="modalShowDeletePost"
                 :type="typeModal"

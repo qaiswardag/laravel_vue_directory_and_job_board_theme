@@ -22,9 +22,10 @@ const faqs = [
 </script>
 
 <template>
+    <Head title="Home" />
+
     <MainLayout>
         <GuestsLayout>
-            <Head title="Home" />
             <template #header>
                 <div class="w-full relative h-[32rem]">
                     <img

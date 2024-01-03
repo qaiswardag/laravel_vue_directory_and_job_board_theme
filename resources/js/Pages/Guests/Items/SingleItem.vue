@@ -34,9 +34,10 @@ const props = defineProps({
 });
 </script>
 <template>
+    <Head :title="`${props.postType} | ${post.title}`" description="øøøøø" />
+
     <MainLayout>
         <GuestsLayout>
-            <Head :title="`${props.postType} | ${post.title}`" />
             <!-- Show Unique Resorce - start -->
             <main class="myPrimaryContentSection">
                 <UnqiueResource

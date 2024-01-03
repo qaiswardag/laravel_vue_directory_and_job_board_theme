@@ -41,9 +41,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Update Store" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Update Store" />
             <template #header> Update Store </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

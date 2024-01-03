@@ -22,9 +22,10 @@ defineProps({
 });
 </script>
 <template>
+    <Head title="Users" />
+
     <MainLayout>
         <GuestsLayout>
-            <Head title="Users" />
             <template #header>
                 <PageHeader title="Users"></PageHeader>
             </template>

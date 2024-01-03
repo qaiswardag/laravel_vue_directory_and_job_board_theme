@@ -7,5 +7,6 @@ const props = defineProps({
 </script>
 <template>
     <Head title="Jobs API" />
+
     {{ JSON.stringify(jobs) }}
 </template>

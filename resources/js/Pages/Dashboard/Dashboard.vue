@@ -32,9 +32,10 @@ const currentUserDetails = ref(false);
 </script>
 
 <template>
+    <Head title="Dashboard" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Dashboard" />
             <template #header> Dashboard </template>
 
             <template #breadcrumbs>

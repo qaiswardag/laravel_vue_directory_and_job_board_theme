@@ -75,6 +75,8 @@ const updatePaymentMethod = function () {
 </script>
 
 <template>
+    <Head title="Your Profile" />
+
     <DynamicModal
         v-if="modalShowUpdatePaymentMethod"
         :show="modalShowUpdatePaymentMethod"
@@ -101,7 +103,6 @@ const updatePaymentMethod = function () {
     </DynamicModal>
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Your Profile" />
             <template #header> Your Profile </template>
             <template #description> Profile Settings </template>
             <template #breadcrumbs>

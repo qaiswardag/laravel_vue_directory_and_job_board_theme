@@ -169,6 +169,8 @@ const handleSelectTeam = function (team) {
 </script>
 
 <template>
+    <Head title="Dashboard" />
+
     <DynamicModal
         :show="modalShowTeams"
         :type="typeModal"
@@ -438,7 +440,6 @@ const handleSelectTeam = function (team) {
 
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Dashboard" />
             <template #header> Super Admininistrator </template>
 
             <template #description>Super Admininistrator Dashboard </template>

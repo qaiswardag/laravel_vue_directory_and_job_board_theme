@@ -19,9 +19,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Switch Company" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Switch Company" />
             <template #header> Switch Company </template>
             <template #description> Switch Company </template>
             <template #breadcrumbs>

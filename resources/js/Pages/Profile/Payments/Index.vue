@@ -89,10 +89,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Payments and invoices" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Payments and invoices" />
-
             <template #header> Payments and invoices </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

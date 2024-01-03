@@ -11,9 +11,10 @@ defineProps({
 </script>
 
 <template>
+    <Head title="Terms of Service" />
+
     <MainLayout>
         <GuestsLayout>
-            <Head title="Terms of Service" />
             <template #header>
                 <div>
                     <PageHeader title="Terms of Service"></PageHeader>

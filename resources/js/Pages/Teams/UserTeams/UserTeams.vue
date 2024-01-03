@@ -15,9 +15,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Your Companies" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Your Companies" />
             <template #header> Your Companies </template>
             <template #description> Companies index page </template>
             <template #breadcrumbs>

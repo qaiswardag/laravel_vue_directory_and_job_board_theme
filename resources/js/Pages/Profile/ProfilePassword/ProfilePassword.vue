@@ -27,9 +27,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Update Password" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Update Password" />
             <template #header> Update Password </template>
             <template #description>Update Update Password</template>
             <template #breadcrumbs>

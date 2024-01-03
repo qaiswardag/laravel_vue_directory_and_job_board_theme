@@ -27,10 +27,11 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Forgot password" />
+
     <MainLayout>
         <div class="bg-gradient-to-t from-red-50 via-pink-100 to-pink-50">
             <GuestsLayout>
-                <Head title="Forgot password" />
                 <template #header>
                     <PageHeader title="Forgot password"></PageHeader>
                 </template>

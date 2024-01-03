@@ -11,9 +11,10 @@ defineProps({
 </script>
 
 <template>
+    <Head title="API Tokens" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="API Tokens" />
             <template #header> API Tokens </template>
 
             <div>

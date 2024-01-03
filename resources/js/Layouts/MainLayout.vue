@@ -49,10 +49,7 @@ watch(flashState, (newValue) => {
 </script>
 
 <template>
-    <Head>
-        <title>{{ title }}</title>
-        <meta type="description" content="myself" head-key="description" />
-    </Head>
+    <meta type="description" content="description" head-key="description" />
 
     <Flash
         v-show="shouldShowFlash"

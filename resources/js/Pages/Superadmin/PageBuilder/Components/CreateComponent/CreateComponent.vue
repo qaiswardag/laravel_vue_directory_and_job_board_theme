@@ -26,9 +26,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Create Component" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Create Component" />
             <template #header> Create a New Component </template>
 
             <template #breadcrumbs>

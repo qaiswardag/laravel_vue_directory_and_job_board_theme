@@ -32,9 +32,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Profile Security" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Profile Security" />
             <template #header> Profile Security </template>
             <template #description> Profile Security </template>
             <template #breadcrumbs>

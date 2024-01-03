@@ -11,9 +11,10 @@ defineProps({
 </script>
 
 <template>
+    <Head title="Privacy Policy" />
+
     <MainLayout>
         <GuestsLayout>
-            <Head title="Privacy Policy" />
             <template #header>
                 <div>
                     <PageHeader title="Privacy Policy"></PageHeader>

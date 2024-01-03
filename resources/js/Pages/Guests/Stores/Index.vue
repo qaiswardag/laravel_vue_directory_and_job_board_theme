@@ -8,9 +8,10 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
 </script>
 
 <template>
+    <Head title="Stores" />
+
     <MainLayout>
         <GuestsLayout>
-            <Head title="Stores" />
             <template #header>
                 <PageHeader title="Stores"></PageHeader>
             </template>

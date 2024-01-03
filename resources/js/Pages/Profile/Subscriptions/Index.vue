@@ -190,9 +190,10 @@ const notificationsModalButton = function () {
 </script>
 
 <template>
+    <Head title="Stores" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Stores" />
             <DynamicModal
                 :show="modalShowDeletePost"
                 :type="typeModal"

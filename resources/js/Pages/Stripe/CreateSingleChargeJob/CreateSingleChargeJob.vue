@@ -36,9 +36,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Payment" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Payment" />
             <template #header> Payment </template>
 
             <template #breadcrumbs>

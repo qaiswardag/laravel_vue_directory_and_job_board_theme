@@ -94,9 +94,10 @@ const handleMediaLibrary = function (imageID) {
 </script>
 
 <template>
+    <Head title="Media" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Media" />
             <template #header> Media </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

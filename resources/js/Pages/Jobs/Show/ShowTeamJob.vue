@@ -42,9 +42,10 @@ const breadcrumbsLinks = [
 ];
 </script>
 <template>
+    <Head :title="`Job | ${post.title}`" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head :title="`Job | ${post.title}`" />
             <template #header> Job </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

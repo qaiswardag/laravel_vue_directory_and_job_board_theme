@@ -13,9 +13,10 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
 </script>
 
 <template>
+    <Head title="Professional" />
+
     <MainLayout>
         <GuestsLayout>
-            <Head title="Professional" />
             <template #header>
                 <PageHeader title="Professional" class="bg-red-50"></PageHeader>
             </template>

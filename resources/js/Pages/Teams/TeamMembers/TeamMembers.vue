@@ -27,9 +27,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Company Memebers" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Company Memebers" />
             <template #header> Company Members </template>
             <template #breadcrumbs>
                 <Breadcrumbs :links="breadcrumbsLinks"></Breadcrumbs>

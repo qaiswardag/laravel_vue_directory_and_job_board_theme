@@ -356,9 +356,10 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head title="Manage Users" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Manage Users" />
             <DynamicModal
                 :show="modalShowCreateUpdateSuperadmin"
                 :type="typeModal"

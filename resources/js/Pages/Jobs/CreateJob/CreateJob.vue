@@ -29,9 +29,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Create Job" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Create Job" />
             <template #header> Create a New Job </template>
 
             <template #breadcrumbs>

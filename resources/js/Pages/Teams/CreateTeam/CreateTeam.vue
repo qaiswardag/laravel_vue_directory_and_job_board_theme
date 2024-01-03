@@ -19,9 +19,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title="Create Company" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title="Create Company" />
             <template #header> Create Company </template>
             <template #description> Create Company </template>
             <template #breadcrumbs>

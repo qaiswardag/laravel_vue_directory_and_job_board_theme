@@ -29,9 +29,10 @@ const breadcrumbsLinks = [
 </script>
 
 <template>
+    <Head title=" Create Campaign" />
+
     <MainLayout>
         <LoggedInLayout>
-            <Head title=" Create Campaign" />
             <template #header> Create Campaign </template>
 
             <template #breadcrumbs>

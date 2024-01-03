@@ -39,10 +39,11 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Sign up" />
+
     <MainLayout>
         <div class="bg-gradient-to-t from-red-50 via-pink-100 to-pink-50">
             <GuestsLayout>
-                <Head title="Sign up" />
                 <template #header>
                     <PageHeader title="Sign up"></PageHeader>
                 </template>
