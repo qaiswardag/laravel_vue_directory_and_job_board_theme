@@ -80,15 +80,16 @@ const selectedUpdated = function (chosen) {
             </div>
             <Listbox as="div" v-model="selected">
                 <div class="relative md:min-w-[9rem] min-w-[7rem] h-full">
-                    <ListboxButton class="myPrimarySelect">
+                    <ListboxButton
+                        class="myPrimarySelect bg-gray-100 border-none shadow-none focus:bg-gray-100 rounded-none"
+                    >
                         <span class="block truncate">{{ selected }}</span>
                         <span
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
                         >
-                            <ChevronUpDownIcon
-                                class="h-5 w-5 text-gray-400"
-                                aria-hidden="true"
-                            />
+                            <span class="material-symbols-outlined">
+                                arrow_downward_alt
+                            </span>
                         </span>
                     </ListboxButton>
 
