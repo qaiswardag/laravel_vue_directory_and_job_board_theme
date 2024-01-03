@@ -615,7 +615,12 @@ const displayAbleRole = (role) => {
                                                 class="myPrimaryTableTBodyTr"
                                             >
                                                 <template
-                                                    v-if="!user.superadmin"
+                                                    v-if="
+                                                        !user.superadmin ||
+                                                        (user.superadmin &&
+                                                            $page.props?.user
+                                                                .superadmin)
+                                                    "
                                                 >
                                                     <td
                                                         class="myPrimaryTableTBodyTd"
