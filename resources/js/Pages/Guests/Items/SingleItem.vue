@@ -2,6 +2,8 @@
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import UnqiueResource from "@/Components/PageTemplates/LoggedIn/Team/UnqiueResource.vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
+// import { delay } from "@/helpers/";
+import { extractTextContentHTML } from "@/helpers/extract-text-content-html";
 
 const props = defineProps({
     post: {
@@ -34,9 +36,19 @@ const props = defineProps({
 });
 </script>
 <template>
-    <Head :title="`${props.postType} | ${post.title}`" description="øøøøø" />
+    <Head :title="`${props.postType} | ${post.title}`">
+        <meta
+            head-key="description"
+            name="description"
+            :content="extractTextContentHTML(post.content, 155)"
+        />
+    </Head>
 
     <MainLayout>
+        <p class="py-12 p-4 bg-green-200">
+            {{ extractTextContentHTML(post.content, 155) }}
+        </p>
+
         <GuestsLayout>
             <!-- Show Unique Resorce - start -->
             <main class="myPrimaryContentSection">

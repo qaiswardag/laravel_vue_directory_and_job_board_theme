@@ -26,11 +26,6 @@ router.on("start", () => {
 router.on("finish", (event) => {
     store.commit("user/setIsLoading", false);
 });
-//
-//
-//
-//
-//
 
 const shouldShowFlash = ref(false);
 
@@ -49,8 +44,6 @@ watch(flashState, (newValue) => {
 </script>
 
 <template>
-    <meta type="description" content="description" head-key="description" />
-
     <Flash
         v-show="shouldShowFlash"
         :showCloseButton="false"

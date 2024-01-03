@@ -1175,18 +1175,20 @@ const pageBuilder = new PageBuilder(store);
 
     <template v-if="post">
         <FriendlyAlert>
-            <p>
-                <span
-                    class="myPrimaryTag"
-                    :class="
-                        post.is_paid
-                            ? 'bg-myPrimaryLinkColor text-white'
-                            : 'bg-myPrimaryErrorColor text-white'
-                    "
-                >
-                    {{ post.is_paid ? "Paid" : "Unpaid" }}</span
-                >
-            </p>
+            <div class="flex items-center justify-center">
+                <p>
+                    <span
+                        class="myPrimaryTag font-medium"
+                        :class="
+                            post.is_paid
+                                ? 'bg-myPrimaryLinkColor text-white'
+                                : 'bg-myPrimaryErrorColor text-white'
+                        "
+                    >
+                        {{ post.is_paid ? "Paid" : "Unpaid" }}</span
+                    >
+                </p>
+            </div>
         </FriendlyAlert>
     </template>
 
