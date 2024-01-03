@@ -153,12 +153,8 @@ onMounted(async () => {
     <div ref="chart"></div>
 
     <div class="mx-auto">
-        <h3 class="myQuaternaryHeader">
-            myself brings fashion to where the consumers are
-        </h3>
-
         <div class="mt-8 rounded">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
+            <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1">
                 <div
                     v-for="stat in stats"
                     :key="stat.name"

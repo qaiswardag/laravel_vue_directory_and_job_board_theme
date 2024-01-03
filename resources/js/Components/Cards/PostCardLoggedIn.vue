@@ -44,19 +44,18 @@ const goToSinglePost = function (currentTeamId, postId, postSlug) {
     </template>
 
     <div class="px-2 pt-4 pb-2">
-        <Link
-            :href="
-                route('team.posts.post.show', [
+        <p
+            @click="
+                goToSinglePost(
                     $page.props.user.current_team.id,
-                    post.slug,
                     post.id,
-                ])
+                    post.slug
+                )
             "
+            class="text-xs mt-2 mb-2 text-myPrimaryLinkColor font-medium cursor-pointer"
         >
-            <p class="text-xs mt-2 mb-2">
-                {{ post.title.slice(0, 35)
-                }}{{ post.title.length > 35 ? ".." : "" }}
-            </p>
-        </Link>
+            {{ post.title.slice(0, 35)
+            }}{{ post.title.length > 35 ? ".." : "" }}
+        </p>
     </div>
 </template>

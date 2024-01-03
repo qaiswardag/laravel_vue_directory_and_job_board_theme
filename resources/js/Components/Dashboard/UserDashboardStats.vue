@@ -1,18 +1,14 @@
 <script setup>
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import PostCardLoggedIn from "@/Components/Cards/PostCardLoggedIn.vue";
-import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/vue/24/outline";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import EmptySectionBorder from "@/Components/Sections/EmptySectionBorder.vue";
 import { useStore } from "vuex";
 import { onMounted, computed, ref } from "vue";
-import { parseISO, format } from "date-fns";
-import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import ChartDefault from "@/Components/Charts/ChartDefault.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
-import { router } from "@inertiajs/vue3";
 
 // store
 const store = useStore();
@@ -298,61 +294,9 @@ onMounted(() => {
                 </div>
                 <!-- column images # end -->
 
-                <!-- column post # start -->
-                <div
-                    class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
-                >
-                    <div class="border-b border-gray-200 mb-8 pb-2">
-                        <Link
-                            :href="
-                                route(
-                                    'team.posts.index',
-                                    $page.props.user.current_team.id
-                                )
-                            "
-                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
-                        >
-                            Latest campaigns
-                        </Link>
-                    </div>
-
-                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
-                        <template
-                            v-if="
-                                Array.isArray(
-                                    getDashboardStats.fetchedData.latestPosts
-                                ) &&
-                                getDashboardStats.fetchedData.latestPosts
-                                    .length === 0
-                            "
-                        >
-                            <p class="myPrimaryParagraph">
-                                Looks like there are no Posts.
-                            </p>
-                        </template>
-                        <ul
-                            role="list"
-                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
-                        >
-                            <li
-                                v-for="post in getDashboardStats.fetchedData
-                                    .latestPosts"
-                                :key="post.id"
-                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
-                            >
-                                <PostCardLoggedIn
-                                    :post="post"
-                                    postListPathName="posts"
-                                    postSinglePathName="post"
-                                ></PostCardLoggedIn>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- column post # end -->
                 <!-- column jobs # start -->
                 <div
-                    class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                 >
                     <div class="border-b border-gray-200 mb-8 pb-2">
                         <Link
@@ -384,7 +328,7 @@ onMounted(() => {
                         </template>
                         <ul
                             role="list"
-                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
+                            class="grid myPrimaryGap md:grid-cols-3 grid-cols-2"
                         >
                             <li
                                 v-for="post in getDashboardStats.fetchedData
@@ -406,7 +350,7 @@ onMounted(() => {
                 <!-- column jobs # end -->
                 <!-- column stores # start -->
                 <div
-                    class="lg:col-span-4 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                 >
                     <div class="border-b border-gray-200 mb-8 pb-2">
                         <Link
@@ -438,7 +382,7 @@ onMounted(() => {
                         </template>
                         <ul
                             role="list"
-                            class="grid myPrimaryGap md:grid-cols-2 grid-cols-2"
+                            class="grid myPrimaryGap md:grid-cols-3 grid-cols-2"
                         >
                             <li
                                 v-for="post in getDashboardStats.fetchedData
@@ -459,9 +403,62 @@ onMounted(() => {
                 </div>
                 <!-- column stores # end -->
 
+                <!-- column post # start -->
+                <div
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                >
+                    <div class="border-b border-gray-200 mb-8 pb-2">
+                        <Link
+                            :href="
+                                route(
+                                    'team.posts.index',
+                                    $page.props.user.current_team.id
+                                )
+                            "
+                            class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer font-medium"
+                        >
+                            Latest campaigns
+                        </Link>
+                    </div>
+
+                    <div class="min-h-[36rem] max-h-[36rem] overflow-y-scroll">
+                        <template
+                            v-if="
+                                Array.isArray(
+                                    getDashboardStats.fetchedData.latestPosts
+                                ) &&
+                                getDashboardStats.fetchedData.latestPosts
+                                    .length === 0
+                            "
+                        >
+                            <p class="myPrimaryParagraph">
+                                Looks like there are no Posts.
+                            </p>
+                        </template>
+                        <ul
+                            role="list"
+                            class="grid myPrimaryGap md:grid-cols-3 grid-cols-2"
+                        >
+                            <li
+                                v-for="post in getDashboardStats.fetchedData
+                                    .latestPosts"
+                                :key="post.id"
+                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                            >
+                                <PostCardLoggedIn
+                                    :post="post"
+                                    postListPathName="posts"
+                                    postSinglePathName="post"
+                                ></PostCardLoggedIn>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- column post # end -->
+
                 <!-- column charts # start -->
                 <div
-                    class="lg:col-span-12 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
+                    class="lg:col-span-6 w-full rounded pt-4 pb-10 px-4 bg-white h-full"
                 >
                     <div class="border-b border-gray-200 mb-8 pb-2">
                         <div
