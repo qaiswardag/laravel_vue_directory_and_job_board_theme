@@ -15,6 +15,7 @@ import config from "@/utils/config";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import { onBeforeMount, onMounted, watch } from "vue";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
+import { useStore } from "vuex";
 
 import {
     CheckIcon,
@@ -33,6 +34,8 @@ import {
     GlobeAmericasIcon,
     PlusIcon,
 } from "@heroicons/vue/24/outline";
+
+const store = useStore();
 
 const isSlugEditable = ref(false);
 const slugValueTeamName = ref("");
@@ -139,8 +142,12 @@ const notificationsModalButton = function () {
 const createTeam = () => {
     postForm.post(route("teams.store.team"), {
         preserveScroll: true,
-        onSuccess: (log) => {},
-        onError: (err) => {},
+        onSuccess: () => {
+            store.commit("mediaLibrary/setCurrentImage", null);
+            store.commit("mediaLibrary/setCurrentPreviewImage", null);
+            store.commit("attachedUsersOrItems/setRemoveAttachedUser", []);
+        },
+        onError: () => {},
         onFinish: () => {},
     });
 };
