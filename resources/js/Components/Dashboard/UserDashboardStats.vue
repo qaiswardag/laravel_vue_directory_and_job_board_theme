@@ -252,42 +252,53 @@ onMounted(() => {
                                 @click="handleMediaLibrary(file.id)"
                                 class="rounded px-0 pb-2 cursor-pointer bg-gray-50"
                             >
-                                <div
-                                    class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-gray-100"
+                                <Link
+                                    :href="
+                                        route(
+                                            'media.index',
+                                            $page.props.user.current_team.id
+                                        )
+                                    "
                                 >
-                                    <img
-                                        :src="`/storage/uploads/${file.medium_path}`"
-                                        alt=""
-                                        class="w-full pointer-events-none object-cover group-hover:opacity-75"
-                                    />
-                                </div>
+                                    <div
+                                        class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-gray-100"
+                                    >
+                                        <img
+                                            :src="`/storage/uploads/${file.medium_path}`"
+                                            alt=""
+                                            class="w-full pointer-events-none object-cover group-hover:opacity-75"
+                                        />
+                                    </div>
 
-                                <dl
-                                    class="px-2 myPrimaryParagraph text-xs border-b border-myPrimaryLightGrayColor divide-y"
-                                >
-                                    <div
-                                        class="py-3 flex justify-between items-center"
+                                    <dl
+                                        class="px-2 myPrimaryParagraph text-xs border-b border-myPrimaryLightGrayColor divide-y"
                                     >
-                                        <dt class="">Dimensions</dt>
-                                        <dd class="">
-                                            {{ file.width }} x
-                                            {{ file.height }}
-                                        </dd>
-                                    </div>
-                                    <div
-                                        class="py-3 flex justify-between items-center"
-                                    >
-                                        <dd class="">
-                                            {{ file.name ? file.name : "–" }}
-                                        </dd>
-                                    </div>
-                                    <div
-                                        class="py-3 flex justify-between items-center"
-                                    >
-                                        <dt class="">Size</dt>
-                                        <dd class="">{{ file.size }} KB</dd>
-                                    </div>
-                                </dl>
+                                        <div
+                                            class="py-3 flex justify-between items-center"
+                                        >
+                                            <dt class="">Dimensions</dt>
+                                            <dd class="">
+                                                {{ file.width }} x
+                                                {{ file.height }}
+                                            </dd>
+                                        </div>
+                                        <div
+                                            class="py-3 flex justify-between items-center"
+                                        >
+                                            <dd class="">
+                                                {{
+                                                    file.name ? file.name : "–"
+                                                }}
+                                            </dd>
+                                        </div>
+                                        <div
+                                            class="py-3 flex justify-between items-center"
+                                        >
+                                            <dt class="">Size</dt>
+                                            <dd class="">{{ file.size }} KB</dd>
+                                        </div>
+                                    </dl>
+                                </Link>
                             </li>
                         </ul>
                     </div>
