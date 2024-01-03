@@ -10,6 +10,8 @@ import {
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import { useStore } from "vuex";
+import { delay } from "@/helpers/delay";
+
 import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
 
 import {
@@ -84,9 +86,14 @@ const firstButton = function () {
     };
 
     // handle click
-    thirdModalButtonFunction.value = function () {
+    thirdModalButtonFunction.value = async function () {
+        store.commit("user/setIsLoading", true);
+        await delay();
+
         closePageBuilder();
         showModalClosePageBuilder.value = false;
+
+        store.commit("user/setIsLoading", false);
     };
     //
     // end modal
