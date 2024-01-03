@@ -33,7 +33,7 @@ class AttachStoreCategoriesController extends Controller
             })
 
             ->orderBy("name")
-            ->paginate(10);
+            ->paginate(20);
 
         //
         $count = $items->total();

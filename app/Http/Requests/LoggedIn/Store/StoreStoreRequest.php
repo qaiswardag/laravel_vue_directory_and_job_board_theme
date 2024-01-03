@@ -87,7 +87,7 @@ class StoreStoreRequest extends FormRequest
     public function withValidator($validator)
     {
         $maxAuthors = 18;
-        $maxCategories = 4;
+        $maxCategories = 8;
         $maxStoreStates = 1;
         $minCoverImages = 1;
         $maxCoverImages = 6;
