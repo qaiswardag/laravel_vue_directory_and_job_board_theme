@@ -59,7 +59,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryTag {
-        @apply myPrimaryParagraph inline-block break-all bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs shadow-sm;
+        @apply myPrimaryParagraph text-xs inline-block break-all bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 shadow-sm;
     }
     /*
     |--------------------------------------------------------------------------
