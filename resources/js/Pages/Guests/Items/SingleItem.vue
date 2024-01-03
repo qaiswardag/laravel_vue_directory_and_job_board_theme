@@ -45,10 +45,6 @@ const props = defineProps({
     </Head>
 
     <MainLayout>
-        <p class="py-12 p-4 bg-green-200">
-            {{ extractTextContentHTML(post.content, 155) }}
-        </p>
-
         <GuestsLayout>
             <!-- Show Unique Resorce - start -->
             <main class="myPrimaryContentSection">
