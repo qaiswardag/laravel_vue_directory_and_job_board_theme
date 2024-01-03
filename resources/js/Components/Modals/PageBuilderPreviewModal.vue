@@ -2,6 +2,7 @@
 import Modal from "@/Components/Modals/Modal.vue";
 import { CheckIcon, BellIcon } from "@heroicons/vue/24/outline";
 import ApplicationLogo from "@/Components/Logos/ApplicationLogo.vue";
+import { delay } from "@/helpers/delay";
 
 import {
     Dialog,
@@ -11,6 +12,8 @@ import {
     TransitionRoot,
 } from "@headlessui/vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+
+import { useStore } from "vuex";
 
 defineProps({
     show: {
@@ -22,9 +25,16 @@ defineProps({
 
 const emit = defineEmits(["firstDesignerPreviewModalButtonFunction"]);
 
+const store = useStore();
+
 // first button function
-const firstButton = function () {
+const firstButton = async function () {
+    store.commit("user/setIsLoading", true);
+    await delay();
+
     emit("firstDesignerPreviewModalButtonFunction");
+
+    store.commit("user/setIsLoading", false);
 };
 </script>
 
