@@ -52,7 +52,7 @@ export const vueFetch = function vueFetch() {
                 handleData(url, fetchOptions, customFetchOptions);
 
                 throw new Error(
-                    "Error 500. Loading time exceeded. Trying again."
+                    "Error 500. Loading time exceeded. Trying again"
                 );
             }
 
