@@ -29,6 +29,7 @@ const store = useStore();
 
 // first button function
 const firstButton = async function () {
+    console.log(`come here... preview`);
     store.commit("user/setIsLoading", true);
     await delay();
 
