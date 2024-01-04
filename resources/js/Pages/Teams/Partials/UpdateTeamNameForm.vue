@@ -832,6 +832,7 @@ onBeforeMount(() => {
             <!-- cover image # end -->
 
             <MediaLibraryModal
+                :forUserNotTeam="false"
                 :user="$page.props.user"
                 :team="team"
                 :open="showMediaLibraryModal"

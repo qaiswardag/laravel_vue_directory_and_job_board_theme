@@ -24,6 +24,10 @@ const uploadOnSuccess = function () {
 };
 
 const props = defineProps({
+    forUserNotTeam: {
+        required: true,
+        type: Boolean,
+    },
     team: {
         required: true,
     },
@@ -94,6 +98,19 @@ const updateImagesPreview = async () => {
 //
 // submit
 const submit = () => {
+    if (props.forUserNotTeam) {
+        form.post(route("user.media.store"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                uploadOnSuccess();
+            },
+            onError: (err) => {},
+            onFinish: () => {},
+        });
+
+        return;
+    }
+
     form.post(route("media.store", [props.team]), {
         preserveScroll: true,
         onSuccess: () => {

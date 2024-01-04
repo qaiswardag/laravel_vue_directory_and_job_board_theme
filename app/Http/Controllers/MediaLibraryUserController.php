@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\LoggedIn\MediaLibrary;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\MediaLibraryUser;
+use Illuminate\Http\Request;
+
 use App\Http\Requests\LoggedIn\MediaLibrary\StoreMediaLibraryRequest;
 use App\Models\MediaLibrary\MediaLibrary;
-use App\Models\Team;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
 
-class MediaLibraryController extends Controller
+class MediaLibraryUserController extends Controller
 {
     // Define $imagePaths as a property current class
     private $imagePaths;
@@ -21,52 +22,27 @@ class MediaLibraryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($teamId, Request $request)
+    public function index(Request $request)
     {
-        $team = Team::find($teamId);
-
-        if ($team === null) {
-            return Inertia::render("Error", [
-                "customError" => "Please try another route.", // Error message for the user.
-                "status" => 404, // HTTP status code for the response.
-            ]);
-        }
-
-        $this->authorize("can-read", $team);
-
-        $images = $team
-            ->media()
-            ->latest()
-            ->paginate(10);
-
-        $images->appends($request->all());
-
-        return Inertia::render("Media/Media", [
-            "images" => $images,
-        ]);
+        //
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Team $team)
+    public function create()
     {
-        $this->authorize("can-create-and-update", $team);
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-
-    //
     public function store(StoreMediaLibraryRequest $request)
     {
-        // use and find the Team from request as that is the Team user want to store a Post for
-        $team = Team::findOrFail($request->team["id"]);
-        $this->authorize("can-create-and-update", $team);
+        $user = Auth::user();
 
         foreach ($request->images as $image) {
-            $teamId = $team->id;
             $image = $image["file"];
 
             // original client file name
@@ -97,7 +73,7 @@ class MediaLibraryController extends Controller
             $extension = $image->getClientOriginalExtension();
 
             $path = $this->generateUniqueImagePath(
-                $teamId,
+                "user" . "_" . $user->id,
                 $currentYearYear,
                 $currentMonth,
                 $slugifyFilename,
@@ -110,7 +86,7 @@ class MediaLibraryController extends Controller
 
             $this->saveAdditionalImageSizes(
                 $path,
-                $teamId,
+                "user" . "_" . $user->id,
                 $currentYearYear,
                 $currentMonth,
                 $slugifyFilename,
@@ -130,9 +106,8 @@ class MediaLibraryController extends Controller
             $height = intval($height);
 
             // Image eloquent
-            MediaLibrary::create([
+            MediaLibraryUser::create([
                 "user_id" => $request->user_id,
-                "team_id" => $team->id,
                 "name" => null,
                 "path" => $this->imagePaths["path"],
                 "thumbnail_path" => $this->imagePaths["thumbnail_path"],
@@ -178,7 +153,7 @@ class MediaLibraryController extends Controller
      * Generate unique image path
      */
     private function generateUniqueImagePath(
-        $teamId,
+        $userId,
         $currentYearYear,
         $currentMonth,
         $slugifyFilename,
@@ -187,7 +162,7 @@ class MediaLibraryController extends Controller
         $timestamp
     ) {
         $path =
-            $teamId .
+            $userId .
             "/" .
             $currentYearYear .
             "/" .
@@ -210,7 +185,7 @@ class MediaLibraryController extends Controller
 
             // regenerate the path
             $path =
-                $teamId .
+                $userId .
                 "/" .
                 $currentYearYear .
                 "/" .
@@ -232,7 +207,7 @@ class MediaLibraryController extends Controller
      */
     private function saveAdditionalImageSizes(
         $path,
-        $teamId,
+        $userId,
         $currentYearYear,
         $currentMonth,
         $slugifyFilename,
@@ -255,7 +230,7 @@ class MediaLibraryController extends Controller
 
         foreach ($sizes as $sizeName => [$width, $height]) {
             $resizedImagePath =
-                $teamId .
+                $userId .
                 "/" .
                 $currentYearYear .
                 "/" .
@@ -320,68 +295,32 @@ class MediaLibraryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MediaLibrary $mediaLibrary, Team $team)
+    public function show(MediaLibraryUser $mediaLibraryUser)
     {
-        // $this->authorize("can-read", $team);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(MediaLibrary $mediaLibrary)
+    public function edit(MediaLibraryUser $mediaLibraryUser)
     {
-        // $this->authorize("can-create-and-update", $team);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Team $team)
+    public function update(Request $request, MediaLibraryUser $mediaLibraryUser)
     {
-        $this->authorize("can-create-and-update", $team);
-
-        $request->validate([
-            "name" => ["string", "min:2", "max:255", "nullable"],
-        ]);
-
-        $image = MediaLibrary::findOrFail($request->image_id);
-        $image->name = $request->name;
-        $image->save();
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Team $team)
+    public function destroy(MediaLibraryUser $mediaLibraryUser)
     {
-        $this->authorize("can-destroy", $team);
-        $image = MediaLibrary::findOrFail($request->image_id);
-
-        // Get the image paths to be deleted
-        $imagePaths = [
-            "path" => $image->path,
-            "thumbnail_path" => $image->thumbnail_path,
-            "medium_path" => $image->medium_path,
-            "large_path" => $image->large_path,
-        ];
-
-        // Delete the files from the public directory
-        foreach ($imagePaths as $path) {
-            if (
-                File::exists(storage_path(self::PUBLIC_UPLOAD_PATH . $path)) ===
-                true
-            ) {
-                File::delete(storage_path(self::PUBLIC_UPLOAD_PATH . $path));
-            }
-        }
-
         //
-        // delete the image record from the dat
-        $image->delete();
-
-        return back()->with(
-            "success",
-            "The image has been successfully deleted."
-        );
     }
 }

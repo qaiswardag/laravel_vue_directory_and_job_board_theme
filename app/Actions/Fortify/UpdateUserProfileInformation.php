@@ -79,7 +79,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             ],
 
             "public" => ["boolean"],
-            "photo" => ["nullable", "mimes:jpg,jpeg,png", "max:2048"],
+            "photo" => ["nullable", "min:2", "max:255"],
 
             "country" => ["string", "min:2", "max:255", "nullable"],
             "city" => ["string", "min:2", "max:255", "nullable"],
@@ -120,10 +120,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                     "error",
                     "Please complete all fields correctly to proceed."
                 );
-        }
-
-        if (isset($input["photo"])) {
-            $user->updateProfilePhoto($input["photo"]);
         }
 
         if (

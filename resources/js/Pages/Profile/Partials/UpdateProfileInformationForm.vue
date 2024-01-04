@@ -14,6 +14,8 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import countryListAllIsoData from "@/utils/country-list-all-iso-data";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
+import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
+import { useStore } from "vuex";
 
 import {
     TrashIcon,
@@ -57,6 +59,96 @@ const form = useForm({
     photo: null,
 });
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// Media library for profile photo # start
+//
+//
+// store
+const store = useStore();
+
+const getCurrentImage = computed(() => {
+    return store.getters["mediaLibrary/getCurrentImage"];
+});
+//
+//
+//
+//
+const showMediaLibraryUserModal = ref(false);
+// modal content
+const titleMedia = ref("");
+const descriptionMedia = ref("");
+const firstButtonMedia = ref("");
+const secondButtonMedia = ref(null);
+const thirdButtonMedia = ref(null);
+// set dynamic modal handle functions
+const firstMediaButtonFunction = ref(null);
+const secondMediaButtonFunction = ref(null);
+const thirdMediaButtonFunction = ref(null);
+// Media library for profile photo # end
+
+//
+//
+//
+//
+//
+const handleUploadCoverImage = function () {
+    // handle show media library modal
+    showMediaLibraryUserModal.value = true;
+
+    // set media library modal standards
+    titleMedia.value = "Media Library";
+    descriptionMedia.value = null;
+    firstButtonMedia.value = "Close";
+    secondButtonMedia.value = "Select image";
+    thirdButtonMedia.value = null;
+    // handle click
+    firstMediaButtonFunction.value = function () {
+        // handle show media library modal
+        showMediaLibraryUserModal.value = false;
+    };
+    //
+    // handle click
+    secondMediaButtonFunction.value = function () {
+        if (Array.isArray(form.cover_image) === false) {
+            form.cover_image = [];
+        }
+
+        const idExists = form.cover_image?.some((item) => {
+            return (
+                item.id === getCurrentImage.value.currentImage.mediaLibrary.id
+            );
+        });
+
+        if (idExists === false && Array.isArray(form.cover_image)) {
+            form.cover_image.unshift(
+                getCurrentImage.value.currentImage.mediaLibrary
+            );
+        }
+
+        // handle show media library modal
+        showMediaLibraryUserModal.value = false;
+    };
+    // end modal
+};
+//
+//
+//
+//
+//
+//
+//
+//
+//
 const modalShowDeletePhoto = ref(false);
 
 // modal content
@@ -232,6 +324,21 @@ onMounted(() => {
 </script>
 
 <template>
+    <MediaLibraryModal
+        :forUserNotTeam="true"
+        :user="user"
+        :open="showMediaLibraryUserModal"
+        :title="titleMedia"
+        :description="descriptionMedia"
+        :firstButtonText="firstButtonMedia"
+        :secondButtonText="secondButtonMedia"
+        :thirdButtonText="thirdButtonMedia"
+        @firstMediaButtonFunction="firstMediaButtonFunction"
+        @secondMediaButtonFunction="secondMediaButtonFunction"
+        @thirdMediaButtonFunction="thirdMediaButtonFunction"
+    >
+    </MediaLibraryModal>
+
     <FormSection @submitted="updateProfileInformation">
         <template #title> Profile Details </template>
 
@@ -719,6 +826,178 @@ onMounted(() => {
                 </div>
                 <InputError :message="form.errors.public" />
             </div>
+
+            <!-- Profile photo # start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Profile photo
+                    </div>
+                </div>
+                <!-- select - start -->
+                <div
+                    @click="handleUploadCoverImage"
+                    class="myPrimaryFakeSelect"
+                >
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <span>
+                            {{
+                                form.cover_image &&
+                                form.cover_image?.length === 0
+                                    ? "Select Profile photo"
+                                    : "Update Profile Photo"
+                            }}
+                        </span>
+                    </div>
+                    <div
+                        class="border-none rounded flex items-center justify-center h-full w-8"
+                    >
+                        <span class="material-symbols-outlined">
+                            unfold_more
+                        </span>
+                    </div>
+                </div>
+                <!-- select - end -->
+
+                <div
+                    v-if="form.cover_image && form.cover_image?.length === 0"
+                    class="space-y-6 mt-2"
+                >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
+                    <p
+                        v-if="
+                            form.cover_image && form.cover_image?.length !== 0
+                        "
+                        class="py-4"
+                    >
+                        Added
+                        {{ form.cover_image && form.cover_image?.length }}
+                        {{
+                            form.cover_image && form.cover_image?.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+                    <div
+                        v-if="
+                            form.cover_image &&
+                            Array.isArray(form?.cover_image) &&
+                            form.cover_image?.length !== 0
+                        "
+                        class="p-2 border border-myPrimaryLightGrayColor"
+                    >
+                        <div
+                            class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                        >
+                            <div
+                                v-for="image in form.cover_image !== null &&
+                                form.cover_image"
+                                :key="image?.id"
+                            >
+                                <div
+                                    class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
+                                >
+                                    <div
+                                        class="flex justify-left items-center gap-2"
+                                    >
+                                        <div class="flex-shrink-0">
+                                            <img
+                                                @click="handleUploadCoverImage"
+                                                :src="`/storage/uploads/${image?.thumbnail_path}`"
+                                                alt="image"
+                                                class="myPrimarythumbnailInsertPreview"
+                                            />
+                                        </div>
+
+                                        <button
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white w-full break-keep"
+                                            v-if="
+                                                image?.pivot?.primary &&
+                                                form.cover_image.length > 1
+                                            "
+                                            type="button"
+                                            @click="
+                                                removePrimaryImage(image?.id)
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-center justify-center gap-2"
+                                            >
+                                                <span> Primary </span>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    check
+                                                </span>
+                                            </div>
+                                        </button>
+                                        <button
+                                            class="myPrimaryTag transition bg-white break-keep"
+                                            v-if="
+                                                !image?.pivot?.primary &&
+                                                form.cover_image?.length > 1
+                                            "
+                                            type="button"
+                                            @click="
+                                                setAsPrimaryImage(image?.id)
+                                            "
+                                        >
+                                            <span> Set as Primary </span>
+                                        </button>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        @click="
+                                            handleRemoveCoverImage(image?.id)
+                                        "
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    >
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            delete
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            v-if="
+                                form.cover_image &&
+                                form.cover_image?.length >= 1
+                            "
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
+                        >
+                            <p
+                                @click="handleUploadCoverImage"
+                                class="myPrimaryParagraph text-xs cursor-pointer font-medium"
+                            >
+                                Add Additional Images
+                            </p>
+                            <button
+                                type="button"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                @click="handleUploadCoverImage"
+                            >
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <InputError :message="form.errors.cover_image" />
+            </div>
+            <!-- Profile photo # end -->
+
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">

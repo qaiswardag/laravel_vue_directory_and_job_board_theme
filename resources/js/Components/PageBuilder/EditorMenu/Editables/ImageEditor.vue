@@ -80,6 +80,7 @@ const handleAddImage = function () {
         />
     </div>
     <MediaLibraryModal
+        :forUserNotTeam="false"
         :user="user"
         :team="team"
         :open="showMediaLibraryModal"

@@ -994,7 +994,7 @@ const pageBuilder = new PageBuilder(store);
     </PageBuilderModal>
     <FormSection @submitted="handleCreatePost">
         <template #title> Campaign details</template>
-        <template #description> Create a new Post. </template>
+        <template #description> Create campaign. </template>
         <template #main>
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
@@ -1892,6 +1892,7 @@ const pageBuilder = new PageBuilder(store);
                 <main></main>
             </DynamicModal>
             <MediaLibraryModal
+                :forUserNotTeam="false"
                 :user="user"
                 :team="postForm.team"
                 :open="showMediaLibraryModal"

@@ -67,7 +67,7 @@ Route::group(
 
                 if (Jetstream::hasAccountDeletionFeatures()) {
                     Route::delete("/user", [
-                        CurrentUserController::class,
+                        UserController::class,
                         "destroy",
                     ])->name("current-user.destroy");
                 }

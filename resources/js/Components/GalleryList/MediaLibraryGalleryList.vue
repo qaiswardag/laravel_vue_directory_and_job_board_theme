@@ -13,6 +13,17 @@ import {
     EyeIcon,
 } from "@heroicons/vue/24/outline";
 
+// props
+const props = defineProps({
+    forUserNotTeam: {
+        required: true,
+        type: Boolean,
+    },
+    team: {
+        required: true,
+    },
+});
+
 // store
 const store = useStore();
 //
@@ -20,19 +31,20 @@ const search_query = ref("");
 // handle search
 const handleSearch = function (page) {
     // dispatch
+    if (props.forUserNotTeam) {
+        store.dispatch("mediaLibrary/loadUserMedia", {
+            page: page,
+            search_query: search_query.value,
+        });
+
+        return;
+    }
     store.dispatch("mediaLibrary/loadMedia", {
         team: props.team,
         page: page,
         search_query: search_query.value,
     });
 };
-
-// props
-const props = defineProps({
-    team: {
-        required: true,
-    },
-});
 
 const getCurrentMedia = computed(() => {
     return store.getters["mediaLibrary/getCurrentMedia"];
@@ -45,6 +57,15 @@ const getCurrentImage = computed(() => {
 // get media
 const getMedia = function (page) {
     // dispatch
+    if (props.forUserNotTeam) {
+        store.dispatch("mediaLibrary/loadUserMedia", {
+            page: page,
+            search_query: search_query.value,
+        });
+
+        return;
+    }
+
     store.dispatch("mediaLibrary/loadMedia", {
         team: props.team,
         page: page,
@@ -62,6 +83,14 @@ const getResultsForPage = (page = 1) => {
 const handleImageClick = function (mediaLibraryId) {
     store.commit("mediaLibrary/setCurrentImage", null);
     store.commit("mediaLibrary/setCurrentPreviewImage", null);
+
+    if (props.forUserNotTeam) {
+        store.dispatch("mediaLibrary/loadUserImage", {
+            mediaLibraryId: mediaLibraryId,
+        });
+
+        return;
+    }
 
     // dispatch
     store.dispatch("mediaLibrary/loadImage", {

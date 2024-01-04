@@ -105,6 +105,7 @@ const handleMediaLibrary = function (imageID) {
 
             <div class="myPrimarySection">
                 <MediaLibraryModal
+                    :forUserNotTeam="false"
                     :user="user"
                     :team="currentUserTeam"
                     :open="showMediaLibraryModal"

@@ -942,6 +942,7 @@ const categoriesSorted = computed(() => {
             </DynamicModal>
 
             <MediaLibraryModal
+                :forUserNotTeam="false"
                 :user="user"
                 :team="postForm.team"
                 :open="showMediaLibraryModal"

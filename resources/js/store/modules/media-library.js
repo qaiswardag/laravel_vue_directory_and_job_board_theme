@@ -66,6 +66,33 @@ export default {
     // actions
     actions: {
         // get images
+        loadUserMedia(context, data) {
+            if (data.search_query === undefined) {
+                data.search_query = "";
+            }
+            if (data.page === undefined) {
+                data.page = "";
+            }
+
+            handleGetImages(
+                route("user.media.index", {
+                    search_query: data.search_query,
+                    page: data.page,
+                })
+            );
+
+            // context & send to mutation
+            context.commit("setCurrentMedia", {
+                fetchedMedia: fetchedMedia,
+                isError: isErrorImages,
+                error: errorImages,
+                errors: errorsImages,
+                isLoading: isLoadingImages,
+                isSuccess: isSuccessImages,
+            });
+        },
+
+        // get images
         loadMedia(context, data) {
             if (data.search_query === undefined) {
                 data.search_query = "";
@@ -94,6 +121,25 @@ export default {
         },
 
         //
+        // get image
+        loadUserImage(context, data) {
+            handleGetImage(
+                route("media.user.edit", {
+                    mediaLibraryUser: data.mediaLibraryId,
+                })
+            );
+
+            // // context & send to mutation
+            context.commit("setCurrentImage", {
+                currentImage: fetchedImage,
+                isError: isErrorImage,
+                error: errorImage,
+                errors: errorsImage,
+                isLoading: isLoadingImage,
+                isSuccess: isSuccessImage,
+            });
+        },
+
         // get image
         loadImage(context, data) {
             handleGetImage(

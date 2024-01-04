@@ -18,6 +18,13 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Contracts\ProfileInformationUpdatedResponse;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use Laravel\Fortify\Fortify;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Inertia\Inertia;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Laravel\Fortify\Actions\ConfirmPassword;
+use Laravel\Jetstream\Contracts\DeletesUsers;
 
 class UserController extends Controller
 {
@@ -140,7 +147,7 @@ class UserController extends Controller
                 ],
                 "ip_address" => $session->ip_address,
                 "is_current_device" =>
-                $session->id === $request->session()->getId(),
+                    $session->id === $request->session()->getId(),
                 "last_active" => Carbon::createFromTimestamp(
                     $session->last_activity
                 )->diffForHumans(),
@@ -159,5 +166,79 @@ class UserController extends Controller
         return tap(new Agent(), function ($agent) use ($session) {
             $agent->setUserAgent($session->user_agent);
         });
+    }
+
+    /**
+     * Delete the current user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, StatefulGuard $guard)
+    {
+        $user = Auth::user();
+
+        $confirmed = app(ConfirmPassword::class)(
+            $guard,
+            $request->user(),
+            $request->password
+        );
+
+        if (!$confirmed) {
+            throw ValidationException::withMessages([
+                "password" => __("The password is incorrect."),
+            ]);
+        }
+
+        // User delete media library folder # start
+        $userImagesFolder = File::exists(
+            storage_path("app/public/uploads/" . "user" . "_" . $user->id)
+        );
+
+        $path = storage_path("app/public/uploads/" . "user" . "_" . $user->id);
+
+        // Check if the directory exists in storage
+        if ($userImagesFolder) {
+            // Delete the directory from storage
+            File::deleteDirectory($path);
+        } else {
+            Log::error(
+                "An error occurred while deleting the images folder for the user."
+            );
+        }
+        // User delete media library folder # end
+
+        // Delete Team image folder # start
+        foreach ($user->ownedTeams as $team) {
+            $teamId = $team->id;
+
+            $teamImagesFolder = File::exists(
+                storage_path("app/public/uploads/" . $teamId)
+            );
+
+            $path = storage_path("app/public/uploads/" . $teamId);
+
+            // Check if the directory exists in storage
+            if ($teamImagesFolder) {
+                // Delete the directory from storage
+                File::deleteDirectory($path);
+            } else {
+                Log::error(
+                    "An error occurred while deleting the images folder for team with ID: {$teamId}."
+                );
+            }
+        }
+
+        // Delete Team image folder # start
+
+        app(DeletesUsers::class)->delete($request->user()->fresh());
+
+        $guard->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Inertia::location(url("/"));
     }
 }

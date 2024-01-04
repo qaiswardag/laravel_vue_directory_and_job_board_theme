@@ -2054,6 +2054,7 @@ const pageBuilder = new PageBuilder(store);
                 <main></main>
             </DynamicModal>
             <MediaLibraryModal
+                :forUserNotTeam="false"
                 :user="user"
                 :team="postForm.team"
                 :open="showMediaLibraryModal"

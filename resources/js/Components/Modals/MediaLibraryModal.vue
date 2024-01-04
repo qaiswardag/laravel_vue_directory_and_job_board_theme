@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import UploadImagesForm from "@/Components/Forms/UploadImagesForm.vue";
 import MediaLibraryGalleryList from "@/Components/GalleryList/MediaLibraryGalleryList.vue";
 import {
@@ -66,8 +66,12 @@ const tabs = ref([
 ]);
 
 const props = defineProps({
-    team: {
+    forUserNotTeam: {
         required: true,
+        type: Boolean,
+    },
+    team: {
+        required: false,
     },
     user: {
         required: true,
@@ -302,8 +306,8 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                     as="h3"
                                     class="tertiaryHeader my-0 py-0"
                                 >
-                                    {{ title }} for
-                                    {{ team.name }}
+                                    {{ title }} {{ team?.name ? "for" : "" }}
+                                    {{ team?.name ? team?.name : "" }}
                                 </DialogTitle>
 
                                 <div class="flex-end">
@@ -429,6 +433,9 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                 >
                                                     <!-- image upload - start -->
                                                     <UploadImagesForm
+                                                        :forUserNotTeam="
+                                                            forUserNotTeam
+                                                        "
                                                         :team="team"
                                                         :user="user"
                                                         @uploadOnSuccess="
@@ -445,6 +452,9 @@ watch(imageNameComputed, (updatedImage, oldImage) => {
                                                 >
                                                     <!-- image gallary - start -->
                                                     <MediaLibraryGalleryList
+                                                        :forUserNotTeam="
+                                                            forUserNotTeam
+                                                        "
                                                         :team="team"
                                                     ></MediaLibraryGalleryList>
                                                     <!-- image gallary - end -->

@@ -250,6 +250,7 @@ const handleModalIframeSrc = function () {
     </DynamicModal>
 
     <MediaLibraryModal
+        :forUserNotTeam="false"
         :user="$page.props.user"
         :team="$page.props.currentUserTeam"
         :open="showMediaLibraryModal"

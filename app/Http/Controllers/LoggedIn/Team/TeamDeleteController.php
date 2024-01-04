@@ -127,6 +127,10 @@ class TeamDeleteController extends Controller
 
         $deleter = app(DeletesTeams::class);
 
+        // delete team
+        $deleter->delete($team);
+
+        // Delete Team image folder # start
         $teamImagesFolder = File::exists(
             storage_path(self::PUBLIC_UPLOAD_PATH . $teamId)
         );
@@ -142,9 +146,7 @@ class TeamDeleteController extends Controller
                 "An error occurred while deleting the images folder for team with ID: {$teamId}."
             );
         }
-
-        // delete team
-        $deleter->delete($team);
+        // Delete Team image folder # start
 
         return redirect()
             ->route("dashboard")

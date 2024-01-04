@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\PaymentsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\Stripe\SubscriptionController as StripeSubscriptionController;
 use App\Http\Controllers\Api\Internal\LoggedIn\Teams\AttachTeamsController;
 use App\Http\Controllers\Api\Internal\LoggedIn\Teams\SuperadminAttachTeamsController;
+use App\Http\Controllers\Api\Internal\LoggedIn\User\MediaLibraryUserController as UserMediaLibraryUserController;
 use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\LoggedIn\Dashboard\DashboardController as DashboardDashboardController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
@@ -47,6 +48,7 @@ use App\Http\Controllers\LoggedIn\User\PaymentsController as UserPaymentsControl
 use App\Http\Controllers\LoggedIn\User\SingleChargeJobController;
 use App\Http\Controllers\LoggedIn\User\SubscriptionController;
 use App\Http\Controllers\LoggedIn\User\UserSessionsController;
+use App\Http\Controllers\MediaLibraryUserController;
 use App\Http\Controllers\Superadmin\PageBuilder\PageBuilderController;
 use App\Http\Controllers\Superadmin\SuperadminManageRoles;
 use App\Http\Controllers\Superadmin\SuperadminSwitchTeamController;
@@ -442,6 +444,54 @@ Route::middleware([
         SingleChargeJobController::class,
         "store",
     ])->name("stripe.single.charge.job.store");
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // Auth only media library # start øø
+    // Auth only media library # start
+
+    Route::get("/media/user/internal/api/index", [
+        UserMediaLibraryUserController::class,
+        "index",
+    ])->name("user.media.index");
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    Route::post("/media/user/store", [
+        MediaLibraryUserController::class,
+        "store",
+    ])->name("user.media.store");
+    //
+    //
+    //
+    Route::get("/media/user/internal/api/edit/{mediaLibraryUser}", [
+        UserMediaLibraryUserController::class,
+        "edit",
+    ])->name("media.user.edit");
+
+    // Route::post("/media/user/image/update", [
+    //     MediaLibraryUserController::class,
+    //     "update",
+    // ])->name("media.update");
+    // Auth only media library # end
+    // Auth only media library # end
 });
 // AUTH ONLY # END
 // AUTH ONLY # END
