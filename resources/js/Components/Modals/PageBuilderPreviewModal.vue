@@ -29,11 +29,10 @@ const store = useStore();
 
 // first button function
 const firstButton = async function () {
-    console.log(`1111`);
+    emit("firstDesignerPreviewModalButtonFunction");
+
     store.commit("user/setIsLoading", true);
     await delay();
-
-    emit("firstDesignerPreviewModalButtonFunction");
 
     store.commit("user/setIsLoading", false);
 };

@@ -87,11 +87,12 @@ const firstButton = function () {
 
     // handle click
     thirdModalButtonFunction.value = async function () {
+        showModalClosePageBuilder.value = false;
+
         store.commit("user/setIsLoading", true);
         await delay();
 
         closePageBuilder();
-        showModalClosePageBuilder.value = false;
 
         store.commit("user/setIsLoading", false);
     };
@@ -105,13 +106,13 @@ const handleEscapeKey = function () {
 
 // first button function
 const closePageBuilder = function () {
-    pageBuilder.removeHoveredAndSelected();
     emit("firstDesignerModalButtonFunction");
+    pageBuilder.removeHoveredAndSelected();
 };
 // first button function
 const secondButton = function () {
-    pageBuilder.removeHoveredAndSelected();
     emit("secondDesignerModalButtonFunction");
+    pageBuilder.removeHoveredAndSelected();
 };
 
 //
