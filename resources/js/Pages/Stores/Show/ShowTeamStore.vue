@@ -3,7 +3,6 @@ import Breadcrumbs from "@/Components/Breadcrumbs/Breadcrumbs.vue";
 import LoggedInLayout from "@/Layouts/LoggedInLayout.vue";
 import UnqiueResource from "@/Components/PageTemplates/LoggedIn/Team/UnqiueResource.vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
-import { extractTextContentHTML } from "@/helpers/extract-text-content-html";
 
 const props = defineProps({
     post: {
@@ -37,13 +36,7 @@ const breadcrumbsLinks = [
 ];
 </script>
 <template>
-    <Head :title="`Store | ${post.title}`">
-        <meta
-            head-key="description"
-            name="description"
-            :content="extractTextContentHTML(post.content, 155)"
-        />
-    </Head>
+    <Head :title="`Store | ${post.title}`"> </Head>
 
     <MainLayout>
         <LoggedInLayout>

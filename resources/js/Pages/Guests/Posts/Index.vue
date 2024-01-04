@@ -8,7 +8,13 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
 </script>
 
 <template>
-    <Head title="Campaigns" />
+    <Head title="Campaigns">
+        <meta
+            head-key="description"
+            name="description"
+            content="Looking for in-store campaigns? myself.ae is the best site in the United Arab Emirates for finding product promotions."
+        />
+    </Head>
 
     <MainLayout>
         <GuestsLayout>

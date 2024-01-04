@@ -22,7 +22,13 @@ const faqs = [
 </script>
 
 <template>
-    <Head title="Home" />
+    <Head title="Home">
+        <meta
+            head-key="description"
+            name="description"
+            content="Search for everything you need in the world of fashion within the United Arab Emirates. From fashion stores and jobs to in-store campaigns."
+        />
+    </Head>
 
     <MainLayout>
         <GuestsLayout>

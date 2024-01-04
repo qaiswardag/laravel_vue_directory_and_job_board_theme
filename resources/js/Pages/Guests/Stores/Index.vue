@@ -8,7 +8,13 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
 </script>
 
 <template>
-    <Head title="Stores" />
+    <Head title="Stores">
+        <meta
+            head-key="description"
+            name="description"
+            content="Find fashion stores and discover everything you need in the world of fashion within the United Arab Emirates — all in one place."
+        />
+    </Head>
 
     <MainLayout>
         <GuestsLayout>

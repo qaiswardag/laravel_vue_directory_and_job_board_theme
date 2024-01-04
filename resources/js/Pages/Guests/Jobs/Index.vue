@@ -8,7 +8,13 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
 </script>
 
 <template>
-    <Head title="Jobs" />
+    <Head title="Jobs">
+        <meta
+            head-key="description"
+            name="description"
+            content="Looking for a job in fashion? myself.ae is the United Arab Emirates best site for finding jobs in the fashion, luxury and retail industries. Start your career here!"
+        />
+    </Head>
 
     <MainLayout>
         <GuestsLayout>

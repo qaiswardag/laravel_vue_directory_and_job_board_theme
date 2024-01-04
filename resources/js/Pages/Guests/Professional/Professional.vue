@@ -13,7 +13,13 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
 </script>
 
 <template>
-    <Head title="Professional" />
+    <Head title="Professional">
+        <meta
+            head-key="description"
+            name="description"
+            content="Join Fashion's most comprehensive marketing platform in the UAE. Showcase stores to local consumers, find professionals and post fashion jobs. View Prices!"
+        />
+    </Head>
 
     <MainLayout>
         <GuestsLayout>
