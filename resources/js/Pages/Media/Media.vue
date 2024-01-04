@@ -171,7 +171,7 @@ const handleMediaLibrary = function (imageID) {
                                         class="myPrimaryParagraph text-xs mt-2 px-2 divide-y"
                                     >
                                         <div
-                                            class="py-3 flex justify-between items-center"
+                                            class="py-3 flex justify-between items-center gap-2 break-all"
                                         >
                                             <dt class="">Name</dt>
                                             <dd class="">
@@ -181,7 +181,7 @@ const handleMediaLibrary = function (imageID) {
                                             </dd>
                                         </div>
                                         <div
-                                            class="py-3 flex justify-between items-center"
+                                            class="py-3 flex justify-between items-center gap-2 break-all"
                                         >
                                             <dt class="">Dimensions</dt>
                                             <dd class="">
@@ -190,7 +190,7 @@ const handleMediaLibrary = function (imageID) {
                                             </dd>
                                         </div>
                                         <div
-                                            class="py-3 flex justify-between items-center"
+                                            class="py-3 flex justify-between items-center gap-2 break-all"
                                         >
                                             <dt class="">Size</dt>
                                             <dd class="">{{ file.size }} KB</dd>
