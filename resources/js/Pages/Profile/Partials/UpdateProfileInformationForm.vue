@@ -385,145 +385,7 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-                <div class="md:flex items-center justify-center myPrimaryGap">
-                    <!-- phone code start -->
-                    <div class="myInputGroup">
-                        <!-- Headless UI select # start -->
-                        <InputLabel
-                            for="laaphone_code"
-                            value="Phone country code"
-                        />
-                        <!-- Headless UI select # start -->
-                        <Combobox v-model="selectedPhoneCode">
-                            <div class="relative mt-1">
-                                <div class="relative">
-                                    <ComboboxInput
-                                        name="laaphone_code"
-                                        id="laaphone_code"
-                                        autocomplete="laaphone_code"
-                                        class="myPrimarySelect"
-                                        placeholder="Search.."
-                                        :displayValue="
-                                            (country) => {
-                                                return country?.phone_code
-                                                    ? `${country.phone_code} ${country?.country}`
-                                                    : '';
-                                            }
-                                        "
-                                        @change="
-                                            queryPhoneCode = $event.target.value
-                                        "
-                                    />
 
-                                    <div
-                                        class="absolute inset-y-0 right-0 flex items-center pr-2"
-                                    >
-                                        <div
-                                            class="flex items-center justify-center gap-2"
-                                        >
-                                            <ComboboxButton
-                                                class="h-8 w-8 cursor-pointer rounded flex items-center justify-center"
-                                            >
-                                                <span
-                                                    class="material-symbols-outlined"
-                                                >
-                                                    unfold_more
-                                                </span>
-                                            </ComboboxButton>
-                                        </div>
-                                    </div>
-                                </div>
-                                <TransitionRoot
-                                    leave="transition ease-in duration-100"
-                                    leaveFrom="opacity-100"
-                                    leaveTo="opacity-0"
-                                    @after-leave="queryPhoneCode = ''"
-                                >
-                                    <ComboboxOptions
-                                        class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                                    >
-                                        <div
-                                            v-if="
-                                                filteredPhoneCodes.length ===
-                                                    0 && queryPhoneCode !== ''
-                                            "
-                                            class="relative cursor-default select-none py-2 px-4 text-gray-700"
-                                        >
-                                            Nothing found.
-                                        </div>
-
-                                        <ComboboxOption
-                                            v-for="country in filteredPhoneCodes"
-                                            as="template"
-                                            :key="country.code"
-                                            :value="country"
-                                            v-slot="{ selected, active }"
-                                        >
-                                            <li
-                                                class="relative cursor-default select-none py-2 pl-10 pr-4"
-                                                :class="{
-                                                    'bg-gray-800 text-white':
-                                                        active,
-                                                    'text-myPrimaryDarkGrayColor':
-                                                        !active,
-                                                }"
-                                            >
-                                                <span
-                                                    class="block truncate"
-                                                    :class="{
-                                                        'font-medium': selected,
-                                                        'font-normal':
-                                                            !selected,
-                                                    }"
-                                                >
-                                                    <div
-                                                        class="flex items-center gap-2"
-                                                    >
-                                                        {{
-                                                            country?.phone_code
-                                                                ? country.phone_code
-                                                                : "None"
-                                                        }}
-                                                    </div>
-                                                </span>
-
-                                                <span
-                                                    v-if="selected"
-                                                    class="absolute inset-y-0 left-0 flex items-center pl-3"
-                                                    :class="{
-                                                        'text-white': active,
-                                                        'text-gray-800':
-                                                            !active,
-                                                    }"
-                                                >
-                                                    <span
-                                                        class="myMediumIcon material-symbols-outlined"
-                                                    >
-                                                        check
-                                                    </span>
-                                                </span>
-                                            </li>
-                                        </ComboboxOption>
-                                    </ComboboxOptions>
-                                </TransitionRoot>
-                            </div>
-                        </Combobox>
-                        <InputError :message="form.errors.phone_code" />
-                    </div>
-                    <!-- phone code end -->
-                    <div class="myInputGroup">
-                        <InputLabel for="laaphone" value="Phone" />
-                        <TextInput
-                            v-model="form.phone"
-                            type="text"
-                            id="laaphone"
-                            name="laaphone"
-                            autocomplete="laaphone"
-                            placeholder="Phone.."
-                        />
-                        <InputError :message="form.errors.phone" />
-                    </div>
-                </div>
                 <div class="myInputGroup">
                     <InputLabel for="job_title" value="Job title" />
                     <TextInput
@@ -1012,6 +874,145 @@ onMounted(() => {
                             autocomplete="laapostal_code"
                         />
                         <InputError :message="form.errors.postal_code" />
+                    </div>
+
+                    <!-- phone code start -->
+                    <div class="myInputGroup">
+                        <!-- Headless UI select # start -->
+                        <InputLabel
+                            for="laaphone_code"
+                            value="Phone country code"
+                        />
+                        <!-- Headless UI select # start -->
+                        <Combobox v-model="selectedPhoneCode">
+                            <div class="relative mt-1">
+                                <div class="relative">
+                                    <ComboboxInput
+                                        name="laaphone_code"
+                                        id="laaphone_code"
+                                        autocomplete="laaphone_code"
+                                        class="myPrimarySelect"
+                                        placeholder="Search.."
+                                        :displayValue="
+                                            (country) => {
+                                                return country?.phone_code
+                                                    ? `${country.phone_code} ${country?.country}`
+                                                    : '';
+                                            }
+                                        "
+                                        @change="
+                                            queryPhoneCode = $event.target.value
+                                        "
+                                    />
+
+                                    <div
+                                        class="absolute inset-y-0 right-0 flex items-center pr-2"
+                                    >
+                                        <div
+                                            class="flex items-center justify-center gap-2"
+                                        >
+                                            <ComboboxButton
+                                                class="h-8 w-8 cursor-pointer rounded flex items-center justify-center"
+                                            >
+                                                <span
+                                                    class="material-symbols-outlined"
+                                                >
+                                                    unfold_more
+                                                </span>
+                                            </ComboboxButton>
+                                        </div>
+                                    </div>
+                                </div>
+                                <TransitionRoot
+                                    leave="transition ease-in duration-100"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                    @after-leave="queryPhoneCode = ''"
+                                >
+                                    <ComboboxOptions
+                                        class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                    >
+                                        <div
+                                            v-if="
+                                                filteredPhoneCodes.length ===
+                                                    0 && queryPhoneCode !== ''
+                                            "
+                                            class="relative cursor-default select-none py-2 px-4 text-gray-700"
+                                        >
+                                            Nothing found.
+                                        </div>
+
+                                        <ComboboxOption
+                                            v-for="country in filteredPhoneCodes"
+                                            as="template"
+                                            :key="country.code"
+                                            :value="country"
+                                            v-slot="{ selected, active }"
+                                        >
+                                            <li
+                                                class="relative cursor-default select-none py-2 pl-10 pr-4"
+                                                :class="{
+                                                    'bg-gray-800 text-white':
+                                                        active,
+                                                    'text-myPrimaryDarkGrayColor':
+                                                        !active,
+                                                }"
+                                            >
+                                                <span
+                                                    class="block truncate"
+                                                    :class="{
+                                                        'font-medium': selected,
+                                                        'font-normal':
+                                                            !selected,
+                                                    }"
+                                                >
+                                                    <div
+                                                        class="flex items-center gap-2"
+                                                    >
+                                                        {{
+                                                            country?.phone_code
+                                                                ? country.phone_code
+                                                                : "None"
+                                                        }}
+                                                    </div>
+                                                </span>
+
+                                                <span
+                                                    v-if="selected"
+                                                    class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                    :class="{
+                                                        'text-white': active,
+                                                        'text-gray-800':
+                                                            !active,
+                                                    }"
+                                                >
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
+                                                </span>
+                                            </li>
+                                        </ComboboxOption>
+                                    </ComboboxOptions>
+                                </TransitionRoot>
+                            </div>
+                        </Combobox>
+                        <InputError :message="form.errors.phone_code" />
+                    </div>
+                    <!-- phone code end -->
+
+                    <div class="myInputGroup">
+                        <InputLabel for="laaphone" value="Phone" />
+                        <TextInput
+                            v-model="form.phone"
+                            type="text"
+                            id="laaphone"
+                            name="laaphone"
+                            autocomplete="laaphone"
+                            placeholder="Phone.."
+                        />
+                        <InputError :message="form.errors.phone" />
                     </div>
                 </div>
             </div>
