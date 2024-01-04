@@ -55,8 +55,6 @@ const form = useForm({
     phone_code: props.user.phone_code,
     phone: props.user.phone,
     job_title: props.user.job_title,
-
-    photo: null,
 });
 
 //
@@ -149,7 +147,6 @@ const handleUploadCoverImage = function () {
 //
 //
 //
-const modalShowDeletePhoto = ref(false);
 
 // modal content
 const typeModal = ref("");
@@ -165,25 +162,15 @@ const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 
 const verificationLinkSent = ref(null);
-const photoPreview = ref(null);
-const photoInput = ref(null);
-
-const profilePhotoIsDirty = ref(false);
 
 const updateProfileInformation = () => {
     form.country = selectedCountry.value?.code;
     form.phone_code = selectedPhoneCode.value?.phone_code;
 
-    if (photoInput.value) {
-        form.photo = photoInput.value.files[0];
-    }
     form.post(route("user-profile-information.update"), {
         errorBag: "updateProfileInformation",
         preserveScroll: true,
-        onSuccess: () => {
-            clearPhotoFileInput();
-            profilePhotoIsDirty.value = false;
-        },
+        onSuccess: () => {},
         onError: (err) => {},
         onFinish: () => {},
     });
@@ -191,65 +178,6 @@ const updateProfileInformation = () => {
 
 const sendEmailVerification = () => {
     verificationLinkSent.value = true;
-};
-
-const selectNewPhoto = () => {
-    photoInput.value.click();
-};
-
-const updatePhotoPreview = () => {
-    const photo = photoInput.value.files[0];
-
-    if (!photo) return;
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        photoPreview.value = e.target.result;
-    };
-
-    reader.readAsDataURL(photo);
-};
-
-const deletePhoto = () => {
-    router.delete(route("current-user-photo.destroy"), {
-        preserveScroll: true,
-        onSuccess: () => {
-            photoPreview.value = null;
-            clearPhotoFileInput();
-        },
-    });
-};
-
-const handleDeletePhoto = function () {
-    // handle show modal for unique content
-    modalShowDeletePhoto.value = true;
-    // set modal standards
-    typeModal.value = "delete";
-    gridColumnModal.value = 2;
-    titleModal.value = "Delete Photo";
-    descriptionModal.value = "Are you sure you want to delete your photo?";
-    firstButtonModal.value = "Close";
-    secondButtonModal.value = null;
-    thirdButtonModal.value = "Delete";
-    // handle click
-    firstModalButtonFunction.value = function () {
-        // handle show modal for unique content
-        modalShowDeletePhoto.value = false;
-    };
-    // handle click
-    thirdModalButtonFunction.value = function () {
-        deletePhoto();
-        // handle show modal for unique content
-        modalShowDeletePhoto.value = false;
-    };
-    // end modal
-};
-
-const clearPhotoFileInput = () => {
-    if (photoInput.value?.value) {
-        photoInput.value.value = null;
-    }
 };
 
 const showErrorNotifications = ref(false);
@@ -294,18 +222,7 @@ const filteredPhoneCodes = computed(() =>
           })
 );
 
-const handleRemoveInputPhoneCode = function () {
-    selectedPhoneCode.value = null;
-};
 // phone country code # end
-
-//
-//
-//
-
-watch(photoPreview, (newValue) => {
-    profilePhotoIsDirty.value = true;
-});
 
 onMounted(() => {
     if (props.user.country) {
@@ -618,128 +535,6 @@ onMounted(() => {
                     <InputError :message="form.errors.job_title" />
                 </div>
             </div>
-            <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Your Profile photo
-                    </div>
-                </div>
-                <div class="myInputGroup">
-                    <InputLabel for="email" value="Profile Image" />
-                    <input
-                        ref="photoInput"
-                        type="file"
-                        class="hidden"
-                        @change="updatePhotoPreview"
-                    />
-                    <div
-                        class="flex-col items-center gap-2 mb-8 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6"
-                    >
-                        <div
-                            v-if="
-                                !photoPreview &&
-                                user.profile_photo_path !== null
-                            "
-                            @click.prevent="selectNewPhoto"
-                            class="mt-2 cursor-pointer"
-                        >
-                            <img
-                                class="object-cover h-16 w-16 rounded-full"
-                                :src="`/storage/${user.profile_photo_path}`"
-                                :alt="user.first_name + user.last_name"
-                            />
-                        </div>
-
-                        <div v-if="photoPreview !== null">
-                            <span
-                                class="block rounded-full h-16 w-16 bg-cover bg-no-repeat bg-center"
-                                :style="
-                                    'background-image: url(\'' +
-                                    photoPreview +
-                                    '\');'
-                                "
-                            />
-                        </div>
-
-                        <div
-                            v-if="
-                                user.profile_photo_path === null &&
-                                !photoPreview
-                            "
-                            @click.prevent="selectNewPhoto"
-                            class="cursor-pointer h-16 w-16 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs font-normal text-white"
-                        >
-                            {{ user.first_name.charAt(0).toUpperCase() }}
-                            {{ user.last_name.charAt(0).toUpperCase() }}
-                        </div>
-                        <span
-                            class="flex flex-col items-center gap-1 myPrimaryParagraph"
-                        >
-                            <span>
-                                {{ user.first_name }}
-                                {{ user.last_name }}
-                            </span>
-                            <span>
-                                {{ $page.props.user.email }}
-                            </span>
-                        </span>
-                    </div>
-
-                    <div class="flex justify-center items-center myPrimaryGap">
-                        <button
-                            class="myPrimaryButton"
-                            type="button"
-                            @click.prevent="selectNewPhoto"
-                        >
-                            Upload New
-                        </button>
-
-                        <button
-                            v-if="
-                                photoPreview || user.profile_photo_path !== null
-                            "
-                            type="button"
-                            class="myPrimaryDeleteButton"
-                            @click.prevent="handleDeletePhoto"
-                        >
-                            Delete Photo
-                        </button>
-                    </div>
-
-                    <br />
-
-                    <InputError :message="form.errors.photo" />
-
-                    <div
-                        v-if="profilePhotoIsDirty === true"
-                        class="rounded-md bg-red-50 p-4 shadow-lg"
-                    >
-                        <div class="flex items-center">
-                            <div class="ml-3">
-                                <p
-                                    class="text-sm font-normal text-red-800 pr-4"
-                                >
-                                    Image and form not saved.
-                                    <span
-                                        @click="updateProfileInformation"
-                                        class="cursor-pointer myPrimaryLink font-medium italic"
-                                    >
-                                        Save image.
-                                    </span>
-                                </p>
-                            </div>
-                            <div class="ml-auto pl-3">
-                                <div class="-mx-1.5 -my-1.5">
-                                    <button
-                                        type="button"
-                                        class="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-green-50"
-                                    ></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </template>
         <template #sidebar>
             <div class="myInputsOrganization">
@@ -1001,7 +796,7 @@ onMounted(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Information
+                        Information (not public)
                     </div>
                 </div>
 
@@ -1185,22 +980,6 @@ onMounted(() => {
                     <InputError :message="form.errors.postal_code" />
                 </div>
             </div>
-            <DynamicModal
-                :show="modalShowDeletePhoto"
-                :type="typeModal"
-                :gridColumnAmount="gridColumnModal"
-                :title="titleModal"
-                :description="descriptionModal"
-                :firstButtonText="firstButtonModal"
-                :secondButtonText="secondButtonModal"
-                :thirdButtonText="thirdButtonModal"
-                @firstModalButtonFunction="firstModalButtonFunction"
-                @secondModalButtonFunction="secondModalButtonFunction"
-                @thirdModalButtonFunction="thirdModalButtonFunction"
-            >
-                <header></header>
-                <main></main>
-            </DynamicModal>
         </template>
         <template #actions>
             <SubmitButton :disabled="form.processing" buttonText="Update">

@@ -486,10 +486,16 @@ Route::middleware([
         "edit",
     ])->name("media.user.edit");
 
-    // Route::post("/media/user/image/update", [
-    //     MediaLibraryUserController::class,
-    //     "update",
-    // ])->name("media.update");
+    Route::post("/media/user/image/update", [
+        MediaLibraryUserController::class,
+        "update",
+    ])->name("media.user.update");
+
+    Route::post("/media/user/image/destroy", [
+        MediaLibraryUserController::class,
+        "destroy",
+    ])->name("media.user.destroy");
+
     // Auth only media library # end
     // Auth only media library # end
 });

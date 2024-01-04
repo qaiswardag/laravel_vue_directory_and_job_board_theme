@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoggedIn\MediaLibrary\StoreMediaLibraryRequest;
 use App\Models\MediaLibraryUser;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\LoggedIn\MediaLibrary\StoreMediaLibraryRequest;
-use App\Models\MediaLibrary\MediaLibrary;
+use App\Http\Requests\LoggedIn\User\StorePaymentMethodsRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -175,7 +175,7 @@ class MediaLibraryUserController extends Controller
             $extension;
 
         // check if the path already exists in the media_libraries table
-        while (MediaLibrary::where("path", $path)->exists()) {
+        while (MediaLibraryUser::where("path", $path)->exists()) {
             // if the path already exists, regenerate the path
 
             // generate a unique ID for the image
@@ -311,16 +311,49 @@ class MediaLibraryUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MediaLibraryUser $mediaLibraryUser)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            "name" => ["string", "min:2", "max:255", "nullable"],
+        ]);
+
+        $image = MediaLibraryUser::findOrFail($request->image_id);
+        $image->name = $request->name;
+        $image->save();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MediaLibraryUser $mediaLibraryUser)
+    public function destroy(Request $request)
     {
+        $image = MediaLibraryUser::findOrFail($request->image_id);
+
+        // Get the image paths to be deleted
+        $imagePaths = [
+            "path" => $image->path,
+            "thumbnail_path" => $image->thumbnail_path,
+            "medium_path" => $image->medium_path,
+            "large_path" => $image->large_path,
+        ];
+
+        // Delete the files from the public directory
+        foreach ($imagePaths as $path) {
+            if (
+                File::exists(storage_path(self::PUBLIC_UPLOAD_PATH . $path)) ===
+                true
+            ) {
+                File::delete(storage_path(self::PUBLIC_UPLOAD_PATH . $path));
+            }
+        }
+
         //
+        // delete the image record from the dat
+        $image->delete();
+
+        return back()->with(
+            "success",
+            "The image has been successfully deleted."
+        );
     }
 }

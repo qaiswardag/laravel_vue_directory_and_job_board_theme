@@ -355,6 +355,7 @@ class MediaLibraryController extends Controller
     public function destroy(Request $request, Team $team)
     {
         $this->authorize("can-destroy", $team);
+
         $image = MediaLibrary::findOrFail($request->image_id);
 
         // Get the image paths to be deleted

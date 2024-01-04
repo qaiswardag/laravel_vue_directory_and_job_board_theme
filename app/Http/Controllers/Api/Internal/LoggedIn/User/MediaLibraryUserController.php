@@ -21,12 +21,11 @@ class MediaLibraryUserController extends Controller
         $searchQuery = "";
         $currentClickedPage = "";
 
-        $totalResults = MediaLibraryUser::when(
-            $request->query("search_query"),
-            function ($query, $term) {
+        $totalResults = MediaLibraryUser::where("user_id", $user->id)
+            ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("name", "LIKE", "%" . $term . "%");
-            }
-        )->count();
+            })
+            ->count();
 
         $media = MediaLibraryUser::latest()
             ->where("user_id", $user->id)

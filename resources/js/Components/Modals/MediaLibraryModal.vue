@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import UploadImagesForm from "@/Components/Forms/UploadImagesForm.vue";
 import MediaLibraryGalleryList from "@/Components/GalleryList/MediaLibraryGalleryList.vue";
 import {
@@ -150,6 +150,31 @@ const handleImageUpdate = function (imageId) {
     // set image id
     form.image_id = imageId;
 
+    // dispatch user image logic # start
+    if (props.forUserNotTeam) {
+        form.post(route("media.user.update"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                // reset form
+                form.reset();
+                // dispatch
+                store.dispatch("mediaLibrary/loadUserImage", {
+                    mediaLibraryId: imageId,
+                });
+
+                store.dispatch("mediaLibrary/loadUserMedia", {
+                    page: currentClickedPage,
+                    search_query: search_query.value,
+                });
+            },
+            onError: (err) => {},
+            onFinish: () => {},
+        });
+
+        return;
+    }
+    // dispatch user image logic # end
+
     form.post(route("media.update", [props.team.id]), {
         preserveScroll: true,
         onSuccess: () => {
@@ -207,6 +232,25 @@ const deleteImage = function (imageId) {
     // set image id
     formDeleteImage.image_id = imageId;
 
+    if (props.forUserNotTeam) {
+        formDeleteImage.post(route("media.user.destroy"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                // commit
+                store.commit("mediaLibrary/setCurrentImage", null);
+                // dispatch
+                store.dispatch("mediaLibrary/loadUserMedia", {
+                    page: currentClickedPage,
+                    search_query: search_query.value,
+                });
+            },
+            onError: (err) => {},
+            onFinish: () => {},
+        });
+
+        return;
+    }
+
     formDeleteImage.post(route("media.destroy", [props.team.id]), {
         preserveScroll: true,
         onSuccess: () => {
@@ -229,6 +273,11 @@ const imageNameComputed = computed(() => {
 });
 watch(imageNameComputed, (updatedImage, oldImage) => {
     form.name = updatedImage;
+});
+
+onMounted(() => {
+    store.commit("mediaLibrary/setCurrentImage", null);
+    store.commit("mediaLibrary/setCurrentPreviewImage", null);
 });
 </script>
 
