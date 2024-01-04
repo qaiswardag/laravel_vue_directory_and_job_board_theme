@@ -544,7 +544,7 @@ onMounted(() => {
                                         <ThumbnailSmallImageSlider
                                             :images="post.cover_images"
                                             :isLoading="isLoadingPosts"
-                                            imageSize="medium_path"
+                                            imageSize="large_path"
                                             imageHeight="max-h-96"
                                             imageWidth="w-full object-cover rounded-b-none"
                                             :roundedFull="false"
