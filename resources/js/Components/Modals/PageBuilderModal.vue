@@ -41,7 +41,7 @@ const pageBuilder = new PageBuilder(store);
 
 const hideDraftButton = ref(true);
 
-const showModalClosePageBuilder = ref(false);
+const showModalConfirmClosePageBuilder = ref(false);
 //
 // use dynamic model
 const typeModal = ref("");
@@ -64,7 +64,7 @@ const emit = defineEmits([
 
 const firstButton = function () {
     // set modal standards
-    showModalClosePageBuilder.value = true;
+    showModalConfirmClosePageBuilder.value = true;
     typeModal.value = "danger";
     gridColumnModal.value = 3;
     titleModal.value = "Close page builder without save?";
@@ -77,7 +77,7 @@ const firstButton = function () {
     // handle click
     firstModalButtonFunction.value = function () {
         // set open modal
-        showModalClosePageBuilder.value = false;
+        showModalConfirmClosePageBuilder.value = false;
     };
     // handle click
     secondModalButtonFunction.value = function () {
@@ -87,12 +87,14 @@ const firstButton = function () {
 
     // handle click
     thirdModalButtonFunction.value = async function () {
-        showModalClosePageBuilder.value = false;
+        showModalConfirmClosePageBuilder.value = false;
+        emit("firstDesignerModalButtonFunction");
+
+        pageBuilder.removeHoveredAndSelected();
 
         store.commit("user/setIsLoading", true);
-        await delay();
 
-        closePageBuilder();
+        await delay();
 
         store.commit("user/setIsLoading", false);
     };
@@ -104,11 +106,6 @@ const handleEscapeKey = function () {
     firstButton();
 };
 
-// first button function
-const closePageBuilder = function () {
-    emit("firstDesignerModalButtonFunction");
-    pageBuilder.removeHoveredAndSelected();
-};
 // first button function
 const secondButton = function () {
     emit("secondDesignerModalButtonFunction");
@@ -187,7 +184,7 @@ onMounted(() => {
                             class="inline-block align-bottom text-left transform transition-all sm:align-middle w-full overflow-hidden h-[100vh] top-0 left-0 right-0 absolute"
                         >
                             <DynamicModal
-                                :show="showModalClosePageBuilder"
+                                :show="showModalConfirmClosePageBuilder"
                                 :type="typeModal"
                                 :gridColumnAmount="gridColumnModal"
                                 :title="titleModal"
