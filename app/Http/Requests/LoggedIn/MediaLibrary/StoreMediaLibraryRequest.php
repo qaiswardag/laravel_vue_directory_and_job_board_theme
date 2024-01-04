@@ -36,7 +36,7 @@ class StoreMediaLibraryRequest extends FormRequest
     public function withValidator($validator)
     {
         $maxImageSize = 2000; //kilobytes
-        $maxImageUploads = 12;
+        $maxImageUploads = 6;
         $validator->after(function ($validator) use (
             $maxImageUploads,
             $maxImageSize
@@ -51,7 +51,7 @@ class StoreMediaLibraryRequest extends FormRequest
                 return;
             }
 
-            if (count($this->images) > $maxImageUploads) {
+            if (count($this->images) >= $maxImageUploads) {
                 $validator
                     ->errors()
                     ->add(
