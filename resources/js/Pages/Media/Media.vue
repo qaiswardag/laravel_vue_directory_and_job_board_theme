@@ -173,19 +173,20 @@ const handleMediaLibrary = function (imageID) {
                                         <div
                                             class="py-3 flex justify-between items-center"
                                         >
-                                            <dt class="">Dimensions</dt>
+                                            <dt class="">Name</dt>
                                             <dd class="">
-                                                {{ file.width }} x
-                                                {{ file.height }}
+                                                {{
+                                                    file.name ? file.name : "—"
+                                                }}
                                             </dd>
                                         </div>
                                         <div
                                             class="py-3 flex justify-between items-center"
                                         >
+                                            <dt class="">Dimensions</dt>
                                             <dd class="">
-                                                {{
-                                                    file.name ? file.name : "–"
-                                                }}
+                                                {{ file.width }} x
+                                                {{ file.height }}
                                             </dd>
                                         </div>
                                         <div
