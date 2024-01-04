@@ -99,6 +99,10 @@ const firstButton = function () {
     // end modal
 };
 
+const handleEscapeKey = function () {
+    firstButton();
+};
+
 // first button function
 const closePageBuilder = function () {
     pageBuilder.removeHoveredAndSelected();
@@ -141,8 +145,9 @@ onMounted(() => {
         <TransitionRoot :show="show" as="template">
             <Dialog
                 @close="firstButton"
+                @keydown.escape.prevent="handleEscapeKey"
                 as="div"
-                class="fixed z-30 inset-0 overflow-y-auto"
+                class="fixed z-30 inset-0 overflow-y-auto focus:outline-none"
                 tabindex="0"
             >
                 <div

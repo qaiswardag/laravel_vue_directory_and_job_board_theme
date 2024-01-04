@@ -29,7 +29,7 @@ const store = useStore();
 
 // first button function
 const firstButton = async function () {
-    console.log(`come here... preview`);
+    console.log(`1111`);
     store.commit("user/setIsLoading", true);
     await delay();
 
@@ -37,15 +37,20 @@ const firstButton = async function () {
 
     store.commit("user/setIsLoading", false);
 };
+
+const handleEscapeKey = function () {
+    firstButton();
+};
 </script>
 
 <template>
     <teleport to="body">
         <TransitionRoot :show="show" as="template">
             <Dialog
-                as="div"
-                class="fixed z-30 inset-0 overflow-y-auto"
                 @close="firstButton"
+                @keydown.escape.prevent="handleEscapeKey"
+                as="div"
+                class="fixed z-30 inset-0 overflow-y-auto focus:outline-none"
                 tabindex="0"
             >
                 <div
