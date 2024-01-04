@@ -38,6 +38,8 @@ const props = defineProps({
     user: Object,
 });
 
+const showUserInformation = ref(false);
+
 const form = useForm({
     _method: "PUT",
     first_name: props.user.first_name,
@@ -795,189 +797,222 @@ onMounted(() => {
 
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">
-                        Information (not public)
-                    </div>
-                </div>
+                    <button
+                        type="button"
+                        @click="showUserInformation = !showUserInformation"
+                        class="w-full"
+                    >
+                        <div
+                            class="myPrimaryFormOrganizationHeader flex w-full items-center justify-between pb-2"
+                        >
+                            <div>Information</div>
 
-                <div class="myInputGroup">
-                    <InputLabel for="laaline1" value="Street address" />
-                    <TextInput
-                        v-model="form.line1"
-                        placeholder="Street address.."
-                        type="text"
-                        id="laaline1"
-                        name="laaline1"
-                        autocomplete="laaline1"
-                    />
-                    <InputError :message="form.errors.line1" />
-                </div>
-
-                <div class="myInputGroup">
-                    <InputLabel
-                        for="laaline2"
-                        value="Apt, suite, building etc."
-                    />
-                    <TextInput
-                        v-model="form.line2"
-                        placeholder="Apt, suite, building.."
-                        type="text"
-                        id="laaline2"
-                        name="laaline2"
-                        autocomplete="laaline2"
-                    />
-                    <InputError :message="form.errors.line2" />
-                </div>
-
-                <div class="myInputGroup">
-                    <!-- Headless UI select # start -->
-                    <InputLabel for="laacountry" value="Country" />
-                    <!-- Headless UI select # start -->
-                    <Combobox v-model="selectedCountry">
-                        <div class="relative mt-1">
-                            <div class="relative">
-                                <ComboboxInput
-                                    name="laacountry"
-                                    id="laacountry"
-                                    autocomplete="laacountry"
-                                    class="myPrimarySelect"
-                                    placeholder="Search.."
-                                    :displayValue="
-                                        (country) => {
-                                            return country?.country;
-                                        }
-                                    "
-                                    @change="query = $event.target.value"
-                                />
-
-                                <div
-                                    class="absolute inset-y-0 right-0 flex items-center pr-2"
+                            <div class="ml-auto flex items-center">
+                                <span
+                                    v-if="!showUserInformation"
+                                    class="myMediumIcon material-symbols-outlined"
                                 >
+                                    add
+                                </span>
+                                <span
+                                    v-if="showUserInformation"
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    remove
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+                    <p class="myPrimaryParagraph">
+                        Additional non-public information.
+                    </p>
+                </div>
+
+                <div
+                    v-if="showUserInformation"
+                    class="border-t border-gray-200 py-6"
+                >
+                    <div class="myInputGroup">
+                        <InputLabel for="laaline1" value="Street address" />
+                        <TextInput
+                            v-model="form.line1"
+                            placeholder="Street address.."
+                            type="text"
+                            id="laaline1"
+                            name="laaline1"
+                            autocomplete="laaline1"
+                        />
+                        <InputError :message="form.errors.line1" />
+                    </div>
+
+                    <div class="myInputGroup">
+                        <InputLabel
+                            for="laaline2"
+                            value="Apt, suite, building etc."
+                        />
+                        <TextInput
+                            v-model="form.line2"
+                            placeholder="Apt, suite, building.."
+                            type="text"
+                            id="laaline2"
+                            name="laaline2"
+                            autocomplete="laaline2"
+                        />
+                        <InputError :message="form.errors.line2" />
+                    </div>
+
+                    <div class="myInputGroup">
+                        <!-- Headless UI select # start -->
+                        <InputLabel for="laacountry" value="Country" />
+                        <!-- Headless UI select # start -->
+                        <Combobox v-model="selectedCountry">
+                            <div class="relative mt-1">
+                                <div class="relative">
+                                    <ComboboxInput
+                                        name="laacountry"
+                                        id="laacountry"
+                                        autocomplete="laacountry"
+                                        class="myPrimarySelect"
+                                        placeholder="Search.."
+                                        :displayValue="
+                                            (country) => {
+                                                return country?.country;
+                                            }
+                                        "
+                                        @change="query = $event.target.value"
+                                    />
+
                                     <div
-                                        class="flex items-center justify-center gap-2"
+                                        class="absolute inset-y-0 right-0 flex items-center pr-2"
                                     >
-                                        <ComboboxButton
-                                            class="h-8 w-8 cursor-pointer rounded flex items-center justify-center"
+                                        <div
+                                            class="flex items-center justify-center gap-2"
                                         >
-                                            <span
-                                                class="material-symbols-outlined"
+                                            <ComboboxButton
+                                                class="h-8 w-8 cursor-pointer rounded flex items-center justify-center"
                                             >
-                                                unfold_more
-                                            </span>
-                                        </ComboboxButton>
+                                                <span
+                                                    class="material-symbols-outlined"
+                                                >
+                                                    unfold_more
+                                                </span>
+                                            </ComboboxButton>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <TransitionRoot
-                                leave="transition ease-in duration-100"
-                                leaveFrom="opacity-100"
-                                leaveTo="opacity-0"
-                                @after-leave="query = ''"
-                            >
-                                <ComboboxOptions
-                                    class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                <TransitionRoot
+                                    leave="transition ease-in duration-100"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                    @after-leave="query = ''"
                                 >
-                                    <div
-                                        v-if="
-                                            filteredCountries.length === 0 &&
-                                            query !== ''
-                                        "
-                                        class="relative cursor-default select-none py-2 px-4 text-gray-700"
+                                    <ComboboxOptions
+                                        class="absolute z-30 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                                     >
-                                        Nothing found.
-                                    </div>
-
-                                    <ComboboxOption
-                                        v-for="country in filteredCountries"
-                                        as="template"
-                                        :key="country.code"
-                                        :value="country"
-                                        v-slot="{ selected, active }"
-                                    >
-                                        <li
-                                            class="relative cursor-default select-none py-2 pl-10 pr-4"
-                                            :class="{
-                                                'bg-gray-800 text-white':
-                                                    active,
-                                                'text-myPrimaryDarkGrayColor':
-                                                    !active,
-                                            }"
+                                        <div
+                                            v-if="
+                                                filteredCountries.length ===
+                                                    0 && query !== ''
+                                            "
+                                            class="relative cursor-default select-none py-2 px-4 text-gray-700"
                                         >
-                                            <span
-                                                class="block truncate"
-                                                :class="{
-                                                    'font-medium': selected,
-                                                    'font-normal': !selected,
-                                                }"
-                                            >
-                                                <div
-                                                    class="flex items-center gap-2"
-                                                >
-                                                    {{
-                                                        country.country
-                                                            ? country.country
-                                                            : "None"
-                                                    }}
-                                                </div>
-                                            </span>
+                                            Nothing found.
+                                        </div>
 
-                                            <span
-                                                v-if="selected"
-                                                class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                        <ComboboxOption
+                                            v-for="country in filteredCountries"
+                                            as="template"
+                                            :key="country.code"
+                                            :value="country"
+                                            v-slot="{ selected, active }"
+                                        >
+                                            <li
+                                                class="relative cursor-default select-none py-2 pl-10 pr-4"
                                                 :class="{
-                                                    'text-white': active,
-                                                    'text-gray-800': !active,
+                                                    'bg-gray-800 text-white':
+                                                        active,
+                                                    'text-myPrimaryDarkGrayColor':
+                                                        !active,
                                                 }"
                                             >
                                                 <span
-                                                    class="myMediumIcon material-symbols-outlined"
+                                                    class="block truncate"
+                                                    :class="{
+                                                        'font-medium': selected,
+                                                        'font-normal':
+                                                            !selected,
+                                                    }"
                                                 >
-                                                    check
+                                                    <div
+                                                        class="flex items-center gap-2"
+                                                    >
+                                                        {{
+                                                            country.country
+                                                                ? country.country
+                                                                : "None"
+                                                        }}
+                                                    </div>
                                                 </span>
-                                            </span>
-                                        </li>
-                                    </ComboboxOption>
-                                </ComboboxOptions>
-                            </TransitionRoot>
-                        </div>
-                    </Combobox>
-                    <InputError :message="form.errors.country" />
-                </div>
-                <div class="myInputGroup">
-                    <InputLabel for="laacity" value="City" />
-                    <TextInput
-                        v-model="form.city"
-                        type="text"
-                        id="laacity"
-                        name="laacity"
-                        autocomplete="laacity"
-                        placeholder="City.."
-                    />
-                    <InputError :message="form.errors.city" />
-                </div>
-                <div class="myInputGroup">
-                    <InputLabel for="laastate" value="Province or region" />
-                    <TextInput
-                        v-model="form.state"
-                        placeholder="Province or region.."
-                        type="text"
-                        id="laastate"
-                        name="laastate"
-                        autocomplete="laastate"
-                    />
-                    <InputError :message="form.errors.state" />
-                </div>
-                <div class="myInputGroup">
-                    <InputLabel for="laapostal_code" value="Postal code " />
-                    <TextInput
-                        v-model="form.postal_code"
-                        placeholder="Postal code.."
-                        type="text"
-                        id="laapostal_code"
-                        name="laapostal_code"
-                        autocomplete="laapostal_code"
-                    />
-                    <InputError :message="form.errors.postal_code" />
+
+                                                <span
+                                                    v-if="selected"
+                                                    class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                    :class="{
+                                                        'text-white': active,
+                                                        'text-gray-800':
+                                                            !active,
+                                                    }"
+                                                >
+                                                    <span
+                                                        class="myMediumIcon material-symbols-outlined"
+                                                    >
+                                                        check
+                                                    </span>
+                                                </span>
+                                            </li>
+                                        </ComboboxOption>
+                                    </ComboboxOptions>
+                                </TransitionRoot>
+                            </div>
+                        </Combobox>
+                        <InputError :message="form.errors.country" />
+                    </div>
+                    <div class="myInputGroup">
+                        <InputLabel for="laacity" value="City" />
+                        <TextInput
+                            v-model="form.city"
+                            type="text"
+                            id="laacity"
+                            name="laacity"
+                            autocomplete="laacity"
+                            placeholder="City.."
+                        />
+                        <InputError :message="form.errors.city" />
+                    </div>
+                    <div class="myInputGroup">
+                        <InputLabel for="laastate" value="Province or region" />
+                        <TextInput
+                            v-model="form.state"
+                            placeholder="Province or region.."
+                            type="text"
+                            id="laastate"
+                            name="laastate"
+                            autocomplete="laastate"
+                        />
+                        <InputError :message="form.errors.state" />
+                    </div>
+                    <div class="myInputGroup">
+                        <InputLabel for="laapostal_code" value="Postal code " />
+                        <TextInput
+                            v-model="form.postal_code"
+                            placeholder="Postal code.."
+                            type="text"
+                            id="laapostal_code"
+                            name="laapostal_code"
+                            autocomplete="laapostal_code"
+                        />
+                        <InputError :message="form.errors.postal_code" />
+                    </div>
                 </div>
             </div>
         </template>
