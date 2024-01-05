@@ -24,6 +24,7 @@ module.exports = {
                 myPrimaryLinkColor: "#16a34a",
                 // gray colors
                 myPrimaryLightGrayColor: "#eaedf0",
+                // for myPrimaryTag
                 myPrimaryLightMediumGrayColor: "#cbd5e1",
                 myPrimaryMediumGrayColor: "#9ca3af",
                 myPrimaryDarkGrayColor: "#111827",

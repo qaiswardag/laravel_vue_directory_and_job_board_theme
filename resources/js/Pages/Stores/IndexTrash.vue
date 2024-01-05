@@ -614,7 +614,7 @@ onMounted(() => {
                                                             style="
                                                                 font-size: 10px;
                                                             "
-                                                            class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1 pl-0 pr-1 flex justify-center items-center gap-1"
+                                                            class="text-xs rounded-full py-1 pl-0 pr-1 flex justify-center items-center gap-1"
                                                         >
                                                             <span>
                                                                 {{

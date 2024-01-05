@@ -8,14 +8,14 @@ const props = defineProps({
 });
 
 const classes = computed(() => {
-    return props.active ? "bg-red-50" : "";
+    return props.active ? "bg-myPrimaryLightMediumGrayColor" : "";
 });
 </script>
 
 <template>
     <Link
         :href="href"
-        class="text-myPrimaryDarkGrayColor group flex items-center px-2 py-4 font-medium rounded-md text-base gap-3"
+        class="text-myPrimaryDarkGrayColor group flex items-center px-2 py-4 font-medium text-base gap-3 rounded"
         :class="classes"
     >
         <slot />

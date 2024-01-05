@@ -92,7 +92,7 @@ const handleLogout = () => {
                         class="myPrimaryParagraph cursor-pointer"
                     >
                         <div
-                            class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-gray-50 cursor-pointer"
+                            class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-myPrimaryLightGrayColor cursor-pointer"
                             :class="[
                                 route().current('teams.show') ||
                                 route().current('team.update.information') ||
@@ -132,7 +132,7 @@ const handleLogout = () => {
                     class="myPrimaryParagraph cursor-pointer"
                 >
                     <div
-                        class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-gray-50 cursor-pointer"
+                        class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-myPrimaryLightGrayColor cursor-pointer"
                         :class="[
                             route().current('profile.show') ||
                             route().current('user.profile.update') ||
@@ -189,7 +189,7 @@ const handleLogout = () => {
                 <form @submit.prevent="handleLogout">
                     <div
                         @click="handleLogout"
-                        class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-gray-50 cursor-pointer"
+                        class="group relative flex gap-x-2 rounded-lg px-4 py-2 items-center bg-myPrimaryLightGrayColor cursor-pointer"
                     >
                         <button
                             type="button"
