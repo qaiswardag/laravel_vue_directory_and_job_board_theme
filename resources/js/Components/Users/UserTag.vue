@@ -56,22 +56,27 @@ const props = defineProps({
                 ></ThumbnailSmallImageSlider>
             </div>
 
-            <Link
-                :href="route('users.guest.show', user.username)"
-                class="text-myPrimaryDarkGrayColor flex items-center gap-2 bg-stone-300 px-2 py-2 rounded-r-full"
+            <div
+                v-if="
+                    user.user_photo &&
+                    Array.isArray(user.user_photo) &&
+                    user.user_photo.length === 0
+                "
+                class="pl-2"
             >
                 <div
-                    v-if="
-                        user.user_photo &&
-                        Array.isArray(user.user_photo) &&
-                        user.user_photo.length === 0
-                    "
-                    class="text-white flex-shrink-0 h-10 w-10 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs"
+                    class="text-white flex-shrink-0 h-10 w-10 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs rounded-l-full"
                 >
                     {{ user.first_name.charAt(0).toUpperCase() }}
                     {{ user.last_name.charAt(0).toUpperCase() }}
                 </div>
+            </div>
 
+            <Link
+                :href="route('users.guest.show', user.username)"
+                class="text-myPrimaryDarkGrayColor flex items-center gap-2 bg-stone-300 px-2 py-2"
+                :class="[user.user_photo ? 'rounded-r-full' : 'rounded-full']"
+            >
                 <div class="flex flex-col items-start justify-start">
                     <span class="font-medium">
                         {{ user.first_name }}
