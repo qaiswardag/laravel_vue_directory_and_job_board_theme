@@ -23,10 +23,14 @@ module.exports = {
                 myPrimaryBrandColor: "#000000",
                 myPrimaryLinkColor: "#16a34a",
                 // gray colors
-                myPrimaryLightGrayColor: "#eaedf0",
+                myPrimaryLightGrayColor: "#eff2f6",
                 // for myPrimaryTag
-                myPrimaryLightMediumGrayColor: "#cbd5e1",
+                myPrimaryLightMediumGrayColor: "#dee6f0",
+
+                // just a dark gray color
                 myPrimaryMediumGrayColor: "#9ca3af",
+
+                // use as black color
                 myPrimaryDarkGrayColor: "#111827",
 
                 myPrimaryErrorColor: "#d60000",
