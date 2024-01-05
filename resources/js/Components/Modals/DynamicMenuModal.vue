@@ -149,7 +149,7 @@ const handleLogout = () => {
                                     Array.isArray(
                                         $page.props.user.user_photo
                                     ) &&
-                                    $page.props.user.user_photo !== 0
+                                    $page.props.user.user_photo.length !== 0
                                 "
                             >
                                 <ThumbnailSmallImageSlider
@@ -167,7 +167,7 @@ const handleLogout = () => {
                                     Array.isArray(
                                         $page.props.user.user_photo
                                     ) &&
-                                    $page.props.user.user_photo === 0
+                                    $page.props.user.user_photo.length === 0
                                 "
                             >
                                 <button

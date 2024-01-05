@@ -2,9 +2,9 @@
 import SlideOverNotifications from "@/Components/Sidebars/SlideOverNotifications.vue";
 import SlideOverPrimaryMenu from "@/Components/Sidebars/SlideOverPrimaryMenu.vue";
 import { ref } from "vue";
-import { router } from "@inertiajs/vue3";
 import SearchAnythingModal from "@/Components/Modals/SearchAnythingModal.vue";
-import DropdownLink from "@/Components/Dropdowns/DropdownLink.vue";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+
 import {
     Dialog,
     DialogPanel,
@@ -181,34 +181,29 @@ const notificationsSlideOverButton = function () {
 
             <button
                 v-if="
-                    $page.props.user &&
-                    $page.props.user.profile_photo_path !== null
+                    $page.props.user.user_photo &&
+                    Array.isArray($page.props.user.user_photo) &&
+                    $page.props.user.user_photo.length !== 0
                 "
                 type="button"
                 @click="handleMenuUserTeamModal"
                 class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
             >
-                <div
-                    class="h-10 w-10 flex-shrink-0"
-                    v-if="
-                        $page.props.user &&
-                        $page.props.user.profile_photo_path !== null
-                    "
-                >
-                    <img
-                        class="object-cover h-10 w-10 rounded-full flex-shrink-0"
-                        :src="`/storage/${$page.props.user.profile_photo_path}`"
-                        :alt="
-                            $page.props.user.first_name +
-                            $page.props.user.last_name
-                        "
-                    />
+                <div class="h-10 w-10 flex-shrink-0">
+                    <ThumbnailSmallImageSlider
+                        :images="$page.props.user.user_photo"
+                        imageSize="thumbnail_path"
+                        imageHeight="h-10"
+                        imageWidth="w-10"
+                        :roundedFull="true"
+                    ></ThumbnailSmallImageSlider>
                 </div>
             </button>
             <button
                 v-if="
-                    $page.props.user &&
-                    $page.props.user.profile_photo_path === null
+                    $page.props.user.user_photo &&
+                    Array.isArray($page.props.user.user_photo) &&
+                    $page.props.user.user_photo.length === 0
                 "
                 @click="handleMenuUserTeamModal"
                 type="button"
