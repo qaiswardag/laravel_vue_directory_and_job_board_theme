@@ -1,4 +1,6 @@
 <script setup>
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+
 const props = defineProps({
     user: {
         required: true,
@@ -37,21 +39,34 @@ const props = defineProps({
         class="myPrimaryTag inline-block"
     >
         <div class="flex items-center gap-2">
-            <div v-if="user.profile_photo_path" class="flex-shrink-0 h-8 w-8">
-                <img
-                    class="object-cover h-8 w-8 rounded-full"
-                    :src="`/storage/${user.profile_photo_path}`"
-                    alt="User Image"
-                />
+            <div
+                v-if="
+                    user.user_photo &&
+                    Array.isArray(user.user_photo) &&
+                    user.user_photo.length !== 0
+                "
+            >
+                <ThumbnailSmallImageSlider
+                    :images="user.user_photo"
+                    imageSize="thumbnail_path"
+                    imageHeight="h-10"
+                    imageWidth="w-10"
+                    :roundedFull="true"
+                ></ThumbnailSmallImageSlider>
             </div>
 
             <div
-                v-if="!user.profile_photo_path"
-                class="flex-shrink-0 h-8 w-8 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs text-white"
+                v-if="
+                    user.user_photo &&
+                    Array.isArray(user.user_photo) &&
+                    user.user_photo.length === 0
+                "
+                class="flex-shrink-0 h-10 w-10 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs text-white"
             >
                 {{ user.first_name.charAt(0).toUpperCase() }}
                 {{ user.last_name.charAt(0).toUpperCase() }}
             </div>
+
             <div class="flex flex-col items-start justify-start">
                 <span class="font-medium">
                     {{ user.first_name }}

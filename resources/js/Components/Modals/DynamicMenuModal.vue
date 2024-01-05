@@ -1,5 +1,7 @@
 <script setup>
 import Modal from "@/Components/Modals/Modal.vue";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+
 import { router } from "@inertiajs/vue3";
 import {
     CheckIcon,
@@ -142,26 +144,30 @@ const handleLogout = () => {
                     >
                         <div>
                             <div
-                                class="h-10 w-10 flex-shrink-0"
                                 v-if="
                                     $page.props.user &&
-                                    $page.props.user.profile_photo_path !== null
+                                    Array.isArray(
+                                        $page.props.user.user_photo
+                                    ) &&
+                                    $page.props.user.user_photo !== 0
                                 "
                             >
-                                <img
-                                    class="object-cover h-10 w-10 rounded-full flex-shrink-0"
-                                    :src="`/storage/${$page.props.user.profile_photo_path}`"
-                                    :alt="
-                                        $page.props.user.first_name +
-                                        $page.props.user.last_name
-                                    "
-                                />
+                                <ThumbnailSmallImageSlider
+                                    :images="$page.props.user.user_photo"
+                                    imageSize="medium_path"
+                                    imageHeight="h-10"
+                                    imageWidth="w-10"
+                                    :roundedFull="true"
+                                ></ThumbnailSmallImageSlider>
                             </div>
 
                             <template
                                 v-if="
-                                    $page.props.user &&
-                                    $page.props.user.profile_photo_path === null
+                                    $page.props.user.user_photo &&
+                                    Array.isArray(
+                                        $page.props.user.user_photo
+                                    ) &&
+                                    $page.props.user.user_photo === 0
                                 "
                             >
                                 <button

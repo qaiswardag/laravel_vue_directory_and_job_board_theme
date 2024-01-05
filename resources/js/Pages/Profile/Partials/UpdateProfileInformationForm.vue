@@ -57,6 +57,8 @@ const form = useForm({
     phone_code: props.user.phone_code,
     phone: props.user.phone,
     job_title: props.user.job_title,
+
+    user_image: [],
 });
 
 //
@@ -101,7 +103,7 @@ const thirdMediaButtonFunction = ref(null);
 //
 //
 //
-const handleUploadCoverImage = function () {
+const handleUploadUserImage = function () {
     // handle show media library modal
     showMediaLibraryUserModal.value = true;
 
@@ -119,18 +121,18 @@ const handleUploadCoverImage = function () {
     //
     // handle click
     secondMediaButtonFunction.value = function () {
-        if (Array.isArray(form.cover_image) === false) {
-            form.cover_image = [];
+        if (Array.isArray(form.user_image) === false) {
+            form.user_image = [];
         }
 
-        const idExists = form.cover_image?.some((item) => {
+        const idExists = form.user_image?.some((item) => {
             return (
                 item.id === getCurrentImage.value.currentImage.mediaLibrary.id
             );
         });
 
-        if (idExists === false && Array.isArray(form.cover_image)) {
-            form.cover_image.unshift(
+        if (idExists === false && Array.isArray(form.user_image)) {
+            form.user_image.unshift(
                 getCurrentImage.value.currentImage.mediaLibrary
             );
         }
@@ -141,7 +143,42 @@ const handleUploadCoverImage = function () {
     // end modal
 };
 //
-//
+const removePrimaryImage = function (imageId) {
+    form.user_image = form.user_image.map((image) => {
+        return {
+            ...image,
+            pivot: {
+                ...image.pivot,
+                primary: image.id === imageId ? false : image?.pivot?.primary,
+            },
+        };
+    });
+};
+
+const setAsPrimaryImage = function (imageId) {
+    form.user_image = form.user_image.map((image) => {
+        if (image.id === imageId) {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: true,
+                },
+            };
+        } else {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: false,
+                },
+            };
+        }
+    });
+};
+const handleRemoveUserImage = function (imageId) {
+    form.user_image = form.user_image.filter((image) => image.id !== imageId);
+};
 //
 //
 //
@@ -238,6 +275,10 @@ onMounted(() => {
             filteredPhoneCodes.value.find((country) => {
                 return country.phone_code === props.user.phone_code;
             }) || null;
+    }
+
+    if (props.user.user_photo) {
+        form.user_image = props.user.user_photo;
     }
 });
 </script>
@@ -494,15 +535,11 @@ onMounted(() => {
                     </div>
                 </div>
                 <!-- select - start -->
-                <div
-                    @click="handleUploadCoverImage"
-                    class="myPrimaryFakeSelect"
-                >
+                <div @click="handleUploadUserImage" class="myPrimaryFakeSelect">
                     <div class="relative flex items-center w-full py-0 p-0">
                         <span>
                             {{
-                                form.cover_image &&
-                                form.cover_image?.length === 0
+                                form.user_image && form.user_image?.length === 0
                                     ? "Select Profile photo"
                                     : "Update Profile Photo"
                             }}
@@ -519,7 +556,7 @@ onMounted(() => {
                 <!-- select - end -->
 
                 <div
-                    v-if="form.cover_image && form.cover_image?.length === 0"
+                    v-if="form.user_image && form.user_image?.length === 0"
                     class="space-y-6 mt-2"
                 >
                     <p class="myPrimaryParagraph">No items selected.</p>
@@ -527,24 +564,22 @@ onMounted(() => {
 
                 <div>
                     <p
-                        v-if="
-                            form.cover_image && form.cover_image?.length !== 0
-                        "
+                        v-if="form.user_image && form.user_image?.length !== 0"
                         class="py-4"
                     >
                         Added
-                        {{ form.cover_image && form.cover_image?.length }}
+                        {{ form.user_image && form.user_image?.length }}
                         {{
-                            form.cover_image && form.cover_image?.length === 1
+                            form.user_image && form.user_image?.length === 1
                                 ? "Item"
                                 : "Items"
                         }}
                     </p>
                     <div
                         v-if="
-                            form.cover_image &&
-                            Array.isArray(form?.cover_image) &&
-                            form.cover_image?.length !== 0
+                            form.user_image &&
+                            Array.isArray(form?.user_image) &&
+                            form.user_image?.length !== 0
                         "
                         class="p-2 border border-myPrimaryLightGrayColor"
                     >
@@ -552,8 +587,8 @@ onMounted(() => {
                             class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
                         >
                             <div
-                                v-for="image in form.cover_image !== null &&
-                                form.cover_image"
+                                v-for="image in form.user_image !== null &&
+                                form.user_image"
                                 :key="image?.id"
                             >
                                 <div
@@ -564,7 +599,7 @@ onMounted(() => {
                                     >
                                         <div class="flex-shrink-0">
                                             <img
-                                                @click="handleUploadCoverImage"
+                                                @click="handleUploadUserImage"
                                                 :src="`/storage/uploads/${image?.thumbnail_path}`"
                                                 alt="image"
                                                 class="myPrimarythumbnailInsertPreview"
@@ -575,7 +610,7 @@ onMounted(() => {
                                             class="myPrimaryTag bg-myPrimaryLinkColor text-white w-full break-keep"
                                             v-if="
                                                 image?.pivot?.primary &&
-                                                form.cover_image.length > 1
+                                                form.user_image.length > 1
                                             "
                                             type="button"
                                             @click="
@@ -597,7 +632,7 @@ onMounted(() => {
                                             class="myPrimaryTag transition bg-white break-keep"
                                             v-if="
                                                 !image?.pivot?.primary &&
-                                                form.cover_image?.length > 1
+                                                form.user_image?.length > 1
                                             "
                                             type="button"
                                             @click="
@@ -611,7 +646,7 @@ onMounted(() => {
                                     <button
                                         type="button"
                                         @click="
-                                            handleRemoveCoverImage(image?.id)
+                                            handleRemoveUserImage(image?.id)
                                         "
                                         class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
                                     >
@@ -627,13 +662,12 @@ onMounted(() => {
 
                         <div
                             v-if="
-                                form.cover_image &&
-                                form.cover_image?.length >= 1
+                                form.user_image && form.user_image?.length >= 1
                             "
                             class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
                         >
                             <p
-                                @click="handleUploadCoverImage"
+                                @click="handleUploadUserImage"
                                 class="myPrimaryParagraph text-xs cursor-pointer font-medium"
                             >
                                 Add Additional Images
@@ -641,7 +675,7 @@ onMounted(() => {
                             <button
                                 type="button"
                                 class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                                @click="handleUploadCoverImage"
+                                @click="handleUploadUserImage"
                             >
                                 <span
                                     class="myMediumIcon material-symbols-outlined"
@@ -653,7 +687,7 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <InputError :message="form.errors.cover_image" />
+                <InputError :message="form.errors.user_image" />
             </div>
             <!-- Profile photo # end -->
 

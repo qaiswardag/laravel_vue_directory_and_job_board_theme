@@ -80,11 +80,21 @@ class User extends Authenticatable
      */
     protected $appends = ["profile_photo_url"];
 
-    protected $with = ["superadmin"];
+    protected $with = ["superadmin", "userPhoto"];
 
     public function superadmin()
     {
         return $this->hasOne(Superadmin::class, "user_id");
+    }
+
+    public function userPhoto()
+    {
+        return $this->belongsToMany(
+            MediaLibraryUser::class,
+            "user_photo_relationships",
+            "user_id",
+            "media_library_id"
+        )->withPivot("primary");
     }
 
     /**

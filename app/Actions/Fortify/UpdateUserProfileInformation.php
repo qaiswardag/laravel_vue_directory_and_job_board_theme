@@ -2,7 +2,9 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\MediaLibraryUser;
 use App\Models\User;
+use App\Models\UserPhotoRelationship;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -93,12 +95,108 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         ]);
 
         $validator->after(function ($validator) use ($input) {
+            $minCoverImages = 0;
+            $maxCoverImages = 1;
+
+            // Validation for profile photo # start
+            // Validation for profile photo # start
+
+            if (
+                isset($input["user_image"]) &&
+                gettype($input["user_image"]) !== "array"
+            ) {
+                $validator
+                    ->errors()
+                    ->add("user_image", "cover image field must be an array.");
+            }
+
+            if (
+                isset($input["user_image"]) &&
+                is_array($input["user_image"]) &&
+                count($input["user_image"]) < $minCoverImages
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "user_image",
+                        "At least {$minCoverImages} images are necessary."
+                    );
+            }
+
+            if (
+                isset($input["user_image"]) &&
+                gettype($input["user_image"]) === "array" &&
+                count($input["user_image"]) > $maxCoverImages
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "user_image",
+                        "User image field is limited to a maximum of {$maxCoverImages} selection(s)."
+                    );
+            }
+
+            // Check if the "primary" key exists, or provide a default value of false
+            if (
+                isset($input["user_image"]) &&
+                !empty($input["user_image"]) &&
+                gettype($input["user_image"]) === "array"
+            ) {
+                // Loop through the array and attach each category to the job
+                foreach ($input["user_image"] as $image) {
+                    // Check if the "id" key exists in the $image array
+                    if (array_key_exists("id", $image)) {
+                        $imageId = $image["id"];
+
+                        // Check if a media library record with this ID exists
+                        $mediaLibrary = MediaLibraryUser::find($imageId);
+
+                        if ($mediaLibrary === null) {
+                            $validator
+                                ->errors()
+                                ->add(
+                                    "user_image",
+                                    "At least one of your attached images no longer exists in the Media Library. Delete the image and try again or click the 'Clear form' button and then try again."
+                                );
+                        }
+                    }
+                }
+            }
+            // validation for User image # end
+
+            // Additional validation to ensure only one image is marked as primary # start
+            $primaryImages =
+                isset($input["user_image"]) && is_array($input["user_image"])
+                    ? array_filter($input["user_image"], function ($image) {
+                        return isset($image["pivot"]) &&
+                            isset($image["pivot"]["primary"]) &&
+                            $image["pivot"]["primary"];
+                    })
+                    : [];
+
+            if (
+                isset($input["user_image"]) &&
+                count($primaryImages) === 0 &&
+                gettype($input["user_image"]) === "array" &&
+                count($input["user_image"]) > 1
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "user_image",
+                        "At least one image must be marked as primary."
+                    );
+            }
+            // Additional validation to ensure only one image is marked as primary # end
+            // Validation for profile photo # end
+
+            // validation phone # start
             if (isset($input["phone"]) && !isset($input["phone_code"])) {
                 $validator->errors()->add(
                     "phone_code",
                     "Phone country code is required when phone number is set.
-
-                "
+                    
+                    "
                 );
             }
 
@@ -106,10 +204,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 $validator->errors()->add(
                     "phone",
                     "Phone number is required when phone_code country code is set.
-
-                "
+                    
+                    "
                 );
             }
+            // validation phone # end
         });
 
         // if validator fails
@@ -127,6 +226,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user instanceof MustVerifyEmail
         ) {
             $this->updateVerifiedUser($user, $input);
+            $this->updateUserPhoto($user, $input);
         } else {
             $user
                 ->forceFill([
@@ -147,6 +247,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                     "job_title" => $input["job_title"] ?? null,
                 ])
                 ->save();
+
+            $this->updateUserPhoto($user, $input);
         }
     }
 
@@ -180,5 +282,56 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             ->save();
 
         $user->sendEmailVerificationNotification();
+    }
+
+    protected function updateUserPhoto(User $user, array $input): void
+    {
+        // Retrieve the existing cover image relationships for the post
+        $existingCoverImages = UserPhotoRelationship::where(
+            "user_id",
+            $user->id
+        )->get();
+
+        // Create an array to store the IDs of existing cover images
+        $existingCoverImageIds = $existingCoverImages
+            ->pluck("media_library_id")
+            ->toArray();
+
+        // Loop through the request's cover images and update or create cover image relationships
+        // Check if $input["user_image"] is not null and is an array
+        if (
+            $input["user_image"] !== null &&
+            gettype($input["user_image"]) === "array" &&
+            count($input["user_image"]) !== 0
+        ) {
+            foreach ($input["user_image"] as $coverImage) {
+                $imageId = $coverImage["id"];
+                $isPrimary = isset($coverImage["pivot"]["primary"])
+                    ? $coverImage["pivot"]["primary"]
+                    : false;
+
+                // Update or create cover image relationship
+                UserPhotoRelationship::updateOrCreate(
+                    [
+                        "media_library_id" => $imageId,
+                        "user_id" => $user->id,
+                    ],
+                    ["primary" => $isPrimary]
+                );
+
+                // Remove the image ID from the existingCoverImageIds array
+                $key = array_search($imageId, $existingCoverImageIds);
+                if ($key !== false) {
+                    unset($existingCoverImageIds[$key]);
+                }
+            }
+        }
+
+        // Delete any remaining cover image relationships that are no longer needed
+        UserPhotoRelationship::where("user_id", $user->id)
+            ->whereIn("media_library_id", $existingCoverImageIds)
+            ->delete();
+
+        // Update cover images # end
     }
 }
