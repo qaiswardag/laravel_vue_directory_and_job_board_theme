@@ -55,7 +55,6 @@ const props = defineProps({
                 ></ThumbnailSmallImageSlider>
             </div>
 
-            <p class="py-4">username: {{ user.username }}</p>
             <Link
                 :href="route('users.guest.show', user.username)"
                 class="text-myPrimaryDarkGrayColor hover:text-white"
