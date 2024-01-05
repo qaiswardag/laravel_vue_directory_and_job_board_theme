@@ -586,7 +586,7 @@ onMounted(() => {
                                                     v-for="author in post.authors &&
                                                     post.authors"
                                                     :key="author"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                    class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
                                                 >
                                                     <div
                                                         v-if="
@@ -661,7 +661,7 @@ onMounted(() => {
                                                     v-for="jobCountry in post.countries &&
                                                     post.countries"
                                                     :key="jobCountry"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                    class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
                                                 >
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
@@ -683,7 +683,7 @@ onMounted(() => {
                                                     v-for="jobState in post.states &&
                                                     post.states"
                                                     :key="jobState"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                    class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
                                                 >
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
@@ -705,7 +705,7 @@ onMounted(() => {
                                                     v-for="jobType in post.types &&
                                                     post.types"
                                                     :key="jobType"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                    class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
                                                 >
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
@@ -747,7 +747,7 @@ onMounted(() => {
                                                         }
                                                     )"
                                                     :key="category"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                    class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
                                                 >
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
@@ -773,7 +773,7 @@ onMounted(() => {
                                                             a.localeCompare(b)
                                                         )"
                                                     :key="tag"
-                                                    class="text-xs rounded-full bg-myPrimaryLightGrayColor py-1.5 px-2 flex justify-center items-center gap-1"
+                                                    class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
                                                 >
                                                     <span
                                                         class="myMediumIcon material-symbols-outlined"
