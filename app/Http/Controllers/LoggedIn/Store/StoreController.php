@@ -93,6 +93,8 @@ class StoreController extends Controller
                     "last_name" => $user->last_name,
                     "job_title" => $user->job_title,
                     "profile_photo_path" => $user->profile_photo_path,
+                    "id" => $user->id,
+                    "username" => $user->username,
                 ];
             }
             if ($user === null) {
@@ -169,6 +171,8 @@ class StoreController extends Controller
                     "last_name" => $user->last_name,
                     "job_title" => $user->job_title,
                     "profile_photo_path" => $user->profile_photo_path,
+                    "id" => $user->id,
+                    "username" => $user->username,
                 ];
             }
             if ($user === null) {
@@ -538,6 +542,8 @@ class StoreController extends Controller
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
+                "id" => $user->id,
+                "username" => $user->username,
             ];
         }
         if ($user === null) {

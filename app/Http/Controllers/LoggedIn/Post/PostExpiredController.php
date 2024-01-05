@@ -59,20 +59,21 @@ class PostExpiredController extends Controller
             ->posts()
             ->with("coverImages")
             ->with("categories")
-            ->with(["stores" => function ($query) {
-                $query->with("states");
-            }])
+            ->with([
+                "stores" => function ($query) {
+                    $query->with("states");
+                },
+            ])
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
             ->where(function ($query) {
-                $query
-                    ->whereNotNull("ended_at");
+                $query->whereNotNull("ended_at");
                 $query->where("ended_at", "<", Carbon::now());
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $posts->appends($request->all());
@@ -87,6 +88,8 @@ class PostExpiredController extends Controller
                     "last_name" => $user->last_name,
                     "job_title" => $user->job_title,
                     "profile_photo_path" => $user->profile_photo_path,
+                    "id" => $user->id,
+                    "username" => $user->username,
                 ];
             }
             if ($user === null) {

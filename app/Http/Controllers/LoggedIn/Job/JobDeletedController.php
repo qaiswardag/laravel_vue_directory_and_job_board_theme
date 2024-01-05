@@ -33,7 +33,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use SoftDeletes;
 
-
 class JobDeletedController extends Controller
 {
     /**
@@ -75,7 +74,7 @@ class JobDeletedController extends Controller
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $jobs->appends($request->all());
@@ -90,14 +89,14 @@ class JobDeletedController extends Controller
                     "last_name" => $user->last_name,
                     "job_title" => $user->job_title,
                     "profile_photo_path" => $user->profile_photo_path,
+                    "id" => $user->id,
+                    "username" => $user->username,
                 ];
             }
             if ($user === null) {
                 $job->updatedBy = null;
             }
         }
-
-
 
         return Inertia::render("Jobs/IndexTrash", [
             "posts" => $jobs,
@@ -124,16 +123,11 @@ class JobDeletedController extends Controller
 
         $job = Job::withTrashed()->findOrFail($jobId);
 
-
         $job->restore();
-
 
         return redirect()
             ->back()
-            ->with(
-                "success",
-                "Successfully restored."
-            );
+            ->with("success", "Successfully restored.");
     }
 
     /**
@@ -171,12 +165,8 @@ class JobDeletedController extends Controller
 
         $job->forceDelete();
 
-
         return redirect()
             ->back()
-            ->with(
-                "success",
-                "Successfully deleted the Job."
-            );
+            ->with("success", "Successfully deleted the Job.");
     }
 }

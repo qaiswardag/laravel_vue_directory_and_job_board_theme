@@ -51,33 +51,14 @@ class UserController extends Controller
      */
     public function show($username)
     {
-        $username = urldecode($username);
+        $user = User::where("username", $username)->first();
 
-        if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+        if (!$user) {
             return Inertia::render("Error", [
-                "customError" =>
-                    "The URL can only consist of letters, numbers, and underscores. Special characters are not allowed.",
-                "status" => 404,
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
             ]);
         }
-
-        $user = User::where("username", $username)
-            ->when(
-                Auth::user() && Auth::user()->superadmin === 1,
-                function ($query) {
-                    // if the logged-in user is a superadmin, include all users
-                    return $query;
-                },
-                function ($query) {
-                    // if the logged-in user is not a superadmin, exclude users with public = 0
-                    return $query->where(function ($query) {
-                        $query
-                            ->where("public", "!=", 0)
-                            ->orWhere("id", "=", Auth::id()); // include the current user
-                    });
-                }
-            )
-            ->firstOrFail();
 
         return Inertia::render("Guests/User/Show", [
             "user" => $user,

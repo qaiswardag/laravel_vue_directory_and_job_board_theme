@@ -18,10 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
 
 class JobExpiredController extends Controller
 {
@@ -67,12 +65,10 @@ class JobExpiredController extends Controller
             })
             // Add the condition for started_at here
             ->where(function ($query) {
-                $query
-                    ->where('is_paid', true)
-                    ->whereNotNull("ended_at");
+                $query->where("is_paid", true)->whereNotNull("ended_at");
                 $query->where("ended_at", "<", Carbon::now());
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $jobs->appends($request->all());
@@ -87,6 +83,8 @@ class JobExpiredController extends Controller
                     "last_name" => $user->last_name,
                     "job_title" => $user->job_title,
                     "profile_photo_path" => $user->profile_photo_path,
+                    "id" => $user->id,
+                    "username" => $user->username,
                 ];
             }
             if ($user === null) {
@@ -151,9 +149,7 @@ class JobExpiredController extends Controller
         // Authorize the team that the user has selected to store the job for, rather than the team that the user is currently on.
         $this->authorize("can-create-and-update", $team);
 
-
         $newJob = null;
-
 
         try {
             DB::transaction(function () use ($job, &$newJob) {
@@ -171,15 +167,13 @@ class JobExpiredController extends Controller
                 ]);
                 // replicate new job # end
 
-
-
                 // replicate new categories # start
                 if ($job->categories !== null) {
                     foreach ($job->categories as $category) {
                         // Create a new instance of the pivot model
                         $newCategoriesPivotData = new JobCategoryRelation([
-                            'job_id' => $newJob->id,
-                            'category_id' => $category->id,
+                            "job_id" => $newJob->id,
+                            "category_id" => $category->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -193,8 +187,8 @@ class JobExpiredController extends Controller
                     foreach ($job->coverImages as $coverImage) {
                         // Create a new instance of the pivot model
                         $newCoverImagePivotData = new JobCoverImageRelation([
-                            'job_id' => $newJob->id,
-                            'media_library_id' => $coverImage->id,
+                            "job_id" => $newJob->id,
+                            "media_library_id" => $coverImage->id,
                             "primary" => $coverImage->pivot->primary ?? null,
                             // Add any other attributes if needed
                         ]);
@@ -209,8 +203,8 @@ class JobExpiredController extends Controller
                     foreach ($job->authors as $author) {
                         // Create a new instance of the pivot model
                         $newJobAuthorsPivotData = new AuthorJob([
-                            'job_id' => $newJob->id,
-                            'user_id' => $author->id,
+                            "job_id" => $newJob->id,
+                            "user_id" => $author->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -224,8 +218,8 @@ class JobExpiredController extends Controller
                     foreach ($job->types as $type) {
                         // Create a new instance of the pivot model
                         $newJobTypesPivotData = new JobTypeRelation([
-                            'job_id' => $newJob->id,
-                            'type_id' => $type->id,
+                            "job_id" => $newJob->id,
+                            "type_id" => $type->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -239,8 +233,8 @@ class JobExpiredController extends Controller
                     foreach ($job->states as $state) {
                         // Create a new instance of the pivot model
                         $newJobStatePivotData = new JobStateRelation([
-                            'job_id' => $newJob->id,
-                            'state_id' => $state->id,
+                            "job_id" => $newJob->id,
+                            "state_id" => $state->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -254,8 +248,8 @@ class JobExpiredController extends Controller
                     foreach ($job->countries as $country) {
                         // Create a new instance of the pivot model
                         $newJobStatePivotData = new JobCountryRelation([
-                            'job_id' => $newJob->id,
-                            'country_id' => $country->id,
+                            "job_id" => $newJob->id,
+                            "country_id" => $country->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -263,12 +257,9 @@ class JobExpiredController extends Controller
                     }
                 }
                 // replicate new countries # end
-
             });
         } catch (Exception $e) {
-            Log::error(
-                "Oops! Something went wrong. {$e->getMessage()}."
-            );
+            Log::error("Oops! Something went wrong. {$e->getMessage()}.");
 
             return Inertia::render("Error", [
                 "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG, // Error message for the user.
@@ -279,7 +270,7 @@ class JobExpiredController extends Controller
         if ($newJob !== null) {
             return redirect()->route("team.jobs.job.edit", [
                 "teamId" => $team->id,
-                "job" => $newJob->id
+                "job" => $newJob->id,
             ]);
         }
 

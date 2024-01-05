@@ -35,7 +35,7 @@ class PageBuilderController extends Controller
             $searchQuery = implode(",", $searchQuery);
         }
 
-        $query = PageBuilderComponent::orderBy('updated_at', 'desc')
+        $query = PageBuilderComponent::orderBy("updated_at", "desc")
             ->with("categories")
             ->with("coverImages");
 
@@ -78,6 +78,8 @@ class PageBuilderController extends Controller
                     "first_name" => $user->first_name,
                     "last_name" => $user->last_name,
                     "profile_photo_path" => $user->profile_photo_path,
+                    "id" => $user->id,
+                    "username" => $user->username,
                 ];
             }
             if ($user === null) {
@@ -109,8 +111,8 @@ class PageBuilderController extends Controller
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
-                // Error message for the user.
-                self::FORBIDDEN_ADMIN_TEAM_ACTION,
+                    // Error message for the user.
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
@@ -134,8 +136,8 @@ class PageBuilderController extends Controller
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
-                // Error message for the user.
-                self::FORBIDDEN_ADMIN_TEAM_ACTION,
+                    // Error message for the user.
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
@@ -244,8 +246,8 @@ class PageBuilderController extends Controller
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
-                // Error message for the user.
-                self::FORBIDDEN_ADMIN_TEAM_ACTION,
+                    // Error message for the user.
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
@@ -282,8 +284,8 @@ class PageBuilderController extends Controller
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
-                // Error message for the user.
-                self::FORBIDDEN_ADMIN_TEAM_ACTION,
+                    // Error message for the user.
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
@@ -323,8 +325,8 @@ class PageBuilderController extends Controller
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
-                // Error message for the user.
-                self::FORBIDDEN_ADMIN_TEAM_ACTION,
+                    // Error message for the user.
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }
@@ -459,8 +461,8 @@ class PageBuilderController extends Controller
         if ($team === null || $team->id !== 1) {
             return Inertia::render("Error", [
                 "customError" =>
-                // Error message for the user.
-                self::FORBIDDEN_ADMIN_TEAM_ACTION,
+                    // Error message for the user.
+                    self::FORBIDDEN_ADMIN_TEAM_ACTION,
                 "status" => 403, // HTTP status code for the response.
             ]);
         }

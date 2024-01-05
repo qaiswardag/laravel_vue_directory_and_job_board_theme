@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\LoggedIn\Post;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoggedIn\Post\StorePostRequest;
 use App\Models\Job\JobCategory;
@@ -25,7 +24,6 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use SoftDeletes;
-
 
 class PostDeletedController extends Controller
 {
@@ -59,15 +57,17 @@ class PostDeletedController extends Controller
             ->onlyTrashed()
             ->with("coverImages")
             ->with("categories")
-            ->with(["stores" => function ($query) {
-                $query->with("states");
-            }])
+            ->with([
+                "stores" => function ($query) {
+                    $query->with("states");
+                },
+            ])
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $posts->appends($request->all());
@@ -82,6 +82,8 @@ class PostDeletedController extends Controller
                     "last_name" => $user->last_name,
                     "job_title" => $user->job_title,
                     "profile_photo_path" => $user->profile_photo_path,
+                    "id" => $user->id,
+                    "username" => $user->username,
                 ];
             }
             if ($user === null) {
@@ -112,17 +114,13 @@ class PostDeletedController extends Controller
     {
         $this->authorize("can-create-and-update", $team);
 
-
         $post = Post::withTrashed()->findOrFail($postId);
 
         $post->restore();
 
         return redirect()
             ->back()
-            ->with(
-                "success",
-                "Successfully restored."
-            );
+            ->with("success", "Successfully restored.");
     }
 
     /**
@@ -162,9 +160,6 @@ class PostDeletedController extends Controller
 
         return redirect()
             ->back()
-            ->with(
-                "success",
-                "Successfully deleted the Post."
-            );
+            ->with("success", "Successfully deleted the Post.");
     }
 }

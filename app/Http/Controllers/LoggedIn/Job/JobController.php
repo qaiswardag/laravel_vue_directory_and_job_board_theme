@@ -77,15 +77,13 @@ class JobController extends Controller
                     ->orWhere("content", "like", "%" . $searchQuery . "%");
             })
             ->where(function ($query) {
-                $query
-                    ->where('is_paid', true)
-                    ->where(function ($query) {
-                        $query
-                            ->where('ended_at', '>', Carbon::now())
-                            ->orWhereNull('ended_at');
-                    });
+                $query->where("is_paid", true)->where(function ($query) {
+                    $query
+                        ->where("ended_at", ">", Carbon::now())
+                        ->orWhereNull("ended_at");
+                });
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $jobs->appends($request->all());
@@ -100,14 +98,14 @@ class JobController extends Controller
                     "last_name" => $user->last_name,
                     "job_title" => $user->job_title,
                     "profile_photo_path" => $user->profile_photo_path,
+                    "id" => $user->id,
+                    "username" => $user->username,
                 ];
             }
             if ($user === null) {
                 $job->updatedBy = null;
             }
         }
-
-
 
         return Inertia::render("Jobs/Index", [
             "posts" => $jobs,
@@ -161,16 +159,16 @@ class JobController extends Controller
                 $query
                     ->where(function ($subquery) {
                         $subquery
-                            ->where('is_paid', false)
+                            ->where("is_paid", false)
                             ->where(function ($subsubquery) {
                                 $subsubquery
-                                    ->where('ended_at', '>', Carbon::now())
-                                    ->orWhereNull('ended_at');
+                                    ->where("ended_at", ">", Carbon::now())
+                                    ->orWhereNull("ended_at");
                             });
                     })
-                    ->orWhereNull('is_paid');
+                    ->orWhereNull("is_paid");
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $jobs->appends($request->all());
@@ -185,14 +183,14 @@ class JobController extends Controller
                     "last_name" => $user->last_name,
                     "job_title" => $user->job_title,
                     "profile_photo_path" => $user->profile_photo_path,
+                    "id" => $user->id,
+                    "username" => $user->username,
                 ];
             }
             if ($user === null) {
                 $job->updatedBy = null;
             }
         }
-
-
 
         return Inertia::render("Jobs/IndexDraft", [
             "posts" => $jobs,
@@ -242,7 +240,7 @@ class JobController extends Controller
         // slug
         $slug = Str::lower(Str::slug($request->slug, "_"));
 
-        $endedAt =  Carbon::parse($startedAt)->addDays(30);
+        $endedAt = Carbon::parse($startedAt)->addDays(30);
 
         // Create the job and store it in a variable
         $job = Job::create([
@@ -411,12 +409,11 @@ class JobController extends Controller
             }
         }
 
-
         // job paid logic # start
         if ($request->published && Auth::user()->superadmin === null) {
             return redirect()->route("stripe.single.charge.job.create", [
                 "team" => $team->id,
-                "job" => $job->id
+                "job" => $job->id,
             ]);
         }
 
@@ -462,8 +459,9 @@ class JobController extends Controller
         $this->authorize("can-read", $team);
 
         // Retrieve the post, including soft-deleted posts
-        $job = Job::withTrashed()->with('coverImages')->findOrFail($jobId);
-
+        $job = Job::withTrashed()
+            ->with("coverImages")
+            ->findOrFail($jobId);
 
         // Retrieve the user associated with the job
         $user = User::find($job->user_id);
@@ -474,6 +472,8 @@ class JobController extends Controller
                 "first_name" => $user->first_name,
                 "last_name" => $user->last_name,
                 "profile_photo_path" => $user->profile_photo_path,
+                "id" => $user->id,
+                "username" => $user->username,
             ];
         }
         if ($user === null) {
@@ -540,7 +540,6 @@ class JobController extends Controller
                     "username" => $user->username,
                     "email" => $user->email,
                     "profile_photo_path" => $user->profile_photo_path,
-                    "profile_photo_url" => $user->profile_photo_url,
                 ];
             }
         }
@@ -601,15 +600,13 @@ class JobController extends Controller
                 ]);
                 // replicate new job # end
 
-
-
                 // replicate new categories # start
                 if ($job->categories !== null) {
                     foreach ($job->categories as $category) {
                         // Create a new instance of the pivot model
                         $newCategoriesPivotData = new JobCategoryRelation([
-                            'job_id' => $newJob->id,
-                            'category_id' => $category->id,
+                            "job_id" => $newJob->id,
+                            "category_id" => $category->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -623,8 +620,8 @@ class JobController extends Controller
                     foreach ($job->coverImages as $coverImage) {
                         // Create a new instance of the pivot model
                         $newCoverImagePivotData = new JobCoverImageRelation([
-                            'job_id' => $newJob->id,
-                            'media_library_id' => $coverImage->id,
+                            "job_id" => $newJob->id,
+                            "media_library_id" => $coverImage->id,
                             "primary" => $coverImage->pivot->primary ?? null,
                             // Add any other attributes if needed
                         ]);
@@ -639,8 +636,8 @@ class JobController extends Controller
                     foreach ($job->authors as $author) {
                         // Create a new instance of the pivot model
                         $newJobAuthorsPivotData = new AuthorJob([
-                            'job_id' => $newJob->id,
-                            'user_id' => $author->id,
+                            "job_id" => $newJob->id,
+                            "user_id" => $author->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -654,8 +651,8 @@ class JobController extends Controller
                     foreach ($job->types as $type) {
                         // Create a new instance of the pivot model
                         $newJobTypesPivotData = new JobTypeRelation([
-                            'job_id' => $newJob->id,
-                            'type_id' => $type->id,
+                            "job_id" => $newJob->id,
+                            "type_id" => $type->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -669,8 +666,8 @@ class JobController extends Controller
                     foreach ($job->states as $state) {
                         // Create a new instance of the pivot model
                         $newJobStatePivotData = new JobStateRelation([
-                            'job_id' => $newJob->id,
-                            'state_id' => $state->id,
+                            "job_id" => $newJob->id,
+                            "state_id" => $state->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -684,8 +681,8 @@ class JobController extends Controller
                     foreach ($job->countries as $country) {
                         // Create a new instance of the pivot model
                         $newJobStatePivotData = new JobCountryRelation([
-                            'job_id' => $newJob->id,
-                            'country_id' => $country->id,
+                            "job_id" => $newJob->id,
+                            "country_id" => $country->id,
                             // Add any other attributes if needed
                         ]);
                         // Save the new pivot data
@@ -693,12 +690,9 @@ class JobController extends Controller
                     }
                 }
                 // replicate new countries # end
-
             });
         } catch (Exception $e) {
-            Log::error(
-                "Oops! Something went wrong. {$e->getMessage()}."
-            );
+            Log::error("Oops! Something went wrong. {$e->getMessage()}.");
 
             return Inertia::render("Error", [
                 "customError" => self::TRY_CATCH_SOMETHING_WENT_WRONG, // Error message for the user.
@@ -741,7 +735,7 @@ class JobController extends Controller
         // Initialize the $authorId variable to null
         $authorId = null;
 
-        $endedAt =  Carbon::parse($startedAt)->addDays(30);
+        $endedAt = Carbon::parse($startedAt)->addDays(30);
 
         // Create the job and store it in a variable
         $job->update([
@@ -993,10 +987,14 @@ class JobController extends Controller
         }
 
         // job paid logic # start
-        if (!$job->is_paid && $request->published && Auth::user()->superadmin === null) {
+        if (
+            !$job->is_paid &&
+            $request->published &&
+            Auth::user()->superadmin === null
+        ) {
             return redirect()->route("stripe.single.charge.job.create", [
                 "team" => $team->id,
-                "job" => $job->id
+                "job" => $job->id,
             ]);
         }
 

@@ -59,9 +59,11 @@ class PostDraftController extends Controller
             ->posts()
             ->with("coverImages")
             ->with("categories")
-            ->with(["stores" => function ($query) {
-                $query->with("states");
-            }])
+            ->with([
+                "stores" => function ($query) {
+                    $query->with("states");
+                },
+            ])
             ->where(function ($query) use ($searchQuery) {
                 $query
                     ->where("title", "like", "%" . $searchQuery . "%")
@@ -71,13 +73,13 @@ class PostDraftController extends Controller
                 $query
                     ->where(function ($query) {
                         $query
-                            ->where('ended_at', '>=', Carbon::now())
-                            ->orWhereNull('ended_at');
+                            ->where("ended_at", ">=", Carbon::now())
+                            ->orWhereNull("ended_at");
                     })
-                    ->where('published', false)
-                    ->orWhereNull('published');
+                    ->where("published", false)
+                    ->orWhereNull("published");
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy("updated_at", "desc")
             ->paginate(12);
 
         $posts->appends($request->all());
@@ -92,6 +94,8 @@ class PostDraftController extends Controller
                     "last_name" => $user->last_name,
                     "job_title" => $user->job_title,
                     "profile_photo_path" => $user->profile_photo_path,
+                    "id" => $user->id,
+                    "username" => $user->username,
                 ];
             }
             if ($user === null) {
