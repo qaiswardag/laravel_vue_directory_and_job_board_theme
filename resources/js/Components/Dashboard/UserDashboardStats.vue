@@ -261,7 +261,7 @@ onMounted(() => {
                                     "
                                 >
                                     <div
-                                        class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-gray-100"
+                                        class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-myPrimaryLightGrayColor"
                                     >
                                         <img
                                             :src="`/storage/uploads/${file.medium_path}`"
@@ -345,7 +345,7 @@ onMounted(() => {
                                 v-for="post in getDashboardStats.fetchedData
                                     .latestJobs"
                                 :key="post.id"
-                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                                class="overflow-hidden whitespace-pre-line flex-1 bg-myPrimaryLightGrayColor h-auto rounded pb-2"
                             >
                                 <!-- start photo -->
 
@@ -399,7 +399,7 @@ onMounted(() => {
                                 v-for="post in getDashboardStats.fetchedData
                                     .latestStores"
                                 :key="post.id"
-                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                                class="overflow-hidden whitespace-pre-line flex-1 bg-myPrimaryLightGrayColor h-auto rounded pb-2"
                             >
                                 <!-- start photo -->
 
@@ -454,7 +454,7 @@ onMounted(() => {
                                 v-for="post in getDashboardStats.fetchedData
                                     .latestPosts"
                                 :key="post.id"
-                                class="overflow-hidden whitespace-pre-line flex-1 bg-gray-100 h-auto rounded pb-2"
+                                class="overflow-hidden whitespace-pre-line flex-1 bg-myPrimaryLightGrayColor h-auto rounded pb-2"
                             >
                                 <PostCardLoggedIn
                                     :post="post"

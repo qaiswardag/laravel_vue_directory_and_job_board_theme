@@ -27,8 +27,8 @@ const classes = computed(() => {
         <button
             v-if="as == 'button'"
             type="submit"
-            class="border-red-500 block w-full px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor text-left hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition"
-            :class="active ? 'bg-gray-100' : ''"
+            class="border-red-500 block w-full px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor text-left hover:bg-myPrimaryLightGrayColor focus:outline-none focus:bg-myPrimaryLightGrayColor transition"
+            :class="active ? 'bg-myPrimaryLightGrayColor' : ''"
         >
             <slot />
         </button>
@@ -36,7 +36,7 @@ const classes = computed(() => {
         <a
             v-else-if="as == 'a'"
             :href="href"
-            class="block px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition"
+            class="block px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-myPrimaryLightGrayColor focus:outline-none focus:bg-myPrimaryLightGrayColor transition"
             :class="active ? 'text-myPrimaryBrandColor' : ''"
         >
             <slot />
@@ -45,7 +45,7 @@ const classes = computed(() => {
         <Link
             v-else
             :href="href"
-            class="block px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition"
+            class="block px-4 py-2 text-sm leading-5 text-myPrimaryDarkGrayColor hover:bg-myPrimaryLightGrayColor focus:outline-none focus:bg-myPrimaryLightGrayColor transition"
             :class="active ? 'text-myPrimaryBrandColor' : ''"
         >
             <slot />

@@ -726,7 +726,7 @@ onMounted(() => {
                                                         class="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                                     >
                                                         <MenuItem
-                                                            class="w-full flex justify-start text-sm leading-5 text-myPrimaryDarkGrayColor py-4 px-4 z-30 rounded hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition text-myPrimaryBrandColor"
+                                                            class="w-full flex justify-start text-sm leading-5 text-myPrimaryDarkGrayColor py-4 px-4 z-30 rounded hover:bg-myPrimaryLightGrayColor focus:outline-none focus:bg-myPrimaryLightGrayColor transition text-myPrimaryBrandColor"
                                                         >
                                                             <button
                                                                 class="flex gap-1 items-center"

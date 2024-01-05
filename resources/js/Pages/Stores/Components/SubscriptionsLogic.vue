@@ -16,7 +16,7 @@ const props = defineProps({
     <div>
         <template v-if="!$page.props.user?.superadmin">
             <div
-                class="p-4 my-4 bg-gray-100 rounded-full flex items-center justify-center"
+                class="p-4 my-4 bg-myPrimaryLightGrayColor rounded-full flex items-center justify-center"
             >
                 <p class="myPrimaryParagraph font-medium">
                     Subscriptions Status

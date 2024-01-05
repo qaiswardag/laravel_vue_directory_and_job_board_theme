@@ -532,7 +532,7 @@ onMounted(() => {
                                 <li
                                     v-for="post in fetchedDataPosts.posts.data"
                                     :key="post.id"
-                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded bg-gray-100"
+                                    class="overflow-hidden whitespace-pre-line flex-1 h-auto rounded bg-myPrimaryLightGrayColor"
                                 >
                                     <!-- start photo -->
 

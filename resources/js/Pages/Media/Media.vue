@@ -156,10 +156,10 @@ const handleMediaLibrary = function (imageID) {
                                     v-for="file in images && images.data"
                                     :key="file.id"
                                     @click="handleMediaLibrary(file.id)"
-                                    class="rounded pb-2 cursor-pointer bg-gray-100"
+                                    class="rounded pb-2 cursor-pointer bg-myPrimaryLightGrayColor"
                                 >
                                     <div
-                                        class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-gray-100"
+                                        class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-t bg-myPrimaryLightGrayColor"
                                     >
                                         <img
                                             :src="`/storage/uploads/${file.medium_path}`"

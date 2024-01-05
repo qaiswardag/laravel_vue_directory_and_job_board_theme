@@ -22,7 +22,7 @@ const getShowModalTipTap = computed(() => {
         >
             <template v-if="pageBuilder.selectedElementIsValidText()">
                 <div
-                    class="h-16 py-2 pl-4 pr-4 bg-gray-100 rounded-full flex gap-4 flex-shrink-0 justify-start items-center border-gray-100 shadow"
+                    class="h-16 py-2 pl-4 pr-4 bg-myPrimaryLightGrayColor rounded-full flex gap-4 flex-shrink-0 justify-start items-center border-gray-100 shadow"
                 >
                     <button
                         @click="toggleTipTap = !toggleTipTap"

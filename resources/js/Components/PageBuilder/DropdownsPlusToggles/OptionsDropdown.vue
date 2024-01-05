@@ -145,7 +145,7 @@ const settingsSlideOverButton = function () {
                             class="cursor-pointer"
                             :class="[
                                 active
-                                    ? 'bg-gray-100 text-gray-900'
+                                    ? 'bg-myPrimaryLightGrayColor text-gray-900'
                                     : 'text-gray-700',
                                 'block px-4 py-2',
                             ]"
@@ -169,7 +169,7 @@ const settingsSlideOverButton = function () {
                             class="cursor-pointer"
                             :class="[
                                 active
-                                    ? 'bg-gray-100 text-gray-900'
+                                    ? 'bg-myPrimaryLightGrayColor text-gray-900'
                                     : 'text-gray-700',
                                 'block px-4 py-2',
                             ]"
@@ -192,7 +192,7 @@ const settingsSlideOverButton = function () {
                             class="cursor-pointer"
                             :class="[
                                 active
-                                    ? 'bg-gray-100 text-gray-900'
+                                    ? 'bg-myPrimaryLightGrayColor text-gray-900'
                                     : 'text-gray-700',
                                 'block px-4 py-2',
                             ]"
