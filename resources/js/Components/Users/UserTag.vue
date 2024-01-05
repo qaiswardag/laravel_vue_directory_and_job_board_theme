@@ -36,7 +36,7 @@ const props = defineProps({
 
             customClass,
         ]"
-        class="myPrimaryTag inline-block"
+        class="myPrimaryTag inline-block py-0 px-0"
     >
         <div class="flex items-center gap-2">
             <div
@@ -45,6 +45,7 @@ const props = defineProps({
                     Array.isArray(user.user_photo) &&
                     user.user_photo.length !== 0
                 "
+                class="pl-2"
             >
                 <ThumbnailSmallImageSlider
                     :images="user.user_photo"
@@ -57,7 +58,7 @@ const props = defineProps({
 
             <Link
                 :href="route('users.guest.show', user.username)"
-                class="text-myPrimaryDarkGrayColor hover:text-white"
+                class="text-myPrimaryDarkGrayColor flex items-center gap-2 bg-stone-300 px-2 py-2 rounded-r-full"
             >
                 <div
                     v-if="
