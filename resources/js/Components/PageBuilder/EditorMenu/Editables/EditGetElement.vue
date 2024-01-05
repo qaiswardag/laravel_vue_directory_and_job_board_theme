@@ -8,6 +8,13 @@ import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import TextColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/TextColorEditor.vue";
 import BackgroundColorEditor from "@/Components/PageBuilder/EditorMenu/Editables/BackgroundColorEditor.vue";
 
+const props = defineProps({
+    forUserNotTeam: {
+        required: true,
+        type: Boolean,
+    },
+});
+
 // store
 const store = useStore();
 const pageBuilder = new PageBuilder(store);
@@ -250,7 +257,7 @@ const handleModalIframeSrc = function () {
     </DynamicModal>
 
     <MediaLibraryModal
-        :forUserNotTeam="false"
+        :forUserNotTeam="forUserNotTeam"
         :user="$page.props.user"
         :team="$page.props.currentUserTeam"
         :open="showMediaLibraryModal"

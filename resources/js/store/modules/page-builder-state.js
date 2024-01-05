@@ -422,7 +422,6 @@ export default {
             //
             handlefetchComponents(
                 route("components.index", {
-                    team: data.team.id,
                     search_query: data.search_query,
                     category: data.category,
                     page: data.page,

@@ -13,7 +13,7 @@ class PageBuilderComponentsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Team $team, Request $request)
+    public function index(Request $request)
     {
         $categoryID = null;
 
@@ -28,8 +28,6 @@ class PageBuilderComponentsController extends Controller
         if (is_array($searchQuery)) {
             $searchQuery = implode(",", $searchQuery);
         }
-
-        $this->authorize("can-read", $team);
 
         $componentsCategories = PageBuilderComponentCategory::all();
 

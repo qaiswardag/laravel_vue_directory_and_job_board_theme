@@ -27,6 +27,10 @@ const props = defineProps({
     user: {
         required: true,
     },
+    forUserNotTeam: {
+        required: true,
+        type: Boolean,
+    },
 });
 
 const reactiveGetElement = ref(null);
@@ -76,7 +80,12 @@ const isHeadingElement = computed(() => {
             <div class="mb-4 overflow-y-scroll md:pb-24 pb-12">
                 <div v-show="isHeadingElement === true">
                     <article>
-                        <ImageEditor :user="user" :team="team"> </ImageEditor>
+                        <ImageEditor
+                            :forUserNotTeam="forUserNotTeam"
+                            :user="user"
+                            :team="team"
+                        >
+                        </ImageEditor>
                     </article>
                     <article>
                         <TipTap></TipTap>

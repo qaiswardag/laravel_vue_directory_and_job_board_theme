@@ -92,6 +92,16 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             "phone" => ["integer", "digits_between:4,16", "nullable"],
             "phone_code" => ["regex:/^\d{1,8}(-\d{1,8})?$/", "nullable"],
             "job_title" => ["required", "string", "max:255", "nullable"],
+
+            // In MySQL, the LONGTEXT data type can store up to 4GB of data,
+            // while the TEXT data type can store
+            // up to 65535 bytes (or characters) of data.
+
+            // If you want to allow the full capacity of the longText column
+            // (which is up to 4GB), you don't need to set a maximum length in
+            // the validation rule. You can simply use the required and string
+            // rules to validate that the input is not empty and is a string
+            "content" => ["required", "string", "min:2", "max:65535"],
         ]);
 
         $validator->after(function ($validator) use ($input) {
@@ -236,6 +246,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                     "email" => $input["email"],
                     "public" => $input["public"],
 
+                    "content" => $input["content"],
+
                     "country" => $input["country"] ?? null,
                     "city" => $input["city"] ?? null,
                     "state" => $input["state"] ?? null,
@@ -266,6 +278,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 "useranme" => $input["username"],
                 "email" => $input["email"],
                 "public" => $input["public"],
+
+                "content" => $input["content"],
 
                 "country" => $input["country"] ?? null,
                 "city" => $input["city"] ?? null,

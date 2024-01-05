@@ -12,6 +12,10 @@ const props = defineProps({
     user: {
         required: true,
     },
+    forUserNotTeam: {
+        required: true,
+        type: Boolean,
+    },
 });
 
 const store = useStore();
@@ -80,7 +84,7 @@ const handleAddImage = function () {
         />
     </div>
     <MediaLibraryModal
-        :forUserNotTeam="false"
+        :forUserNotTeam="forUserNotTeam"
         :user="user"
         :team="team"
         :open="showMediaLibraryModal"

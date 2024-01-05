@@ -110,7 +110,6 @@ const handleAddHelperComponent = async function (helperComponentObject) {
 const handleSearch = function (page) {
     // dispatch
     store.dispatch("pageBuilderState/loadComponents", {
-        team: props.team,
         page: page,
         search_query: search_query.value,
         category: categorySelected.value,
@@ -126,7 +125,6 @@ const fetchComponents = function (page) {
     //
     // dispatch
     store.dispatch("pageBuilderState/loadComponents", {
-        team: props.team,
         page: page,
         search_query: search_query.value,
         category: categorySelected.value,
@@ -143,7 +141,6 @@ const handleCategory = function (category) {
 
     // dispatch
     store.dispatch("pageBuilderState/loadComponents", {
-        team: props.team,
         page: 1,
         search_query: search_query.value,
         category: category,

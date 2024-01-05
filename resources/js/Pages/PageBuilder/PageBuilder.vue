@@ -30,10 +30,14 @@ const emit = defineEmits(["previewCurrentDesign"]);
 
 const props = defineProps({
     team: {
-        required: true,
+        required: false,
     },
     user: {
         required: true,
+    },
+    forUserNotTeam: {
+        required: true,
+        type: Boolean,
     },
 });
 
@@ -276,7 +280,9 @@ onMounted(async () => {
                     </div>
                 </div>
 
-                <EditGetElement></EditGetElement>
+                <EditGetElement
+                    :forUserNotTeam="forUserNotTeam"
+                ></EditGetElement>
                 <div
                     @click="store.commit('pageBuilderState/setComponent', null)"
                     id="contains-pagebuilder"
@@ -351,6 +357,7 @@ onMounted(async () => {
                 class="h-full duration-300 z-20 flex-shrink-0 overflow-hidden shadow-2xl rounded-l-2xl bg-white"
             >
                 <RightSidebarEditor
+                    :forUserNotTeam="forUserNotTeam"
                     :user="user"
                     :team="team"
                     @closeEditor="

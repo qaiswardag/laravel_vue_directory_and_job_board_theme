@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed, onMounted } from "vue";
+import { ref, watch, computed, onMounted, nextTick, onBeforeMount } from "vue";
 import { Link, router, useForm } from "@inertiajs/vue3";
 import ActionMessage from "@/Components/Actions/ActionMessage.vue";
 import FormSection from "@/Components/Forms/FormSection.vue";
@@ -16,6 +16,10 @@ import countryListAllIsoData from "@/utils/country-list-all-iso-data";
 import NotificationsFixedBottom from "@/Components/Modals/NotificationsFixedBottom.vue";
 import MediaLibraryModal from "@/Components/Modals/MediaLibraryModal.vue";
 import { useStore } from "vuex";
+import { delay } from "@/helpers/delay";
+import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
+import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
+import PageBuilder from "@/composables/PageBuilder";
 
 import {
     TrashIcon,
@@ -38,6 +42,9 @@ const props = defineProps({
     user: Object,
 });
 
+// store
+const store = useStore();
+
 const showUserInformation = ref(false);
 
 const form = useForm({
@@ -58,6 +65,7 @@ const form = useForm({
     phone: props.user.phone,
     job_title: props.user.job_title,
 
+    content: "",
     user_image: [],
 });
 
@@ -66,17 +74,91 @@ const form = useForm({
 //
 //
 //
-//
+// page builder logic start
+const pageBuilder = new PageBuilder(store);
+
+// Builder # Start
+const getComponents = computed(() => {
+    return store.getters["pageBuilderState/getComponents"];
+});
+
+const openDesignerModal = ref(false);
+
+// use designer model
+const firstDesignerModalButtonFunction = ref(null);
+const secondDesignerModalButtonFunction = ref(null);
+
+const handleDraftForUpdate = async function () {
+    store.commit("user/setIsLoading", true);
+
+    await nextTick();
+    pageBuilder.areComponentsStoredInLocalStorageUpdate();
+
+    await nextTick();
+    pageBuilder.setEventListenersForElements();
+
+    await delay();
+    store.commit("user/setIsLoading", false);
+};
+
+const handlePageBuilder = async function () {
+    // set modal standards
+    store.commit("user/setIsLoading", true);
+
+    await delay();
+    await nextTick();
+    openDesignerModal.value = true;
+
+    // handle click
+    firstDesignerModalButtonFunction.value = async function () {
+        store.commit("user/setIsLoading", true);
+
+        await nextTick();
+        pageBuilder.saveComponentsLocalStorageUpdate();
+        pageBuilder.synchronizeDOMAndComponents();
+        await delay();
+
+        // set open modal
+        openDesignerModal.value = false;
+        store.commit("user/setIsLoading", false);
+    };
+
+    // handle click
+    secondDesignerModalButtonFunction.value = async function () {
+        store.commit("user/setIsLoading", true);
+
+        await nextTick();
+        pageBuilder.saveComponentsLocalStorageUpdate();
+        pageBuilder.synchronizeDOMAndComponents();
+
+        await nextTick();
+        form.content =
+            Array.isArray(getComponents.value) &&
+            getComponents.value
+                .map((component) => {
+                    return component.html_code;
+                })
+                .join("");
+
+        // set open modal
+
+        openDesignerModal.value = false;
+        await delay();
+        store.commit("user/setIsLoading", false);
+    };
+
+    store.commit("user/setIsLoading", false);
+
+    // end modal
+};
+// Builder # End
+// page builder logic end
 //
 //
 //
 //
 //
 // Media library for profile photo # start
-//
-//
-// store
-const store = useStore();
 
 const getCurrentImage = computed(() => {
     return store.getters["mediaLibrary/getCurrentImage"];
@@ -96,7 +178,6 @@ const thirdButtonMedia = ref(null);
 const firstMediaButtonFunction = ref(null);
 const secondMediaButtonFunction = ref(null);
 const thirdMediaButtonFunction = ref(null);
-// Media library for profile photo # end
 
 //
 //
@@ -176,9 +257,11 @@ const setAsPrimaryImage = function (imageId) {
         }
     });
 };
+
 const handleRemoveUserImage = function (imageId) {
     form.user_image = form.user_image.filter((image) => image.id !== imageId);
 };
+// Media library for profile photo # end
 //
 //
 //
@@ -186,21 +269,13 @@ const handleRemoveUserImage = function (imageId) {
 //
 //
 //
-
-// modal content
-const typeModal = ref("");
-const gridColumnModal = ref(Number(1));
-const titleModal = ref("");
-const descriptionModal = ref("");
-const firstButtonModal = ref("");
-const secondButtonModal = ref(null);
-const thirdButtonModal = ref(null);
-// set dynamic modal handle functions
-const firstModalButtonFunction = ref(null);
-const secondModalButtonFunction = ref(null);
-const thirdModalButtonFunction = ref(null);
 
 const verificationLinkSent = ref(null);
+
+const clearPageBuilderOnSuccessUpdate = function () {
+    pageBuilder.removeItemComponentsLocalStorageUpdate();
+    store.commit("pageBuilderState/setComponents", []);
+};
 
 const updateProfileInformation = () => {
     form.country = selectedCountry.value?.code;
@@ -209,7 +284,9 @@ const updateProfileInformation = () => {
     form.post(route("user-profile-information.update"), {
         errorBag: "updateProfileInformation",
         preserveScroll: true,
-        onSuccess: () => {},
+        onSuccess: () => {
+            clearPageBuilderOnSuccessUpdate();
+        },
         onError: (err) => {},
         onFinish: () => {},
     });
@@ -263,27 +340,79 @@ const filteredPhoneCodes = computed(() =>
 
 // phone country code # end
 
+const pathPageBuilderLocalStorageUpdateDraft = ref(
+    `page-builder-draft-user-${props.user.id}`
+);
+
+onBeforeMount(() => {
+    if (props.user && !props.user.content) {
+        store.commit("pageBuilderState/setComponents", []);
+    }
+
+    // User is editing an existing Resource, rather than creating a new one from scratch.
+    if (props.user && props.user.content) {
+        // Parse the HTML content using DOMParser
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(props.user.content, "text/html");
+
+        // Select all <section> elements with data-componentid attribute
+        const sectionElements = doc.querySelectorAll(
+            "section[data-componentid]"
+        );
+
+        const extractedSections = [];
+        // Loop through the selected elements and extract outerHTML
+        sectionElements.forEach((section) => {
+            extractedSections.push({
+                html_code: section.outerHTML,
+                id: section.dataset.componentid,
+            });
+        });
+
+        store.commit("pageBuilderState/setComponents", extractedSections);
+
+        form.content = props.user.content;
+    }
+
+    store.commit(
+        "pageBuilderState/setLocalStorageItemNameUpdate",
+        pathPageBuilderLocalStorageUpdateDraft.value
+    );
+});
+
+//
+//
 onMounted(() => {
-    if (props.user.country) {
+    if (props.user && props.user.country) {
         selectedCountry.value =
             filteredCountries.value.find((country) => {
                 return country.code === props.user.country;
             }) || null;
     }
-    if (props.user.phone_code) {
+    if (props.user && props.user.phone_code) {
         selectedPhoneCode.value =
             filteredPhoneCodes.value.find((country) => {
                 return country.phone_code === props.user.phone_code;
             }) || null;
     }
 
-    if (props.user.user_photo) {
+    if (props.user && props.user.user_photo) {
         form.user_image = props.user.user_photo;
     }
 });
 </script>
 
 <template>
+    <PageBuilderModal
+        :show="openDesignerModal"
+        updateOrCreate="update"
+        @firstDesignerModalButtonFunction="firstDesignerModalButtonFunction"
+        @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"
+        @handleDraftForUpdate="handleDraftForUpdate"
+    >
+        <PageBuilderView :forUserNotTeam="true" :user="user"></PageBuilderView>
+    </PageBuilderModal>
+
     <MediaLibraryModal
         :forUserNotTeam="true"
         :user="user"
@@ -440,6 +569,46 @@ onMounted(() => {
                     <InputError :message="form.errors.job_title" />
                 </div>
             </div>
+
+            <!-- Builder #start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeader">Linkthree</div>
+                <!-- Add Content # start -->
+                <div
+                    class="rounded-lg mt-4 border-2 border-dashed border-gray-300 p-8 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                    <button type="button" @click="handlePageBuilder">
+                        <span class="myMediumIcon material-symbols-outlined">
+                            stacks
+                        </span>
+                    </button>
+
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">
+                        Build your profile by adding Components
+                    </h3>
+                    <p class="mt-1 text-sm text-gray-500">
+                        Get started by adding components using the drag & drop
+                        Page Builder.
+                    </p>
+                    <div class="mt-6">
+                        <button
+                            @click="handlePageBuilder"
+                            type="button"
+                            class="myPrimaryButton"
+                        >
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                stacks
+                            </span>
+                            Add content
+                        </button>
+                    </div>
+                </div>
+                <!-- Add Content # end -->
+                <InputError :message="form.errors.content" />
+            </div>
+            <!-- Builder #end -->
         </template>
         <template #sidebar>
             <div class="myInputsOrganization">

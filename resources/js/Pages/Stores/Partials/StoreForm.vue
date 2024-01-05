@@ -1053,7 +1053,11 @@ const pageBuilder = new PageBuilder(store);
         @secondDesignerModalButtonFunction="secondDesignerModalButtonFunction"
         @handleDraftForUpdate="handleDraftForUpdate"
     >
-        <PageBuilderView :user="user" :team="postForm.team"></PageBuilderView>
+        <PageBuilderView
+            :forUserNotTeam="false"
+            :user="user"
+            :team="postForm.team"
+        ></PageBuilderView>
     </PageBuilderModal>
 
     <FormSection @submitted="handleCreatePost">

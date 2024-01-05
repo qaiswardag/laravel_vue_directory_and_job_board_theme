@@ -498,6 +498,24 @@ Route::middleware([
 
     // Auth only media library # end
     // Auth only media library # end
+
+    //
+    //
+    //
+    //
+    //
+    // PAGE BUILDER #START
+    // PAGE BUILDER #START
+    // PAGE BUILDER #START
+    // PAGE BUILDER #START
+    Route::get("/components/index", [
+        PageBuilderComponentsController::class,
+        "index",
+    ])->name("components.index");
+    // PAGE BUILDER #END
+    // PAGE BUILDER #END
+    // PAGE BUILDER #END
+    // PAGE BUILDER #END
 });
 // AUTH ONLY # END
 // AUTH ONLY # END
@@ -794,19 +812,6 @@ Route::middleware([
     // ATTACH USER #END
     // ATTACH USER #END
     // ATTACH USER #END
-
-    // PAGE BUILDER #START
-    // PAGE BUILDER #START
-    // PAGE BUILDER #START
-    // PAGE BUILDER #START
-    Route::get("/team/components/index/{team}", [
-        PageBuilderComponentsController::class,
-        "index",
-    ])->name("components.index");
-    // PAGE BUILDER #END
-    // PAGE BUILDER #END
-    // PAGE BUILDER #END
-    // PAGE BUILDER #END
 });
 // AUTH & THIER TEAM -> CAN READ ONLY # END
 // AUTH & THIER TEAM -> CAN READ ONLY # END
