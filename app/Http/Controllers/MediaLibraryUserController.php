@@ -216,7 +216,7 @@ class MediaLibraryUserController extends Controller
     ) {
         // Create thumbnail, medium, and large image sizes
         $sizes = [
-            "thumbnail" => [200, 200],
+            "thumbnail" => [100, 100],
             "medium" => [600, 600],
             "large" => [2048, 2048],
         ];
