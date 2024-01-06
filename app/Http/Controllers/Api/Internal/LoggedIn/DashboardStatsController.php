@@ -88,7 +88,13 @@ class DashboardStatsController extends Controller
                 "id",
                 array_keys($latestUserIdsWithRoles)
             )
-                ->get(["id", "first_name", "last_name", "profile_photo_path"])
+                ->get([
+                    "id",
+                    "username",
+                    "first_name",
+                    "last_name",
+                    "profile_photo_path",
+                ])
                 ->map(function ($user) use ($latestUserIdsWithRoles) {
                     $user->role = $latestUserIdsWithRoles[$user->id] ?? null;
                     return $user;

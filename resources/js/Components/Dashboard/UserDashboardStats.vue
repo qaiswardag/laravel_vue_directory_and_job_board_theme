@@ -71,28 +71,6 @@ const handleMediaLibrary = function (imageID) {
     // end modal
 };
 
-const faqs = [
-    {
-        question: "Current user",
-        answer: props.user,
-    },
-    {
-        question: "Current user team",
-        answer: props.currentUserTeam,
-    },
-    {
-        question: "Current user  team role",
-        answer: props.currentUserTeamRole,
-    },
-];
-
-const stats = [
-    { id: 1, name: "Creators on the platform", value: "8,000+" },
-    { id: 2, name: "Flat platform fee", value: "3%" },
-    { id: 3, name: "Uptime guarantee", value: "99.9%" },
-    { id: 4, name: "Paid out to creators", value: "$70M" },
-];
-
 onMounted(() => {
     store.dispatch("userDashboard/loadDashboardStats", {
         teamId: props.currentUserTeam && props.currentUserTeam.id,
@@ -187,22 +165,13 @@ onMounted(() => {
                                     .latestTeamMembers"
                                 :key="member.id"
                             >
-                                <Link
-                                    :href="
-                                        route(
-                                            'team.members',
-                                            $page.props.user.current_team.id
-                                        )
-                                    "
-                                >
-                                    <UserTag
-                                        customClass="my-0"
-                                        :user="member"
-                                        :showTeamRole="true"
-                                        :clickable="true"
-                                        :currentUserTeamRole="member"
-                                    ></UserTag>
-                                </Link>
+                                <UserTag
+                                    customClass="my-0"
+                                    :user="member"
+                                    :showTeamRole="true"
+                                    :clickable="true"
+                                    :currentUserTeamRole="member"
+                                ></UserTag>
                             </li>
                         </ul>
                     </div>

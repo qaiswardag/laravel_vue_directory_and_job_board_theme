@@ -51,7 +51,9 @@ class UserController extends Controller
      */
     public function show($username)
     {
-        $user = User::where("username", $username)->first();
+        $user = User::where("username", $username)
+            ->select("first_name", "last_name", "content")
+            ->first();
 
         if (!$user) {
             return Inertia::render("Error", [

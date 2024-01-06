@@ -16,15 +16,25 @@ defineProps({
 });
 </script>
 <template>
+    <Head :title="`${user.first_name} ${user.last_name}`">
+        <meta
+            head-key="description"
+            name="description"
+            content="Search for everything you need in the world of fashion within the United Arab Emirates. From fashion stores and jobs to in-store campaigns."
+        />
+    </Head>
+
     <MainLayout>
         <GuestsLayout>
             <template #header> </template>
+
             <div class="myPrimarySection">
-                <p class="my-12">User: {{ JSON.stringify(user) }}</p>
-                <p class="text-3xl my-8">
-                    {{ user.first_name }}
-                    {{ user.last_name }}
-                </p>
+                <h1 class="myPrimaryHeader text-center">
+                    {{ user.first_name }} {{ user.last_name }}
+                </h1>
+            </div>
+            <div id="page-builder-editor">
+                <section v-html="user.content"></section>
             </div>
         </GuestsLayout>
     </MainLayout>

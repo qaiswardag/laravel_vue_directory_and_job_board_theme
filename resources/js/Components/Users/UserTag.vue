@@ -38,39 +38,44 @@ const props = defineProps({
         ]"
         class="myPrimaryTag inline-block py-0 px-0"
     >
-        <div class="flex items-center gap-2">
-            <div
-                v-if="
-                    user.user_photo &&
-                    Array.isArray(user.user_photo) &&
-                    user.user_photo.length !== 0
-                "
-                class="pl-2"
-            >
-                <ThumbnailSmallImageSlider
-                    :images="user.user_photo"
-                    imageSize="thumbnail_path"
-                    imageHeight="h-10"
-                    imageWidth="w-10"
-                    :roundedFull="true"
-                ></ThumbnailSmallImageSlider>
-            </div>
-
-            <div
-                v-if="
-                    user.user_photo &&
-                    Array.isArray(user.user_photo) &&
-                    user.user_photo.length === 0
-                "
-                class="pl-2"
+        <div class="flex items-center rounded-full">
+            <Link
+                :href="route('users.guest.show', user.username)"
+                class="bg-red-400 py-1 rounded-l-full hover:bg-emerald-600"
             >
                 <div
-                    class="text-white flex-shrink-0 h-10 w-10 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs rounded-l-full"
+                    v-if="
+                        user.user_photo &&
+                        Array.isArray(user.user_photo) &&
+                        user.user_photo.length !== 0
+                    "
+                    class="px-2 rounded-l-full"
                 >
-                    {{ user.first_name.charAt(0).toUpperCase() }}
-                    {{ user.last_name.charAt(0).toUpperCase() }}
+                    <ThumbnailSmallImageSlider
+                        :images="user.user_photo"
+                        imageSize="thumbnail_path"
+                        imageHeight="h-10"
+                        imageWidth="w-10"
+                        :roundedFull="true"
+                    ></ThumbnailSmallImageSlider>
                 </div>
-            </div>
+
+                <div
+                    v-if="
+                        user.user_photo &&
+                        Array.isArray(user.user_photo) &&
+                        user.user_photo.length === 0
+                    "
+                    class="px-2"
+                >
+                    <div
+                        class="text-white flex-shrink-0 h-10 w-10 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs rounded-l-full"
+                    >
+                        {{ user.first_name.charAt(0).toUpperCase() }}
+                        {{ user.last_name.charAt(0).toUpperCase() }}
+                    </div>
+                </div>
+            </Link>
 
             <Link
                 :href="route('users.guest.show', user.username)"
