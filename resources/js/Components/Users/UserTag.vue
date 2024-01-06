@@ -42,7 +42,7 @@ const props = defineProps({
             <a
                 :href="route('users.guest.show', user.username)"
                 target="_blank"
-                class="py-1 rounded-l-full"
+                class="rounded-l-full"
             >
                 <div
                     v-if="
@@ -55,8 +55,8 @@ const props = defineProps({
                     <ThumbnailSmallImageSlider
                         :images="user.user_photo"
                         imageSize="thumbnail_path"
-                        imageHeight="h-10"
-                        imageWidth="w-10"
+                        imageHeight="h-8"
+                        imageWidth="w-8"
                         :roundedFull="true"
                     ></ThumbnailSmallImageSlider>
                 </div>
@@ -70,7 +70,7 @@ const props = defineProps({
                     class="px-2"
                 >
                     <div
-                        class="text-white flex-shrink-0 h-10 w-10 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs rounded-l-full"
+                        class="text-white flex-shrink-0 h-8 w-8 rounded-full bg-myPrimaryBrandColor flex justify-center items-center text-xs rounded-l-full"
                     >
                         {{ user.first_name.charAt(0).toUpperCase() }}
                         {{ user.last_name.charAt(0).toUpperCase() }}
@@ -81,22 +81,26 @@ const props = defineProps({
             <a
                 :href="route('users.guest.show', user.username)"
                 target="_blank"
-                class="text-myPrimaryDarkGrayColor flex items-center gap-2 bg-stone-300 px-2 py-2"
-                :class="[user.user_photo ? 'rounded-r-full' : 'rounded-full']"
+                class=""
             >
-                <div class="flex flex-col items-start justify-start">
-                    <span class="font-medium">
+                <div
+                    class="flex flex-col items-start justify-center bg-stone-300 min-h-[3rem] px-2"
+                    :class="[
+                        user.user_photo ? 'rounded-r-full' : 'rounded-full',
+                    ]"
+                >
+                    <span class="myPrimaryParagraph font-medium h-full text-sm">
                         {{ user.first_name }}
                         {{ user.last_name }}
                     </span>
                     <template v-if="showJobTitle && user.job_title">
-                        <p class="text-xs font-normal">
+                        <span class="myPrimaryParagraph text-xs font-normal">
                             {{ `title: ${user.job_title}` }}
-                        </p>
+                        </span>
                     </template>
 
                     <template v-if="showTeamRole && currentUserTeamRole">
-                        <p class="text-xs font-normal">
+                        <span class="myPrimaryParagraph text-xs font-normal">
                             role:
                             {{
                                 currentUserTeamRole?.key
@@ -108,7 +112,7 @@ const props = defineProps({
                                     ? currentUserTeamRole.role
                                     : null
                             }}
-                        </p>
+                        </span>
                     </template>
                 </div>
             </a>

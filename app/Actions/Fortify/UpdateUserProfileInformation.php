@@ -101,7 +101,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             // (which is up to 4GB), you don't need to set a maximum length in
             // the validation rule. You can simply use the required and string
             // rules to validate that the input is not empty and is a string
-            "content" => ["required", "string", "min:2", "max:65535"],
+            "content" => ["string", "min:2", "max:65535", "nullable"],
         ]);
 
         $validator->after(function ($validator) use ($input) {

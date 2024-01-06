@@ -116,7 +116,7 @@ const breadcrumbsLinks = [
                                         class="absolute inset-0"
                                         aria-hidden="true"
                                     />
-                                    Company Members
+                                    Members and Company Users
                                 </Link>
                             </h3>
                             <p class="mt-2 text-sm text-gray-500">

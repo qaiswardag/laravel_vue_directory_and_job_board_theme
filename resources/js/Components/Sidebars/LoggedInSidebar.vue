@@ -84,21 +84,10 @@ import {
                     </p>
                 </Link>
             </div>
-
-            <div
-                class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
-            >
-                <UserTag
-                    :user="$page.props.user"
-                    :showTeamRole="true"
-                    :currentUserTeamRole="$page.props.currentUserTeamRole"
-                    :clickable="true"
-                ></UserTag>
-            </div>
         </template>
 
+        <!-- User tag # start -->
         <div
-            v-if="!$page.props.user.current_team"
             class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
         >
             <UserTag
@@ -107,7 +96,20 @@ import {
                 :currentUserTeamRole="$page.props.currentUserTeamRole"
                 :clickable="true"
             ></UserTag>
+
+            <Link
+                :href="route('user.profile.update')"
+                class="focus:outline-none"
+            >
+                <button
+                    type="button"
+                    class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
+                >
+                    <span class="material-symbols-outlined"> edit </span>
+                </button>
+            </Link>
         </div>
+        <!-- User tag # end -->
 
         <!--  -->
         <template
@@ -137,12 +139,13 @@ import {
             </div>
         </template>
         <!--  -->
-        <template
+        <div
             v-if="
                 $page.props.user.all_teams.length === 0 &&
                 $page.props.user.current_team === null &&
                 $page.props.jetstream.hasTeamFeatures
             "
+            class="border-b border-gray-200 pb-2"
         >
             <Link
                 :href="route('teams.create.team')"
@@ -152,10 +155,10 @@ import {
                     <span class="myMediumIcon material-symbols-outlined">
                         check
                     </span>
-                    <span> Create Company </span>
+                    <span class="font-medium"> Create Company </span>
                 </div>
             </Link>
-        </template>
+        </div>
 
         <SideBarLink
             :href="route('dashboard')"

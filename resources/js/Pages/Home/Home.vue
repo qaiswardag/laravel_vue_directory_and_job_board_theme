@@ -59,38 +59,6 @@ const faqs = [
                 </div>
             </template>
 
-            <!-- Builder # start -->
-            <FullWidthElement
-                :descriptionArea="true"
-                class="bg-red-50 lg:block hidden"
-            >
-                <template #title
-                    >Customize the design the way you want</template
-                >
-                <template #description>
-                    Design stores, jobs or campaigns your way with our intuitive
-                    page builder. Customize layouts, colors, and fonts to
-                    achieve the perfect design.
-                    <br />
-                    myself is like a digital shopping window, focusing on your
-                    brand image, authenticity and credibility! Just like on a
-                    shopping site customers can search for anything they are
-                    looking for.
-                </template>
-                <template #content>
-                    <div class="w-full relative">
-                        <img
-                            class="top-0 left-0 w-full object-cover rounded-lg"
-                            src="/app-images/pages/home/edit_or_add_designs.jpg"
-                            alt="image"
-                        />
-                        <div
-                            class="bg-black/0 absolute top-0 left-0 w-full h-full rounded-lg"
-                        ></div>
-                    </div>
-                </template>
-            </FullWidthElement>
-            <!-- Builder # end -->
             <!-- 4 images # start -->
             <FullWidthElement :descriptionArea="true" class="bg-gray-50">
                 <template #title
@@ -215,6 +183,149 @@ const faqs = [
                 </template>
             </FullWidthElement>
             <!-- 4 images # end -->
+
+            <!-- Builder # start -->
+            <FullWidthElement
+                :descriptionArea="true"
+                class="bg-red-50 lg:block hidden"
+            >
+                <template #title
+                    >Customize the design the way you want</template
+                >
+                <template #description>
+                    Design stores, jobs or campaigns your way with our intuitive
+                    page builder. Customize layouts, colors, and fonts to
+                    achieve the perfect design.
+                    <br />
+                    myself is like a digital shopping window, focusing on your
+                    brand image, authenticity and credibility! Just like on a
+                    shopping site customers can search for anything they are
+                    looking for.
+                </template>
+                <template #content>
+                    <div class="w-full relative">
+                        <img
+                            class="top-0 left-0 w-full object-cover rounded-lg"
+                            src="/app-images/pages/home/edit_or_add_designs.jpg"
+                            alt="image"
+                        />
+                        <div
+                            class="bg-black/0 absolute top-0 left-0 w-full h-full rounded-lg"
+                        ></div>
+                    </div>
+                </template>
+            </FullWidthElement>
+            <!-- Builder # end -->
+
+            <!-- Linktree # start -->
+            <FullWidthElement
+                :descriptionArea="true"
+                class="bg-gray-50 lg:block hidden"
+            >
+                <template #title
+                    >A Linktree Template To Suit Every Brand And
+                    Creator</template
+                >
+                <template #description>
+                    Different Link Apps, integrations and visual styles can help
+                    you create a Linktree that looks and feels like you and your
+                    brand. Explore our library of custom templates to grow and
+                    connect with your audience even more easily!
+                </template>
+                <template #content>
+                    <div
+                        class="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                    >
+                        <div
+                            class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                        >
+                            <Link :href="route('stores.guest.index')">
+                                <div
+                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                ></div>
+                                <div class="px-2 pt-8 absolute top-0 w-full">
+                                    <p class="text-white mySecondaryHeader">
+                                        Number 1
+                                    </p>
+                                    <p
+                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
+                                    >
+                                        myself is the largest and most exclusive
+                                        fashion directory in the United Arab
+                                        Emirates, gathering all fashion brands
+                                        and stores in one searchable solution.
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div
+                            class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                        >
+                            <Link :href="route('posts.guest.index')">
+                                <div
+                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                ></div>
+
+                                <div class="px-2 pt-8 absolute top-0 w-full">
+                                    <p class="text-white mySecondaryHeader">
+                                        Number 2
+                                    </p>
+                                    <p
+                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
+                                    >
+                                        Fashion campaigns in the United Arab
+                                        Emirates. Discover new products or get
+                                        inspired.
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div
+                            class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                        >
+                            <Link :href="route('jobs.guest.index')">
+                                <div
+                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                ></div>
+                                <div class="px-2 pt-8 absolute top-0 w-full">
+                                    <p class="text-white mySecondaryHeader">
+                                        Number 3
+                                    </p>
+                                    <p
+                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
+                                    >
+                                        Find the right job for you in the
+                                        fashion industry in the United Arab
+                                        Emirates.
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div
+                            class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                        >
+                            <Link :href="route('professional.index')">
+                                <div
+                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
+                                ></div>
+                                <div class="px-2 pt-8 absolute top-0 w-full">
+                                    <p class="text-white mySecondaryHeader">
+                                        Number 4
+                                    </p>
+                                    <p
+                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
+                                    >
+                                        myself is like a digital shopping
+                                        window, focusing on your brand image,
+                                        authenticity and credibility.
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                </template>
+            </FullWidthElement>
+            <!-- Linktree # end -->
 
             <!-- FAQ # start -->
             <FullWidthElement
