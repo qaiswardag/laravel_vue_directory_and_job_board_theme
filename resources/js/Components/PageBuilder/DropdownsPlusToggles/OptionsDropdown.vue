@@ -59,7 +59,7 @@ const deleteAllComponents = function () {
     showModalDeleteAllComponents.value = true;
     typeModal.value = "delete";
     gridColumnModal.value = 2;
-    titleModal.value = "Delete Sections";
+    titleModal.value = "Delete all Sections";
     descriptionModal.value = "Are you sure you want to delete all sections?";
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
@@ -81,11 +81,15 @@ const deleteAllComponents = function () {
 
 // handle slideover window
 const handleSettingsSlideOver = function () {
+    store.commit("pageBuilderState/setComponent", null);
+
     titleSettingsSlideOverRight.value = "Settings";
     showSettingsSlideOverRight.value = true;
 };
 // handle slideover window
 const settingsSlideOverButton = function () {
+    store.commit("pageBuilderState/setComponent", null);
+
     showSettingsSlideOverRight.value = false;
 };
 </script>
@@ -208,7 +212,7 @@ const settingsSlideOverButton = function () {
                                     </span>
                                 </div>
                                 <span class="group-hover:text-white">
-                                    Clear page
+                                    Delete all Sections
                                 </span>
                             </div>
                         </div>

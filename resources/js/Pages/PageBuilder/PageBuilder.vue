@@ -73,6 +73,9 @@ const firstButtonTextSearchComponents = ref("");
 const firstModalButtonSearchComponentsFunction = ref(null);
 
 const handleAddComponent = function () {
+    store.commit("pageBuilderState/setComponent", null);
+
+    //
     titleModalAddComponent.value = "Add Components to Page";
     firstButtonTextSearchComponents.value = "Close";
     showModalAddComponent.value = true;
@@ -173,6 +176,26 @@ onMounted(async () => {
                     </div>
                 </div>
 
+                <div class="flex gap-2 items-center justify-center">
+                    <button
+                        type="button"
+                        @click="
+                            () => {
+                                store.commit(
+                                    'pageBuilderState/setComponentArrayAddMethod',
+                                    'unshift'
+                                );
+                                handleAddComponent();
+                            }
+                        "
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                    >
+                        <span class="myMediumIcon material-symbols-outlined">
+                            add
+                        </span>
+                    </button>
+                </div>
+
                 <div
                     @click.self="
                         store.commit('pageBuilderState/setComponent', null)
@@ -240,7 +263,7 @@ onMounted(async () => {
                                 <span
                                     class="myMediumIcon material-symbols-outlined"
                                 >
-                                    stacks
+                                    add
                                 </span>
                             </button>
                             <button
