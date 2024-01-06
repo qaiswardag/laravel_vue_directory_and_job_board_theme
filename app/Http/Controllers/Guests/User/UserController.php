@@ -51,9 +51,32 @@ class UserController extends Controller
      */
     public function show($username)
     {
-        $user = User::where("username", $username)
-            ->select("first_name", "last_name", "content")
-            ->first();
+        $user = User::where("username", $username)->first();
+
+        // Hide additional fields
+        $user->makeHidden([
+            "email",
+            "public",
+            "id",
+            "superadmin",
+            "profile_photo_url",
+            "public",
+            "two_factor_confirmed_at",
+            "stripe_id",
+            "pm_type",
+            "pm_last_four",
+            "trial_ends_at",
+            "current_team_id",
+            "phone",
+            "vat_number",
+            "tax_id",
+            "vat_id",
+            "phone_code",
+            "postal_code",
+            "line1",
+            "line2",
+            "email_verified_at",
+        ]);
 
         if (!$user) {
             return Inertia::render("Error", [
@@ -63,7 +86,7 @@ class UserController extends Controller
         }
 
         return Inertia::render("Guests/User/Show", [
-            "user" => $user,
+            "userData" => $user,
         ]);
     }
 

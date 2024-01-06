@@ -41,7 +41,7 @@ const props = defineProps({
         <div class="flex items-center rounded-full">
             <Link
                 :href="route('users.guest.show', user.username)"
-                class="bg-red-400 py-1 rounded-l-full hover:bg-emerald-600"
+                class="py-1 rounded-l-full"
             >
                 <div
                     v-if="

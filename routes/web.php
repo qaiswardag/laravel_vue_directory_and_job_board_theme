@@ -158,7 +158,7 @@ Route::middleware([])->group(function () {
         "users.guest.index"
     );
     // unique user
-    Route::get("/user/{username}", [UserController::class, "show"])->name(
+    Route::get("/users/{username}", [UserController::class, "show"])->name(
         "users.guest.show"
     );
     // USERS #END

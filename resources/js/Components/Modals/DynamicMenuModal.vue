@@ -74,6 +74,7 @@ const handleLogout = () => {
 
                 <template
                     v-if="
+                        $page.props.user.all_teams &&
                         $page.props.user.all_teams.length > 0 &&
                         $page.props.user.current_team &&
                         $page.props.jetstream.hasTeamFeatures
