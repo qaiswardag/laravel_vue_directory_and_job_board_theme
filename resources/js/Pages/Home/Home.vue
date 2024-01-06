@@ -190,7 +190,8 @@ const faqs = [
                 class="bg-red-50 lg:block hidden"
             >
                 <template #title
-                    >Customize the design the way you want</template
+                    >Customize the design of Stores, Jobs and Campaigns the way
+                    you want</template
                 >
                 <template #description>
                     Design stores, jobs or campaigns your way with our intuitive
