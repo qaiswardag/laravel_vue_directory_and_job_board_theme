@@ -53,7 +53,7 @@ const handleUpdateTeam = function () {
     // end modal
 };
 
-const isSlugEditable = ref(false);
+const isSlugEditable = ref(true);
 const slugValueTeamName = ref("");
 const slugValueCustom = ref("");
 
@@ -301,13 +301,14 @@ const handleRemoveCoverImage = function (imageId) {
 
 onBeforeMount(() => {
     // User is editing an existing Resource, rather than creating a new one from scratch.
-    if (props.team !== null) {
+    if (props.team) {
         postForm.name = props.team.name;
 
         // slug logic
         // slug is editable when editing an existing post
-        isSlugEditable.value = false;
+        isSlugEditable.value = true;
         slugValueCustom.value = props.team.slug;
+        slugValueTeamName.value = props.team.slug;
 
         postForm.public = props.team.public ? true : false;
 
@@ -351,13 +352,13 @@ onBeforeMount(() => {
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Company slug
+                        Company slug or username
                     </div>
                 </div>
 
                 <div class="myInputGroup">
                     <div v-show="isSlugEditable === false">
-                        <InputLabel for="slug" value="Slug" />
+                        <InputLabel for="slug" value="Slug or username" />
                         <div class="relative flex items-center">
                             <TextInput
                                 placeholder="Slug.."

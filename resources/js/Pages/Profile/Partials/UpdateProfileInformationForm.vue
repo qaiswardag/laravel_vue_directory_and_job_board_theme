@@ -20,8 +20,12 @@ import { delay } from "@/helpers/delay";
 import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
+import slugify from "slugify";
+import config from "@/utils/config";
 
 import {
+    LockClosedIcon,
+    LockOpenIcon,
     TrashIcon,
     CheckIcon,
     NewspaperIcon,
@@ -45,6 +49,12 @@ const props = defineProps({
 // store
 const store = useStore();
 
+//
+const isSlugEditable = ref(false);
+const slugValueTeamName = ref("");
+const slugValueCustom = ref("");
+//
+//
 const showUserInformation = ref(false);
 
 const form = useForm({
@@ -71,7 +81,78 @@ const form = useForm({
 
 //
 //
-//
+const watchSlugInputChanges = function () {
+    watch(
+        () => slugValueCustom.value,
+        (newValue) => {
+            form.username = slugify(
+                slugValueCustom.value,
+                config.slugifyOptions
+            );
+        },
+        { immediate: true }
+    );
+
+    watch(
+        () => form.first_name,
+        (newValue) => {
+            if (isSlugEditable.value === false) {
+                form.username = slugify(
+                    `${form.first_name} ${form.last_name}`,
+                    config.slugifyOptions
+                );
+                slugValueTeamName.value = slugify(
+                    `${form.first_name} ${form.last_name}`,
+                    config.slugifyOptions
+                );
+            }
+        }
+    );
+
+    watch(
+        () => form.last_name,
+        (newValue) => {
+            if (isSlugEditable.value === false) {
+                form.username = slugify(
+                    `${form.first_name} ${form.last_name}`,
+                    config.slugifyOptions
+                );
+                slugValueTeamName.value = slugify(
+                    `${form.first_name} ${form.last_name}`,
+                    config.slugifyOptions
+                );
+            }
+        }
+    );
+};
+
+watch(
+    () => isSlugEditable.value,
+    (newValue) => {
+        watchSlugInputChanges();
+    },
+    { immediate: true }
+);
+
+const handleCloseLock = function () {
+    isSlugEditable.value = false;
+
+    //
+    //
+    //
+    form.username = slugify(
+        `${form.first_name} ${form.last_name}`,
+        config.slugifyOptions
+    );
+    slugValueTeamName.value = slugify(
+        `${form.first_name} ${form.last_name}`,
+        config.slugifyOptions
+    );
+};
+const handleOpenLock = function () {
+    isSlugEditable.value = true;
+};
+
 //
 //
 // page builder logic start
@@ -349,29 +430,38 @@ onBeforeMount(() => {
         store.commit("pageBuilderState/setComponents", []);
     }
 
-    // User is editing an existing Resource, rather than creating a new one from scratch.
-    if (props.user && props.user.content) {
-        // Parse the HTML content using DOMParser
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(props.user.content, "text/html");
+    // slug logic
+    // slug is editable when editing an existing post
+    if (props.user) {
+        isSlugEditable.value = true;
+        slugValueCustom.value = props.user.username;
+        slugValueTeamName.value = props.user.username;
 
-        // Select all <section> elements with data-componentid attribute
-        const sectionElements = doc.querySelectorAll(
-            "section[data-componentid]"
-        );
+        // user content
+        // User is editing an existing Resource, rather than creating a new one from scratch.
+        if (props.user.content) {
+            // Parse the HTML content using DOMParser
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(props.user.content, "text/html");
 
-        const extractedSections = [];
-        // Loop through the selected elements and extract outerHTML
-        sectionElements.forEach((section) => {
-            extractedSections.push({
-                html_code: section.outerHTML,
-                id: section.dataset.componentid,
+            // Select all <section> elements with data-componentid attribute
+            const sectionElements = doc.querySelectorAll(
+                "section[data-componentid]"
+            );
+
+            const extractedSections = [];
+            // Loop through the selected elements and extract outerHTML
+            sectionElements.forEach((section) => {
+                extractedSections.push({
+                    html_code: section.outerHTML,
+                    id: section.dataset.componentid,
+                });
             });
-        });
 
-        store.commit("pageBuilderState/setComponents", extractedSections);
+            store.commit("pageBuilderState/setComponents", extractedSections);
 
-        form.content = props.user.content;
+            form.content = props.user.content;
+        }
     }
 
     store.commit(
@@ -437,51 +527,6 @@ onMounted(() => {
 
         <template #main>
             <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                    <div class="myPrimaryFormOrganizationHeader">Username</div>
-                </div>
-                <div class="myInputGroup">
-                    <InputLabel for="user_name" value="Username" />
-                    <div class="relative flex items-center">
-                        <TextInput
-                            id="user_name"
-                            v-model="form.username"
-                            :value="user.username"
-                            type="text"
-                            autocomplete="off"
-                            readonly
-                            class="myPrimaryInputReadonly"
-                        />
-                        <div
-                            class="absolute inset-y-0 right-0 pr-1.5 flex items-center cursor-pointer"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5 text-myPrimaryErrorColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                                />
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="myPrimaryParagraph text-xs italic">
-                        Your username must be between 4-15 characters in length
-                        and can only contain letters (A-Z) numbers (0-9) and
-                        underscores. Special characters and spaces are not
-                        allowed.
-                    </p>
-                    <InputError :message="form.errors.username" />
-                </div>
-
-                <SectionBorder></SectionBorder>
-
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
                         Profile details
@@ -568,6 +613,76 @@ onMounted(() => {
                     />
                     <InputError :message="form.errors.job_title" />
                 </div>
+                <SectionBorder></SectionBorder>
+
+                <!-- post slug start -->
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">Username</div>
+                </div>
+
+                <div class="myInputGroup">
+                    <div v-show="isSlugEditable === false">
+                        <InputLabel for="slug" value="Username" />
+                        <div class="relative flex items-center">
+                            <TextInput
+                                placeholder="Slug.."
+                                id="slug"
+                                v-model="slugValueTeamName"
+                                type="text"
+                                class="block w-full myPrimaryInputReadonly"
+                                readonly
+                                autocomplete="off"
+                            />
+                            <div
+                                @click="handleOpenLock"
+                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
+                            >
+                                <LockClosedIcon
+                                    class="w-5 h-5 text-myPrimaryErrorColor"
+                                >
+                                </LockClosedIcon>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-show="isSlugEditable === true">
+                        <InputLabel
+                            for="slug"
+                            value="Username
+"
+                        />
+                        <div class="relative flex items-center cursor-pointer">
+                            <TextInput
+                                placeholder="Slug.."
+                                id="slug"
+                                v-model="slugValueCustom"
+                                type="text"
+                                class="block w-full"
+                                autocomplete="off"
+                            />
+                            <div
+                                @click="handleCloseLock"
+                                class="cursor-pointer absolute inset-y-0 right-0 pr-1.5 flex items-center"
+                            >
+                                <LockOpenIcon
+                                    class="w-5 h-5 text-myPrimaryLinkColor"
+                                >
+                                </LockOpenIcon>
+                            </div>
+                        </div>
+                        <div class="myPrimaryTag italic">
+                            Slug: {{ form.username }}
+                        </div>
+                    </div>
+                    <p class="myPrimaryParagraph text-xs italic">
+                        Your username must be between 4-15 characters in length
+                        and can only contain letters (A-Z) numbers (0-9) and
+                        underscores. Special characters and spaces are not
+                        allowed.
+                    </p>
+                    <InputError :message="form.errors.username" />
+                </div>
+
+                <!-- post slug end -->
             </div>
 
             <!-- Builder #start -->
