@@ -39,8 +39,9 @@ const props = defineProps({
         class="myPrimaryTag inline-block py-0 px-0"
     >
         <div class="flex items-center rounded-full">
-            <Link
+            <a
                 :href="route('users.guest.show', user.username)"
+                target="_blank"
                 class="py-1 rounded-l-full"
             >
                 <div
@@ -75,10 +76,11 @@ const props = defineProps({
                         {{ user.last_name.charAt(0).toUpperCase() }}
                     </div>
                 </div>
-            </Link>
+            </a>
 
-            <Link
+            <a
                 :href="route('users.guest.show', user.username)"
+                target="_blank"
                 class="text-myPrimaryDarkGrayColor flex items-center gap-2 bg-stone-300 px-2 py-2"
                 :class="[user.user_photo ? 'rounded-r-full' : 'rounded-full']"
             >
@@ -109,7 +111,7 @@ const props = defineProps({
                         </p>
                     </template>
                 </div>
-            </Link>
+            </a>
         </div>
     </div>
     <!-- user photo - end -->

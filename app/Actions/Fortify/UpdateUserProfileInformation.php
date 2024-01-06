@@ -231,7 +231,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 );
         }
 
-        dd("username er:", $input["username"]);
+        // dd("username er:", $input["username"]);
         if (
             $input["email"] !== $user->email &&
             $user instanceof MustVerifyEmail
