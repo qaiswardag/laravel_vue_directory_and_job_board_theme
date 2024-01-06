@@ -50,7 +50,7 @@ const props = defineProps({
                         Array.isArray(user.user_photo) &&
                         user.user_photo.length !== 0
                     "
-                    class="px-2 rounded-l-full"
+                    class="px-2 rounded-l-full min-h-[3rem] flex items-center justify-center"
                 >
                     <ThumbnailSmallImageSlider
                         :images="user.user_photo"

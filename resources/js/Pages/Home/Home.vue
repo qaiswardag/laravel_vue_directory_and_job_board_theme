@@ -223,104 +223,176 @@ const faqs = [
                 class="bg-gray-50 lg:block hidden"
             >
                 <template #title
-                    >A Linktree Template To Suit Every Brand And
-                    Creator</template
+                    >Share multiple links, suitable for everyone and fully
+                    free</template
                 >
                 <template #description>
-                    Different Link Apps, integrations and visual styles can help
-                    you create a Linktree that looks and feels like you and your
-                    brand. Explore our library of custom templates to grow and
-                    connect with your audience even more easily!
+                    Add and manage multiple links to your landing page with
+                    minimal effort and reach the right people.
                 </template>
                 <template #content>
                     <div
                         class="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
                     >
                         <div
-                            class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                            class="bg-gradient-to-r from-red-100 via-red-200 to-pink-100 w-full lg:h-[32rem] h-[32rem] relative col-span-1 flex flex-col text-center shadow rounded-lg"
                         >
-                            <Link :href="route('stores.guest.index')">
+                            <div
+                                class="px-2 pt-8 absolute top-0 w-full rounded-full"
+                            >
                                 <div
-                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
-                                ></div>
-                                <div class="px-2 pt-8 absolute top-0 w-full">
-                                    <p class="text-white mySecondaryHeader">
-                                        Number 1
-                                    </p>
-                                    <p
-                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
-                                    >
-                                        myself is the largest and most exclusive
-                                        fashion directory in the United Arab
-                                        Emirates, gathering all fashion brands
-                                        and stores in one searchable solution.
-                                    </p>
+                                    class="flex justify-center items-center shrink-0 w-full mb-8"
+                                >
+                                    <img
+                                        class="object-cover w-28 h-28 rounded-full"
+                                        src="/app-images/pages/home/woman_1.jpg"
+                                        alt="image"
+                                    />
                                 </div>
-                            </Link>
-                        </div>
-                        <div
-                            class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
-                        >
-                            <Link :href="route('posts.guest.index')">
-                                <div
-                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
-                                ></div>
 
-                                <div class="px-2 pt-8 absolute top-0 w-full">
-                                    <p class="text-white mySecondaryHeader">
-                                        Number 2
-                                    </p>
-                                    <p
-                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
-                                    >
-                                        Fashion campaigns in the United Arab
-                                        Emirates. Discover new products or get
-                                        inspired.
-                                    </p>
+                                <p class="myQuaternaryHeader">Stella Hill</p>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Instagram
                                 </div>
-                            </Link>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Website
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Blog
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Contact
+                                </div>
+                            </div>
                         </div>
                         <div
-                            class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                            class="bg-gradient-to-r from-gray-100 via-gray-100 to-gray-200 w-full lg:h-[32rem] h-[32rem] relative col-span-1 flex flex-col text-center shadow rounded-lg"
                         >
-                            <Link :href="route('jobs.guest.index')">
+                            <div
+                                class="px-2 pt-8 absolute top-0 w-full rounded-full"
+                            >
                                 <div
-                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
-                                ></div>
-                                <div class="px-2 pt-8 absolute top-0 w-full">
-                                    <p class="text-white mySecondaryHeader">
-                                        Number 3
-                                    </p>
-                                    <p
-                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
-                                    >
-                                        Find the right job for you in the
-                                        fashion industry in the United Arab
-                                        Emirates.
-                                    </p>
+                                    class="flex justify-center items-center shrink-0 w-full mb-8"
+                                >
+                                    <img
+                                        class="object-cover w-28 h-28 rounded-full"
+                                        src="/app-images/pages/home/woman_2.jpg"
+                                        alt="image"
+                                    />
                                 </div>
-                            </Link>
+
+                                <p class="myQuaternaryHeader">
+                                    Victoria Alvarez
+                                </p>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    YouTube
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    TikTok
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Instagram
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Contact
+                                </div>
+                            </div>
                         </div>
                         <div
-                            class="w-full lg:h-[30rem] h-[22rem] relative col-span-1 flex flex-col bg-red-100 text-center shadow rounded-lg"
+                            class="bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-orange-100 via-green-400 to-orange-100 w-full lg:h-[32rem] h-[32rem] relative col-span-1 flex flex-col text-center shadow rounded-lg"
                         >
-                            <Link :href="route('professional.index')">
+                            <div
+                                class="px-2 pt-8 absolute top-0 w-full rounded-full"
+                            >
                                 <div
-                                    class="bg-black/10 absolute top-0 left-0 w-full h-full rounded-lg"
-                                ></div>
-                                <div class="px-2 pt-8 absolute top-0 w-full">
-                                    <p class="text-white mySecondaryHeader">
-                                        Number 4
-                                    </p>
-                                    <p
-                                        class="myPrimaryParagraph text-white font-medium drop-shadow-sm"
-                                    >
-                                        myself is like a digital shopping
-                                        window, focusing on your brand image,
-                                        authenticity and credibility.
-                                    </p>
+                                    class="flex justify-center items-center shrink-0 w-full mb-8"
+                                >
+                                    <img
+                                        class="object-cover w-28 h-28 rounded-full"
+                                        src="/app-images/pages/home/woman_3.jpg"
+                                        alt="image"
+                                    />
                                 </div>
-                            </Link>
+
+                                <p class="myQuaternaryHeader">
+                                    Leilani Sanders
+                                </p>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Work
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Affiliate Links
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Daily Outfits
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Fashion Inspo
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gradient-to-l from-orange-200 via-orange-200 to-orange-300 w-full lg:h-[32rem] h-[32rem] relative col-span-1 flex flex-col text-center shadow rounded-lg"
+                        >
+                            <div
+                                class="px-2 pt-8 absolute top-0 w-full rounded-full"
+                            >
+                                <div
+                                    class="flex justify-center items-center shrink-0 w-full mb-8"
+                                >
+                                    <img
+                                        class="object-cover w-28 h-28 rounded-full"
+                                        src="/app-images/pages/home/woman_4.jpg"
+                                        alt="image"
+                                    />
+                                </div>
+
+                                <p class="myQuaternaryHeader">Alice Howard</p>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Travel Blog
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Travel Tips
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    Inspiration
+                                </div>
+                                <div
+                                    class="mySecondaryButton w-full mt-4 bg-transparent text-myPrimaryDarkGrayColor text-sm bg-white hover:bg-white"
+                                >
+                                    About me
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </template>
