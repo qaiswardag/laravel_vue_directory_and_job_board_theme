@@ -248,6 +248,16 @@ onMounted(() => {
                         </span>
                     </button>
                     <button
+                        @click="handleURL"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        :class="{
+                            'bg-myPrimaryLinkColor text-white':
+                                editor.isActive('link'),
+                        }"
+                    >
+                        <span class="material-symbols-outlined"> link </span>
+                    </button>
+                    <button
                         @click="
                             editor
                                 .chain()
@@ -296,16 +306,6 @@ onMounted(() => {
                         }"
                     >
                         <span class="material-symbols-outlined"> list </span>
-                    </button>
-                    <button
-                        @click="handleURL"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                        :class="{
-                            'bg-myPrimaryLinkColor text-white':
-                                editor.isActive('link'),
-                        }"
-                    >
-                        <span class="material-symbols-outlined"> link </span>
                     </button>
                 </div>
                 <editor-content
