@@ -27,6 +27,10 @@
         async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzutbgFidPQIG0Gkaqx8DmiwiB0pUFyeE&libraries=places&callback=console.debug"></script>
         <!-- Google maps end -->
 
+        <!-- Google Search Console start-->
+        <meta name="google-site-verification" content="erV447H5voAvs1MTiQCgETMlHpVvA0mDRIUCSh79tjI" />
+        <!-- Google Search Console end -->
+
         <!-- Favicon start -->
         <link
         rel="icon"
