@@ -106,7 +106,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
         $validator->after(function ($validator) use ($input) {
             $minCoverImages = 0;
-            $maxCoverImages = 2;
+            $maxCoverImages = 1;
 
             // Validation for profile photo # start
             // Validation for profile photo # start
