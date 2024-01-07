@@ -469,20 +469,50 @@ h3 {
 /* Manage P, Link, H1, H2 # end */
 
 /* CSS for content inside page builder # start */
-#page-builder-editor a {
+#page-builder-editor-editable-area a {
+    pointer-events: none;
+    /* display: block;
+    width: 100%; */
+}
+
+#page-builder-editor a,
+#page-builder-editor-editable-area a {
     text-decoration: underline;
 }
-#page-builder-editor strong {
+
+#page-builder-editor #linktree p,
+#page-builder-editor-editable-area #linktree p {
+    width: 100%;
+}
+
+#page-builder-editor #linktree a,
+#page-builder-editor-editable-area #linktree a {
+    @apply py-4 px-2 block w-full;
+}
+
+#page-builder-editor #linktree a,
+#page-builder-editor-editable-area #linktree a {
+    text-decoration: none;
+    font-weight: 500;
+    color: inherit !important;
+    width: 100%;
+    cursor: pointer;
+}
+#page-builder-editor strong,
+#page-builder-editor-editable-area strong {
     font-weight: 500;
 }
 
 #page-builder-editor ol,
-#page-builder-editor ul {
+#page-builder-editor-editable-area ol,
+#page-builder-editor ul,
+#page-builder-editor-editable-area ul {
     list-style: disc !important;
     padding: 1rem 0rem;
 }
 
-#page-builder-editor li {
+#page-builder-editor li,
+#page-builder-editor-editable-area li {
     line-height: 2.2rem;
     margin-left: 1.5em; /* Adjust this value as needed */
 }

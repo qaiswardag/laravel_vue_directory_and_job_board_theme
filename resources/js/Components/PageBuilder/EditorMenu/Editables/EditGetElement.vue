@@ -336,7 +336,6 @@ const handleModalIframeSrc = function () {
                 v-if="
                     getElement &&
                     !getBasePrimaryImage &&
-                    !pageBuilder.selectedElementIsValidText() &&
                     !pageBuilder.ElOrFirstChildIsIframe()
                 "
             >

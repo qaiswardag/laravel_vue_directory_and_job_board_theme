@@ -687,7 +687,7 @@ onMounted(() => {
 
             <!-- Builder #start -->
             <div class="myInputsOrganization">
-                <div class="myPrimaryFormOrganizationHeader">Linkthree</div>
+                <div class="myPrimaryFormOrganizationHeader">Linktree</div>
                 <!-- Add Content # start -->
                 <div
                     class="rounded-lg mt-4 border-2 border-dashed border-gray-300 p-8 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

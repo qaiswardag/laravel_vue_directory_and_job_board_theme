@@ -311,7 +311,7 @@ onMounted(async () => {
                     id="contains-pagebuilder"
                     class="pl-4 pr-4 pb-4 overflow-y-auto h-screen pt-1"
                 >
-                    <div id="pagebuilder" class="">
+                    <div id="pagebuilder">
                         <div ref="draggableZone">
                             <!-- Added Components to DOM # start -->
                             <div
@@ -319,7 +319,7 @@ onMounted(async () => {
                                     getComponents
                                 ) && getComponents"
                                 :key="component"
-                                id="page-builder-editor"
+                                id="page-builder-editor-editable-area"
                                 class="bg-white grow"
                             >
                                 <div
