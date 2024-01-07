@@ -88,7 +88,7 @@ import {
 
         <!-- User tag # start -->
         <div
-            class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
+            class="justify-between group flex items-center border-b border-gray-200 pb-2"
         >
             <UserTag
                 :user="$page.props.user"
@@ -120,7 +120,7 @@ import {
             "
         >
             <div
-                class="justify-between group flex items-center px-2 border-b border-gray-200 pb-2"
+                class="justify-between group flex items-center border-b border-gray-200 pb-2"
             >
                 <Link
                     :href="route('user.teams.switch')"
