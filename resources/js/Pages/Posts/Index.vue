@@ -633,7 +633,8 @@ onMounted(() => {
                                                                 >
                                                                     check
                                                                 </span>
-                                                                Duplicate Post
+                                                                Duplicate
+                                                                Campaign
                                                             </button>
                                                         </MenuItem>
                                                     </MenuItems>
