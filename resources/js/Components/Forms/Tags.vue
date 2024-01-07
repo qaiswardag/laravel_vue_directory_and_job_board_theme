@@ -22,7 +22,7 @@ const error = ref(null);
 const vueTag = ref("");
 const tagsEntered = ref([]);
 const emit = defineEmits(["handleTags"]);
-const regexSpecialCharacters = /^[a-zA-Z ]+$/;
+const regexSpecialCharacters = /^[a-zA-Z ' -]+$/;
 
 // handle input
 const handleInput = function () {
