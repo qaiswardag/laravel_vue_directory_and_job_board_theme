@@ -22,19 +22,17 @@ const error = ref(null);
 const vueTag = ref("");
 const tagsEntered = ref([]);
 const emit = defineEmits(["handleTags"]);
-const regexSpecialCharacters = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+const regexSpecialCharacters = /^[a-zA-Z ]+$/;
 
 // handle input
 const handleInput = function () {
     // error
     error.value = null;
-    // spaces are not allowed
-    if (vueTag.value.includes(" ")) {
-        error.value = "Spaces not allowed.";
-        return;
-    }
+
+    vueTag.value = vueTag.value.trim();
+
     // check for empty tag and special characters
-    if (vueTag.value === "" || regexSpecialCharacters.test(vueTag.value)) {
+    if (vueTag.value === "" || !regexSpecialCharacters.test(vueTag.value)) {
         error.value = "Tag can not be empty or includes special characters.";
         return;
     }
