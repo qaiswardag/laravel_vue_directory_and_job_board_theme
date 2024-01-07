@@ -485,14 +485,12 @@ const handleSwitchTeam = function () {
 
     <div class="flex justify-center">
         <div class="justify-between group flex items-center px-2">
-            <Link :href="route('profile.show')">
-                <UserTag
-                    :user="$page.props.user"
-                    :showTeamRole="true"
-                    :currentUserTeamRole="$page.props.currentUserTeamRole"
-                    :clickable="true"
-                ></UserTag>
-            </Link>
+            <UserTag
+                :user="$page.props.user"
+                :showTeamRole="true"
+                :currentUserTeamRole="$page.props.currentUserTeamRole"
+                :clickable="true"
+            ></UserTag>
         </div>
     </div>
 
