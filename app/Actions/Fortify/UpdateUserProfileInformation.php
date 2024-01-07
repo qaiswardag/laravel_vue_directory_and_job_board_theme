@@ -91,7 +91,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             "postal_code" => ["string", "min:2", "max:255", "nullable"],
             "phone" => ["integer", "digits_between:4,16", "nullable"],
             "phone_code" => ["regex:/^\d{1,8}(-\d{1,8})?$/", "nullable"],
-            "job_title" => ["required", "string", "max:255", "nullable"],
+            "job_title" => ["string", "max:255", "nullable"],
 
             // In MySQL, the LONGTEXT data type can store up to 4GB of data,
             // while the TEXT data type can store
