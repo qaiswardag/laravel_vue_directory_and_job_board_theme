@@ -8,7 +8,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryWidget {
-        @apply py-8 px-4 border border-myPrimaryLightGrayColor rounded-md;
+        @apply py-8 px-4 border border-myPrimaryLightGrayColor rounded-md bg-white;
     }
 
     /*
