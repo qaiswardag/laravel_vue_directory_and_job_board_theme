@@ -164,45 +164,58 @@ onMounted(async () => {
     >
         <div class="relative h-full flex">
             <div
-                class="min-w-[3.5rem] py-2 mx-2 px-2 rounded-xl flex flex-col myPrimaryGap"
+                @click.self="
+                    store.commit('pageBuilderState/setComponent', null)
+                "
+                class="min-w-[3.5rem] py-2"
             >
-                <div>
-                    <div class="rounded-full mb-8">
-                        <img
-                            class="rounded-full mx-auto w-12"
-                            src="/logo/myself_text_logo_white_bg_black.svg"
-                            alt="Logo"
-                        />
+                <div class="mx-4 flex flex-col myPrimaryGap">
+                    <div>
+                        <div class="rounded-full mb-8">
+                            <img
+                                class="rounded-full mx-auto w-12"
+                                src="/logo/myself_text_logo_white_bg_black.svg"
+                                alt="Logo"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 items-center justify-center">
+                        <button
+                            type="button"
+                            @click="
+                                () => {
+                                    store.commit(
+                                        'pageBuilderState/setComponentArrayAddMethod',
+                                        'unshift'
+                                    );
+                                    handleAddComponent();
+                                }
+                            "
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        >
+                            <span
+                                class="myMediumIcon material-symbols-outlined"
+                            >
+                                add
+                            </span>
+                        </button>
+                    </div>
+
+                    <div
+                        @click.self="
+                            store.commit('pageBuilderState/setComponent', null)
+                        "
+                    >
+                        <ComponentTopMenu v-if="getElement"></ComponentTopMenu>
                     </div>
                 </div>
-
-                <div class="flex gap-2 items-center justify-center">
-                    <button
-                        type="button"
-                        @click="
-                            () => {
-                                store.commit(
-                                    'pageBuilderState/setComponentArrayAddMethod',
-                                    'unshift'
-                                );
-                                handleAddComponent();
-                            }
-                        "
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                    >
-                        <span class="myMediumIcon material-symbols-outlined">
-                            add
-                        </span>
-                    </button>
-                </div>
-
                 <div
                     @click.self="
                         store.commit('pageBuilderState/setComponent', null)
                     "
-                >
-                    <ComponentTopMenu v-if="getElement"></ComponentTopMenu>
-                </div>
+                    class="w-full h-full"
+                ></div>
             </div>
             <main
                 class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl"
