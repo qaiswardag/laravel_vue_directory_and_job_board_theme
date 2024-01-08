@@ -59,8 +59,8 @@ const deleteAllComponents = function () {
     showModalDeleteAllComponents.value = true;
     typeModal.value = "delete";
     gridColumnModal.value = 2;
-    titleModal.value = "Delete all Sections";
-    descriptionModal.value = "Are you sure you want to delete all sections?";
+    titleModal.value = "Delete all Components";
+    descriptionModal.value = "Are you sure you want to delete all Components?";
     firstButtonModal.value = "Close";
     secondButtonModal.value = null;
     thirdButtonModal.value = "Delete";
@@ -212,7 +212,7 @@ const settingsSlideOverButton = function () {
                                     </span>
                                 </div>
                                 <span class="group-hover:text-white">
-                                    Delete all Sections
+                                    Delete all Components
                                 </span>
                             </div>
                         </div>
