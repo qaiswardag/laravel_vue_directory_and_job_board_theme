@@ -10,6 +10,12 @@ import { usePage } from "@inertiajs/vue3";
 import storeSubscriptionPrices from "@/utils/pricing/store-subscription-prices";
 import jobPrices from "@/utils/pricing/job-prices";
 import PageHeader from "@/Components/Headers/PageHeader.vue";
+
+const props = defineProps({
+    myselfContactInformation: {
+        required: true,
+    },
+});
 </script>
 
 <template>
@@ -240,6 +246,58 @@ import PageHeader from "@/Components/Headers/PageHeader.vue";
                             </div>
                         </div>
                     </div>
+                </template>
+            </FullWidthElement>
+            <FullWidthElement :descriptionArea="true" class="bg-red-50">
+                <template #title>Contact us</template>
+                <template #description
+                    >If you have questions or need assistance, please contact
+                    us.
+                </template>
+                <template #content>
+                    <template v-if="!myselfContactInformation">
+                        <p class="myPrimaryParagraph">
+                            We are always ready to assist you and will gladly
+                            answer any questions or inquiries you may have in
+                            connection with our services! Please note that our
+                            Service Assistants are available Monday through
+                            Friday between 10.00 am and 08.00 pm.
+                        </p>
+                        <p class="myPrimaryParagraph font-medium mt-4">
+                            To ensure security and prevent spam, please log in
+                            or register before contacting us — takes less than
+                            30 seconds.
+                        </p>
+
+                        <Link class="font-medium" :href="route('login')">
+                            Log in or register now.
+                        </Link>
+                    </template>
+
+                    <template v-if="myselfContactInformation">
+                        <p class="myPrimaryParagraph">
+                            We are always ready to assist you and will gladly
+                            answer any questions or inquiries you may have in
+                            connection with our services! Please note that our
+                            Service Assistants are available Monday through
+                            Friday between 10.00 am and 08.00 pm.
+                        </p>
+                        <p
+                            v-if="myselfContactInformation"
+                            class="myPrimaryParagraph mt-4"
+                        >
+                            <a
+                                :href="`mailto:${myselfContactInformation.email}`"
+                            >
+                                <span class="text-myPrimaryDarkGrayColor">
+                                    Email:
+                                </span>
+                                <span class="font-medium">
+                                    {{ myselfContactInformation.email }}
+                                </span>
+                            </a>
+                        </p>
+                    </template>
                 </template>
             </FullWidthElement>
         </GuestsLayout>

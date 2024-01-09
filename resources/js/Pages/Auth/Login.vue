@@ -105,22 +105,31 @@ const submit = () => {
                                     </label>
                                 </div>
 
-                                <div
-                                    class="flex items-center justify-between mt-4"
-                                >
-                                    <Link
-                                        v-if="canResetPassword"
-                                        :href="route('password.request')"
-                                        class="myPrimaryLink"
-                                    >
-                                        Forgot your password?
-                                    </Link>
-
+                                <div class="flex items-center justify-end mt-4">
                                     <SubmitButton
                                         :disabled="form.processing"
                                         buttonText="Log in"
                                     >
                                     </SubmitButton>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between mt-12"
+                                >
+                                    <Link
+                                        :href="route('register')"
+                                        class="myPrimaryLink"
+                                    >
+                                        Sign up
+                                    </Link>
+
+                                    <span class="myPrimaryLink"> | </span>
+                                    <Link
+                                        v-if="canResetPassword"
+                                        :href="route('password.request')"
+                                        class="myPrimaryLink"
+                                    >
+                                        Forgot password?
+                                    </Link>
                                 </div>
                             </form>
                         </AuthenticationCard>

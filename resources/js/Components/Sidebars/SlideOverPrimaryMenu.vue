@@ -56,7 +56,7 @@ const navigation = [
             route().current("posts.guest.show"),
     },
     {
-        label: "Professional",
+        label: "Professional & Contact",
         route: {
             name: "professional.index",
             parameters: [],
