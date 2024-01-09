@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { usePromise } from "./helpers/usePromise";
 import { isObject } from "./helpers/isObject";
+import { delay } from "@/helpers/delay";
 
 export const vueFetch = function vueFetch() {
     // Initializing state management references
@@ -52,10 +53,11 @@ export const vueFetch = function vueFetch() {
                 handleData(url, fetchOptions, customFetchOptions);
 
                 throw new Error(
-                    "Error 500. Loading time exceeded. Trying again"
+                    "Error 500. Loading time exceeded. Trying again in 2 secondes."
                 );
             }
 
+            await delay(2000);
             // Fetch and handle response
             const response = await fetch(url, fetchOptions);
 
