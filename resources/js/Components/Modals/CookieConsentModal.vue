@@ -59,7 +59,7 @@ const handleCookieModal = function () {
 
                                 <p class="myPrimaryParagraph text-sm">
                                     This website uses cookies and local storage
-                                    for performance, personalization. Only
+                                    for performance and personalization. Only
                                     essential cookies are turned on by default.
                                     Read more at the
                                     <a
