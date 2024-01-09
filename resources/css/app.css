@@ -569,3 +569,9 @@ h3 {
     color: #fff !important;
 }
 /* CSS for Vue datepicker # end */
+
+/* Cookies CSSS # start */
+.cookie-consent {
+    z-index: 100000 !important;
+}
+/* Cookies CSSS # end */
