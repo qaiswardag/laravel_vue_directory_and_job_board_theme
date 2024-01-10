@@ -48,6 +48,18 @@ const searchForm = useForm({
 
 const searchTagsOrContent = function () {
     searchForm.tags_or_content = !searchForm.tags_or_content;
+
+    handleGetPosts(
+        route(props.pathList, {
+            page: 1,
+            search_query: searchForm.search_query,
+            tags_or_content: searchForm.tags_or_content,
+            type: typeSelected.value,
+            category: categorySelected.value,
+            country: countrySelected.value,
+            state: stateSelected.value,
+        })
+    );
 };
 
 // get images
