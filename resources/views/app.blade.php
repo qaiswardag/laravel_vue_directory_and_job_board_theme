@@ -31,6 +31,17 @@
         <meta name="google-site-verification" content="erV447H5voAvs1MTiQCgETMlHpVvA0mDRIUCSh79tjI" />
         <!-- Google Search Console end -->
 
+        
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ32Y8NV9M"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DJ32Y8NV9M');
+        </script>
+
         <!-- Favicon start -->
         <link
         rel="icon"
