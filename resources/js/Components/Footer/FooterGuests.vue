@@ -1,17 +1,25 @@
 <template>
-    <footer
-        class="w-full space-y-6 mx-auto px-6 py-4 md:flex md:items-center md:justify-between lg:px-8 bg-gray-50"
-    >
-        <div
-            class="flex w-f justify-center items-center space-x-6 md:order-2 text-gray-600 hover:text-gray-700"
-        >
-            <p class="myPrimaryParagraph text-xs">
+    <footer class="w-full mx-auto px-6 py-4 flex justify-between bg-gray-100">
+        <div>
+            <p class="myPrimaryParagraph lg:text-sm text-xs">
                 <span class="text-xs">©</span> myself fashion & jobs الموضة
                 ووظائف | All rights reserved
             </p>
         </div>
-        <div
-            class="flex justify-center space-x-6 md:order-2 text-gray-600 hover:text-gray-700"
-        ></div>
+        <div class="flex justify-center items-center myPrimaryGap">
+            <p class="myPrimaryParagraph lg:text-sm text-xs">
+                <a href="https://www.instagram.com/myself.ae/" target="_blank">
+                    Instagram
+                </a>
+            </p>
+            <p class="myPrimaryParagraph lg:text-sm text-xs">
+                <a
+                    href="https://www.linkedin.com/company/myself-ae"
+                    target="_blank"
+                >
+                    LinkedIn
+                </a>
+            </p>
+        </div>
     </footer>
 </template>
