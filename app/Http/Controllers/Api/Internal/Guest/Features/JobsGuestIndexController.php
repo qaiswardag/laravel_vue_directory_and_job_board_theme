@@ -53,7 +53,8 @@ class JobsGuestIndexController extends Controller
             ->when($tagsOrContent, function ($query) use ($searchQuery) {
                 $query
                     ->where("tags", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%");
+                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
+                    ->orWhere("content", "LIKE", "%" . $searchQuery . "%");
             })
             // Add a condition to filter posts where ended_at is
             ->where(function ($query) {

@@ -45,7 +45,8 @@ class StoresGuestIndexController extends Controller
             ->when($tagsOrContent, function ($query) use ($searchQuery) {
                 $query
                     ->where("tags", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%");
+                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
+                    ->orWhere("content", "LIKE", "%" . $searchQuery . "%");
             });
 
         // categories filter logic # start

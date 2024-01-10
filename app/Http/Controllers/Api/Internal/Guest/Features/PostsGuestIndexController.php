@@ -42,7 +42,8 @@ class PostsGuestIndexController extends Controller
             ->when($tagsOrContent, function ($query) use ($searchQuery) {
                 $query
                     ->where("tags", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%");
+                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
+                    ->orWhere("content", "LIKE", "%" . $searchQuery . "%");
             })
             ->where(function ($query) {
                 $query
