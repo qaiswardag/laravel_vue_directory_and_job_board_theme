@@ -39,7 +39,13 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Sign up" />
+    <Head title="Sign up">
+        <meta
+            head-key="description"
+            name="description"
+            content="Register & search for everything you need in the world of fashion within the United Arab Emirates."
+        />
+    </Head>
 
     <MainLayout>
         <div class="bg-gradient-to-t from-red-50 via-pink-100 to-pink-50">

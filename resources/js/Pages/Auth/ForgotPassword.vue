@@ -27,7 +27,13 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Forgot password" />
+    <Head title="Forgot password">
+        <meta
+            head-key="description"
+            name="description"
+            content="Forgot your password? No problem. Just let us know your email address and we will email you a password reset link."
+        />
+    </Head>
 
     <MainLayout>
         <div class="bg-gradient-to-t from-red-50 via-pink-100 to-pink-50">
