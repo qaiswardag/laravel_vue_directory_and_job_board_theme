@@ -346,7 +346,7 @@ onMounted(() => {
         <FullWidthElement :descriptionArea="true" :headerArea="false">
             <template #content>
                 <div
-                    class="flex flex-col myPrimaryGap border-b border-gray-200 pb-8 mb-8"
+                    class="flex flex-col myPrimaryGap border-b border-gray-200 pb-2 mb-8"
                 >
                     <!-- error # start -->
                     <template v-if="!isLoadingPosts && isErrorPosts">
@@ -369,68 +369,37 @@ onMounted(() => {
                                 },
                             ]"
                         >
-                            <!-- tags # start -->
-
-                            <div class="mb-4">
-                                <button
-                                    type="button"
-                                    @click="searchTagsOrContent"
-                                    class="flex items-center justify-start gap-2 cursor-pointer w-auto py-2 px-4 border border-gray-200 rounded-full text-xs min-h-[3rem]"
-                                    :class="[
-                                        {
-                                            'bg-myPrimaryDarkGrayColor text-white':
-                                                searchForm.tags_or_content,
-                                        },
-                                        {
-                                            'bg-myPrimaryLightGrayColor':
-                                                !searchForm.tags_or_content,
-                                        },
-                                    ]"
-                                >
-                                    <span> Tags or Content </span>
-                                    <template v-if="searchForm.tags_or_content">
-                                        <span class="material-symbols-outlined">
-                                            done
-                                        </span>
-                                    </template>
-                                </button>
-                            </div>
-                            <!-- tags # end -->
-
                             <!-- Search # start -->
-                            <div class="self-end">
-                                <form @submit.prevent="handleSearch">
-                                    <div class="relative w-full">
-                                        <div
-                                            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-                                        >
-                                            <span
-                                                class="material-symbols-outlined"
-                                            >
-                                                search
-                                            </span>
-                                        </div>
-                                        <input
-                                            v-model="searchForm.search_query"
-                                            type="search"
-                                            id="search_query"
-                                            class="myPrimaryInput pl-10 shadow-none min-h-[3.5rem] h-[3.5rem]"
-                                            autocomplete="off"
-                                            :placeholder="`Search ${
-                                                nameList === 'stores'
-                                                    ? 'company'
-                                                    : nameList
-                                            }..`"
-                                        />
+
+                            <form @submit.prevent="handleSearch">
+                                <div class="relative w-full">
+                                    <div
+                                        class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                                    >
+                                        <span class="material-symbols-outlined">
+                                            search
+                                        </span>
                                     </div>
-                                </form>
-                            </div>
+                                    <input
+                                        v-model="searchForm.search_query"
+                                        type="search"
+                                        id="search_query"
+                                        class="myPrimaryInput pl-10 shadow-none min-h-[3.5rem] h-[3.5rem]"
+                                        autocomplete="off"
+                                        :placeholder="`${
+                                            nameList === 'stores'
+                                                ? 'Company name'
+                                                : `Search ${nameList}`
+                                        }..`"
+                                    />
+                                </div>
+                            </form>
 
                             <!-- Search # end -->
                         </div>
                         <!-- Categories # start -->
                         <div
-                            class="w-full self-end"
+                            class="w-full"
                             :class="[
                                 {
                                     'md:w-1/3': nameList !== 'posts',
@@ -459,7 +428,7 @@ onMounted(() => {
 
                         <!-- State # start -->
                         <div
-                            class="md:w-1/3 w-full self-end"
+                            class="md:w-1/3 w-full"
                             v-if="
                                 stateSelected &&
                                 Array.isArray(stateSelected) &&
@@ -535,6 +504,36 @@ onMounted(() => {
                             <!-- Type # end -->
                         </div>
                     </template>
+
+                    <div
+                        v-if="fetchedDataPosts && fetchedDataPosts.posts"
+                        class="mb-2"
+                    >
+                        <!-- tags # start -->
+                        <button
+                            type="button"
+                            @click="searchTagsOrContent"
+                            class="flex items-center justify-start gap-2 cursor-pointer w-auto py-2 px-4 border border-gray-200 rounded-full text-xs min-h-[3rem]"
+                            :class="[
+                                {
+                                    'bg-myPrimaryLightGrayColor':
+                                        searchForm.tags_or_content,
+                                },
+                                {
+                                    'bg-myPrimaryLightGrayColor':
+                                        !searchForm.tags_or_content,
+                                },
+                            ]"
+                        >
+                            <span> Search Everything </span>
+                            <template v-if="searchForm.tags_or_content">
+                                <span class="material-symbols-outlined">
+                                    done
+                                </span>
+                            </template>
+                        </button>
+                    </div>
+                    <!-- tags # end -->
                 </div>
 
                 <!-- If posts is empty array # start -->
