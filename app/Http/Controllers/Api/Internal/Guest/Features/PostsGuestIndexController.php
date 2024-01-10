@@ -33,17 +33,42 @@ class PostsGuestIndexController extends Controller
             ->with("stores")
             ->with("coverImages")
             ->where("published", true)
+
+            // search for title and team name
             ->when(!$tagsOrContent && $searchQuery, function ($query) use (
                 $searchQuery
             ) {
-                $query->where("title", "LIKE", "%" . $searchQuery . "%");
+                $query
+                    ->where("title", "LIKE", "%" . $searchQuery . "%")
+                    // search for team name
+                    ->orWhereHas("team", function ($teamQuery) use (
+                        $searchQuery
+                    ) {
+                        $teamQuery->where(
+                            "name",
+                            "LIKE",
+                            "%" . $searchQuery . "%"
+                        );
+                    });
             })
+
             // search with tags or content is true
             ->when($tagsOrContent, function ($query) use ($searchQuery) {
                 $query
                     ->where("tags", "LIKE", "%" . $searchQuery . "%")
                     ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("content", "LIKE", "%" . $searchQuery . "%");
+                    ->orWhere("content", "LIKE", "%" . $searchQuery . "%")
+
+                    // search for team name
+                    ->orWhereHas("team", function ($teamQuery) use (
+                        $searchQuery
+                    ) {
+                        $teamQuery->where(
+                            "name",
+                            "LIKE",
+                            "%" . $searchQuery . "%"
+                        );
+                    });
             })
             ->where(function ($query) {
                 $query

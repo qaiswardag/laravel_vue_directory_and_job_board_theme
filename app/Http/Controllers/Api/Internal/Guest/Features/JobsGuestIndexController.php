@@ -44,17 +44,42 @@ class JobsGuestIndexController extends Controller
             ->with("authors")
             ->where("published", true)
             ->where("is_paid", true)
+
+            // search for title and team name
             ->when(!$tagsOrContent && $searchQuery, function ($query) use (
                 $searchQuery
             ) {
-                $query->where("title", "LIKE", "%" . $searchQuery . "%");
+                $query
+                    ->where("title", "LIKE", "%" . $searchQuery . "%")
+                    // search for team name
+                    ->orWhereHas("team", function ($teamQuery) use (
+                        $searchQuery
+                    ) {
+                        $teamQuery->where(
+                            "name",
+                            "LIKE",
+                            "%" . $searchQuery . "%"
+                        );
+                    });
             })
+
             // search with tags or content is true
             ->when($tagsOrContent, function ($query) use ($searchQuery) {
                 $query
                     ->where("tags", "LIKE", "%" . $searchQuery . "%")
                     ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("content", "LIKE", "%" . $searchQuery . "%");
+                    ->orWhere("content", "LIKE", "%" . $searchQuery . "%")
+
+                    // search for team name
+                    ->orWhereHas("team", function ($teamQuery) use (
+                        $searchQuery
+                    ) {
+                        $teamQuery->where(
+                            "name",
+                            "LIKE",
+                            "%" . $searchQuery . "%"
+                        );
+                    });
             })
             // Add a condition to filter posts where ended_at is
             ->where(function ($query) {

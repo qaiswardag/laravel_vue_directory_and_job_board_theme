@@ -416,7 +416,11 @@ onMounted(() => {
                                             id="search_query"
                                             class="myPrimaryInput pl-10 shadow-none min-h-[3.5rem] h-[3.5rem]"
                                             autocomplete="off"
-                                            :placeholder="`Search ${nameList}..`"
+                                            :placeholder="`Search ${
+                                                nameList === 'stores'
+                                                    ? 'company'
+                                                    : nameList
+                                            }..`"
                                         />
                                     </div>
                                 </form>
