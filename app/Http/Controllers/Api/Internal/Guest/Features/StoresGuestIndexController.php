@@ -16,6 +16,8 @@ class StoresGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
+        $tagsOrContent = $request->input("tags_or_content");
+
         $searchQuery = $request->input("search_query");
 
         // Check $searchQuery is an array
@@ -34,8 +36,16 @@ class StoresGuestIndexController extends Controller
             ->with("states")
             ->with("authors")
             ->where("published", true)
-            ->when($request->query("search_query"), function ($query, $term) {
-                $query->where("title", "LIKE", "%" . $term . "%");
+            ->when(!$tagsOrContent && $searchQuery, function ($query) use (
+                $searchQuery
+            ) {
+                $query->where("title", "LIKE", "%" . $searchQuery . "%");
+            })
+            // search with tags or content is true
+            ->when($tagsOrContent, function ($query) use ($searchQuery) {
+                $query
+                    ->where("tags", "LIKE", "%" . $searchQuery . "%")
+                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%");
             });
 
         // categories filter logic # start
@@ -80,30 +90,6 @@ class StoresGuestIndexController extends Controller
                 $query->whereIn("store_states.id", $stateIDs);
             });
         }
-        // states filter logic # start
-
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
 
         $posts = $query->paginate(20);
 

@@ -77,7 +77,7 @@ onMounted(() => {
                     <div
                         :data-tag="tag"
                         @click="deleteTag"
-                        class="hover:text-white flex flex-wrap justify-center items-center gap-2 myPrimaryTag hover:bg-red-500 cursor-pointer"
+                        class="hover:text-white font-medium flex flex-wrap justify-center items-center gap-2 myPrimaryTag hover:bg-red-500 cursor-pointer"
                     >
                         <div :data-tag="tag">
                             {{ tag }}

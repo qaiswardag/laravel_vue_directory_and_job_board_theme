@@ -16,6 +16,7 @@ class PostsGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
+        $tagsOrContent = $request->input("tags_or_content");
         $searchQuery = $request->input("search_query");
 
         // Check $searchQuery is an array
@@ -32,8 +33,16 @@ class PostsGuestIndexController extends Controller
             ->with("stores")
             ->with("coverImages")
             ->where("published", true)
-            ->when($request->query("search_query"), function ($query, $term) {
-                $query->where("title", "LIKE", "%" . $term . "%");
+            ->when(!$tagsOrContent && $searchQuery, function ($query) use (
+                $searchQuery
+            ) {
+                $query->where("title", "LIKE", "%" . $searchQuery . "%");
+            })
+            // search with tags or content is true
+            ->when($tagsOrContent, function ($query) use ($searchQuery) {
+                $query
+                    ->where("tags", "LIKE", "%" . $searchQuery . "%")
+                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%");
             })
             ->where(function ($query) {
                 $query

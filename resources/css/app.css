@@ -59,7 +59,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryTag {
-        @apply myPrimaryParagraph text-xs inline-block break-all bg-myPrimaryLightMediumGrayColor rounded-full my-2 px-3 py-3 shadow-sm hover:shadow;
+        @apply min-h-[3rem] table-cell myPrimaryParagraph text-xs break-all bg-myPrimaryLightMediumGrayColor rounded-full my-2 px-3 py-3 shadow-sm hover:shadow;
     }
     /*
     |--------------------------------------------------------------------------
@@ -136,7 +136,7 @@
     }
 
     .myPrimaryButton {
-        @apply lg:px-4 lg:py-3 px-3 py-3
+        @apply min-h-[3rem] lg:px-4 lg:py-3 px-3 py-3
         sm:text-sm text-xs whitespace-nowrap break-keep font-medium inline-flex gap-1 items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2
         focus-visible:ring-2 focus-visible:ring-myPrimaryLinkColor;

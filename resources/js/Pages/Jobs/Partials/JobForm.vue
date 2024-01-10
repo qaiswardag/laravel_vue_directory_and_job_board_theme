@@ -1796,7 +1796,7 @@ const pageBuilder = new PageBuilder(store);
                             >
                                 <div
                                     @click="handleAddCountries"
-                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                    class="flex items-center gap-4 my-2 cursor-pointer font-medium"
                                 >
                                     <button
                                         type="button"
@@ -1896,7 +1896,7 @@ const pageBuilder = new PageBuilder(store);
                             >
                                 <div
                                     @click="handleAddStates"
-                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                    class="flex items-center gap-4 my-2 cursor-pointer font-medium"
                                 >
                                     <button
                                         type="button"
@@ -2008,7 +2008,7 @@ const pageBuilder = new PageBuilder(store);
                             >
                                 <div
                                     @click="handleAddCategories"
-                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                    class="flex items-center gap-4 my-2 cursor-pointer font-medium"
                                 >
                                     <button
                                         type="button"
@@ -2109,7 +2109,7 @@ const pageBuilder = new PageBuilder(store);
                             >
                                 <div
                                     @click="handleAddJobTypes"
-                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                    class="flex items-center gap-4 my-2 cursor-pointer font-medium"
                                 >
                                     <button
                                         type="button"

@@ -20,6 +20,7 @@ class JobsGuestIndexController extends Controller
 
     public function index(Request $request)
     {
+        $tagsOrContent = $request->input("tags_or_content");
         $searchQuery = $request->input("search_query");
 
         // Check $searchQuery is an array
@@ -43,8 +44,16 @@ class JobsGuestIndexController extends Controller
             ->with("authors")
             ->where("published", true)
             ->where("is_paid", true)
-            ->when($request->query("search_query"), function ($query, $term) {
-                $query->where("title", "LIKE", "%" . $term . "%");
+            ->when(!$tagsOrContent && $searchQuery, function ($query) use (
+                $searchQuery
+            ) {
+                $query->where("title", "LIKE", "%" . $searchQuery . "%");
+            })
+            // search with tags or content is true
+            ->when($tagsOrContent, function ($query) use ($searchQuery) {
+                $query
+                    ->where("tags", "LIKE", "%" . $searchQuery . "%")
+                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%");
             })
             // Add a condition to filter posts where ended_at is
             ->where(function ($query) {
@@ -55,7 +64,6 @@ class JobsGuestIndexController extends Controller
                     ->where("started_at", "<=", now()->addDays(1))
                     ->where("ended_at", ">=", now());
             });
-
 
         // countries filter logic # start
         $countryIDs = [];
@@ -142,7 +150,6 @@ class JobsGuestIndexController extends Controller
             });
         }
         // categories filter logic # end
-
 
         $posts = $query->paginate(20);
 

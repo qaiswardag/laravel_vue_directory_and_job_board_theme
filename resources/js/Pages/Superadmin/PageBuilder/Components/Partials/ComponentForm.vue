@@ -652,7 +652,7 @@ const categoriesSorted = computed(() => {
                             >
                                 <div
                                     @click="handleAddCategories"
-                                    class="flex items-center gap-4 my-2 cursor-pointer"
+                                    class="flex items-center gap-4 my-2 cursor-pointer font-medium"
                                 >
                                     <button
                                         type="button"
