@@ -170,12 +170,24 @@ class JobsGuestIndexController extends Controller
             })
 
             // search with tags or content is true
-            ->when($tagsOrContent, function ($query) use ($searchQuery) {
+            ->when($tagsOrContent, function ($query) use (
+                $searchQuery,
+                $stateIDs,
+                $countryIDs,
+                $categoryIDs,
+                $typeIDs
+            ) {
                 $query
-                    ->where("tags", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("content", "LIKE", "%" . $searchQuery . "%")
-
+                    ->where(function ($query) use ($searchQuery) {
+                        $query
+                            ->where("tags", "LIKE", "%" . $searchQuery . "%")
+                            ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
+                            ->orWhere(
+                                "content",
+                                "LIKE",
+                                "%" . $searchQuery . "%"
+                            );
+                    })
                     // search for team name
                     ->orWhereHas("team", function ($teamQuery) use (
                         $searchQuery
@@ -185,9 +197,49 @@ class JobsGuestIndexController extends Controller
                             "LIKE",
                             "%" . $searchQuery . "%"
                         );
-                    });
-            });
+                    })
+                    // Additional conditions based on states and categories
 
+                    // countries filter logic # start
+                    ->when(!empty($countryIDs), function ($query) use (
+                        $countryIDs
+                    ) {
+                        $query->whereHas("countries", function ($query) use (
+                            $countryIDs
+                        ) {
+                            $query->whereIn("job_countries.id", $countryIDs);
+                        });
+                    })
+                    // countries filter logic # end
+
+                    ->when(!empty($stateIDs), function ($query) use (
+                        $stateIDs
+                    ) {
+                        $query->whereHas("states", function ($query) use (
+                            $stateIDs
+                        ) {
+                            $query->whereIn("job_states.id", $stateIDs);
+                        });
+                    })
+                    ->when(!empty($categoryIDs), function ($query) use (
+                        $categoryIDs
+                    ) {
+                        $query->whereHas("categories", function ($query) use (
+                            $categoryIDs
+                        ) {
+                            $query->whereIn("job_categories.id", $categoryIDs);
+                        });
+                    })
+                    // types filter logic # start
+                    ->when(!empty($typeIDs), function ($query) use ($typeIDs) {
+                        $query->whereHas("types", function ($query) use (
+                            $typeIDs
+                        ) {
+                            $query->whereIn("job_types.id", $typeIDs);
+                        });
+                    });
+                // types filter logic # end
+            });
         $posts = $query->paginate(20);
 
         $posts->appends($request->all());

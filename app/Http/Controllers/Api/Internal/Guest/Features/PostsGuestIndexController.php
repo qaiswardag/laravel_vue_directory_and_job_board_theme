@@ -87,12 +87,21 @@ class PostsGuestIndexController extends Controller
             })
 
             // search with tags or content is true
-            ->when($tagsOrContent, function ($query) use ($searchQuery) {
+            ->when($tagsOrContent, function ($query) use (
+                $searchQuery,
+                $categoryIDs
+            ) {
                 $query
-                    ->where("tags", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("content", "LIKE", "%" . $searchQuery . "%")
-
+                    ->where(function ($query) use ($searchQuery) {
+                        $query
+                            ->where("tags", "LIKE", "%" . $searchQuery . "%")
+                            ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
+                            ->orWhere(
+                                "content",
+                                "LIKE",
+                                "%" . $searchQuery . "%"
+                            );
+                    })
                     // search for team name
                     ->orWhereHas("team", function ($teamQuery) use (
                         $searchQuery
@@ -102,6 +111,16 @@ class PostsGuestIndexController extends Controller
                             "LIKE",
                             "%" . $searchQuery . "%"
                         );
+                    })
+                    // Additional conditions based on categories
+                    ->when(!empty($categoryIDs), function ($query) use (
+                        $categoryIDs
+                    ) {
+                        $query->whereHas("categories", function ($query) use (
+                            $categoryIDs
+                        ) {
+                            $query->whereIn("post_categories.id", $categoryIDs);
+                        });
                     });
             });
 

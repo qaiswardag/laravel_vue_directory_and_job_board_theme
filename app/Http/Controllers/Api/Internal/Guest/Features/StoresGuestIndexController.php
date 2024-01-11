@@ -104,12 +104,22 @@ class StoresGuestIndexController extends Controller
             })
 
             // search with tags or content is true
-            ->when($tagsOrContent, function ($query) use ($searchQuery) {
+            ->when($tagsOrContent, function ($query) use (
+                $searchQuery,
+                $stateIDs,
+                $categoryIDs
+            ) {
                 $query
-                    ->where("tags", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
-                    ->orWhere("content", "LIKE", "%" . $searchQuery . "%")
-
+                    ->where(function ($query) use ($searchQuery) {
+                        $query
+                            ->where("tags", "LIKE", "%" . $searchQuery . "%")
+                            ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
+                            ->orWhere(
+                                "content",
+                                "LIKE",
+                                "%" . $searchQuery . "%"
+                            );
+                    })
                     // search for team name
                     ->orWhereHas("team", function ($teamQuery) use (
                         $searchQuery
@@ -119,6 +129,28 @@ class StoresGuestIndexController extends Controller
                             "LIKE",
                             "%" . $searchQuery . "%"
                         );
+                    })
+                    // Additional conditions based on states and categories
+                    ->when(!empty($stateIDs), function ($query) use (
+                        $stateIDs
+                    ) {
+                        $query->whereHas("states", function ($query) use (
+                            $stateIDs
+                        ) {
+                            $query->whereIn("store_states.id", $stateIDs);
+                        });
+                    })
+                    ->when(!empty($categoryIDs), function ($query) use (
+                        $categoryIDs
+                    ) {
+                        $query->whereHas("categories", function ($query) use (
+                            $categoryIDs
+                        ) {
+                            $query->whereIn(
+                                "store_categories.id",
+                                $categoryIDs
+                            );
+                        });
                     });
             });
 
