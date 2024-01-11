@@ -23,6 +23,67 @@ class JobsGuestIndexController extends Controller
         $tagsOrContent = $request->input("tags_or_content");
         $searchQuery = $request->input("search_query");
 
+        // countries filter logic # start
+        $countryIDs = [];
+
+        if (isset($request->country) && is_array($request->country)) {
+            foreach ($request->country as $country) {
+                $countryIDs[] = $country["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array
+        $countryIDs = array_filter($countryIDs, function ($value) {
+            return $value !== null;
+        });
+
+        // countries filter logic # end
+
+        // states filter logic # start
+        $stateIDs = [];
+
+        if (isset($request->state) && is_array($request->state)) {
+            foreach ($request->state as $state) {
+                $stateIDs[] = $state["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array
+        $stateIDs = array_filter($stateIDs, function ($value) {
+            return $value !== null;
+        });
+        // states filter logic # end
+
+        // categories filter logic # start
+        $categoryIDs = [];
+
+        if (isset($request->category) && is_array($request->category)) {
+            foreach ($request->category as $category) {
+                $categoryIDs[] = $category["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array
+        $categoryIDs = array_filter($categoryIDs, function ($value) {
+            return $value !== null;
+        });
+        // categories filter logic # end
+
+        // types filter logic # start
+        $typeIDs = [];
+
+        if (isset($request->type) && is_array($request->type)) {
+            foreach ($request->type as $type) {
+                $typeIDs[] = $type["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array
+        $typeIDs = array_filter($typeIDs, function ($value) {
+            return $value !== null;
+        });
+        // types filter logic # end
+
         // Check $searchQuery is an array
         // If it is, the implode function joins the elements of the array into a comma-separated string
         if (is_array($searchQuery)) {
@@ -44,6 +105,51 @@ class JobsGuestIndexController extends Controller
             ->with("authors")
             ->where("published", true)
             ->where("is_paid", true)
+            // Add a condition to filter posts where ended_at is
+            ->where(function ($query) {
+                // Include posts where ended_at is not null
+                $query
+                    ->whereNotNull("started_at")
+                    ->whereNotNull("ended_at")
+                    ->where("started_at", "<=", now()->addDays(1))
+                    ->where("ended_at", ">=", now());
+            })
+
+            // countries filter logic # start
+            ->when(!empty($countryIDs), function ($query) use ($countryIDs) {
+                $query->whereHas("countries", function ($query) use (
+                    $countryIDs
+                ) {
+                    $query->whereIn("job_countries.id", $countryIDs);
+                });
+            })
+            // countries filter logic # end
+
+            // states filter logic # start
+            ->when(!empty($stateIDs), function ($query) use ($stateIDs) {
+                $query->whereHas("states", function ($query) use ($stateIDs) {
+                    $query->whereIn("job_states.id", $stateIDs);
+                });
+            })
+            // states filter logic # end
+
+            // categories filter logic # start
+            ->when(!empty($categoryIDs), function ($query) use ($categoryIDs) {
+                $query->whereHas("categories", function ($query) use (
+                    $categoryIDs
+                ) {
+                    $query->whereIn("job_categories.id", $categoryIDs);
+                });
+            })
+            // categories filter logic # end
+
+            // types filter logic # start
+            ->when(!empty($typeIDs), function ($query) use ($typeIDs) {
+                $query->whereHas("types", function ($query) use ($typeIDs) {
+                    $query->whereIn("job_types.id", $typeIDs);
+                });
+            })
+            // types filter logic # end
 
             // search for title and team name
             ->when(!$tagsOrContent && $searchQuery, function ($query) use (
@@ -80,102 +186,7 @@ class JobsGuestIndexController extends Controller
                             "%" . $searchQuery . "%"
                         );
                     });
-            })
-            // Add a condition to filter posts where ended_at is
-            ->where(function ($query) {
-                // Include posts where ended_at is not null
-                $query
-                    ->whereNotNull("started_at")
-                    ->whereNotNull("ended_at")
-                    ->where("started_at", "<=", now()->addDays(1))
-                    ->where("ended_at", ">=", now());
             });
-
-        // countries filter logic # start
-        $countryIDs = [];
-
-        if (isset($request->country) && is_array($request->country)) {
-            foreach ($request->country as $country) {
-                $countryIDs[] = $country["id"] ?? null;
-            }
-        }
-
-        // Remove null values from the array
-        $countryIDs = array_filter($countryIDs, function ($value) {
-            return $value !== null;
-        });
-
-        if (!empty($countryIDs)) {
-            $query->whereHas("countries", function ($query) use ($countryIDs) {
-                $query->whereIn("job_countries.id", $countryIDs);
-            });
-        }
-        // countries filter logic # end
-
-        // states filter logic # start
-        $stateIDs = [];
-
-        if (isset($request->state) && is_array($request->state)) {
-            foreach ($request->state as $state) {
-                $stateIDs[] = $state["id"] ?? null;
-            }
-        }
-
-        // Remove null values from the array
-        $stateIDs = array_filter($stateIDs, function ($value) {
-            return $value !== null;
-        });
-
-        if (!empty($stateIDs)) {
-            $query->whereHas("states", function ($query) use ($stateIDs) {
-                $query->whereIn("job_states.id", $stateIDs);
-            });
-        }
-        // states filter logic # end
-
-        // types filter logic # start
-        $typeIDs = [];
-
-        if (isset($request->type) && is_array($request->type)) {
-            foreach ($request->type as $type) {
-                $typeIDs[] = $type["id"] ?? null;
-            }
-        }
-
-        // Remove null values from the array
-        $typeIDs = array_filter($typeIDs, function ($value) {
-            return $value !== null;
-        });
-
-        if (!empty($typeIDs)) {
-            $query->whereHas("types", function ($query) use ($typeIDs) {
-                $query->whereIn("job_types.id", $typeIDs);
-            });
-        }
-        // types filter logic # end
-
-        // categories filter logic # start
-        $categoryIDs = [];
-
-        if (isset($request->category) && is_array($request->category)) {
-            foreach ($request->category as $category) {
-                $categoryIDs[] = $category["id"] ?? null;
-            }
-        }
-
-        // Remove null values from the array
-        $categoryIDs = array_filter($categoryIDs, function ($value) {
-            return $value !== null;
-        });
-
-        if (!empty($categoryIDs)) {
-            $query->whereHas("categories", function ($query) use (
-                $categoryIDs
-            ) {
-                $query->whereIn("job_categories.id", $categoryIDs);
-            });
-        }
-        // categories filter logic # end
 
         $posts = $query->paginate(20);
 

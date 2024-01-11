@@ -20,6 +20,36 @@ class StoresGuestIndexController extends Controller
 
         $searchQuery = $request->input("search_query");
 
+        // states filter logic # start
+        $stateIDs = [];
+
+        if (isset($request->state) && is_array($request->state)) {
+            foreach ($request->state as $state) {
+                $stateIDs[] = $state["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array
+        $stateIDs = array_filter($stateIDs, function ($value) {
+            return $value !== null;
+        });
+        // states filter logic # end
+
+        // categories filter logic # start
+        $categoryIDs = [];
+
+        if (isset($request->category) && is_array($request->category)) {
+            foreach ($request->category as $category) {
+                $categoryIDs[] = $category["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array
+        $categoryIDs = array_filter($categoryIDs, function ($value) {
+            return $value !== null;
+        });
+        // categories filter logic # end
+
         // Check $searchQuery is an array
         // If it is, the implode function joins the elements of the array into a comma-separated string
         if (is_array($searchQuery)) {
@@ -36,6 +66,24 @@ class StoresGuestIndexController extends Controller
             ->with("states")
             ->with("authors")
             ->where("published", true)
+
+            // states filter logic # start
+            ->when(!empty($stateIDs), function ($query) use ($stateIDs) {
+                $query->whereHas("states", function ($query) use ($stateIDs) {
+                    $query->whereIn("store_states.id", $stateIDs);
+                });
+            })
+            // states filter logic # end
+
+            // categories filter logic # start
+            ->when(!empty($categoryIDs), function ($query) use ($categoryIDs) {
+                $query->whereHas("categories", function ($query) use (
+                    $categoryIDs
+                ) {
+                    $query->whereIn("store_categories.id", $categoryIDs);
+                });
+            })
+            // categories filter logic # end
 
             // search for title and team name
             ->when(!$tagsOrContent && $searchQuery, function ($query) use (
@@ -73,49 +121,6 @@ class StoresGuestIndexController extends Controller
                         );
                     });
             });
-
-        // categories filter logic # start
-        $categoryIDs = [];
-
-        if (isset($request->category) && is_array($request->category)) {
-            foreach ($request->category as $category) {
-                $categoryIDs[] = $category["id"] ?? null;
-            }
-        }
-
-        // Remove null values from the array
-        $categoryIDs = array_filter($categoryIDs, function ($value) {
-            return $value !== null;
-        });
-
-        if (!empty($categoryIDs)) {
-            $query->whereHas("categories", function ($query) use (
-                $categoryIDs
-            ) {
-                $query->whereIn("store_categories.id", $categoryIDs);
-            });
-        }
-        // categories filter logic # start
-
-        // states filter logic # start
-        $stateIDs = [];
-
-        if (isset($request->state) && is_array($request->state)) {
-            foreach ($request->state as $state) {
-                $stateIDs[] = $state["id"] ?? null;
-            }
-        }
-
-        // Remove null values from the array
-        $stateIDs = array_filter($stateIDs, function ($value) {
-            return $value !== null;
-        });
-
-        if (!empty($stateIDs)) {
-            $query->whereHas("states", function ($query) use ($stateIDs) {
-                $query->whereIn("store_states.id", $stateIDs);
-            });
-        }
 
         $posts = $query->paginate(20);
 

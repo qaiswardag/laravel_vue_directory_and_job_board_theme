@@ -19,6 +19,21 @@ class PostsGuestIndexController extends Controller
         $tagsOrContent = $request->input("tags_or_content");
         $searchQuery = $request->input("search_query");
 
+        // categories filter logic # start
+        $categoryIDs = [];
+
+        if (isset($request->category) && is_array($request->category)) {
+            foreach ($request->category as $category) {
+                $categoryIDs[] = $category["id"] ?? null;
+            }
+        }
+
+        // Remove null values from the array
+        $categoryIDs = array_filter($categoryIDs, function ($value) {
+            return $value !== null;
+        });
+        // categories filter logic # end
+
         // Check $searchQuery is an array
         // If it is, the implode function joins the elements of the array into a comma-separated string
         if (is_array($searchQuery)) {
@@ -33,6 +48,25 @@ class PostsGuestIndexController extends Controller
             ->with("stores")
             ->with("coverImages")
             ->where("published", true)
+            ->where(function ($query) {
+                $query
+                    ->whereNotNull("started_at")
+                    ->whereNotNull("ended_at")
+                    ->whereNotNull("days_before_campaign_visibility");
+            })
+            ->whereRaw(
+                "started_at <= NOW() + INTERVAL days_before_campaign_visibility DAY"
+            )
+
+            // categories filter logic # start
+            ->when(!empty($categoryIDs), function ($query) use ($categoryIDs) {
+                $query->whereHas("categories", function ($query) use (
+                    $categoryIDs
+                ) {
+                    $query->whereIn("post_categories.id", $categoryIDs);
+                });
+            })
+            // categories filter logic # end
 
             // search for title and team name
             ->when(!$tagsOrContent && $searchQuery, function ($query) use (
@@ -69,38 +103,7 @@ class PostsGuestIndexController extends Controller
                             "%" . $searchQuery . "%"
                         );
                     });
-            })
-            ->where(function ($query) {
-                $query
-                    ->whereNotNull("started_at")
-                    ->whereNotNull("ended_at")
-                    ->whereNotNull("days_before_campaign_visibility");
-            })
-            ->whereRaw(
-                "started_at <= NOW() + INTERVAL days_before_campaign_visibility DAY"
-            );
-
-        // categories filter logic # start
-        $categoryIDs = [];
-
-        if (isset($request->category) && is_array($request->category)) {
-            foreach ($request->category as $category) {
-                $categoryIDs[] = $category["id"] ?? null;
-            }
-        }
-
-        // Remove null values from the array
-        $categoryIDs = array_filter($categoryIDs, function ($value) {
-            return $value !== null;
-        });
-
-        if (!empty($categoryIDs)) {
-            $query->whereHas("categories", function ($query) use (
-                $categoryIDs
-            ) {
-                $query->whereIn("post_categories.id", $categoryIDs);
             });
-        }
 
         $posts = $query->paginate(20);
 

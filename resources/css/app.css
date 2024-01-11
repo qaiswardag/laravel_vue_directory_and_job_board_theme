@@ -59,7 +59,7 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryTag {
-        @apply min-h-[3rem] table-cell myPrimaryParagraph text-xs break-all bg-myPrimaryLightMediumGrayColor rounded-full my-2 px-3 py-3 shadow-sm hover:shadow;
+        @apply min-h-[3rem] flex items-center grow-0 myPrimaryParagraph text-xs break-all bg-myPrimaryLightMediumGrayColor rounded-full my-2 px-3 py-3 shadow-sm hover:shadow;
     }
     /*
     |--------------------------------------------------------------------------
