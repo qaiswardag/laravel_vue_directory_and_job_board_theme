@@ -387,7 +387,7 @@ onMounted(() => {
                                         <span class="material-symbols-outlined">
                                             filter_alt
                                         </span>
-                                        <span> Options </span>
+                                        <span> Filter </span>
                                         <span class="material-symbols-outlined">
                                             arrow_drop_down
                                         </span>
