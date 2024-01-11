@@ -14,6 +14,7 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import ItemsFilterSelection from "@/Pages/Guests/Items/ItemsFilterSelection/ItemsFilterSelection.vue";
 import ItemDisplaySelection from "@/Pages/Guests/Items/ItemsFilterSelection/ItemDisplaySelection.vue";
 import { parseISO, format } from "date-fns";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
 import {
     GlobeAmericasIcon,
@@ -369,25 +370,80 @@ onMounted(() => {
                     <!-- error # end -->
 
                     <!-- Search in Tags Or Content # start -->
-                    <div v-if="fetchedDataPosts && fetchedDataPosts.posts">
-                        <button
-                            type="button"
-                            @click="searchTagsOrContent"
-                            class="myPrimaryTag"
-                            :class="[
-                                {
-                                    'bg-myPrimaryLinkColor text-white':
-                                        searchForm.tags_or_content,
-                                },
-                                {
-                                    'bg-myPrimaryLightGrayColor':
-                                        !searchForm.tags_or_content,
-                                },
-                            ]"
-                        >
-                            <span> Tags & Content </span>
-                        </button>
+                    <div
+                        class="border-b border-myPrimaryLightGrayColor pb-2"
+                        v-if="fetchedDataPosts && fetchedDataPosts.posts"
+                    >
+                        <!-- options dropdow # start -->
+                        <div>
+                            <Menu
+                                as="div"
+                                class="relative inline-block text-left"
+                            >
+                                <div>
+                                    <MenuButton
+                                        class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-white pl-4 pr-4 py-4 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                    >
+                                        <span class="material-symbols-outlined">
+                                            all_inclusive
+                                        </span>
+                                        <span> Options </span>
+                                        <span class="material-symbols-outlined">
+                                            arrow_drop_down
+                                        </span>
+                                    </MenuButton>
+                                </div>
+
+                                <transition
+                                    enter-active-class="transition ease-out duration-100"
+                                    enter-from-class="transform opacity-0 scale-95"
+                                    enter-to-class="transform opacity-100 scale-100"
+                                    leave-active-class="transition ease-in duration-75"
+                                    leave-from-class="transform opacity-100 scale-100"
+                                    leave-to-class="transform opacity-0 scale-95"
+                                >
+                                    <MenuItems
+                                        class="absolute left-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    >
+                                        <div class="py-1">
+                                            <MenuItem>
+                                                <button
+                                                    type="button"
+                                                    @click="searchTagsOrContent"
+                                                    class="pl-4 pr-2 py-4 w-full text-sm flex items-center justify-start gap-2 my-4 border-b border-myPrimaryLightGrayColor"
+                                                    :class="[
+                                                        {
+                                                            'bg-myPrimaryLightGrayColor':
+                                                                searchForm.tags_or_content,
+                                                        },
+                                                        {
+                                                            '': !searchForm.tags_or_content,
+                                                        },
+                                                    ]"
+                                                >
+                                                    <span>
+                                                        Search in Tags & Content
+                                                    </span>
+                                                    <template
+                                                        v-if="
+                                                            searchForm.tags_or_content
+                                                        "
+                                                    >
+                                                        <span
+                                                            class="material-symbols-outlined"
+                                                        >
+                                                            check
+                                                        </span>
+                                                    </template>
+                                                </button>
+                                            </MenuItem>
+                                        </div>
+                                    </MenuItems>
+                                </transition>
+                            </Menu>
+                        </div>
                     </div>
+                    <!-- options dropdow # end -->
                     <!-- Search in Tags Or Content # end -->
 
                     <div class="flex md:flex-row flex-col myPrimaryGap">
