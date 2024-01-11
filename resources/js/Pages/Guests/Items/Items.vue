@@ -368,6 +368,31 @@ onMounted(() => {
                     </template>
                     <!-- error # end -->
 
+                    <!-- Search in Tags Or Content # start -->
+                    <div
+                        v-if="fetchedDataPosts && fetchedDataPosts.posts"
+                        class="mb-2"
+                    >
+                        <button
+                            type="button"
+                            @click="searchTagsOrContent"
+                            class="myPrimaryTag"
+                            :class="[
+                                {
+                                    'bg-myPrimaryLinkColor text-white':
+                                        searchForm.tags_or_content,
+                                },
+                                {
+                                    'bg-myPrimaryLightGrayColor':
+                                        !searchForm.tags_or_content,
+                                },
+                            ]"
+                        >
+                            <span> Tags & Content </span>
+                        </button>
+                    </div>
+                    <!-- Search in Tags Or Content # end -->
+
                     <div class="flex md:flex-row flex-col myPrimaryGap">
                         <div
                             v-if="fetchedDataPosts && fetchedDataPosts.posts"
@@ -516,36 +541,6 @@ onMounted(() => {
                             <!-- Type # end -->
                         </div>
                     </template>
-
-                    <div
-                        v-if="fetchedDataPosts && fetchedDataPosts.posts"
-                        class="mb-2"
-                    >
-                        <!-- tags # start -->
-                        <button
-                            type="button"
-                            @click="searchTagsOrContent"
-                            class="flex items-center justify-start gap-2 cursor-pointer w-auto py-2 px-4 border border-gray-200 rounded-full text-xs min-h-[3rem]"
-                            :class="[
-                                {
-                                    'bg-myPrimaryLightGrayColor':
-                                        searchForm.tags_or_content,
-                                },
-                                {
-                                    'bg-myPrimaryLightGrayColor':
-                                        !searchForm.tags_or_content,
-                                },
-                            ]"
-                        >
-                            <span> Search Everything </span>
-                            <template v-if="searchForm.tags_or_content">
-                                <span class="material-symbols-outlined">
-                                    done
-                                </span>
-                            </template>
-                        </button>
-                    </div>
-                    <!-- tags # end -->
                 </div>
 
                 <!-- If posts is empty array # start -->
