@@ -358,7 +358,7 @@ onMounted(() => {
         <FullWidthElement :descriptionArea="true" :headerArea="false">
             <template #content>
                 <div
-                    class="flex flex-col myPrimaryGap border-b border-gray-200 pb-2 mb-8"
+                    class="flex flex-col gap-2 border-b border-gray-200 pb-2 mb-8"
                 >
                     <!-- error # start -->
                     <template v-if="!isLoadingPosts && isErrorPosts">
@@ -369,10 +369,7 @@ onMounted(() => {
                     <!-- error # end -->
 
                     <!-- Search in Tags Or Content # start -->
-                    <div
-                        v-if="fetchedDataPosts && fetchedDataPosts.posts"
-                        class="mb-2"
-                    >
+                    <div v-if="fetchedDataPosts && fetchedDataPosts.posts">
                         <button
                             type="button"
                             @click="searchTagsOrContent"
