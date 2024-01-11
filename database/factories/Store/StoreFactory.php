@@ -76,6 +76,7 @@ class StoreFactory extends Factory
             "content" => $factoriesPageBuilderContent->index(),
             "published" => 1,
             "tags" => $selectedTagsList,
+            "contact_page_url" => "https://www.google.com",
         ];
     }
 }
