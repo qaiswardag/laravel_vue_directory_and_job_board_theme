@@ -475,7 +475,7 @@ onMounted(() => {
                                         autocomplete="off"
                                         :placeholder="`${
                                             nameList === 'stores'
-                                                ? 'Company name'
+                                                ? 'Company or Brand name'
                                                 : `Search ${nameList}`
                                         }..`"
                                     />
