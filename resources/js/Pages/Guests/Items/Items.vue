@@ -422,7 +422,7 @@ onMounted(() => {
                                                     ]"
                                                 >
                                                     <span>
-                                                        Search in everyting
+                                                        Search in Tags & Content
                                                     </span>
                                                     <template
                                                         v-if="
