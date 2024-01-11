@@ -382,11 +382,8 @@ onMounted(() => {
                             >
                                 <div>
                                     <MenuButton
-                                        class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-white pl-4 pr-4 py-4 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                        class="myPrimaryParagraph pl-3 pr-3 py-2 text-xs font-medium inline-flex w-full items-center justify-center gap-2 rounded-md bg-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                     >
-                                        <span class="material-symbols-outlined">
-                                            all_inclusive
-                                        </span>
                                         <span> Options </span>
                                         <span class="material-symbols-outlined">
                                             arrow_drop_down
@@ -410,7 +407,7 @@ onMounted(() => {
                                                 <button
                                                     type="button"
                                                     @click="searchTagsOrContent"
-                                                    class="pl-4 pr-2 py-4 w-full text-sm flex items-center justify-start gap-2 my-4 border-b border-myPrimaryLightGrayColor"
+                                                    class="pl-4 pr-2 pt-2 pb-2 w-full text-sm flex items-center justify-start gap-2 my-4 hover:bg-myPrimaryLightGrayColor"
                                                     :class="[
                                                         {
                                                             'bg-myPrimaryLightGrayColor':
