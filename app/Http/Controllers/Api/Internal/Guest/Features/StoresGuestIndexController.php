@@ -85,22 +85,24 @@ class StoresGuestIndexController extends Controller
             })
             // categories filter logic # end
 
-            // search for title and team name
+            // search for title, team name respecting states and categories
             ->when(!$tagsOrContent && $searchQuery, function ($query) use (
                 $searchQuery
             ) {
-                $query
-                    ->where("title", "LIKE", "%" . $searchQuery . "%")
-                    // search for team name
-                    ->orWhereHas("team", function ($teamQuery) use (
-                        $searchQuery
-                    ) {
-                        $teamQuery->where(
-                            "name",
-                            "LIKE",
-                            "%" . $searchQuery . "%"
-                        );
-                    });
+                $query->where(function ($titleTeamQuery) use ($searchQuery) {
+                    $titleTeamQuery
+                        ->where("title", "LIKE", "%" . $searchQuery . "%")
+                        // search for team name
+                        ->orWhereHas("team", function ($teamQuery) use (
+                            $searchQuery
+                        ) {
+                            $teamQuery->where(
+                                "name",
+                                "LIKE",
+                                "%" . $searchQuery . "%"
+                            );
+                        });
+                });
             })
 
             // search with tags or content is true
@@ -120,7 +122,7 @@ class StoresGuestIndexController extends Controller
                                 "%" . $searchQuery . "%"
                             );
                     })
-                    // search for team name
+                    // search for team name respecting tags, title, and content
                     ->orWhereHas("team", function ($teamQuery) use (
                         $searchQuery
                     ) {
