@@ -384,6 +384,9 @@ onMounted(() => {
                                     <MenuButton
                                         class="myPrimaryParagraph pl-3 pr-3 py-2 text-xs font-medium inline-flex w-full items-center justify-center gap-2 rounded-md bg-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                     >
+                                        <span class="material-symbols-outlined">
+                                            loyalty
+                                        </span>
                                         <span> Options </span>
                                         <span class="material-symbols-outlined">
                                             arrow_drop_down
@@ -419,7 +422,7 @@ onMounted(() => {
                                                     ]"
                                                 >
                                                     <span>
-                                                        Search in Tags & Content
+                                                        Search in everyting
                                                     </span>
                                                     <template
                                                         v-if="

@@ -79,8 +79,15 @@ onMounted(() => {
                         @click="deleteTag"
                         class="hover:text-white font-medium flex flex-wrap justify-center items-center gap-2 myPrimaryTag hover:bg-red-500 cursor-pointer"
                     >
+                        <span>
+                            <span class="material-symbols-outlined">
+                                loyalty
+                            </span>
+                        </span>
                         <div :data-tag="tag">
-                            {{ tag }}
+                            <span>
+                                {{ tag }}
+                            </span>
                             <span :data-tag="tag">×</span>
                         </div>
                     </div>
