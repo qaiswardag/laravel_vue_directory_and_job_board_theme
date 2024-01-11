@@ -371,7 +371,7 @@ onMounted(() => {
 
                     <!-- Search in Tags Or Content # start -->
                     <div
-                        class="border-b border-myPrimaryLightGrayColor pb-2"
+                        class="border-b border-gray-200 pb-2"
                         v-if="fetchedDataPosts && fetchedDataPosts.posts"
                     >
                         <!-- options dropdow # start -->
