@@ -668,29 +668,35 @@ onMounted(() => {
                                         >
                                             <div class="flex gap-4">
                                                 <div
-                                                    class="myPrimaryTag text-[10px] py-1 px-2"
+                                                    class="myPrimaryTag text-[10px] py-1 px-2 flex items-center min-h-[1rem]"
                                                 >
-                                                    {{
-                                                        format(
-                                                            parseISO(
-                                                                post.started_at
-                                                            ),
-                                                            "dd. MMMM yyyy"
-                                                        )
-                                                    }}
+                                                    From:
+                                                    <span class="font-medium">
+                                                        {{
+                                                            format(
+                                                                parseISO(
+                                                                    post.started_at
+                                                                ),
+                                                                "dd. MMMM yyyy"
+                                                            )
+                                                        }}
+                                                    </span>
                                                 </div>
 
                                                 <div
-                                                    class="myPrimaryTag text-[10px] py-1 px-2"
+                                                    class="myPrimaryTag text-[10px] py-1 px-2 flex items-center min-h-[1rem]"
                                                 >
-                                                    {{
-                                                        format(
-                                                            parseISO(
-                                                                post.ended_at
-                                                            ),
-                                                            "dd. MMMM yyyy"
-                                                        )
-                                                    }}
+                                                    To:
+                                                    <span class="font-medium">
+                                                        {{
+                                                            format(
+                                                                parseISO(
+                                                                    post.ended_at
+                                                                ),
+                                                                "dd. MMMM yyyy"
+                                                            )
+                                                        }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </template>
