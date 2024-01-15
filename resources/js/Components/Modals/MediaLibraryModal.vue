@@ -286,7 +286,7 @@ onMounted(() => {
         <TransitionRoot :show="open" as="template">
             <Dialog
                 as="div"
-                class="fixed z-30 inset-0 overflow-y-auto sm:px-4 m-1"
+                class="fixed z-30 inset-0 overflow-y-auto sm:px-4"
                 @close="firstButton"
             >
                 <div
