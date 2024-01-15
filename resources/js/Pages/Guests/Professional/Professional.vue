@@ -266,7 +266,7 @@ const props = defineProps({
                         <p class="myPrimaryParagraph font-medium mt-4">
                             To ensure security and prevent spam, please log in
                             or register before contacting us — takes less than
-                            30 seconds.
+                            10 seconds to sign up.
                         </p>
 
                         <Link class="font-medium" :href="route('login')">
