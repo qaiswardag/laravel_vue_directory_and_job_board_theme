@@ -59,7 +59,12 @@
     |--------------------------------------------------------------------------
     */
     .myPrimaryTag {
-        @apply min-h-[3rem] table-cell myPrimaryParagraph text-xs break-all bg-myPrimaryLightMediumGrayColor rounded-full my-2 px-3 py-3 shadow-sm hover:shadow;
+        @apply min-h-[3rem] my-2 px-3 py-2
+        text-xs break-all 
+        inline-flex gap-1 items-center justify-center 
+        rounded-full border border-transparent
+        text-myPrimaryDarkGrayColor bg-myPrimaryLightMediumGrayColor 
+        sm:w-auto shadow-sm hover:shadow;
     }
     /*
     |--------------------------------------------------------------------------
