@@ -519,7 +519,7 @@ onMounted(() => {
                                             class="md:w-72"
                                         >
                                             <div
-                                                class="rounded md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
+                                                class="rounded md:w-72 md:min-h-[42.5rem] md:max-h-[42.5rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
                                             >
                                                 <div
                                                     v-if="
@@ -851,7 +851,7 @@ onMounted(() => {
                                         <aside
                                             v-if="selected === 'Upload'"
                                             aria-label="sidebar"
-                                            class="rounded md:w-72 md:min-h-[50rem] md:max-h-[50rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
+                                            class="rounded md:w-72 md:min-h-[42.5rem] md:max-h-[42.5rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200"
                                         >
                                             <div
                                                 v-if="

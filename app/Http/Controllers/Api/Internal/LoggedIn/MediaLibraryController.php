@@ -35,7 +35,7 @@ class MediaLibraryController extends Controller
             ->when($request->query("search_query"), function ($query, $term) {
                 $query->where("name", "LIKE", "%" . $term . "%");
             })
-            ->paginate(14);
+            ->paginate(16);
 
         // check for search_query
         if ($request->search_query !== null) {

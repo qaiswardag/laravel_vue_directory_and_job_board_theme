@@ -233,7 +233,7 @@ onMounted(() => {
         "
     >
         <div
-            class="border p-2 rounded border-gray-200 overflow-y-scroll md:min-h-[32.5em] md:max-h-[32.5rem] min-h-[15rem] max-h-[15rem]"
+            class="border p-2 rounded border-gray-200 overflow-y-scroll md:min-h-[24rem] md:max-h-[24rem] min-h-[15rem] max-h-[15rem]"
         >
             <div v-if="getCurrentMedia?.fetchedMedia?.total_results === 0">
                 <div class="pt-6 py-b px-4">
@@ -259,7 +259,7 @@ onMounted(() => {
                 "
             >
                 <div
-                    class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 myPrimaryGap"
+                    class="grid lg:grid-cols-8 md:grid-cols-6 grid-cols-2 myPrimaryGap"
                 >
                     <template
                         v-for="image in Array.isArray(

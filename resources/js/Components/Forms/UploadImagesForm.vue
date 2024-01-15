@@ -200,24 +200,16 @@ onMounted(() => {
         <!-- Actions # start -->
         <div
             v-if="isLoading === false && imagesPreview.length !== 0"
-            class="px-2 py-4 flex sm:justify-center justify-center"
+            class="flex justify-center gap-2 items-center mb-4"
         >
-            <button @click="submit" type="button" class="myPrimaryButton">
-                <span class="material-symbols-outlined"> cloud_upload </span>
-                <span> Upload Images </span>
-            </button>
-        </div>
-        <!-- Actions # end -->
-
-        <div class="flex justify-start items-center">
-            <p
+            <div
                 v-if="
                     Array.isArray(imagesPreview) && imagesPreview.length === 0
                 "
                 class="myPrimaryTag"
             >
                 <span class="font-medium"> Images 0 </span>
-            </p>
+            </div>
             <div
                 v-if="
                     Array.isArray(imagesPreview) && imagesPreview.length !== 0
@@ -228,10 +220,16 @@ onMounted(() => {
                     Images {{ imagesPreview && imagesPreview.length }}
                 </div>
             </div>
+
+            <button @click="submit" type="button" class="myPrimaryButton">
+                <span class="material-symbols-outlined"> cloud_upload </span>
+                <span> Upload Images </span>
+            </button>
         </div>
+        <!-- Actions # end -->
 
         <div
-            class="rounded p-2 border border-myPrimaryLightGrayColor overflow-y-scroll md:min-h-[29rem] md:max-h-[29rem] min-h-[15rem] max-h-[15rem]"
+            class="rounded p-2 border border-myPrimaryLightGrayColor overflow-y-scroll md:min-h-[19.5rem] md:max-h-[19.5rem] min-h-[15rem] max-h-[15rem]"
         >
             <div v-if="isLoading === true">
                 <div class="flex items-center justify-center">
