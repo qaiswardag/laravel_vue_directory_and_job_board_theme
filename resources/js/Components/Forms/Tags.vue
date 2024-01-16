@@ -52,9 +52,9 @@ const handleInput = function () {
 };
 
 // delete tag
-const deleteTag = function (e) {
+const deleteTag = function (passedTag) {
     tagsEntered.value = tagsEntered.value.filter((tag) => {
-        return tag !== e.target.getAttribute("data-tag");
+        return tag !== passedTag;
     });
     emit("handleTags", tagsEntered.value.toString(","));
 };
@@ -76,7 +76,7 @@ onMounted(() => {
                 <template v-for="tag in tagsEntered" :key="tag">
                     <div
                         :data-tag="tag"
-                        @click="deleteTag"
+                        @click="deleteTag(tag)"
                         class="hover:text-white font-medium flex flex-wrap justify-center items-center gap-2 myPrimaryTag hover:bg-red-500 cursor-pointer"
                     >
                         <span>
@@ -88,7 +88,6 @@ onMounted(() => {
                             <span>
                                 {{ tag }}
                             </span>
-                            <span :data-tag="tag">×</span>
                         </div>
                     </div>
                 </template>
