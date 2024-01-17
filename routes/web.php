@@ -1027,6 +1027,7 @@ Route::middleware([
         MediaLibraryController::class,
         "update",
     ])->name("media.update");
+
     Route::post("/team/media/store", [
         MediaLibraryController::class,
         "store",
