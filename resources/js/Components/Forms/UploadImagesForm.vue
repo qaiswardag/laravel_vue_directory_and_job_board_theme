@@ -111,7 +111,7 @@ const submit = () => {
         return;
     }
 
-    form.post(route("media.store", [props.team]), {
+    form.post(route("media.store", { id: props.team.id }), {
         preserveScroll: true,
         onSuccess: () => {
             uploadOnSuccess();
