@@ -68,13 +68,6 @@ const goToSingleStoreFromInSale = function (
 ) {
     router.get(route(routeName, [storeTeamSlug, storeSlug, storeId]));
 };
-
-const adsenseContent = ref(null);
-onMounted(() => {
-    adsenseContent.value = document.getElementById(
-        "divadsensedisplaynone"
-    ).innerHTML;
-});
 </script>
 <template>
     <div class="my-0 py-0"></div>
@@ -89,25 +82,6 @@ onMounted(() => {
         </template>
         <template #sidebar>
             <aside class="flex gap-8 flex-col">
-                <!-- Google add # start -->
-                <template v-if="team">
-                    <div class="myPrimaryWidget">
-                        <h4 class="myQuaternaryHeader">Ads</h4>
-                        <WidgetSectionBorder></WidgetSectionBorder>
-
-                        <div
-                            id="adsgoeshere"
-                            style="
-                                background: #1d1f29;
-                                padding-top: 60px;
-                                text-align: center;
-                            "
-                            v-html="adsenseContent"
-                        ></div>
-                    </div>
-                </template>
-                <!-- Google Add # end -->
-
                 <!-- team related to this resource # start -->
                 <template v-if="team">
                     <div class="myPrimaryWidget">

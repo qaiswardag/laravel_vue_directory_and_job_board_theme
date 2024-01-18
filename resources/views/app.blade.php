@@ -27,31 +27,6 @@
         async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzutbgFidPQIG0Gkaqx8DmiwiB0pUFyeE&libraries=places&callback=console.debug"></script>
         <!-- Google maps end -->
 
-        <!-- Google Search Console start-->
-        <meta name="google-site-verification" content="erV447H5voAvs1MTiQCgETMlHpVvA0mDRIUCSh79tjI" />
-        <!-- Google Search Console end -->
-  
- 
-        <!-- Google Adsense start-->
-        <div id="divadsensedisplaynone" style="display:none;">
-            <!-- put here all adsense code -->
-            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-xxxxxx"
-                data-ad-slot="xxxxxx"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-            <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-            </div>
-        <!-- Google Adsense end -->
-
-
-
-        
-
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ32Y8NV9M"></script>
         <script>
