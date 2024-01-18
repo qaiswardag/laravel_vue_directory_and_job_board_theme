@@ -31,10 +31,24 @@
         <meta name="google-site-verification" content="erV447H5voAvs1MTiQCgETMlHpVvA0mDRIUCSh79tjI" />
         <!-- Google Search Console end -->
   
+ 
         <!-- Google Adsense start-->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7133169496171056"
-        crossorigin="anonymous"></script>
+        <div id="divadsensedisplaynone" style="display:none;">
+            <!-- put here all adsense code -->
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-xxxxxx"
+                data-ad-slot="xxxxxx"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            </div>
         <!-- Google Adsense end -->
+
+
 
         
 
