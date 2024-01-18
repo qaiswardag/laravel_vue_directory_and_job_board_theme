@@ -30,6 +30,11 @@
         <!-- Google Search Console start-->
         <meta name="google-site-verification" content="erV447H5voAvs1MTiQCgETMlHpVvA0mDRIUCSh79tjI" />
         <!-- Google Search Console end -->
+  
+        <!-- Google Adsense start-->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7133169496171056"
+        crossorigin="anonymous"></script>
+        <!-- Google Adsense end -->
 
         
 
