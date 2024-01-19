@@ -39,11 +39,15 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $environment = config("app.env");
+
         return array_merge(parent::share($request), [
             "flash" => [
                 "success" => fn() => $request->session()->get("success"),
                 "error" => fn() => $request->session()->get("error"),
             ],
+
+            "environment" => $environment,
 
             "currentUserTeamRole" =>
                 Auth::user() &&

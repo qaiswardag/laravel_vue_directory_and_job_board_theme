@@ -16,6 +16,7 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import { vueFetch } from "@/composables/vueFetch";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 import { TailwindPagination } from "laravel-vue-pagination";
+import { usePage } from "@inertiajs/vue3";
 
 import {
     TrashIcon,
@@ -105,6 +106,13 @@ const fullDynamicPrice = ref(0);
 const showProductError = ref(false);
 
 const handleSelectProduct = function (product) {
+    // console.log(`product:`, product);
+    //
+    //
+    console.log(`usePage:`, usePage().props.environment);
+    //
+    //
+    //
     showProductError.value = false;
 
     if (!product.dynamic_product) {
