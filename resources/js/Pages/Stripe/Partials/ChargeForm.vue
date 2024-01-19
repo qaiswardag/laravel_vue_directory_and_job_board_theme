@@ -108,7 +108,11 @@ const showProductError = ref(false);
 const handleSelectProduct = function (product) {
     let stripePriceId = product.priceIdentifierStripe;
 
-    if (usePage().props && usePage().props.environment === "local") {
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment === "local"
+    ) {
         stripePriceId = product.priceIdentifierStripeTest;
     }
 
@@ -330,10 +334,31 @@ onBeforeMount(() => {
     if (props.post) {
         formType.value = "update";
 
-        const product = props.products.find((product) => {
-            return product.priceIdentifierStripe === props.post.stripe_price;
-        });
+        //
+        let product = null;
+        //
+        //
+        // let stripePriceId = product.priceIdentifierStripe;
 
+        if (
+            usePage() &&
+            usePage().props &&
+            usePage().props.environment === "local"
+        ) {
+            product = props.products.find((product) => {
+                return (
+                    product.priceIdentifierStripeTest ===
+                    props.post.stripe_price
+                );
+            });
+        } else {
+            product = props.products.find((product) => {
+                return (
+                    product.priceIdentifierStripe === props.post.stripe_price
+                );
+            });
+        }
+        //
         handleSelectProduct(product);
         productQuantity.value = props.post.quantity;
         fullDynamicPrice.value = props.post.quantity * product.priceRaw;
