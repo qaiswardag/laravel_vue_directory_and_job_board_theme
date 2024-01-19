@@ -106,13 +106,12 @@ const fullDynamicPrice = ref(0);
 const showProductError = ref(false);
 
 const handleSelectProduct = function (product) {
-    // console.log(`product:`, product);
-    //
-    //
-    console.log(`usePage:`, usePage().props.environment);
-    //
-    //
-    //
+    let stripePriceId = product.priceIdentifierStripe;
+
+    if (usePage().props && usePage().props.environment === "local") {
+        stripePriceId = product.priceIdentifierStripeTest;
+    }
+
     showProductError.value = false;
 
     if (!product.dynamic_product) {
@@ -133,7 +132,7 @@ const handleSelectProduct = function (product) {
         selectedProduct.value = product;
         formCharge.dynamic_product = product.dynamic_product;
         formCharge.product_id = product.id;
-        formCharge.price_identifier_stripe = product.priceIdentifierStripe;
+        formCharge.price_identifier_stripe = stripePriceId;
 
         formCharge.minimum_quantity = product.minimum_quantity;
         formCharge.maximum_quantity = product.maximum_quantity;
