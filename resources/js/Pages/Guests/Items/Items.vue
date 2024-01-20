@@ -3,7 +3,7 @@ import { useStore } from "vuex";
 import { vueFetch } from "@/composables/vueFetch";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import slugify from "slugify";
@@ -47,9 +47,21 @@ const searchForm = useForm({
     search_query: "",
 });
 
-const searchTagsOrContent = function () {
-    searchForm.tags_or_content = !searchForm.tags_or_content;
+const searchInTagsAndContent = ref(false);
+const showJobCountriesAndTypes = ref(false);
 
+watch(searchInTagsAndContent, (newValue) => {
+    if (newValue) {
+        searchForm.tags_or_content = true;
+        searchTagsOrContent();
+    }
+    if (!newValue) {
+        searchForm.tags_or_content = false;
+        searchTagsOrContent();
+    }
+});
+
+const searchTagsOrContent = function () {
     handleGetPosts(
         route(props.pathList, {
             page: 1,
@@ -406,38 +418,79 @@ onMounted(() => {
                                         class="absolute left-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     >
                                         <div class="py-1">
-                                            <MenuItem>
-                                                <button
-                                                    type="button"
-                                                    @click="searchTagsOrContent"
-                                                    class="pl-4 pr-2 pt-2 pb-2 w-full text-sm flex items-center justify-start gap-2 my-4 hover:bg-myPrimaryLightGrayColor"
-                                                    :class="[
-                                                        {
-                                                            'bg-myPrimaryLightGrayColor':
-                                                                searchForm.tags_or_content,
-                                                        },
-                                                        {
-                                                            '': !searchForm.tags_or_content,
-                                                        },
-                                                    ]"
+                                            <!-- Search in tags and content # start -->
+                                            <div class="py-1">
+                                                <div
+                                                    class="pl-4 pr-2 pt-2 pb-2 w-full text-sm flex items-center justify-start gap-2 my-2 hover:bg-myPrimaryLightGrayColor"
                                                 >
-                                                    <span>
-                                                        Search in Tags & Content
-                                                    </span>
-                                                    <template
-                                                        v-if="
-                                                            searchForm.tags_or_content
-                                                        "
+                                                    <div
+                                                        class="relative flex items-center"
                                                     >
-                                                        <span
-                                                            class="material-symbols-outlined"
+                                                        <div
+                                                            class="flex h-6 items-center"
                                                         >
-                                                            check
-                                                        </span>
-                                                    </template>
-                                                </button>
-                                            </MenuItem>
+                                                            <input
+                                                                id="show_seach_in_tags_content"
+                                                                name="show_seach_in_tags_content"
+                                                                v-model="
+                                                                    searchInTagsAndContent
+                                                                "
+                                                                type="checkbox"
+                                                                class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            class="ml-3 min-w-0 flex-1 text-sm leading-6"
+                                                        >
+                                                            <label
+                                                                for="show_seach_in_tags_content"
+                                                                class="select-none font-medium text-gray-900"
+                                                            >
+                                                                Search in Tags &
+                                                                Content
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Search in tags and content # end -->
                                         </div>
+
+                                        <template v-if="nameList === 'jobs'">
+                                            <div class="py-1">
+                                                <div
+                                                    class="pl-4 pr-2 pt-2 pb-2 w-full text-sm flex items-center justify-start gap-2 my-2 hover:bg-myPrimaryLightGrayColor"
+                                                >
+                                                    <div
+                                                        class="relative flex items-center"
+                                                    >
+                                                        <div
+                                                            class="flex h-6 items-center"
+                                                        >
+                                                            <input
+                                                                id="show_countries"
+                                                                name="show_countries"
+                                                                v-model="
+                                                                    showJobCountriesAndTypes
+                                                                "
+                                                                type="checkbox"
+                                                                class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            class="ml-3 min-w-0 flex-1 text-sm leading-6"
+                                                        >
+                                                            <label
+                                                                for="show_countries"
+                                                                class="select-none font-medium text-gray-900"
+                                                                >Countries & Job
+                                                                Type
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
                                     </MenuItems>
                                 </transition>
                             </Menu>
@@ -552,45 +605,50 @@ onMounted(() => {
                     >
                         <div class="flex md:flex-row flex-col myPrimaryGap">
                             <!-- Country # start -->
-                            <div
-                                class="md:w-1/2 w-full"
-                                v-if="
-                                    countrySelected &&
-                                    Array.isArray(countrySelected) &&
-                                    fetchedDataPosts &&
-                                    Array.isArray(fetchedDataPosts.countries)
-                                "
-                            >
-                                <ItemsFilterSelection
-                                    nameOfList="Countries"
-                                    :list="fetchedDataPosts.countries"
-                                    :listSelected="countrySelected"
-                                    icon="GlobeAmericasIcon"
-                                    @removeItem="handleRemoveCountry"
-                                    @selectItem="handleSelectCountry"
-                                ></ItemsFilterSelection>
-                            </div>
-                            <!-- Country # end -->
+                            <template v-if="showJobCountriesAndTypes">
+                                <div
+                                    class="md:w-1/2 w-full"
+                                    v-if="
+                                        countrySelected &&
+                                        Array.isArray(countrySelected) &&
+                                        fetchedDataPosts &&
+                                        Array.isArray(
+                                            fetchedDataPosts.countries
+                                        )
+                                    "
+                                >
+                                    <ItemsFilterSelection
+                                        nameOfList="Countries"
+                                        :list="fetchedDataPosts.countries"
+                                        :listSelected="countrySelected"
+                                        icon="GlobeAmericasIcon"
+                                        @removeItem="handleRemoveCountry"
+                                        @selectItem="handleSelectCountry"
+                                    ></ItemsFilterSelection>
+                                </div>
 
-                            <!-- Type # start -->
-                            <div
-                                class="md:w-1/2 w-full"
-                                v-if="
-                                    typeSelected &&
-                                    Array.isArray(typeSelected) &&
-                                    fetchedDataPosts &&
-                                    Array.isArray(fetchedDataPosts.types)
-                                "
-                            >
-                                <ItemsFilterSelection
-                                    nameOfList="Types"
-                                    :list="fetchedDataPosts.types"
-                                    :listSelected="typeSelected"
-                                    icon="NewspaperIcon"
-                                    @removeItem="handleRemoveType"
-                                    @selectItem="handleSelectType"
-                                ></ItemsFilterSelection>
-                            </div>
+                                <!-- Country # end -->
+
+                                <!-- Type # start -->
+                                <div
+                                    class="md:w-1/2 w-full"
+                                    v-if="
+                                        typeSelected &&
+                                        Array.isArray(typeSelected) &&
+                                        fetchedDataPosts &&
+                                        Array.isArray(fetchedDataPosts.types)
+                                    "
+                                >
+                                    <ItemsFilterSelection
+                                        nameOfList="Types"
+                                        :list="fetchedDataPosts.types"
+                                        :listSelected="typeSelected"
+                                        icon="NewspaperIcon"
+                                        @removeItem="handleRemoveType"
+                                        @selectItem="handleSelectType"
+                                    ></ItemsFilterSelection>
+                                </div>
+                            </template>
                             <!-- Type # end -->
                         </div>
                     </template>
