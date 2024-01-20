@@ -76,10 +76,7 @@ const currentUrlHref = window.location.href;
             <meta
                 head-key="og:image"
                 property="og:image"
-                :content="
-                    currentUrl + post.cover_images[0] &&
-                    post.cover_images[0].path
-                "
+                :content="currentUrl + post.cover_images[0].path"
             />
         </template>
     </Head>
