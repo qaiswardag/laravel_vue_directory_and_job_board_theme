@@ -67,11 +67,21 @@ const currentUrlHref = window.location.href;
             :content="extractTextContentHTML(post.content, 155)"
         />
 
-        <meta
-            head-key="og:image"
-            property="og:image"
-            :content="currentUrl + post.cover_images[0].path"
-        />
+        <template
+            v-if="
+                Array.isArray(post.cover_images) &&
+                post.cover_images.length >= 1
+            "
+        >
+            <meta
+                head-key="og:image"
+                property="og:image"
+                :content="
+                    currentUrl + post.cover_images[0] &&
+                    post.cover_images[0].path
+                "
+            />
+        </template>
     </Head>
 
     <MainLayout>
