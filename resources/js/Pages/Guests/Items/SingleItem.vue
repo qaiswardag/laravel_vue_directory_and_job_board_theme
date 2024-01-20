@@ -44,9 +44,10 @@ const currentUrlHref = window.location.href;
         <title>{{ props.postType }} | {{ post.title }}</title>
 
         <meta
+            name="description"
             head-key="description"
             type="description"
-            :content="extractTextContentHTML(post.content, 155)"
+            :content="extractTextContentHTML(post.content, 200)"
         />
 
         <meta name="keywords" :content="post.tags" />
@@ -62,9 +63,10 @@ const currentUrlHref = window.location.href;
         />
 
         <meta
+            name="description"
             head-key="og:description"
             property="og:description"
-            :content="extractTextContentHTML(post.content, 155)"
+            :content="extractTextContentHTML(post.content, 200)"
         />
 
         <template
