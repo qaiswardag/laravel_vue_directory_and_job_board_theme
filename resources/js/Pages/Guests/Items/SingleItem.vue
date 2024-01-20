@@ -4,6 +4,7 @@ import UnqiueResource from "@/Components/PageTemplates/LoggedIn/Team/UnqiueResou
 import MainLayout from "@/Layouts/MainLayout.vue";
 // import { delay } from "@/helpers/";
 import { extractTextContentHTML } from "@/helpers/extract-text-content-html";
+import { onMounted } from "vue";
 
 const props = defineProps({
     post: {
@@ -34,13 +35,42 @@ const props = defineProps({
         required: false,
     },
 });
+
+const currentUrl = window.location.host + "/storage/uploads/" + "/";
+const currentUrlHref = window.location.href;
 </script>
 <template>
-    <Head :title="`${props.postType} | ${post.title}`">
+    <Head>
+        <title>{{ props.postType }} | {{ post.title }}</title>
+
         <meta
             head-key="description"
-            name="description"
+            type="description"
             :content="extractTextContentHTML(post.content, 155)"
+        />
+
+        <meta name="keywords" :content="post.tags" />
+
+        <meta head-key="og:type" property="og:type" content="article" />
+
+        <meta property="og:url" :content="currentUrlHref" />
+
+        <meta
+            head-key="og:title"
+            property="og:title"
+            :content="`${props.postType} | ${post.title}`"
+        />
+
+        <meta
+            head-key="og:description"
+            property="og:description"
+            :content="extractTextContentHTML(post.content, 155)"
+        />
+
+        <meta
+            head-key="og:image"
+            property="og:image"
+            :content="currentUrl + post.cover_images[0].path"
         />
     </Head>
 
