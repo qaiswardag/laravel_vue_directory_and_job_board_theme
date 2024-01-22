@@ -131,20 +131,35 @@ const notificationsSlideOverButton = function () {
         >
             <div class="flex myPrimaryGap items-center mx-auto">
                 <Link
-                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
                     :href="route('stores.guest.index')"
+                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor font-medium"
+                    :class="{
+                        'shadow-md bg-red-200':
+                            route().current('stores.guest.show') ||
+                            route().current('stores.guest.index'),
+                    }"
                 >
                     Stores
                 </Link>
                 <Link
-                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
                     :href="route('jobs.guest.index')"
+                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor font-medium"
+                    :class="{
+                        'shadow-md bg-red-200':
+                            route().current('jobs.guest.show') ||
+                            route().current('jobs.guest.index'),
+                    }"
                 >
                     Jobs
                 </Link>
                 <Link
-                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
                     :href="route('posts.guest.index')"
+                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor font-medium"
+                    :class="{
+                        'shadow-md bg-red-200':
+                            route().current('posts.guest.show') ||
+                            route().current('posts.guest.index'),
+                    }"
                 >
                     Campaigns
                 </Link>
@@ -166,7 +181,7 @@ const notificationsSlideOverButton = function () {
 
                 <template v-if="$page.props.user === null">
                     <Link
-                        class="text-black focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
+                        class="text-black focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor font-medium"
                         :href="route('login')"
                     >
                         <span> Login </span>
@@ -174,7 +189,7 @@ const notificationsSlideOverButton = function () {
                 </template>
                 <template v-if="$page.props.user === null">
                     <Link
-                        class="text-black focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
+                        class="text-black focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor font-medium"
                         :href="route('register')"
                     >
                         <span> Sign up </span>
