@@ -36,7 +36,8 @@ const props = defineProps({
     },
 });
 
-const currentUrl = window.location.host + "/storage/uploads/" + "/";
+const currentUrl =
+    "https://" + window.location.host + "/storage/uploads/" + "/";
 const currentUrlHref = window.location.href;
 </script>
 <template>
