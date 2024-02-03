@@ -849,7 +849,7 @@ class StoreController extends Controller
         }
 
         if ($newStore !== null) {
-            return redirect()->route("team.stores.index", [
+            return redirect()->route("team.stores.index.draft", [
                 "teamId" => $team->id,
             ]);
         }
