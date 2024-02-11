@@ -218,15 +218,28 @@ const navigation = [
                                                                             item.label
                                                                         }}
 
-                                                                        <ChevronRightIcon
-                                                                            :class="[
+                                                                        <template
+                                                                            v-if="
                                                                                 open
-                                                                                    ? 'rotate-90 text-gray-500'
-                                                                                    : 'text-gray-400',
-                                                                                'h-5 w-5 shrink-0',
-                                                                            ]"
-                                                                            aria-hidden="true"
-                                                                        />
+                                                                            "
+                                                                        >
+                                                                            <span
+                                                                                class="material-symbols-outlined"
+                                                                            >
+                                                                                remove
+                                                                            </span>
+                                                                        </template>
+                                                                        <template
+                                                                            v-if="
+                                                                                !open
+                                                                            "
+                                                                        >
+                                                                            <span
+                                                                                class="material-symbols-outlined"
+                                                                            >
+                                                                                add
+                                                                            </span>
+                                                                        </template>
                                                                     </DisclosureButton>
 
                                                                     <DisclosurePanel
