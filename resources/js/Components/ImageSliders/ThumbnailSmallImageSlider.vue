@@ -1,13 +1,5 @@
 <script setup>
-import {
-    ArrowLeftCircleIcon,
-    ArrowLeftIcon,
-    ArrowRightCircleIcon,
-    ArrowRightIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
-} from "@heroicons/vue/24/outline";
-import { computed, onMounted, ref, watch, watchEffect } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const props = defineProps({
     images: {

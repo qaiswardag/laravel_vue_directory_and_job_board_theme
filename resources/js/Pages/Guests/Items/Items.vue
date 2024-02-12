@@ -12,7 +12,6 @@ import { TailwindPagination } from "laravel-vue-pagination";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
 import ItemsFilterSelection from "@/Pages/Guests/Items/ItemsFilterSelection/ItemsFilterSelection.vue";
-import ItemDisplaySelection from "@/Pages/Guests/Items/ItemsFilterSelection/ItemDisplaySelection.vue";
 import { parseISO, format } from "date-fns";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 
