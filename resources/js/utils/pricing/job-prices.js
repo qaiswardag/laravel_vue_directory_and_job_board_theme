@@ -1,5 +1,3 @@
-import { usePage } from "@inertiajs/vue3";
-
 const jobPrices = [
     {
         name: "Single Job Posting",
