@@ -1,13 +1,4 @@
 <script setup>
-import {
-    GlobeAmericasIcon,
-    MapIcon,
-    MapPinIcon,
-    NewspaperIcon,
-    Square2StackIcon,
-    Squares2X2Icon,
-} from "@heroicons/vue/24/outline";
-
 const emit = defineEmits(["selectItem", "removeItem"]);
 const props = defineProps({
     list: {
