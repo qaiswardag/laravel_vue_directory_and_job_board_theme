@@ -2,7 +2,6 @@
 import MainLayout from "@/Layouts/MainLayout.vue";
 import GuestsLayout from "@/Layouts/GuestsLayout.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
-import DefaultElement from "@/Components/Layouts/DefaultElement.vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import SectionBorder from "@/Components/Sections/SectionBorder.vue";
 import FooterSectionBorder from "@/Components/Sections/FooterSectionBorder.vue";
