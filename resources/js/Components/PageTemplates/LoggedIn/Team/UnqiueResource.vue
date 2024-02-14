@@ -1,7 +1,5 @@
 <script setup>
-import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
-import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import DefaultTemplate from "@/Components/PageTemplates/DefaultTemplate.vue";
 import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import { parseISO, format } from "date-fns";
