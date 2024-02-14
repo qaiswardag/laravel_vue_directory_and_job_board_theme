@@ -57,6 +57,55 @@ class PostController extends Controller
      */
     public function show($teamSlug, $postSlug, $postId)
     {
+        // Call the getShow method and store its return values
+        list(
+            $post,
+            $authors,
+            $categories,
+            $states,
+            $stores,
+            $postTeam,
+            $postRenderView,
+        ) = $this->getShow($postId);
+
+        // Render
+        return Inertia::render($postRenderView, [
+            "post" => $post,
+            "postType" => "Campaign",
+            "authors" => $authors,
+            "states" => $states,
+            "categories" => $categories,
+            "stores" => $stores,
+            "team" => $postTeam,
+        ]);
+    }
+
+    public function showAPI($teamSlug, $postSlug, $postId)
+    {
+        // Call the getShow method and store its return values
+        list(
+            $post,
+            $authors,
+            $categories,
+            $states,
+            $stores,
+            $postTeam,
+        ) = $this->getShow($postId);
+
+        // Render
+        return [
+            "post" => $post,
+            "postType" => "Campaign",
+            "authors" => $authors,
+            "states" => $states,
+            "categories" => $categories,
+            "stores" => $stores,
+            "team" => $postTeam,
+        ];
+    }
+
+    private function getShow($postId)
+    {
         $postRenderView = "Guests/Items/SingleItem";
 
         $post = Post::findOrFail($postId);
@@ -70,7 +119,6 @@ class PostController extends Controller
                     ->whereNotNull("started_at")
                     ->whereNotNull("ended_at")
                     ->whereNotNull("days_before_campaign_visibility")
-
                     ->where(
                         "started_at",
                         "<=",
@@ -93,18 +141,17 @@ class PostController extends Controller
 
         $postTeam = Team::find($post->team_id);
 
-        // Render
-        return Inertia::render($postRenderView, [
-            "post" => $post,
-            "postType" => "Campaign",
-            "authors" => $authors,
-            "states" => $states,
-            "categories" => $categories,
-            "stores" => $stores,
-            "team" => $postTeam,
-        ]);
+        // Return the values as an array
+        return [
+            $post,
+            $authors,
+            $categories,
+            $states,
+            $stores,
+            $postTeam,
+            $postRenderView,
+        ];
     }
-
     /**
      * Show the form for editing the specified resource.
      *

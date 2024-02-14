@@ -7,8 +7,8 @@ import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
 import { parseISO, format } from "date-fns";
 import ArticleTemplate from "@/Components/PageTemplates/ArticleTemplate.vue";
 import WidgetSectionBorder from "@/Components/Sections/WidgetSectionBorder.vue";
-import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import UserTag from "@/Components/Users/UserTag.vue";
+import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import {
     BriefcaseIcon,
     CalendarDaysIcon,

@@ -42,19 +42,15 @@ class StoreController extends Controller
      */
     public function show($teamSlug, $postSlug, $postId)
     {
-        $store = Store::where("id", $postId)
-            ->where("published", true)
-            ->with('coverImages')
-            ->firstOrFail();
-
-        $postRenderView = "Guests/Items/SingleItem";
-
-        $authors = $store->authors;
-        $categories = $store->categories;
-        $states = $store->states;
-
-        $storeTeam = Team::find($store->team_id);
-
+        // Call the getShow method and store its return values
+        list(
+            $store,
+            $authors,
+            $categories,
+            $states,
+            $storeTeam,
+            $postRenderView,
+        ) = $this->getShow($postId);
 
         // Render
         return Inertia::render($postRenderView, [
@@ -65,6 +61,56 @@ class StoreController extends Controller
             "categories" => $categories,
             "team" => $storeTeam,
         ]);
+    }
+    /**
+     * Display the specified resource.
+     */
+    public function showAPI($teamSlug, $postSlug, $postId)
+    {
+        // Call the getShow method and store its return values
+        list(
+            $store,
+            $authors,
+            $categories,
+            $states,
+            $storeTeam,
+        ) = $this->getShow($postId);
+
+        // Render
+        return [
+            "postType" => "Store",
+            "post" => $store,
+            "authors" => $authors,
+            "states" => $states,
+            "categories" => $categories,
+            "team" => $storeTeam,
+        ];
+    }
+
+    private function getShow($postId)
+    {
+        $store = Store::where("id", $postId)
+            ->where("published", true)
+            ->with("coverImages")
+            ->firstOrFail();
+
+        $postRenderView = "Guests/Items/SingleItem";
+
+        $authors = $store->authors;
+        $categories = $store->categories;
+        $states = $store->states;
+
+        $storeTeam = Team::find($store->team_id);
+
+        // Return the values as an array
+        return [
+            $store,
+            $authors,
+            $categories,
+            $states,
+            $storeTeam,
+            $postRenderView,
+        ];
     }
 
     /**

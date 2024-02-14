@@ -180,7 +180,7 @@ Route::middleware([])->group(function () {
     ])->name("posts.guest.show");
     //
     //
-    Route::get("/api/guest/campaigns/index", [
+    Route::get("/guest/campaigns/index", [
         PostsGuestIndexController::class,
         "index",
     ])->name("api.guest.posts.index");
@@ -204,7 +204,7 @@ Route::middleware([])->group(function () {
     ])->name("jobs.guest.show");
     //
     //
-    Route::get("/api/guest/jobs/index", [
+    Route::get("/guest/jobs/index", [
         JobsGuestIndexController::class,
         "index",
     ])->name("api.guest.jobs.index");
@@ -222,14 +222,14 @@ Route::middleware([])->group(function () {
         "stores.guest.index"
     );
 
-    Route::get("{teamSlug}/stores/{postSlug}/view/{postId}/", [
+    Route::get("{teamSlug}/stores/{postSlug}/view/{postId}", [
         StoreStoreController::class,
         "show",
     ])->name("stores.guest.show");
 
     //
     //
-    Route::get("/api/guest/stores/index", [
+    Route::get("/guest/stores/index", [
         StoresGuestIndexController::class,
         "index",
     ])->name("api.guest.stores.index");

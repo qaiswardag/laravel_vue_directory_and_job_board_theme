@@ -58,6 +58,60 @@ class JobController extends Controller
      */
     public function show($teamSlug, $postSlug, $postId)
     {
+        // Call the getShow method and store its return values
+        list(
+            $job,
+            $authors,
+            $categories,
+            $countries,
+            $jobTypes,
+            $states,
+            $jobTeam,
+            $postRenderView,
+        ) = $this->getShow($postId);
+
+        // Render
+        return Inertia::render($postRenderView, [
+            "postType" => "Job",
+            "post" => $job,
+            "authors" => $authors,
+            "countries" => $countries,
+            "jobTypes" => $jobTypes,
+            "states" => $states,
+            "categories" => $categories,
+            "team" => $jobTeam,
+        ]);
+    }
+
+    public function showAPI($teamSlug, $postSlug, $postId)
+    {
+        // Call the getShow method and store its return values
+        list(
+            $job,
+            $authors,
+            $categories,
+            $countries,
+            $jobTypes,
+            $states,
+            $jobTeam,
+        ) = $this->getShow($postId);
+
+        // Render
+        return [
+            "postType" => "Job",
+            "post" => $job,
+            "authors" => $authors,
+            "countries" => $countries,
+            "jobTypes" => $jobTypes,
+            "states" => $states,
+            "categories" => $categories,
+            "team" => $jobTeam,
+        ];
+    }
+    private function getShow($postId)
+    {
+        $postRenderView = "Guests/Items/SingleItem";
+
         $job = Job::where("id", $postId)
             ->where("published", true)
             ->where("is_paid", true)
@@ -71,8 +125,6 @@ class JobController extends Controller
             })
             ->firstOrFail();
 
-        $postRenderView = "Guests/Items/SingleItem";
-
         $authors = $job->authors;
         $categories = $job->categories;
         $countries = $job->countries;
@@ -81,17 +133,17 @@ class JobController extends Controller
 
         $jobTeam = Team::find($job->team_id);
 
-        // Render the store
-        return Inertia::render($postRenderView, [
-            "postType" => "Job",
-            "post" => $job,
-            "authors" => $authors,
-            "countries" => $countries,
-            "jobTypes" => $jobTypes,
-            "states" => $states,
-            "categories" => $categories,
-            "team" => $jobTeam,
-        ]);
+        // Return the values as an array
+        return [
+            $job,
+            $authors,
+            $categories,
+            $countries,
+            $jobTypes,
+            $states,
+            $jobTeam,
+            $postRenderView,
+        ];
     }
 
     /**
