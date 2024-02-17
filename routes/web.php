@@ -168,16 +168,9 @@ Route::middleware([])->group(function () {
     // POSTS #START
     // POSTS #START
     // POSTS #START
-    Route::get("{teamSlug}/campaigns/{postSlug}/view/{postId}/", [
-        PostPostController::class,
-        "show",
-    ])->name("posts.guest.show");
+
     //
     //
-    Route::get("/guest/campaigns/index", [
-        PostsGuestIndexController::class,
-        "index",
-    ])->name("api.guest.posts.index");
 
     // POSTS #END
     // POSTS #END
@@ -188,19 +181,9 @@ Route::middleware([])->group(function () {
     // JOBS #START
     // JOBS #START
     // JOBS #START
-
-    Route::get("{teamSlug}/jobs/{postSlug}/view/{postId}/", [
-        JobJobController::class,
-        "show",
-    ])->name("jobs.guest.show");
     //
     //
-    Route::get("/guest/jobs/index", [
-        JobsGuestIndexController::class,
-        "index",
-    ])->name("api.guest.jobs.index");
 
-    // JOBS #END
     // JOBS #END
     // JOBS #END
     // JOBS #END
@@ -209,18 +192,9 @@ Route::middleware([])->group(function () {
     // STORES #START
     // STORES #START
     // STORES #START
-    Route::get("{teamSlug}/stores/{postSlug}/view/{postId}", [
-        StoreStoreController::class,
-        "show",
-    ])->name("stores.guest.show");
 
     //
     //
-    Route::get("/guest/stores/index", [
-        StoresGuestIndexController::class,
-        "index",
-    ])->name("api.guest.stores.index");
-
     // PROFESSIONAL # START
     // PROFESSIONAL # START
     // PROFESSIONAL # START

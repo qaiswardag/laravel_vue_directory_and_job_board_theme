@@ -11,12 +11,15 @@ use Inertia\Inertia;
 
 class JobController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        // Render the view
-        return Inertia::render("Guests/Jobs/Index", [
-            "posts" => null,
-        ]);
+        //
     }
 
     public function jobsFetch()
@@ -58,29 +61,7 @@ class JobController extends Controller
      */
     public function show($teamSlug, $postSlug, $postId)
     {
-        // Call the getShow method and store its return values
-        list(
-            $job,
-            $authors,
-            $categories,
-            $countries,
-            $jobTypes,
-            $states,
-            $jobTeam,
-            $postRenderView,
-        ) = $this->getShow($postId);
-
-        // Render
-        return Inertia::render($postRenderView, [
-            "postType" => "Job",
-            "post" => $job,
-            "authors" => $authors,
-            "countries" => $countries,
-            "jobTypes" => $jobTypes,
-            "states" => $states,
-            "categories" => $categories,
-            "team" => $jobTeam,
-        ]);
+        //
     }
 
     public function showAPI($teamSlug, $postSlug, $postId)

@@ -15,10 +15,7 @@ class StoreController extends Controller
      */
     public function index()
     {
-        // Render the view
-        return Inertia::render("Guests/Stores/Index", [
-            "posts" => null,
-        ]);
+        //
     }
 
     /**
@@ -40,27 +37,9 @@ class StoreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($teamSlug, $postSlug, $postId)
+    public function show(Request $request)
     {
-        // Call the getShow method and store its return values
-        list(
-            $store,
-            $authors,
-            $categories,
-            $states,
-            $storeTeam,
-            $postRenderView,
-        ) = $this->getShow($postId);
-
-        // Render
-        return Inertia::render($postRenderView, [
-            "postType" => "Store",
-            "post" => $store,
-            "authors" => $authors,
-            "states" => $states,
-            "categories" => $categories,
-            "team" => $storeTeam,
-        ]);
+        //
     }
     /**
      * Display the specified resource.

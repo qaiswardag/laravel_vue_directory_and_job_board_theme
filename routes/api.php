@@ -26,41 +26,31 @@ use App\Http\Controllers\Guests\User\UserController;
 |
 */
 
-Route::get("/jobs", [JobController::class, "jobsFetch"])->name("jobs.fetch");
-
 // index
 Route::get("/guest/campaigns/index", [
     PostsGuestIndexController::class,
     "index",
 ])->name("api.guest.posts.index");
 
-Route::get("/guest/jobs/index", [
-    JobsGuestIndexController::class,
-    "index",
-])->name("api.api.guest.jobs.index");
+Route::get("/guest/jobs/index", [JobsGuestIndexController::class, "index"]);
 
-Route::get("/guest/stores/index", [
-    StoresGuestIndexController::class,
-    "index",
-])->name("api.api.guest.stores.index");
+Route::get("/guest/stores/index", [StoresGuestIndexController::class, "index"]);
 
 // single
 Route::get("{teamSlug}/campaign/{postSlug}/view/{postId}/", [
     PostPostController::class,
     "showAPI",
-])->name("posts.guest.show");
+]);
 
 Route::get("{teamSlug}/job/{postSlug}/view/{postId}/", [
     JobJobController::class,
     "showAPI",
-])->name("jobs.guest.show");
+]);
 
 Route::get("{teamSlug}/store/{postSlug}/view/{postId}", [
     StoreStoreController::class,
     "showAPI",
-])->name("stores.guest.show");
+]);
 
 // users
-Route::get("/users", [UserController::class, "index"])->name(
-    "users.guest.index"
-);
+Route::get("/users", [UserController::class, "index"]);

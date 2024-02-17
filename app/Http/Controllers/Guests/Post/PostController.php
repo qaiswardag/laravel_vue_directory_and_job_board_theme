@@ -22,10 +22,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        // Render the view
-        return Inertia::render("Guests/Posts/Index", [
-            "posts" => null,
-        ]);
+        //
     }
 
     /**
@@ -39,6 +36,14 @@ class PostController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(Request $request)
+    {
+        //
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -47,37 +52,6 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $slug The slug of the post.
-     * @return \Inertia\Response A rendered view with post data or an error view if needed.
-     */
-    public function show($teamSlug, $postSlug, $postId)
-    {
-        // Call the getShow method and store its return values
-        list(
-            $post,
-            $authors,
-            $categories,
-            $states,
-            $stores,
-            $postTeam,
-            $postRenderView,
-        ) = $this->getShow($postId);
-
-        // Render
-        return Inertia::render($postRenderView, [
-            "post" => $post,
-            "postType" => "Campaign",
-            "authors" => $authors,
-            "states" => $states,
-            "categories" => $categories,
-            "stores" => $stores,
-            "team" => $postTeam,
-        ]);
     }
 
     public function showAPI($teamSlug, $postSlug, $postId)
