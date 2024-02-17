@@ -124,7 +124,7 @@ import {
             >
                 <Link
                     :href="route('user.teams.switch')"
-                    class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                    class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
                     :class="{
                         'shadow-md': route().current('user.teams.switch'),
                     }"
@@ -149,7 +149,7 @@ import {
         >
             <Link
                 :href="route('teams.create.team')"
-                class="myPrimaryTag inline-block hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
+                class="myPrimaryTag hover:bg-myPrimaryLinkColor hover:text-white cursor-pointer"
             >
                 <div class="flex items-center gap-2">
                     <span class="myMediumIcon material-symbols-outlined">

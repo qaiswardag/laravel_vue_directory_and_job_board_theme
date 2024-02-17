@@ -6,7 +6,7 @@
 
         <title inertia>{{ config('app.name', 'myself') }}</title>
         
-        <script src="https://js.stripe.com/v3/"></script>
+        <script src="https://js.stripe.com/v3/"></script>        
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,6 +26,15 @@
         <script
         async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzutbgFidPQIG0Gkaqx8DmiwiB0pUFyeE&libraries=places&callback=console.debug"></script>
         <!-- Google maps end -->
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ32Y8NV9M"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DJ32Y8NV9M');
+        </script>
 
         <!-- Favicon start -->
         <link
