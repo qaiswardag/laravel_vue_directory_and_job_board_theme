@@ -26,36 +26,6 @@ const primaryMenuSlideOverButton = function () {
 
 const navigation = [
     {
-        label: "Stores",
-        route: {
-            name: "stores.guest.index",
-            parameters: [],
-        },
-        active:
-            route().current("stores.guest.index") ||
-            route().current("stores.guest.show"),
-    },
-    {
-        label: "Jobs",
-        route: {
-            name: "jobs.guest.index",
-            parameters: [],
-        },
-        active:
-            route().current("jobs.guest.index") ||
-            route().current("jobs.guest.show"),
-    },
-    {
-        label: "Campaigns",
-        route: {
-            name: "posts.guest.index",
-            parameters: [],
-        },
-        active:
-            route().current("posts.guest.index") ||
-            route().current("posts.guest.show"),
-    },
-    {
         label: "Professional & Contact",
         route: {
             name: "professional.index",

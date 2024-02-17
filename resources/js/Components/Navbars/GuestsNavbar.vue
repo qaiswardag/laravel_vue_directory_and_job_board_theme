@@ -129,42 +129,6 @@ const notificationsSlideOverButton = function () {
             class="mx-auto flex myPrimaryGap items-center justify-end px-6 lg:px-8"
             aria-label="Global"
         >
-            <div class="flex myPrimaryGap items-center mx-auto">
-                <Link
-                    :href="route('stores.guest.index')"
-                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor font-medium"
-                    :class="{
-                        'shadow-md bg-red-200':
-                            route().current('stores.guest.show') ||
-                            route().current('stores.guest.index'),
-                    }"
-                >
-                    Stores
-                </Link>
-                <Link
-                    :href="route('jobs.guest.index')"
-                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor font-medium"
-                    :class="{
-                        'shadow-md bg-red-200':
-                            route().current('jobs.guest.show') ||
-                            route().current('jobs.guest.index'),
-                    }"
-                >
-                    Jobs
-                </Link>
-                <Link
-                    :href="route('posts.guest.index')"
-                    class="text-black lg:flex lg:gap-2 lg:items-center hidden focus:outline-none cursor-pointer rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor font-medium"
-                    :class="{
-                        'shadow-md bg-red-200':
-                            route().current('posts.guest.show') ||
-                            route().current('posts.guest.index'),
-                    }"
-                >
-                    Campaigns
-                </Link>
-            </div>
-
             <div class="flex myPrimaryGap items-center">
                 <template v-if="$page.props.user !== null">
                     <Link :href="route('dashboard')">
