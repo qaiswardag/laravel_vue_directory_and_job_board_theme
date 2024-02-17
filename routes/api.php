@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Internal\Guest\Features\StoresGuestIndexController;
 use App\Http\Controllers\Guests\Store\StoreController as StoreStoreController;
 use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
+use App\Http\Controllers\Guests\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +59,8 @@ Route::get("{teamSlug}/store/{postSlug}/view/{postId}", [
     StoreStoreController::class,
     "showAPI",
 ])->name("stores.guest.show");
+
+// users
+Route::get("/users", [UserController::class, "index"])->name(
+    "users.guest.index"
+);

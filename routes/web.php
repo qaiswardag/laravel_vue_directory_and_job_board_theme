@@ -154,9 +154,7 @@ Route::middleware([])->group(function () {
     // USERS #START
     // USERS #START
     // USERS #START
-    Route::get("/users", [UserController::class, "index"])->name(
-        "users.guest.index"
-    );
+
     // unique user
     Route::get("/me/{username}", [UserController::class, "show"])->name(
         "users.guest.show"
