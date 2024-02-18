@@ -1,5 +1,6 @@
 <script setup>
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import { usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
     user: {
@@ -23,6 +24,29 @@ const props = defineProps({
         required: false,
     },
 });
+
+const goToUser = function () {
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment === "local"
+    ) {
+        window.open(
+            `http://localhost:3000/me/${props.user.username}`,
+            "_blank"
+        );
+    }
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment !== "local"
+    ) {
+        window.open(
+            `https://www.myself.ae/me/${props.user.username}`,
+            "_blank"
+        );
+    }
+};
 </script>
 
 <template>
@@ -77,11 +101,7 @@ const props = defineProps({
                 </div>
             </a>
 
-            <a
-                :href="route('users.guest.show', user.username)"
-                target="_blank"
-                class=""
-            >
+            <button @click="goToUser" class="">
                 <div
                     class="flex flex-col items-start justify-center min-h-[3rem] px-2 text-myPrimaryDarkGrayColor"
                     :class="[
@@ -114,7 +134,7 @@ const props = defineProps({
                         </span>
                     </template>
                 </div>
-            </a>
+            </button>
         </div>
     </div>
     <!-- user photo - end -->
