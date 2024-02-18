@@ -14,19 +14,7 @@ class ProfessionalController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $myselfContactInformation = null;
-
-        if ($user) {
-            $myselfContactInformation = [
-                "email" => "hello@myself.ae",
-            ];
-        }
-
-        // Render the view
-        return Inertia::render("Guests/Professional/Professional", [
-            "myselfContactInformation" => $myselfContactInformation,
-        ]);
+        //
     }
 
     /**

@@ -193,16 +193,6 @@ Route::middleware([])->group(function () {
     // STORES #START
     // STORES #START
 
-    //
-    //
-    // PROFESSIONAL # START
-    // PROFESSIONAL # START
-    // PROFESSIONAL # START
-    // PROFESSIONAL # START
-    Route::get("/professional", [ProfessionalController::class, "index"])->name(
-        "professional.index"
-    );
-
     // CREATE NEW TEAM # START
     // CREATE NEW TEAM # START
     if (Jetstream::hasTeamFeatures()) {
