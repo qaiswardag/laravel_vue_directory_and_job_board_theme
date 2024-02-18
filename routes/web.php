@@ -156,9 +156,7 @@ Route::middleware([])->group(function () {
     // USERS #START
 
     // unique user
-    Route::get("/me/{username}", [UserController::class, "show"])->name(
-        "users.guest.show"
-    );
+
     // USERS #END
     // USERS #END
     // USERS #END

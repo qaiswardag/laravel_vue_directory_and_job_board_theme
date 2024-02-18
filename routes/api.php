@@ -54,3 +54,8 @@ Route::get("{teamSlug}/store/{postSlug}/view/{postId}", [
 
 // users
 Route::get("/users", [UserController::class, "index"]);
+
+// single user
+Route::get("/me/{username}", [UserController::class, "show"])->name(
+    "users.guest.show"
+);

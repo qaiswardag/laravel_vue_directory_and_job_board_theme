@@ -79,15 +79,19 @@ class UserController extends Controller
         ]);
 
         if (!$user) {
-            return Inertia::render("Error", [
+            return [
                 "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
                 "status" => 404, // HTTP status code for the response.
-            ]);
+            ];
         }
 
-        return Inertia::render("Guests/User/Show", [
+        if (!$user->public) {
+            return response()->json("User not found!", 404);
+        }
+
+        return [
             "userData" => $user,
-        ]);
+        ];
     }
 
     /**
