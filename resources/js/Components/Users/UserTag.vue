@@ -101,7 +101,7 @@ const goToUser = function () {
                 </div>
             </a>
 
-            <button @click="goToUser" class="">
+            <button @click="goToUser" type="button">
                 <div
                     class="flex flex-col items-start justify-center min-h-[3rem] px-2 text-myPrimaryDarkGrayColor"
                     :class="[

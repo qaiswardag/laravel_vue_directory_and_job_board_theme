@@ -4,6 +4,7 @@ import SlideOverPrimaryMenu from "@/Components/Sidebars/SlideOverPrimaryMenu.vue
 import { ref } from "vue";
 import SearchAnythingModal from "@/Components/Modals/SearchAnythingModal.vue";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import { usePage } from "@inertiajs/vue3";
 
 import {
     Dialog,
@@ -114,6 +115,23 @@ const handleNotificationsSlideOver = function () {
 const notificationsSlideOverButton = function () {
     showNotificationsSlideOver.value = false;
 };
+
+const goToHome = function () {
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment === "local"
+    ) {
+        window.location.href = "http://localhost:3000";
+    }
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment !== "local"
+    ) {
+        window.location.href = "https://www.myself.ae";
+    }
+};
 </script>
 <template>
     <SearchAnythingModal
@@ -169,7 +187,7 @@ const notificationsSlideOverButton = function () {
             class="mx-auto flex gap-4 max-w-7xl items-center justify-end px-6 lg:px-8"
             aria-label="Global"
         >
-            <Link :href="route('home')">
+            <button @click="goToHome" type="button">
                 <div
                     class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
                 >
@@ -177,7 +195,7 @@ const notificationsSlideOverButton = function () {
                         home
                     </span>
                 </div>
-            </Link>
+            </button>
 
             <button
                 v-if="

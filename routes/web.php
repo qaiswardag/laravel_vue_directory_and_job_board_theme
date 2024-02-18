@@ -75,7 +75,7 @@ use Laravel\Jetstream\Jetstream;
 */
 
 Route::get("/", function () {
-    return Inertia::render("Home/Home", [
+    return Inertia::render("Dashboard/Dashboard", [
         "canLogin" => Route::has("login"),
         "canRegister" => Route::has("register"),
         "laravelVersion" => Application::VERSION,
@@ -412,7 +412,7 @@ Route::middleware([
     //
     //
     //
-    // Auth only media library # start øø
+    // Auth only media library # start
     // Auth only media library # start
 
     Route::get("/media/user/internal/api/index", [
@@ -573,6 +573,7 @@ Route::middleware([
         DashboardStatsController::class,
         "show",
     ])->name("user.dashboard.stats");
+
     Route::get("/dashboard", [
         DashboardDashboardController::class,
         "show",
