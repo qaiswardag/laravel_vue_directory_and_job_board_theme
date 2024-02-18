@@ -3,6 +3,7 @@ import SlideOverNotifications from "@/Components/Sidebars/SlideOverNotifications
 import SlideOverPrimaryMenu from "@/Components/Sidebars/SlideOverPrimaryMenu.vue";
 import { ref } from "vue";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
+import { usePage } from "@inertiajs/vue3";
 
 import {
     Dialog,
@@ -104,6 +105,23 @@ const handleNotificationsSlideOver = function () {
 const notificationsSlideOverButton = function () {
     showNotificationsSlideOver.value = false;
 };
+
+const goToHome = function () {
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment === "local"
+    ) {
+        window.location.href = "http://localhost:3000";
+    }
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment !== "local"
+    ) {
+        window.location.href = "https://www.myself.ae";
+    }
+};
 </script>
 <template>
     <SlideOverNotifications
@@ -144,19 +162,40 @@ const notificationsSlideOverButton = function () {
                 </template>
 
                 <template v-if="$page.props.user === null">
-                    <Link
-                        class="text-black focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor font-medium"
-                        :href="route('login')"
+                    <button
+                        @click="goToHome"
+                        type="button"
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
                     >
-                        <span> Login </span>
+                        <span class="sr-only">Go to home</span>
+                        <span class="myMediumIcon material-symbols-outlined">
+                            home
+                        </span>
+                    </button>
+                    <Link
+                        class="text-myPrimaryDarkGrayColor"
+                        :href="route('login')"
+                        :class="{
+                            'text-myPrimaryLinkColor': route().current('login'),
+                        }"
+                    >
+                        <div class="myPrimaryMenuTextButton">
+                            <span> Login </span>
+                        </div>
                     </Link>
                 </template>
                 <template v-if="$page.props.user === null">
                     <Link
-                        class="text-black focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor font-medium"
+                        class="text-myPrimaryDarkGrayColor"
                         :href="route('register')"
+                        :class="{
+                            'text-myPrimaryLinkColor':
+                                route().current('register'),
+                        }"
                     >
-                        <span> Sign up </span>
+                        <div class="myPrimaryMenuTextButton">
+                            <span> Sign up </span>
+                        </div>
                     </Link>
                 </template>
                 <template v-if="$page.props.user !== null">
