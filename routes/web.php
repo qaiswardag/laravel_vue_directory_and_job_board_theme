@@ -74,14 +74,16 @@ use Laravel\Jetstream\Jetstream;
 |
 */
 
-Route::get("/", function () {
-    return Inertia::render("Dashboard/Dashboard", [
-        "canLogin" => Route::has("login"),
-        "canRegister" => Route::has("register"),
-        "laravelVersion" => Application::VERSION,
-        "phpVersion" => PHP_VERSION,
-    ]);
-})->name("home");
+Route::middleware([
+    "auth:sanctum",
+    config("jetstream.auth_session"),
+    "verified",
+])->group(function () {
+    Route::get("/", function () {
+        return Inertia::render("Dashboard/Dashboard");
+    })->name("home");
+    //
+});
 
 //
 //
