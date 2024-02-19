@@ -364,6 +364,16 @@ onMounted(async () => {
                                                 component.cover_images
                                             "
                                         >
+                                            <p
+                                                @click="
+                                                    handleDropComponent(
+                                                        component
+                                                    )
+                                                "
+                                                class="myPrimaryParagraph pt-2 pb-2 text-xs cursor-pointer"
+                                            >
+                                                {{ component.title }}
+                                            </p>
                                             <ThumbnailSmallImageSlider
                                                 :images="component.cover_images"
                                                 imageSize="medium_path"
