@@ -58,13 +58,23 @@ defineProps({
     },
 });
 
-const goToSingleStoreFromInSale = function (
-    routeName,
-    storeTeamSlug,
-    storeSlug,
-    storeId
-) {
-    router.get(route(routeName, [storeTeamSlug, storeSlug, storeId]));
+const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
+    const routePath = `${storeTeamSlug}/store/${storeSlug}/view/${storeId}`;
+
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment === "local"
+    ) {
+        window.open(`http://localhost:3000/${routePath}`, "_blank");
+    }
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment !== "local"
+    ) {
+        window.open(`https://www.myself.ae/${routePath}`, "_blank");
+    }
 };
 </script>
 <template>
@@ -427,7 +437,6 @@ const goToSingleStoreFromInSale = function (
                                         :imageClickable="true"
                                         @firstButtonClick="
                                             goToSingleStoreFromInSale(
-                                                'stores.guest.show',
                                                 store.team.slug,
                                                 store.slug,
                                                 store.id
@@ -440,7 +449,6 @@ const goToSingleStoreFromInSale = function (
                                         <div
                                             @click="
                                                 goToSingleStoreFromInSale(
-                                                    'stores.guest.show',
                                                     store.team.slug,
                                                     store.slug,
                                                     store.id
