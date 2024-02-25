@@ -2,11 +2,10 @@ import tailwindColors from "@/utils/builder/tailwaind-colors";
 import tailwindOpacities from "@/utils/builder/tailwind-opacities";
 import tailwindFontSizes from "@/utils/builder/tailwind-font-sizes";
 import tailwindFontStyles from "@/utils/builder/tailwind-font-styles";
-import compiledCSS from "@/utils/builder/compiledCSS";
 import tailwindPaddingAndMargin from "@/utils/builder/tailwind-padding-margin";
 import tailwindBorderRadius from "@/utils/builder/tailwind-border-radius";
 import tailwindBorderStyleWidthPlusColor from "@/utils/builder/tailwind-border-style-width-color";
-import { computed, ref, nextTick, watch } from "vue";
+import { computed, ref, nextTick } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { delay } from "@/helpers/delay";
 
