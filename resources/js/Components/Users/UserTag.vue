@@ -52,6 +52,7 @@ const goToUser = function () {
 <template>
     <div
         v-if="user"
+        @click="goToUser"
         :class="[
             {
                 'hover:bg-opacity-60 cursor-pointer': clickable,
@@ -62,11 +63,7 @@ const goToUser = function () {
         class="myPrimaryTag inline-block py-0 px-0"
     >
         <div class="flex items-center rounded-full">
-            <a
-                :href="route('users.guest.show', user.username)"
-                target="_blank"
-                class="rounded-l-full"
-            >
+            <div class="rounded-l-full">
                 <div
                     v-if="
                         user.user_photo &&
@@ -78,8 +75,8 @@ const goToUser = function () {
                     <ThumbnailSmallImageSlider
                         :images="user.user_photo"
                         imageSize="thumbnail_path"
-                        imageHeight="h-8"
-                        imageWidth="w-8"
+                        imageHeight="min-h-8 max-h-8"
+                        imageWidth="min-w-8 max-w-8"
                         :roundedFull="true"
                     ></ThumbnailSmallImageSlider>
                 </div>
@@ -99,9 +96,9 @@ const goToUser = function () {
                         {{ user.last_name.charAt(0).toUpperCase() }}
                     </div>
                 </div>
-            </a>
+            </div>
 
-            <button @click="goToUser" type="button">
+            <button type="button">
                 <div
                     class="flex flex-col items-start justify-center min-h-[3rem] px-2 text-myPrimaryDarkGrayColor"
                     :class="[
@@ -135,6 +132,16 @@ const goToUser = function () {
                     </template>
                 </div>
             </button>
+            <template v-if="user.public === 1">
+                <div class="ml-4 mr-2">
+                    <span class="flex h-2 w-2 rounded-full bg-green-400"></span>
+                </div>
+            </template>
+            <template v-if="user.public === 0">
+                <div class="ml-4 mr-2">
+                    <span class="flex h-2 w-2 rounded-full bg-red-400"></span>
+                </div>
+            </template>
         </div>
     </div>
     <!-- user photo - end -->

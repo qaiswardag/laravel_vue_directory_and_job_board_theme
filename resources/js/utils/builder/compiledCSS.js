@@ -1991,6 +1991,12 @@ const compiledCSS = {
         "sm:grid-rows-12",
 
         // grid
+
+        "2xl:flex",
+        "xl:flex",
+        "lg:flex",
+        "md:flex",
+        "sm:flex",
         "grid-flow-col auto-cols-max",
         "auto-cols-max",
         "grid-cols-[minmax(10rem,1fr)]",

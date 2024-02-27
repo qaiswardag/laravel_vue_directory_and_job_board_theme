@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Internal\Guest\Features\JobsGuestIndexController;
 use App\Http\Controllers\Api\Internal\Guest\Features\PostsGuestIndexController;
 use App\Http\Controllers\Api\Internal\Guest\Features\StoresGuestIndexController;
-use App\Http\Controllers\Api\Internal\LoggedIn\User\LoggedInUser;
 use App\Http\Controllers\Guests\Store\StoreController as StoreStoreController;
 use App\Http\Controllers\Guests\Job\JobController as JobJobController;
 use App\Http\Controllers\Guests\Post\PostController as PostPostController;
@@ -52,9 +51,6 @@ Route::get("{teamSlug}/store/{postSlug}/view/{postId}", [
     StoreStoreController::class,
     "showAPI",
 ]);
-
-// loggedin user
-Route::get("/loggedin-user", [LoggedInUser::class, "show"]);
 
 // users
 Route::get("/users", [UserController::class, "index"]);

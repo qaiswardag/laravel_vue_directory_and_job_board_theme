@@ -1,7 +1,5 @@
 <script setup>
-import { router, useForm, usePage } from "@inertiajs/vue3";
-import DefaultTemplate from "@/Components/PageTemplates/DefaultTemplate.vue";
-import FullWidthElement from "@/Components/Layouts/FullWidthElement.vue";
+import { usePage } from "@inertiajs/vue3";
 import { parseISO, format } from "date-fns";
 import ArticleTemplate from "@/Components/PageTemplates/ArticleTemplate.vue";
 import WidgetSectionBorder from "@/Components/Sections/WidgetSectionBorder.vue";
@@ -102,9 +100,9 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                             <ThumbnailSmallImageSlider
                                 :images="team.coverImagesWithLogos?.logos"
                                 imageSize="large_path"
-                                imageHeight="h-24"
-                                imageWidth="w-24 mb-4"
-                                :roundedFull="false"
+                                imageHeight="min-h-24 max-h-24"
+                                imageWidth="min-w-24 max-w-24 mb-4"
+                                :roundedFull="true"
                                 :squareButtons="true"
                             ></ThumbnailSmallImageSlider>
                         </template>
@@ -430,8 +428,8 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                                         v-if="store.cover_images"
                                         :images="store.cover_images"
                                         imageSize="medium_path"
-                                        imageHeight="h-28"
-                                        imageWidth="w-28"
+                                        imageHeight="min-h-28 max-h-28"
+                                        imageWidth="min-w-28 max-w-28"
                                         :roundedFull="true"
                                         :squareButtons="false"
                                         :imageClickable="true"

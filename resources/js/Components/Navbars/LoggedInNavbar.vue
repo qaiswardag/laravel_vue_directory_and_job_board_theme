@@ -1,57 +1,12 @@
 <script setup>
 import SlideOverNotifications from "@/Components/Sidebars/SlideOverNotifications.vue";
 import SlideOverPrimaryMenu from "@/Components/Sidebars/SlideOverPrimaryMenu.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import SearchAnythingModal from "@/Components/Modals/SearchAnythingModal.vue";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
 import { usePage } from "@inertiajs/vue3";
 
-import {
-    Dialog,
-    DialogPanel,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    TransitionChild,
-    TransitionRoot,
-} from "@headlessui/vue";
-import {
-    AdjustmentsHorizontalIcon,
-    ArrowRightCircleIcon,
-    ArrowRightIcon,
-    Bars3BottomLeftIcon,
-    Bars3Icon,
-    BellIcon,
-    CalendarIcon,
-    ChartBarIcon,
-    FolderIcon,
-    HomeIcon,
-    InboxIcon,
-    UserIcon,
-    UsersIcon,
-    XMarkIcon,
-} from "@heroicons/vue/24/outline";
-import { MagnifyingGlassIcon } from "@heroicons/vue/24/outline";
-import ApplicationMark from "@/Components/MarkComponents/ApplicationMark.vue";
-import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import DynamicMenuModal from "@/Components/Modals/DynamicMenuModal.vue";
-
-// updated menu
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import {
-    ChevronDownIcon,
-    PhoneIcon,
-    PlayCircleIcon,
-} from "@heroicons/vue/24/outline";
-import {
-    ArrowPathIcon,
-    ChartPieIcon,
-    CursorArrowRaysIcon,
-    FingerPrintIcon,
-    SquaresPlusIcon,
-    Bars2Icon,
-} from "@heroicons/vue/24/outline";
 
 // slide over
 const showNotificationsSlideOver = ref(false);
@@ -156,6 +111,7 @@ const goToHome = function () {
     >
     </DynamicMenuModal>
     <!-- search anything - start -->
+
     <div class="flex flex-1">
         <div class="ml-4 flex items-center md:ml-6 gap-8">
             <form class="w-full flex md:ml-0" @submit.prevent>
@@ -211,8 +167,8 @@ const goToHome = function () {
                     <ThumbnailSmallImageSlider
                         :images="$page.props.user.user_photo"
                         imageSize="thumbnail_path"
-                        imageHeight="h-10"
-                        imageWidth="w-10"
+                        imageHeight="min-h-10 max-h-10"
+                        imageWidth="min-w-10 max-w-10"
                         :roundedFull="true"
                     ></ThumbnailSmallImageSlider>
                 </div>

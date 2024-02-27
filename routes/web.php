@@ -62,6 +62,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Jetstream\Jetstream;
+use App\Http\Controllers\Api\Internal\LoggedIn\User\LoggedInUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,7 +87,8 @@ Route::middleware([
 });
 
 //
-//
+// users
+Route::get("/loggedin-user", [LoggedInUser::class, "show"]);
 //
 //
 //

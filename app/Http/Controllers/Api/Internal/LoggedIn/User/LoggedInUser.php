@@ -36,18 +36,15 @@ class LoggedInUser extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Request $request)
     {
         sleep(1);
+        $user = Auth::user();
 
-        // return response()->json("Unable to load the user", 400);
-
-        // return [
-        //     "Hi" => "hello",
-        //     "and" => "world",
-        // ];
-
-        return Auth::user();
+        if (!$user) {
+            return null;
+        }
+        return $user;
     }
 
     /**

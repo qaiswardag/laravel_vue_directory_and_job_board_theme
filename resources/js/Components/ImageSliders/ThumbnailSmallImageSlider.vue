@@ -1,5 +1,7 @@
+<!-- :src="`/storage/uploads/${image[imageSize]}`" -->
+
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps({
     images: {
@@ -34,6 +36,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["firstButtonClick"]);
+
 const firstButtonClick = function () {
     emit("firstButtonClick");
 };
@@ -68,19 +71,10 @@ const sortedImages = computed(() => {
     // If no primary image is found, return the original array
     return props.images;
 });
-
-const showArrowsOnMounted = ref(false);
-
-onMounted(() => {
-    setTimeout(() => {
-        showArrowsOnMounted.value = true;
-    }, 500);
-});
 </script>
 
 <template>
     <div
-        loading="lazy"
         v-if="Array.isArray(images)"
         class="relative flex justify-center items-center"
     >
@@ -88,46 +82,65 @@ onMounted(() => {
             class="justify-center items-center flex-col"
             :class="[`${imageWidth}`]"
         >
-            <div class="w-full flex justify-center">
-                <!-- Carousel wrapper -->
-                <template
-                    v-for="(image, index) in Array.isArray(sortedImages) &&
-                    sortedImages"
-                    :key="image.id"
+            <!-- Carousel wrapper -->
+            <div
+                v-for="(image, index) in Array.isArray(sortedImages) &&
+                sortedImages"
+                :key="image.id"
+                class="w-full flex justify-center"
+            >
+                <div
+                    id="imagePlaceholder"
+                    :style="
+                        currentImageIndex === index
+                            ? { height: (image.height * 300) / 2000 + 'px' }
+                            : {}
+                    "
+                    class="relative bg-slate-300 shrink-0 duration-200 ease-linear rounded"
+                    :class="[
+                        `${imageHeight}`,
+                        `${imageWidth}`,
+                        { hidden: currentImageIndex !== index },
+                        { 'rounded-full': roundedFull === true },
+                    ]"
                 >
-                    <!-- image #start -->
-                    <div
-                        id="imagePlaceholder"
-                        class="relative shrink-0 duration-200 ease-linear rounded"
+                    <img
+                        alt="image"
+                        @click="firstButtonClick"
+                        :style="
+                            currentImageIndex === index
+                                ? { height: (image.height * 300) / 2000 + 'px' }
+                                : {}
+                        "
+                        :src="`/storage/uploads/${image[imageSize]}`"
+                        class="absolute inset-0 z-20 object-cover rounded"
                         :class="[
                             `${imageHeight}`,
                             `${imageWidth}`,
-                            { hidden: currentImageIndex !== index },
+                            { 'rounded-full': roundedFull === true },
+                            { 'cursor-pointer': imageClickable === true },
+                        ]"
+                    />
+                    <div
+                        :style="
+                            currentImageIndex === index
+                                ? { height: (image.height * 300) / 2000 + 'px' }
+                                : {}
+                        "
+                        :class="[
+                            `${imageHeight}`,
+                            `${imageWidth}`,
                             { 'rounded-full': roundedFull === true },
                         ]"
-                    >
-                        <img
-                            @click="firstButtonClick"
-                            class="object-cover rounded"
-                            :src="`/storage/uploads/${image[imageSize]}`"
-                            alt="image"
-                            :class="[
-                                `${imageHeight}`,
-                                `${imageWidth}`,
-                                { 'rounded-full': roundedFull === true },
-                                { 'cursor-pointer': imageClickable === true },
-                            ]"
-                        />
-                        <div
-                            class="w-full relative shrink-0 duration-200 ease-linear rounded animate-pulse bg-red-300"
-                        >
-                            <div class="max-h-96 w-full"></div>
-                        </div>
-                    </div>
-                    <!-- image #end -->
-                </template>
-                <!-- Slider controls -->
+                        class="absolute inset-0 z-10 animate-pulse bg-slate-50 top-0 left-0 w-full"
+                    ></div>
+                    <div
+                        class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    ></div>
+                </div>
+                <!-- image #end -->
             </div>
+            <!-- Slider controls -->
             <div
                 v-if="images.length >= 2"
                 class="flex gap-[60%] items-center justify-center z-30"
@@ -135,7 +148,7 @@ onMounted(() => {
                 <button
                     type="button"
                     @click="prevSlide"
-                    class="bg-opacity-20 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
+                    class="z-20 bg-opacity-20 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
                     :class="[
                         {
                             'rounded-none h-full top-0 bottom-0 left-0 w-8':
@@ -147,10 +160,7 @@ onMounted(() => {
                         },
                     ]"
                 >
-                    <span
-                        v-if="showArrowsOnMounted"
-                        class="material-symbols-outlined"
-                    >
+                    <span class="material-symbols-outlined">
                         keyboard_arrow_left
                     </span>
                 </button>
@@ -158,7 +168,7 @@ onMounted(() => {
                 <button
                     type="button"
                     @click="nextSlide"
-                    class="bg-opacity-20 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
+                    class="z-20 bg-opacity-20 hover:bg-opacity-70 absolute cursor-pointer flex items-center justify-center bg-gray-50 aspect-square hover:bg-red-50 hover:text-gray-800"
                     :class="[
                         {
                             'rounded-none h-full top-0 right-0 bottom-0 w-8':
@@ -170,10 +180,7 @@ onMounted(() => {
                         },
                     ]"
                 >
-                    <span
-                        v-if="showArrowsOnMounted"
-                        class="material-symbols-outlined"
-                    >
+                    <span class="material-symbols-outlined">
                         keyboard_arrow_right
                     </span>
                 </button>

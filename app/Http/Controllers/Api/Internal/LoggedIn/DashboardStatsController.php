@@ -93,6 +93,7 @@ class DashboardStatsController extends Controller
                     "username",
                     "first_name",
                     "last_name",
+                    "public",
                     "profile_photo_path",
                 ])
                 ->map(function ($user) use ($latestUserIdsWithRoles) {
