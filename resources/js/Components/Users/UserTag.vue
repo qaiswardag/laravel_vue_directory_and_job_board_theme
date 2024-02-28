@@ -134,12 +134,12 @@ const goToUser = function () {
             </button>
             <template v-if="user.public === 1">
                 <div class="ml-4 mr-2">
-                    <span class="flex h-2 w-2 rounded-full bg-green-400"></span>
+                    <span class="flex h-2 w-2 rounded-full bg-green-800"></span>
                 </div>
             </template>
             <template v-if="user.public === 0">
                 <div class="ml-4 mr-2">
-                    <span class="flex h-2 w-2 rounded-full bg-red-400"></span>
+                    <span class="flex h-2 w-2 rounded-full bg-red-600"></span>
                 </div>
             </template>
         </div>
