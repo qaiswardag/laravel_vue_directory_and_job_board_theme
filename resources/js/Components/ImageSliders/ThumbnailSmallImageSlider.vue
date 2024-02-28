@@ -74,6 +74,7 @@ const sortedImages = computed(() => {
 </script>
 
 <template>
+    <div class="min-w-8 hidden"></div>
     <div
         v-if="Array.isArray(images)"
         class="relative flex justify-center items-center"
