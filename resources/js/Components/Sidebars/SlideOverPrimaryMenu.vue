@@ -9,6 +9,7 @@ import {
 } from "@headlessui/vue";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { ChevronRightIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { usePage } from "@inertiajs/vue3";
 
 // props
 const props = defineProps({
@@ -68,6 +69,55 @@ const navigation = [
         ],
     },
 ];
+
+const goToStores = function () {
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment === "local"
+    ) {
+        window.location.href = "http://localhost:3000/stores";
+    }
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment !== "local"
+    ) {
+        window.location.href = "https://www.myself.ae/stores";
+    }
+};
+const goToJobs = function () {
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment === "local"
+    ) {
+        window.location.href = "http://localhost:3000/jobs";
+    }
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment !== "local"
+    ) {
+        window.location.href = "https://www.myself.ae/jobs";
+    }
+};
+const goToCampaigns = function () {
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment === "local"
+    ) {
+        window.location.href = "http://localhost:3000/campaigns";
+    }
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.environment !== "local"
+    ) {
+        window.location.href = "https://www.myself.ae/campaigns";
+    }
+};
 </script>
 
 <template>
@@ -137,12 +187,47 @@ const navigation = [
                                             <nav class="flex flex-1 flex-col">
                                                 <ul
                                                     role="list"
-                                                    class="flex flex-1 flex-col gap-y-7"
+                                                    class="flex flex-1 flex-col gap-y-2"
                                                 >
+                                                    <li
+                                                        class="block w-full hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                    >
+                                                        <button
+                                                            @click="goToStores"
+                                                            type="button"
+                                                            class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                        >
+                                                            Stores
+                                                        </button>
+                                                    </li>
+                                                    <li
+                                                        class="block w-full hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                    >
+                                                        <button
+                                                            @click="goToJobs"
+                                                            type="button"
+                                                            class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                        >
+                                                            Jobs
+                                                        </button>
+                                                    </li>
+                                                    <li
+                                                        class="block w-full hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                    >
+                                                        <button
+                                                            @click="
+                                                                goToCampaigns
+                                                            "
+                                                            type="button"
+                                                            class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
+                                                        >
+                                                            Campaigns
+                                                        </button>
+                                                    </li>
                                                     <li>
                                                         <ul
                                                             role="list"
-                                                            class="-mx-2 space-y-2"
+                                                            class="space-y-2"
                                                         >
                                                             <li
                                                                 v-for="item in navigation"

@@ -98,22 +98,22 @@ onMounted(() => {
                     <!-- image #start -->
                     <div
                         id="imagePlaceholder"
-                        class="relative shrink-0 duration-200 ease-linear rounded"
+                        class="relative shrink-0 duration-200 ease-linear rounded bg-white"
                         :class="[
-                            `${imageHeight}`,
-                            `${imageWidth}`,
+                            imageHeight,
+                            imageWidth,
                             { hidden: currentImageIndex !== index },
                             { 'rounded-full': roundedFull === true },
                         ]"
                     >
                         <img
                             @click="firstButtonClick"
-                            class="object-cover rounded"
+                            class="object-cover rounded bg-white"
                             :src="`/storage/uploads/${image[imageSize]}`"
                             alt="image"
                             :class="[
-                                `${imageHeight}`,
-                                `${imageWidth}`,
+                                imageHeight,
+                                imageWidth,
                                 { 'rounded-full': roundedFull === true },
                                 { 'cursor-pointer': imageClickable === true },
                             ]"
