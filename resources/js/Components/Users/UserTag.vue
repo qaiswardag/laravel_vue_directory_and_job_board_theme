@@ -75,8 +75,8 @@ const goToUser = function () {
                     <ThumbnailSmallImageSlider
                         :images="user.user_photo"
                         imageSize="thumbnail_path"
-                        imageHeight="min-h-8 max-h-8"
-                        imageWidth="min-w-8 max-w-8"
+                        imageHeight="h-8 min-h-8 max-h-8"
+                        imageWidth="w-8 min-w-8 max-w-8"
                         :roundedFull="true"
                     ></ThumbnailSmallImageSlider>
                 </div>

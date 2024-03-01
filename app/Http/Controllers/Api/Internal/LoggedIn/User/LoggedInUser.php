@@ -38,7 +38,7 @@ class LoggedInUser extends Controller
      */
     public function show(Request $request)
     {
-        sleep(1);
+        sleep(2);
         $user = Auth::user();
 
         if (!$user) {
