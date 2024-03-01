@@ -8,7 +8,6 @@ import tailwindBorderStyleWidthPlusColor from "@/utils/builder/tailwind-border-s
 import { computed, ref, nextTick } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { delay } from "@/helpers/delay";
-import compiledCSS from "@/utils/builder/compiledCSS";
 
 class PageBuilder {
     constructor(store) {
