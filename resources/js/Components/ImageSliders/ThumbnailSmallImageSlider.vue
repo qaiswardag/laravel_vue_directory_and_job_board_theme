@@ -68,13 +68,6 @@ const sortedImages = computed(() => {
     // If no primary image is found, return the original array
     return props.images;
 });
-
-const numbers = [50, 100, 200, 300, 400];
-
-function getRandomNumber() {
-    const randomIndex = Math.floor(Math.random() * numbers.length);
-    return numbers[randomIndex];
-}
 </script>
 
 <template>
@@ -95,16 +88,19 @@ function getRandomNumber() {
             >
                 <div
                     id="imagePlaceholder"
-                    :style="
-                        currentImageIndex === index
-                            ? { height: (image.height * 300) / 2000 + 'px' }
-                            : {}
-                    "
+                    :style="{
+                        height:
+                            currentImageIndex === index
+                                ? typeof Number(image.height) === 'number'
+                                    ? Number(image.height) + 'px'
+                                    : '600px'
+                                : '',
+                    }"
                     class="relative shrink-0 rounded"
                     :class="[
                         `${imageHeight}`,
                         `${imageWidth}`,
-                        `bg-slate-${getRandomNumber()}`,
+                        `bg-red-50`,
                         { hidden: currentImageIndex !== index },
                         { 'rounded-full': roundedFull === true },
                     ]"
@@ -112,11 +108,14 @@ function getRandomNumber() {
                     <img
                         alt="image"
                         @click="firstButtonClick"
-                        :style="
-                            currentImageIndex === index
-                                ? { height: (image.height * 300) / 2000 + 'px' }
-                                : {}
-                        "
+                        :style="{
+                            height:
+                                currentImageIndex === index
+                                    ? typeof Number(image.height) === 'number'
+                                        ? Number(image.height) + 'px'
+                                        : '600px'
+                                    : '',
+                        }"
                         :src="`/storage/uploads/${image[imageSize]}`"
                         class="absolute inset-0 z-20 rounded"
                         :class="[
@@ -128,11 +127,14 @@ function getRandomNumber() {
                         ]"
                     />
                     <div
-                        :style="
-                            currentImageIndex === index
-                                ? { height: (image.height * 300) / 2000 + 'px' }
-                                : {}
-                        "
+                        :style="{
+                            height:
+                                currentImageIndex === index
+                                    ? typeof Number(image.height) === 'number'
+                                        ? Number(image.height) + 'px'
+                                        : '600px'
+                                    : '',
+                        }"
                         :class="[
                             `${imageHeight}`,
                             `${imageWidth}`,
