@@ -118,7 +118,7 @@ function getRandomNumber() {
                                 : {}
                         "
                         :src="`/storage/uploads/${image[imageSize]}`"
-                        class="absolute inset-0 z-20 object-cover rounded"
+                        class="absolute inset-0 z-20 rounded"
                         :class="[
                             `${imageHeight}`,
                             `${imageWidth}`,

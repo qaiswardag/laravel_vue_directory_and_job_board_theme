@@ -443,7 +443,7 @@ const handleSwitchTeam = function () {
                                 "
                                 imageSize="medium_path"
                                 imageHeight="min-h-16 max-h-16"
-                                imageWidth="min-w-16 max-w-16"
+                                imageWidth="min-w-16 max-w-16 object-cover"
                                 :roundedFull="true"
                             ></ThumbnailSmallImageSlider>
 

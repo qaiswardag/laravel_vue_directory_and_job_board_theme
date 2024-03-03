@@ -157,7 +157,7 @@ const handleLogout = () => {
                                     :images="$page.props.user.user_photo"
                                     imageSize="thumbnail_path"
                                     imageHeight="h-10 min-h-10 max-h-10"
-                                    imageWidth="w-10 min-w-10 max-w-10"
+                                    imageWidth="w-10 min-w-10 max-w-10 object-cover"
                                     :roundedFull="true"
                                 ></ThumbnailSmallImageSlider>
                             </div>

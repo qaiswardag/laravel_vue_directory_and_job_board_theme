@@ -95,6 +95,18 @@ class PostsGuestIndexController extends Controller
                 $categoryIDs
             ) {
                 $query
+                    ->where("published", true)
+                    ->where(function ($query) {
+                        $query
+                            ->whereNotNull("started_at")
+                            ->whereNotNull("ended_at")
+                            ->whereNotNull("days_before_campaign_visibility");
+                    })
+                    ->where("ended_at", ">=", now())
+                    ->whereRaw(
+                        "started_at <= NOW() + INTERVAL days_before_campaign_visibility DAY"
+                    )
+
                     ->where(function ($query) use ($searchQuery) {
                         $query
                             ->where("tags", "LIKE", "%" . $searchQuery . "%")
