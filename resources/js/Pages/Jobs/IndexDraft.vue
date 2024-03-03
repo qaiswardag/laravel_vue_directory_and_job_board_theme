@@ -401,9 +401,6 @@ onMounted(() => {
                                     <th scope="col" class="myPrimaryTableTh">
                                         Categories
                                     </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Tags
-                                    </th>
 
                                     <th scope="col" class="myPrimaryTableTh">
                                         Updated By
@@ -756,32 +753,6 @@ onMounted(() => {
                                                     </span>
                                                     <span>
                                                         {{ category.name }}
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                class="flex flex-wrap justify-start items-center gap-2"
-                                            >
-                                                <p
-                                                    v-for="tag in post.tags &&
-                                                    post.tags
-                                                        .split(',')
-                                                        .sort((a, b) =>
-                                                            a.localeCompare(b)
-                                                        )"
-                                                    :key="tag"
-                                                    class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
-                                                >
-                                                    <span
-                                                        class="myMediumIcon material-symbols-outlined"
-                                                    >
-                                                        loyalty
-                                                    </span>
-                                                    <span>
-                                                        {{ tag }}
                                                     </span>
                                                 </p>
                                             </div>
