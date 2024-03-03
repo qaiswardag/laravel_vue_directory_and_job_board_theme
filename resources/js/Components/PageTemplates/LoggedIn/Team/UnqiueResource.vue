@@ -101,7 +101,7 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                                 :images="team.coverImagesWithLogos?.logos"
                                 imageSize="large_path"
                                 imageHeight="min-h-24 max-h-24"
-                                imageWidth="min-w-24 max-w-24 mb-4 object-cover"
+                                imageWidth="min-w-24 max-w-24 mb-4 w-24 object-cover"
                                 :roundedFull="true"
                                 :squareButtons="true"
                             ></ThumbnailSmallImageSlider>
