@@ -118,5 +118,8 @@ onMounted(() => {
             </div>
         </div>
     </div>
+    <p class="myPrimaryParagraph italic">
+        Remember to press Enter after entering each tag.
+    </p>
     <p class="myPrimaryParagraphError">{{ error }}</p>
 </template>
