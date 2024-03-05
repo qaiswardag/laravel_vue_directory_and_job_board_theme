@@ -27,22 +27,6 @@ const primaryMenuSlideOverButton = function () {
 
 const navigation = [
     {
-        label: "Terms of Service",
-        route: {
-            name: "terms.show",
-            parameters: [],
-        },
-        active: route().current("terms.show"),
-    },
-    {
-        label: "Privacy Policy",
-        route: {
-            name: "policy.show",
-            parameters: [],
-        },
-        active: route().current("policy.show"),
-    },
-    {
         label: "Resources",
         route: {
             name: null,
