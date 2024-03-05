@@ -2,11 +2,9 @@
 import { router } from "@inertiajs/vue3";
 import FullScreenSpinner from "@/Components/Loaders/FullScreenSpinner.vue";
 import Flash from "@/Components/Actions/Flash.vue";
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { useStore } from "vuex";
-import CookieConsentModal from "@/Components/Modals/CookieConsentModal.vue";
-
 defineProps({
     title: {
         required: false,
@@ -42,38 +40,6 @@ watch(flashState, (newValue) => {
         shouldShowFlash.value = false;
     }, 1000);
 });
-
-//
-//
-//
-const showCookieModal = ref(false);
-const cookieName = "cookieConsent";
-
-const handleCookieModal = function () {
-    showCookieModal.value = false;
-};
-
-const checkACookieExists = function (cookieName) {
-    if (
-        document.cookie
-            .split(";")
-            .some((item) => item.trim().startsWith(`${cookieName}=`))
-    ) {
-        showCookieModal.value = false;
-    } else {
-        showCookieModal.value = true;
-    }
-};
-
-//
-//
-//
-//
-onMounted(() => {
-    if (checkACookieExists(cookieName)) {
-        // showCookieModal.value = true;
-    }
-});
 </script>
 
 <template>
@@ -87,8 +53,4 @@ onMounted(() => {
         <FullScreenSpinner v-if="getIsLoading"></FullScreenSpinner>
     </teleport>
     <slot />
-    <CookieConsentModal
-        :show="showCookieModal"
-        @handleCookieModal="handleCookieModal"
-    ></CookieConsentModal>
 </template>
