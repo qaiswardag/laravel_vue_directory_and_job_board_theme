@@ -542,6 +542,9 @@ onMounted(() => {
                                         User
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
+                                        Email
+                                    </th>
+                                    <th scope="col" class="myPrimaryTableTh">
                                         User ID
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
@@ -578,6 +581,10 @@ onMounted(() => {
                                                 :showTeamRole="true"
                                                 :clickable="true"
                                             ></UserTag>
+                                        </td>
+
+                                        <td class="myPrimaryTableTBodyTd">
+                                            {{ user.email }}
                                         </td>
 
                                         <td class="myPrimaryTableTBodyTd">
