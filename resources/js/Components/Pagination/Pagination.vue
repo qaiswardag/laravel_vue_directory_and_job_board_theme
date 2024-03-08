@@ -10,7 +10,7 @@ defineProps({
 <template>
     <div class="myPrimarySection" v-if="links && links.length > 3">
         <div
-            class="flex gap-y-2 space-x-2 flex-wrap items-center justify-center -mb-1 py-2 px-2 rounded"
+            class="flex gap-y-2 space-x-2 flex-wrap items-center justify-center -mb-1 py-2 rounded"
         >
             <template v-for="(link, k) in links" :key="k">
                 <div
