@@ -112,42 +112,44 @@ const goToHome = function () {
                 </template>
 
                 <template v-if="$page.props.user === null">
-                    <button
-                        @click="goToHome"
-                        type="button"
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white hover:fill-white focus-visible:ring-0"
-                    >
-                        <span class="sr-only">Go to home</span>
-                        <span class="myMediumIcon material-symbols-outlined">
-                            home
-                        </span>
-                    </button>
-                    <Link
-                        class="text-myPrimaryDarkGrayColor"
-                        :href="route('login')"
-                        :class="{
-                            'text-myPrimaryLinkColor': route().current('login'),
-                        }"
-                    >
-                        <div class="myPrimaryMenuTextButton">
-                            <span> Login </span>
-                        </div>
-                    </Link>
+                    <div class="lg:block hidden">
+                        <button @click="goToHome" type="button">
+                            <div class="myPrimaryMenuTextButton">
+                                <span> Home</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="lg:block">
+                        <Link
+                            class="text-myPrimaryDarkGrayColor"
+                            :href="route('login')"
+                            :class="{
+                                'text-myPrimaryLinkColor':
+                                    route().current('login'),
+                            }"
+                        >
+                            <div class="myPrimaryMenuTextButton">
+                                <span> Login </span>
+                            </div>
+                        </Link>
+                    </div>
+
+                    <div class="lg:block">
+                        <Link
+                            class="text-myPrimaryDarkGrayColor"
+                            :href="route('register')"
+                            :class="{
+                                'text-myPrimaryLinkColor':
+                                    route().current('register'),
+                            }"
+                        >
+                            <div class="myPrimaryMenuTextButton">
+                                <span> Sign up </span>
+                            </div>
+                        </Link>
+                    </div>
                 </template>
-                <template v-if="$page.props.user === null">
-                    <Link
-                        class="text-myPrimaryDarkGrayColor"
-                        :href="route('register')"
-                        :class="{
-                            'text-myPrimaryLinkColor':
-                                route().current('register'),
-                        }"
-                    >
-                        <div class="myPrimaryMenuTextButton">
-                            <span> Sign up </span>
-                        </div>
-                    </Link>
-                </template>
+
                 <template v-if="$page.props.user !== null">
                     <button
                         v-if="
