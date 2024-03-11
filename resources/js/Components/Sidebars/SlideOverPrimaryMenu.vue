@@ -179,7 +179,7 @@ const goToCampaigns = function () {
                                                         <button
                                                             @click="goToStores"
                                                             type="button"
-                                                            class="block w-full py-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left text-myPrimaryDarkGrayColor"
+                                                            class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                         >
                                                             Stores
                                                         </button>
@@ -190,7 +190,7 @@ const goToCampaigns = function () {
                                                         <button
                                                             @click="goToJobs"
                                                             type="button"
-                                                            class="block w-full py-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left text-myPrimaryDarkGrayColor"
+                                                            class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                         >
                                                             Jobs
                                                         </button>
@@ -203,7 +203,7 @@ const goToCampaigns = function () {
                                                                 goToCampaigns
                                                             "
                                                             type="button"
-                                                            class="block w-full py-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left text-myPrimaryDarkGrayColor"
+                                                            class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                         >
                                                             Campaigns
                                                         </button>
@@ -220,7 +220,7 @@ const goToCampaigns = function () {
                                                                 "
                                                             >
                                                                 <Link
-                                                                    class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-myPrimaryDarkGrayColor"
+                                                                    class="block w-full py-3 pl-3 pr-1 hover:bg-myPrimaryLightGrayColor rounded-md text-left"
                                                                     :class="[
                                                                         item.active
                                                                             ? 'text-myPrimaryLinkColor'
@@ -258,7 +258,7 @@ const goToCampaigns = function () {
                                                                             item.active
                                                                                 ? 'hover:bg-myPrimaryLightGrayColor'
                                                                                 : '',
-                                                                            'flex items-center justify-between w-full text-left gap-x-3 py-3 pr-1 rounded-md',
+                                                                            'flex items-center justify-between w-full text-left gap-x-3 py-3 pl-3 pr-1 rounded-md',
                                                                         ]"
                                                                     >
                                                                         {{
@@ -315,7 +315,7 @@ const goToCampaigns = function () {
                                                                                             ? 'text-myPrimaryLinkColor'
                                                                                             : '',
                                                                                     ]"
-                                                                                    class="block py-3 pr-1 text-myPrimaryDarkGrayColor text-myPrimaryDarkGrayColor"
+                                                                                    class="block py-3 pl-3 pr-1 text-myPrimaryDarkGrayColor text-myPrimaryDarkGrayColor"
                                                                                     :href="
                                                                                         route(
                                                                                             subItem
