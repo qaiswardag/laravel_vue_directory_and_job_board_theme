@@ -6,6 +6,7 @@ use App\Models\MediaLibrary\MediaLibrary;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class StorePostRequest extends FormRequest
@@ -103,6 +104,7 @@ class StorePostRequest extends FormRequest
      */
     public function withValidator($validator)
     {
+        $user = Auth::user();
         $maxStores = 200;
         $minStores = 1;
         $maxCategories = 2;
@@ -110,6 +112,7 @@ class StorePostRequest extends FormRequest
         $maxCoverImages = 6;
 
         $validator->after(function ($validator) use (
+            $user,
             $maxStores,
             $minStores,
             $maxCategories,
@@ -219,8 +222,9 @@ class StorePostRequest extends FormRequest
                     );
             }
 
-            // The started at date must not be more than 1 year in the future.
+            // The ended at date must not be more than 1 year in the future.
             if (
+                !$user->superadmin &&
                 $this->ended_at &&
                 Carbon::parse($this->ended_at)->isFuture() &&
                 Carbon::parse($this->ended_at)->diffInDays(Carbon::now()) > 365
@@ -229,7 +233,7 @@ class StorePostRequest extends FormRequest
                     ->errors()
                     ->add(
                         "ended_at",
-                        "The started at date must not be more than 1 year in the future."
+                        "The ended at date must not be more than 1 year in the future."
                     );
             }
             // Ended at date validation # end

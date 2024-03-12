@@ -26,12 +26,7 @@
         <script
         async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzutbgFidPQIG0Gkaqx8DmiwiB0pUFyeE&libraries=places&loading=async&callback=console.debug">
         </script>
-
-        {{-- <script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzutbgFidPQIG0Gkaqx8DmiwiB0pUFyeE&libraries&loading=async&callback=initMap">
-        </script> --}}
-        <!-- Google maps end -->
-
+        
         <!-- Favicon start -->
         <link
         rel="icon"
