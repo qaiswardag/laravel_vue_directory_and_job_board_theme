@@ -22,11 +22,6 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         <!-- Google icons # end -->
 
-        <!-- Google maps start-->
-        <script
-        async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzutbgFidPQIG0Gkaqx8DmiwiB0pUFyeE&libraries=places&loading=async&callback=console.debug">
-        </script>
-        
         <!-- Favicon start -->
         <link
         rel="icon"

@@ -1010,37 +1010,7 @@ onBeforeMount(async () => {
     );
 });
 
-// google autocomplete # start
-const addressRef = ref();
-
-const options = {
-    componentRestrictions: { country: "ae" },
-    fields: ["address_components"],
-    strictBounds: false,
-};
-
-// google autocomplete # end
-onMounted(async () => {
-    //
-    //
-    //
-    //
-    //
-    //
-    const autocomplete = new google.maps.places.Autocomplete(
-        addressRef.value,
-        options
-    );
-    //
-    //
-    google.maps.event.addListener(autocomplete, "place_changed", () => {
-        postForm.address = `${
-            autocomplete.getPlace().address_components[0].long_name
-        }, ${autocomplete.getPlace().address_components[1].long_name}`;
-    });
-    //
-    //
-    //
+onMounted(() => {
     submittedOnUpdate.value = true;
 });
 const pageBuilder = new PageBuilder(store);
@@ -1142,7 +1112,6 @@ const pageBuilder = new PageBuilder(store);
                     <div class="myInputGroup md:w-2/3">
                         <InputLabel for="address" value="Store address" />
                         <input
-                            ref="addressRef"
                             placeholder="Enter store address.."
                             id="address"
                             v-model="postForm.address"
@@ -1150,6 +1119,9 @@ const pageBuilder = new PageBuilder(store);
                             class="block w-full myPrimaryInput"
                             autocomplete="off"
                         />
+                        <p class="myPrimaryParagraph italic">
+                            Example: Emaar Business Park 1
+                        </p>
                         <InputError :message="postForm.errors.address" />
                     </div>
 
