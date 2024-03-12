@@ -101,7 +101,7 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                                 :images="team.coverImagesWithLogos?.logos"
                                 imageSize="large_path"
                                 imageHeight="min-h-24 max-h-24"
-                                imageWidth="min-w-24 max-w-24 mb-4 w-24 object-cover"
+                                imageWidth="w-24 min-w-24 max-w-24 mb-4 w-24 object-cover"
                                 :roundedFull="true"
                                 :squareButtons="true"
                             ></ThumbnailSmallImageSlider>
@@ -429,7 +429,7 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                                         :images="store.cover_images"
                                         imageSize="medium_path"
                                         imageHeight="min-h-32 max-h-32"
-                                        imageWidth="min-w-32 max-w-32 mb-4 object-cover"
+                                        imageWidth="w-32 min-w-32 max-w-32 mb-4 object-cover"
                                         :roundedFull="true"
                                         :squareButtons="false"
                                         :imageClickable="true"
