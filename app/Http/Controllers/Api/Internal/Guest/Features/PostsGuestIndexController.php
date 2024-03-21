@@ -42,102 +42,118 @@ class PostsGuestIndexController extends Controller
 
         $categories = PostCategory::orderBy("name")->get();
 
-        $query = Post::latest()
-            ->with("team")
-            ->with("categories")
-            ->with("stores")
-            ->with("coverImages")
-            ->where("published", true)
-            ->where(function ($query) {
-                $query
-                    ->whereNotNull("started_at")
-                    ->whereNotNull("ended_at")
-                    ->whereNotNull("days_before_campaign_visibility");
-            })
-            ->where("ended_at", ">=", now())
-            ->whereRaw(
-                "started_at <= NOW() + INTERVAL days_before_campaign_visibility DAY"
-            )
+        // Do not search with tags or content
+        if (!$tagsOrContent) {
+            $query = Post::latest()
+                ->with("team")
+                ->with("categories")
+                ->with("stores")
+                ->with("coverImages")
+                ->where("published", true)
+                ->where(function ($query) {
+                    $query
+                        ->whereNotNull("started_at")
+                        ->whereNotNull("ended_at")
+                        ->whereNotNull("days_before_campaign_visibility");
+                })
+                ->where("ended_at", ">=", now())
+                ->whereRaw(
+                    "started_at <= NOW() + INTERVAL days_before_campaign_visibility DAY"
+                )
 
-            // categories filter logic # start
-            ->when(!empty($categoryIDs), function ($query) use ($categoryIDs) {
-                $query->whereHas("categories", function ($query) use (
+                // categories filter logic # start
+                ->when(!empty($categoryIDs), function ($query) use (
                     $categoryIDs
                 ) {
-                    $query->whereIn("post_categories.id", $categoryIDs);
+                    $query->whereHas("categories", function ($query) use (
+                        $categoryIDs
+                    ) {
+                        $query->whereIn("post_categories.id", $categoryIDs);
+                    });
+                })
+                // categories filter logic # end
+
+                // search for title, team name respecting states and categories
+                ->when(!$tagsOrContent && $searchQuery, function ($query) use (
+                    $searchQuery
+                ) {
+                    $query->where(function ($titleTeamQuery) use (
+                        $searchQuery
+                    ) {
+                        $titleTeamQuery
+                            ->where("title", "LIKE", "%" . $searchQuery . "%")
+                            // search for team name
+                            ->orWhereHas("team", function ($teamQuery) use (
+                                $searchQuery
+                            ) {
+                                $teamQuery->where(
+                                    "name",
+                                    "LIKE",
+                                    "%" . $searchQuery . "%"
+                                );
+                            });
+                    });
                 });
-            })
-            // categories filter logic # end
+        }
+        // Search with tags or content
+        if ($tagsOrContent) {
+            $query = Post::latest()
+                ->with("team")
+                ->with("categories")
+                ->with("stores")
+                ->with("coverImages")
+                ->where("published", true)
+                ->where(function ($query) {
+                    $query
+                        ->whereNotNull("started_at")
+                        ->whereNotNull("ended_at")
+                        ->whereNotNull("days_before_campaign_visibility");
+                })
+                ->where("ended_at", ">=", now())
+                ->whereRaw(
+                    "started_at <= NOW() + INTERVAL days_before_campaign_visibility DAY"
+                )
 
-            // search for title, team name respecting states and categories
-            ->when(!$tagsOrContent && $searchQuery, function ($query) use (
-                $searchQuery
-            ) {
-                $query->where(function ($titleTeamQuery) use ($searchQuery) {
-                    $titleTeamQuery
-                        ->where("title", "LIKE", "%" . $searchQuery . "%")
-                        // search for team name
-                        ->orWhereHas("team", function ($teamQuery) use (
-                            $searchQuery
-                        ) {
-                            $teamQuery->where(
-                                "name",
-                                "LIKE",
-                                "%" . $searchQuery . "%"
-                            );
-                        });
-                });
-            })
+                // categories filter logic # start
+                ->when(!empty($categoryIDs), function ($query) use (
+                    $categoryIDs
+                ) {
+                    $query->whereHas("categories", function ($query) use (
+                        $categoryIDs
+                    ) {
+                        $query->whereIn("post_categories.id", $categoryIDs);
+                    });
+                })
+                // categories filter logic # end
 
-            // search with tags or content is true
-            ->when($tagsOrContent, function ($query) use (
-                $searchQuery,
-                $categoryIDs
-            ) {
-                $query
-                    ->where("published", true)
-                    ->where(function ($query) {
-                        $query
-                            ->whereNotNull("started_at")
-                            ->whereNotNull("ended_at")
-                            ->whereNotNull("days_before_campaign_visibility");
-                    })
-                    ->where("ended_at", ">=", now())
-                    ->whereRaw(
-                        "started_at <= NOW() + INTERVAL days_before_campaign_visibility DAY"
-                    )
+                // search for title, team name respecting states and categories
+                ->when($searchQuery, function ($query) use ($searchQuery) {
+                    $query->where(function ($titleTeamQuery) use (
+                        $searchQuery
+                    ) {
+                        $titleTeamQuery
+                            ->where("title", "LIKE", "%" . $searchQuery . "%")
 
-                    ->where(function ($query) use ($searchQuery) {
-                        $query
-                            ->where("tags", "LIKE", "%" . $searchQuery . "%")
-                            ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
+                            ->orWhere("tags", "LIKE", "%" . $searchQuery . "%")
                             ->orWhere(
                                 "content",
                                 "LIKE",
                                 "%" . $searchQuery . "%"
-                            );
-                    })
-                    // search for team name
-                    ->orWhereHas("team", function ($teamQuery) use (
-                        $searchQuery
-                    ) {
-                        $teamQuery->where(
-                            "name",
-                            "LIKE",
-                            "%" . $searchQuery . "%"
-                        );
-                    })
-                    // Additional conditions based on categories
-                    ->when(!empty($categoryIDs), function ($query) use (
-                        $categoryIDs
-                    ) {
-                        $query->whereHas("categories", function ($query) use (
-                            $categoryIDs
-                        ) {
-                            $query->whereIn("post_categories.id", $categoryIDs);
-                        });
+                            )
+
+                            // search for team name
+                            ->orWhereHas("team", function ($teamQuery) use (
+                                $searchQuery
+                            ) {
+                                $teamQuery->where(
+                                    "name",
+                                    "LIKE",
+                                    "%" . $searchQuery . "%"
+                                );
+                            });
                     });
-            });
+                });
+        }
 
         $posts = $query->paginate(20);
 

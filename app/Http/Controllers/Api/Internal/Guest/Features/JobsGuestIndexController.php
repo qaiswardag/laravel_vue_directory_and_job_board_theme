@@ -95,153 +95,186 @@ class JobsGuestIndexController extends Controller
         $types = JobType::orderBy("name")->get();
         $categories = JobCategory::orderBy("name")->get();
 
-        $query = Job::latest()
-            ->with("team")
-            ->with("types")
-            ->with("categories")
-            ->with("coverImages")
-            ->with("countries")
-            ->with("states")
-            ->with("authors")
-            ->where("published", true)
-            ->where("is_paid", true)
-            // Add a condition to filter posts where ended_at is
-            ->where(function ($query) {
-                // Include posts where ended_at is not null
-                $query
-                    ->whereNotNull("started_at")
-                    ->whereNotNull("ended_at")
-                    ->where("started_at", "<=", now()->addDays(1))
-                    ->where("ended_at", ">=", now());
-            })
+        // Do not search with tags or content
+        if (!$tagsOrContent) {
+            $query = Job::latest()
+                ->with("team")
+                ->with("types")
+                ->with("categories")
+                ->with("coverImages")
+                ->with("countries")
+                ->with("states")
+                ->with("authors")
+                ->where("published", true)
+                ->where("is_paid", true)
+                // Add a condition to filter posts where ended_at is
+                ->where(function ($query) {
+                    // Include posts where ended_at is not null
+                    $query
+                        ->whereNotNull("started_at")
+                        ->whereNotNull("ended_at")
+                        ->where("started_at", "<=", now()->addDays(1))
+                        ->where("ended_at", ">=", now());
+                })
 
-            // countries filter logic # start
-            ->when(!empty($countryIDs), function ($query) use ($countryIDs) {
-                $query->whereHas("countries", function ($query) use (
+                // countries filter logic # start
+                ->when(!empty($countryIDs), function ($query) use (
                     $countryIDs
                 ) {
-                    $query->whereIn("job_countries.id", $countryIDs);
-                });
-            })
-            // countries filter logic # end
+                    $query->whereHas("countries", function ($query) use (
+                        $countryIDs
+                    ) {
+                        $query->whereIn("job_countries.id", $countryIDs);
+                    });
+                })
+                // countries filter logic # end
 
-            // states filter logic # start
-            ->when(!empty($stateIDs), function ($query) use ($stateIDs) {
-                $query->whereHas("states", function ($query) use ($stateIDs) {
-                    $query->whereIn("job_states.id", $stateIDs);
-                });
-            })
-            // states filter logic # end
+                // states filter logic # start
+                ->when(!empty($stateIDs), function ($query) use ($stateIDs) {
+                    $query->whereHas("states", function ($query) use (
+                        $stateIDs
+                    ) {
+                        $query->whereIn("job_states.id", $stateIDs);
+                    });
+                })
+                // states filter logic # end
 
-            // categories filter logic # start
-            ->when(!empty($categoryIDs), function ($query) use ($categoryIDs) {
-                $query->whereHas("categories", function ($query) use (
+                // categories filter logic # start
+                ->when(!empty($categoryIDs), function ($query) use (
                     $categoryIDs
                 ) {
-                    $query->whereIn("job_categories.id", $categoryIDs);
-                });
-            })
-            // categories filter logic # end
+                    $query->whereHas("categories", function ($query) use (
+                        $categoryIDs
+                    ) {
+                        $query->whereIn("job_categories.id", $categoryIDs);
+                    });
+                })
+                // categories filter logic # end
 
-            // types filter logic # start
-            ->when(!empty($typeIDs), function ($query) use ($typeIDs) {
-                $query->whereHas("types", function ($query) use ($typeIDs) {
-                    $query->whereIn("job_types.id", $typeIDs);
-                });
-            })
-            // types filter logic # end
+                // types filter logic # start
+                ->when(!empty($typeIDs), function ($query) use ($typeIDs) {
+                    $query->whereHas("types", function ($query) use ($typeIDs) {
+                        $query->whereIn("job_types.id", $typeIDs);
+                    });
+                })
+                // types filter logic # end
 
-            // search for title, team name respecting states and categories
-            ->when(!$tagsOrContent && $searchQuery, function ($query) use (
-                $searchQuery
-            ) {
-                $query->where(function ($titleTeamQuery) use ($searchQuery) {
-                    $titleTeamQuery
-                        ->where("title", "LIKE", "%" . $searchQuery . "%")
-                        // search for team name
-                        ->orWhereHas("team", function ($teamQuery) use (
-                            $searchQuery
-                        ) {
-                            $teamQuery->where(
-                                "name",
-                                "LIKE",
-                                "%" . $searchQuery . "%"
-                            );
-                        });
+                // search for title, team name respecting states and categories
+                ->when(!$tagsOrContent && $searchQuery, function ($query) use (
+                    $searchQuery
+                ) {
+                    $query->where(function ($titleTeamQuery) use (
+                        $searchQuery
+                    ) {
+                        $titleTeamQuery
+                            ->where("title", "LIKE", "%" . $searchQuery . "%")
+                            // search for team name
+                            ->orWhereHas("team", function ($teamQuery) use (
+                                $searchQuery
+                            ) {
+                                $teamQuery->where(
+                                    "name",
+                                    "LIKE",
+                                    "%" . $searchQuery . "%"
+                                );
+                            });
+                    });
                 });
-            })
+        }
 
-            // search with tags or content is true
-            ->when($tagsOrContent, function ($query) use (
-                $searchQuery,
-                $stateIDs,
-                $countryIDs,
-                $categoryIDs,
-                $typeIDs
-            ) {
-                $query
-                    ->where(function ($query) use ($searchQuery) {
-                        $query
-                            ->where("tags", "LIKE", "%" . $searchQuery . "%")
-                            ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
+        // Search with tags or content
+        if ($tagsOrContent) {
+            $query = Job::latest()
+                ->with("team")
+                ->with("types")
+                ->with("categories")
+                ->with("coverImages")
+                ->with("countries")
+                ->with("states")
+                ->with("authors")
+                ->where("published", true)
+                ->where("is_paid", true)
+                // Add a condition to filter posts where ended_at is
+                ->where(function ($query) {
+                    // Include posts where ended_at is not null
+                    $query
+                        ->whereNotNull("started_at")
+                        ->whereNotNull("ended_at")
+                        ->where("started_at", "<=", now()->addDays(1))
+                        ->where("ended_at", ">=", now());
+                })
+
+                // countries filter logic # start
+                ->when(!empty($countryIDs), function ($query) use (
+                    $countryIDs
+                ) {
+                    $query->whereHas("countries", function ($query) use (
+                        $countryIDs
+                    ) {
+                        $query->whereIn("job_countries.id", $countryIDs);
+                    });
+                })
+                // countries filter logic # end
+
+                // states filter logic # start
+                ->when(!empty($stateIDs), function ($query) use ($stateIDs) {
+                    $query->whereHas("states", function ($query) use (
+                        $stateIDs
+                    ) {
+                        $query->whereIn("job_states.id", $stateIDs);
+                    });
+                })
+                // states filter logic # end
+
+                // categories filter logic # start
+                ->when(!empty($categoryIDs), function ($query) use (
+                    $categoryIDs
+                ) {
+                    $query->whereHas("categories", function ($query) use (
+                        $categoryIDs
+                    ) {
+                        $query->whereIn("job_categories.id", $categoryIDs);
+                    });
+                })
+                // categories filter logic # end
+
+                // types filter logic # start
+                ->when(!empty($typeIDs), function ($query) use ($typeIDs) {
+                    $query->whereHas("types", function ($query) use ($typeIDs) {
+                        $query->whereIn("job_types.id", $typeIDs);
+                    });
+                })
+                // types filter logic # end
+
+                // search for title, team name respecting states and categories
+                ->when($searchQuery, function ($query) use ($searchQuery) {
+                    $query->where(function ($titleTeamQuery) use (
+                        $searchQuery
+                    ) {
+                        $titleTeamQuery
+                            ->where("title", "LIKE", "%" . $searchQuery . "%")
+
+                            ->orWhere("tags", "LIKE", "%" . $searchQuery . "%")
                             ->orWhere(
                                 "content",
                                 "LIKE",
                                 "%" . $searchQuery . "%"
-                            );
-                    })
-                    // search for team name
-                    ->orWhereHas("team", function ($teamQuery) use (
-                        $searchQuery
-                    ) {
-                        $teamQuery->where(
-                            "name",
-                            "LIKE",
-                            "%" . $searchQuery . "%"
-                        );
-                    })
-                    // Additional conditions based on states and categories
+                            )
 
-                    // countries filter logic # start
-                    ->when(!empty($countryIDs), function ($query) use (
-                        $countryIDs
-                    ) {
-                        $query->whereHas("countries", function ($query) use (
-                            $countryIDs
-                        ) {
-                            $query->whereIn("job_countries.id", $countryIDs);
-                        });
-                    })
-                    // countries filter logic # end
-
-                    ->when(!empty($stateIDs), function ($query) use (
-                        $stateIDs
-                    ) {
-                        $query->whereHas("states", function ($query) use (
-                            $stateIDs
-                        ) {
-                            $query->whereIn("job_states.id", $stateIDs);
-                        });
-                    })
-                    ->when(!empty($categoryIDs), function ($query) use (
-                        $categoryIDs
-                    ) {
-                        $query->whereHas("categories", function ($query) use (
-                            $categoryIDs
-                        ) {
-                            $query->whereIn("job_categories.id", $categoryIDs);
-                        });
-                    })
-                    // types filter logic # start
-                    ->when(!empty($typeIDs), function ($query) use ($typeIDs) {
-                        $query->whereHas("types", function ($query) use (
-                            $typeIDs
-                        ) {
-                            $query->whereIn("job_types.id", $typeIDs);
-                        });
+                            // search for team name
+                            ->orWhereHas("team", function ($teamQuery) use (
+                                $searchQuery
+                            ) {
+                                $teamQuery->where(
+                                    "name",
+                                    "LIKE",
+                                    "%" . $searchQuery . "%"
+                                );
+                            });
                     });
-                // types filter logic # end
-            });
+                });
+        }
+
         $posts = $query->paginate(20);
 
         $posts->appends($request->all());

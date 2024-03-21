@@ -59,102 +59,121 @@ class StoresGuestIndexController extends Controller
         $categories = StoreCategory::orderBy("name")->get();
         $states = StoreState::orderBy("name")->get();
 
-        $query = Store::latest()
-            ->with("team")
-            ->with("categories")
-            ->with("coverImages")
-            ->with("states")
-            ->with("authors")
-            ->where("published", true)
+        // Do not search with tags or content
+        if (!$tagsOrContent) {
+            $query = Store::latest()
+                ->with("team")
+                ->with("categories")
+                ->with("coverImages")
+                ->with("states")
+                ->with("authors")
+                ->where("published", true)
 
-            // states filter logic # start
-            ->when(!empty($stateIDs), function ($query) use ($stateIDs) {
-                $query->whereHas("states", function ($query) use ($stateIDs) {
-                    $query->whereIn("store_states.id", $stateIDs);
-                });
-            })
-            // states filter logic # end
+                // states filter logic # start
+                ->when(!empty($stateIDs), function ($query) use ($stateIDs) {
+                    $query->whereHas("states", function ($query) use (
+                        $stateIDs
+                    ) {
+                        $query->whereIn("store_states.id", $stateIDs);
+                    });
+                })
+                // states filter logic # end
 
-            // categories filter logic # start
-            ->when(!empty($categoryIDs), function ($query) use ($categoryIDs) {
-                $query->whereHas("categories", function ($query) use (
+                // categories filter logic # start
+                ->when(!empty($categoryIDs), function ($query) use (
                     $categoryIDs
                 ) {
-                    $query->whereIn("store_categories.id", $categoryIDs);
-                });
-            })
-            // categories filter logic # end
+                    $query->whereHas("categories", function ($query) use (
+                        $categoryIDs
+                    ) {
+                        $query->whereIn("store_categories.id", $categoryIDs);
+                    });
+                })
+                // categories filter logic # end
 
-            // search for title, team name respecting states and categories
-            ->when(!$tagsOrContent && $searchQuery, function ($query) use (
-                $searchQuery
-            ) {
-                $query->where(function ($titleTeamQuery) use ($searchQuery) {
-                    $titleTeamQuery
-                        ->where("title", "LIKE", "%" . $searchQuery . "%")
-                        // search for team name
-                        ->orWhereHas("team", function ($teamQuery) use (
-                            $searchQuery
-                        ) {
-                            $teamQuery->where(
-                                "name",
-                                "LIKE",
-                                "%" . $searchQuery . "%"
-                            );
-                        });
+                // search for title, team name respecting states and categories
+                ->when(!$tagsOrContent && $searchQuery, function ($query) use (
+                    $searchQuery
+                ) {
+                    $query->where(function ($titleTeamQuery) use (
+                        $searchQuery
+                    ) {
+                        $titleTeamQuery
+                            ->where("title", "LIKE", "%" . $searchQuery . "%")
+                            // search for team name
+                            ->orWhereHas("team", function ($teamQuery) use (
+                                $searchQuery
+                            ) {
+                                $teamQuery->where(
+                                    "name",
+                                    "LIKE",
+                                    "%" . $searchQuery . "%"
+                                );
+                            });
+                    });
                 });
-            })
+        }
 
-            // search with tags or content is true
-            ->when($tagsOrContent, function ($query) use (
-                $searchQuery,
-                $stateIDs,
-                $categoryIDs
-            ) {
-                $query
-                    ->where(function ($query) use ($searchQuery) {
-                        $query
-                            ->where("tags", "LIKE", "%" . $searchQuery . "%")
-                            ->orWhere("title", "LIKE", "%" . $searchQuery . "%")
+        // Search with tags or content
+        if ($tagsOrContent) {
+            $query = Store::latest()
+                ->with("team")
+                ->with("categories")
+                ->with("coverImages")
+                ->with("states")
+                ->with("authors")
+                ->where("published", true)
+
+                // states filter logic # start
+                ->when(!empty($stateIDs), function ($query) use ($stateIDs) {
+                    $query->whereHas("states", function ($query) use (
+                        $stateIDs
+                    ) {
+                        $query->whereIn("store_states.id", $stateIDs);
+                    });
+                })
+                // states filter logic # end
+
+                // categories filter logic # start
+                ->when(!empty($categoryIDs), function ($query) use (
+                    $categoryIDs
+                ) {
+                    $query->whereHas("categories", function ($query) use (
+                        $categoryIDs
+                    ) {
+                        $query->whereIn("store_categories.id", $categoryIDs);
+                    });
+                })
+                // categories filter logic # end
+
+                // search for title, team name respecting states and categories
+                ->when($searchQuery, function ($query) use ($searchQuery) {
+                    $query->where(function ($titleTeamQuery) use (
+                        $searchQuery
+                    ) {
+                        $titleTeamQuery
+                            ->where("title", "LIKE", "%" . $searchQuery . "%")
+
+                            ->orWhere("tags", "LIKE", "%" . $searchQuery . "%")
                             ->orWhere(
                                 "content",
                                 "LIKE",
                                 "%" . $searchQuery . "%"
-                            );
-                    })
-                    // search for team name respecting tags, title, and content
-                    ->orWhereHas("team", function ($teamQuery) use (
-                        $searchQuery
-                    ) {
-                        $teamQuery->where(
-                            "name",
-                            "LIKE",
-                            "%" . $searchQuery . "%"
-                        );
-                    })
-                    // Additional conditions based on states and categories
-                    ->when(!empty($stateIDs), function ($query) use (
-                        $stateIDs
-                    ) {
-                        $query->whereHas("states", function ($query) use (
-                            $stateIDs
-                        ) {
-                            $query->whereIn("store_states.id", $stateIDs);
-                        });
-                    })
-                    ->when(!empty($categoryIDs), function ($query) use (
-                        $categoryIDs
-                    ) {
-                        $query->whereHas("categories", function ($query) use (
-                            $categoryIDs
-                        ) {
-                            $query->whereIn(
-                                "store_categories.id",
-                                $categoryIDs
-                            );
-                        });
+                            )
+
+                            // search for team name
+                            ->orWhereHas("team", function ($teamQuery) use (
+                                $searchQuery
+                            ) {
+                                $teamQuery->where(
+                                    "name",
+                                    "LIKE",
+                                    "%" . $searchQuery . "%"
+                                );
+                            });
                     });
-            });
+                });
+        }
 
         $posts = $query->paginate(20);
 
