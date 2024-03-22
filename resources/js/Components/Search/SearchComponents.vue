@@ -3,19 +3,7 @@ import Modal from "@/Components/Modals/Modal.vue";
 import { ref, computed, onMounted, onBeforeMount, nextTick } from "vue";
 import { TailwindPagination } from "laravel-vue-pagination";
 import componentHelpers from "@/utils/builder/html-elements/componentHelpers";
-import {
-    Squares2X2Icon,
-    TrashIcon,
-    CheckIcon,
-    MapPinIcon,
-    GlobeAmericasIcon,
-    PlusIcon,
-    MinusIcon,
-    NewspaperIcon,
-    XMarkIcon,
-} from "@heroicons/vue/24/outline";
 import ThumbnailSmallImageSlider from "@/Components/ImageSliders/ThumbnailSmallImageSlider.vue";
-import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import PageBuilder from "@/composables/PageBuilder";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 
@@ -377,8 +365,8 @@ onMounted(async () => {
                                             <ThumbnailSmallImageSlider
                                                 :images="component.cover_images"
                                                 imageSize="medium_path"
-                                                imageHeight="h-auto"
-                                                imageWidth="max-h-96 w-full cursor-pointer object-contain"
+                                                imageHeight="max-h-72"
+                                                imageWidth="w-full cursor-pointer object-contain bg-white"
                                                 :roundedFull="false"
                                                 :squareButtons="true"
                                                 @firstButtonClick="
