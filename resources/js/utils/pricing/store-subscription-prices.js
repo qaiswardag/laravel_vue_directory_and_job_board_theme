@@ -18,6 +18,7 @@ const storeSubscriptionPrices = [
         description: "Affordable & with all features.",
         features: [
             "Only for Fashion Stores",
+            "Up to 8000 dayly visitors",
             "Fashion Directory in UAE",
             "Geolocation Technology",
             "Be Found Instantly By Consumers",
@@ -50,6 +51,7 @@ const storeSubscriptionPrices = [
         description: "Affordable & with all features.",
         features: [
             "Only for Fashion Stores",
+            "Up to 8000 dayly visitors",
             "Fashion Directory in UAE",
             "Geolocation Technology",
             "Be Found Instantly By Consumers",
