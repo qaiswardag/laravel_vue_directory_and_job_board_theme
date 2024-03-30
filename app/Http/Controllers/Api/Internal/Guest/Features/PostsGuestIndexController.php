@@ -16,6 +16,8 @@ class PostsGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
+        $postCount = null;
+
         $tagsOrContent = $request->input("tags_or_content");
         $searchQuery = $request->input("search_query");
 
@@ -94,6 +96,9 @@ class PostsGuestIndexController extends Controller
                             });
                     });
                 });
+
+            $countQuery = clone $query;
+            $postCount = $countQuery->count();
         }
         // Search with tags or content
         if ($tagsOrContent) {
@@ -153,6 +158,9 @@ class PostsGuestIndexController extends Controller
                             });
                     });
                 });
+
+            $countQuery = clone $query;
+            $postCount = $countQuery->count();
         }
 
         $posts = $query->paginate(20);
@@ -160,6 +168,7 @@ class PostsGuestIndexController extends Controller
         $posts->appends($request->all());
 
         return [
+            "postCount" => $postCount,
             "categories" => $categories,
             "posts" => $posts,
             "oldInput" => [

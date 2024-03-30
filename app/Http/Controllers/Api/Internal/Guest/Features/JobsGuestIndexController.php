@@ -20,6 +20,7 @@ class JobsGuestIndexController extends Controller
 
     public function index(Request $request)
     {
+        $postCount = null;
         $tagsOrContent = $request->input("tags_or_content");
         $searchQuery = $request->input("search_query");
 
@@ -180,6 +181,9 @@ class JobsGuestIndexController extends Controller
                             });
                     });
                 });
+
+            $countQuery = clone $query;
+            $postCount = $countQuery->count();
         }
 
         // Search with tags or content
@@ -273,6 +277,9 @@ class JobsGuestIndexController extends Controller
                             });
                     });
                 });
+
+            $countQuery = clone $query;
+            $postCount = $countQuery->count();
         }
 
         $posts = $query->paginate(20);
@@ -280,6 +287,7 @@ class JobsGuestIndexController extends Controller
         $posts->appends($request->all());
 
         return [
+            "postCount" => $postCount,
             "types" => $types,
             "categories" => $categories,
             "posts" => $posts,

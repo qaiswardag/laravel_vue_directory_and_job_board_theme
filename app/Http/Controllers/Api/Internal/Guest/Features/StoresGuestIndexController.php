@@ -16,6 +16,7 @@ class StoresGuestIndexController extends Controller
      */
     public function index(Request $request)
     {
+        $postCount = null;
         $tagsOrContent = $request->input("tags_or_content");
 
         $searchQuery = $request->input("search_query");
@@ -112,6 +113,9 @@ class StoresGuestIndexController extends Controller
                             });
                     });
                 });
+
+            $countQuery = clone $query;
+            $postCount = $countQuery->count();
         }
 
         // Search with tags or content
@@ -173,6 +177,9 @@ class StoresGuestIndexController extends Controller
                             });
                     });
                 });
+
+            $countQuery = clone $query;
+            $postCount = $countQuery->count();
         }
 
         $posts = $query->paginate(20);
@@ -180,6 +187,7 @@ class StoresGuestIndexController extends Controller
         $posts->appends($request->all());
 
         return [
+            "postCount" => $postCount,
             "categories" => $categories,
             "states" => $states,
             "posts" => $posts,
