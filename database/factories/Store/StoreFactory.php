@@ -77,6 +77,7 @@ class StoreFactory extends Factory
             "published" => 1,
             "tags" => $selectedTagsList,
             "contact_page_url" => "https://www.google.com",
+            "brand_website_url" => "https://www.cnn.com",
         ];
     }
 }

@@ -348,6 +348,7 @@ class StoreController extends Controller
         // Logic for subscription quantity # end
 
         $title = $request->title;
+        $brandWebsiteUrl = $request->brand_website_url;
         $address = $request->address;
         $contactPageUrl = $request->contact_page_url;
         $floor = $request->floor;
@@ -363,6 +364,7 @@ class StoreController extends Controller
             "team_id" => $team->id,
             "title" => $title,
             "slug" => $slug,
+            "brand_website_url" => $brandWebsiteUrl,
             "address" => $address,
             "floor" => $floor,
             "contact_page_url" => $contactPageUrl,
@@ -937,6 +939,7 @@ class StoreController extends Controller
         $slug = $request->slug;
 
         $title = $request->title;
+        $brandWebsiteUrl = $request->brand_website_url;
         $address = $request->address;
         $floor = $request->floor;
         $content = $request->content;
@@ -967,6 +970,7 @@ class StoreController extends Controller
             "team_id" => $teamId,
             "title" => $title,
             "slug" => $slug,
+            "brand_website_url" => $brandWebsiteUrl,
             "address" => $address,
             "floor" => $floor,
             "contact_page_url" => $contactPageUrl,

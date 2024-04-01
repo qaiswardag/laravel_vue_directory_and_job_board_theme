@@ -29,6 +29,7 @@ class Store extends Model
         "show_author",
         "trash",
         "contact_page_url",
+        "brand_website_url",
     ];
 
     // Define the relationship with the Team model

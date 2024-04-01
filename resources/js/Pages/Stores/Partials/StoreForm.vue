@@ -347,6 +347,7 @@ const slugValueCustom = ref("");
 const postForm = useForm({
     title: "",
     slug: "",
+    brand_website_url: "",
     address: "",
     contact_page_url: "",
     floor: "",
@@ -473,6 +474,7 @@ const clearForm = function () {
     postForm.title = "";
     // slug
     postForm.slug = "";
+    postForm.brand_website_url = "";
 
     if (props.currentUserTeam && props.currentUserTeam.address) {
         postForm.address = props.currentUserTeam.address;
@@ -809,6 +811,7 @@ onBeforeMount(async () => {
             }
 
             postForm.title = formLocalStorage.title;
+            postForm.brand_website_url = formLocalStorage.brand_website_url;
 
             if (!formLocalStorage.address) {
                 if (props.currentUserTeam && props.currentUserTeam.address) {
@@ -973,6 +976,7 @@ onBeforeMount(async () => {
         store.commit("pageBuilderState/setComponents", extractedSections);
 
         postForm.title = props.post.title;
+        postForm.brand_website_url = props.post.brand_website_url;
         postForm.address = props.post.address;
         postForm.contact_page_url = props.post.contact_page_url;
         postForm.floor = props.post.floor;
@@ -1321,7 +1325,7 @@ const pageBuilder = new PageBuilder(store);
                         value="Url for mall or company"
                     />
                     <TextInput
-                        placeholder="Contact page url.."
+                        placeholder="Company or Mall url.."
                         id="contact_page_url"
                         v-model="postForm.contact_page_url"
                         type="text"
@@ -1740,6 +1744,35 @@ const pageBuilder = new PageBuilder(store);
                 </div>
             </div>
             <!-- tags - end -->
+
+            <!-- post contact page url # start -->
+
+            øøøø
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Brand website
+                    </div>
+                </div>
+                <!-- post title start -->
+                <div class="myInputGroup">
+                    <InputLabel for="brand_website_url" value="Url for brand" />
+                    <TextInput
+                        placeholder="Brand url.."
+                        id="brand_website_url"
+                        v-model="postForm.brand_website_url"
+                        type="text"
+                        class="block w-full"
+                        autocomplete="off"
+                    />
+                    <p class="myPrimaryParagraph italic">
+                        Example: www.dior.com
+                    </p>
+                    <InputError :message="postForm.errors.brand_website_url" />
+                </div>
+            </div>
+            <!-- post contact page url # end -->
+
             <!-- post author - start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">

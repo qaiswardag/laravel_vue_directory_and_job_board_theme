@@ -91,9 +91,30 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                 <!-- team related to this resource # start -->
                 <template v-if="team">
                     <div class="myPrimaryWidget">
-                        <h4 class="myQuaternaryHeader">
-                            {{ team?.name }}
+                        <h4 class="myQuaternaryHeader flex items-center gap-2">
+                            <div>
+                                {{ team?.name }}
+                            </div>
+                            <!-- Url for contact page # start -->
+                            <template v-if="post.contact_page_url">
+                                <div>
+                                    <a
+                                        :href="post.contact_page_url"
+                                        target="_blank"
+                                        :title="`Website for ${team?.name}`"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    >
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            link
+                                        </span>
+                                    </a>
+                                </div>
+                            </template>
+                            <!-- Url for contact page # end -->
                         </h4>
+
                         <WidgetSectionBorder></WidgetSectionBorder>
 
                         <template v-if="team.coverImagesWithLogos?.logos">
@@ -563,24 +584,6 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                 </template>
                 <!-- tags # end -->
 
-                <!-- Url for contact page # start -->
-                <template v-if="post.contact_page_url">
-                    <div class="myPrimaryWidget">
-                        <h4 class="myQuaternaryHeader">Contact Store</h4>
-                        <WidgetSectionBorder></WidgetSectionBorder>
-                        <div
-                            class="flex flex-wrap justify-start items-center gap-2"
-                        >
-                            <a :href="post.contact_page_url" target="_blank">
-                                <button type="button" class="myPrimaryButton">
-                                    Contact store
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </template>
-                <!-- Url for contact page # end -->
-
                 <!-- show authors # start -->
                 <template v-if="onlyForCurrentTeam && postType !== 'Campaign'">
                     <div v-if="post.show_author" class="myPrimaryWidget">
@@ -692,11 +695,31 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                 </div>
                 <!-- authors # end -->
                 <!-- cover images - start -->
-
                 <!-- cover images for resource # start -->
                 <template v-if="post.cover_images">
                     <div class="myPrimaryWidget">
-                        <h4 class="myQuaternaryHeader">Cover images</h4>
+                        <h4 class="myQuaternaryHeader flex items-center gap-2">
+                            {{ post.title }}
+                            <!-- brand website # start -->
+                            <template v-if="post.brand_website_url">
+                                <div class="flex items-center gap-4">
+                                    <a
+                                        :href="post.brand_website_url"
+                                        target="_blank"
+                                        :title="`Website for ${post?.title}`"
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                    >
+                                        <div
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            link
+                                        </div>
+                                    </a>
+                                </div>
+                            </template>
+                            <!-- brand website # end -->
+                        </h4>
+
                         <WidgetSectionBorder></WidgetSectionBorder>
                         <ThumbnailSmallImageSlider
                             v-if="post.cover_images"
@@ -707,6 +730,9 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                             :roundedFull="false"
                             :squareButtons="true"
                         ></ThumbnailSmallImageSlider>
+                        <!-- post logo # start -->
+
+                        <!-- post logo # end -->
                     </div>
                 </template>
                 <!-- cover images for resource # end -->
