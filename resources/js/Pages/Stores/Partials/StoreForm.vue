@@ -1747,7 +1747,6 @@ const pageBuilder = new PageBuilder(store);
 
             <!-- post contact page url # start -->
 
-            øøøø
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
