@@ -1311,14 +1311,14 @@ const pageBuilder = new PageBuilder(store);
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
-                        Url for contact form
+                        Company or Mall website
                     </div>
                 </div>
                 <!-- post title start -->
                 <div class="myInputGroup">
                     <InputLabel
                         for="contact_page_url"
-                        value="Url for contact form"
+                        value="Url for mall or company"
                     />
                     <TextInput
                         placeholder="Contact page url.."
@@ -1328,6 +1328,9 @@ const pageBuilder = new PageBuilder(store);
                         class="block w-full"
                         autocomplete="off"
                     />
+                    <p class="myPrimaryParagraph italic">
+                        Example: www.thedubaimall.com
+                    </p>
                     <InputError :message="postForm.errors.contact_page_url" />
                 </div>
             </div>
