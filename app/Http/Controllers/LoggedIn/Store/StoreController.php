@@ -846,7 +846,23 @@ class StoreController extends Controller
                 }
                 // replicate new cover images # start
 
-                // replicate new cover images # start
+                // replicate new brand logos # start
+                if ($store->brandLogos !== null) {
+                    foreach ($store->brandLogos as $brandLogo) {
+                        // Create a new instance of the pivot model
+                        $newBrandLogoPivotData = new StoreBrandLogoRelation([
+                            "store_id" => $newStore->id,
+                            "media_library_id" => $brandLogo->id,
+                            "primary" => $brandLogo->pivot->primary ?? null,
+                            // Add any other attributes if needed
+                        ]);
+                        // Save the new pivot data
+                        $newBrandLogoPivotData->save();
+                    }
+                }
+                // replicate new brand logos # end
+
+                // replicate new authors  # start
                 if ($store->authors !== null) {
                     foreach ($store->authors as $author) {
                         // Create a new instance of the pivot model
@@ -859,7 +875,7 @@ class StoreController extends Controller
                         $newJobAuthorsPivotData->save();
                     }
                 }
-                // replicate new cover images # end
+                // replicate new authors  # end
 
                 // replicate new states # start
                 if ($store->states !== null) {
@@ -1125,10 +1141,10 @@ class StoreController extends Controller
             gettype($request->brand_logo) === "array" &&
             count($request->brand_logo) !== 0
         ) {
-            foreach ($request->brand_logo as $coverImage) {
-                $imageId = $coverImage["id"];
-                $isPrimary = isset($coverImage["pivot"]["primary"])
-                    ? $coverImage["pivot"]["primary"]
+            foreach ($request->brand_logo as $brandLogo) {
+                $imageId = $brandLogo["id"];
+                $isPrimary = isset($brandLogo["pivot"]["primary"])
+                    ? $brandLogo["pivot"]["primary"]
                     : false;
 
                 // Update or create cover image relationship

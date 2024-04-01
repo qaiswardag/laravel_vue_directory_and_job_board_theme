@@ -25,7 +25,7 @@ return new class extends Migration {
             $table
                 ->foreignId("store_id")
                 ->references("id")
-                ->on("teams")
+                ->on("stores")
                 ->onDelete("cascade")
                 ->constrained();
 
