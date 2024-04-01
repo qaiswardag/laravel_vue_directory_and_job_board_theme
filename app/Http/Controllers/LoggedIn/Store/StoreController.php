@@ -11,6 +11,7 @@ use App\Http\Requests\LoggedIn\Store\StoreStoreRequest;
 use App\Models\MediaLibrary\MediaLibrary;
 use App\Models\Store\AuthorStore;
 use App\Models\Store\Store;
+use App\Models\Store\StoreBrandLogoRelation;
 use App\Models\Store\StoreCategory;
 use App\Models\Store\StoreCategoryRelation;
 use App\Models\Store\StoreCoverImageRelation;
@@ -448,6 +449,37 @@ class StoreController extends Controller
             }
         }
 
+        // brand logos
+        if (
+            $request->brand_logo !== null &&
+            is_array($request->brand_logo) &&
+            count($request->brand_logo) !== 0
+        ) {
+            // Loop through the array and attach each item to the store
+            foreach ($request->brand_logo as $image) {
+                // Check if the "id" key exists in the $image array
+                if (array_key_exists("id", $image)) {
+                    $imageId = $image["id"];
+
+                    // Check if a media library record with this ID exists
+                    $mediaLibrary = MediaLibrary::find($imageId);
+                    if ($mediaLibrary) {
+                        // Determine the primary status from the pivot
+                        $isPrimary = isset($image["pivot"]["primary"])
+                            ? $image["pivot"]["primary"]
+                            : false;
+
+                        // Create a new record in the table
+                        StoreBrandLogoRelation::create([
+                            "media_library_id" => $imageId,
+                            "store_id" => $storeId,
+                            "primary" => $isPrimary,
+                        ]);
+                    }
+                }
+            }
+        }
+
         // states
         if (
             $request->states !== null &&
@@ -533,6 +565,7 @@ class StoreController extends Controller
         // Retrieve the post, including soft-deleted posts
         $store = Store::withTrashed()
             ->with("coverImages")
+            ->with("brandLogos")
             ->findOrFail($storeId);
 
         // Retrieve the user associated with the store
@@ -674,6 +707,7 @@ class StoreController extends Controller
         }
 
         $coverImages = $store->coverImages;
+        $brandLogos = $store->brandLogos;
         $categories = $store->categories;
         $states = $store->states;
 
@@ -681,6 +715,7 @@ class StoreController extends Controller
             "post" => $store,
             "postAuthor" => $authors,
             "coverImages" => $coverImages,
+            "brandLogos" => $brandLogos,
             "categories" => $categories,
             "states" => $states,
         ]);
@@ -1024,7 +1059,6 @@ class StoreController extends Controller
         }
 
         // Update cover images # start
-
         // Retrieve the existing cover image relationships for the post
         $existingCoverImages = StoreCoverImageRelation::where(
             "store_id",
@@ -1070,8 +1104,55 @@ class StoreController extends Controller
         StoreCoverImageRelation::where("store_id", $storeId)
             ->whereIn("media_library_id", $existingCoverImageIds)
             ->delete();
-
         // Update cover images # end
+
+        // Update brand logo # start
+        // Retrieve the existing cover image relationships for the post
+        $existingBrandLogos = StoreBrandLogoRelation::where(
+            "store_id",
+            $storeId
+        )->get();
+
+        // Create an array to store the IDs of existing cover images
+        $existingBrandLogosIds = $existingBrandLogos
+            ->pluck("media_library_id")
+            ->toArray();
+
+        // Loop through the request's cover images and update or create cover image relationships
+        // Check if $request->cover_image is not null and is an array
+        if (
+            $request->brand_logo !== null &&
+            gettype($request->brand_logo) === "array" &&
+            count($request->brand_logo) !== 0
+        ) {
+            foreach ($request->brand_logo as $coverImage) {
+                $imageId = $coverImage["id"];
+                $isPrimary = isset($coverImage["pivot"]["primary"])
+                    ? $coverImage["pivot"]["primary"]
+                    : false;
+
+                // Update or create cover image relationship
+                StoreBrandLogoRelation::updateOrCreate(
+                    [
+                        "media_library_id" => $imageId,
+                        "store_id" => $storeId,
+                    ],
+                    ["primary" => $isPrimary]
+                );
+
+                // Remove the image ID from the existingBrandLogosIds array
+                $key = array_search($imageId, $existingBrandLogosIds);
+                if ($key !== false) {
+                    unset($existingBrandLogosIds[$key]);
+                }
+            }
+        }
+
+        // Delete any remaining cover image relationships that are no longer needed
+        StoreBrandLogoRelation::where("store_id", $storeId)
+            ->whereIn("media_library_id", $existingBrandLogosIds)
+            ->delete();
+        // Update brand logo # end
 
         // Update states
         if (

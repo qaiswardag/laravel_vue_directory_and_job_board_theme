@@ -77,6 +77,10 @@ const props = defineProps({
         default: null,
         required: false,
     },
+    brandLogos: {
+        default: null,
+        required: false,
+    },
 });
 
 const modalShowClearForm = ref(false);
@@ -185,8 +189,87 @@ const handleUploadCoverImage = function () {
     };
     // end modal
 };
+const handleUploadBrandLogo = function () {
+    // handle show media library modal
+    showMediaLibraryModal.value = true;
+
+    // set media library modal standards
+    titleMedia.value = "Media Library";
+    descriptionMedia.value = null;
+    firstButtonMedia.value = "Close";
+    secondButtonMedia.value = "Select image";
+    thirdButtonMedia.value = null;
+    // handle click
+    firstMediaButtonFunction.value = function () {
+        // handle show media library modal
+        showMediaLibraryModal.value = false;
+    };
+    //
+    // handle click
+    secondMediaButtonFunction.value = function () {
+        if (Array.isArray(postForm.brand_logo) === false) {
+            postForm.brand_logo = [];
+        }
+
+        const idExists = postForm.brand_logo?.some((item) => {
+            return (
+                item.id === getCurrentImage.value.currentImage.mediaLibrary.id
+            );
+        });
+
+        if (idExists === false && Array.isArray(postForm.brand_logo)) {
+            postForm.brand_logo.unshift(
+                getCurrentImage.value.currentImage.mediaLibrary
+            );
+        }
+
+        // handle show media library modal
+        showMediaLibraryModal.value = false;
+    };
+    // end modal
+};
+const handleRemoveBrandLogo = function (imageId) {
+    postForm.brand_logo = postForm.brand_logo.filter(
+        (image) => image.id !== imageId
+    );
+};
+
+const removePrimaryImageBrandLogo = function (imageId) {
+    postForm.brand_logo = postForm.brand_logo.map((image) => {
+        return {
+            ...image,
+            pivot: {
+                ...image.pivot,
+                primary: image.id === imageId ? false : image?.pivot?.primary,
+            },
+        };
+    });
+};
+
+const setAsPrimaryImageBrandLogo = function (imageId) {
+    postForm.brand_logo = postForm.brand_logo.map((image) => {
+        if (image.id === imageId) {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: true,
+                },
+            };
+        } else {
+            return {
+                ...image,
+                pivot: {
+                    ...image.pivot,
+                    primary: false,
+                },
+            };
+        }
+    });
+};
+
 const removePrimaryImage = function (imageId) {
-    postForm.cover_image = postForm.cover_image.map((image) => {
+    postForm.brand_logo = postForm.brand_logo.map((image) => {
         return {
             ...image,
             pivot: {
@@ -218,6 +301,7 @@ const setAsPrimaryImage = function (imageId) {
         }
     });
 };
+
 const handleRemoveCoverImage = function (imageId) {
     postForm.cover_image = postForm.cover_image.filter(
         (image) => image.id !== imageId
@@ -362,6 +446,7 @@ const postForm = useForm({
     states: [],
     categories: [],
     cover_image: [],
+    brand_logo: [],
 });
 
 // The above code uses the watch function from Vue 3 to watch for changes to the
@@ -505,6 +590,7 @@ const clearForm = function () {
     postForm.states = [];
     postForm.categories = [];
     postForm.cover_image = [];
+    postForm.brand_logo = [];
 
     localStorage.removeItem(pathLocalStorage);
     localStorage.removeItem(pathPageBuilderLocalStorageCreate);
@@ -891,6 +977,29 @@ onBeforeMount(async () => {
                     postForm.cover_image = formLocalStorage.cover_image;
                 }
             }
+            // Brand logo
+            if (
+                formLocalStorage.brand_logo === undefined ||
+                formLocalStorage.brand_logo === null
+            ) {
+                postForm.brand_logo = [];
+            }
+            if (
+                formLocalStorage.brand_logo !== undefined ||
+                formLocalStorage.brand_logo !== null
+            ) {
+                const arrayContainsOnlyNull =
+                    formLocalStorage.brand_logo?.every((element) => {
+                        return element === null;
+                    });
+
+                if (arrayContainsOnlyNull === true) {
+                    postForm.brand_logo = [];
+                }
+                if (arrayContainsOnlyNull === false) {
+                    postForm.brand_logo = formLocalStorage.brand_logo;
+                }
+            }
             // states
             if (
                 formLocalStorage.states === undefined ||
@@ -1001,6 +1110,7 @@ onBeforeMount(async () => {
         postForm.states = props.states;
         postForm.categories = props.categories;
         postForm.cover_image = props.coverImages;
+        postForm.brand_logo = props.brandLogos;
     }
 
     store.commit(
@@ -1440,7 +1550,9 @@ const pageBuilder = new PageBuilder(store);
                                             "
                                             type="button"
                                             @click="
-                                                removePrimaryImage(image?.id)
+                                                removePrimaryImageBrandLogo(
+                                                    image?.id
+                                                )
                                             "
                                         >
                                             <div
@@ -1745,8 +1857,7 @@ const pageBuilder = new PageBuilder(store);
             </div>
             <!-- tags - end -->
 
-            <!-- post contact page url # start -->
-
+            <!-- post brand website url # start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -1770,7 +1881,183 @@ const pageBuilder = new PageBuilder(store);
                     <InputError :message="postForm.errors.brand_website_url" />
                 </div>
             </div>
-            <!-- post contact page url # end -->
+            <!-- post brand website url # end -->
+
+            <!-- Brand logos - start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Brand logo
+                    </div>
+                </div>
+                <!-- select - start -->
+                <div @click="handleUploadBrandLogo" class="myPrimaryFakeSelect">
+                    <div class="relative flex items-center w-full py-0 p-0">
+                        <span>
+                            {{
+                                postForm.brand_logo &&
+                                postForm.brand_logo?.length === 0
+                                    ? "Select Logo"
+                                    : "Add Additional Logos"
+                            }}
+                        </span>
+                    </div>
+                    <div
+                        class="border-none rounded flex items-center justify-center h-full w-8"
+                    >
+                        <span class="material-symbols-outlined">
+                            unfold_more
+                        </span>
+                    </div>
+                </div>
+                <!-- select - end -->
+
+                <div
+                    v-if="
+                        postForm.brand_logo && postForm.brand_logo?.length === 0
+                    "
+                    class="space-y-6 mt-2"
+                >
+                    <p class="myPrimaryParagraph">No items selected.</p>
+                </div>
+
+                <div>
+                    <p
+                        v-if="
+                            postForm.brand_logo &&
+                            postForm.brand_logo?.length !== 0
+                        "
+                        class="py-4"
+                    >
+                        Added
+                        {{ postForm.brand_logo && postForm.brand_logo?.length }}
+                        {{
+                            postForm.brand_logo &&
+                            postForm.brand_logo?.length === 1
+                                ? "Item"
+                                : "Items"
+                        }}
+                    </p>
+                    <div
+                        v-if="
+                            postForm.brand_logo &&
+                            Array.isArray(postForm?.brand_logo) &&
+                            postForm.brand_logo?.length !== 0
+                        "
+                        class="p-2 border border-myPrimaryLightGrayColor"
+                    >
+                        <div
+                            class="min-h-[4rem] max-h-[18rem] flex flex-col w-full overflow-y-scroll divide-y divide-gray-200 pr-2"
+                        >
+                            <div
+                                v-for="image in postForm.brand_logo !== null &&
+                                postForm.brand_logo"
+                                :key="image?.id"
+                            >
+                                <div
+                                    class="flex justify-between items-center my-2 gap-4 myPrimaryTag w-max"
+                                >
+                                    <div
+                                        class="flex justify-left items-center gap-2"
+                                    >
+                                        <div class="flex-shrink-0">
+                                            <img
+                                                @click="handleUploadBrandLogo"
+                                                :src="`/storage/uploads/${image?.thumbnail_path}`"
+                                                alt="image"
+                                                class="myPrimarythumbnailInsertPreview"
+                                            />
+                                        </div>
+
+                                        <button
+                                            class="myPrimaryTag bg-myPrimaryLinkColor text-white break-keep"
+                                            v-if="
+                                                image?.pivot?.primary &&
+                                                postForm.brand_logo.length > 1
+                                            "
+                                            type="button"
+                                            @click="
+                                                removePrimaryImageBrandLogo(
+                                                    image?.id
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-center justify-center gap-2"
+                                            >
+                                                <span> Primary </span>
+                                                <span
+                                                    class="myMediumIcon material-symbols-outlined"
+                                                >
+                                                    check
+                                                </span>
+                                            </div>
+                                        </button>
+                                        <button
+                                            class="myPrimaryTag transition bg-white break-keep"
+                                            v-if="
+                                                !image?.pivot?.primary &&
+                                                postForm.brand_logo?.length > 1
+                                            "
+                                            type="button"
+                                            @click="
+                                                setAsPrimaryImageBrandLogo(
+                                                    image?.id
+                                                )
+                                            "
+                                        >
+                                            <span> Set as Primary </span>
+                                        </button>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        @click="
+                                            handleRemoveBrandLogo(image?.id)
+                                        "
+                                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
+                                    >
+                                        <span
+                                            class="myMediumIcon material-symbols-outlined"
+                                        >
+                                            delete
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            v-if="
+                                postForm.brand_logo &&
+                                postForm.brand_logo?.length >= 1
+                            "
+                            class="flex items-center justify-between border-t border-gray-200 pt-2 mt-1"
+                        >
+                            <p
+                                @click="handleUploadBrandLogo"
+                                class="myPrimaryParagraph text-xs cursor-pointer font-medium"
+                            >
+                                Add Additional Images
+                            </p>
+                            <button
+                                type="button"
+                                class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                                @click="handleUploadBrandLogo"
+                            >
+                                <span
+                                    class="myMediumIcon material-symbols-outlined"
+                                >
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <InputError :message="postForm.errors.brand_logo" />
+            </div>
+            <!--Brand logos - end -->
 
             <!-- post author - start -->
             <div class="myInputsOrganization">

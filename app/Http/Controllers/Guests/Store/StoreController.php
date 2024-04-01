@@ -71,6 +71,7 @@ class StoreController extends Controller
         $store = Store::where("id", $postId)
             ->where("published", true)
             ->with("coverImages")
+            ->with("brandLogos")
             ->firstOrFail();
 
         $postRenderView = "Guests/Items/SingleItem";

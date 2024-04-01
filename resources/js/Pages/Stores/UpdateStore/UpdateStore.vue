@@ -26,6 +26,9 @@ const props = defineProps({
     coverImages: {
         required: true,
     },
+    brandLogos: {
+        required: true,
+    },
 });
 
 const breadcrumbsLinks = [
@@ -57,6 +60,7 @@ const breadcrumbsLinks = [
                 :categories="categories"
                 :states="states"
                 :coverImages="coverImages"
+                :brandLogos="brandLogos"
             ></StoreForm>
         </LoggedInLayout>
     </MainLayout>

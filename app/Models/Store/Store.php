@@ -80,4 +80,14 @@ class Store extends Model
             "media_library_id"
         )->withPivot("primary");
     }
+
+    public function brandLogos()
+    {
+        return $this->belongsToMany(
+            MediaLibrary::class,
+            "store_brand_logo_relations",
+            "store_id",
+            "media_library_id"
+        )->withPivot("primary");
+    }
 }

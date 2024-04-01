@@ -96,6 +96,9 @@ class StoreStoreRequest extends FormRequest
         $maxAuthors = 18;
         $maxCategories = 8;
         $maxStoreStates = 1;
+        $minBrandLogos = 1;
+        $maxBrandLogos = 1;
+
         $minCoverImages = 1;
         $maxCoverImages = 6;
 
@@ -103,6 +106,8 @@ class StoreStoreRequest extends FormRequest
             $maxAuthors,
             $maxCategories,
             $maxStoreStates,
+            $minBrandLogos,
+            $maxBrandLogos,
             $minCoverImages,
             $maxCoverImages
         ) {
@@ -178,7 +183,71 @@ class StoreStoreRequest extends FormRequest
             }
             // validation for cover image # end
 
-            // Additional validation to ensure only one image is marked as primary # start
+            // validation for brand logo # start
+            if (
+                $this->brand_logo === null ||
+                (gettype($this->brand_logo) === "array" &&
+                    count($this->brand_logo) === 0)
+            ) {
+                $validator
+                    ->errors()
+                    ->add("brand_logo", "The brand logo field is required.");
+            }
+
+            if (gettype($this->brand_logo) !== "array") {
+                $validator
+                    ->errors()
+                    ->add("brand_logo", "Brand logo field must be an array.");
+            }
+
+            if (
+                gettype($this->brand_logo) === "array" &&
+                count($this->brand_logo) < $minBrandLogos
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "brand_logo",
+                        "At least {$minBrandLogos} images are necessary."
+                    );
+            }
+
+            if (
+                gettype($this->brand_logo) === "array" &&
+                count($this->brand_logo) > $maxBrandLogos
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "brand_logo",
+                        "Brand logo image field is limited to a maximum of {$maxBrandLogos} selection(s)."
+                    );
+            }
+            // Check if the "primary" key exists, or provide a default value of false
+            if (!empty($this->brand_logo)) {
+                // Loop through the array and attach each category to the post
+                foreach ($this->brand_logo as $image) {
+                    // Check if the "id" key exists in the $image array
+                    if (array_key_exists("id", $image)) {
+                        $imageId = $image["id"];
+
+                        // Check if a media library record with this ID exists
+                        $mediaLibrary = MediaLibrary::find($imageId);
+
+                        if ($mediaLibrary === null) {
+                            $validator
+                                ->errors()
+                                ->add(
+                                    "brand_logo",
+                                    "At least one your attached images no longer exists in the Media Library. Delete the image and try again or click the 'Clear form' button and then try again."
+                                );
+                        }
+                    }
+                }
+            }
+            // validation for brand logo # end
+
+            // Additional cover image validation to ensure only one image is marked as primary # start
             $primaryImages = is_array($this->cover_image)
                 ? array_filter($this->cover_image, function ($image) {
                     return isset($image["pivot"]) &&
@@ -196,7 +265,7 @@ class StoreStoreRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "At least one image must be marked as primary."
+                        "At least one cover image must be marked as primary."
                     );
             }
 
@@ -212,7 +281,43 @@ class StoreStoreRequest extends FormRequest
                         "Only one image can be marked as primary."
                     );
             }
-            // Additional validation to ensure only one image is marked as primary # end
+            // Additional cover image validation to ensure only one image is marked as primary # end
+
+            // Additional brand logos validation to ensure only one image is marked as primary # start
+            $primaryImagesBrandLogos = is_array($this->brand_logo)
+                ? array_filter($this->brand_logo, function ($image) {
+                    return isset($image["pivot"]) &&
+                        isset($image["pivot"]["primary"]) &&
+                        $image["pivot"]["primary"];
+                })
+                : [];
+
+            if (
+                count($primaryImagesBrandLogos) === 0 &&
+                gettype($this->brand_logo) === "array" &&
+                count($this->brand_logo) > 1
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "brand_logo",
+                        "At least one brand logo image must be marked as primary."
+                    );
+            }
+
+            if (
+                count($primaryImagesBrandLogos) > 1 &&
+                gettype($this->brand_logo) === "array" &&
+                count($this->brand_logo) > 1
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "brand_logo",
+                        "Only one image can be marked as primary."
+                    );
+            }
+            // Additional brand logos validation to ensure only one image is marked as primary # end
 
             // validation for categories # start
             if (

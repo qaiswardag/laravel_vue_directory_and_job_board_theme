@@ -721,6 +721,18 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                         </h4>
 
                         <WidgetSectionBorder></WidgetSectionBorder>
+                        <!-- post logo # start -->
+                        <ThumbnailSmallImageSlider
+                            v-if="post.brand_logos"
+                            :images="post.brand_logos"
+                            imageSize="medium_path"
+                            imageHeight="min-h-24 max-h-24"
+                            imageWidth="w-24 min-w-24 max-w-24 mb-4 w-24 object-cover"
+                            :roundedFull="false"
+                            :squareButtons="true"
+                        ></ThumbnailSmallImageSlider>
+                        <!-- post logo # end -->
+
                         <ThumbnailSmallImageSlider
                             v-if="post.cover_images"
                             :images="post.cover_images"
@@ -730,9 +742,6 @@ const goToSingleStoreFromInSale = function (storeTeamSlug, storeSlug, storeId) {
                             :roundedFull="false"
                             :squareButtons="true"
                         ></ThumbnailSmallImageSlider>
-                        <!-- post logo # start -->
-
-                        <!-- post logo # end -->
                     </div>
                 </template>
                 <!-- cover images for resource # end -->

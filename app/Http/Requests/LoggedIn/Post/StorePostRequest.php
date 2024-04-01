@@ -320,7 +320,7 @@ class StorePostRequest extends FormRequest
                     ->errors()
                     ->add(
                         "cover_image",
-                        "At least one image must be marked as primary."
+                        "At least one cover image must be marked as primary."
                     );
             }
 
