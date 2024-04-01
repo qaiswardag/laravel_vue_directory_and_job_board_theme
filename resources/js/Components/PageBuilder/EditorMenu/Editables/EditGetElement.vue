@@ -58,12 +58,13 @@ const handleModalPreviewTiptap = function () {
     gridColumnModal.value = 2;
     titleModal.value = "Manage Content";
     descriptionModal.value = null;
-    firstButtonModal.value = "Close";
+    firstButtonModal.value = null;
     secondButtonModal.value = null;
-    thirdButtonModal.value = null;
+    thirdButtonModal.value = "Save";
 
     // handle click
-    firstModalButtonFunction.value = function () {
+
+    thirdModalButtonFunction.value = function () {
         // set open modal
         store.commit("pageBuilderState/setShowModalTipTap", false);
     };
