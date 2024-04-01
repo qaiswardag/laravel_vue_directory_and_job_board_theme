@@ -64,6 +64,11 @@ const handleModalPreviewTiptap = function () {
 
     // handle click
 
+    firstModalButtonFunction.value = function () {
+        // set open modal
+        store.commit("pageBuilderState/setShowModalTipTap", false);
+    };
+
     thirdModalButtonFunction.value = function () {
         // set open modal
         store.commit("pageBuilderState/setShowModalTipTap", false);
