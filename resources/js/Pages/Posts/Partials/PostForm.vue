@@ -1090,7 +1090,7 @@ const pageBuilder = new PageBuilder(store);
                         </span>
                     </button>
                     <h3 class="mt-2 text-sm font-medium text-gray-900">
-                        Build your Post by adding Components
+                        Build your Campaign by adding Components
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">
                         Get started by adding components using the drag & drop
