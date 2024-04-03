@@ -1,7 +1,7 @@
 <script setup>
 import ActionSection from "@/Components/Actions/ActionSection.vue";
 import DynamicModal from "@/Components/Modals/DynamicModal.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { useStore } from "vuex";
 import UserTag from "@/Components/Users/UserTag.vue";
@@ -139,6 +139,10 @@ const handleSwitchTeam = function () {
         }
     );
 };
+
+onMounted(() => {
+    handleShowAllTeams();
+});
 </script>
 
 <template>
@@ -410,80 +414,6 @@ const handleSwitchTeam = function () {
     </DynamicModal>
 
     <div class="flex justify-center">
-        <template
-            v-if="
-                $page.props.user.all_teams.length > 0 &&
-                $page.props.user.current_team &&
-                $page.props.jetstream.hasTeamFeatures
-            "
-        >
-            <div class="myPrimaryTag px-4">
-                <div
-                    class="flex items-center justify-center px-2 py-2"
-                    v-if="$page.props.user.current_team.coverImagesWithLogos"
-                >
-                    <div
-                        v-if="
-                            Array.isArray(
-                                $page.props.user.current_team
-                                    .coverImagesWithLogos.logos
-                            )
-                        "
-                    >
-                        <template
-                            v-if="
-                                $page.props.user.current_team
-                                    .coverImagesWithLogos?.logos.length !== 0
-                            "
-                        >
-                            <ThumbnailSmallImageSlider
-                                :images="
-                                    $page.props.user.current_team
-                                        .coverImagesWithLogos?.logos
-                                "
-                                imageSize="medium_path"
-                                imageHeight="min-h-16 max-h-16"
-                                imageWidth="w-16 min-w-16 max-w-16 object-cover"
-                                :roundedFull="true"
-                            ></ThumbnailSmallImageSlider>
-
-                            <p
-                                class="myPrimaryParagraph font-medium mt-2 text-center"
-                            >
-                                {{ $page.props.currentUserTeam?.name }}
-                            </p>
-                        </template>
-                    </div>
-                </div>
-                <div
-                    v-if="
-                        $page.props.user.current_team.coverImagesWithLogos
-                            ?.logos?.length === 0
-                    "
-                    class="flex items-center justify-center px-2 py-2"
-                >
-                    <p class="myPrimaryParagraph font-medium text-center">
-                        {{ $page.props.currentUserTeam?.name }}
-                    </p>
-                </div>
-                <div class="flex justify-center">
-                    <Link
-                        :href="
-                            route(
-                                'team.update.information',
-                                $page.props.currentUserTeam?.id
-                            )
-                        "
-                        class="h-10 w-10 text-myPrimaryDarkGrayColor cursor-pointer rounded-full flex items-center justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
-                    >
-                        <span class="material-symbols-outlined"> edit </span>
-                    </Link>
-                </div>
-            </div>
-        </template>
-    </div>
-
-    <div class="flex justify-center">
         <div class="justify-between group flex items-center px-2">
             <UserTag
                 :user="$page.props.user"
@@ -494,24 +424,42 @@ const handleSwitchTeam = function () {
         </div>
     </div>
 
-    <div>
-        <div class="myInputsOrganization">
-            <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
-                <div class="myPrimaryFormOrganizationHeader">
-                    Switch Company
+    <div class="myPrimarySection">
+        <div
+            @click="handleShowAllTeams"
+            class="divide-y divide-gray-200 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
+        >
+            <div
+                class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor cursor-pointer"
+            >
+                <div>
+                    <span
+                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        ><span class="material-symbols-outlined">
+                            compare_arrows
+                        </span></span
+                    >
                 </div>
-                <p class="myPrimaryParagraph">
-                    Switch to another Company you are part of.
-                </p>
-            </div>
-            <div>
-                <button
-                    type="button"
-                    @click="handleShowAllTeams"
-                    class="myPrimaryButton"
+                <div class="mt-8">
+                    <h3 class="text-lg font-normal">
+                        <p class="focus:outline-none text-myPrimaryLinkColor">
+                            Switch Company
+                        </p>
+                    </h3>
+                    <p class="mt-2 text-sm text-gray-500">
+                        Navigate to the page and discover a range of settings
+                        crafted to suit your needs. Whether it's personalizing
+                        your account details, adjusting security preferences, or
+                        fine-tuning company settings.
+                    </p>
+                </div>
+                <span
+                    class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
+                    aria-hidden="true"
+                    ><span class="material-symbols-outlined">
+                        arrow_forward
+                    </span></span
                 >
-                    Switch Company
-                </button>
             </div>
         </div>
     </div>

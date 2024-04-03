@@ -49,7 +49,14 @@ import {
                                 ?.logos.length !== 0
                         "
                     >
-                        <Link :href="route('user.teams.switch')">
+                        <Link
+                            :href="
+                                route(
+                                    'teams.show',
+                                    $page.props.user.current_team.id
+                                )
+                            "
+                        >
                             <ThumbnailSmallImageSlider
                                 :images="
                                     $page.props.user.current_team
@@ -61,7 +68,14 @@ import {
                                 :roundedFull="true"
                             ></ThumbnailSmallImageSlider>
                         </Link>
-                        <Link :href="route('user.teams.switch')">
+                        <Link
+                            :href="
+                                route(
+                                    'teams.show',
+                                    $page.props.user.current_team.id
+                                )
+                            "
+                        >
                             <p
                                 class="myPrimaryParagraph font-medium mt-2 text-center"
                             >
@@ -78,7 +92,11 @@ import {
                 "
                 class="flex items-center justify-center px-2 py-2"
             >
-                <Link :href="route('user.teams.switch')">
+                <Link
+                    :href="
+                        route('teams.show', $page.props.user.current_team.id)
+                    "
+                >
                     <p class="myPrimaryParagraph font-medium text-center">
                         {{ $page.props.currentUserTeam?.name }}
                     </p>
