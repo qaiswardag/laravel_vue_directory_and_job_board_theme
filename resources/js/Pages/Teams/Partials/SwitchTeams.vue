@@ -9,6 +9,7 @@ import { vueFetch } from "@/composables/vueFetch";
 import { TailwindPagination } from "laravel-vue-pagination";
 import SmallUniversalSpinner from "@/Components/Loaders/SmallUniversalSpinner.vue";
 import InputError from "@/Components/Forms/InputError.vue";
+import { usePage } from "@inertiajs/vue3";
 
 import {
     CheckIcon,
@@ -141,7 +142,14 @@ const handleSwitchTeam = function () {
 };
 
 onMounted(() => {
-    handleShowAllTeams();
+    if (
+        usePage() &&
+        usePage().props &&
+        usePage().props.user &&
+        !usePage().props.user.superadmin
+    ) {
+        handleShowAllTeams();
+    }
 });
 </script>
 
@@ -349,7 +357,7 @@ onMounted(() => {
                                                             )
                                                         "
                                                         :src="`/storage/uploads/${logo.thumbnail_path}`"
-                                                        alt="image"
+                                                        alt="logo"
                                                         class="h-10 rounded-full"
                                                     />
                                                 </div>
@@ -424,43 +432,104 @@ onMounted(() => {
         </div>
     </div>
 
+    <!-- admin # start -->
     <div class="myPrimarySection">
-        <div
-            @click="handleShowAllTeams"
-            class="divide-y divide-gray-200 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
+        <Link
+            v-if="$page.props.user.superadmin !== null"
+            :href="route('admin.dashboard')"
         >
             <div
-                class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor cursor-pointer"
+                @click="handleShowAllTeams"
+                class="divide-y divide-gray-200 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
             >
-                <div>
+                <div
+                    class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor cursor-pointer"
+                >
+                    <div>
+                        <span
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                            ><span class="material-symbols-outlined">
+                                compare_arrows
+                            </span></span
+                        >
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-lg font-normal">
+                            <p
+                                class="focus:outline-none text-myPrimaryLinkColor"
+                            >
+                                Switch Company — Go to Superadmin Dashboard
+                            </p>
+                        </h3>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Navigate to the page and discover a range of
+                            settings crafted to suit your needs. Whether it's
+                            personalizing your account details, adjusting
+                            security preferences, or fine-tuning company
+                            settings.
+                        </p>
+                    </div>
                     <span
-                        class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                        class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
+                        aria-hidden="true"
                         ><span class="material-symbols-outlined">
-                            compare_arrows
+                            arrow_forward
                         </span></span
                     >
                 </div>
-                <div class="mt-8">
-                    <h3 class="text-lg font-normal">
-                        <p class="focus:outline-none text-myPrimaryLinkColor">
-                            Switch Company
-                        </p>
-                    </h3>
-                    <p class="mt-2 text-sm text-gray-500">
-                        Navigate to the page and discover a range of settings
-                        crafted to suit your needs. Whether it's personalizing
-                        your account details, adjusting security preferences, or
-                        fine-tuning company settings.
-                    </p>
-                </div>
-                <span
-                    class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
-                    aria-hidden="true"
-                    ><span class="material-symbols-outlined">
-                        arrow_forward
-                    </span></span
-                >
             </div>
-        </div>
+        </Link>
     </div>
+    <!-- admin # end -->
+    <div class="myPrimarySection">
+        <!-- none admin # start -->
+        <template
+            v-if="
+                $page.props.user.superadmin !== null &&
+                $page.props.user.superadmin.role === 'admin'
+            "
+        >
+            <div
+                @click="handleShowAllTeams"
+                class="divide-y divide-gray-200 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0"
+            >
+                <div
+                    class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-myPrimaryBrandColor cursor-pointer"
+                >
+                    <div>
+                        <span
+                            class="h-10 w-10 cursor-pointer rounded-full flex items-center border-none justify-center bg-gray-50 aspect-square hover:bg-myPrimaryLinkColor hover:text-white focus-visible:ring-0"
+                            ><span class="material-symbols-outlined">
+                                compare_arrows
+                            </span></span
+                        >
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-lg font-normal">
+                            <p
+                                class="focus:outline-none text-myPrimaryLinkColor"
+                            >
+                                Switch Company
+                            </p>
+                        </h3>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Navigate to the page and discover a range of
+                            settings crafted to suit your needs. Whether it's
+                            personalizing your account details, adjusting
+                            security preferences, or fine-tuning company
+                            settings.
+                        </p>
+                    </div>
+                    <span
+                        class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
+                        aria-hidden="true"
+                        ><span class="material-symbols-outlined">
+                            arrow_forward
+                        </span></span
+                    >
+                </div>
+            </div>
+        </template>
+    </div>
+    <!-- none admin # end -->
 </template>
