@@ -11,16 +11,6 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table("stores", function (Blueprint $table) {
-            //
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table("stores", function (Blueprint $table) {
             // Accepts time format 'HH:MM:SS'.
             // Example: To set the closing time to 6:00 PM (18:00),
             // send '18:00:00' from frontend to backend.
@@ -49,6 +39,16 @@ return new class extends Migration {
             $table->time("sunday_closing_time")->nullable();
 
             $table->string("time_zone")->nullable(); // ->default("Asia/Dubai");
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table("stores", function (Blueprint $table) {
+            //
         });
     }
 };
