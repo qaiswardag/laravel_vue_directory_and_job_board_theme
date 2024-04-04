@@ -64,6 +64,20 @@ class StoreFactory extends Factory
             }, $selectedTags)
         );
 
+        // Calculate the opening time
+        $openingTime = Carbon::today()
+            ->setHour(10)
+            ->setMinute(0)
+            ->setSecond(0)
+            ->format("H:i:s");
+
+        // Calculate the closing time
+        $closingTime = Carbon::today()
+            ->setHour(22)
+            ->setMinute(0)
+            ->setSecond(0)
+            ->format("H:i:s");
+
         return [
             "team_id" => 2,
             "user_id" => 1,
@@ -78,6 +92,31 @@ class StoreFactory extends Factory
             "tags" => $selectedTagsList,
             "contact_page_url" => "https://www.google.com",
             "brand_website_url" => "https://www.cnn.com",
+
+            "use_team_opening_hours" => true,
+
+            "monday_opening_time" => $openingTime,
+            "monday_closing_time" => $closingTime,
+
+            "tuesday_opening_time" => $openingTime,
+            "tuesday_closing_time" => $closingTime,
+
+            "wednesday_opening_time" => $openingTime,
+            "wednesday_closing_time" => $closingTime,
+
+            "thursday_opening_time" => $openingTime,
+            "thursday_closing_time" => $closingTime,
+
+            "friday_opening_time" => $openingTime,
+            "friday_closing_time" => $closingTime,
+
+            "saturday_opening_time" => $openingTime,
+            "saturday_closing_time" => $closingTime,
+
+            "sunday_opening_time" => $openingTime,
+            "sunday_closing_time" => $closingTime,
+
+            "time_zone" => "Asia/Dubai",
         ];
     }
 }

@@ -30,6 +30,31 @@ class Store extends Model
         "trash",
         "contact_page_url",
         "brand_website_url",
+
+        "use_team_opening_hours", // Example "Asia/Dubai",
+
+        "monday_opening_time",
+        "monday_closing_time",
+
+        "tuesday_opening_time",
+        "tuesday_closing_time",
+
+        "wednesday_opening_time",
+        "wednesday_closing_time",
+
+        "thursday_opening_time",
+        "thursday_closing_time",
+
+        "friday_opening_time",
+        "friday_closing_time",
+
+        "saturday_opening_time",
+        "saturday_closing_time",
+
+        "sunday_opening_time",
+        "sunday_closing_time",
+
+        "time_zone",
     ];
 
     // Define the relationship with the Team model

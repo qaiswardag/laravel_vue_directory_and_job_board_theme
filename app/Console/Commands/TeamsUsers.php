@@ -6,6 +6,7 @@ use App\Models\Superadmin\Superadmin;
 use App\Models\Team;
 use App\Models\TeamUser;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,6 +31,20 @@ class TeamsUsers extends Command
      */
     public function handle()
     {
+        // Calculate the opening time
+        $openingTime = Carbon::today()
+            ->setHour(10)
+            ->setMinute(0)
+            ->setSecond(0)
+            ->format("H:i:s");
+
+        // Calculate the closing time
+        $closingTime = Carbon::today()
+            ->setHour(22)
+            ->setMinute(0)
+            ->setSecond(0)
+            ->format("H:i:s");
+
         // Check if the user with ID 1 exists
         if (!User::where("id", 1)->exists()) {
             User::factory()->create([
@@ -75,6 +90,29 @@ class TeamsUsers extends Command
                 "slug" => "myself",
                 "public" => true,
                 "personal_team" => false,
+
+                "monday_opening_time" => $openingTime,
+                "monday_closing_time" => $closingTime,
+
+                "tuesday_opening_time" => $openingTime,
+                "tuesday_closing_time" => $closingTime,
+
+                "wednesday_opening_time" => $openingTime,
+                "wednesday_closing_time" => $closingTime,
+
+                "thursday_opening_time" => $openingTime,
+                "thursday_closing_time" => $closingTime,
+
+                "friday_opening_time" => $openingTime,
+                "friday_closing_time" => $closingTime,
+
+                "saturday_opening_time" => $openingTime,
+                "saturday_closing_time" => $closingTime,
+
+                "sunday_opening_time" => $openingTime,
+                "sunday_closing_time" => $closingTime,
+
+                "time_zone" => "Asia/Dubai",
             ]);
         }
         // Check if the team with ID 2 exists
@@ -86,6 +124,29 @@ class TeamsUsers extends Command
                 "slug" => "Dubai Mall",
                 "public" => true,
                 "personal_team" => false,
+
+                "monday_opening_time" => $openingTime,
+                "monday_closing_time" => $closingTime,
+
+                "tuesday_opening_time" => $openingTime,
+                "tuesday_closing_time" => $closingTime,
+
+                "wednesday_opening_time" => $openingTime,
+                "wednesday_closing_time" => $closingTime,
+
+                "thursday_opening_time" => $openingTime,
+                "thursday_closing_time" => $closingTime,
+
+                "friday_opening_time" => $openingTime,
+                "friday_closing_time" => $closingTime,
+
+                "saturday_opening_time" => $openingTime,
+                "saturday_closing_time" => $closingTime,
+
+                "sunday_opening_time" => $openingTime,
+                "sunday_closing_time" => $closingTime,
+
+                "time_zone" => "Asia/Dubai",
             ]);
         }
 

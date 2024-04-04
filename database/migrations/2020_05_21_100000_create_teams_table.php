@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -28,9 +27,7 @@ return new class extends Migration
                 ->nullable()
                 ->index();
 
-            $table
-                ->string("contact_page_url")
-                ->nullable();
+            $table->string("contact_page_url")->nullable();
 
             $table
                 ->string("slug")
@@ -39,8 +36,9 @@ return new class extends Migration
 
             $table->longText("content")->nullable();
 
-            $table->boolean("public")->nullable();;
+            $table->boolean("public")->nullable();
             $table->boolean("personal_team");
+
             $table->timestamps();
         });
     }
