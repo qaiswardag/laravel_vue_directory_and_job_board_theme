@@ -1487,22 +1487,26 @@ const pageBuilder = new PageBuilder(store);
                     >
                         <!-- post is filled - start -->
 
-                        <div class="relative flex items-center">
-                            <div class="flex h-6 items-center">
-                                <input
-                                    id="is_filled"
-                                    name="is_filled"
-                                    v-model="postForm.is_filled"
-                                    type="checkbox"
-                                    class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
-                                />
-                            </div>
-                            <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
-                                <label
-                                    for="is_filled"
-                                    class="select-none font-medium text-gray-900"
-                                    >Closed for new applications
-                                </label>
+                        <div class="myInputGroup">
+                            <div class="relative flex items-center">
+                                <div class="flex h-6 items-center">
+                                    <input
+                                        id="is_filled"
+                                        name="is_filled"
+                                        v-model="postForm.is_filled"
+                                        type="checkbox"
+                                        class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                                    />
+                                </div>
+                                <div
+                                    class="ml-3 min-w-0 flex-1 text-sm leading-6"
+                                >
+                                    <label
+                                        for="is_filled"
+                                        class="select-none font-medium text-gray-900"
+                                        >Closed for new applications
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>

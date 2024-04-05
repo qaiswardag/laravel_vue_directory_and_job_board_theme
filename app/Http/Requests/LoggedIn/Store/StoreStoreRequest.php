@@ -25,6 +25,8 @@ class StoreStoreRequest extends FormRequest
     {
         $rules = [
             "published" => ["boolean"],
+            "use_team_opening_hours" => ["boolean"],
+            "use_store_opening_hours" => ["boolean"],
             "featured" => ["boolean", "nullable"],
             "show_author" => ["boolean"],
             // If you do not include the string validation rule for a text input like title.
@@ -111,6 +113,54 @@ class StoreStoreRequest extends FormRequest
             $minCoverImages,
             $maxCoverImages
         ) {
+            // logic for opening hours # start
+            if (
+                !$this->use_team_opening_hours &&
+                !$this->use_store_opening_hours
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "use_team_opening_hours",
+                        "Select Use of Company hours or Store hours."
+                    );
+            }
+            if (
+                !$this->use_team_opening_hours &&
+                !$this->use_store_opening_hours
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "use_store_opening_hours",
+                        "Select Use of Company hours or Store hours."
+                    );
+            }
+
+            if (
+                $this->use_team_opening_hours &&
+                $this->use_store_opening_hours
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "use_team_opening_hours",
+                        "Only one option. Select Company or Store."
+                    );
+            }
+            if (
+                $this->use_team_opening_hours &&
+                $this->use_store_opening_hours
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "use_store_opening_hours",
+                        "Only one option. Select Company or Store."
+                    );
+            }
+            // logic for opening hours # start
+
             if ($this->team === null) {
                 $validator
                     ->errors()

@@ -440,6 +440,9 @@ const postForm = useForm({
     team: props.currentUserTeam,
     user_id: props.user.id,
 
+    use_team_opening_hours: true,
+    use_store_opening_hours: true,
+
     tags: "",
     show_author: false,
     author: [],
@@ -1449,6 +1452,69 @@ const pageBuilder = new PageBuilder(store);
                 </div>
             </div>
             <!-- post contact page url # end -->
+
+            <!-- Opening hours # start -->
+            <div class="myInputsOrganization">
+                <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
+                    <div class="myPrimaryFormOrganizationHeader">
+                        Opening hours
+                    </div>
+                </div>
+
+                <!-- Team opening hours # start -->
+                <div class="myInputGroup">
+                    <div class="relative flex items-center">
+                        <div class="flex h-6 items-center">
+                            <input
+                                id="use_team_opening_hours"
+                                name="use_team_opening_hours"
+                                v-model="postForm.use_team_opening_hours"
+                                type="checkbox"
+                                class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                            />
+                        </div>
+                        <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                            <label
+                                for="use_team_opening_hours"
+                                class="select-none font-medium text-gray-900"
+                                >Use Company Opening Hours
+                            </label>
+                        </div>
+                    </div>
+                    <InputError
+                        :message="postForm.errors.use_team_opening_hours"
+                    />
+                    <!-- Team opening hours # end -->
+
+                    <div class="border-t border-gray-200 pt-6"></div>
+
+                    <!-- Store Opening hours # start -->
+                    <div class="relative flex items-center">
+                        <div class="flex h-6 items-center">
+                            <input
+                                id="use_store_opening_hours"
+                                name="use_store_opening_hours"
+                                v-model="postForm.use_store_opening_hours"
+                                type="checkbox"
+                                class="h-5 w-5 rounded border-gray-300 text-myPrimaryBrandColor focus:ring-myPrimaryBrandColor"
+                            />
+                        </div>
+                        <div class="ml-3 min-w-0 flex-1 text-sm leading-6">
+                            <label
+                                for="use_store_opening_hours"
+                                class="select-none font-medium text-gray-900"
+                            >
+                                Use Store Opening Hours
+                            </label>
+                        </div>
+                    </div>
+                    <InputError
+                        :message="postForm.errors.use_store_opening_hours"
+                    />
+                </div>
+                <!-- Store Opening hours # end -->
+            </div>
+            <!-- Opening hours # end -->
 
             <!-- cover image - start -->
             <div class="myInputsOrganization">
