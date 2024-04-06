@@ -442,29 +442,50 @@ const postForm = useForm({
     user_id: props.user.id,
 
     time_zone: "Asia/Dubai",
-    use_team_opening_hours: null,
-    use_store_opening_hours: null,
+    use_team_opening_hours: false,
+    use_store_opening_hours: false,
 
-    monday_opening_time: null,
-    monday_closing_time: null,
+    monday_opening_time_store: null,
+    monday_closing_time_store: null,
 
-    tuesday_opening_time: null,
-    tuesday_closing_time: null,
+    tuesday_opening_time_store: null,
+    tuesday_closing_time_store: null,
 
-    wednesday_opening_time: null,
-    wednesday_closing_time: null,
+    wednesday_opening_time_store: null,
+    wednesday_closing_time_store: null,
 
-    thursday_opening_time: null,
-    thursday_closing_time: null,
+    thursday_opening_time_store: null,
+    thursday_closing_time_store: null,
 
-    friday_opening_time: null,
-    friday_closing_time: null,
+    friday_opening_time_store: null,
+    friday_closing_time_store: null,
 
-    saturday_opening_time: null,
-    saturday_closing_time: null,
+    saturday_opening_time_store: null,
+    saturday_closing_time_store: null,
 
-    sunday_opening_time: null,
-    sunday_closing_time: null,
+    sunday_opening_time_store: null,
+    sunday_closing_time_store: null,
+
+    monday_opening_time_team: null,
+    monday_closing_time_team: null,
+
+    tuesday_opening_time_team: null,
+    tuesday_closing_time_team: null,
+
+    wednesday_opening_time_team: null,
+    wednesday_closing_time_team: null,
+
+    thursday_opening_time_team: null,
+    thursday_closing_time_team: null,
+
+    friday_opening_time_team: null,
+    friday_closing_time_team: null,
+
+    saturday_opening_time_team: null,
+    saturday_closing_time_team: null,
+
+    sunday_opening_time_team: null,
+    sunday_closing_time_team: null,
 
     tags: "",
     show_author: false,
@@ -528,6 +549,290 @@ const handleCreatePost = function () {
 };
 
 const submittedOnUpdate = ref(true);
+
+// watch store opening hours # start
+// monday # start
+const getMondayOpeningTime = computed(() => {
+    return store.getters["fashionStore/getMondayOpeningTime"];
+});
+//
+
+watch(getMondayOpeningTime, (newValue) => {
+    postForm.monday_opening_time_store = newValue;
+});
+
+const getMondayClosingTime = computed(() => {
+    return store.getters["fashionStore/getMondayClosingTime"];
+});
+//
+
+watch(getMondayClosingTime, (newValue) => {
+    postForm.monday_closing_time_store = newValue;
+});
+// monday # end
+
+// tuesday # start
+const getTuesdayOpeningTime = computed(() => {
+    return store.getters["fashionStore/getTuesdayOpeningTime"];
+});
+//
+
+watch(getTuesdayOpeningTime, (newValue) => {
+    postForm.tuesday_opening_time_store = newValue;
+});
+
+const getTuesdayClosingTime = computed(() => {
+    return store.getters["fashionStore/getTuesdayClosingTime"];
+});
+//
+
+watch(getTuesdayClosingTime, (newValue) => {
+    postForm.tuesday_closing_time_store = newValue;
+});
+// tuesday # end
+
+// wednesday # start
+const getWednesdayOpeningTime = computed(() => {
+    return store.getters["fashionStore/getWednesdayOpeningTime"];
+});
+//
+
+watch(getWednesdayOpeningTime, (newValue) => {
+    postForm.wednesday_opening_time_store = newValue;
+});
+
+const getWednesdayClosingTime = computed(() => {
+    return store.getters["fashionStore/getWednesdayClosingTime"];
+});
+//
+
+watch(getWednesdayClosingTime, (newValue) => {
+    postForm.wednesday_closing_time_store = newValue;
+});
+// wednesday # end
+
+// thursday # start
+const getThursdayOpeningTime = computed(() => {
+    return store.getters["fashionStore/getThursdayOpeningTime"];
+});
+//
+
+watch(getThursdayOpeningTime, (newValue) => {
+    postForm.thursday_opening_time_store = newValue;
+});
+
+const getThursdayClosingTime = computed(() => {
+    return store.getters["fashionStore/getThursdayClosingTime"];
+});
+//
+
+watch(getThursdayClosingTime, (newValue) => {
+    postForm.thursday_closing_time_store = newValue;
+});
+// thursday # end
+
+// friday # start
+const getFridayOpeningTime = computed(() => {
+    return store.getters["fashionStore/getFridayOpeningTime"];
+});
+//
+
+watch(getFridayOpeningTime, (newValue) => {
+    postForm.friday_opening_time_store = newValue;
+});
+
+const getFridayClosingTime = computed(() => {
+    return store.getters["fashionStore/getFridayClosingTime"];
+});
+//
+
+watch(getFridayClosingTime, (newValue) => {
+    postForm.friday_closing_time_store = newValue;
+});
+// friday # end
+
+// saturday # start
+const getSaturdayOpeningTime = computed(() => {
+    return store.getters["fashionStore/getSaturdayOpeningTime"];
+});
+//
+
+watch(getSaturdayOpeningTime, (newValue) => {
+    postForm.saturday_opening_time_store = newValue;
+});
+
+const getSaturdayClosingTime = computed(() => {
+    return store.getters["fashionStore/getSaturdayClosingTime"];
+});
+//
+
+watch(getSaturdayClosingTime, (newValue) => {
+    postForm.saturday_closing_time_store = newValue;
+});
+// saturday # end
+
+// sunday # start
+const getSundayOpeningTime = computed(() => {
+    return store.getters["fashionStore/getSundayOpeningTime"];
+});
+//
+
+watch(getSundayOpeningTime, (newValue) => {
+    postForm.sunday_opening_time_store = newValue;
+});
+
+const getSundayClosingTime = computed(() => {
+    return store.getters["fashionStore/getSundayClosingTime"];
+});
+//
+
+watch(getSundayClosingTime, (newValue) => {
+    postForm.sunday_closing_time_store = newValue;
+});
+// sunday # end
+// watch store opening hours # end
+
+// watch team opening hours # start
+// monday # start
+const getMondayOpeningTimeTeam = computed(() => {
+    return store.getters["team/getMondayOpeningTime"];
+});
+//
+
+watch(getMondayOpeningTimeTeam, (newValue) => {
+    postForm.monday_opening_time_team = newValue;
+});
+
+const getMondayClosingTimeTeam = computed(() => {
+    return store.getters["team/getMondayClosingTime"];
+});
+//
+
+watch(getMondayClosingTimeTeam, (newValue) => {
+    postForm.monday_closing_time_team = newValue;
+});
+// monday # end
+
+// tuesday # start
+const getTuesdayOpeningTimeTeam = computed(() => {
+    return store.getters["team/getTuesdayOpeningTime"];
+});
+//
+
+watch(getTuesdayOpeningTimeTeam, (newValue) => {
+    postForm.tuesday_opening_time_team = newValue;
+});
+
+const getTuesdayClosingTimeTeam = computed(() => {
+    return store.getters["team/getTuesdayClosingTime"];
+});
+//
+
+watch(getTuesdayClosingTimeTeam, (newValue) => {
+    postForm.tuesday_closing_time_team = newValue;
+});
+// tuesday # end
+
+// wednesday # start
+const getWednesdayOpeningTimeTeam = computed(() => {
+    return store.getters["team/getWednesdayOpeningTime"];
+});
+//
+
+watch(getWednesdayOpeningTimeTeam, (newValue) => {
+    postForm.wednesday_opening_time_team = newValue;
+});
+
+const getWednesdayClosingTimeTeam = computed(() => {
+    return store.getters["team/getWednesdayClosingTime"];
+});
+//
+
+watch(getWednesdayClosingTimeTeam, (newValue) => {
+    postForm.wednesday_closing_time_team = newValue;
+});
+// wednesday # end
+
+// thursday # start
+const getThursdayOpeningTimeTeam = computed(() => {
+    return store.getters["team/getThursdayOpeningTime"];
+});
+//
+
+watch(getThursdayOpeningTimeTeam, (newValue) => {
+    postForm.thursday_opening_time_team = newValue;
+});
+
+const getThursdayClosingTimeTeam = computed(() => {
+    return store.getters["team/getThursdayClosingTime"];
+});
+//
+
+watch(getThursdayClosingTimeTeam, (newValue) => {
+    postForm.thursday_closing_time_team = newValue;
+});
+// thursday # end
+
+// friday # start
+const getFridayOpeningTimeTeam = computed(() => {
+    return store.getters["team/getFridayOpeningTime"];
+});
+//
+
+watch(getFridayOpeningTimeTeam, (newValue) => {
+    postForm.friday_opening_time_team = newValue;
+});
+
+const getFridayClosingTimeTeam = computed(() => {
+    return store.getters["team/getFridayClosingTime"];
+});
+//
+
+watch(getFridayClosingTimeTeam, (newValue) => {
+    postForm.friday_closing_time_team = newValue;
+});
+// friday # end
+
+// saturday # start
+const getSaturdayOpeningTimeTeam = computed(() => {
+    return store.getters["team/getSaturdayOpeningTime"];
+});
+//
+
+watch(getSaturdayOpeningTimeTeam, (newValue) => {
+    postForm.saturday_opening_time_team = newValue;
+});
+
+const getSaturdayClosingTimeTeam = computed(() => {
+    return store.getters["team/getSaturdayClosingTime"];
+});
+//
+
+watch(getSaturdayClosingTimeTeam, (newValue) => {
+    postForm.saturday_closing_time_team = newValue;
+});
+// saturday # end
+
+// sunday # start
+const getSundayOpeningTimeTeam = computed(() => {
+    return store.getters["team/getSundayOpeningTime"];
+});
+//
+
+watch(getSundayOpeningTimeTeam, (newValue) => {
+    postForm.sunday_opening_time_team = newValue;
+});
+
+const getSundayClosingTimeTeam = computed(() => {
+    return store.getters["team/getSundayClosingTime"];
+});
+//
+
+watch(getSundayClosingTimeTeam, (newValue) => {
+    postForm.sunday_closing_time_team = newValue;
+});
+// sunday # end
+// watch team opening hours # end
 
 const createPost = () => {
     if (formType.value === "create") {
@@ -615,6 +920,27 @@ const clearForm = function () {
 
     postForm.use_team_opening_hours = null;
     postForm.use_store_opening_hours = null;
+
+    postForm.monday_opening_time_store = null;
+    postForm.monday_closing_time_store = null;
+
+    postForm.tuesday_opening_time_store = null;
+    postForm.tuesday_closing_time_store = null;
+
+    postForm.wednesday_opening_time_store = null;
+    postForm.wednesday_closing_time_store = null;
+
+    postForm.thursday_opening_time_store = null;
+    postForm.thursday_closing_time_store = null;
+
+    postForm.friday_opening_time_store = null;
+    postForm.friday_closing_time_store = null;
+
+    postForm.saturday_opening_time_store = null;
+    postForm.saturday_closing_time_store = null;
+
+    postForm.sunday_opening_time_store = null;
+    postForm.sunday_closing_time_store = null;
 
     postForm.author = [];
     postForm.states = [];
@@ -957,11 +1283,95 @@ onBeforeMount(async () => {
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
 
+            // opening hours # start
             postForm.use_team_opening_hours =
                 formLocalStorage.use_team_opening_hours;
             postForm.use_store_opening_hours =
                 formLocalStorage.use_store_opening_hours;
+            // opening hours # end
 
+            // store logic opening hours # start
+            postForm.monday_opening_time_store =
+                formLocalStorage.monday_opening_time_store;
+            postForm.monday_closing_time_store =
+                formLocalStorage.monday_closing_time_store;
+
+            postForm.tuesday_opening_time_store =
+                formLocalStorage.tuesday_opening_time_store;
+            postForm.tuesday_closing_time_store =
+                formLocalStorage.tuesday_closing_time_store;
+
+            postForm.wednesday_opening_time_store =
+                formLocalStorage.wednesday_opening_time_store;
+            postForm.wednesday_closing_time_store =
+                formLocalStorage.wednesday_closing_time_store;
+
+            postForm.thursday_opening_time_store =
+                formLocalStorage.thursday_opening_time_store;
+            postForm.thursday_closing_time_store =
+                formLocalStorage.thursday_closing_time_store;
+
+            postForm.friday_opening_time_store =
+                formLocalStorage.friday_opening_time_store;
+            postForm.friday_closing_time_store =
+                formLocalStorage.friday_closing_time_store;
+
+            postForm.saturday_opening_time_store =
+                formLocalStorage.saturday_opening_time_store;
+            postForm.saturday_closing_time_store =
+                formLocalStorage.saturday_closing_time_store;
+
+            postForm.sunday_opening_time_store =
+                formLocalStorage.sunday_opening_time_store;
+            postForm.sunday_closing_time_store =
+                formLocalStorage.sunday_closing_time_store;
+            // store logic opening hours # end
+
+            // team opening hours team # start
+            //
+
+            postForm.monday_opening_time_team =
+                formLocalStorage.monday_opening_time_team;
+            postForm.monday_closing_time_team =
+                formLocalStorage.monday_closing_time_team;
+
+            postForm.tuesday_opening_time_team =
+                formLocalStorage.tuesday_opening_time_team;
+            postForm.tuesday_closing_time_team =
+                formLocalStorage.tuesday_closing_time_team;
+
+            postForm.wednesday_opening_time_team =
+                formLocalStorage.wednesday_opening_time_team;
+            postForm.wednesday_closing_time_team =
+                formLocalStorage.wednesday_closing_time_team;
+
+            postForm.thursday_opening_time_team =
+                formLocalStorage.thursday_opening_time_team;
+            postForm.thursday_closing_time_team =
+                formLocalStorage.thursday_closing_time_team;
+
+            postForm.friday_opening_time_team =
+                formLocalStorage.friday_opening_time_team;
+            postForm.friday_closing_time_team =
+                formLocalStorage.friday_closing_time_team;
+
+            postForm.saturday_opening_time_team =
+                formLocalStorage.saturday_opening_time_team;
+            postForm.saturday_closing_time_team =
+                formLocalStorage.saturday_closing_time_team;
+
+            postForm.sunday_opening_time_team =
+                formLocalStorage.sunday_opening_time_team;
+            postForm.sunday_closing_time_team =
+                formLocalStorage.sunday_closing_time_team;
+
+            //
+            // team opening hours team # end
+
+            //
+            //
+            //
+            //
             postForm.tags = formLocalStorage.tags;
 
             // Authors
@@ -1119,19 +1529,81 @@ onBeforeMount(async () => {
 
         store.commit("pageBuilderState/setComponents", extractedSections);
 
-        // opening hours team # start
-        // opening hours team # end
+        // team opening hours team # start
+        postForm.monday_opening_time_team =
+            props.currentUserTeam.monday_opening_time_store;
+        postForm.monday_closing_time_team =
+            props.currentUserTeam.monday_closing_time_store;
 
-        // ØØØ opening hours store # start
+        postForm.tuesday_opening_time_team =
+            props.currentUserTeam.tuesday_opening_time_store;
+        postForm.tuesday_closing_time_team =
+            props.currentUserTeam.tuesday_closing_time_store;
 
-        // console.log(`postForm:`, postForm.monday_opening_time);
+        postForm.wednesday_opening_time_team =
+            props.currentUserTeam.wednesday_opening_time_store;
+        postForm.wednesday_closing_time_team =
+            props.currentUserTeam.wednesday_closing_time_store;
 
-        postForm.monday_opening_time = props.post.monday_opening_time;
-        postForm.monday_closing_time = props.post.monday_closing_time;
+        postForm.thursday_opening_time_team =
+            props.currentUserTeam.thursday_opening_time_store;
+        postForm.thursday_closing_time_team =
+            props.currentUserTeam.thursday_closing_time_store;
 
-        store.commit("fashionStore/setOpeningHoursStore", { hiiii: "yoo" });
+        postForm.friday_opening_time_team =
+            props.currentUserTeam.friday_opening_time_store;
+        postForm.friday_closing_time_team =
+            props.currentUserTeam.friday_closing_time_store;
 
-        // ØØØ opening hours store # end
+        postForm.saturday_opening_time_team =
+            props.currentUserTeam.saturday_opening_time_store;
+        postForm.saturday_closing_time_team =
+            props.currentUserTeam.saturday_closing_time_store;
+
+        postForm.sunday_opening_time_team =
+            props.currentUserTeam.sunday_opening_time_store;
+        postForm.sunday_closing_time_team =
+            props.currentUserTeam.sunday_closing_time_store;
+        // team opening hours team # end
+
+        // console.log(`postForm:`, postForm.monday_opening_time_store);
+
+        // opening hours store # start
+        postForm.monday_opening_time_store =
+            props.post.monday_opening_time_store;
+        postForm.monday_closing_time_store =
+            props.post.monday_closing_time_store;
+
+        postForm.tuesday_opening_time_store =
+            props.post.tuesday_opening_time_store;
+        postForm.tuesday_closing_time_store =
+            props.post.tuesday_closing_time_store;
+
+        postForm.wednesday_opening_time_store =
+            props.post.wednesday_opening_time_store;
+        postForm.wednesday_closing_time_store =
+            props.post.wednesday_closing_time_store;
+
+        postForm.thursday_opening_time_store =
+            props.post.thursday_opening_time_store;
+        postForm.thursday_closing_time_store =
+            props.post.thursday_closing_time_store;
+
+        postForm.friday_opening_time_store =
+            props.post.friday_opening_time_store;
+        postForm.friday_closing_time_store =
+            props.post.friday_closing_time_store;
+
+        postForm.saturday_opening_time_store =
+            props.post.saturday_opening_time_store;
+        postForm.saturday_closing_time_store =
+            props.post.saturday_closing_time_store;
+
+        postForm.sunday_opening_time_store =
+            props.post.sunday_opening_time_store;
+        postForm.sunday_closing_time_store =
+            props.post.sunday_closing_time_store;
+        // opening hours store # end
 
         postForm.title = props.post.title;
         postForm.brand_website_url = props.post.brand_website_url;
@@ -1610,10 +2082,70 @@ const pageBuilder = new PageBuilder(store);
                             weekday="monday"
                             resourceId="store"
                             :openingClockFromDatabaseOrLocalStorage="
-                                postForm.monday_opening_time
+                                postForm.monday_opening_time_store
                             "
                             :closingClockFromDatabaseOrLocalStorage="
-                                postForm.monday_closing_time
+                                postForm.monday_closing_time_store
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="tuesday"
+                            resourceId="store"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.tuesday_opening_time_store
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.tuesday_closing_time_store
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="wednesday"
+                            resourceId="store"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.wednesday_opening_time_store
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.wednesday_closing_time_store
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="thursday"
+                            resourceId="store"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.thursday_opening_time_store
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.thursday_closing_time_store
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="friday"
+                            resourceId="store"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.friday_opening_time_store
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.friday_closing_time_store
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="saturday"
+                            resourceId="store"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.saturday_opening_time_store
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.saturday_closing_time_store
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="sunday"
+                            resourceId="store"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.sunday_opening_time_store
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.sunday_closing_time_store
                             "
                         ></OpeningClosingHours>
                     </div>
@@ -1628,14 +2160,77 @@ const pageBuilder = new PageBuilder(store);
                     <div
                         class="py-4 px-2 border-2 border-green-400 rounded-2xl divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
                     >
-                        <!-- <OpeningClosingHours
+                        <OpeningClosingHours
                             weekday="monday"
                             resourceId="team"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.monday_opening_time_team
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.monday_closing_time_team
+                            "
                         ></OpeningClosingHours>
+
                         <OpeningClosingHours
                             weekday="tuesday"
                             resourceId="team"
-                        ></OpeningClosingHours> -->
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.tuesday_opening_time_team
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.tuesday_closing_time_team
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="wednesday"
+                            resourceId="team"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.wednesday_opening_time_team
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.wednesday_closing_time_team
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="thursday"
+                            resourceId="team"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.thursday_opening_time_team
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.thursday_closing_time_team
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="friday"
+                            resourceId="team"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.friday_opening_time_team
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.friday_closing_time_team
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="saturday"
+                            resourceId="team"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.saturday_opening_time_team
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.saturday_closing_time_team
+                            "
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="sunday"
+                            resourceId="team"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.sunday_opening_time_team
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.sunday_closing_time_team
+                            "
+                        ></OpeningClosingHours>
                     </div>
                 </template>
             </div>

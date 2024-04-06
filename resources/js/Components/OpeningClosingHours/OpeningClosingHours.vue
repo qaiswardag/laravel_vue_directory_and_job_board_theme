@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import {
     Listbox,
@@ -27,11 +27,6 @@ const props = defineProps({
 
 const store = useStore();
 
-const getOpeningHoursStore = computed(() => {
-    return store.getters["fashionStore/getOpeningHoursStore"];
-});
-
-console.log(`getOpeningHoursStore:`, getOpeningHoursStore.value);
 const openingHours = [
     { id: 0, clock: "Select", value: null },
     { id: 1, clock: "00:00:00", value: "00:00:00" },
@@ -137,18 +132,132 @@ const closingHours = [
 
 const selectedOpeningHours = ref(null);
 const selectedClosingHours = ref(null);
+
+// opening hours
+watch(selectedOpeningHours, (newValue) => {
+    if (props.resourceId === "store") {
+        if (props.weekday === "monday") {
+            store.commit("fashionStore/setMondayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "tuesday") {
+            store.commit("fashionStore/setTuesdayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "wednesday") {
+            store.commit(
+                "fashionStore/setWednesdayOpeningTime",
+                newValue.value
+            );
+        }
+        if (props.weekday === "thursday") {
+            store.commit("fashionStore/setThursdayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "friday") {
+            store.commit("fashionStore/setFridayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "saturday") {
+            store.commit("fashionStore/setSaturdayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "sunday") {
+            store.commit("fashionStore/setSundayOpeningTime", newValue.value);
+        }
+    }
+
+    if (props.resourceId === "team") {
+        if (props.weekday === "monday") {
+            store.commit("team/setMondayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "tuesday") {
+            store.commit("team/setTuesdayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "wednesday") {
+            store.commit("team/setWednesdayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "thursday") {
+            store.commit("team/setThursdayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "friday") {
+            store.commit("team/setFridayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "saturday") {
+            store.commit("team/setSaturdayOpeningTime", newValue.value);
+        }
+        if (props.weekday === "sunday") {
+            store.commit("team/setSundayOpeningTime", newValue.value);
+        }
+    }
+});
+
+// closing hours
+watch(selectedClosingHours, (newValue) => {
+    if (props.resourceId === "store") {
+        if (props.weekday === "monday") {
+            store.commit("fashionStore/setMondayClosingTime", newValue.value);
+        }
+        if (props.weekday === "tuesday") {
+            store.commit("fashionStore/setTuesdayClosingTime", newValue.value);
+        }
+        if (props.weekday === "wednesday") {
+            store.commit(
+                "fashionStore/setWednesdayClosingTime",
+                newValue.value
+            );
+        }
+        if (props.weekday === "thursday") {
+            store.commit("fashionStore/setThursdayClosingTime", newValue.value);
+        }
+        if (props.weekday === "friday") {
+            store.commit("fashionStore/setFridayClosingTime", newValue.value);
+        }
+        if (props.weekday === "saturday") {
+            store.commit("fashionStore/setSaturdayClosingTime", newValue.value);
+        }
+        if (props.weekday === "sunday") {
+            store.commit("fashionStore/setSundayClosingTime", newValue.value);
+        }
+    }
+
+    if (props.resourceId === "team") {
+        if (props.weekday === "monday") {
+            store.commit("team/setMondayClosingTime", newValue.value);
+        }
+        if (props.weekday === "tuesday") {
+            store.commit("team/setTuesdayClosingTime", newValue.value);
+        }
+        if (props.weekday === "wednesday") {
+            store.commit("team/setWednesdayClosingTime", newValue.value);
+        }
+        if (props.weekday === "thursday") {
+            store.commit("team/setThursdayClosingTime", newValue.value);
+        }
+        if (props.weekday === "friday") {
+            store.commit("team/setFridayClosingTime", newValue.value);
+        }
+        if (props.weekday === "saturday") {
+            store.commit("team/setSaturdayClosingTime", newValue.value);
+        }
+        if (props.weekday === "sunday") {
+            store.commit("team/setSundayClosingTime", newValue.value);
+        }
+    }
+});
+
+//
+//
+//
+//
+
 onMounted(() => {
     selectedOpeningHours.value = openingHours[0];
     selectedClosingHours.value = closingHours[0];
 
     openingHours.forEach((clock) => {
-        if (clock.clock === props.openingClockFromDatabaseOrLocalStorage) {
+        if (clock.value === props.openingClockFromDatabaseOrLocalStorage) {
             selectedOpeningHours.value = clock;
         }
     });
 
     closingHours.forEach((clock) => {
-        if (clock.clock === props.closingClockFromDatabaseOrLocalStorage) {
+        if (clock.value === props.closingClockFromDatabaseOrLocalStorage) {
             selectedClosingHours.value = clock;
         }
     });
