@@ -16,6 +16,7 @@ return new class extends Migration {
             // send '18:00:00' from frontend to backend.
 
             $table->boolean("use_team_opening_hours")->nullable();
+            $table->boolean("use_store_opening_hours")->nullable();
 
             $table->time("monday_opening_time")->nullable();
             $table->time("monday_closing_time")->nullable();

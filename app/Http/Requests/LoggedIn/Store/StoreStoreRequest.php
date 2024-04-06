@@ -4,6 +4,7 @@ namespace App\Http\Requests\LoggedIn\Store;
 
 use App\Models\MediaLibrary\MediaLibrary;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 class StoreStoreRequest extends FormRequest
@@ -95,6 +96,8 @@ class StoreStoreRequest extends FormRequest
      */
     public function withValidator($validator)
     {
+        $user = Auth::user();
+
         $maxAuthors = 18;
         $maxCategories = 8;
         $maxStoreStates = 1;
@@ -105,6 +108,7 @@ class StoreStoreRequest extends FormRequest
         $maxCoverImages = 6;
 
         $validator->after(function ($validator) use (
+            $user,
             $maxAuthors,
             $maxCategories,
             $maxStoreStates,
@@ -114,53 +118,159 @@ class StoreStoreRequest extends FormRequest
             $maxCoverImages
         ) {
             // logic for opening hours # start
-            if (
-                !$this->use_team_opening_hours &&
-                !$this->use_store_opening_hours
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "use_team_opening_hours",
-                        "Select Use of Company hours or Store hours."
-                    );
-            }
-            if (
-                !$this->use_team_opening_hours &&
-                !$this->use_store_opening_hours
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "use_store_opening_hours",
-                        "Select Use of Company hours or Store hours."
-                    );
-            }
-
-            if (
-                $this->use_team_opening_hours &&
-                $this->use_store_opening_hours
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "use_team_opening_hours",
-                        "Only one option. Select Company or Store."
-                    );
-            }
-            if (
-                $this->use_team_opening_hours &&
-                $this->use_store_opening_hours
-            ) {
-                $validator
-                    ->errors()
-                    ->add(
-                        "use_store_opening_hours",
-                        "Only one option. Select Company or Store."
-                    );
-            }
             // logic for opening hours # start
+            if (!$this->time_zone) {
+                $validator
+                    ->errors()
+                    ->add("time_zone", "Time zone can not be null.");
+            }
 
+            // logic for opening hours # start
+            // logic for opening hours # start
+            if (
+                !$this->use_team_opening_hours &&
+                !$this->use_store_opening_hours
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "use_team_opening_hours",
+                        "Select Use of Company hours or Store hours."
+                    );
+            }
+            if (
+                !$this->use_team_opening_hours &&
+                !$this->use_store_opening_hours
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "use_store_opening_hours",
+                        "Select Use of Company hours or Store hours."
+                    );
+            }
+
+            if (
+                $this->use_team_opening_hours &&
+                $this->use_store_opening_hours
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "use_team_opening_hours",
+                        "Only one option. Select Company or Store."
+                    );
+            }
+            if (
+                $this->use_team_opening_hours &&
+                $this->use_store_opening_hours
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "use_store_opening_hours",
+                        "Only one option. Select Company or Store."
+                    );
+            }
+            // logic for opening hours # end
+            // logic for opening hours # end
+
+            // use team opening hours # start
+            // check if current team has null for opening hours for all days # start
+            // check if current team has null for opening hours for all days # start
+
+            if (
+                $this->use_team_opening_hours &&
+                !$this->use_store_opening_hours &&
+                //
+
+                //
+                $user->currentTeam &&
+                //
+                //
+                !$user->currentTeam->monday_opening_time &&
+                !$user->currentTeam->monday_closing_time &&
+                //
+                !$user->currentTeam->tuesday_opening_time &&
+                !$user->currentTeam->tuesday_closing_time &&
+                //
+                !$user->currentTeam->wednesday_opening_time &&
+                !$user->currentTeam->wednesday_closing_time &&
+                //
+                !$user->currentTeam->thursday_opening_time &&
+                !$user->currentTeam->thursday_closing_time &&
+                //
+                !$user->currentTeam->friday_opening_time &&
+                !$user->currentTeam->friday_closing_time &&
+                //
+                !$user->currentTeam->saturday_opening_time &&
+                !$user->currentTeam->saturday_closing_time &&
+                //
+                !$user->currentTeam->sunday_opening_time &&
+                !$user->currentTeam->sunday_closing_time
+                //
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "team_opening_hours",
+                        "Team opening hours is required."
+                    );
+            }
+            // check if current team has null for opening hours for all days # end
+            // check if current team has null for opening hours for all days # end
+            // use team opening hours # end
+
+            // use store opening hours # start
+            // check if current store has null for opening hours # start
+            // check if current store has null for opening hours # start
+
+            if (
+                !$this->use_team_opening_hours &&
+                $this->use_store_opening_hours &&
+                //
+                //
+                !$this->monday_opening_time &&
+                !$this->monday_closing_time &&
+                //
+                !$this->tuesday_opening_time &&
+                !$this->tuesday_closing_time &&
+                //
+                !$this->wednesday_opening_time &&
+                !$this->wednesday_closing_time &&
+                //
+                !$this->thursday_opening_time &&
+                !$this->thursday_closing_time &&
+                //
+                !$this->friday_opening_time &&
+                !$this->friday_closing_time &&
+                //
+                !$this->saturday_opening_time &&
+                !$this->saturday_closing_time &&
+                //
+                !$this->sunday_opening_time &&
+                !$this->sunday_closing_time
+                //
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        "store_opening_hours",
+                        "Store opening hours is required."
+                    );
+            }
+            // check if current store has null for opening hours # end
+            // check if current store has null for opening hours # end
+            // use store opening hours # end
+
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
             if ($this->team === null) {
                 $validator
                     ->errors()

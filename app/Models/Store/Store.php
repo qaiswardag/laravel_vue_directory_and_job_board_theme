@@ -31,7 +31,9 @@ class Store extends Model
         "contact_page_url",
         "brand_website_url",
 
-        "use_team_opening_hours", // Example "Asia/Dubai",
+        "time_zone", // Example "Asia/Dubai",
+        "use_team_opening_hours",
+        "use_store_opening_hours",
 
         "monday_opening_time",
         "monday_closing_time",
@@ -53,8 +55,6 @@ class Store extends Model
 
         "sunday_opening_time",
         "sunday_closing_time",
-
-        "time_zone",
     ];
 
     // Define the relationship with the Team model

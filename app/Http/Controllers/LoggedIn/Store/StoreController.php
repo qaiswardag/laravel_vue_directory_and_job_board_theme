@@ -363,8 +363,14 @@ class StoreController extends Controller
         $store = Store::create([
             "user_id" => $userId,
             "team_id" => $team->id,
+
             "title" => $title,
             "slug" => $slug,
+
+            "time_zone" => $request->time_zone,
+            "use_team_opening_hours" => $request->use_team_opening_hours,
+            "use_store_opening_hours" => $request->use_store_opening_hours,
+
             "brand_website_url" => $brandWebsiteUrl,
             "address" => $address,
             "floor" => $floor,
@@ -988,7 +994,6 @@ class StoreController extends Controller
         // Logic for subscription quantity # end
 
         $slug = $request->slug;
-
         $title = $request->title;
         $brandWebsiteUrl = $request->brand_website_url;
         $address = $request->address;
@@ -1021,6 +1026,11 @@ class StoreController extends Controller
             "team_id" => $teamId,
             "title" => $title,
             "slug" => $slug,
+
+            "time_zone" => $request->time_zone,
+            "use_team_opening_hours" => $request->use_team_opening_hours,
+            "use_store_opening_hours" => $request->use_store_opening_hours,
+
             "brand_website_url" => $brandWebsiteUrl,
             "address" => $address,
             "floor" => $floor,

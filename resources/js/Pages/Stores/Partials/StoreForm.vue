@@ -440,8 +440,9 @@ const postForm = useForm({
     team: props.currentUserTeam,
     user_id: props.user.id,
 
-    use_team_opening_hours: true,
-    use_store_opening_hours: true,
+    time_zone: "Asia/Dubai",
+    use_team_opening_hours: null,
+    use_store_opening_hours: null,
 
     tags: "",
     show_author: false,
@@ -589,6 +590,10 @@ const clearForm = function () {
     clearTags.value++;
 
     postForm.show_author = false;
+
+    postForm.use_team_opening_hours = null;
+    postForm.use_store_opening_hours = null;
+
     postForm.author = [];
     postForm.states = [];
     postForm.categories = [];
@@ -930,6 +935,11 @@ onBeforeMount(async () => {
             postForm.published = formLocalStorage.published;
             postForm.show_author = formLocalStorage.show_author;
 
+            postForm.use_team_opening_hours =
+                formLocalStorage.use_team_opening_hours;
+            postForm.use_store_opening_hours =
+                formLocalStorage.use_store_opening_hours;
+
             postForm.tags = formLocalStorage.tags;
 
             // Authors
@@ -1100,6 +1110,12 @@ onBeforeMount(async () => {
         postForm.content = props.post.content;
         postForm.published = props.post.published === 1 ? true : false;
         postForm.show_author = props.post.show_author === 1 ? true : false;
+
+        postForm.use_team_opening_hours =
+            props.post.use_team_opening_hours === 1 ? true : false;
+        //
+        postForm.use_store_opening_hours =
+            props.post.use_store_opening_hours === 1 ? true : false;
 
         postForm.tags = props.post.tags;
 
@@ -1453,7 +1469,7 @@ const pageBuilder = new PageBuilder(store);
             </div>
             <!-- post contact page url # end -->
 
-            <!-- Opening hours # start -->
+            <!-- Check box Opening hours # start -->
             <div class="myInputsOrganization">
                 <div class="myPrimaryFormOrganizationHeaderDescriptionSection">
                     <div class="myPrimaryFormOrganizationHeader">
@@ -1461,7 +1477,7 @@ const pageBuilder = new PageBuilder(store);
                     </div>
                 </div>
 
-                <!-- Team opening hours # start -->
+                <!-- Check box Team opening hours # start -->
                 <div class="myInputGroup">
                     <div class="relative flex items-center">
                         <div class="flex h-6 items-center">
@@ -1484,11 +1500,11 @@ const pageBuilder = new PageBuilder(store);
                     <InputError
                         :message="postForm.errors.use_team_opening_hours"
                     />
-                    <!-- Team opening hours # end -->
+                    <!-- Check box Team opening hours # end -->
 
                     <div class="border-t border-gray-200 pt-6"></div>
 
-                    <!-- Store Opening hours # start -->
+                    <!-- Check box Store Opening hours # start -->
                     <div class="relative flex items-center">
                         <div class="flex h-6 items-center">
                             <input
@@ -1512,9 +1528,32 @@ const pageBuilder = new PageBuilder(store);
                         :message="postForm.errors.use_store_opening_hours"
                     />
                 </div>
-                <!-- Store Opening hours # end -->
+                <!-- Check box Store Opening hours # end -->
+
+                <div class="border-t-2 border-red-200 pt-6"></div>
+
+                <div class="myInputGroup">
+                    time zone here
+                    <InputError :message="postForm.errors.time_zone" />
+                </div>
+
+                <div class="border-t-2 border-blue-200 pt-6"></div>
+
+                <div class="myInputGroup">
+                    here er team opening hours input
+                    <InputError :message="postForm.errors.team_opening_hours" />
+                </div>
+
+                <div class="border-t-2 border-green-200 pt-6"></div>
+
+                <div class="myInputGroup">
+                    here er store opening hours input
+                    <InputError
+                        :message="postForm.errors.store_opening_hours"
+                    />
+                </div>
             </div>
-            <!-- Opening hours # end -->
+            <!--  Check box Opening hours # end -->
 
             <!-- cover image - start -->
             <div class="myInputsOrganization">

@@ -53,6 +53,17 @@ class UserController extends Controller
     {
         $user = User::where("username", $username)->first();
 
+        if (!$user) {
+            return [
+                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
+                "status" => 404, // HTTP status code for the response.
+            ];
+        }
+
+        if (!$user->public) {
+            return response()->json("User not found!", 404);
+        }
+
         // Hide additional fields
         $user->makeHidden([
             "email",
@@ -77,17 +88,6 @@ class UserController extends Controller
             "line2",
             "email_verified_at",
         ]);
-
-        if (!$user) {
-            return [
-                "customError" => self::TRY_ANOTHER_ROUTE, // Error message for the user.
-                "status" => 404, // HTTP status code for the response.
-            ];
-        }
-
-        if (!$user->public) {
-            return response()->json("User not found!", 404);
-        }
 
         return [
             "userData" => $user,

@@ -93,7 +93,8 @@ class StoreFactory extends Factory
             "contact_page_url" => "https://www.google.com",
             "brand_website_url" => "https://www.cnn.com",
 
-            "use_team_opening_hours" => true,
+            "use_team_opening_hours" => false,
+            "use_store_opening_hours" => true,
 
             "monday_opening_time" => $openingTime,
             "monday_closing_time" => $closingTime,
