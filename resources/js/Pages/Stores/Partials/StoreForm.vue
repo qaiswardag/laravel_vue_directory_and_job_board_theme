@@ -445,6 +445,27 @@ const postForm = useForm({
     use_team_opening_hours: null,
     use_store_opening_hours: null,
 
+    monday_opening_time: null,
+    monday_closing_time: null,
+
+    tuesday_opening_time: null,
+    tuesday_closing_time: null,
+
+    wednesday_opening_time: null,
+    wednesday_closing_time: null,
+
+    thursday_opening_time: null,
+    thursday_closing_time: null,
+
+    friday_opening_time: null,
+    friday_closing_time: null,
+
+    saturday_opening_time: null,
+    saturday_closing_time: null,
+
+    sunday_opening_time: null,
+    sunday_closing_time: null,
+
     tags: "",
     show_author: false,
     author: [],
@@ -1098,6 +1119,20 @@ onBeforeMount(async () => {
 
         store.commit("pageBuilderState/setComponents", extractedSections);
 
+        // opening hours team # start
+        // opening hours team # end
+
+        // ØØØ opening hours store # start
+
+        // console.log(`postForm:`, postForm.monday_opening_time);
+
+        postForm.monday_opening_time = props.post.monday_opening_time;
+        postForm.monday_closing_time = props.post.monday_closing_time;
+
+        store.commit("fashionStore/setOpeningHoursStore", { hiiii: "yoo" });
+
+        // ØØØ opening hours store # end
+
         postForm.title = props.post.title;
         postForm.brand_website_url = props.post.brand_website_url;
         postForm.address = props.post.address;
@@ -1499,7 +1534,8 @@ const pageBuilder = new PageBuilder(store);
                         </div>
                     </div>
                     <p class="myPrimaryParagraph mt-4">
-                        Recommended. Can be reused for all stores.
+                        Recommended for malls. Set once and reuse when creating
+                        new stores.
                     </p>
                     <InputError
                         :message="postForm.errors.use_team_opening_hours"
@@ -1561,40 +1597,45 @@ const pageBuilder = new PageBuilder(store);
 
                 <template
                     v-if="
-                        postForm.use_store_opening_hours &&
-                        !postForm.use_team_opening_hours
+                        true ||
+                        (postForm.use_store_opening_hours &&
+                            !postForm.use_team_opening_hours)
                     "
                 >
+                    <!-- åå -->
                     <div
                         class="py-4 px-2 border-2 border-red-400 rounded-2xl divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
                     >
                         <OpeningClosingHours
                             weekday="monday"
                             resourceId="store"
-                        ></OpeningClosingHours>
-                        <OpeningClosingHours
-                            weekday="tuesday"
-                            resourceId="store"
+                            :openingClockFromDatabaseOrLocalStorage="
+                                postForm.monday_opening_time
+                            "
+                            :closingClockFromDatabaseOrLocalStorage="
+                                postForm.monday_closing_time
+                            "
                         ></OpeningClosingHours>
                     </div>
                 </template>
                 <template
                     v-if="
-                        postForm.use_team_opening_hours &&
-                        !postForm.use_store_opening_hours
+                        true ||
+                        (postForm.use_team_opening_hours &&
+                            !postForm.use_store_opening_hours)
                     "
                 >
                     <div
                         class="py-4 px-2 border-2 border-green-400 rounded-2xl divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
                     >
-                        <OpeningClosingHours
+                        <!-- <OpeningClosingHours
                             weekday="monday"
                             resourceId="team"
                         ></OpeningClosingHours>
                         <OpeningClosingHours
                             weekday="tuesday"
                             resourceId="team"
-                        ></OpeningClosingHours>
+                        ></OpeningClosingHours> -->
                     </div>
                 </template>
             </div>
