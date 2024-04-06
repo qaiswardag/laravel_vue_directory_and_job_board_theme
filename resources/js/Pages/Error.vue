@@ -65,7 +65,7 @@ const handleBack = function () {
                         {{ props.status }}
                     </p>
                     <h1
-                        class="mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl"
+                        class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-5xl"
                     >
                         {{ title }}
                     </h1>

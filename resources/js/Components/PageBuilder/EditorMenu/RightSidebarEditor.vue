@@ -71,7 +71,7 @@ const isHeadingElement = computed(() => {
                 >
                     <span class="material-symbols-outlined"> close </span>
                 </button>
-                <p class="font-bold text-sm">
+                <p class="font-semibold text-sm">
                     Editing
                     <span class="lowercase">&lt;{{ elementTag }}&gt;</span>
                 </p>

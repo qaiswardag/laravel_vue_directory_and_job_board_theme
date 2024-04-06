@@ -1243,7 +1243,7 @@ const handleSwitchTeam = function (team) {
                                                 class="mt-2 flex items-baseline gap-x-1"
                                             >
                                                 <span
-                                                    class="text-2xl font-bold tracking-tight text-gray-900"
+                                                    class="text-2xl font-semibold tracking-tight text-gray-900"
                                                     >{{ product.price }}</span
                                                 >
                                                 <span

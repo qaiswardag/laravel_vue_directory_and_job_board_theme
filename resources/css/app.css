@@ -160,7 +160,7 @@
     }
 
     .myPrimaryToggleButton {
-        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-myPrimaryDarkGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 bg-myPrimaryLightGrayColor hover:bg-myPrimaryBrandColor hover:text-white;
+        @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-semibold text-myPrimaryDarkGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 bg-myPrimaryLightGrayColor hover:bg-myPrimaryBrandColor hover:text-white;
     }
     /*
     |--------------------------------------------------------------------------
