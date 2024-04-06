@@ -111,6 +111,7 @@ class PostController extends Controller
             ->with("states")
             ->with("team")
             ->with("coverImages")
+            ->with("brandLogos")
             ->get();
 
         $postTeam = Team::find($post->team_id);
