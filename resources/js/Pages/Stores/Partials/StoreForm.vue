@@ -19,6 +19,7 @@ import DynamicModal from "@/Components/Modals/DynamicModal.vue";
 import PageBuilderModal from "@/Components/Modals/PageBuilderModal.vue";
 import PageBuilderView from "@/Pages/PageBuilder/PageBuilder.vue";
 import PageBuilder from "@/composables/PageBuilder";
+import OpeningClosingHours from "@/Components/OpeningClosingHours/OpeningClosingHours.vue";
 import { delay } from "@/helpers/delay";
 
 import {
@@ -1493,10 +1494,13 @@ const pageBuilder = new PageBuilder(store);
                             <label
                                 for="use_team_opening_hours"
                                 class="select-none font-medium text-gray-900"
-                                >Use Company Opening Hours
+                                >Use Mall or Company Opening Hours
                             </label>
                         </div>
                     </div>
+                    <p class="myPrimaryParagraph mt-4">
+                        Recommended. Can be reused for all stores.
+                    </p>
                     <InputError
                         :message="postForm.errors.use_team_opening_hours"
                     />
@@ -1552,6 +1556,47 @@ const pageBuilder = new PageBuilder(store);
                         :message="postForm.errors.store_opening_hours"
                     />
                 </div>
+
+                <div class="border-t-4 border-indigo-700 pt-6"></div>
+
+                <template
+                    v-if="
+                        postForm.use_store_opening_hours &&
+                        !postForm.use_team_opening_hours
+                    "
+                >
+                    <div
+                        class="py-4 px-2 border-2 border-red-400 rounded-2xl divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
+                    >
+                        <OpeningClosingHours
+                            weekday="monday"
+                            resourceId="store"
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="tuesday"
+                            resourceId="store"
+                        ></OpeningClosingHours>
+                    </div>
+                </template>
+                <template
+                    v-if="
+                        postForm.use_team_opening_hours &&
+                        !postForm.use_store_opening_hours
+                    "
+                >
+                    <div
+                        class="py-4 px-2 border-2 border-green-400 rounded-2xl divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
+                    >
+                        <OpeningClosingHours
+                            weekday="monday"
+                            resourceId="team"
+                        ></OpeningClosingHours>
+                        <OpeningClosingHours
+                            weekday="tuesday"
+                            resourceId="team"
+                        ></OpeningClosingHours>
+                    </div>
+                </template>
             </div>
             <!--  Check box Opening hours # end -->
 
