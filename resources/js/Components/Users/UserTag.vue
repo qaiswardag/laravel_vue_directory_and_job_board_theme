@@ -105,7 +105,7 @@ const goToUser = function () {
                         user.user_photo ? 'rounded-r-full' : 'rounded-full',
                     ]"
                 >
-                    <span class="font-medium h-full text-sm">
+                    <span class="h-full text-xs">
                         {{ user.first_name }}
                         {{ user.last_name }}
                     </span>

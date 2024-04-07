@@ -16,6 +16,11 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 import TopMenu from "@/Components/Menues/TopMenu.vue";
 import SubscriptionsLogic from "@/Pages/Stores/Components/SubscriptionsLogic.vue";
 
+import { useStore } from "vuex";
+import { computed } from "vue";
+
+import TableSettings from "@/Components/Tables/TableSettings.vue";
+
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
@@ -55,6 +60,8 @@ const props = defineProps({
         },
     },
 });
+
+const store = useStore();
 
 const breadcrumbsLinks = [
     {
@@ -224,6 +231,11 @@ const handleRight = function () {
     }
 };
 
+// Builder # Start
+const getUserSettings = computed(() => {
+    return store.getters["user/getUserSettings"];
+});
+
 onMounted(() => {
     if (props.oldInput?.search_query) {
         searchForm.search_query = props.oldInput.search_query;
@@ -341,6 +353,7 @@ onMounted(() => {
             </template>
 
             <!-- table start -->
+            <TableSettings></TableSettings>
             <div
                 v-if="posts && posts.data.length >= 1"
                 class="myTableContainerPlusScrollButton"
@@ -370,39 +383,87 @@ onMounted(() => {
                                     <th scope="col" class="myPrimaryTableTh">
                                         Title
                                     </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Store ID
-                                    </th>
+                                    <template
+                                        v-if="
+                                            getUserSettings &&
+                                            getUserSettings.showPostId
+                                        "
+                                    >
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Store ID
+                                        </th>
+                                    </template>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Company Name
                                     </th>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Status
                                     </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Show Store Staff Members
-                                    </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Store Staff Members
-                                    </th>
+
+                                    <template
+                                        v-if="
+                                            getUserSettings &&
+                                            getUserSettings.authorsOrPeopleShow
+                                        "
+                                    >
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Show Store Staff Members
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Store Staff Members
+                                        </th>
+                                    </template>
                                     <th scope="col" class="myPrimaryTableTh">
                                         State
                                     </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Categories
-                                    </th>
+
+                                    <template
+                                        v-if="
+                                            getUserSettings &&
+                                            getUserSettings.categoriesShow
+                                        "
+                                    >
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Categories
+                                        </th>
+                                    </template>
 
                                     <th scope="col" class="myPrimaryTableTh">
                                         Updated By
                                     </th>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Updated Date
-                                    </th>
+                                    <template
+                                        v-if="
+                                            getUserSettings &&
+                                            getUserSettings.createdUpdatedDateShow
+                                        "
+                                    >
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Updated Date
+                                        </th>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Created Date
-                                    </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Created Date
+                                        </th>
+                                    </template>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Options
                                     </th>
@@ -465,9 +526,16 @@ onMounted(() => {
                                             </Link>
                                         </td>
 
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{ post.id }}
-                                        </td>
+                                        <template
+                                            v-if="
+                                                getUserSettings &&
+                                                getUserSettings.showPostId
+                                            "
+                                        >
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.id }}
+                                            </td>
+                                        </template>
 
                                         <td class="myPrimaryTableTBodyTd">
                                             {{
@@ -493,97 +561,108 @@ onMounted(() => {
                                             </div>
                                         </td>
 
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                class="myPrimaryTag"
-                                                :class="
-                                                    post.show_author
-                                                        ? 'bg-myPrimaryLinkColor text-white'
-                                                        : 'bg-myPrimaryErrorColor text-white'
-                                                "
-                                            >
-                                                {{
-                                                    post.show_author
-                                                        ? "Visible"
-                                                        : "Hidden"
-                                                }}
-                                            </div>
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                class="flex flex-wrap justify-start items-center gap-1"
-                                            >
+                                        <template
+                                            v-if="
+                                                getUserSettings &&
+                                                getUserSettings.authorsOrPeopleShow
+                                            "
+                                        >
+                                            <td class="myPrimaryTableTBodyTd">
                                                 <div
-                                                    v-for="author in post.authors &&
-                                                    post.authors"
-                                                    :key="author"
-                                                    class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
+                                                    class="myPrimaryTag"
+                                                    :class="
+                                                        post.show_author
+                                                            ? 'bg-myPrimaryLinkColor text-white'
+                                                            : 'bg-myPrimaryErrorColor text-white'
+                                                    "
+                                                >
+                                                    {{
+                                                        post.show_author
+                                                            ? "Visible"
+                                                            : "Hidden"
+                                                    }}
+                                                </div>
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <div
+                                                    class="flex flex-wrap justify-start items-center gap-1"
                                                 >
                                                     <div
-                                                        v-if="
-                                                            author.profile_photo_path !==
-                                                            null
-                                                        "
+                                                        v-for="author in post.authors &&
+                                                        post.authors"
+                                                        :key="author"
+                                                        class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
                                                     >
                                                         <div
-                                                            class="h-5 w-5 flex-shrink-0"
-                                                        >
-                                                            <img
-                                                                class="object-cover h-5 w-5 rounded-full"
-                                                                :src="`/storage/${author.profile_photo_path}`"
-                                                                alt="avatar"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div
-                                                        style="
-                                                            font-size: 9px;
-                                                            gap: 2px;
-                                                        "
-                                                        v-if="
-                                                            author.profile_photo_path ===
-                                                            null
-                                                        "
-                                                        class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
-                                                    >
-                                                        <span>
-                                                            {{
-                                                                author.first_name
-                                                                    .charAt(0)
-                                                                    .toUpperCase()
-                                                            }}
-                                                        </span>
-                                                        <span>
-                                                            {{
-                                                                author.last_name
-                                                                    .charAt(0)
-                                                                    .toUpperCase()
-                                                            }}
-                                                        </span>
-                                                    </div>
-                                                    <span
-                                                        class="flex flex-col items-left gap-1 myPrimaryParagraph"
-                                                    >
-                                                        <p
-                                                            style="
-                                                                font-size: 10px;
+                                                            v-if="
+                                                                author.profile_photo_path !==
+                                                                null
                                                             "
-                                                            class="text-xs rounded-full py-1 pl-0 pr-1 flex justify-center items-center gap-1"
+                                                        >
+                                                            <div
+                                                                class="h-5 w-5 flex-shrink-0"
+                                                            >
+                                                                <img
+                                                                    class="object-cover h-5 w-5 rounded-full"
+                                                                    :src="`/storage/${author.profile_photo_path}`"
+                                                                    alt="avatar"
+                                                                />
+                                                            </div>
+                                                        </div>
+
+                                                        <div
+                                                            style="
+                                                                font-size: 9px;
+                                                                gap: 2px;
+                                                            "
+                                                            v-if="
+                                                                author.profile_photo_path ===
+                                                                null
+                                                            "
+                                                            class="flex-shrink-0 h-5 w-5 rounded-full bg-myPrimaryBrandColor flex justify-center items-center font-normal text-white text-xs"
                                                         >
                                                             <span>
                                                                 {{
                                                                     author.first_name
-                                                                }}
-                                                                {{
-                                                                    author.last_name
+                                                                        .charAt(
+                                                                            0
+                                                                        )
+                                                                        .toUpperCase()
                                                                 }}
                                                             </span>
-                                                        </p>
-                                                    </span>
+                                                            <span>
+                                                                {{
+                                                                    author.last_name
+                                                                        .charAt(
+                                                                            0
+                                                                        )
+                                                                        .toUpperCase()
+                                                                }}
+                                                            </span>
+                                                        </div>
+                                                        <span
+                                                            class="flex flex-col items-left gap-1 myPrimaryParagraph"
+                                                        >
+                                                            <p
+                                                                style="
+                                                                    font-size: 10px;
+                                                                "
+                                                                class="text-xs rounded-full py-1 pl-0 pr-1 flex justify-center items-center gap-1"
+                                                            >
+                                                                <span>
+                                                                    {{
+                                                                        author.first_name
+                                                                    }}
+                                                                    {{
+                                                                        author.last_name
+                                                                    }}
+                                                                </span>
+                                                            </p>
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
+                                        </template>
                                         <td class="myPrimaryTableTBodyTd">
                                             <div
                                                 class="flex flex-wrap justify-start items-center gap-2"
@@ -605,47 +684,58 @@ onMounted(() => {
                                                 </p>
                                             </div>
                                         </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                class="flex flex-wrap justify-start items-center gap-2"
-                                            >
-                                                <p
-                                                    v-for="category in post.categories &&
-                                                    Array.isArray(
-                                                        post.categories
-                                                    ) &&
-                                                    post.categories.sort(
-                                                        (a, b) => {
-                                                            const nameA =
-                                                                a.name;
-                                                            const nameB =
-                                                                b.name;
-
-                                                            if (nameA < nameB) {
-                                                                return -1;
-                                                            } else if (
-                                                                nameA > nameB
-                                                            ) {
-                                                                return 1;
-                                                            } else {
-                                                                return 0;
-                                                            }
-                                                        }
-                                                    )"
-                                                    :key="category"
-                                                    class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
+                                        <template
+                                            v-if="
+                                                getUserSettings &&
+                                                getUserSettings.categoriesShow
+                                            "
+                                        >
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <div
+                                                    class="flex flex-wrap justify-start items-center gap-2"
                                                 >
-                                                    <span
-                                                        class="myMediumIcon material-symbols-outlined"
+                                                    <p
+                                                        v-for="category in post.categories &&
+                                                        Array.isArray(
+                                                            post.categories
+                                                        ) &&
+                                                        post.categories.sort(
+                                                            (a, b) => {
+                                                                const nameA =
+                                                                    a.name;
+                                                                const nameB =
+                                                                    b.name;
+
+                                                                if (
+                                                                    nameA <
+                                                                    nameB
+                                                                ) {
+                                                                    return -1;
+                                                                } else if (
+                                                                    nameA >
+                                                                    nameB
+                                                                ) {
+                                                                    return 1;
+                                                                } else {
+                                                                    return 0;
+                                                                }
+                                                            }
+                                                        )"
+                                                        :key="category"
+                                                        class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
                                                     >
-                                                        interests
-                                                    </span>
-                                                    <span>
-                                                        {{ category.name }}
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </td>
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            interests
+                                                        </span>
+                                                        <span>
+                                                            {{ category.name }}
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </template>
 
                                         <td class="myPrimaryTableTBodyTd">
                                             <UserTag
@@ -653,23 +743,33 @@ onMounted(() => {
                                                 :showJobTitle="true"
                                             ></UserTag>
                                         </td>
-
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(post.updated_at),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(post.created_at),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
-                                        </td>
+                                        <template
+                                            v-if="
+                                                getUserSettings &&
+                                                getUserSettings.createdUpdatedDateShow
+                                            "
+                                        >
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.updated_at
+                                                        ),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.created_at
+                                                        ),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </td>
+                                        </template>
 
                                         <td class="myPrimaryTableTBodyTd">
                                             <Menu

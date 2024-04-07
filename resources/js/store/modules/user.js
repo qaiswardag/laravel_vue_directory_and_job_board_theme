@@ -4,6 +4,7 @@ export default {
     // state
     state: {
         isLoading: false,
+        userSettings: null,
 
         // end state
     },
@@ -13,6 +14,10 @@ export default {
         getIsLoading(state) {
             return state.isLoading;
         },
+
+        getUserSettings(state) {
+            return state.userSettings;
+        },
         // end getters
     },
 
@@ -20,6 +25,9 @@ export default {
     mutations: {
         setIsLoading(state, payload) {
             state.isLoading = payload;
+        },
+        setUserSettings(state, payload) {
+            state.userSettings = payload;
         },
         // end mutations
     },

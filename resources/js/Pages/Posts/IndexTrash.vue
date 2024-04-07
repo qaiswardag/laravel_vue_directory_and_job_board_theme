@@ -13,6 +13,11 @@ import { parseISO, format } from "date-fns";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import TopMenu from "@/Components/Menues/TopMenu.vue";
 
+import { useStore } from "vuex";
+import { computed } from "vue";
+
+import TableSettings from "@/Components/Tables/TableSettings.vue";
+
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
@@ -47,6 +52,8 @@ const props = defineProps({
         },
     },
 });
+
+const store = useStore();
 
 const breadcrumbsLinks = [
     {
@@ -256,6 +263,11 @@ const handleRight = function () {
     }
 };
 
+// Builder # Start
+const getUserSettings = computed(() => {
+    return store.getters["user/getUserSettings"];
+});
+
 onMounted(() => {
     if (props.oldInput?.search_query) {
         searchForm.search_query = props.oldInput.search_query;
@@ -371,6 +383,7 @@ onMounted(() => {
             </template>
 
             <!-- table start -->
+            <TableSettings></TableSettings>
             <div
                 v-if="posts && posts.data.length >= 1"
                 class="myTableContainerPlusScrollButton"
@@ -400,9 +413,19 @@ onMounted(() => {
                                     <th scope="col" class="myPrimaryTableTh">
                                         Title
                                     </th>
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Post ID
-                                    </th>
+                                    <template
+                                        v-if="
+                                            getUserSettings &&
+                                            getUserSettings.showPostId
+                                        "
+                                    >
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Post ID
+                                        </th>
+                                    </template>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Company Name
                                     </th>
@@ -417,21 +440,44 @@ onMounted(() => {
                                         Campaign end date
                                     </th>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Categories
-                                    </th>
+                                    <template
+                                        v-if="
+                                            getUserSettings &&
+                                            getUserSettings.categoriesShow
+                                        "
+                                    >
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Categories
+                                        </th>
+                                    </template>
 
                                     <th scope="col" class="myPrimaryTableTh">
                                         Updated By
                                     </th>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Updated Date
-                                    </th>
+                                    <template
+                                        v-if="
+                                            getUserSettings &&
+                                            getUserSettings.createdUpdatedDateShow
+                                        "
+                                    >
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Updated Date
+                                        </th>
 
-                                    <th scope="col" class="myPrimaryTableTh">
-                                        Created Date
-                                    </th>
+                                        <th
+                                            scope="col"
+                                            class="myPrimaryTableTh"
+                                        >
+                                            Created Date
+                                        </th>
+                                    </template>
                                     <th scope="col" class="myPrimaryTableTh">
                                         Restore
                                     </th>
@@ -491,9 +537,16 @@ onMounted(() => {
                                                 </span>
                                             </Link>
                                         </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{ post.id }}
-                                        </td>
+                                        <template
+                                            v-if="
+                                                getUserSettings &&
+                                                getUserSettings.showPostId
+                                            "
+                                        >
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{ post.id }}
+                                            </td>
+                                        </template>
                                         <td class="myPrimaryTableTBodyTd">
                                             {{
                                                 $page.props.user &&
@@ -542,47 +595,58 @@ onMounted(() => {
                                             </template>
                                         </td>
 
-                                        <td class="myPrimaryTableTBodyTd">
-                                            <div
-                                                class="flex flex-wrap justify-start items-center gap-2"
-                                            >
-                                                <p
-                                                    v-for="category in post.categories &&
-                                                    Array.isArray(
-                                                        post.categories
-                                                    ) &&
-                                                    post.categories.sort(
-                                                        (a, b) => {
-                                                            const nameA =
-                                                                a.name;
-                                                            const nameB =
-                                                                b.name;
-
-                                                            if (nameA < nameB) {
-                                                                return -1;
-                                                            } else if (
-                                                                nameA > nameB
-                                                            ) {
-                                                                return 1;
-                                                            } else {
-                                                                return 0;
-                                                            }
-                                                        }
-                                                    )"
-                                                    :key="category"
-                                                    class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
+                                        <template
+                                            v-if="
+                                                getUserSettings &&
+                                                getUserSettings.categoriesShow
+                                            "
+                                        >
+                                            <td class="myPrimaryTableTBodyTd">
+                                                <div
+                                                    class="flex flex-wrap justify-start items-center gap-2"
                                                 >
-                                                    <span
-                                                        class="myMediumIcon material-symbols-outlined"
+                                                    <p
+                                                        v-for="category in post.categories &&
+                                                        Array.isArray(
+                                                            post.categories
+                                                        ) &&
+                                                        post.categories.sort(
+                                                            (a, b) => {
+                                                                const nameA =
+                                                                    a.name;
+                                                                const nameB =
+                                                                    b.name;
+
+                                                                if (
+                                                                    nameA <
+                                                                    nameB
+                                                                ) {
+                                                                    return -1;
+                                                                } else if (
+                                                                    nameA >
+                                                                    nameB
+                                                                ) {
+                                                                    return 1;
+                                                                } else {
+                                                                    return 0;
+                                                                }
+                                                            }
+                                                        )"
+                                                        :key="category"
+                                                        class="text-xs py-1.5 px-2 flex justify-center items-center gap-1 myPrimaryTag"
                                                     >
-                                                        interests
-                                                    </span>
-                                                    <span>
-                                                        {{ category.name }}
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </td>
+                                                        <span
+                                                            class="myMediumIcon material-symbols-outlined"
+                                                        >
+                                                            interests
+                                                        </span>
+                                                        <span>
+                                                            {{ category.name }}
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </template>
 
                                         <td class="myPrimaryTableTBodyTd">
                                             <UserTag
@@ -591,22 +655,33 @@ onMounted(() => {
                                             ></UserTag>
                                         </td>
 
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(post.updated_at),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
-                                        </td>
-                                        <td class="myPrimaryTableTBodyTd">
-                                            {{
-                                                format(
-                                                    parseISO(post.created_at),
-                                                    "dd. MMMM yyyy HH:mm"
-                                                )
-                                            }}
-                                        </td>
+                                        <template
+                                            v-if="
+                                                getUserSettings &&
+                                                getUserSettings.createdUpdatedDateShow
+                                            "
+                                        >
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.updated_at
+                                                        ),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </td>
+                                            <td class="myPrimaryTableTBodyTd">
+                                                {{
+                                                    format(
+                                                        parseISO(
+                                                            post.created_at
+                                                        ),
+                                                        "dd. MMMM yyyy HH:mm"
+                                                    )
+                                                }}
+                                            </td>
+                                        </template>
 
                                         <td class="myPrimaryTableTBodyTd">
                                             <button
