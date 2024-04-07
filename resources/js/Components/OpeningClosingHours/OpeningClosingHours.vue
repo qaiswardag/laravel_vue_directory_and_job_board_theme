@@ -265,7 +265,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
+    <div class="bg-gray-100 py-4 px-2 rounded">
+        <p
+            class="myPrimaryParagraph flex justify-center font-medium py-2 italic"
+        >
+            {{ weekday && weekday.charAt(0).toUpperCase() + weekday.slice(1) }}
+        </p>
         <div class="pt-2 flex items-center justify-start myPrimaryGap">
             <!-- Opening hours # start -->
             <div class="w-full">

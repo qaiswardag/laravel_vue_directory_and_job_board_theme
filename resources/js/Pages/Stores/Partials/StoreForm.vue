@@ -2034,7 +2034,7 @@ const pageBuilder = new PageBuilder(store);
                     "
                 >
                     <div
-                        class="border-2 border-red-100 rounded-lg px-2 py-2 divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
+                        class="border-2 border-red-100 rounded-lg px-2 py-2 divide-y divide-myPrimaryLightGrayColor flex flex-col gap-4"
                     >
                         <OpeningClosingHours
                             weekday="monday"
@@ -2118,7 +2118,7 @@ const pageBuilder = new PageBuilder(store);
                     "
                 >
                     <div
-                        class="border-2 border-red-100 rounded-lg px-2 py-2 divide-y divide-myPrimaryLightGrayColor flex flex-col gap-8"
+                        class="border-2 border-red-100 rounded-lg px-2 py-2 divide-y divide-myPrimaryLightGrayColor flex flex-col gap-4"
                     >
                         <OpeningClosingHours
                             weekday="monday"
